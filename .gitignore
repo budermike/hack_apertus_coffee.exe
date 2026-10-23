@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+.pytest_cache/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Editors / OS
+.DS_Store
+.idea/
+.vscode/
+
+# Secrets
+.env
+
+# Data — uncomment to keep large generated data out of git (.gitkeep stays tracked)
+# data/processed/*
+# data/synthesized/*
+# !data/**/.gitkeep
+
+# Docs build
+docs/_build/
