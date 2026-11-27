@@ -10,7 +10,8 @@ Implements the summary part of the contract in ``src/presentation/api.js``:
     DELETE /api/knowledge-base                   405: the knowledge base is append-only
 
 ``{id}`` is a case number in either spelling (``8C_7_2025`` or ``8C_7/2025``).
-Not part of this module: ``GET /api/judgements`` (triage list) and feedback.
+The judgement list (``GET /api/judgements``), ``GET /api/config`` and the feedback
+placeholder are only routed here; their logic is in ``present/judgements.py``.
 
 Run:
     python -m hack_apertus_coffee_exe.summary.api --input data/raw --static src/presentation
@@ -33,6 +34,7 @@ from urllib.parse import parse_qs, unquote, urlparse
 
 from dotenv import load_dotenv
 
+from ..present.judgements import JudgementList, config_response, list_response, record_feedback
 from . import store
 from .judgement import Judgement, load_judgements, same_case
 from .run import summarize_case, summarizer_factory
@@ -158,12 +160,17 @@ class Handler(SimpleHTTPRequestHandler):
     """Routes ``/api/...`` to the backend; everything else is served from ``--static``."""
 
     backend: Backend  # set by make_server
+    judgements: JudgementList | None = None  # set by make_server (present/judgements.py)
 
     def do_GET(self) -> None:
         url = urlparse(self.path)
         parts = _api_parts(url.path)
         if parts is None:
             return super().do_GET()
+        if parts == ["judgements"]:  # present/judgements.py
+            return self._respond(lambda: list_response(self.judgements, parse_qs(url.query)))
+        if parts == ["config"]:  # present/judgements.py
+            return self._respond(lambda: config_response(self.judgements))
         if parts == ["knowledge-base"]:
             query = parse_qs(url.query).get("q", [""])[0]
             return self._respond(lambda: self.backend.search(query))
@@ -178,6 +185,8 @@ class Handler(SimpleHTTPRequestHandler):
             return self._respond(lambda: self.backend.create_summary(parts[1]))
         if len(parts) == 4 and parts[0] == "judgements" and parts[2:] == ["summary", "approve"]:
             return self._respond(lambda: self.backend.approve_summary(parts[1], body))
+        if len(parts) == 3 and parts[0] == "judgements" and parts[2] == "feedback":  # present/judgements.py
+            return self._respond(lambda: (HTTPStatus.OK, record_feedback(parts[1], body)))
         self._respond(lambda: _error(HTTPStatus.NOT_FOUND, "unknown endpoint"))
 
     def do_PUT(self) -> None:
@@ -220,8 +229,10 @@ class Handler(SimpleHTTPRequestHandler):
         self.wfile.write(data)
 
 
-def make_server(backend: Backend, host: str, port: int, static_dir: str | Path) -> ThreadingHTTPServer:
-    handler = type("BoundHandler", (Handler,), {"backend": backend})
+def make_server(
+    backend: Backend, host: str, port: int, static_dir: str | Path, judgements: JudgementList | None = None
+) -> ThreadingHTTPServer:
+    handler = type("BoundHandler", (Handler,), {"backend": backend, "judgements": judgements})
     return ThreadingHTTPServer((host, port), partial(handler, directory=str(static_dir)))
 
 
@@ -229,6 +240,12 @@ def _api_parts(path: str) -> list[str] | None:
     if not path.startswith("/api/"):
         return None
     return [unquote(p) for p in path[len("/api/"):].split("/") if p]
+
+
+def _summarized_case_ids(db_path: str | Path | None) -> list[str]:
+    """Case ids with a stored summary (read-only, for the judgement list)."""
+    with closing(store.connect(db_path)) as conn:
+        return [s.case_id for s in store.list_display(conn)]
 
 
 def _error(status: int, message: str) -> Response:
@@ -245,12 +262,17 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--model", default=None, help="Gateway model ID (default: LLM_NAME / APERTUS_MODEL)")
     parser.add_argument("--judgements-dir", default="judgements", help="Suva example summaries")
     parser.add_argument("--examples", type=int, default=2, help="Few-shot examples per language")
+    parser.add_argument("--triage", default=None, help="Triage results JSON for GET /api/judgements")
     args = parser.parse_args(argv)
     load_dotenv()  # SUMMARY_DB_PATH and gateway settings from .env
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
 
     backend = Backend(args.db, args.input, summarizer_factory(args.model, args.judgements_dir, args.examples))
-    server = make_server(backend, args.host, args.port, args.static)
+    judgements = (
+        JudgementList(args.triage, summarized_ids=lambda: _summarized_case_ids(args.db), crawl_dir=args.input)
+        if args.triage else None
+    )
+    server = make_server(backend, args.host, args.port, args.static, judgements)
     logger.info("Serving on http://%s:%s (API under /api)", args.host, args.port)
     try:
         server.serve_forever()
