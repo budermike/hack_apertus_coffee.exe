@@ -6,15 +6,16 @@ Dieses Dokument beschreibt, wie Urteile und Summaries gespeichert werden.
 |---|---|---|---|
 | [1. Rohdaten](#1-rohdaten-crawl-json) | JSON, eine Datei pro Urteil | `data/raw/<YYYY-MM>/<decision_date>_<safe_case_id>.json` | Gecrawlte Urteile (Volltext + Metadaten), Issue #3 |
 | [2. Summaries-DB](#2-summaries-datenbank-sqlite) | SQLite | `SUMMARY_DB_PATH` (Default unter `data/processed/`) | Zentrale, durchsuchbare Wissensbasis aller Summaries |
+| [3. Vector-DB & FTS5](#3-persistente-vector-db--fts5) | SQLite + NumPy `.npz` | `data/processed/vectordb/` | Chunk-Embeddings (`multilingual-e5-small`), Metadaten, Referenz-Flags & FTS5-Volltextindex (#5, #8, #30, #37) |
 
-Datenfluss: Crawler → Rohdaten-JSON → (Triage) → Summary-Pipeline → Summaries-DB → UI
+Datenfluss: Crawler → Rohdaten-JSON → Vector-DB → (Triage) → Summary-Pipeline → Summaries-DB → UI
 
 ## Gemeinsame Konventionen
 
 - **Geschäftsnummer (`case_id`):** überall in Originalschreibweise, z. B. `1D_1/2025`, für den Abgleich mit Suva.
 - **ID-Normalisierung (`/` → `_`):** Nur in Dateinamen, Vector-DB-IDs und UI-URLs wird `/` durch `_` ersetzt (z. B. `1D_1/2025` → `1D_1_2025`, Datei `2026-04-01_1D_1_2025.json`). In den Feldern `case_id` und `case_ids` sowie in der Datenbank bleibt die Originalschreibweise erhalten.
 - **Vereinigte Verfahren:** Ein Urteil kann mehrere Geschäftsnummern haben (z. B. `1D_1/2025, 1D_2/2025`). Die erste ist die Haupt-`case_id`; alle stehen in `case_ids` (JSON) bzw. `case_numbers` (DB).
-- **Datumsfilter (`decision_date` vs. `publication_date`):** `publication_date` ist aktuell `null`, da weder `entscheidsuche.ch` noch die Ergebnisliste von `search.bger.ch` das Publikationsdatum liefern. **Annahme:** Bis Suva klärt, ob für Q2/2026 das Urteils- oder das Publikationsdatum zählt, wird nach `decision_date` gefiltert.
+- **Datumsfilter (`decision_date`):** Empirisch gegen Suvas Referenzliste (`BG_Urteile_2025_Q4_2026_Q1.xlsx`) verifiziert: **59 von 59 (100 %)** der Suva-Referenzfälle für Q4/2025 (28) und Q1/2026 (31) liegen mit ihrem `decision_date` exakt in `2025-10-01`..`2026-03-31`. Der Zeitfilter arbeitet daher verbindlich auf `decision_date`. `publication_date` bleibt `null`, da weder `entscheidsuche.ch` noch die Trefferliste von `search.bger.ch` dieses Feld liefern.
 - **Datumsformate:** Datum als `YYYY-MM-DD`, Zeitstempel als ISO-8601 in UTC (`2026-11-27T14:16:14+00:00`).
 
 ---
@@ -60,14 +61,22 @@ Nachgelagerte Pipeline-Schritte ergänzen gemäss Issue `#3` folgende Felder:
 
 | Feld | Typ | Beschreibung |
 |---|---|---|
-| `score` | `number` | Relevanz-Score für Suva. |
-| `ampel` | `string` | Ampel-Einstufung (z. B. `"rot"`, `"gelb"`, `"grün"`). |
+| `score` | `number` | Relevanz-Score für Suva (`0`–`100`). |
+| `ampel` | `string` | Ampel-Einstufung: `"gruen"`, `"gelb"` oder `"rot"` (ASCII ohne Umlaut gemäss `#12`/`#28`/`#40`). |
 | `relevance_reason` | `string` | Begründung der Triage-Einstufung. |
-| `similar_cases` | `list[string]` | Ähnliche Fälle (z. B. über Vektorsuche). |
+| `similar_cases` | `list[object]` | Ähnlichste Referenzfälle (`case_id`, `id`, `decision_date`, `subject`, `similarity`). |
 | `summary_de` | `string` | Zusammenfassung auf Deutsch. |
 | `summary_fr` | `string` | Zusammenfassung auf Französisch. |
 
 > Summaries werden verbindlich in der [Summaries-DB](#2-summaries-datenbank-sqlite) gespeichert (mit Verlauf und Status).
+
+---
+
+## 3. Persistente Vector-DB & FTS5
+
+- **Metadaten (`data/processed/vectordb/metadata.sqlite3`, ~2 MB, im Git):** Tabelle `judgements` (`doc_key`, `id`, `case_id`, `case_ids`, `decision_date`, `language`, `division`, `subject`, `is_reference`, `is_negative_reference`, `manual_reference`, `url`, `text_sha256`, `fingerprint`, `n_chunks`, `vector_file`) + Alias-Tabelle `case_lookup`.
+- **Chunk-Vektoren (`data/processed/vectordb/vectors/<YYYY-MM>/<doc_key>.npz`, ~79 MB, im Git):** L2-normalisierte `float32`-Chunk-Embeddings (`intfloat/multilingual-e5-small`, 384 Dim.).
+- **Lokale Such-Indizes (gitignored, automatisch in ~3 s lokal aufgebaut):** `search_index.npz` (konsolidierte Matrix für schnelle Cosine-Suche) und `fts.sqlite3` (SQLite FTS5 Volltextindex `judgements_fts` über `case_id`, `subject`, `text` für exakte Gesetzes-/Begriffssuche `#30`).
 
 ---
 
@@ -230,3 +239,4 @@ ORDER BY s.language, s.version;
 
 - **Volltextsuche:** Aktuell einfache Teilstring-Suche (`store.search`, alle Begriffe müssen vorkommen, Akzente zählen). Bei Bedarf SQLite FTS5.
 - **Triage-Feedback / Ampel:** zurückgestellt, Entwurf in `src/hack_apertus_coffee_exe/summary/VORGEHEN_DB.md`.
+>>>>>>> origin/main

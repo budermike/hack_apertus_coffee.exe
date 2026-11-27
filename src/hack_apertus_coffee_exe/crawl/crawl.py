@@ -23,6 +23,7 @@ import csv
 import hashlib
 import json
 import logging
+import os
 import re
 import time
 from collections import Counter
@@ -109,7 +110,10 @@ def bger_parse_list(html):
         raise ValueError("result page has no hit count; did the page layout change?")
     entries = []
     for item in soup.select("div.ranklist_content li"):
-        title = item.select_one("span.rank_title a").get_text(strip=True)  # e.g. "15.05.2026 8C 123/2026 *"
+        link = item.select_one("span.rank_title a")
+        if link is None:
+            raise ValueError("result item has no rank_title link; did the page layout change?")
+        title = link.get_text(strip=True)  # e.g. "15.05.2026 8C 123/2026 *"
         title_match = BGER_TITLE_RE.search(title)
         if title_match is None:
             raise ValueError(f"cannot parse case title: {title!r}")
@@ -265,6 +269,11 @@ def parse_case_ids(text, primary_case_id):
     return ids
 
 
+def _is_case_id_list_line(line):
+    tokens = [tok for tok in re.split(r"[,;\s]+", line.strip()) if tok and tok not in ("und", "et", "e")]
+    return bool(tokens) and all(CASE_ID_RE.fullmatch(tok) for tok in tokens)
+
+
 def parse_subject(text):
     """Extract the subject block after 'Gegenstand' / 'Objet' / 'Oggetto' in the header."""
     lines = text.splitlines()[:300]
@@ -274,21 +283,35 @@ def parse_subject(text):
             break
         if SUBJECT_HEADING_RE.match(s):
             parts = []
+            multi_case_block = False
             for idx, raw in enumerate(lines[i + 1 : i + 15]):
                 item = raw.strip()
                 if not item:
                     continue
                 if BODY_START_RE.match(item) or (parts and APPEAL_ORIGIN_RE.match(item)):
                     break
-                if CASE_ID_RE.fullmatch(item) or item in ("und", "et", "e"):
+                if _is_case_id_list_line(item) or item in ("und", "et", "e"):
+                    multi_case_block = True
                     continue
                 cleaned = item.rstrip(", ")
                 if cleaned and cleaned not in parts:
                     parts.append(cleaned)
                 next_line = lines[i + 2 + idx].strip() if i + 2 + idx < len(lines) else ""
-                if item.endswith((",", ".")) and not CASE_ID_RE.fullmatch(next_line):
+                if item.endswith((",", ".")) and not _is_case_id_list_line(next_line):
                     break
-            return "; ".join(parts) if len(parts) > 1 and item.endswith(",") and CASE_ID_RE.fullmatch(lines[i + 1].strip()) else (" ".join(parts).rstrip(", ") or None)
+            if not parts:
+                return None
+            return "; ".join(parts) if (multi_case_block and len(parts) > 1) else " ".join(parts).rstrip(", ")
+
+    # Fallback when the court omitted the 'Gegenstand'/'Objet' label right before 'Beschwerde gegen...':
+    for i, line in enumerate(lines[1:], start=1):
+        s = line.strip()
+        if BODY_START_RE.match(s):
+            break
+        if APPEAL_ORIGIN_RE.match(s):
+            prev = lines[i - 1].strip().rstrip(", ")
+            if prev and not _is_case_id_list_line(prev) and not prev.endswith("."):
+                return prev
     return None
 
 
@@ -343,9 +366,9 @@ def is_valid(path):
 
 
 def write_json(path, data):
-    """Write to a temporary file first, so an interrupted run leaves no half file."""
+    """Write to a process-unique temporary file first, so concurrent or interrupted runs are safe."""
     path.parent.mkdir(parents=True, exist_ok=True)
-    tmp = path.with_suffix(".tmp")
+    tmp = path.with_name(f".{path.name}.{os.getpid()}.{time.time_ns()}.tmp")
     tmp.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
     tmp.replace(path)
 
@@ -382,7 +405,7 @@ def crawl(config, refresh=False):
         day_ok = True
         try:
             entries = list_day(config, day)
-        except (httpx.HTTPError, ValueError) as error:
+        except (httpx.HTTPError, ValueError, KeyError) as error:
             log.error("%s: listing failed: %s", day, error)
             entries, day_ok = [], False
 
@@ -397,7 +420,7 @@ def crawl(config, refresh=False):
                 html, url = fetch(config, entry)
                 write_json(path, build_record(config, entry, html, url))
                 stats["downloaded"] += 1
-            except (httpx.HTTPError, ValueError) as error:
+            except (httpx.HTTPError, ValueError, KeyError) as error:
                 log.error("%s: %s", entry["case_id"], error)
                 stats["failed"] += 1
                 day_ok = False
@@ -411,6 +434,54 @@ def crawl(config, refresh=False):
             stats["days_failed"] += 1
         log.info("%s %s", day, stats)
         day += timedelta(days=1)
+    return stats
+
+
+def fetch_reference_cases(config, targets):
+    """Fetch specific (case_id, iso_date) judgements without marking their days covered in _index.json."""
+    list_day, fetch = SOURCES[config["source"]]
+    out_dir = Path(config["out_dir"])
+    by_day = {}
+    for case_id, iso_date in targets:
+        by_day.setdefault(iso_date, set()).add(case_id)
+
+    stats = {"downloaded": 0, "skipped": 0, "missing": 0, "failed": 0}
+    for iso_date in sorted(by_day):
+        wanted = set(by_day[iso_date])
+        pending = set()
+        for case_id in wanted:
+            path = record_path(out_dir, {"case_id": case_id, "decision_date": iso_date})
+            if is_valid(path):
+                stats["skipped"] += 1
+            else:
+                pending.add(case_id)
+        if not pending:
+            continue
+
+        day = date.fromisoformat(iso_date)
+        try:
+            entries = list_day(config, day)
+        except (httpx.HTTPError, ValueError, KeyError) as error:
+            log.error("%s: listing failed: %s", day, error)
+            stats["failed"] += len(pending)
+            continue
+
+        matched = set()
+        for entry in entries:
+            if entry["case_id"] not in pending:
+                continue
+            matched.add(entry["case_id"])
+            path = record_path(out_dir, entry)
+            if path.exists():
+                path.rename(path.with_suffix(f".corrupt-{int(time.time())}"))
+            try:
+                html, url = fetch(config, entry)
+                write_json(path, build_record(config, entry, html, url))
+                stats["downloaded"] += 1
+            except (httpx.HTTPError, ValueError, KeyError) as error:
+                log.error("%s: %s", entry["case_id"], error)
+                stats["failed"] += 1
+        stats["missing"] += len(pending - matched)
     return stats
 
 

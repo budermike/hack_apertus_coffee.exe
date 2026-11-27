@@ -9,11 +9,9 @@ python-dotenv==1.2.4
 httpx==0.29.0
 beautifulsoup4==4.15.0
 
-# Deliberately NOT installed: sentence-transformers (pulls PyTorch, several GB).
-# Only needed for the optional local embeddings in triage/embeddings.py
-# (SentenceTransformerEmbedder, BAAI/bge-m3); default is TF-IDF / gateway embeddings.
-# If ever needed: install, then pin the version from `pip freeze` here.
-# sentence-transformers==<version>
+# Optional local embeddings (issue #5, intfloat/multilingual-e5-small, MIT):
+# pinned in requirements-dev.txt (pulls PyTorch). Pre-computed vectors are in Git,
+# so reading/scoring/triage/summary/tests work with numpy only.
 
 # Analysis
 numpy==2.5.5

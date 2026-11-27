@@ -1,0 +1,56 @@
+{
+  "id": "8C_455_2025",
+  "case_id": "8C_455/2025",
+  "case_ids": [
+    "8C_455/2025"
+  ],
+  "decision_date": "2025-08-27",
+  "publication_date": null,
+  "department": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "division": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "subject": "Invalidenversicherung (Prozessvoraussetzung)",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://27-08-2025-8C_455-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n8C_455/2025\nUrteil vom 27. August 2025\nIV. öffentlich-rechtliche Abteilung\nBesetzung\nBundesrichterin Viscione, Präsidentin,\nGerichtsschreiber Grünvogel.\nVerfahrensbeteiligte\nA.________,\nvertreten durch Rechtsanwalt Dr. Kreso Glavas,\nBeschwerdeführer,\ngegen\nIV-Stelle des Kantons St. Gallen,\nBrauerstrasse 54, 9016 St. Gallen,\nBeschwerdegegnerin.\nGegenstand\nInvalidenversicherung (Prozessvoraussetzung),\nBeschwerde gegen den Entscheid des Versicherungsgerichts des Kantons St. Gallen vom 17. Juni 2025 (IV 2024/231 Z).\nNach Einsicht\nin die Beschwerde vom 19. August 2025 (Poststempel) gegen den am 27. Juni 2025 an den Rechtsvertreter von A.________ ausgehändigten Entscheid des Versicherungsgerichts des Kantons St. Gallen vom 17. Juni 2025, worin dieses davon absah, die anhängige Invalidenversicherungsstreitigkeit IV 2024/231 zu sistieren,\nin Erwägung,\ndass die Beschwerde nach Art. 100 Abs. 1 BGG innert 30 Tagen nach der Eröffnung der vollständigen Ausfertigung des angefochtenen Entscheids beim Bundesgericht einzureichen ist,\ndass gemäss Art. 46 Abs. 1 lit. a BGG die gesetzlichen und richterlich nach Tagen bestimmten Fristen vom 15. Juli bis und mit dem 15. August still stehen,\ndass dieser Fristenstillstand indessen in Verfahren betreffend aufschiebende Wirkung und andere vorsorgliche Massnahmen, wozu auch die Verfahrenssistierung zählt, nicht gilt (Art. 46 Abs. 2 BGG; Urteile 8C_601/2019 vom 23. September 2019 und 9C_652/2011 vom 19. Januar 2012 E. 4.4, letzteres in: SVR 2012 IV Nr. 40 S. 151; je mit weiterführenden Hinweisen),\ndass die Rechtsmittelfrist demnach gemäss Art. 44-48 und Art. 100 Abs. 1 BGG am 28. Juli 2025 abgelaufen ist,\ndass die am 19. August 2025 der Post übergebene Beschwerde somit offensichtlich verspätet ist, was zu einem Nichteintreten im vereinfachten Verfahren nach Art. 108 Abs. 1 lit. a BGG führt,\ndass der Beschwerdeführer nach Art. 66 Abs. 1 und 3 BGG kostenpflichtig wird,\nerkennt die Präsidentin:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 300.- werden dem Beschwerdeführer auferlegt.\n3.\nDieses Urteil wird den Parteien, dem Versicherungsgericht des Kantons St. Gallen und dem Bundesamt für Sozialversicherungen schriftlich mitgeteilt.\nLuzern, 27. August 2025\nIm Namen der IV. öffentlich-rechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Präsidentin: Viscione\nDer Gerichtsschreiber: Grünvogel",
+  "operator_metadata": {
+    "date": "2025-08-27",
+    "reference": [
+      "8C_455/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-455-2025_2025-08-27.html",
+      "source": "446973/45/2851",
+      "content_length": 2787
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+      "it": "Confederazione Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale)",
+      "fr": "Conféderation Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social)"
+    },
+    "scrapedate": "2026-06-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_008"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2851",
+    "id": "CH_BGer_008_8C-455-2025_2025-08-27",
+    "title": {
+      "de": "Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung) 27.08.2025 8C_455/2025",
+      "it": "Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale) 27.08.2025 8C_455/2025",
+      "fr": "Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social) 27.08.2025 8C_455/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T19:45:07+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-455-2025_2025-08-27.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "080dfa91bdf844defdd5b748a449cfd0fb492303f06739b2faa68c0349f33215"
+  }
+}

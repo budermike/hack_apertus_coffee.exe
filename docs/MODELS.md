@@ -19,10 +19,9 @@ Alles, was die Lösung beim Ausführen verwendet. **In dieser Tabelle darf in de
 
 | # | Modell | Version / ID | Quelle | Rolle in der Lösung | Open-Weights | Lizenz | Eingetragen von / Datum |
 |---|---|---|---|---|---|---|---|
-| R1 | Apertus v1.5 | `apertus-v1-5-8b` (Gateway) bzw. `swiss-ai/Apertus-v1.5-8B` (HF) | CSCS/Keera Gateway, Hugging Face | **Kernaufgabe:** Relevanz-Triage und Zusammenfassung DE/FR (Fakten-Extraktion, Text DE, Text FR) im Suva-Stil | ja | <prüfen> | |
-| R2 | Apertus v1.5 (grosses Modell, falls genutzt) | `apertus-v1-5-70b` bzw. `swiss-ai/Apertus-v1.5-70B` | CSCS/Keera Gateway, Hugging Face | <Rolle> | ja | <prüfen> | |
-| R3 | <Embedding-Modell, falls genutzt> | <exakte ID und Version> | <Hugging Face> | Retrieval | ja | <Lizenz> | |
-| R4 | <OCR / Reranker / STT, falls genutzt> | | | | ja | | |
+| R1 | Apertus v1.5 (8B) | `apertus-v1-5-8b` (Gateway) bzw. `swiss-ai/Apertus-v1.5-8B` (HF) | CSCS/Keera Gateway, Hugging Face | **Kernaufgabe:** Relevanz-Triage und Zusammenfassung DE/FR (Fakten-Extraktion, Text DE, Text FR) im Suva-Stil | ja | Apache-2.0 | abirahm / Mike, 27.11.2026 |
+| R2 | Apertus v1.5 (70B, Qualitätsvergleich #22) | `apertus-v1-5-70b` bzw. `swiss-ai/Apertus-v1.5-70B` | CSCS/Keera Gateway, Hugging Face | **Kernaufgabe (Vergleich #22):** Triage-Begründung & Zusammenfassungen DE/FR | ja | Apache-2.0 | abirahm, 27.11.2026 |
+| R3 | Multilingual-E5-small | `intfloat/multilingual-e5-small` (`sentence-transformers==6.3.0`) | Hugging Face (lokal auf MPS/CPU) | Mehrsprachige Embeddings (DE/FR/IT) für Vector-DB, Triage-Retrieval & semantische Suche (#5, #8, #30, #37) | ja | MIT | abirahm, 27.11.2026 |
 
 Modell-IDs auf dem Gateway: `apertus-v1-5-8b`, `apertus-v1-5-70b` (mit Tool Calls) sowie `apertus-v1-5-8b-thinking`, `apertus-v1-5-70b-thinking` (Reasoning-Modus, ohne Tool Calls). Nicht verwendete Zeilen löschen.
 
@@ -36,7 +35,7 @@ Hier stehen auch **Coding-Assistenten** und alle Modelle, mit denen Texte, Code,
 |---|---|---|---|---|---|---|---|
 | D1 | Claude | Claude Sonnet 5.5 | Anthropic | Planung und Entwurf der Teamdokumente (CONTRIBUTING, Leitfaden, AGENTS.md, dieses Register) | Vorbereitung | nein | PM, 20.11.2026 |
 | D2 | Claude Code (Coding-Assistent) | Claude Opus 5.5 (`claude-opus-5-5`) | Anthropic | Code schreiben und prüfen: Setup (pip, `requirements.txt`, `.env`), `keera_example.py`, Anpassungen in AGENTS.md, Crawler (`crawl.py`) | Entwicklung | nein | abirahm, 27.11.2026 |
-| D3 | Antigravity (Coding-Assistent) | Gemini | Google DeepMind | Code-Review-Fixes und Schema-Dokumentation (`crawl.py`, `test_crawl.py`, `docs/SCHEMA.md`) | Entwicklung | nein | abirahm, 27.11.2026 |
+| D3 | Antigravity (Coding-Assistent) | Gemini | Google DeepMind | Code-Review-Fixes, Schema-Dokumentation (`docs/SCHEMA.md`), Embeddings (`embed.py`) und lokale Vector-DB (`crawl/vectordb.py`, Tests) | Entwicklung | nein | abirahm, 27.11.2026 |
 | D4 | <Video- oder Sprachtool, z.B. ElevenLabs, Edit with Ava, falls genutzt> | | | Demo-Video / Pitch (nicht in der Lösung) | Entwicklung | nein | |
 | D5 | Claude Code (Coding-Assistent) | Claude Opus 5.5 (`claude-opus-5-5`) | Anthropic | Summary-Modul (`src/hack_apertus_coffee_exe/summary/`), Stilprofile und Glossar (`prompts/`), Tests; Paket-Layout-Fix | Entwicklung | nein | Mike, 27.11.2026 |
 

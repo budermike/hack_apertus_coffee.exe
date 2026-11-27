@@ -7,3 +7,7 @@ ipykernel==7.4.0
 pytest==9.2.0
 sphinx==9.2.0
 myst-parser==5.2.0
+
+# Multilingual open-weights embeddings (issue #5, intfloat/multilingual-e5-small, MIT)
+# Needed only to embed new judgements or run free-text vector queries.
+sentence-transformers==6.3.0

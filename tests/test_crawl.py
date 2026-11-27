@@ -186,6 +186,10 @@ def test_parse_case_ids_collects_multiple_from_header_only():
      "Widerruf bzw. Nichtverlängerung der Aufenthaltsbewilligung"),
     ("6B_115/2025\nGegenstand\n6B_115/2025\nEntführung; Willkür,\n6B_144/2025\nEntführung; Willkür,\nSachverhalt:",
      "Entführung; Willkür"),
+    ("6B_475/2025\nObjet\n6B_475/2025, 6B_485/2025\nEscroquerie; arbitraire,\nFaits :",
+     "Escroquerie; arbitraire"),
+    ("7B_1297/2024\nintimé.\nAbus d'autorité, violation du secret de fonction,\nrecours contre le jugement du 5 octobre 2023.\nFaits :",
+     "Abus d'autorité, violation du secret de fonction"),
     ("1C_74/2025\nObjet\nRésiliation des rapports de service,\nrecours contre l'arrêt du 17 décembre 2024.\nFaits :",
      "Résiliation des rapports de service"),
     ("6B_9/2026\nOggetto\nFurto,\nricorso contro la sentenza.\nFatti:", "Furto"),
@@ -349,6 +353,17 @@ def test_command_line(site, tmp_path, capsys):
     crawl.main(["--config", str(path), "--from", "2026-05-15", "--to", "2026-05-15"])
     assert '"downloaded": 1' in capsys.readouterr().out
     assert saved_file(json.loads(path.read_text())).exists()
+
+
+def test_fetch_reference_cases_does_not_mark_day_covered(site, tmp_path):
+    config = make_config(tmp_path, "entscheidsuche")
+    stats = crawl.fetch_reference_cases(config, [("8C_123/2026", "2026-05-15"), ("9C_999/2026", "2026-05-15")])
+    assert stats == {"downloaded": 1, "skipped": 0, "missing": 1, "failed": 0}
+    assert saved_file(config).exists()
+    assert not (Path(config["out_dir"]) / "_index.json").exists()
+    # Second call skips the already downloaded valid file:
+    stats2 = crawl.fetch_reference_cases(config, [("8C_123/2026", "2026-05-15")])
+    assert stats2["skipped"] == 1 and stats2["downloaded"] == 0
 
 
 # ---------------------------------------------------------------- integration (real websites)
