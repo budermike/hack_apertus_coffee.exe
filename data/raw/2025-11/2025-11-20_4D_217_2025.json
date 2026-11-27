@@ -1,0 +1,56 @@
+{
+  "id": "4D_217_2025",
+  "case_id": "4D_217/2025",
+  "case_ids": [
+    "4D_217/2025"
+  ],
+  "decision_date": "2025-11-20",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "contrat de travail; retrait du recours",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://20-11-2025-4D_217-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4D_217/2025\nOrdonnance du 20 novembre 2025\nIre Cour de droit civil\nComposition\nM. le Juge fédéral Hurni, Président.\nGreffier : M. Widmer.\nParticipants à la procédure\nA.________\nrecourante,\ncontre\nB.________,\nreprésentée par Me Luca Urben, avocat,\nintimée.\nObjet\ncontrat de travail; retrait du recours,\nrecours contre l'arrêt rendu le 21 août 2025 par la Chambre des recours civile du Tribunal cantonal du canton de Vaud (P324.053335-250931 184).\nLe Président :\nVu le recours déposé le 31 octobre 2025 par A.________ (ci-après: la recourante) contre l'arrêt rendu le 21 août 2025 par la Chambre des recours civile du Tribunal cantonal du canton de Vaud, dans la cause divisant la recourante d'avec B.________, intimée au recours;\nVu la lettre du 13 novembre 2025 (date du timbre postal: 14 novembre 2025) par laquelle la recourante informe le Tribunal fédéral qu'elle retire son recours;\nConsidérant qu'il y a lieu de prendre acte de ce retrait et de rayer la cause 4D_217/2025 du rôle (art. 32 al. 2 LTF),\nque la remise intégrale des frais en application de l'art. 66 al. 2 LTF ne se justifie pas,\nque les frais peuvent en revanche être réduits,\nqu'ils doivent être mis à la charge de la recourante (art. 66 al. 1 et 2 LTF),\nqu'il n'y a pas lieu d'allouer de dépens, vu l'art. 68 LTF;\nVu l'art. 32 al. 2 LTF,\nOrdonne :\n1.\nIl est pris acte du retrait du recours.\n2.\nLa cause 4D_217/2025 est rayée du rôle.\n3.\nUn émolument judiciaire de 300 fr. est mis à la charge de la recourante.\n4.\nIl n'est pas alloué de dépens.\n5.\nLa présente ordonnance est communiquée aux parties et à la Chambre des recours civile du Tribunal cantonal du canton de Vaud.\nLausanne, le 20 novembre 2025\nAu nom de la Ire Cour de droit civil\ndu Tribunal fédéral suisse\nLe Président : Hurni\nLe Greffier : Widmer",
+  "operator_metadata": {
+    "date": "2025-11-20",
+    "reference": [
+      "4D_217/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-217-2025_2025-11-20.html",
+      "source": "446973/45/2869",
+      "content_length": 2169
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-06-18",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2869",
+    "id": "CH_BGer_004_4D-217-2025_2025-11-20",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 20.11.2025 4D_217/2025",
+      "it": "Tribunale federale I Corte di diritto civile 20.11.2025 4D_217/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 20.11.2025 4D_217/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:37:06+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-217-2025_2025-11-20.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "cabeef6efcad1cc8ff9771808a4ea9c9aa6d7b409417461cd3223d9485715171"
+  }
+}

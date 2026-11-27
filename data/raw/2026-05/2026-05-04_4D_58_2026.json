@@ -1,0 +1,56 @@
+{
+  "id": "4D_58_2026",
+  "case_id": "4D_58/2026",
+  "case_ids": [
+    "4D_58/2026"
+  ],
+  "decision_date": "2026-05-04",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "Definitive Rechtsöffnung",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://04-05-2026-4D_58-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4D_58/2026\nUrteil 4. Mai 2026\nI. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Hurni, Präsident,\nGerichtsschreiber Tanner.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nKanton Solothurn,\nvertreten durch die Zentrale Gerichtskasse Solothurn,\nBeschwerdegegner.\nGegenstand\nDefinitive Rechtsöffnung,\nBeschwerde gegen den Beschluss des Obergerichts des Kantons Solothurn, Zivilkammer, vom 23. Februar 2026 (ZKBES.2026.66).\nErwägungen:\n1.\nMit Beschluss vom 23. Februar 2026 trat das Obergericht des Kantons Solothurn auf die Beschwerde des Beschwerdeführers gegen den Rechtsöffnungsentscheid des Amtsgerichtspräsidenten von Olten-Gösgen vom 16. Dezember 2025 nicht ein.\n2.\nDagegen erhob der Beschwerdeführer am 2. April 2026 Beschwerde an das Bundesgericht.\nEs wurden keine Vernehmlassungen eingeholt.\nDiese Eingabe erfüllt die Begründungsanforderungen, die an eine Beschwerde an das Bundesgericht gestellt werden (Art. 42 Abs. 2 und Art. 106 Abs. 2 BGG; BGE 142 III 364 E. 2.4; 140 III 86 E. 2, 115 E. 2), offensichtlich nicht. Auf die Beschwerde ist somit mangels hinreichender Begründung im vereinfachten Verfahren durch den Abteilungspräsidenten nicht einzutreten (Art. 108 Abs. 1 lit. b BGG). Die Begründung dieses Entscheids beschränkt sich auf eine kurze Angabe des Unzulässigkeitsgrundes (Art. 108 Abs. 3 BGG).\n3.\nDas sinngemässe Gesuch des Beschwerdeführers um unentgeltliche Rechtspflege und Verbeiständung für das bundesgerichtliche Verfahren ist wegen Aussichtslosigkeit abzuweisen (Art. 64 Abs. 1 BGG).\nDer Beschwerdeführer wird bei diesem Verfahrensausgang kostenpflichtig (Art. 66 Abs. 1 BGG).\nDer Beschwerdegegner hat keinen Anspruch auf eine Parteientschädigung, da ihm mangels Einholung einer Vernehmlassung aus dem bundesgerichtlichen Verfahren kein entschädigungspflichtiger Aufwand erwachsen ist (Art. 68 Abs. 2 BGG).\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDas Gesuch des Beschwerdeführers um unentgeltliche Rechtspflege und Verbeiständung für das bundesgerichtliche Verfahren wird abgewiesen.\n3.\nDie Gerichtskosten von Fr. 600.-- werden dem Beschwerdeführer auferlegt.\n4.\nEs wird keine Parteientschädigung zugesprochen.\n5.\nDieses Urteil wird den Parteien und dem Obergericht des Kantons Solothurn, Zivilkammer, schriftlich mitgeteilt.\nLausanne, 4. Mai 2026\nIm Namen der I. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Hurni\nDer Gerichtsschreiber: Tanner",
+  "operator_metadata": {
+    "date": "2026-05-04",
+    "reference": [
+      "4D_58/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-58-2026_2026-05-04.html",
+      "source": "446973/45/2829",
+      "content_length": 2905
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_004_4D-58-2026_2026-05-04",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 04.05.2026 4D_58/2026",
+      "it": "Tribunale federale I Corte di diritto civile 04.05.2026 4D_58/2026",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 04.05.2026 4D_58/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:36:39+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-58-2026_2026-05-04.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "958843248fa6a1509cd8c1472c8d4a32d271d1204720cebb98ce21640dff9b77"
+  }
+}

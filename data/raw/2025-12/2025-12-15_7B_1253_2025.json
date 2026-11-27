@@ -1,0 +1,56 @@
+{
+  "id": "7B_1253_2025",
+  "case_id": "7B_1253/2025",
+  "case_ids": [
+    "7B_1253/2025"
+  ],
+  "decision_date": "2025-12-15",
+  "publication_date": null,
+  "department": "II. Strafrechtliche Abteilung",
+  "division": "II. Strafrechtliche Abteilung",
+  "subject": "Verfahrenstrennung; Nichteintreten",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://15-12-2025-7B_1253-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n7B_1253/2025\nUrteil vom 15. Dezember 2025\nII. strafrechtliche Abteilung\nBesetzung\nBundesrichterin Koch, als Einzelrichterin,\nGerichtsschreiber Hahn.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nGeneralstaatsanwaltschaft des Kantons Bern, Nordring 8, Postfach, 3001 Bern,\nBeschwerdegegnerin.\nGegenstand\nVerfahrenstrennung; Nichteintreten,\nBeschwerde gegen den Beschluss des Obergerichts des Kantons Bern, Beschwerdekammer in Strafsachen, vom 21. Oktober 2025 (BK 25 238).\nErwägungen:\n1.\nMit Eingabe vom 18. November 2025 führt A.________ Beschwerde in Strafsachen gegen den Beschluss des Obergerichts des Kantons Bern vom 21. Oktober 2025 betreffend Verfahrenstrennung.\nEs wurden keine Vernehmlassungen eingeholt.\n2.\nIm angefochtenen Beschluss hiess die Vorinstanz die kantonale Beschwerde des Beschwerdeführers gut und hob die von der Staatsanwaltschaft Emmental-Oberaargau am 19. Mai 2025 verfügte Verfahrenstrennung auf. Nachdem der Beschwerdeführer unter diesen Umständen im vorinstanzlichen Verfahren vollumfänglich obsiegte, ist nicht ersichtlich, inwiefern er durch den angefochtenen Beschluss in seinen Rechten beeinträchtigt wird und er nach Art. 81 Abs. 1 lit. b BGG ein rechtlich geschütztes Interesse an der Aufhebung oder Änderung des angefochtenen Beschlusses hat. Dies legt er in Verletzung der ihm obliegenden gesetzlichen Begründungspflichten (Art. 42 Abs. 1 und 2 BGG) denn auch mit keinem Wort dar. Unter diesen Umständen erweist sich die Beschwerde als offensichtlich unzulässig und ist auf sie im vereinfachten Verfahren nach Art. 108 Abs. 1 BGG nicht einzutreten. Bei diesem Ausgang des Verfahrens wird der Beschwerdeführer kostenpflichtig (Art. 66 Abs. 1 BGG).\nDemnach erkennt die Einzelrichterin:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 800.-- werden dem Beschwerdeführer auferlegt.\n3.\nDieses Urteil wird den Parteien und dem Obergericht des Kantons Bern, Beschwerdekammer in Strafsachen, schriftlich mitgeteilt.\nLausanne, 15. Dezember 2025\nIm Namen der II. strafrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Einzelrichterin: Koch\nDer Gerichtsschreiber: Hahn",
+  "operator_metadata": {
+    "date": "2025-12-15",
+    "reference": [
+      "7B_1253/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-1253-2025_2025-12-15.html",
+      "source": "446973/45/2851",
+      "content_length": 2534
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit pénal"
+    },
+    "scrapedate": "2026-06-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_007"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2851",
+    "id": "CH_BGer_007_7B-1253-2025_2025-12-15",
+    "title": {
+      "de": "Bundesgericht II. Strafrechtliche Abteilung 15.12.2025 7B_1253/2025",
+      "it": "Tribunale federale II Corte di diritto penale 15.12.2025 7B_1253/2025",
+      "fr": "Tribunal fédéral IIe Cour de droit pénal 15.12.2025 7B_1253/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:57:47+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-1253-2025_2025-12-15.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "d800121b3d0bdd6fa0ab185850e9f2c1d9df7d5a8f741f85724dc31e8a99c662"
+  }
+}

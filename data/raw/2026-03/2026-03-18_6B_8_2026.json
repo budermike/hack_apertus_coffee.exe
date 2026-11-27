@@ -1,0 +1,56 @@
+{
+  "id": "6B_8_2026",
+  "case_id": "6B_8/2026",
+  "case_ids": [
+    "6B_8/2026"
+  ],
+  "decision_date": "2026-03-18",
+  "publication_date": null,
+  "department": "I. Strafrechtliche Abteilung",
+  "division": "I. Strafrechtliche Abteilung",
+  "subject": "Geringfügiger Betrug; willkürliche Beweiswürdigung; rechtliches Gehör; Nichteintreten",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://18-03-2026-6B_8-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n6B_8/2026\nUrteil vom 18. März 2026\nI. strafrechtliche Abteilung\nBesetzung\nBundesrichter von Felten, als präsidierendes Mitglied,\nGerichtsschreiberin Arquint Hill.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nOberstaatsanwaltschaft des Kantons Luzern, Postfach 3439, 6002 Luzern,\nBeschwerdegegnerin.\nGegenstand\nGeringfügiger Betrug; willkürliche Beweiswürdigung; rechtliches Gehör; Nichteintreten,\nBeschwerde gegen das Urteil des Kantonsgerichts Luzern, 2. Abteilung, vom 2. Dezember 2025 (4M 24 78).\nDas präsidierende Mitglied zieht in Erwägung:\n1.\nMit Eingabe vom 23. Dezember 2025 erhebt der Beschwerdeführer Beschwerde an das Bundesgericht gegen das Urteil des Kantonsgerichts Luzern vom 2. Dezember 2025.\n2.\nDie Partei, die das Bundesgericht anruft, hat einen Kostenvorschuss zu bezahlen (Art. 62 Abs. 1 BGG).\n3.\nDem Beschwerdeführer wurde mit Verfügung vom 29. Januar 2026 Frist bis zum 13. Februar 2026 angesetzt, um dem Bundesgericht einen Kostenvorschuss von Fr. 800.-- zu leisten. Da der Kostenvorschuss nicht einging, wurde ihm mit Verfügung vom 20. Februar 2026 die gesetzlich vorgeschriebene, nicht erstreckbare Nachfrist bis zum 3. März 2026 angesetzt, um dem Bundesgericht den Kostenvorschuss von Fr. 800.-- zu leisten, unter der Androhung, dass ansonsten auf das Rechtsmittel nicht eingetreten werde (Art. 62 Abs. 3 BGG).\n4.\nDie Kostenvorschuss- und die Nachfristverfügung wurden dem Beschwerdeführer mittels Gerichtsurkunde zugestellt; sie wurden dem Bundesgericht mit dem Vermerk \"nicht abgeholt\" retourniert. Weil der Beschwerdeführer mit Post des Bundesgerichts rechnen musste, gelten die Verfügungen als zugestellt. Im Übrigen wurden ihm die Kostenvorschuss- und die Nachfristverfügung auch mit A-Post zugesandt.\n5.\nDer Kostenvorschuss ging auch innert Nachfrist nicht ein, weshalb auf die Beschwerde androhungsgemäss im Verfahren nach Art. 108 BGG nicht einzutreten ist. Im Übrigen wäre die Beschwerde auch deshalb unzulässig, weil sie den Begründungsanforderungen von Art. 42 Abs. 2 BGG offensichtlich nicht zu genügen vermag.\n6.\nBei diesem Ausgang des Verfahrens sind die Gerichtskosten dem Beschwerdeführer aufzuerlegen (Art. 66 Abs. 1 BGG).\nDemnach erkennt das präsidierende Mitglied:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 500.-- werden dem Beschwerdeführer auferlegt.\n3.\nDieses Urteil wird den Parteien und dem Kantonsgericht Luzern, 2. Abteilung, schriftlich mitgeteilt.\nLausanne, 18. März 2026\nIm Namen der I. strafrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDas präsidierende Mitglied: von Felten\nDie Gerichtsschreiberin: Arquint Hill",
+  "operator_metadata": {
+    "date": "2026-03-18",
+    "reference": [
+      "6B_8/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_006_6B-8-2026_2026-03-18.html",
+      "source": "446973/45/2834",
+      "content_length": 3081
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit pénal"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_006"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_006_6B-8-2026_2026-03-18",
+    "title": {
+      "de": "Bundesgericht I. Strafrechtliche Abteilung 18.03.2026 6B_8/2026",
+      "it": "Tribunale federale I Corte di diritto penale 18.03.2026 6B_8/2026",
+      "fr": "Tribunal fédéral Ire Cour de droit pénal 18.03.2026 6B_8/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:22:48+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_006_6B-8-2026_2026-03-18.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "3bfcc8016f32e3f98bfef3f1f6b77334e574677748847b0399ebf6d0098977ea"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "id": "4D_75_2026",
+  "case_id": "4D_75/2026",
+  "case_ids": [
+    "4D_75/2026"
+  ],
+  "decision_date": "2026-05-04",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "Beschwerde wegen Rechtsverzögerung durch das Appellationsgericht des Kantons Basel-Stadt im Verfahren BEZ.2025.22.",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://04-05-2026-4D_75-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4D_75/2026\nUrteil vom 4. Mai 2026\nI. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Hurni, Präsident,\nGerichtsschreiber Widmer.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nAppellationsgericht des Kantons Basel-Stadt,\nBäumleingasse 1, 4051 Basel,\nBeschwerdegegner\nB.________ AG,\nweitere Verfahrensbeteiligte.\nGegenstand\nBeschwerde wegen Rechtsverzögerung durch das Appellationsgericht des Kantons Basel-Stadt im Verfahren BEZ.2025.22.\nErwägungen:\n1.\nDer Beschwerdeführer erhob vor dem Appellationsgericht des Kantons Basel-Stadt Beschwerde wegen Rechtsverzögerung im Schlichtungsverfahren SB.2026.179, die vom Appellationsgericht im Verfahren BEZ.2026.22 behandelt wird.\nAm 24. April 2026 (Postaufgabe) erhob der Beschwerdeführer beim Bundesgericht eine vom 23. April 2026 datierte Beschwerde \"wegen Rechtsverzögerung im Verfahren SB.2026.179 / BEZ.2026.22\", in der er auf als Beilagen bezeichnete Eingaben \"beim Gericht\" vom 15., 16. und 21. April 2026 verweist, die er der Eingabe indessen nicht beigelegt hatte. Er beklagt sich darüber, dass trotz mehrfacher Eingaben bis heute keine materielle Entscheidung erfolgt sei, was seinen Anspruch auf Beurteilung innert angemessener Frist verletze, und ersucht um umgehende Entscheidung.\n2.\nBeschwerden an das Bundesgericht sind hinreichend zu begründen, ansonsten darauf nicht eingetreten werden kann (BGE 140 III 115 E. 2 S. 116; 134 II 244 E. 2.1). Eine Verletzung von Grundrechten wird vom Bundesgericht nicht von Amtes wegen geprüft, sondern nur insofern, als eine solche Rüge in der Beschwerde detailliert und klar vorgebracht und begründet worden ist (Art. 106 Abs. 2 BGG; BGE 142 III 364 E. 2.4).\nDiesen Anforderungen an die Begründung genügt die Eingabe vom 23./24. April 2026 offensichtlich nicht. Auf die demnach unzulässige Beschwerde ist somit im vereinfachten Verfahren nach Art. 108 Abs. 1 lit. b BGG nicht einzutreten, wobei sich die Urteilsbegründung auf eine kurze Angabe des Unzulässigkeitsgrundes beschränkt (Art. 108 Abs. 3 BGG).\n3.\nBei diesem Ausgang des Verfahrens sind die Gerichtskosten dem Beschwerdeführer aufzuerlegen (Art. 66 Abs. 1 BGG). Parteientschädigungen sind keine zuzusprechen (Art. 68 BGG).\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 500.-- werden dem Beschwerdeführer auferlegt.\n3.\nDieses Urteil wird dem Beschwerdeführer, dem Appellationsgericht des Kantons Basel-Stadt und der B.________ AG schriftlich mitgeteilt.\nLausanne, 4. Mai 2026\nIm Namen der I. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Hurni\nDer Gerichtsschreiber: Widmer",
+  "operator_metadata": {
+    "date": "2026-05-04",
+    "reference": [
+      "4D_75/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-75-2026_2026-05-04.html",
+      "source": "446973/45/2829",
+      "content_length": 3056
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_004_4D-75-2026_2026-05-04",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 04.05.2026 4D_75/2026",
+      "it": "Tribunale federale I Corte di diritto civile 04.05.2026 4D_75/2026",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 04.05.2026 4D_75/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:36:42+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-75-2026_2026-05-04.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "4bc0b96b5e7952388041f6796df5b78722927e3deee3a7c16ea6ef3f41edfe03"
+  }
+}

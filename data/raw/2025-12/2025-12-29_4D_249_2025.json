@@ -1,0 +1,56 @@
+{
+  "id": "4D_249_2025",
+  "case_id": "4D_249/2025",
+  "case_ids": [
+    "4D_249/2025"
+  ],
+  "decision_date": "2025-12-29",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "Kostenerlass",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://29-12-2025-4D_249-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4D_249/2025\nUrteil vom 29. Dezember 2025\nI. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Hurni, Präsident,\nGerichtsschreiber Dürst.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nKreisgericht St. Gallen,\nBohl 1, Postfach, 9004 St. Gallen,\nBeschwerdegegner.\nGegenstand\nKostenerlass,\nBeschwerde gegen den Entscheid des Kantonsgerichts St. Gallen, Einzelrichter für Beschwerden SchKG,\nvom 18. Dezember 2025 (BES.2025.111-EZS1).\nErwägungen:\n1.\nMit Entscheid vom 10. Juni 2025 wies das Kreisgericht St. Gallen das Gesuch des Beschwerdeführers um Erlass von Gerichtskosten in der Höhe von Fr. 150.-- ab. Mit Entscheid vom 18. Dezember 2025 wies das Kantonsgericht St. Gallen eine vom Beschwerdeführer gegen den Entscheid des Kreisgerichts erhobene Beschwerde ab, soweit es darauf eintrat und verwies dabei auf die Begründung der Erstinstanz.\nDagegen erhob der Beschwerdeführer mit Eingabe vom 28. Dezember 2025 Beschwerde an das Bundesgericht. Gleichzeitig ersucht er um Gewährung der unentgeltlichen Rechtspflege für das bundesgerichtliche Verfahren.\nAuf das Einholen von Vernehmlassungen zur Beschwerde wurde verzichtet.\n2.\nDie Eingabe des Beschwerdeführers beruht augenfällig auf querulatorischer und rechtsmissbräuchlicher Prozessführung und ist als solche unzulässig (Art. 42 Abs. 7 BGG). Auf die Beschwerde ist demnach im vereinfachten Verfahren durch den Abteilungspräsidenten nicht einzutreten (Art. 108 Abs. 1 lit. c BGG). Die Begründung des Entscheids beschränkt sich dabei auf eine kurze Angabe des Unzulässigkeitsgrundes (Art. 108 Abs. 3 BGG).\n3.\nDas Gesuch um Gewährung der unentgeltlichen Rechtspflege für das bundesgerichtliche Verfahren ist abzuweisen, weil die Beschwerde als von vornherein aussichtslos erscheint (Art. 64 Abs. 1 BGG). Darüber musste unter den gegebenen Umständen nicht vorgängig separat entschieden werden (vgl. Urteil 4A_20/2011 vom 11. April 2011 E. 7.2.2).\n4.\nBei diesem Ausgang des Verfahrens sind die Gerichtskosten dem Beschwerdeführer aufzuerlegen (Art. 66 Abs. 1 BGG). Der Beschwerdegegner hat keinen Anspruch auf eine Parteientschädigung, da ihm mangels Einholung einer Vernehmlassung aus dem bundesgerichtlichen Verfahren kein entschädigungspflichtiger Aufwand erwachsen ist (Art. 68 Abs. 2 BGG).\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDas Gesuch des Beschwerdeführers um unentgeltliche Rechtspflege für das bundesgerichtliche Verfahren wird abgewiesen.\n3.\nDie Gerichtskosten von Fr. 500.-- werden dem Beschwerdeführer auferlegt.\n4.\nDieses Urteil wird den Parteien und dem Kantonsgericht St. Gallen, Einzelrichter für Beschwerden SchKG, schriftlich mitgeteilt.\nLausanne, 29. Dezember 2025\nIm Namen der I. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Hurni\nDer Gerichtsschreiber: Dürst",
+  "operator_metadata": {
+    "date": "2025-12-29",
+    "reference": [
+      "4D_249/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-249-2025_2025-12-29.html",
+      "source": "446973/45/2869",
+      "content_length": 3258
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-06-18",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2869",
+    "id": "CH_BGer_004_4D-249-2025_2025-12-29",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 29.12.2025 4D_249/2025",
+      "it": "Tribunale federale I Corte di diritto civile 29.12.2025 4D_249/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 29.12.2025 4D_249/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:00:36+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-249-2025_2025-12-29.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "c9c83d91ee880dba38ed54e317d06651546327133574ae64bc4c7b2d5a5de128"
+  }
+}

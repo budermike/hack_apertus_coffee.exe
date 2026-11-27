@@ -1,0 +1,56 @@
+{
+  "id": "8C_473_2025",
+  "case_id": "8C_473/2025",
+  "case_ids": [
+    "8C_473/2025"
+  ],
+  "decision_date": "2026-01-19",
+  "publication_date": null,
+  "department": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "division": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "subject": "Ergänzungsleistung zur AHV/IV (Prozessvoraussetzung)",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://19-01-2026-8C_473-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n8C_473/2025\nVerfügung vom 19. Januar 2026\nIV. öffentlich-rechtliche Abteilung\nBesetzung\nBundesrichterin Viscione, Präsidentin,\nGerichtsschreiber Grünvogel.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nAusgleichskasse des Kantons Bern, Abteilung Ergänzungsleistungen,\nChutzenstrasse 10, 3007 Bern,\nBeschwerdegegnerin.\nGegenstand\nErgänzungsleistung zur AHV/IV (Prozessvoraussetzung),\nBeschwerde gegen das Urteil des Verwaltungsgerichts des Kantons Bern vom 20. Juni 2025 (EL 200 2025 27).\nNach Einsicht\nin das Schreiben vom 16. Januar 2026, worin A.________ die Beschwerde vom 27. August 2025 gegen das Urteil des Verwaltungsgerichts des Kantons Bern vom 20. Juni 2025 zurückzieht,\nin Erwägung,\ndass die Beschwerde gemäss Art. 71 BGG in Verbindung mit Art. 73 Abs. 1 BZP im Verfahren nach Art. 32 Abs. 2 BGG abzuschreiben ist,\ndass in Anwendung von Art. 66 Abs. 2 BGG auf die Erhebung von Gerichtskosten verzichtet wird,\nverfügt die Präsidentin:\n1.\nDas Verfahren wird infolge Rückzugs der Beschwerde abgeschrieben.\n2.\nEs werden keine Gerichtskosten erhoben.\n3.\nDiese Verfügung wird den Parteien, dem Verwaltungsgericht des Kantons Bern und dem Bundesamt für Sozialversicherungen schriftlich mitgeteilt.\nLuzern, 19. Januar 2026\nIm Namen der IV. öffentlich-rechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Präsidentin: Viscione\nDer Gerichtsschreiber: Grünvogel",
+  "operator_metadata": {
+    "date": "2026-01-19",
+    "reference": [
+      "8C_473/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-473-2025_2026-01-19.html",
+      "source": "446973/45/2834",
+      "content_length": 1770
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+      "it": "Confederazione Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale)",
+      "fr": "Conféderation Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social)"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_008"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_008_8C-473-2025_2026-01-19",
+    "title": {
+      "de": "Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung) 19.01.2026 8C_473/2025",
+      "it": "Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale) 19.01.2026 8C_473/2025",
+      "fr": "Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social) 19.01.2026 8C_473/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:05:06+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-473-2025_2026-01-19.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "13211107f9df4d05bf0ff335de6cc37b15d6577f7477209f8fd2a97d4f770f42"
+  }
+}

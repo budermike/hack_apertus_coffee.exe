@@ -1,0 +1,56 @@
+{
+  "id": "4A_100_2026",
+  "case_id": "4A_100/2026",
+  "case_ids": [
+    "4A_100/2026"
+  ],
+  "decision_date": "2026-03-02",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "Provisorische Rechtsöffnung",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://02-03-2026-4A_100-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4A_100/2026\nUrteil vom 2. März 2026\nI. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Hurni, Präsident,\nGerichtsschreiber Tanner.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführerin,\ngegen\nBank B.________,\nBeschwerdegegnerin.\nGegenstand\nProvisorische Rechtsöffnung,\nBeschwerde gegen die Verfügung des Obergerichts des Kantons Zürich, I. Zivilkammer, vom 28. Januar 2026 (RT250231-O/Z01).\nErwägungen:\n1.\nMit Verfügung vom 28. Januar 2026 trat das Obergericht des Kantons Zürich auf den Antrag der Beschwerdeführerin, ihrer Beschwerde gegen den Entscheid des Einzelgerichts Audienz am Bezirksgericht Zürich vom 18. September 2025 die aufschiebende Wirkung zu gewähren, nicht ein. Zugleich setzte das Obergericht der Beschwerdeführerin eine Frist von 10 Tagen an, um für die Gerichtskosten des Beschwerdeverfahrens einen Vorschuss von Fr. 3'000.-- zu leisten.\nDagegen erhob die Beschwerdeführerin am 26. Februar 2026 Beschwerde an das Bundesgericht.\n2.\nMit dem vorliegenden Endentscheid wird das Gesuch der Beschwerdeführerin um aufschiebende Wirkung für das bundesgerichtliche Verfahren gegenstandslos.\nDie Eingabe der Beschwerdeführerin beruht augenfällig auf querulatorischer und rechtsmissbräuchlicher Prozessführung und ist als solche unzulässig (Art. 42 Abs. 7 BGG). Auf die Beschwerde ist demnach im vereinfachten Verfahren durch den Abteilungspräsidenten nicht einzutreten (Art. 108 Abs. 1 lit. c BGG). Die Begründung dieses Entscheids beschränkt sich dabei auf eine kurze Angabe des Unzulässigkeitsgrundes (Art. 108 Abs. 3 BGG).\n3.\nDas sinngemässe Gesuch der Beschwerdeführerin um unentgeltliche Rechtspflege für das bundesgerichtliche Verfahren ist wegen Aussichtslosigkeit abzuweisen (Art. 64 Abs. 1 BGG).\nDie Beschwerdeführerin wird bei diesem Verfahrensausgang kostenpflichtig (Art. 66 Abs. 1 BGG).\nDie Beschwerdegegnerin hat keinen Anspruch auf eine Parteientschädigung, da ihr mangels Einholung einer Vernehmlassung aus dem bundesgerichtlichen Verfahren kein entschädigungspflichtiger Aufwand erwachsen ist (Art. 68 Abs. 2 BGG).\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDas Gesuch der Beschwerdeführerin um unentgeltliche Rechtspflege für das bundesgerichtliche Verfahren wird abgewiesen.\n3.\nDie Gerichtskosten von Fr. 800.-- werden der Beschwerdeführerin auferlegt.\n4.\nDieses Urteil wird den Parteien und dem Obergericht des Kantons Zürich, I. Zivilkammer, schriftlich mitgeteilt.\nLausanne, 2. März 2026\nIm Namen der I. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Hurni\nDer Gerichtsschreiber: Tanner",
+  "operator_metadata": {
+    "date": "2026-03-02",
+    "reference": [
+      "4A_100/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-100-2026_2026-03-02.html",
+      "source": "446973/45/2829",
+      "content_length": 3017
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_004_4A-100-2026_2026-03-02",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 02.03.2026 4A_100/2026",
+      "it": "Tribunale federale I Corte di diritto civile 02.03.2026 4A_100/2026",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 02.03.2026 4A_100/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:17:38+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-100-2026_2026-03-02.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "ff576d91f3f2381ce1708bfc9974383eceae1e7948292ed6efd2c79a387d5fe7"
+  }
+}

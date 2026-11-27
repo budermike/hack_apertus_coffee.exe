@@ -1,0 +1,56 @@
+{
+  "id": "8C_478_2025",
+  "case_id": "8C_478/2025",
+  "case_ids": [
+    "8C_478/2025"
+  ],
+  "decision_date": "2025-10-14",
+  "publication_date": null,
+  "department": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "division": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "subject": "Rechtsverweigerung (Prozessvoraussetzung)",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://14-10-2025-8C_478-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n8C_478/2025\nVerfügung vom 14. Oktober 2025\nIV. öffentlich-rechtliche Abteilung\nBesetzung\nBundesrichterin Viscione, Präsidentin,\nGerichtsschreiber Grünvogel.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nBundesverwaltungsgericht, Abteilung III, Kreuzackerstrasse 12, 9000 St. Gallen,\nBeschwerdegegner.\nGegenstand\nRechtsverweigerung (Prozessvoraussetzung),\nBeschwerde gegen das Urteil des Bundesverwaltungsgerichts vom 12. September 2025 (C-3070/2024).\nNach Einsicht\nin die am 27. August 2025 ergänzte Eingabe vom 22. Juli 2025 (jeweils Postaufgabe), worin A.________ sich über den ausbleibenden Verfahrensabschluss in der ihn betreffenden Angelegenheit C-3070/2024 vor Bundesverwaltungsgericht beschwert,\nin Erwägung,\ndass das Verfahren vor Bundesverwaltungsgericht mit dem Urteil vom 12. September 2025 seinen Abschluss gefunden hat,\ndass damit das bundesgerichtliche Verfahren in Anwendung von Art. 71 BGG in Verbindung mit Art. 72 BZP als gegenstandslos abzuschreiben ist,\ndass umständehalber auf die Erhebung von Gerichtskosten verzichtet wird (Art. 66 Abs. 1 Satz 2 BGG), womit das in der zweiten Eingabe sinngemäss gestellte Gesuch um unentgeltliche Prozessführung gegenstandslos wird,\nverfügt die Präsidentin:\n1.\nDas Verfahren wird als gegenstandslos abgeschrieben.\n2.\nEs werden keine Gerichtskosten erhoben.\n3.\nDiese Verfügung wird den Parteien, der IV-Stelle für Versicherte im Ausland IVSTA und dem Bundesamt für Sozialversicherungen schriftlich mitgeteilt.\nLuzern, 14. Oktober 2025\nIm Namen der IV. öffentlich-rechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Präsidentin: Viscione\nDer Gerichtsschreiber: Grünvogel",
+  "operator_metadata": {
+    "date": "2025-10-14",
+    "reference": [
+      "8C_478/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-478-2025_2025-10-14.html",
+      "source": "446973/45/2851",
+      "content_length": 2036
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+      "it": "Confederazione Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale)",
+      "fr": "Conféderation Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social)"
+    },
+    "scrapedate": "2026-06-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_008"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2851",
+    "id": "CH_BGer_008_8C-478-2025_2025-10-14",
+    "title": {
+      "de": "Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung) 14.10.2025 8C_478/2025",
+      "it": "Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale) 14.10.2025 8C_478/2025",
+      "fr": "Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social) 14.10.2025 8C_478/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:26:26+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-478-2025_2025-10-14.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "b9033ba6275dffc9931d228855022e1909bafc0be6ff8db724c06551dff71b12"
+  }
+}

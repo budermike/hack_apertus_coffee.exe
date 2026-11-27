@@ -1,0 +1,56 @@
+{
+  "id": "5A_72_2024",
+  "case_id": "5A_72/2024",
+  "case_ids": [
+    "5A_72/2024"
+  ],
+  "decision_date": "2025-11-04",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "validité d'une clause de liquidation d'un contrat de mariage (art. 242 CC)",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://04-11-2025-5A_72-2024",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5A_72/2024\nOrdonnance du 4 novembre 2025\nIIe Cour de droit civil\nComposition\nM. le Juge fédéral Bovey, Président.\nGreffier : M. Braconi.\nParticipants à la procédure\nA.________,\nreprésentée par Me Corinne Corminboeuf Harari, avocate,\nrecourante,\ncontre\nB.________,\nreprésenté par Me Diane Broto, avocate,\nintimé.\nObjet\nvalidité d'une clause de liquidation d'un contrat de mariage (art. 242 CC),\nrecours contre l'arrêt de la Chambre civile de la Cour de justice du canton de Genève du 13 décembre 2023 (C/22575/2020 ACJC/1646/2023).\nVu :\nle recours en matière civile interjeté le 1er février 2024 par A.________ contre l'arrêt rendu le 13 décembre 2023 par la Chambre civile de la Cour de justice du canton de Genève dans la cause qui l'oppose à B.________;\nles ordonnances des 20 juin 2024, 17 juin, 29 août et 2 octobre 2025 suspendant, en vertu de l'art. 6 al. 1 PCF (par renvoi de l'art. 71 LTF), la présente procédure en raison de pourparlers transactionnels;\nle courrier du conseil de la recourante du 31 octobre 2025 informant la Cour de céans de l'homologation des \" conclusions d'accord \" déposées par le parties et déclarant, au nom de l'intéressée, retirer le recours;\nConsidérant :\nqu'il convient de prendre acte du retrait du recours et de rayer la cause du rôle (art. 73 PCF, par renvoi de l'art. 71 LTF);\nque le Président de la Cour de céans est compétent à cet effet (art. 32 al. 1 et 2 LTF);\nque les frais judiciaires (réduits) incombent à la recourante (art. 66 al. 1 et 2 LTF; ordonnance 5A_537/2025 du 25 septembre 2025);\nqu'il n'y a pas lieu d'allouer de dépens à l'intimé (art. 68 al. 1 LTF);\nPar ces motifs, le Président ordonne :\n1.\nLa cause est rayée du rôle par suite de retrait du recours.\n2.\nLes frais judiciaires, arrêtés à 500 fr., sont mis à la charge de la recourante.\n3.\nLa présente ordonnance est communiquée aux parties et à la Chambre civile de la Cour de justice du canton de Genève.\nLausanne, le 4 novembre 2025\nAu nom de la IIe Cour de droit civil\ndu Tribunal fédéral suisse\nLe Président : Bovey\nLe Greffier : Braconi",
+  "operator_metadata": {
+    "date": "2025-11-04",
+    "reference": [
+      "5A_72/2024"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-72-2024_2025-11-04.html",
+      "source": "446973/45/2869",
+      "content_length": 2440
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-06-18",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2869",
+    "id": "CH_BGer_005_5A-72-2024_2025-11-04",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 04.11.2025 5A_72/2024",
+      "it": "Tribunale federale II Corte di diritto civile 04.11.2025 5A_72/2024",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 04.11.2025 5A_72/2024"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:32:23+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-72-2024_2025-11-04.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "256174ef840e7fb71e55ce48fd7ff8d31ef84889aff32ad68335915eb7a6aed7"
+  }
+}

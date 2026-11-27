@@ -1,0 +1,56 @@
+{
+  "id": "4D_45_2026",
+  "case_id": "4D_45/2026",
+  "case_ids": [
+    "4D_45/2026"
+  ],
+  "decision_date": "2026-03-26",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "Definitive Rechtsöffnung",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://26-03-2026-4D_45-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4D_45/2026\nUrteil vom 26. März 2026\nI. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Hurni, Präsident,\nGerichtsschreiber Tanner.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführerin,\ngegen\nKanton Luzern,\nvertreten durch das Bezirksgericht Willisau,\nBeschwerdegegner.\nGegenstand\nDefinitive Rechtsöffnung,\nBeschwerde gegen den Entscheid des Kantonsgerichts Luzern, 1. Abteilung, vom 16. Februar 2026\n(2C 26 16/2U 26 10).\nErwägungen:\n1.\nMit Entscheid vom 16. Februar 2026 trat das Kantonsgericht Luzern auf die Beschwerde der Beschwerdeführerin gegen den Rechtsöffnungsentscheid des Bezirksgerichts Willisau vom 22. Januar 2026 nicht ein.\nDagegen erhob die Beschwerdeführerin am 21. März 2026 Beschwerde an das Bundesgericht.\n2.\nDiese Eingabe erfüllt die Begründungsanforderungen, die an eine Beschwerde an das Bundesgericht gestellt werden (Art. 42 Abs. 2 und Art. 106 Abs. 2 BGG; BGE 142 III 364 E. 2.4; 140 III 86 E. 2, 115 E. 2), offensichtlich nicht. Auf die Beschwerde ist somit mangels hinreichender Begründung im vereinfachten Verfahren durch den Abteilungspräsidenten nicht einzutreten (Art. 108 Abs. 1 lit. b BGG). Die Begründung dieses Entscheids beschränkt sich auf eine kurze Angabe des Unzulässigkeitsgrundes (Art. 108 Abs. 3 BGG).\n3.\nDas Gesuch der Beschwerdeführerin um unentgeltliche Rechtspflege für das bundesgerichtliche Verfahren ist wegen Aussichtslosigkeit abzuweisen (Art. 64 Abs. 1 BGG).\nDie Beschwerdeführerin wird bei diesem Verfahrensausgang kostenpflichtig (Art. 66 Abs. 1 BGG).\nDer Beschwerdegegner hat keinen Anspruch auf eine Parteientschädigung, da ihm mangels Einholung einer Vernehmlassung aus dem bundesgerichtlichen Verfahren kein entschädigungspflichtiger Aufwand erwachsen ist (Art. 68 Abs. 2 BGG).\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDas Gesuch der Beschwerdeführerin um unentgeltliche Rechtspflege für das bundesgerichtliche Verfahren wird abgewiesen.\n3.\nDie Gerichtskosten von Fr. 800.-- werden der Beschwerdeführerin aufgelegt.\n4.\nEs wird keine Parteientschädigung zugesprochen.\n5.\nDieses Urteil wird den Parteien und dem Kantonsgericht Luzern, 1. Abteilung, schriftlich mitgeteilt.\nLausanne, >\nIm Namen der I. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Hurni\nDer Gerichtsschreiber: Tanner",
+  "operator_metadata": {
+    "date": "2026-03-26",
+    "reference": [
+      "4D_45/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-45-2026_2026-03-26.html",
+      "source": "446973/45/2829",
+      "content_length": 2757
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_004_4D-45-2026_2026-03-26",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 26.03.2026 4D_45/2026",
+      "it": "Tribunale federale I Corte di diritto civile 26.03.2026 4D_45/2026",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 26.03.2026 4D_45/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:25:22+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-45-2026_2026-03-26.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "646f7ac1e9a499f217d27ce16926afcfbba3e65ea44d0b131691fc4d6dd238da"
+  }
+}

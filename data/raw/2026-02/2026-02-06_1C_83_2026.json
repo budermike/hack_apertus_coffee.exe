@@ -1,0 +1,56 @@
+{
+  "id": "1C_83_2026",
+  "case_id": "1C_83/2026",
+  "case_ids": [
+    "1C_83/2026"
+  ],
+  "decision_date": "2026-02-06",
+  "publication_date": null,
+  "department": "I. Öffentlich-rechtliche Abteilung",
+  "division": "I. Öffentlich-rechtliche Abteilung",
+  "subject": "Auslieferung an Kroatien",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://06-02-2026-1C_83-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n1C_83/2026\nUrteil vom 6. Februar 2026\nI. öffentlich-rechtliche Abteilung\nBesetzung\nBundesrichter Haag, Präsident,\nGerichtsschreiberin Gerber.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführerin,\ngegen\nBundesamt für Justiz, Fachbereich Auslieferung, Bundesrain 20, 3003 Bern,\nBeschwerdegegner.\nGegenstand\nAuslieferung an Kroatien,\nBeschwerde gegen den Entscheid des Bundesstrafgerichts, Beschwerdekammer, vom 16. Januar 2026 (RR.2025.197).\nErwägungen:\n1.\nMit Entscheid vom 13. November 2025 bewilligte das Bundesamt für Justiz (BJ) die Auslieferung der kroatischen Staatsangehörigen A.________ zwecks Strafverfolgung an Kroatien. Die dagegen erhobene Beschwerde wies die Beschwerdekammer des Bundesstrafgerichts am 16. Januar 2026 ab. Der Entscheid wurde A.________ gemäss Empfangsbestätigung am 21. Januar 2026 zugestellt.\n2.\nA.________ hat gegen den Entscheid des Bundesstrafgerichts Beschwerde an das Bundesgericht erhoben. Zwar ist das Schreiben auf den 31. Januar 2026 datiert; die für die Fristeinhaltung massgebliche Übergabe an die Post (Art. 48 Abs. 1 BGG) erfolgte jedoch erst am 3. Februar 2026 (gemäss Sendungsverfolgung der Post). Zu diesem Zeitpunkt war die Beschwerdefrist, die für Entscheide auf dem Gebiet der internationalen Rechtshilfe in Strafsachen 10 Tage beträgt (Art. 100 Abs. 2 lit. b BGG), bereits abgelaufen: Diese endete gemäss Art. 44 Abs. 1 und Art. 45 Abs. 1 BGG am 2. Februar 2026.\n3.\nDie Beschwerde ist daher offensichtlich unzulässig, weshalb darauf im vereinfachten Verfahren gemäss Art. 108 Abs. 1 lit. a BGG nicht einzutreten ist.\nEs rechtfertigt sich, auf Kosten zu verzichten.\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nEs werden keine Kosten erhoben.\n3.\nDieses Urteil wird den Parteien und dem Bundesstrafgericht, Beschwerdekammer, schriftlich mitgeteilt.\nLausanne, 6. Februar 2026\nIm Namen der I. öffentlich-rechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Haag\nDie Gerichtsschreiberin: Gerber",
+  "operator_metadata": {
+    "date": "2026-02-06",
+    "reference": [
+      "1C_83/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_001_1C-83-2026_2026-02-06.html",
+      "source": "446973/45/2829",
+      "content_length": 2399
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Öffentlich-rechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto pubblico",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit public"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_001"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_001_1C-83-2026_2026-02-06",
+    "title": {
+      "de": "Bundesgericht I. Öffentlich-rechtliche Abteilung 06.02.2026 1C_83/2026",
+      "it": "Tribunale federale I Corte di diritto pubblico 06.02.2026 1C_83/2026",
+      "fr": "Tribunal fédéral Ire Cour de droit public 06.02.2026 1C_83/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:10:43+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_001_1C-83-2026_2026-02-06.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "1e8461cc10666d4d86d3a80eca45748d158f5901b9a3449c9bb0e96a5d41c741"
+  }
+}

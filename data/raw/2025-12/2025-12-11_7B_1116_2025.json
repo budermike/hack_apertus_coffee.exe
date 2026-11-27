@@ -1,0 +1,56 @@
+{
+  "id": "7B_1116_2025",
+  "case_id": "7B_1116/2025",
+  "case_ids": [
+    "7B_1116/2025"
+  ],
+  "decision_date": "2025-12-11",
+  "publication_date": null,
+  "department": "II. Strafrechtliche Abteilung",
+  "division": "II. Strafrechtliche Abteilung",
+  "subject": "Irrecevabilité du recours en matière pénale (défaut de production de la décision attaquée)",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://11-12-2025-7B_1116-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n7B_1116/2025\nArrêt du 11 décembre 2025\nIIe Cour de droit pénal\nComposition\nM. le Juge fédéral Abrecht, Président.\nGreffier : M. Valentino.\nParticipants à la procédure\nA.________,\nrecourant.\nObjet\nIrrecevabilité du recours en matière pénale (défaut de production de la décision attaquée),\nrecours du 16 octobre 2025.\nConsidérant en fait et en droit :\n1.\nPar acte du 16 octobre 2025 (timbre postal), A.________ adresse au Tribunal fédéral un recours contre un \"arrêt du Tribunal cantonal valaisan, Chambre pénale, rendu le 16 septembre 2025 sous la référence ATC 16.09.25\", faisant valoir que cet arrêt \"contient des erreurs d'appréciation manifestes, tant sur le fond que sur les conséquences de l'exécution\".\nPar ordonnance présidentielle du 21 octobre 2025, le recourant a été invité à produire, jusqu'au 29 octobre 2025, un exemplaire de l'arrêt attaqué, à défaut de quoi son mémoire ne serait pas pris en considération.\nNotifiée par acte judiciaire à l'adresse indiquée par le recourant sur son acte du 16 octobre 2025, cette ordonnance n'a pas été retirée dans le délai de garde de sept jours et a été retournée au Tribunal fédéral le 31 octobre 2025 avec la mention \"non réclamé\". Cela étant, elle a été adressée au recourant par pli simple le jour même.\n2.\nSelon l'art. 44 al. 2 LTF, une communication qui n'est remise que contre la signature du destinataire ou d'un tiers habilité est réputée reçue au plus tard sept jours après la première tentative infructueuse de distribution.\nEn l'occurrence, l'ordonnance présidentielle du 21 octobre 2025 est réputée avoir été notifiée le 29 octobre 2025, soit le septième jour après que le recourant a été avisé le 22 octobre 2025 par la Poste en vue de retirer le pli en question.\n3.\nNonobstant la notification de l'ordonnance précitée, le recourant - qui n'a pas produit un exemplaire de l'arrêt attaqué dans le délai imparti au 29 octobre 2025 - n'a pas remédié au vice de forme affectant son mémoire. En vertu de l'art. 42 al. 5 LTF, le recours sera ainsi déclaré irrecevable selon la procédure simplifiée prévue à l'art. 108 al. 1 let. a LTF.\n4.\nIl sera exceptionnellement statué sans frais (art. 66 al. 1 LTF).\nPar ces motifs, le Président prononce :\n1.\nLe recours est irrecevable.\n2.\nIl n'est pas perçu de frais judiciaires.\n3.\nLe présent arrêt est communiqué au recourant.\nLausanne, le 11 décembre 2025\nAu nom de la IIe Cour de droit pénal\ndu Tribunal fédéral suisse\nLe Président : Abrecht\nLe Greffier : Valentino",
+  "operator_metadata": {
+    "date": "2025-12-11",
+    "reference": [
+      "7B_1116/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-1116-2025_2025-12-11.html",
+      "source": "446973/45/2851",
+      "content_length": 2872
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit pénal"
+    },
+    "scrapedate": "2026-06-18",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_007"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2851",
+    "id": "CH_BGer_007_7B-1116-2025_2025-12-11",
+    "title": {
+      "de": "Bundesgericht II. Strafrechtliche Abteilung 11.12.2025 7B_1116/2025",
+      "it": "Tribunale federale II Corte di diritto penale 11.12.2025 7B_1116/2025",
+      "fr": "Tribunal fédéral IIe Cour de droit pénal 11.12.2025 7B_1116/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:53:01+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-1116-2025_2025-12-11.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "e4707442c1b81363d7956fe3444669ad72935594e593a039d207086c605e1b95"
+  }
+}

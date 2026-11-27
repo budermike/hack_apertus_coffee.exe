@@ -1,0 +1,56 @@
+{
+  "id": "8C_42_2026",
+  "case_id": "8C_42/2026",
+  "case_ids": [
+    "8C_42/2026"
+  ],
+  "decision_date": "2026-05-19",
+  "publication_date": null,
+  "department": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "division": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "subject": "Assurance-accidents (retrait du recours)",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://19-05-2026-8C_42-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n8C_42/2026\nOrdonnance du 19 mai 2026\nIVe Cour de droit public\nComposition\nM. le Juge fédéral Métral, en qualité de juge unique.\nGreffière : Mme Barman Ionta.\nParticipants à la procédure\nA.________,\nreprésenté par Me Laura Leggiero-Reichenbach, avocate,\nrecourant,\ncontre\nCaisse nationale suisse d'assurance en cas d'accidents (CNA), Division juridique, Fluhmattstrasse 1, 6002 Lucerne,\nintimée.\nObjet\nAssurance-accidents (retrait du recours),\nrecours contre l'arrêt du Tribunal cantonal du Valais du 10 décembre 2025 (S2 24 33).\nVu :\nle recours formé le 19 janvier 2026 par A.________ contre l'arrêt de la Cour des assurances sociales du Tribunal cantonal du Valais du 10 décembre 2025,\nl'ordonnance de la IVe Cour de droit public du Tribunal fédéral du 23 février 2026 par laquelle celle-ci a suspendu la procédure jusqu'à droit connu sur la demande de révision de l'arrêt attaqué déposée le même jour par le recourant devant la cour cantonale,\nle courrier du 5 mai 2026 du recourant déclarant retirer le recours ensuite de l'arrêt rendu le 14 avril 2026 par la cour cantonale,\nconsidérant :\nque la cause doit être rayée du rôle en application des art. 32 al. 2 et 71 LTF, en relation avec l'art. 73 al. 1 PCF (RS 273),\nqu'il se justifie en appliquant l'art. 66 al. 2 LTF de statuer sans frais judiciaires,\npar ces motifs, le Juge unique ordonne :\n1.\nLa cause est rayée du rôle par suite de retrait du recours.\n2.\nIl n'est pas perçu de frais judiciaires.\n3.\nLa présente ordonnance est communiquée aux parties, au Tribunal cantonal du Valais, Cour des assurances sociales, et à l'Office fédéral de la santé publique.\nLucerne, le 19 mai 2026\nAu nom de la IVe Cour de droit public\ndu Tribunal fédéral suisse\nLe Juge unique : Métral\nLa Greffière : Barman Ionta",
+  "operator_metadata": {
+    "date": "2026-05-19",
+    "reference": [
+      "8C_42/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-42-2026_2026-05-19.html",
+      "source": "446973/45/2834",
+      "content_length": 2136
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+      "it": "Confederazione Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale)",
+      "fr": "Conféderation Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social)"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_008"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_008_8C-42-2026_2026-05-19",
+    "title": {
+      "de": "Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung) 19.05.2026 8C_42/2026",
+      "it": "Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale) 19.05.2026 8C_42/2026",
+      "fr": "Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social) 19.05.2026 8C_42/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:40:04+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-42-2026_2026-05-19.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "dbe825807a65abd4ddd2105254df3c4e44296e838bf7bf4f7d0cc75022c4cdea"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "id": "8C_341_2023",
+  "case_id": "8C_341/2023",
+  "case_ids": [
+    "8C_341/2023"
+  ],
+  "decision_date": "2026-05-19",
+  "publication_date": null,
+  "department": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "division": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "subject": "Assurance-accidents",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://19-05-2026-8C_341-2023",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n8C_341/2023\nOrdonnance du 19 mai 2026\nIVe Cour de droit public\nComposition\nM. le Juge fédéral Métral, en qualité de juge unique.\nGreffier : M. Colombi.\nParticipants à la procédure\nA.________ Sàrl en liquidation,\nreprésentée par Me Michel De Palma, avocat,\nrecourante,\ncontre\nCaisse nationale suisse d'assurance en cas d'accidents (CNA), Division juridique, Fluhmattstrasse 1, 6002 Lucerne,\nintimée.\nObjet\nAssurance-accidents,\nrecours contre la décision du Tribunal cantonal du Valais du 19 avril 2023 (S2 23 7).\nconsidérant :\nque par décision du 19 avril 2023, la Cour des assurances sociales du Tribunal cantonal du Valais a rejeté le recours de A.________ Sàrl contre la décision sur opposition de la Caisse nationale suisse d'assurance en cas d'accidents (CNA) du 11 juillet 2022,\nque A.________ Sàrl a saisi le Tribunal fédéral d'un recours en matière de droit public le 24 mai 2023,\nque par décision du 7 décembre 2023 de la Présidente du Tribunal civil B.________, à U.________, la recourante a été dissoute et mise en liquidation conformément à l'art. 731b CO,\nque par ordonnance du 7 mars 2024, le Juge instructeur a ordonné la suspension de la procédure jusqu'à nouvel ordre,\nque par décision du 15 avril 2024, le Président du Tribunal civil B.________, à U.________, a suspendu la procédure de faillite faute d'actif,\nque le Tribunal fédéral n'en a pas été informé,\nque la recourante a été radiée d'office du registre du commerce le xxx mai 2026 conformément à l'art. 159a ORC (RS 221.411),\nqu'elle n'est plus capable d'ester en justice selon l'art. 14 PCF (RS 273), applicable par le renvoi de l'art. 71 LTF,\nque la procédure du recours en matière de droit public n'a plus d'objet et doit être rayée du rôle conformément à l'art. 32 al. 2 LTF,\nque, vu les circonstances, il sera renoncé à percevoir des frais judiciaires (art. 66 al. 1, 2e phrase LTF),\npar ces motifs, le Juge unique ordonne :\n1.\nLa cause est rayée du rôle.\n2.\nIl n'est pas perçu de frais judiciaires.\n3.\nLa présente ordonnance est communiquée aux parties, au Tribunal cantonal du Valais, Cour des assurances sociales, à l'Office fédéral de la santé publique et à l'Office cantonal des faillites de l'État de U.________.\nLucerne, le 19 mai 2026\nAu nom de la IVe Cour de droit public\ndu Tribunal fédéral suisse\nLe Juge unique : Métral\nLe Greffier : Colombi",
+  "operator_metadata": {
+    "date": "2026-05-19",
+    "reference": [
+      "8C_341/2023"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-341-2023_2026-05-19.html",
+      "source": "446973/45/2834",
+      "content_length": 2702
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+      "it": "Confederazione Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale)",
+      "fr": "Conféderation Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social)"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_008"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_008_8C-341-2023_2026-05-19",
+    "title": {
+      "de": "Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung) 19.05.2026 8C_341/2023",
+      "it": "Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale) 19.05.2026 8C_341/2023",
+      "fr": "Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social) 19.05.2026 8C_341/2023"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:40:03+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-341-2023_2026-05-19.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "bf94f3343c4b0a53d3ec46caa8cf4b8f267341b8b4d039fc66c1c39e507daaab"
+  }
+}

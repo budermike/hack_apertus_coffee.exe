@@ -1,0 +1,56 @@
+{
+  "id": "8C_618_2025",
+  "case_id": "8C_618/2025",
+  "case_ids": [
+    "8C_618/2025"
+  ],
+  "decision_date": "2026-01-13",
+  "publication_date": null,
+  "department": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "division": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "subject": "Assurance-accidents (retrait du recours)",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://13-01-2026-8C_618-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n8C_618/2025\nOrdonnance du 13 janvier 2026\nIVe Cour de droit public\nComposition\nM. le Juge fédéral Métral, en qualité de juge unique.\nGreffière : Mme Barman Ionta.\nParticipants à la procédure\nA.________,\nreprésentée par Me Pierre-Bernard Petitat, avocat,\nrecourante,\ncontre\nCaisse nationale suisse d'assurance en cas d'accidents (CNA), Division juridique, Fluhmattstrasse 1, 6002 Lucerne,\nintimée.\nObjet\nAssurance-accidents (retrait du recours),\nrecours contre l'arrêt de la Cour de justice de la République et canton de Genève du 22 septembre 2025 (A/564/2025 ATAS/704/2025).\nVu :\nle recours formé le 20 octobre 2025 par A.________ contre l'arrêt de la Chambre des assurances sociales de la Cour de justice de la République et canton de Genève du 22 septembre 2025 et la demande d'assistance judiciaire qui l'assortit,\nl'ordonnance de la IVe Cour de droit public du Tribunal fédéral du 21 novembre 2025, par laquelle celle-ci a rejeté la demande d'assistance judiciaire de l'intéressée en raison de l'absence de chances de succès du recours, et lui a imparti un délai de 14 jours courant dès réception de l'ordonnance pour verser une avance de frais de 500 fr.,\nle courrier du 9 janvier 2026 de la recourante déclarant retirer le recours,\nconsidérant :\nque la cause doit être rayée du rôle en application des art. 32 al. 2 et 71 LTF, en relation avec l'art. 73 al. 1 PCF (RS 273),\nqu'il se justifie en appliquant l'art. 66 al. 2 LTF de statuer sans frais judiciaires,\npar ces motifs, le Juge unique ordonne :\n1.\nLa cause est rayée du rôle par suite de retrait du recours.\n2.\nIl n'est pas perçu de frais judiciaires.\n3.\nLa présente ordonnance est communiquée aux parties, à la Cour de justice de la République et canton de Genève, Chambre des assurances sociales, et à l'Office fédéral de la santé publique.\nLucerne, le 13 janvier 2026\nAu nom de la IVe Cour de droit public\ndu Tribunal fédéral suisse\nLe Juge unique : Métral\nLa Greffière : Barman Ionta",
+  "operator_metadata": {
+    "date": "2026-01-13",
+    "reference": [
+      "8C_618/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-618-2025_2026-01-13.html",
+      "source": "446973/45/2834",
+      "content_length": 2330
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+      "it": "Confederazione Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale)",
+      "fr": "Conféderation Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social)"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_008"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_008_8C-618-2025_2026-01-13",
+    "title": {
+      "de": "Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung) 13.01.2026 8C_618/2025",
+      "it": "Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale) 13.01.2026 8C_618/2025",
+      "fr": "Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social) 13.01.2026 8C_618/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:03:37+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-618-2025_2026-01-13.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "b0a6e07310d7edf9a4cdd215c3d14119390280c5cc1d6fae9da907a579f802a3"
+  }
+}

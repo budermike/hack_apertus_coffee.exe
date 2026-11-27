@@ -1,0 +1,56 @@
+{
+  "id": "8C_604_2025",
+  "case_id": "8C_604/2025",
+  "case_ids": [
+    "8C_604/2025"
+  ],
+  "decision_date": "2026-01-19",
+  "publication_date": null,
+  "department": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "division": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "subject": "Arbeitslosenversicherung (Prozessvoraussetzung)",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://19-01-2026-8C_604-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n8C_604/2025\nUrteil vom 19. Januar 2026\nIV. öffentlich-rechtliche Abteilung\nBesetzung\nBundesrichterin Viscione, Präsidentin,\nGerichtsschreiberin Aliu.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführerin,\ngegen\nAmt für Arbeit, Qualifizierung für Stellensuchende (QuS), Lagerstrasse 107, 8090 Zürich,\nBeschwerdegegner.\nGegenstand\nArbeitslosenversicherung (Prozessvoraussetzung),\nBeschwerde gegen das Urteil des Sozialversicherungsgerichts des Kantons Zürich vom 27. August 2025 (AL.2025.00065).\nNach Einsicht\nin die Beschwerde vom 17. Oktober 2025 (Poststempel) gegen das Urteil des Sozialversicherungsgerichts des Kantons Zürich vom 27. August 2025,\nin die Verfügung vom 14. November 2025, mit welcher A.________ in Ablehnung des mit der Beschwerdeerhebung gestellten Gesuchs um unentgeltliche Rechtspflege zur Bezahlung eines Kostenvorschusses innert gesetzter Frist verpflichtet wurde,\nin die Verfügung vom 11. Dezember 2025, mit welcher A.________ zur Bezahlung eines Kostenvorschusses innert einer Nachfrist bis zum 7. Januar 2026 verpflichtet wurde, ansonsten auf das Rechtsmittel nicht eingetreten werde,\nin Erwägung,\ndass die Beschwerdeführerin den Vorschuss auch innerhalb der Nachfrist nicht geleistet hat,\ndass deshalb gestützt auf Art. 62 Abs. 3 BGG im vereinfachten Verfahren nach Art. 108 Abs. 1 lit. a BGG auf die Beschwerde nicht einzutreten ist,\ndass in Anwendung von Art. 66 Abs. 1 Satz 2 BGG ausnahmsweise auf die Erhebung von Gerichtskosten verzichtet werden kann,\nerkennt die Präsidentin:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nEs werden keine Gerichtskosten erhoben.\n3.\nDieses Urteil wird den Parteien, dem Sozialversicherungsgericht des Kantons Zürich und dem Staatssekretariat für Wirtschaft (SECO) schriftlich mitgeteilt.\nLuzern, 19. Januar 2026\nIm Namen der IV. öffentlich-rechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Präsidentin: Viscione\nDie Gerichtsschreiberin: Aliu",
+  "operator_metadata": {
+    "date": "2026-01-19",
+    "reference": [
+      "8C_604/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-604-2025_2026-01-19.html",
+      "source": "446973/45/2834",
+      "content_length": 2312
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+      "it": "Confederazione Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale)",
+      "fr": "Conféderation Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social)"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_008"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_008_8C-604-2025_2026-01-19",
+    "title": {
+      "de": "Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung) 19.01.2026 8C_604/2025",
+      "it": "Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale) 19.01.2026 8C_604/2025",
+      "fr": "Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social) 19.01.2026 8C_604/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:05:07+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-604-2025_2026-01-19.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "3fcf6add988657daa328b47d1a3ca26e89a69d65b397955d3545eef51ff64690"
+  }
+}

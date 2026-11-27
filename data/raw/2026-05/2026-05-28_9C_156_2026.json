@@ -1,0 +1,56 @@
+{
+  "id": "9C_156_2026",
+  "case_id": "9C_156/2026",
+  "case_ids": [
+    "9C_156/2026"
+  ],
+  "decision_date": "2026-05-28",
+  "publication_date": null,
+  "department": "IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung)",
+  "division": "IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung)",
+  "subject": "Krankenversicherung",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://28-05-2026-9C_156-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n9C_156/2026\nUrteil vom 28. Mai 2026\nIII. öffentlich-rechtliche Abteilung\nBesetzung\nBundesrichterin Moser-Szeless, Präsidentin,\nGerichtsschreiberin Stanger.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nAssura-Basis AG,\nAvenue Charles-Ferdinand-Ramuz 70, 1009 Pully,\nBeschwerdegegnerin.\nGegenstand\nKrankenversicherung,\nBeschwerde gegen das Urteil des Sozialversicherungsgerichts des Kantons Zürich vom 8. Dezember 2025 (KV.2024.00071).\nNach Einsicht\nin die Beschwerde vom 12. Februar 2026 (Poststempel) gegen das Urteil des Sozialversicherungsgerichts des Kantons Zürich vom 8. Dezember 2025,\nin die Verfügung vom 24. März 2026, mit welcher A.________ zur Bezahlung eines Kostenvorschusses innert einer Nachfrist bis zum 20. April 2026 verpflichtet wurde, ansonsten auf das Rechtsmittel nicht eingetreten werde,\nin Erwägung,\ndass der Beschwerdeführer den Vorschuss auch innerhalb der Nachfrist nicht geleistet hat,\ndass deshalb gestützt auf Art. 62 Abs. 3 BGG im vereinfachten Verfahren nach Art. 108 Abs. 1 lit. a BGG auf die Beschwerde nicht einzutreten ist und der Beschwerdeführer nach Art. 66 Abs. 1 und 3 BGG kostenpflichtig wird,\nerkennt die Präsidentin:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 300.- werden dem Beschwerdeführer auferlegt.\n3.\nDieses Urteil wird den Parteien, dem Sozialversicherungsgericht des Kantons Zürich und dem Bundesamt für Gesundheit schriftlich mitgeteilt.\nLuzern, 28. Mai 2026\nIm Namen der III. öffentlich-rechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Präsidentin: Moser-Szeless\nDie Gerichtsschreiberin: Stanger",
+  "operator_metadata": {
+    "date": "2026-05-28",
+    "reference": [
+      "9C_156/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_009_9C-156-2026_2026-05-28.html",
+      "source": "446973/45/2834",
+      "content_length": 1998
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung)",
+      "it": "Confederazione Tribunale federale IV Corte di diritto pubblico (II Corte di diritto sociale)",
+      "fr": "Conféderation Tribunal fédéral IVe Cour de droit public (IIe Cour de droit social)"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_009"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_009_9C-156-2026_2026-05-28",
+    "title": {
+      "de": "Bundesgericht IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung) 28.05.2026 9C_156/2026",
+      "it": "Tribunale federale IV Corte di diritto pubblico (II Corte di diritto sociale) 28.05.2026 9C_156/2026",
+      "fr": "Tribunal fédéral IVe Cour de droit public (IIe Cour de droit social) 28.05.2026 9C_156/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:42:20+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_009_9C-156-2026_2026-05-28.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "70e32aa9f09c97bd6d9d49dc298b4ef6aa19e7a79aeb54d464599121b8861cb8"
+  }
+}

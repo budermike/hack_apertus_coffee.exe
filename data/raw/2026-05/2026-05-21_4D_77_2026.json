@@ -1,0 +1,56 @@
+{
+  "id": "4D_77_2026",
+  "case_id": "4D_77/2026",
+  "case_ids": [
+    "4D_77/2026"
+  ],
+  "decision_date": "2026-05-21",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "mainlevée; retrait du recours",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://21-05-2026-4D_77-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4D_77/2026\nOrdonnance du 21 mai 2026\nIre Cour de droit civil\nComposition\nM. le Juge fédéral\nHurni, Président.\nGreffier : M. Botteron.\nParticipants à la procédure\nA.________,\nrecourante,\ncontre\nB.________,\nreprésenté par Me Olivier Wehrli, avocat,\nintimé.\nObjet\nmainlevée; retrait du recours,\nrecours contre la décision rendue le 5 mai 2026 par la Chambre civile de la Cour de justice du canton de Genève (DCJC/537/2026).\nConsidérant en fait et en droit :\nVu la décision de la Chambre civile de la Cour de Justice du canton de Genève du 5 mai 2026 accordant un ultime délai à A.________ pour le paiement d'une avance de frais de 150 fr.;\nVu le recours interjeté par A.________ (ci-après: la recourante) au Tribunal fédéral le 6 mai 2026 à l'encontre de cette décision;\nVu l'ordonnance du 12 mai 2026 invitant la recourante à verser jusqu'au 27 mai 2026 au plus tard, une avance de frais de 500 fr.;\nVu l'écrit du 13 mai 2026 par lequel la recourante déclare retirer son recours;\nConsidérant que le juge instructeur statue en qualité de juge unique sur la radiation du rôle des procédures devenues sans objet ou achevées par un retrait ou une transaction judiciaire (art. 32 al. 2 LTF),\nqu'il y a lieu de prendre acte du retrait du recours et de rayer la cause du rôle;\nVu l'art. 66 al. 2 LTF concernant les frais,\nqu'il n'y a pas lieu à l'allocation de dépens;\npar ces motifs, le Président ordonne :\n1.\nIl est pris acte du retrait du recours.\n2.\nLa cause 4D_77/2026 est rayée du rôle.\n3.\nIl n'est pas perçu de frais judiciaires.\n4.\nLa présente ordonnance est communiquée aux parties et à la Chambre civile de la Cour de justice du canton de Genève.\nLausanne, le 21 mai 2026\nAu nom de la Ire Cour de droit civil\ndu Tribunal fédéral suisse\nLe Président : Hurni\nLe Greffier : Botteron",
+  "operator_metadata": {
+    "date": "2026-05-21",
+    "reference": [
+      "4D_77/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-77-2026_2026-05-21.html",
+      "source": "446973/45/2829",
+      "content_length": 2159
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_004_4D-77-2026_2026-05-21",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 21.05.2026 4D_77/2026",
+      "it": "Tribunale federale I Corte di diritto civile 21.05.2026 4D_77/2026",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 21.05.2026 4D_77/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:40:37+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-77-2026_2026-05-21.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "a5086493745fa47e1d4a07c06d9e9aaaf1a05ce6dca4267b725a0157ab2aa2eb"
+  }
+}

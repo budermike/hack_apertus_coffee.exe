@@ -1,0 +1,56 @@
+{
+  "id": "8C_616_2025",
+  "case_id": "8C_616/2025",
+  "case_ids": [
+    "8C_616/2025"
+  ],
+  "decision_date": "2025-11-19",
+  "publication_date": null,
+  "department": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "division": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "subject": "Prestation complémentaire à l'AVS/AI (condition de recevabilité)",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://19-11-2025-8C_616-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n8C_616/2025\nArrêt du 19 novembre 2025\nIVe Cour de droit public\nComposition\nM. le Juge fédéral Métral, en qualité de juge unique.\nGreffière : Mme Fretz Perrin.\nParticipants à la procédure\nA.________,\nrecourante,\ncontre\nintimé inconnu\nObjet\nPrestation complémentaire à l'AVS/AI (condition de recevabilité),\nrecours contre l'arrêt de l'autorité précédente inconnue du 20 août 2025 (A/1227/2025 4 PC 665774).\nConsidérant en fait et en droit :\n1.\nPar écriture du 19 septembre 2025 (date du timbre postal) adressé au Tribunal fédéral, A.________ a demandé une remise totale (ou partielle) de sa dette ou, à défaut, un aménagement de paiement adapté à ses ressources.\n2.\nPar ordonnance du 22 septembre 2025, le Tribunal fédéral a, en application de l'art. 42 al. 5 LTF, invité la recourante à lui faire parvenir, jusqu'au 3 octobre 2025, la décision attaquée, faute de quoi son mémoire ne serait pas pris en considération.\nPar courrier du 29 septembre 2025 (timbre postal), A.________ a indiqué la référence de l'arrêt attaqué (A/1227/2025 4 PC 665774) et a réitéré sa demande de remise. Elle n'a cependant pas produit l'arrêt attaqué.\n3.\nSelon l'art. 108 al. 1 LTF, le président de la cour décide en procédure simplifiée de ne pas entrer en matière sur les recours manifestement irrecevables (let. a). Il peut confier cette tâche à un autre juge (art. 108 al. 2 LTF).\n4.\nEn vertu de l'art. 42 al. 3 LTF, la décision attaquée doit être jointe si le mémoire de recours est dirigé contre une décision. Si les annexes prescrites font défaut, le Tribunal fédéral impartit un délai approprié à la partie pour remédier à l'irrégularité et l'avertit qu'à défaut le mémoire ne sera pas pris en considération (art. 42 al. 5 LTF).\nEn l'occurrence, la recourante n'a pas produit l'arrêt attaqué dans le délai imparti par le Tribunal fédéral. Le recours doit dès lors être déclaré irrecevable pour ce motif.\n5.\nIl convient de renoncer exceptionnellement à la perception de frais judiciaires en application de l'art. 66 al. 1, seconde phrase, LTF.\nPar ces motifs, le Juge unique prononce :\n1.\nLe recours est irrecevable.\n2.\nIl n'est pas perçu de frais judiciaires.\n3.\nLe présent arrêt est communiqué à la recourante.\nLucerne, le 19 novembre 2025\nAu nom de la IVe Cour de droit public\ndu Tribunal fédéral suisse\nLe Juge unique : Métral\nLa Greffière : Fretz Perrin",
+  "operator_metadata": {
+    "date": "2025-11-19",
+    "reference": [
+      "8C_616/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-616-2025_2025-11-19.html",
+      "source": "446973/45/2851",
+      "content_length": 2782
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+      "it": "Confederazione Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale)",
+      "fr": "Conféderation Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social)"
+    },
+    "scrapedate": "2026-06-18",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_008"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2851",
+    "id": "CH_BGer_008_8C-616-2025_2025-11-19",
+    "title": {
+      "de": "Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung) 19.11.2025 8C_616/2025",
+      "it": "Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale) 19.11.2025 8C_616/2025",
+      "fr": "Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social) 19.11.2025 8C_616/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:36:56+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-616-2025_2025-11-19.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "b4b880c7c8053645eb78cb1ea60ba58ace20001b9c264b3c562b1c3a326e7e11"
+  }
+}

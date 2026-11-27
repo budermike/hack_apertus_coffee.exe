@@ -1,0 +1,56 @@
+{
+  "id": "9C_692_2025",
+  "case_id": "9C_692/2025",
+  "case_ids": [
+    "9C_692/2025"
+  ],
+  "decision_date": "2026-03-18",
+  "publication_date": null,
+  "department": "IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung)",
+  "division": "IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung)",
+  "subject": "Impôts cantonaux et communaux du canton de Vaud et impôt fédéral direct, périodes fiscales 2005-2007",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://18-03-2026-9C_692-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n9C_692/2025\nOrdonnance du 18 mars 2026\nIIIe Cour de droit public\nComposition\nM. le Juge fédéral Parrino, en qualité de juge unique.\nGreffier : M. Bürgisser.\nParticipants à la procédure\nA.________,\nreprésenté par Me Maxime Crisinel, avocat,\nrecourant,\ncontre\nAdministration cantonale des impôts du canton de Vaud,\nroute de Berne 46, 1010 Lausanne,\nintimée.\nObjet\nImpôts cantonaux et communaux du canton de Vaud et impôt fédéral direct, périodes fiscales 2005-2007,\nrecours contre l'arrêt du Tribunal cantonal du canton de Vaud du 4 novembre 2025 (FI.2025.0063).\nVu :\nla lettre du 11 février 2026 par laquelle A.________ a déclaré retirer le recours interjeté le 5 décembre 2025 (timbre postal) contre l'arrêt du Tribunal cantonal du canton de Vaud, Cour de droit administratif et public, du 4 novembre 2025,\nconsidérant :\nque le juge instructeur statue comme juge unique sur la radiation du rôle des procédures achevées par un retrait (art. 32 al. 1 et 2 LTF),\nque le recourant a expressément signifié le retrait de son recours au Tribunal fédéral,\nqu'il convient d'en prendre acte et de rayer la cause du rôle (art. 73 al. 1 PCF par renvoi de l'art. 71 LTF),\nqu'en principe, la partie qui retire son recours doit supporter les frais de l'instance fédérale (parmi plusieurs, ordonnance 9C_603/2025 du 21 novembre 2025 et la référence),\nqu'il n'y a pas lieu de déroger à cette règle,\nqu'en l'occurrence, il convient de mettre une partie des frais déjà encourus dans la procédure à la charge du recourant (art. 66 al. 2 LTF), qui n'a pas droit à des dépens (art. 68 al. 1 LTF),\npar ces motifs, le Juge unique ordonne :\n1.\nLa cause est rayée du rôle par suite de retrait du recours.\n2.\nLes frais judiciaires de 500 fr. sont mis à la charge du recourant.\n3.\nLa présente ordonnance est communiquée aux parties, au Tribunal cantonal du canton de Vaud, Cour de droit administratif et public, et à l'Administration fédérale des contributions.\nLucerne, le 18 mars 2026\nAu nom de la IIIe Cour de droit public\ndu Tribunal fédéral suisse\nLe Juge unique : Parrino\nLe Greffier : Bürgisser",
+  "operator_metadata": {
+    "date": "2026-03-18",
+    "reference": [
+      "9C_692/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_009_9C-692-2025_2026-03-18.html",
+      "source": "446973/45/2834",
+      "content_length": 2460
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung)",
+      "it": "Confederazione Tribunale federale IV Corte di diritto pubblico (II Corte di diritto sociale)",
+      "fr": "Conféderation Tribunal fédéral IVe Cour de droit public (IIe Cour de droit social)"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_009"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_009_9C-692-2025_2026-03-18",
+    "title": {
+      "de": "Bundesgericht IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung) 18.03.2026 9C_692/2025",
+      "it": "Tribunale federale IV Corte di diritto pubblico (II Corte di diritto sociale) 18.03.2026 9C_692/2025",
+      "fr": "Tribunal fédéral IVe Cour de droit public (IIe Cour de droit social) 18.03.2026 9C_692/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:23:03+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_009_9C-692-2025_2026-03-18.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "30c1734463d79146e09014c2689f0d53898457ddd33afcb6caf10cb1dffd8f29"
+  }
+}

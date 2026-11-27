@@ -1,0 +1,56 @@
+{
+  "id": "6B_662_2025",
+  "case_id": "6B_662/2025",
+  "case_ids": [
+    "6B_662/2025"
+  ],
+  "decision_date": "2025-10-02",
+  "publication_date": null,
+  "department": "I. Strafrechtliche Abteilung",
+  "division": "I. Strafrechtliche Abteilung",
+  "subject": "Diffamazione",
+  "language": "it",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://02-10-2025-6B_662-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n6B_662/2025\nSentenza del 2 ottobre 2025\nI Corte di diritto penale\nComposizione\nGiudice federale Jacquemoud-Rossari, Presidente,\nCancelliere Gadoni.\nPartecipanti al procedimento\nA.________,\nricorrente,\ncontro\n1. Ministero pubblico del Cantone Ticino, Palazzo di giustizia, via Pretorio 16, 6901 Lugano,\n2. B.________,\npatrocinato dall'avv. Marco Corrente,\nopponenti.\nOggetto\nDiffamazione,\nricorso in materia penale contro la sentenza emanata l'11 luglio 2025 dalla Corte di appello e di revisione penale del Cantone Ticino (incarto n. 17.2023.218).\nConsiderando:\nche, in parziale accoglimento di un appello presentato da B.________ contro una sentenza della Pretura penale del Cantone Ticino, con sentenza dell'11 luglio 2025 la Corte di appello e di revisione penale (CARP) ha dichiarato A.________ autrice colpevole di diffamazione e l'ha condannata alla pena pecuniaria di 20 aliquote giornaliere di fr. 30.-- ciascuna, per complessivi fr. 600.--, sospesa condizionalmente per un periodo di prova di due anni;\nche A.________ impugna questa sentenza con un ricorso in materia penale al Tribunale federale;\nche, con decreto presidenziale del 15 agosto 2025, la ricorrente è stata invitata a fornire, entro il 1° settembre seguente, un anticipo delle spese giudiziarie presunte di fr. 800.-- (art. 62 cpv. 1 LTF);\nche, scaduto infruttuoso detto termine, con ulteriore decreto presidenziale dell'8 settembre 2025 alla ricorrente è stato fissato un termine suppletorio non prorogabile, scadente il 19 settembre 2025, per versare l'anticipo richiesto, con l'avvertenza che in caso di mancato pagamento il ricorso sarebbe stato dichiarato inammissibile (art. 62 cpv. 3 LTF);\nche gli invii postali raccomandati contenenti detti atti giudiziari non sono stati ritirati dalla ricorrente, sicché giusta l'art. 44 cpv. 2 LTF le notificazioni devono essere reputate avvenute al più tardi il settimo giorno dopo il primo tentativo di consegna infruttuoso;\nche in ragione del rapporto procedurale pendente in questa sede, la ricorrente doveva infatti aspettarsi l'invio di comunicazioni da parte del Tribunale federale (cfr. DTF 142 IV 286 consid. 1.6.2);\nch'ella non ha versato l'anticipo richiesto, né ha inoltrato alla Cassa del Tribunale federale un'attestazione di Postfinance o della banca che certifichi l'avvenuto addebito;\nche, pertanto, come espressamente indicato nel secondo decreto presidenziale, il ricorso dev'essere dichiarato inammissibile (art. 62 cpv. 3 LTF);\nche le spese inutili sono messe a carico di chi le causa (art. 66 cpv. 3 LTF);\nrichiamato l'art. 108 cpv. 1 lett. a LTF;\nper questi motivi, la Presidente pronuncia:\n1.\nIl ricorso è inammissibile.\n2.\nLe spese giudiziarie di fr. 500.-- sono poste a carico della ricorrente.\n3.\nComunicazione alle parti e alla Corte di appello e di revisione penale del Cantone Ticino.\nLosanna, 2 ottobre 2025\nIn nome della I Corte di diritto penale\ndel Tribunale federale svizzero\nLa Presidente: Jacquemoud-Rossari\nIl Cancelliere: Gadoni",
+  "operator_metadata": {
+    "date": "2025-10-02",
+    "reference": [
+      "6B_662/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "it",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_006_6B-662-2025_2025-10-02.html",
+      "source": "446973/45/2851",
+      "content_length": 3352
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit pénal"
+    },
+    "scrapedate": "2026-06-18",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_006"
+    ],
+    "canton": "CH",
+    "language": "it",
+    "source": "446973/45/2851",
+    "id": "CH_BGer_006_6B-662-2025_2025-10-02",
+    "title": {
+      "de": "Bundesgericht I. Strafrechtliche Abteilung 02.10.2025 6B_662/2025",
+      "it": "Tribunale federale I Corte di diritto penale 02.10.2025 6B_662/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit pénal 02.10.2025 6B_662/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:23:18+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_006_6B-662-2025_2025-10-02.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "339180711f6aba95a5dd2c28067098c59b632ad964c4afcb3ae3df654d05e6c0"
+  }
+}

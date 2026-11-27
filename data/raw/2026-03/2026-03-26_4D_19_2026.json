@@ -1,0 +1,56 @@
+{
+  "id": "4D_19_2026",
+  "case_id": "4D_19/2026",
+  "case_ids": [
+    "4D_19/2026"
+  ],
+  "decision_date": "2026-03-26",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "Definitive Rechtsöffnung",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://26-03-2026-4D_19-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4D_19/2026\nUrteil vom 26. März 2026\nI. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Hurni, Präsident,\nGerichtsschreiber Tanner.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nB.________,\nvertreten durch Rechtsanwalt Achim Beck,\nBeschwerdegegner.\nGegenstand\nDefinitive Rechtsöffnung,\nBeschwerde gegen den Entscheid des Obergerichts des Kantons Thurgau, Einzelrichterin, vom 4. Dezember 2025 (BR.2025.86).\nErwägungen:\n1.\nMit Entscheid vom 4. Dezember 2025 wies das Obergericht des Kantons Thurgau die Beschwerde des Beschwerdeführers gegen den Rechtsöffnungsentscheid des Bezirksgerichts Kreuzlingen vom 13. Oktober 2025 ab.\nDagegen erhob der Beschwerdeführer am 30. Januar 2026 Beschwerde an das Bundesgericht.\n2.\nMit Präsidialverfügung vom 3. Februar 2026 wurde der Beschwerdeführer aufgefordert, spätestens am 18. Februar 2026 einen Kostenvorschuss von Fr. 800.-- für das bundesgerichtliche Verfahren einzuzahlen.\nDa der Kostenvorschuss innerhalb der angesetzten Frist nicht eingegangen war, wurde dem Beschwerdeführer mit Präsidialverfügung vom 24. Februar 2026 eine nicht erstreckbare Nachfrist zur Vorschussleistung bis zum 11. März 2026 angesetzt, unter Hinweis darauf, dass das Bundesgericht bei Säumnis auf das Rechtsmittel nicht eintreten werde (Art. 62 Abs. 3 BGG).\nDer Beschwerdeführer hat den ihm auferlegten Kostenvorschuss auch innerhalb der angesetzten Nachfrist nicht geleistet. Gestützt auf Art. 62 Abs. 3 BGG ist auf die Beschwerde nicht einzutreten (Art. 108 Abs. 1 lit. a BGG).\n3.\nDer Beschwerdeführer wird bei diesem Verfahrensausgang kostenpflichtig (Art. 66 Abs. 1 BGG).\nDer Beschwerdegegner hat keinen Anspruch auf eine Parteientschädigung, da ihm mangels Einholung einer Vernehmlassung aus dem bundesgerichtlichen Verfahren kein entschädigungspflichtiger Aufwand erwachsen ist (Art. 68 Abs. 2 BGG).\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 800.-- werden dem Beschwerdeführer auferlegt.\n3.\nEs wird keine Parteientschädigung zugesprochen.\n4.\nDieses Urteil wird dem Beschwerdeführer und dem Obergericht des Kantons Thurgau, Einzelrichterin, schriftlich mitgeteilt, dem Rechtsvertreter des Beschwerdegegners via PrivaSphere.\nLausanne, 26. März 2026\nIm Namen der I. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Hurni\nDer Gerichtsschreiber: Tanner",
+  "operator_metadata": {
+    "date": "2026-03-26",
+    "reference": [
+      "4D_19/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-19-2026_2026-03-26.html",
+      "source": "446973/45/2829",
+      "content_length": 2810
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_004_4D-19-2026_2026-03-26",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 26.03.2026 4D_19/2026",
+      "it": "Tribunale federale I Corte di diritto civile 26.03.2026 4D_19/2026",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 26.03.2026 4D_19/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:25:20+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-19-2026_2026-03-26.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "77b68986a218eed2aa922161852d060515116bcdc0a7095b65d03410b3a653f3"
+  }
+}

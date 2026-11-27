@@ -1,0 +1,56 @@
+{
+  "id": "5A_860_2025",
+  "case_id": "5A_860/2025",
+  "case_ids": [
+    "5A_860/2025"
+  ],
+  "decision_date": "2025-11-26",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "nullité de la poursuite",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://26-11-2025-5A_860-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5A_860/2025\nArrêt du 26 novembre 2025\nIIe Cour de droit civil\nComposition\nM. le Juge fédéral Bovey, Président.\nGreffière : Mme Hildbrand.\nParticipants à la procédure\nA.________,\nrecourant,\ncontre\nOffice cantonal des poursuites de Genève, rue du Stand 46, 1204 Genève.\nObjet\nnullité de la poursuite,\nrecours contre la décision de la Chambre de surveillance des Offices des poursuites et faillites de la Cour de justice du canton de Genève du 9 septembre 2025 (A/338/2024-CS DCSO/491/25).\nVu :\nle recours interjeté le 6 octobre 2025 par A.________ contre la décision du 9 septembre 2025 de la Chambre de surveillance des Offices des poursuites et faillites de la Cour de justice du canton de Genève;\nl'ordonnance du 8 octobre 2025 invitant le recourant à verser une avance de frais de 3'000 fr. jusqu'au 23 octobre 2025 au plus tard;\nle courrier du recourant du 20 octobre 2025 sollicitant la prolongation de ce délai;\nl'ordonnance du 21 octobre 2025 impartissant au recourant un délai supplémentaire échéant le 7 novembre 2025;\nle courrier du recourant du 1 er novembre 2025 sollicitant une nouvelle prolongation de ce délai;\nl'ordonnance du 10 novembre 2025 rejetant la requête de prolongation de délai du recourant tout en lui impartissant un ultime délai échéant le 19 novembre 2025;\nl'avis de la Poste Suisse selon lequel le courrier contenant l'ordonnance du 10 novembre 2025 n'a pas été réclamé par son destinataire;\nl'avis de la Caisse du Tribunal fédéral du 26 novembre 2025 constatant que l'avance de frais exigée n'avait été ni payée ni créditée sur son compte postal et qu'aucune attestation de débit d'un compte postal ou bancaire ne lui était parvenue;\nConsidérant :\nque l'avance de frais n'a pas été versée dans le délai supplémentaire imparti à cet effet, étant rappelé qu'en application de l'art. 44 al. 2 LTF, une communication qui n'est remise que contre la signature du destinataire ou d'un tiers habilité est réputée reçue au plus tard sept jours après la première tentative infructueuse de distribution;\nque, partant, le présent recours doit être déclaré irrecevable par voie de procédure simplifiée (art. 62 al. 3 LTF, en relation avec l'art. 108 al. 1 let. a LTF);\nque les frais incombent au recourant (art. 66 al. 1 LTF);\nPar ces motifs, le Président prononce :\n1.\nLe recours est irrecevable.\n2.\nLes frais judiciaires, arrêtés à 1'000 fr., sont mis à la charge du recourant.\n3.\nLe présent arrêt est communiqué au recourant, à l'Office cantonal des poursuites de Genève et à la Chambre de surveillance des Offices des poursuites et faillites de la Cour de justice du canton de Genève.\nLausanne, le 26 novembre 2025\nAu nom de la IIe Cour de droit civil\ndu Tribunal fédéral suisse\nLe Président : Bovey\nLa Greffière : Hildbrand",
+  "operator_metadata": {
+    "date": "2025-11-26",
+    "reference": [
+      "5A_860/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-860-2025_2025-11-26.html",
+      "source": "446973/45/2869",
+      "content_length": 3148
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-06-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2869",
+    "id": "CH_BGer_005_5A-860-2025_2025-11-26",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 26.11.2025 5A_860/2025",
+      "it": "Tribunale federale II Corte di diritto civile 26.11.2025 5A_860/2025",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 26.11.2025 5A_860/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:38:45+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-860-2025_2025-11-26.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "1f81e555a5ff2a9ab8e6b98089044d67e09d500dec6d7b0d2b3de8e33925ee12"
+  }
+}

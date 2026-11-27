@@ -1,0 +1,56 @@
+{
+  "id": "6B_904_2025",
+  "case_id": "6B_904/2025",
+  "case_ids": [
+    "6B_904/2025"
+  ],
+  "decision_date": "2025-11-12",
+  "publication_date": null,
+  "department": "I. Strafrechtliche Abteilung",
+  "division": "I. Strafrechtliche Abteilung",
+  "subject": "Einsprache gegen Strafbefehl (Ungehorsam gegen amtliche Verfügungen); Nichteintreten",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://12-11-2025-6B_904-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n6B_904/2025\nUrteil vom 12. November 2025\nI. strafrechtliche Abteilung\nBesetzung\nBundesrichterin Jacquemoud-Rossari, Präsidentin,\nGerichtsschreiberin Arquint Hill.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführerin,\ngegen\nStaatsanwaltschaft Kreuzlingen,\nHauptstrasse 5, 8280 Kreuzlingen.\nGegenstand\nEinsprache gegen Strafbefehl (Ungehorsam gegen amtliche Verfügungen); Nichteintreten,\nBeschwerde gegen den Strafbefehl der Staatsanwaltschaft Kreuzlingen vom 31. Oktober 2025 (SBV_K.2025.2182).\nDie Präsidentin zieht in Erwägung:\n1.\nDie Beschwerdeführerin wendet sich mit Eingabe vom 6. November 2025 gegen den Strafbefehl vom 31. Oktober 2025 und verlangt dessen Überprüfung durch das Bundesgericht, wobei insbesondere ihre finanzielle Notlage und die Mitverantwortung ihres Ehemannes zu berücksichtigen seien. Indessen ist der fragliche Strafbefehl nicht letztinstanzlich (Art. 80 Abs. 1 BGG). Dagegen ist gemäss der Rechtsmittelbelehrung des Strafbefehls Einsprache bei der Staatsanwaltschaft Kreuzlingen zu erheben, was die Beschwerdeführerin nach ihren eigenen Angaben getan hat und weshalb sich eine Weiterleitung ihrer Eingabe an die zuständige Staatsanwaltschaft erübrigt. Auf die Eingabe an das Bundesgericht ist im Lichte des soeben Ausgeführten in Anwendung von Art. 80 Abs. 1 BGG im Verfahren nach Art. 108 BGG nicht einzutreten.\n2.\nAuf eine Kostenauflage ist ausnahmsweise zu verzichten (Art. 66 Abs. 1 BGG). Das Gesuch um unentgeltliche Rechtspflege wird damit gegenstandslos.\nDemnach erkennt die Präsidentin:\n1.\nAuf die Eingabe wird nicht eingetreten.\n2.\nEs werden keine Kosten erhoben.\n3.\nDieses Urteil wird der Beschwerdeführerin und der Staatsanwaltschaft Kreuzlingen schriftlich mitgeteilt.\nLausanne, 12. November 2025\nIm Namen der I. strafrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Präsidentin: Jacquemoud-Rossari\nDie Gerichtsschreiberin: Arquint Hill",
+  "operator_metadata": {
+    "date": "2025-11-12",
+    "reference": [
+      "6B_904/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_006_6B-904-2025_2025-11-12.html",
+      "source": "446973/45/2851",
+      "content_length": 2274
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit pénal"
+    },
+    "scrapedate": "2026-06-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_006"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2851",
+    "id": "CH_BGer_006_6B-904-2025_2025-11-12",
+    "title": {
+      "de": "Bundesgericht I. Strafrechtliche Abteilung 12.11.2025 6B_904/2025",
+      "it": "Tribunale federale I Corte di diritto penale 12.11.2025 6B_904/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit pénal 12.11.2025 6B_904/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:34:47+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_006_6B-904-2025_2025-11-12.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "26fe02fbdd5ab02e4e59bed75d38cfa4720f74205d731b7c0d24e8c9700d04b5"
+  }
+}

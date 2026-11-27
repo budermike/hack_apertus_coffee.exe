@@ -1,0 +1,56 @@
+{
+  "id": "5A_56_2026",
+  "case_id": "5A_56/2026",
+  "case_ids": [
+    "5A_56/2026"
+  ],
+  "decision_date": "2026-02-10",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "levée du placement à des fins d'assistance",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://10-02-2026-5A_56-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5A_56/2026\nOrdonnance du 10 février 2026\nIIe Cour de droit civil\nComposition\nM. le Juge fédéral Bovey, Président.\nGreffier : M. Braconi.\nParticipants à la procédure\nA.________,\nrecourante,\ncontre\nTribunal de protection de l'adulte et de l'enfant du canton de Genève,\nrue des Glacis-de-Rive 6, 1207 Genève.\nObjet\nlevée du placement à des fins d'assistance,\nrecours contre la décision de la Chambre de\nsurveillance de la Cour de justice du canton de Genève du 17 décembre 2025 (C/968/2025-CS, DAS/248/2025).\nVu :\nl'ordonnance du 4 juillet 2025 du Tribunal de protection de l'adulte et de l'enfant du canton de Genève instituant une curatelle de représentation et de gestion en faveur de A.________ (1944);\nl'ordonnance sur mesures superprovisionnelles du 30 septembre 2025 du Tribunal de protection ordonnant le placement à des fins d'assistance de la personne concernée;\nl'ordonnance du 4 décembre 2025 du Tribunal de protection confirmant le placement ordonné sur mesures superprovisionnelles et son exécution à la Clinique de B.________ (ch. 1 et 2);\nla décision du 17 décembre 2025 de la Chambre de surveillance de la Cour de justice du canton de Genève rejetant le recours de la personne concernée à l'encontre de cette décision et ordonnant la levée de son placement \" au plus tard le vendredi 30 janvier 2026\";\nle recours (traité en tant que recours en matière civile) interjeté par la prénommée le 16 janvier 2026 contre la décision cantonale;\nl'écriture complémentaire expédiée le 26 janvier 2026;\nConsidérant :\nque, le placement de la recourante ayant pris fin le 30 janvier 2026 au plus tard, l'intérêt au recours a disparu en cours de procédure;\nque, partant, le présent recours est devenu sans objet et doit être rayé du rôle (art. 72 PCF, applicable par renvoi de l'art. 71 LTF; cf. parmi d'autres: arrêt 5A_730/2024 du 30 octobre 2024 consid. 3);\nque, de surcroît, aucun intérêt virtuel n'est démontré, ni même allégué, en l'occurrence ( cf. à ce sujet: arrêt 5A_640/2021 du 13 octobre 2021 consid. 1.2, non publié in : ATF 148 III 1);\nque le Président de la Cour de céans est compétent pour prendre acte de la perte d'objet du recours (art. 32 al. 1 et 2 LTF);\nque, vu les circonstances de l'espèce, il convient de statuer sans frais judiciaires (art. 66 al. 1, 2ème phrase, LTF);\nPar ces motifs, le Président ordonne :\n1.\nLe recours est sans objet et la cause est rayée du rôle.\n2.\nIl n'est pas perçu de frais judiciaires.\n3.\nLa présente ordonnance est communiquée à la recourante, à l'Office de protection de l'adulte du canton de Genève, au Tribunal de protection de l'adulte et de l'enfant du canton de Genève, au curateur d'office de la recourante (Me C.________) et à la Chambre de surveillance de la Cour de justice du canton de Genève.\nLausanne, le 10 février 2026\nAu nom de la IIe Cour de droit civil\ndu Tribunal fédéral suisse\nLe Président : Bovey\nLe Greffier : Braconi",
+  "operator_metadata": {
+    "date": "2026-02-10",
+    "reference": [
+      "5A_56/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-56-2026_2026-02-10.html",
+      "source": "446973/45/2830",
+      "content_length": 3296
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2830",
+    "id": "CH_BGer_005_5A-56-2026_2026-02-10",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 10.02.2026 5A_56/2026",
+      "it": "Tribunale federale II Corte di diritto civile 10.02.2026 5A_56/2026",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 10.02.2026 5A_56/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:11:53+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-56-2026_2026-02-10.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "a85d51941777d8ecffa203245e16c692746fcb71397e0a4fe0617298e969c11d"
+  }
+}

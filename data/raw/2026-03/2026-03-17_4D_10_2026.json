@@ -1,0 +1,56 @@
+{
+  "id": "4D_10_2026",
+  "case_id": "4D_10/2026",
+  "case_ids": [
+    "4D_10/2026"
+  ],
+  "decision_date": "2026-03-17",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "Rechtsöffnung; Nichtleistung des Kostenvorschusses",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://17-03-2026-4D_10-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4D_10/2026\nUrteil vom 17. März 2026\nI. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Hurni, Präsident,\nGerichtsschreiber Dürst.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nKanton Zürich,\nvertreten durch das Kantonale Steueramt Zürich, Steuerbezug, Bändliweg 21, 8090 Zürich,\nBeschwerdegegner.\nGegenstand\nRechtsöffnung; Nichtleistung des Kostenvorschusses,\nBeschwerde gegen das Urteil des Obergerichts des Kantons Zürich, I. Zivilkammer, vom 4. Dezember 2025 (RT250223-O/U).\nErwägungen:\n1.\nMit Urteil vom 4. Dezember 2025 wies das Obergericht des Kantons Zürich die Beschwerde des Bezirksgerichts Zürich vom 15. Oktober 2025 nicht ein. Dagegen erhob der Beschwerdeführer mit Eingabe vom 16. Januar 2026 Beschwerde an das Bundesgericht.\n2.\nDas Bundesgericht forderte den Beschwerdeführer mit Präsidialverfügung vom 20. Januar 2026 auf, spätestens am 4. Februar 2026 einen Kostenvorschuss von Fr. 500.-- einzuzahlen. Diese Verfügung wurde dem Beschwerdeführer am 29. Januar 2026 am Postschalter zugestellt. Da der Kostenvorschuss innerhalb dieser Frist nicht eingegangen war, wurde dem Beschwerdeführer mit Verfügung vom 12. Februar 2026 eine nicht erstreckbare Nachfrist zur Vorschussleistung bis zum 27. Februar 2026 angesetzt, unter Hinweis darauf, dass das Bundesgericht bei Säumnis auf das Rechtsmittel nicht eintreten werde (Art. 62 Abs. 3 BGG). Diese Verfügung wurde dem Beschwerdeführer am 19. Februar 2026 am Postschalter zugestellt. Der Beschwerdeführer hat den ihm auferlegten Kostenvorschuss auch innerhalb der angesetzten Nachfrist nicht geleistet.\nNachdem der Kostenvorschuss auch innert Nachfrist nicht bezahlt wurde, ist auf die Beschwerde im vereinfachten Verfahren nach Art. 108 Abs. 1 lit. a BGG (androhungsgemäss) gestützt auf Art. 62 Abs. 3 BGG nicht einzutreten.\n3.\nIm Übrigen wäre auf die Beschwerde auch deshalb nicht einzutreten, weil sie den Begründungsanforderungen von Art. 42 Abs. 2 BGG offensichtlich nicht genügt.\n4.\nBei diesem Ausgang des Verfahrens sind die Gerichtskosten dem Beschwerdeführer aufzuerlegen (Art. 66 Abs. 1 BGG). Der Beschwerdegegnerin ist keine Parteientschädigung zuzusprechen (Art. 68 Abs. 3 BGG), zumal ihr mangels Einholung einer Vernehmlassung aus dem bundesgerichtlichen Verfahren kein entschädigungspflichtiger Aufwand erwachsen ist.\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 500.-- werden dem Beschwerdeführer auferlegt.\n3.\nDieses Urteil wird den Parteien und dem Obergericht des Kantons Zürich, I. Zivilkammer, schriftlich mitgeteilt.\nLausanne, 17. März 2026\nIm Namen der I. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Hurni\nDer Gerichtsschreiber: Dürst",
+  "operator_metadata": {
+    "date": "2026-03-17",
+    "reference": [
+      "4D_10/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-10-2026_2026-03-17.html",
+      "source": "446973/45/2829",
+      "content_length": 3150
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_004_4D-10-2026_2026-03-17",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 17.03.2026 4D_10/2026",
+      "it": "Tribunale federale I Corte di diritto civile 17.03.2026 4D_10/2026",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 17.03.2026 4D_10/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:22:08+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-10-2026_2026-03-17.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "c50347eca2427c230d322778c78b4e5851d984ae8a5d0530049f5ae3e9d9e222"
+  }
+}

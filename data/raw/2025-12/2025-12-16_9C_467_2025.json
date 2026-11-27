@@ -1,0 +1,56 @@
+{
+  "id": "9C_467_2025",
+  "case_id": "9C_467/2025",
+  "case_ids": [
+    "9C_467/2025"
+  ],
+  "decision_date": "2025-12-16",
+  "publication_date": null,
+  "department": "IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung)",
+  "division": "IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung)",
+  "subject": "Invalidenversicherung",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://16-12-2025-9C_467-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n9C_467/2025\nVerfügung vom 16. Dezember 2025\nIII. öffentlich-rechtliche Abteilung\nBesetzung\nBundesrichter Stadelmann, als Einzelrichter,\nGerichtsschreiberin Dormann.\nVerfahrensbeteiligte\nA.________,\nvertreten durch Rechtsanwalt Marco Unternährer,\nBeschwerdeführerin,\ngegen\nIV-Stelle Luzern,\nLandenbergstrasse 35, 6005 Luzern,\nBeschwerdegegnerin.\nGegenstand\nInvalidenversicherung,\nBeschwerde gegen das Urteil des Kantonsgerichts Luzern vom 14. Juli 2025 (5V 24 123).\nNach Einsicht\nin das Schreiben vom 28. November 2025, mit dem A.________ die Beschwerde vom 1. September 2025 (Poststempel) gegen das Urteil des Kantonsgerichts Luzern vom 14. Juli 2025 zurückziehen lässt,\nin Erwägung,\ndass die Beschwerde gemäss Art. 71 BGG in Verbindung mit Art. 73 Abs. 1 BZP im Verfahren nach Art. 32 Abs. 2 BGG abzuschreiben ist,\ndass in Anwendung von Art. 66 Abs. 2 BGG auf die Erhebung von Gerichtskosten verzichtet wird,\nverfügt der Einzelrichter:\n1.\nDas Verfahren wird infolge Rückzugs der Beschwerde abgeschrieben.\n2.\nEs werden keine Gerichtskosten erhoben.\n3.\nDiese Verfügung wird den Parteien, dem Kantonsgericht Luzern und dem Bundesamt für Sozialversicherungen schriftlich mitgeteilt.\nLuzern, 16. Dezember 2025\nIm Namen der III. öffentlich-rechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Einzelrichter: Stadelmann\nDie Gerichtsschreiberin: Dormann",
+  "operator_metadata": {
+    "date": "2025-12-16",
+    "reference": [
+      "9C_467/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_009_9C-467-2025_2025-12-16.html",
+      "source": "446973/45/2851",
+      "content_length": 1710
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung)",
+      "it": "Confederazione Tribunale federale IV Corte di diritto pubblico (II Corte di diritto sociale)",
+      "fr": "Conféderation Tribunal fédéral IVe Cour de droit public (IIe Cour de droit social)"
+    },
+    "scrapedate": "2026-06-18",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_009"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2851",
+    "id": "CH_BGer_009_9C-467-2025_2025-12-16",
+    "title": {
+      "de": "Bundesgericht IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung) 16.12.2025 9C_467/2025",
+      "it": "Tribunale federale IV Corte di diritto pubblico (II Corte di diritto sociale) 16.12.2025 9C_467/2025",
+      "fr": "Tribunal fédéral IVe Cour de droit public (IIe Cour de droit social) 16.12.2025 9C_467/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:58:02+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_009_9C-467-2025_2025-12-16.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "356fe43ac9326abd5e75f4a12912b9f0ef86a7f0b9a41965638e7513f77357dd"
+  }
+}

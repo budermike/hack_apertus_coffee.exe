@@ -1,0 +1,56 @@
+{
+  "id": "7B_186_2026",
+  "case_id": "7B_186/2026",
+  "case_ids": [
+    "7B_186/2026"
+  ],
+  "decision_date": "2026-03-30",
+  "publication_date": null,
+  "department": "II. Strafrechtliche Abteilung",
+  "division": "II. Strafrechtliche Abteilung",
+  "subject": "Rechtsverweigerung; Nichteintreten",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://30-03-2026-7B_186-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n7B_186/2026\nUrteil vom 30. März 2026\nII. strafrechtliche Abteilung\nBesetzung\nBundesrichterin Koch, als Einzelrichterin,\nGerichtsschreiberin Sauthier.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nGeneralstaatsanwaltschaft des Kantons Bern, Nordring 8, Postfach, 3001 Bern,\nBeschwerdegegnerin.\nGegenstand\nRechtsverweigerung; Nichteintreten,\nBeschwerde gegen den Beschluss des Obergerichts des Kantons Bern, Beschwerdekammer in Strafsachen, vom 6. Januar 2026 (BK 25 582+583).\nErwägungen:\n1.\nA.________ erhob mit Eingabe vom 10. Februar 2026 Beschwerde in Strafsachen an das Bundesgericht gegen den Beschluss des Obergerichts des Kantons Bern vom 6. Januar 2026 wegen Rechtsverweigerung.\n2.\nEine Partei, die das Bundesgericht anruft, hat einen Kostenvorschuss in der Höhe der mutmasslichen Gerichtskosten zu leisten. Bei Vorliegen besonderer Gründe kann auf die Erhebung des Kostenvorschusses ganz oder teilweise verzichtet werden (Art. 62 Abs. 1 BGG).\n3.\nMit Verfügung vom 17. Februar 2026 wurde dem Beschwerdeführer eine Frist bis zum 5. März 2026 angesetzt, um einen Kostenvorschuss von Fr. 800.-- für das bundesgerichtliche Verfahren zu bezahlen. Da der Kostenvorschuss innert Frist nicht beim Bundesgericht einging, wurde dem Beschwerdeführer mit Verfügung vom 10. März 2026 eine Nachfrist bis zum 23. März 2026 angesetzt, um den einverlangten Kostenvorschuss zu bezahlen, ansonsten auf die Beschwerde nicht eingetreten werde. Bis zum Ablauf der nicht erstreckbaren Nachfrist hat der Beschwerdeführer den Kostenvorschuss nicht geleistet. Androhungsgemäss ist daher gestützt auf Art. 62 Abs. 3 BGG im vereinfachten Verfahren nach Art. 108 BGG auf die Beschwerde nicht einzutreten.\n4.\nBei diesem Ausgang hat der Beschwerdeführer die Kosten des bundesgerichtlichen Verfahrens zu bezahlen (Art. 66 Abs. 1 BGG).\nDemnach erkennt die Einzelrichterin:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 500.-- werden dem Beschwerdeführer auferlegt.\n3.\nDieses Urteil wird den Parteien und dem Obergericht des Kantons Bern, Beschwerdekammer in Strafsachen, schriftlich mitgeteilt.\nLausanne, 30. März 2026\nIm Namen der II. strafrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Einzelrichterin: Koch\nDie Gerichtsschreiberin: Sauthier",
+  "operator_metadata": {
+    "date": "2026-03-30",
+    "reference": [
+      "7B_186/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-186-2026_2026-03-30.html",
+      "source": "446973/45/2834",
+      "content_length": 2694
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit pénal"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_007"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_007_7B-186-2026_2026-03-30",
+    "title": {
+      "de": "Bundesgericht II. Strafrechtliche Abteilung 30.03.2026 7B_186/2026",
+      "it": "Tribunale federale II Corte di diritto penale 30.03.2026 7B_186/2026",
+      "fr": "Tribunal fédéral IIe Cour de droit pénal 30.03.2026 7B_186/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:26:17+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-186-2026_2026-03-30.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "dd2dab47b904101ff1f1b587b18d96c4450b6dc1102d1c6e8e82e492182d88f5"
+  }
+}

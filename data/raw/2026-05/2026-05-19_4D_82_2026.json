@@ -1,0 +1,56 @@
+{
+  "id": "4D_82_2026",
+  "case_id": "4D_82/2026",
+  "case_ids": [
+    "4D_82/2026"
+  ],
+  "decision_date": "2026-05-19",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "contrat de bail",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://19-05-2026-4D_82-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4D_82/2026\nArrêt du 19 mai 2026\nIre Cour de droit civil\nComposition\nM. le Juge fédéral Hurni, président.\nGreffier: M. Carruzzo.\nParticipants à la procédure\nA.________et B.________,\nrecourants,\ncontre\nC.________,\nintimée.\nObjet\ncontrat de bail,\nrecours contre l'arrêt rendu le 9 avril 2026 par la IIe Cour d'appel civil du Tribunal cantonal du canton de Fribourg (102 2026 98).\nConsidérant en fait et en droit:\n1.\nPar décision du 18 mars 2026, le Président du Tribunal des baux de l'arrondissement de la Gruyère a prononcé l'expulsion de A.________et B.________ de tous biens ou occupants de l'appartement et la place de parc extérieure, situés à Bulle, qui leur avaient été remis en location, et autorisé la bailleresse C.________ à avoir recours à la force publique pour procéder à l'exécution de l'expulsion si les prénommés ne libéraient pas les locaux concernés d'ici au 30 juin 2026 à midi.\n2.\nPar arrêt du 9 avril 2026, la IIe Cour d'appel civil du Tribunal cantonal du canton de Fribourg a rejeté le recours interjeté par A.________ et B.________ contre cette décision.\n3.\nLe 11 mai 2026, A.________et B.________ (ci-après: les recourants) ont formé un recours au Tribunal fédéral à l'encontre de cet arrêt.\nLa bailleresse et la cour cantonale n'ont pas été invitées à répondre au recours.\n4.\nLe Tribunal fédéral examine d'office et librement la recevabilité des recours qui lui sont soumis (ATF 138 III 46 consid. 1).\n4.1. À teneur de l'art. 42 al. 1 et 2 de la loi sur le Tribunal fédéral du 17 juin 2005 (LTF; RS 173.110), le recours adressé au Tribunal fédéral doit comprendre des conclusions et il doit être motivé (al. 1); les motifs doivent exposer succinctement en quoi la décision attaquée viole le droit (al. 2). La partie recourante doit discuter les motifs de cette décision et indiquer précisément en quoi elle estime que l'autorité précédente a méconnu le droit (ATF 142 III 364 consid. 2.4 et les références citées).\n4.2. Le présent recours ne satisfait manifestement pas aux exigences de motivation rappelées ci-dessus. On cherche en effet, en vain, dans le mémoire de recours, une critique digne de ce nom des considérations juridiques émises par la cour cantonale pour justifier la solution retenue par elle. Il suit de là que le recours est manifestement irrecevable, ce qu'il y a lieu de constater en procédure simplifiée (art. 108 al. 1 let. b LTF).\n5.\nLes frais judiciaires de la présente procédure seront mis solidairement à la charge des recourants, qui succombent (art. 66 al. 1 et 5 LTF). Il n'y a pas lieu à l'allocation de dépens.\nPar ces motifs, le Président prononce :\n1.\nLe recours est irrecevable.\n2.\nLes frais judiciaires, arrêtés à 800 fr., sont mis solidairement à la charge des recourants.\n3.\nLe présent arrêt est communiqué aux parties et à la IIe Cour d'appel civil du Tribunal cantonal du canton de Fribourg.\nLausanne, le 19 mai 2026\nAu nom de la Ire Cour de droit civil\ndu Tribunal fédéral suisse\nLe Président : Hurni\nLe Greffier : Carruzzo",
+  "operator_metadata": {
+    "date": "2026-05-19",
+    "reference": [
+      "4D_82/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-82-2026_2026-05-19.html",
+      "source": "446973/45/2829",
+      "content_length": 3455
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_004_4D-82-2026_2026-05-19",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 19.05.2026 4D_82/2026",
+      "it": "Tribunale federale I Corte di diritto civile 19.05.2026 4D_82/2026",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 19.05.2026 4D_82/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:39:46+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-82-2026_2026-05-19.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "61d8a70a5cabc729e7cd67196fb0be2c442602fba10de8f07e9a4a8489eb5ebe"
+  }
+}

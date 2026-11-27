@@ -1,0 +1,56 @@
+{
+  "id": "5A_804_2025",
+  "case_id": "5A_804/2025",
+  "case_ids": [
+    "5A_804/2025"
+  ],
+  "decision_date": "2025-10-31",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "Konkurseröffnung",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://31-10-2025-5A_804-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5A_804/2025\nUrteil vom 31. Oktober 2025\nII. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Bovey, Präsident,\nGerichtsschreiber Zingg.\nVerfahrensbeteiligte\nA.________ GmbH in Liquidation,\nBeschwerdeführerin,\ngegen\nSchweizerische Eidgenossenschaft,\nvertreten durch die Kantonale Steuerverwaltung, Hauptstrasse 11/17, 8750 Glarus,\nBeschwerdegegnerin.\nGegenstand\nKonkurseröffnung,\nBeschwerde gegen das Urteil des Obergerichts des Kantons Glarus vom 12. September 2025 (OG.2025.00073).\nErwägungen:\n1.\nMit Verfügung vom 21. August 2025 eröffnete das Kantonsgericht Glarus auf Antrag der Beschwerdegegnerin über die Beschwerdeführerin den Konkurs.\nDagegen erhob die Beschwerdeführerin mit Eingabe vom 22. August 2025 Beschwerde beim Obergericht des Kantons Glarus. Mit Urteil vom 12. September 2025 wies das Obergericht die Beschwerde ab und bestätigte die angefochtene Verfügung.\nAm 17. September 2025 hat die Beschwerdeführerin im damals beim Bundesgericht hängigen Verfahren 5A_751/2025 eine als \"Gesamtnachtrag und Sammel-Nachreichung\" bezeichnete Eingabe eingereicht, in der sie sich auch gegen das Urteil des Obergerichts vom 12. September 2025 gewandt hat. Das Bundesgericht hat in Bezug auf dieses Urteil das Verfahren 5A_804/2025 eröffnet. Mit Verfügung vom 18. September 2025 hat das Bundesgericht die Gesuche um vorsorgliche Massnahmen abgewiesen. Mit einer weiteren Verfügung vom gleichen Tag hat das Bundesgericht die Beschwerdeführerin zur Bezahlung eines Kostenvorschusses von Fr. 5'000.-- aufgefordert. Mit Verfügung vom 10. Oktober 2025 hat das Bundesgericht der Beschwerdeführerin zur Zahlung des Kostenvorschusses eine Nachfrist bis 21. Oktober 2025 angesetzt (unter Androhung des Nichteintretens auf das Rechtsmittel bei nicht rechtzeitiger Bezahlung; Art. 62 Abs. 3 BGG). Die Beschwerdeführerin hat den Kostenvorschuss nicht bezahlt.\n2.\nAndrohungsgemäss ist demnach auf die Beschwerde nicht einzutreten. Der Abteilungspräsident entscheidet darüber im vereinfachten Verfahren (Art. 62 Abs. 3 i.V.m. Art. 108 Abs. 1 lit. a BGG).\n3.\nBei diesem Ausgang des Verfahrens trägt die Beschwerdeführerin die Gerichtskosten, die angesichts des geringen entstandenen Aufwands reduziert werden (Art. 66 Abs. 1 BGG).\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 2'000.-- werden der Beschwerdeführerin auferlegt.\n3.\nDieses Urteil wird den Parteien, dem Betreibungs- und Konkursamt des Kantons Glarus, dem Handelsregisteramt des Kantons Glarus, dem Grundbuchamt des Kantons Glarus und dem Obergericht des Kantons Glarus mitgeteilt.\nLausanne, 31. Oktober 2025\nIm Namen der II. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Bovey\nDer Gerichtsschreiber: Zingg",
+  "operator_metadata": {
+    "date": "2025-10-31",
+    "reference": [
+      "5A_804/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-804-2025_2025-10-31.html",
+      "source": "446973/45/2869",
+      "content_length": 3159
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-06-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2869",
+    "id": "CH_BGer_005_5A-804-2025_2025-10-31",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 31.10.2025 5A_804/2025",
+      "it": "Tribunale federale II Corte di diritto civile 31.10.2025 5A_804/2025",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 31.10.2025 5A_804/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:31:31+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-804-2025_2025-10-31.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "36073473aad985677bfe0b07d6754fb812ba5c1becf1209ca5a06152e6f51410"
+  }
+}

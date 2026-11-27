@@ -1,0 +1,56 @@
+{
+  "id": "8C_586_2025",
+  "case_id": "8C_586/2025",
+  "case_ids": [
+    "8C_586/2025"
+  ],
+  "decision_date": "2025-10-23",
+  "publication_date": null,
+  "department": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "division": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "subject": "Aide sociale (condition de recevabilité)",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://23-10-2025-8C_586-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n8C_586/2025\nArrêt du 23 octobre 2025\nIVe Cour de droit public\nComposition\nM. le Juge fédéral Métral, en qualité de juge unique.\nGreffier : M. Ourny.\nParticipants à la procédure\n1. A.A.________,\n2. B.A.________,\nrecourants,\ncontre\nCentre social régional de Morges-Aubonne-Cossonay,\nrue de Couvaloup 10, 1110 Morges,\nintimé.\nObjet\nAide sociale (condition de recevabilité),\nrecours contre l'arrêt du Tribunal cantonal du canton de Vaud du 21 août 2025 (PS.2025.0035).\nVu :\nle recours formé par A.A.________ et B.A.________ le 2 octobre 2025 (date du timbre postal) contre l'arrêt rendu le 21 août 2025 par la Cour de droit administratif et public du Tribunal cantonal du canton de Vaud,\nconsidérant :\nque le recours contre une décision doit être déposé devant le Tribunal fédéral dans les 30 jours qui suivent la notification de l'expédition complète (art. 100 al. 1 LTF),\nque les délais dont le début dépend d'une communication ou de la survenance d'un événement courent dès le lendemain de celles-ci (art. 44 al. 1 LTF),\nqu'en l'espèce, selon le suivi des envois de la Poste Suisse, l'arrêt attaqué a été notifié aux recourants le lundi 25 août 2025,\nque le délai pour recourir a dès lors commencé à courir le lendemain, soit le mardi 26 août 2025,\nque le délai pour recourir est donc arrivé à échéance le mercredi 24 septembre 2025,\nqu'en postant leur recours à l'adresse du Tribunal fédéral le jeudi 2 octobre 2025, les recourants n'ont pas respecté le délai de recours de 30 jours de l'art. 100 al. 1 LTF,\nque le recours est par conséquent tardif,\nqu'il doit donc être déclaré irrecevable selon la procédure simplifiée de l'art. 108 al. 1 let. a LTF,\nque, vu les circonstances, il convient de renoncer à percevoir des frais judiciaires (art. 66 al. 1, seconde phrase, LTF),\npar ces motifs, le Juge unique prononce :\n1.\nLe recours est irrecevable.\n2.\nIl n'est pas perçu de frais judiciaires.\n3.\nLe présent arrêt est communiqué aux parties, à la Cour de droit administratif et public du Tribunal cantonal du canton de Vaud et à la Direction générale de la cohésion sociale (DGCS).\nLucerne, le 23 octobre 2025\nAu nom de la IVe Cour de droit public\ndu Tribunal fédéral suisse\nLe Juge unique : Métral\nLe Greffier : Ourny",
+  "operator_metadata": {
+    "date": "2025-10-23",
+    "reference": [
+      "8C_586/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-586-2025_2025-10-23.html",
+      "source": "446973/45/2851",
+      "content_length": 2636
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+      "it": "Confederazione Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale)",
+      "fr": "Conféderation Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social)"
+    },
+    "scrapedate": "2026-06-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_008"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2851",
+    "id": "CH_BGer_008_8C-586-2025_2025-10-23",
+    "title": {
+      "de": "Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung) 23.10.2025 8C_586/2025",
+      "it": "Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale) 23.10.2025 8C_586/2025",
+      "fr": "Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social) 23.10.2025 8C_586/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:29:21+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-586-2025_2025-10-23.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "f89cb3d051f6434d6d961618f52e11de1f4e5147116b226bd4d59aca0e14c2a7"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "id": "5A_914_2025",
+  "case_id": "5A_914/2025",
+  "case_ids": [
+    "5A_914/2025"
+  ],
+  "decision_date": "2025-12-05",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "faillite (rejet de la requête d'effet suspensif)",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://05-12-2025-5A_914-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5A_914/2025\nOrdonnance du 5 décembre 2025\nIIe Cour de droit civil\nComposition\nM. le Juge fédéral Bovey, Président.\nGreffière : Mme Dolivo-Bonvin.\nParticipants à la procédure\nA.________ Sàrl en liquidation,\nrecourante,\ncontre\nB.________,\nintimée.\nObjet\nfaillite (rejet de la requête d'effet suspensif),\nrecours contre le prononcé du Président de la Cour des poursuites et faillites du Tribunal cantonal du canton de Vaud du 10 octobre 2025 (FF25.031451).\nConsidérant en fait et en droit :\n1.\nStatuant le 3 octobre 2025 sur requête de B.________, la Présidente du Tribunal d'arrondissement de La Côte a prononcé la faillite de A.________ Sàrl avec effet le jour-même à 14 heures.\nA.________ Sàrl a interjeté recours contre ce jugement par acte du 9 octobre 2025. Elle a préalablement requis que son recours soit assorti de l'effet suspensif, requête qui a été rejetée par le Président de la Cour des poursuites et faillites du Tribunal cantonal du canton de Vaud par prononcé du 10 octobre 2025.\n2.\nPar acte du 21 octobre 2025, A.________ Sàrl exerce un \"recours\" au Tribunal fédéral contre le prononcé du 10 octobre 2025, dont elle conclut à la réforme, en ce sens que le recours cantonal interjeté le 9 octobre 2025 est assorti de l'effet suspensif et que la suspension immédiate de toute mesure de liquidation et le déblocage provisoire de ses comptes bancaires sont ordonnés.\nInvitée à se déterminer sur la requête d'effet suspensif assortissant le recours fédéral, l'intimée a conclu à son rejet. La cour cantonale a déclaré s'en remettre à justice à cet égard.\nIl n'a pas été demandé de réponse sur le fond du recours.\n3.\nPar arrêt du 17 novembre 2025, adressé aux parties par envoi du 26 novembre 2025, la Cour des poursuites et faillites a déclaré irrecevable le recours formé le 9 octobre 2025 par A.________ Sàrl contre le jugement de faillite.\nL'autorité cantonale ayant ainsi statué sur le fond, le présent recours, dirigé à l'encontre de la décision (incidente) refusant d'assortir le recours cantonal de l'effet suspensif est devenu sans objet (ordonnance 5A_446/2025 du 16 juillet 2025 et l'arrêt cité).\n4.\nEn conclusion, le recours doit être déclaré sans objet et la cause rayée du rôle; le Président de la Cour de céans est compétent à cet effet (art. 32 al. 1 et 2 LTF). Vu les circonstances, il sera renoncé à percevoir des frais judiciaires (art. 66 al. 1, 2e phrase LTF). Il n'y a pas lieu d'allouer des dépens aux parties, qui ont chacune procédé sans le concours d'un avocat (ATF 135 III 127 consid. 4).\nPar ces motifs, le Président ordonne :\n1.\nLe recours est sans objet et la cause est rayée du rôle.\n2.\nIl n'est pas perçu de frais judiciaires.\n3.\nLa présente ordonnance est communiquée aux parties, au Président de la Cour des poursuites et faillites du Tribunal cantonal du canton de Vaud, au Conservateur du Registre foncier de La Côte, à l'Office des faillites de l'arrondissement de La Côte, au Registre du commerce du canton de Vaud et à l'Office des poursuites et faillites de Nyon.\nLausanne, le 5 décembre 2025\nAu nom de la IIe Cour de droit civil\ndu Tribunal fédéral suisse\nLe Président : Bovey\nLa Greffière : Dolivo-Bonvin",
+  "operator_metadata": {
+    "date": "2025-12-05",
+    "reference": [
+      "5A_914/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-914-2025_2025-12-05.html",
+      "source": "446973/45/2869",
+      "content_length": 3571
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-06-18",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2869",
+    "id": "CH_BGer_005_5A-914-2025_2025-12-05",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 05.12.2025 5A_914/2025",
+      "it": "Tribunale federale II Corte di diritto civile 05.12.2025 5A_914/2025",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 05.12.2025 5A_914/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:41:36+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-914-2025_2025-12-05.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "7ca7e73570f2cd70317525a69d6a978fd2f2e0533c1966c744d0bb0475f119d9"
+  }
+}

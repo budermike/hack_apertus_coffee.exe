@@ -1,0 +1,56 @@
+{
+  "id": "4A_414_2025",
+  "case_id": "4A_414/2025",
+  "case_ids": [
+    "4A_414/2025"
+  ],
+  "decision_date": "2025-10-29",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "Rechtsöffnung",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://29-10-2025-4A_414-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4A_414/2025\nUrteil vom 29. Oktober 2025\nI. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Hurni, Präsident,\nGerichtsschreiber Dürst.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nB.________,\nBeschwerdegegnerin.\nGegenstand\nRechtsöffnung,\nBeschwerde gegen den Entscheid des Obergerichts\ndes Kantons Aargau, Zivilgericht, 4. Kammer,\nvom 25. Juli 2025 (ZSU.2025.174).\nErwägungen:\n1.\nMit Entscheid vom 25. Juli 2025 trat das Obergericht des Kantons Aargau auf die vom Beschwerdeführer erhobene Beschwerde gegen den abschlägigen Rechtsöffnungsentscheid des Bezirksgerichts Muri vom 16. Juni 2025 nicht ein. Gegen dieses Urteil erhebt der Beschwerdeführer mit Eingabe vom 4. September 2025 (Postaufgabe) Beschwerde an das Bundesgericht.\n2.\nDie Beschwerde ist nicht eigenhändig unterzeichnet. Mit Verfügung vom 5. September 2025 wurde der Beschwerdeführer daher aufgefordert, bis am 16. September 2025 den Unterschriftenmangel zu beheben. Es wurde angedroht, dass die eingereichte Rechtsschrift ansonsten unbeachtet bleibe. Diese Verfügung wurde dem Beschwerdeführer am 10. September 2025 am Schalter zugestellt.\nDa der Unterschriftenmangel innert Frist nicht behoben wurde, ist daher auf die Beschwerde androhungsgemäss im Verfahren nach Art. 108 Abs. 1 lit. a BGG nicht einzutreten.\n3.\nIm Übrigen wäre auf die Beschwerde auch deshalb nicht einzutreten, weil sie den Begründungsanforderungen von Art. 42 Abs. 2 BGG offensichtlich nicht genügt.\n4.\nBei diesem Ausgang des Verfahrens sind die Gerichtskosten dem Beschwerdeführer aufzuerlegen (Art. 66 Abs. 1 BGG). Der Beschwerdegegnerin ist keine Parteientschädigung zuzusprechen, da ihr aus dem bundesgerichtlichen Verfahren kein entschädigungspflichtiger Aufwand erwachsen ist.\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 500.-- werden dem Beschwerdeführer auferlegt.\n3.\nDieses Urteil wird den Parteien und dem Obergericht des Kantons Aargau, Zivilgericht, 4. Kammer, schriftlich mitgeteilt.\nLausanne, 29. Oktober 2025\nIm Namen der I. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Hurni\nDer Gerichtsschreiber: Dürst",
+  "operator_metadata": {
+    "date": "2025-10-29",
+    "reference": [
+      "4A_414/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-414-2025_2025-10-29.html",
+      "source": "446973/45/2869",
+      "content_length": 2593
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-06-18",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2869",
+    "id": "CH_BGer_004_4A-414-2025_2025-10-29",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 29.10.2025 4A_414/2025",
+      "it": "Tribunale federale I Corte di diritto civile 29.10.2025 4A_414/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 29.10.2025 4A_414/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:30:20+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-414-2025_2025-10-29.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "3ada86b233315fb0aa983ca24fa261b1c0d3f78f8bdc938287a90a17ba8dd3b1"
+  }
+}

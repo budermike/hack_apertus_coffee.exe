@@ -1,0 +1,56 @@
+{
+  "id": "7B_3_2026",
+  "case_id": "7B_3/2026",
+  "case_ids": [
+    "7B_3/2026"
+  ],
+  "decision_date": "2026-05-11",
+  "publication_date": null,
+  "department": "II. Strafrechtliche Abteilung",
+  "division": "II. Strafrechtliche Abteilung",
+  "subject": "Ordonnance de non-entrée en matière, irrecevabilité du recours en matière pénale;",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://11-05-2026-7B_3-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n7B_3/2026\nArrêt du 11 mai 2026\nIIe Cour de droit pénal\nComposition\nMme la Juge fédérale Koch, Juge présidant.\nGreffière : Mme Nasel.\nParticipants à la procédure\nA.________,\nrecourante,\ncontre\nMinistère public de l'État de Fribourg,\nplace Notre-Dame 4, 1700 Fribourg,\nintimé.\nObjet\nOrdonnance de non-entrée en matière, irrecevabilité du recours en matière pénale;\nrecours contre l'arrêt de la Chambre pénale du Tribunal cantonal de l'État de Fribourg du 7 novembre 2025\n(502 2025 340).\nFaits :\nA.\nPar arrêt du 7 novembre 2025, la Chambre pénale du Tribunal cantonal de l'État de Fribourg a rejeté dans la mesure de sa recevabilité le recours déposé par A.________ contre l'ordonnance de non-entrée en matière rendue le 19 septembre 2025 par le Ministère public de l'État de Fribourg.\nB.\nPar acte du 12 décembre 2025, complété le 22 décembre 2025, A.________ interjette un recours contre cet arrêt.\nAprès avoir fait part de sa volonté de retirer son recours le 28 janvier 2026, A.________ a indiqué, le 10 février 2026, vouloir \"quand même faire recours\".\nConsidérant en droit :\n1.\n1.1. Le recours contre une décision doit être déposé devant le Tribunal fédéral dans les trente jours qui suivent sa notification (art. 100 al. 1 LTF). Les délais dont le début dépend d'une communication ou de la survenance d'un événement courent dès le lendemain de celles-ci (art. 44 al. 1 LTF). Les mémoires doivent être remis au plus tard le dernier jour du délai, soit au Tribunal fédéral soit, à l'attention de ce dernier, à La Poste Suisse ou à une représentation diplomatique ou consulaire suisse (art. 48 al. 1 LTF).\n1.2. En l'espèce, selon les informations figurant sur l'accusé de réception établi par La Poste Suisse, l'arrêt entrepris a été notifié à la recourante le 12 novembre 2025. Le délai de 30 jours a dès lors commencé à courir le lendemain, soit le 13 novembre 2025, pour arriver à échéance le 12 décembre 2025. Il s'ensuit que le recours posté à l'adresse du Tribunal fédéral le 15 décembre 2025, et a fortiori son complément du 22 décembre 2025, sont tardifs.\n2.\nAu vu de ce qui précède, l'irrecevabilité manifeste du recours doit être constatée selon la procédure simplifiée prévue par l'art. 108 al. 1 let. a LTF. La recourante, qui succombe, supportera les frais judiciaires (art. 66 al. 1 LTF).\nPar ces motifs, la Juge présidant prononce :\n1.\nLe recours est irrecevable.\n2.\nLes frais judiciaires, arrêtés à 800 fr., sont mis à la charge de la recourante.\n3.\nLe présent arrêt est communiqué aux parties et à la Chambre pénale du Tribunal cantonal de l'État de Fribourg.\nLausanne, le 11 mai 2026\nAu nom de la IIe Cour de droit pénal\ndu Tribunal fédéral suisse\nLa Juge présidant : Koch\nLa Greffière : Nasel",
+  "operator_metadata": {
+    "date": "2026-05-11",
+    "reference": [
+      "7B_3/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-3-2026_2026-05-11.html",
+      "source": "446973/45/2834",
+      "content_length": 3186
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit pénal"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_007"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_007_7B-3-2026_2026-05-11",
+    "title": {
+      "de": "Bundesgericht II. Strafrechtliche Abteilung 11.05.2026 7B_3/2026",
+      "it": "Tribunale federale II Corte di diritto penale 11.05.2026 7B_3/2026",
+      "fr": "Tribunal fédéral IIe Cour de droit pénal 11.05.2026 7B_3/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:38:20+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-3-2026_2026-05-11.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "f11b935e37a754a3709374e65b1e400989fb16b27af89f5a8a58604b91fbfcd7"
+  }
+}

@@ -29,6 +29,6 @@ build/
 
 #data
 .data/
-# Crawled court judgements stay local (keep only the empty folder in git)
-data/raw/*
-!data/raw/.gitkeep
+# Temporary / corrupt crawler files stay local; public BGer judgements in data/raw/ are tracked
+data/raw/**/*.tmp
+data/raw/**/*.corrupt-*

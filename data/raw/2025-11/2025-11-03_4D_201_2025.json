@@ -1,0 +1,56 @@
+{
+  "id": "4D_201_2025",
+  "case_id": "4D_201/2025",
+  "case_ids": [
+    "4D_201/2025"
+  ],
+  "decision_date": "2025-11-03",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "mainlevée; retrait du recours",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://03-11-2025-4D_201-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4D_201/2025\nOrdonnance du 3 novembre 2025\nIre Cour de droit civil\nComposition\nM. le Juge fédéral Hurni, Président.\nGreffier : M. Douzals.\nParticipantes à la procédure\nA.________,\nrecourante,\ncontre\nChambre civile de la Cour de justice du canton de Genève,\nplace du Bourg-de-Four 1, 1204 Genève,\nintimée.\nObjet\nmainlevée; retrait du recours,\nrecours contre la décision rendue le 13 octobre 2025 par la Chambre civile de la Cour de justice du canton de Genève (C/21080/2025, DCJC/917/2025).\nConsidérant en fait et en droit :\n1.\nLe 14 octobre 2025, A.________ (ci-après: la recourante) a formé recours contre la décision rendue le 13 octobre 2025 par la Chambre civile de la Cour de justice du canton de Genève.\nPar ordonnance présidentielle du 16 octobre 2025, la recourante a été invitée à verser une avance de frais de 500 fr. d'ici au 31 octobre 2025.\nLe 30 octobre 2025, la recourante a retiré son recours.\n2.\nLe juge instructeur statue comme juge unique sur la radiation du rôle des procédures devenues sans objet ou achevées par un retrait ou une transaction judiciaire (art. 32 al. 2 LTF).\nEn l'espèce, il y a lieu de prendre acte du retrait du recours et de rayer la cause du rôle.\n3.\nLorsque la cause est rayée du rôle en raison du retrait du recours, la partie recourante est réputée avoir succombé au sens de l'art. 66 al. 1, 1re phr., LTF (GRÉGORY BOVEY, in Commentaire de la LTF, 3e éd. 2022, no 38 ad art. 66 LTF). Si l'affaire est liquidée en raison du retrait du recours, les frais judiciaires peuvent être réduits ou remis (art. 66 al. 2 LTF).\nAu vu des circonstances, il ne sera pas perçu de frais judiciaires ni alloué de dépens.\npar ces motifs, le Président ordonne :\n1.\nIl est pris acte du retrait du recours.\n2.\nLa cause 4D_201/2025 est rayée du rôle.\n3.\nIl n'est pas perçu de frais judiciaires.\n4.\nIl n'est pas alloué de dépens.\n5.\nLa présente ordonnance est communiquée à la recourante et à la Chambre civile de la Cour de justice du canton de Genève.\nLausanne, le 3 novembre 2025\nAu nom de la Ire Cour de droit civil\ndu Tribunal fédéral suisse\nLe Président : Hurni\nLe Greffier : Douzals",
+  "operator_metadata": {
+    "date": "2025-11-03",
+    "reference": [
+      "4D_201/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-201-2025_2025-11-03.html",
+      "source": "446973/45/2869",
+      "content_length": 2543
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-06-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2869",
+    "id": "CH_BGer_004_4D-201-2025_2025-11-03",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 03.11.2025 4D_201/2025",
+      "it": "Tribunale federale I Corte di diritto civile 03.11.2025 4D_201/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 03.11.2025 4D_201/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:31:48+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-201-2025_2025-11-03.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "fc6914b41dc3e71ca69bab5719610fbb4ade3b9e6c7a06e5d310ffaae5d17f47"
+  }
+}

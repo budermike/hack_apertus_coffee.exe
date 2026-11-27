@@ -1,0 +1,56 @@
+{
+  "id": "6B_918_2025",
+  "case_id": "6B_918/2025",
+  "case_ids": [
+    "6B_918/2025"
+  ],
+  "decision_date": "2025-12-23",
+  "publication_date": null,
+  "department": "I. Strafrechtliche Abteilung",
+  "division": "I. Strafrechtliche Abteilung",
+  "subject": "Einsprache gegen Strafbefehl, Gültigkeit der Einsprache; Rückzug",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://23-12-2025-6B_918-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n6B_918/2025\nVerfügung vom 23. Dezember 2025\nI. strafrechtliche Abteilung\nBesetzung\nBundesrichterin Jacquemoud-Rossari, Präsidentin,\nGerichtsschreiber Boller.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nOberstaatsanwaltschaft des Kantons Luzern, Postfach 3439, 6002 Luzern,\nBeschwerdegegnerin.\nGegenstand\nEinsprache gegen Strafbefehl, Gültigkeit der Einsprache; Rückzug,\nBeschwerde gegen die Verfügung des Kantonsgerichts Luzern, 1. Abteilung, vom 10. November 2025 (2N 25 159/2U 25 55).\nDie Präsidentin zieht in Erwägung:\n1.\nDie Beschwerde vom 13. November 2025 gegen die Verfügung des Kantonsgerichts Luzern vom 10. November 2025 wurde mit undatierter Eingabe (Posteingang am 23. Dezember 2025) zurückgezogen. Das Verfahren ist infolge Beschwerderückzugs abzuschreiben.\n2.\nAuf die Erhebung von Gerichtskosten kann in Anwendung von Art. 66 Abs. 2 BGG verzichtet werden.\nDemnach verfügt die Präsidentin:\n1.\nDas Verfahren wird infolge Rückzugs der Beschwerde abgeschrieben.\n2.\nEs werden keine Kosten erhoben.\n3.\nDiese Verfügung wird den Parteien und dem Kantonsgericht Luzern, 1. Abteilung, schriftlich mitgeteilt.\nLausanne, 23. Dezember 2025\nIm Namen der I. strafrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Präsidentin: Jacquemoud-Rossari\nDer Gerichtsschreiber: Boller",
+  "operator_metadata": {
+    "date": "2025-12-23",
+    "reference": [
+      "6B_918/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_006_6B-918-2025_2025-12-23.html",
+      "source": "446973/45/2851",
+      "content_length": 1684
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit pénal"
+    },
+    "scrapedate": "2026-06-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_006"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2851",
+    "id": "CH_BGer_006_6B-918-2025_2025-12-23",
+    "title": {
+      "de": "Bundesgericht I. Strafrechtliche Abteilung 23.12.2025 6B_918/2025",
+      "it": "Tribunale federale I Corte di diritto penale 23.12.2025 6B_918/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit pénal 23.12.2025 6B_918/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:00:12+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_006_6B-918-2025_2025-12-23.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "09885d4ba5740e2262f5e57afee74974a482958a8a2412f24927b2fd17a1884d"
+  }
+}

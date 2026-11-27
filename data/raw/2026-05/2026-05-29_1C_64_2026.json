@@ -1,0 +1,56 @@
+{
+  "id": "1C_64_2026",
+  "case_id": "1C_64/2026",
+  "case_ids": [
+    "1C_64/2026"
+  ],
+  "decision_date": "2026-05-29",
+  "publication_date": null,
+  "department": "I. Öffentlich-rechtliche Abteilung",
+  "division": "I. Öffentlich-rechtliche Abteilung",
+  "subject": "Permis de construire",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://29-05-2026-1C_64-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n1C_64/2026\nOrdonnance du 29 mai 2026\nIre Cour de droit public\nComposition\nM. le Juge fédéral Müller, Juge présidant.\nGreffier : M. Parmelin.\nParticipants à la procédure\nA.________ SA,\nreprésentée par Me Julien Guignard, avocat,\nrecourante,\ncontre\nB.B.________ et C.B.________,\nreprésentés par Me Valentin Aebischer et\nMe Guillaume Hess, avocats,\nintimés,\nPréfecture du district de la Glâne,\nrue du Château 108, 1680 Romont,\nCommune de Romont,\nrue du Château 93, 1680 Romont.\nObjet\nPermis de construire,\nrecours contre l'arrêt de la IIe Cour administrative\ndu Tribunal cantonal de l'État de Fribourg du\n11 décembre 2025 (602 2025 5).\nVu :\nles décisions du Préfet du district de la Glâne du 18 novembre 2024 qui délivre à A.________ SA les permis de construire deux immeubles de dix-sept logements avec parking souterrain sur la parcelle n° 2096 de la commune de Romont et qui rejette les oppositions,\nl'arrêt de la IIe Cour administrative du Tribunal cantonal de l'État de Fribourg du 11 décembre 2025 qui annule ces décisions sur recours des opposants B.B.________ et C.B.________,\nle recours en matière de droit public déposé par A.________ SA contre cet arrêt,\nles déterminations du Tribunal cantonal, de la Commune de Romont et des intimés,\nla lettre du 28 mai 2026 par laquelle A.________ SA déclare retirer son recours;\nconsidérant :\nqu'il sied de prendre acte du retrait du recours et de rayer la cause du rôle (art. 73 PCF par renvoi de l'art. 71 LTF; art. 32 al. 2 LTF),\nque celui qui retire un recours doit en principe être considéré comme une partie succombante, en principe astreinte au paiement des frais de procédure encourus jusque-là, en application de la règle générale de l'art. 66 al. 1 LTF,\nqu'il n'y a aucun motif de déroger à cette règle,\nqu'au vu de l'avancement de la cause et des actes d'instruction effectués, il convient d'arrêter les frais judiciaires à la charge de la recourante à 800 fr. (art. 5 al. 2 PCF, par renvoi de l'art. 71 LTF; art. 66 al. 2 LTF),\nque les intimés, représentés par des mandataires professionnels, ont déposé une réponse circonstanciée au recours et ont en conséquence droit à des dépens, à la charge de la recourante, qui seront fixés à 2'000 fr. (art. 68 al. 1, 2 et 4 LTF);\npar ces motifs, le Juge présidant ordonne :\n1.\nLa cause est rayée du rôle par suite de retrait du recours.\n2.\nLes frais judiciaires, arrêtés à 800 fr., sont mis à la charge de la recourante.\n3.\nLa recourante versera aux intimés, créanciers solidaires, une indemnité de 2'000 fr. à titre de dépens.\n4.\nLa présente ordonnance est communiquée aux mandataires des parties, à la Préfecture du district de la Glâne, à la Commune de Romont et à la IIe Cour administrative du Tribunal cantonal de l'État de Fribourg.\nLausanne, le 29 mai 2026\nAu nom de la Ire Cour de droit public\ndu Tribunal fédéral suisse\nLe Juge présidant : Müller\nLe Greffier : Parmelin",
+  "operator_metadata": {
+    "date": "2026-05-29",
+    "reference": [
+      "1C_64/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_001_1C-64-2026_2026-05-29.html",
+      "source": "446973/45/2829",
+      "content_length": 3294
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Öffentlich-rechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto pubblico",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit public"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_001"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_001_1C-64-2026_2026-05-29",
+    "title": {
+      "de": "Bundesgericht I. Öffentlich-rechtliche Abteilung 29.05.2026 1C_64/2026",
+      "it": "Tribunale federale I Corte di diritto pubblico 29.05.2026 1C_64/2026",
+      "fr": "Tribunal fédéral Ire Cour de droit public 29.05.2026 1C_64/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:15:52+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_001_1C-64-2026_2026-05-29.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "ba46007ef44b09dcc30f74b0398b805727dd842d2ab16e86e44ce5e518f28910"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "id": "9C_703_2025",
+  "case_id": "9C_703/2025",
+  "case_ids": [
+    "9C_703/2025"
+  ],
+  "decision_date": "2026-01-07",
+  "publication_date": null,
+  "department": "IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung)",
+  "division": "IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung)",
+  "subject": "Krankenversicherung",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://07-01-2026-9C_703-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n9C_703/2025\nUrteil vom 7. Januar 2026\nIII. öffentlich-rechtliche Abteilung\nBesetzung\nBundesrichterin Moser-Szeless, Präsidentin,\nGerichtsschreiber Traub.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nVivao Sympany AG, Peter Merian-Weg 4, 4052 Basel,\nBeschwerdegegnerin.\nGegenstand\nKrankenversicherung,\nBeschwerde gegen das Urteil des Sozialversicherungsgerichts des Kantons Zürich vom 18. September 2025.\nErwägungen:\n1.\nA.________ reichte am 25. November 2025 beim Bundesgericht eine Beschwerde in öffentlich-rechtlichen Angelegenheiten ein. Laut dieser Eingabe richtet sich das Rechtsmittel gegen ein Urteil des Sozialversicherungsgerichts des Kantons Zürich vom 18. September 2025. Das Bundesgericht hat den Beschwerdeführer mit Verfügung vom 26. November 2025 darauf hingewiesen, dass er den angefochtenen Entscheid der Rechtsschrift nicht beigelegt hat (vgl. Art. 42 Abs. 3 BGG), und ihn aufgefordert, diesen Mangel spätestens bis am 8. Dezember 2025 zu beheben, ansonsten die Rechtsschrift unbeachtet bleibe (Art. 42 Abs. 5 BGG). Der Beschwerdeführer hat den Formmangel innerhalb der angesetzten Frist (vgl. Art. 44 ff. BGG) nicht behoben.\n2.\nDamit ist im vereinfachten Verfahren nach Art. 108 Abs. 1 lit. a BGG auf die Beschwerde nicht einzutreten.\n3.\nBei diesem Ausgang des Verfahrens wird der Beschwerdeführer grundsätzlich kostenpflichtig. Indessen ist in Anwendung von Art. 66 Abs. 1 zweiter Satz BGG umständehalber auf die Erhebung von Gerichtskosten zu verzichten.\nDemnach erkennt die Präsidentin:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nEs werden keine Gerichtskosten erhoben.\n3.\nDieses Urteil wird den Parteien, dem Sozialversicherungsgericht des Kantons Zürich und dem Bundesamt für Gesundheit schriftlich mitgeteilt.\nLuzern, 7. Januar 2026\nIm Namen der III. öffentlich-rechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Präsidentin: Moser-Szeless\nDer Gerichtsschreiber: Traub",
+  "operator_metadata": {
+    "date": "2026-01-07",
+    "reference": [
+      "9C_703/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_009_9C-703-2025_2026-01-07.html",
+      "source": "446973/45/2834",
+      "content_length": 2326
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung)",
+      "it": "Confederazione Tribunale federale IV Corte di diritto pubblico (II Corte di diritto sociale)",
+      "fr": "Conféderation Tribunal fédéral IVe Cour de droit public (IIe Cour de droit social)"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_009"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_009_9C-703-2025_2026-01-07",
+    "title": {
+      "de": "Bundesgericht IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung) 07.01.2026 9C_703/2025",
+      "it": "Tribunale federale IV Corte di diritto pubblico (II Corte di diritto sociale) 07.01.2026 9C_703/2025",
+      "fr": "Tribunal fédéral IVe Cour de droit public (IIe Cour de droit social) 07.01.2026 9C_703/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:01:56+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_009_9C-703-2025_2026-01-07.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "a7a39c2b3fb1576e85c7ff3134f89c2efbff5aa31a6515245226612eb7ab65e7"
+  }
+}

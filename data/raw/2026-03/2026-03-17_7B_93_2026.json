@@ -1,0 +1,56 @@
+{
+  "id": "7B_93_2026",
+  "case_id": "7B_93/2026",
+  "case_ids": [
+    "7B_93/2026"
+  ],
+  "decision_date": "2026-03-17",
+  "publication_date": null,
+  "department": "II. Strafrechtliche Abteilung",
+  "division": "II. Strafrechtliche Abteilung",
+  "subject": "Nichtanhandnahme; Nichteintreten",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://17-03-2026-7B_93-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n7B_93/2026\nUrteil vom 17. März 2026\nII. strafrechtliche Abteilung\nBesetzung\nBundesrichterin Koch, als Einzelrichterin,\nGerichtsschreiber Clément.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nOberstaatsanwaltschaft des Kantons Solothurn, Franziskanerhof, Barfüssergasse 28, Postfach 157, 4502 Solothurn,\nBeschwerdegegnerin.\nGegenstand\nNichtanhandnahme; Nichteintreten,\nBeschwerde gegen den Beschluss des Obergerichts des Kantons Solothurn, Beschwerdekammer, vom 7. Januar 2026 (BKBES.2025.185).\nErwägungen:\n1.\nMit Beschluss vom 7. Januar 2026 wies das Obergericht des Kantons Solothurn die Beschwerde des Beschwerdeführers gegen die Nichtanhandnahmeverfügung der Staatsanwaltschaft des Kantons Solothurn vom 27. November 2025 ab. Der Beschwerdeführer gelangte dagegen mit Beschwerde in Strafsachen vom 21. Januar 2026 (Postaufgabe) an das Bundesgericht.\n2.\nDiese Eingabe ist mangels eines Zivilanspruchs, der dem Beschwerdeführer zustehen und der ihn zur Beschwerde in Strafsachen berechtigen könnte (Art. 81 Abs. 1 lit. b Ziff. 5 BGG; BGE 146 IV 76 E. 3.1; 133 IV 228 E. 2.3.3; 131 I 455 E. 1.2.4; je mit Hinweisen; § 2 des Gesetzes über die Haftung des Staates, der Gemeinden, der öffentlich-rechtlichen Körperschaften und Anstalten und die Verantwortlichkeit der Behörden, Beamten und öffentlichen Angestellten und Arbeiter des Kantons Solothurn [Verantwortlichkeitsgesetzes; BGS 124.21]), offensichtlich unzulässig. Auf die Beschwerde ist im vereinfachten Verfahren nicht einzutreten (Art. 108 Abs. 1 lit. a BGG). Die Begründung des Entscheids beschränkt sich auf eine kurze Angabe des Unzulässigkeitsgrundes (Art. 108 Abs. 3 BGG).\n3.\nDie Gerichtskosten sind dem Beschwerdeführer aufzuerlegen (Art. 66 Abs. 1 BGG). Das Gesuch um unentgeltliche Rechtspflege ist wegen offensichtlicher Aussichtslosigkeit der Begehren abzuweisen (Art. 64 Abs. 1 BGG). Den finanziellen Verhältnissen des Beschwerdeführers ist bei der Bemessung der Gerichtskosten Rechnung zu tragen (Art. 65 Abs. 2 BGG).\nDemnach erkennt die Einzelrichterin:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDas Gesuch um unentgeltliche Rechtspflege wird abgewiesen.\n3.\nDie Gerichtskosten von Fr. 300.-- werden dem Beschwerdeführer auferlegt.\n4.\nDieses Urteil wird den Parteien und dem Obergericht des Kantons Solothurn, Beschwerdekammer, schriftlich mitgeteilt.\nLausanne, 17. März 2026\nIm Namen der II. strafrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Einzelrichterin: Koch\nDer Gerichtsschreiber: Clément",
+  "operator_metadata": {
+    "date": "2026-03-17",
+    "reference": [
+      "7B_93/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-93-2026_2026-03-17.html",
+      "source": "446973/45/2834",
+      "content_length": 2921
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit pénal"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_007"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_007_7B-93-2026_2026-03-17",
+    "title": {
+      "de": "Bundesgericht II. Strafrechtliche Abteilung 17.03.2026 7B_93/2026",
+      "it": "Tribunale federale II Corte di diritto penale 17.03.2026 7B_93/2026",
+      "fr": "Tribunal fédéral IIe Cour de droit pénal 17.03.2026 7B_93/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:22:23+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-93-2026_2026-03-17.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "c3a18284ad40ea23f04665a45a9187c022f23aadaf4e6883daaade448c91e873"
+  }
+}

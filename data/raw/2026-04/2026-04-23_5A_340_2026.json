@@ -1,0 +1,56 @@
+{
+  "id": "5A_340_2026",
+  "case_id": "5A_340/2026",
+  "case_ids": [
+    "5A_340/2026"
+  ],
+  "decision_date": "2026-04-23",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "changement de curateur provisoire",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://23-04-2026-5A_340-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5A_340/2026\nOrdonnance du 23 avril 2026\nIIe Cour de droit civil\nComposition\nM. le Juge fédéral Bovey, Président.\nGreffière : Mme Mairot.\nParticipants à la procédure\nA.________,\nrecourant,\ncontre\nJuge de paix des districts du Jura-Nord vaudois et du Gros-de-Vaud,\nrue des Moulins 10, 1400 Yverdon-les-Bains,\nB.________,\ncuratrice auprès du SCTP, Région Nord, rue des Moulins 32, 1400 Yverdon-les-Bains.\nObjet\nchangement de curateur provisoire,\nrequête d'effet suspensif concernant l'arrêt de la Chambre des curatelles du Tribunal cantonal du canton de Vaud du 2 avril 2026 (QC23.001941-260426 n° 86).\nVu :\nla décision rendue le 17 février 2026 par le Juge de paix du district du Gros-de-Vaud désignant B.________, responsable de mandats auprès du Service des curatelles et tutelles professionnelles (ci-après: SCTP), en qualité de curatrice provisoire à forme des art. 390 et 445 CC, de A.________, au motif que les fonctions au SCTP de son ancienne curatrice avaient pris fin;\nl'arrêt de la Chambre des curatelles du Tribunal cantonal du canton de Vaud du 2 avril 2026 rejetant, dans la mesure de sa recevabilité, le recours interjeté par l'intéressé contre cette décision;\nla requête d'effet suspensif déposée par celui-ci le 18 avril 2026;\nl'art. 103 al. 3 LTF;\nConsidérant :\nque l'octroi de l'effet suspensif suppose qu'un recours soit pendant, de sorte qu'une telle mesure ne saurait être ordonnée en présence d'une simple intention de recourir ultérieurement (parmi d'autres: ordonnance 4A_392/2025 du 26 août 2025);\nque la pratique de la Cour de céans est cependant plus souple lorsque la requête d'effet suspensif (ou de mesures provisionnelles) comporte des griefs exposés succinctement, que la partie requérante se réserve de compléter jusqu'à l'expiration du délai de recours (parmi d'autres: ordonnance 5A_240/2026 du 18 mars 2026 et les références);\nque la question de savoir ce qu'il en est dans le cas présent peut rester indécise, dès lors que le requérant se contente d'affirmer que \" la pesée des intérêts en présence command[e] la suspension faute d'urgence et pour éviter un préjudice irréparable \";\nque la requête tendant à l'attribution de l'effet suspensif ne comporte ainsi aucune motivation quant au préjudice irréparable que la mesure sollicitée devrait prévenir;\nque, par ailleurs, aucun élément manifeste ne justifie impérativement un tel prononcé;\nque, supposée recevable, la requête d'effet suspensif doit donc être rejetée;\nque le requérant, qui succombe, supportera les frais judiciaires (art. 66 al. 1 LTF).\nPar ces motifs, le Président ordonne :\n1.\nLa requête d'effet suspensif est rejetée.\n2.\nLes frais judiciaires, arrêtés à 500 fr., sont mis à la charge du requérant.\n3.\nLa présente ordonnance est communiquée au requérant, au Juge de paix des districts du Jura-Nord vaudois et du Gros-de-Vaud, à B.________ et à la Chambre des curatelles du Tribunal cantonal du canton de Vaud.\nLausanne, le 23 avril 2026\nAu nom de la IIe Cour de droit civil\ndu Tribunal fédéral suisse\nLe Président : Bovey\nLa Greffière : Mairot",
+  "operator_metadata": {
+    "date": "2026-04-23",
+    "reference": [
+      "5A_340/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-340-2026_2026-04-23.html",
+      "source": "446973/45/2830",
+      "content_length": 3437
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2830",
+    "id": "CH_BGer_005_5A-340-2026_2026-04-23",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 23.04.2026 5A_340/2026",
+      "it": "Tribunale federale II Corte di diritto civile 23.04.2026 5A_340/2026",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 23.04.2026 5A_340/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:32:33+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-340-2026_2026-04-23.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "4988a7069f6cba140c5c0ff2d9a6608a975b411329db1c9be31a66c170e91958"
+  }
+}

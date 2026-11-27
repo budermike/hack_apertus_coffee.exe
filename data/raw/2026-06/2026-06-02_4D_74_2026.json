@@ -1,0 +1,56 @@
+{
+  "id": "4D_74_2026",
+  "case_id": "4D_74/2026",
+  "case_ids": [
+    "4D_74/2026"
+  ],
+  "decision_date": "2026-06-02",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "Mietvertrag; Exmission",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://02-06-2026-4D_74-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4D_74/2026\nVerfügung vom 2. Juni 2026\nI. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Hurni, Präsident,\nGerichtsschreiber Widmer.\nVerfahrensbeteiligte\nA.________,\nGesuchsgegnerin,\ngegen\nB.________,\nvertreten durch Rechtsanwalt Dr. Fabrizio Andrea Liechti,\nGesuchstellerin.\nGegenstand\nMietvertrag; Exmission,\nEingabe betreffend den Entscheid des Obergerichts des Kantons Bern, 1. Zivilkammer, vom 21. April 2026\n(ZK 26 200).\nErwägungen:\n1.\nDie Gesuchsgegnerin reichte am 26. April 2026 beim Obergericht des Kantons Bern eine vom 23. April 2026 datierte Eingabe betreffend den Entscheid des Obergerichts des Kantons Bern vom 21. April 2026 (ZK 26 200) ein. Das Obergericht leitete die Eingabe mit Schreiben vom 29. April 2026 zuständigkeitshalber an das Bundesgericht weiter. Dieses eröffnete in dieser Angelegenheit ein Verfahren unter der Nummer 4D_74/2026.\nMit Schreiben vom 5. Mai 2026 wurde der Gesuchsgegnerin mitgeteilt, dass aus ihrer Eingabe nicht klar hervorgehe, ob sie gegen den genannten Entscheid vom 21. April 2026 beim Bundesgericht Beschwerde erheben wolle. Sie wurde aufgefordert, dem Bundesgericht bis zum 22. Mai 2026 schriftlich mitzuteilen, ob ihre Eingabe so zu verstehen ist, dass sie die Durchführung eines formellen Beschwerdeverfahrens vor Bundesgericht wünscht.\nMit Schreiben vom 21. Mai 2026 teilte die Gesuchsgegnerin mit, dass sie auf das Einreichen einer Beschwerde in der rubrizierten Angelegenheit verzichte, und machte \"zuhanden der Akten und der Gegenpartei\" verschiedene Ausführungen\n2.\nDas Verfahren 4D_74/2026 ist somit als erledigt abzuschreiben (Art. 32 Abs. 2 BGG). Auf die Erhebung von Gerichtskosten ist zu verzichten (Art. 66 Abs. 1 zweiter Satz BGG). Parteientschädigungen sind nicht zuzusprechen (Art. 68 BGG).\nDemnach verfügt der Präsident:\n1.\nDas Verfahren 4D_74/2026 wird als erledigt abgeschrieben.\n2.\nEs werden keine Gerichtskosten erhoben und es wird keine Parteientschädigung gesprochen.\n3.\nDiese Verfügung wird den Parteien und dem Obergericht des Kantons Bern, 1. Zivilkammer, schriftlich mitgeteilt, der Gesuchstellerin unter Beilage eines Doppels des Schreibens vom 21. Mai 2026 (act. 5).\nLausanne, 2. Juni 2026\nIm Namen der I. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Hurni\nDer Gerichtsschreiber: Widmer",
+  "operator_metadata": {
+    "date": "2026-06-02",
+    "reference": [
+      "4D_74/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-74-2026_2026-06-02.html",
+      "source": "446973/45/2829",
+      "content_length": 2697
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_004_4D-74-2026_2026-06-02",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 02.06.2026 4D_74/2026",
+      "it": "Tribunale federale I Corte di diritto civile 02.06.2026 4D_74/2026",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 02.06.2026 4D_74/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:43:00+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-74-2026_2026-06-02.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "f4922e210f86437ad492207f4cdcf685f5f30385c9bf241b8b85efeba5063d64"
+  }
+}

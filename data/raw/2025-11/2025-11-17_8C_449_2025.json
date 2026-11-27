@@ -1,0 +1,56 @@
+{
+  "id": "8C_449_2025",
+  "case_id": "8C_449/2025",
+  "case_ids": [
+    "8C_449/2025"
+  ],
+  "decision_date": "2025-11-17",
+  "publication_date": null,
+  "department": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "division": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "subject": "Invalidenversicherung (Prozessvoraussetzung)",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://17-11-2025-8C_449-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n8C_449/2025\nUrteil vom 17. November 2025\nIV. öffentlich-rechtliche Abteilung\nBesetzung\nBundesrichterin Viscione, Präsidentin,\nGerichtsschreiber Grünvogel.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nIV-Stelle Basel-Landschaft,\nHauptstrasse 109, 4102 Binningen,\nBeschwerdegegnerin.\nGegenstand\nInvalidenversicherung (Prozessvoraussetzung),\nBeschwerde gegen das Urteil des Kantonsgerichts Basel-Landschaft vom 27. März 2025 (720 24 212).\nNach Einsicht\nin die Beschwerde vom 15. August 2025 gegen das Urteil des Kantonsgerichts Basel-Landschaft vom 27. März 2025,\nin die Verfügung vom 25. September 2025, mit welcher in Ablehnung des mit der Beschwerdeerhebung gestellten Gesuchs um unentgeltliche Rechtspflege A.________ zur Bezahlung eines Kostenvorschusses innert gesetzter Frist verpflichtet wurde,\nin die Verfügung vom 27. Oktober 2025, mit welcher A.________ zur Bezahlung des Kostenvorschusses innert einer Nachfrist bis zum 7. November 2025 verpflichtet wurde, ansonsten auf das Rechtsmittel nicht eingetreten werde,\nin Erwägung,\ndass der Beschwerdeführer den Vorschuss auch innerhalb der Nachfrist nicht geleistet hat,\ndass deshalb gestützt auf Art. 62 Abs. 3 BGG im vereinfachten Verfahren nach Art. 108 Abs. 1 lit. a BGG auf die Beschwerde nicht einzutreten ist und in Anwendung von Art. 66 Abs. 1 Satz 2 BGG auf die Erhebung von Gerichtskosten verzichtet wird,\nerkennt die Präsidentin:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nEs werden keine Gerichtskosten erhoben.\n3.\nDieses Urteil wird den Parteien, dem Kantonsgericht Basel-Landschaft, Abteilung Sozialversicherungsrecht, und dem Bundesamt für Sozialversicherungen schriftlich mitgeteilt.\nLuzern, 17. November 2025\nIm Namen der IV. öffentlich-rechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Präsidentin: Viscione\nDer Gerichtsschreiber: Grünvogel",
+  "operator_metadata": {
+    "date": "2025-11-17",
+    "reference": [
+      "8C_449/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-449-2025_2025-11-17.html",
+      "source": "446973/45/2851",
+      "content_length": 2235
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+      "it": "Confederazione Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale)",
+      "fr": "Conféderation Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social)"
+    },
+    "scrapedate": "2026-06-18",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_008"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2851",
+    "id": "CH_BGer_008_8C-449-2025_2025-11-17",
+    "title": {
+      "de": "Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung) 17.11.2025 8C_449/2025",
+      "it": "Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale) 17.11.2025 8C_449/2025",
+      "fr": "Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social) 17.11.2025 8C_449/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:36:10+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-449-2025_2025-11-17.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "3fae591d7d801eb6c8258a07d3e169b289b1b6541f145b6bf7cd53555e2f1c9b"
+  }
+}

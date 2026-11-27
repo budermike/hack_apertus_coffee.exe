@@ -1,0 +1,56 @@
+{
+  "id": "4A_639_2025",
+  "case_id": "4A_639/2025",
+  "case_ids": [
+    "4A_639/2025"
+  ],
+  "decision_date": "2026-03-04",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "Rechtsöffnung; Rückzug der Beschwerde",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://04-03-2026-4A_639-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4A_639/2025\nVerfügung vom 4. März 2026\nI. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Hurni, Präsident,\nGerichtsschreiber Dürst.\nVerfahrensbeteiligte\nA.________ Sàrl,\nvertreten durch Rechtsanwältin Nadine Mounir Broccard,\nBeschwerdeführerin,\ngegen\nB.________ Sàrl,\nvertreten durch Rechtsanwalt Nicolas Rivard,\nBeschwerdegegnerin.\nGegenstand\nRechtsöffnung; Rückzug der Beschwerde,\nBeschwerde gegen den Entscheid des Kantonsgerichts Wallis, Zivilkammer, vom 10. November 2025\n(C3 25 123).\nErwägungen:\n1.\nDie Beschwerdeführerin erhob mit Eingabe vom 11. Dezember 2025 Beschwerde gegen den Entscheid des Kantonsgerichts Wallis vom 10. November 2025. Gleichzeitig ersuchte sie darum, es sei der Beschwerde die aufschiebende Wirkung zu gewähren.\nMit Verfügung vom 15. Dezember 2025 wurde der Beschwerdeführerin Frist zur Leistung eines Kostenvorschusses bis zum 15. Januar 2026 angesetzt. Mit Verfügung vom 13. Januar 2026 wurde ihr diese Frist bis zum 4. Februar 2026 erstreckt. Mit Verfügung vom 10. Februar 2026 wurde der Beschwerdeführerin eine Nachfrist zur Vorschussleistung bis zum 25. Februar 2026 angesetzt.\nMit Verfügung vom 15. Dezember 2025 wurde der Beschwerdegegnerin Frist zur Beantwortung der Beschwerde und des Gesuchs um aufschiebende Wirkung bis zum 21. Januar 2026 angesetzt. Mit Verfügung vom 21. Januar 2026 wurde ihr diese Frist bis zum 11. Februar 2026 erstreckt. Die Beschwerdegegnerin hat sich innert Frist nicht vernehmen lassen.\nMit Eingabe vom 10. Februar 2026 erklärte die Beschwerdeführerin dem Bundesgericht, sie ziehe ihre Beschwerde zurück.\n2.\nAufgrund des erklärten Rückzugs ist das Verfahren als erledigt abzuschreiben (Art. 32 Abs. 2 BGG).\n3.\nDie Beschwerdeführerin wird dafür kostenpflichtig (Art. 66 Abs. 1 und 2 BGG). Der Beschwerdegegnerin ist keine Parteientschädigung zuzusprechen, da ihr im Zusammenhang mit dem bundesgerichtlichen Verfahren kein entschädigungspflichtiger Aufwand entstanden ist (Art. 68 BGG).\nDemnach verfügt der Präsident:\n1.\nDas Verfahren 4A_639/2025 wird infolge Rückzugs der Beschwerde abgeschrieben.\n2.\nDie Gerichtskosten von Fr. 500.-- werden der Beschwerdeführerin auferlegt.\n3.\nEs wird keine Parteientschädigung zugesprochen.\n4.\nDiese Verfügung wird den Parteien und dem Kantonsgericht Wallis, Zivilkammer, schriftlich mitgeteilt.\nLausanne, 4. März 2026\nIm Namen der I. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Hurni\nDer Gerichtsschreiber: Dürst",
+  "operator_metadata": {
+    "date": "2026-03-04",
+    "reference": [
+      "4A_639/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-639-2025_2026-03-04.html",
+      "source": "446973/45/2829",
+      "content_length": 2885
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_004_4A-639-2025_2026-03-04",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 04.03.2026 4A_639/2025",
+      "it": "Tribunale federale I Corte di diritto civile 04.03.2026 4A_639/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 04.03.2026 4A_639/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:18:36+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-639-2025_2026-03-04.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "d99f86d98b07efe59b27102d08bf66930ade946a171d26c7a86d0c2f03e01ff2"
+  }
+}

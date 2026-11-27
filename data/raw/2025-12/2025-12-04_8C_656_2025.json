@@ -1,0 +1,56 @@
+{
+  "id": "8C_656_2025",
+  "case_id": "8C_656/2025",
+  "case_ids": [
+    "8C_656/2025"
+  ],
+  "decision_date": "2025-12-04",
+  "publication_date": null,
+  "department": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "division": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "subject": "Sozialhilfe (Prozessvoraussetzung)",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://04-12-2025-8C_656-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n8C_656/2025\nUrteil vom 4. Dezember 2025\nIV. öffentlich-rechtliche Abteilung\nBesetzung\nBundesrichterin Viscione, Präsidentin,\nGerichtsschreiber Grünvogel.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführerin,\ngegen\nGemeinde Stäfa, vertreten durch die Sozialbehörde Stäfa, Goethestrasse 16, 8712 Stäfa,\nBeschwerdegegnerin.\nGegenstand\nSozialhilfe (Prozessvoraussetzung),\nBeschwerde gegen die Verfügung des Verwaltungsgerichts des Kantons Zürich vom 23. Oktober 2025 (VB.2025.00678).\nErwägungen:\n1.\nGemäss Art. 42 Abs. 1 und 2 BGG hat die Beschwerde unter anderem die Begehren und deren Begründung zu enthalten, wobei in gedrängter Form darzulegen ist, inwiefern der angefochtene Akt Recht verletzt. Dies bedingt bei angefochtenen Nichteintretensverfügungen praxisgemäss eine spezifische Auseinandersetzung mit den Nichteintretensgründen (BGE 123 V 335).\n2.\nDas kantonale Gericht trat mit Verfügung vom 23. Oktober 2025 auf die als Beschwerde entgegengenommene E-Mail vom 17. Oktober 2025 nicht ein. Zur Begründung führte es aus, einerseits erfülle die E-Mail die vom kantonalen Recht vorgegebenen Gültigkeitsvoraussetzungen nicht, was aber Voraussetzung dafür wäre, dass auf die Ausführungen überhaupt eingegangen werden könnte. Überdies fehle es an einem tauglichen Anfechtungsobjekt. Soweit um aufsichtsrechtliche Massnahmen ersucht werde, komme dem Verwaltungsgericht ohnehin keine Aufsichtsfunktion zu.\n3.\nInwiefern das vorinstanzliche Nichteintreten rechtsfehlerhaft sein soll, legt die Beschwerdeführerin in ihren zahlreichen Eingaben nicht ansatzweise dar. Allein ausserhalb davon Liegendes vorzutragen, zielt an der Sache vorbei.\n4.\nDa dieser Begründungsmangel offensichtlich ist, führt dies zu einem Nichteintreten auf das Rechtsmittel im vereinfachten Verfahren nach Art. 108 Abs. 1 lit. b BGG.\n5.\nDas Gesuch um unentgeltliche Rechtspflege ist wegen aussichtsloser Beschwerdeführung abzuweisen (Art. 64 Abs. 1 BGG).\nIn Anwendung von Art. 66 Abs. 1 Satz 2 BGG kann indessen ausnahmsweise auf die Erhebung von Gerichtskosten verzichtet werden.\n6.\nDas Gericht behält sich vor, weitere gleichartige Eingaben inskünftig unbeantwortet abzulegen.\nDemnach erkennt die Präsidentin:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDas Gesuch um unentgeltliche Rechtspflege wird abgewiesen.\n3.\nEs werden keine Gerichtskosten erhoben.\n4.\nDieses Urteil wird den Parteien und dem Verwaltungsgericht des Kantons Zürich schriftlich mitgeteilt.\nLuzern, 4. Dezember 2025\nIm Namen der IV. öffentlich-rechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Präsidentin: Viscione\nDer Gerichtsschreiber: Grünvogel",
+  "operator_metadata": {
+    "date": "2025-12-04",
+    "reference": [
+      "8C_656/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-656-2025_2025-12-04.html",
+      "source": "446973/45/2851",
+      "content_length": 3078
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+      "it": "Confederazione Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale)",
+      "fr": "Conféderation Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social)"
+    },
+    "scrapedate": "2026-06-18",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_008"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2851",
+    "id": "CH_BGer_008_8C-656-2025_2025-12-04",
+    "title": {
+      "de": "Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung) 04.12.2025 8C_656/2025",
+      "it": "Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale) 04.12.2025 8C_656/2025",
+      "fr": "Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social) 04.12.2025 8C_656/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:41:25+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-656-2025_2025-12-04.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "595473f410e3bafe6448439fd247f2b2dff725f1c0054c6a1652653f66f8da6a"
+  }
+}

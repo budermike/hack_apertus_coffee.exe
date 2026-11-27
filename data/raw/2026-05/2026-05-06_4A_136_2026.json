@@ -1,0 +1,56 @@
+{
+  "id": "4A_136_2026",
+  "case_id": "4A_136/2026",
+  "case_ids": [
+    "4A_136/2026"
+  ],
+  "decision_date": "2026-05-06",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "Mieterausweisung",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://06-05-2026-4A_136-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4A_136/2026\nUrteil vom 6. Mai 2026\nI. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Hurni, Präsident,\nGerichtsschreiber Leemann.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführerin,\ngegen\nB.________,\nBeschwerdegegner,\nC.________,\nweiterer Verfahrensbeteiligter.\nGegenstand\nMieterausweisung,\nBeschwerde gegen das Urteil des Kantonsgerichts Luzern, 1. Abteilung, vom 12. März 2026 (1B 26 1).\nErwägungen:\n1.\nMit Entscheid vom 21. Januar 2026 verpflichtete das Bezirksgericht Hochdorf die Beschwerdeführerin und den Verfahrensbeteiligten, das Mietobjekt Loft Nr. xxx im 3. Obergeschoss inkl. Parkplatz Nr. xxx in der Tiefgarage der Liegenschaft U.________ in V.________ innert zehn Tagen seit Rechtskraft des Entscheids zu räumen, zu reinigen und zu verlassen und dem Beschwerdegegner sämtliche Schlüssel des Mietobjekts zurückzugeben.\nMit Urteil vom 12. März 2026 wies das Kantonsgericht Luzern eine von der Beschwerdeführerin und vom Verfahrensbeteiligten gegen den bezirksgerichtlichen Entscheid vom 21. Januar 2026 erhobene Berufung ab, soweit es darauf eintrat.\nMit Eingabe vom 19. März 2026 erklärte die Beschwerdeführerin dem Bundesgericht, das Urteil des Kantonsgerichts Luzern vom 12. März 2026 mit Beschwerde anfechten zu wollen.\nMit Verfügung vom 23. März 2026 wies das Bundesgericht das Gesuch der Beschwerdeführerin um Gewährung der aufschiebenden Wirkung ab.\nEs wurden keine Vernehmlassungen eingeholt.\n2.\nDie Eingabe der Beschwerdeführerin vom 19. März 2026 erfüllt die Begründungsanforderungen, die an eine Beschwerde an das Bundesgericht gestellt werden, offensichtlich nicht (Art. 42 Abs. 2 und Art. 106 Abs. 2 BGG; BGE 142 III 364 E. 2.4; 140 III 86 E. 2, 115 E. 2).\nAuf die Beschwerde ist somit mangels hinreichender Begründung im vereinfachten Verfahren nicht einzutreten (Art. 108 Abs. 1 lit. b BGG).\n3.\nUnter den gegebenen Umständen ist ausnahmsweise auf die Erhebung von Gerichtskosten zu verzichten (Art. 66 Abs. 1 zweiter Satz BGG). Dem Beschwerdegegner steht keine Parteientschädigung zu, da ihm aus dem bundesgerichtlichen Verfahren kein Aufwand erwachsen ist (Art. 68 Abs. 2 BGG).\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nEs werden keine Gerichtskosten erhoben.\n3.\nEs wird keine Parteientschädigung zugesprochen.\n4.\nDieses Urteil wird den Parteien, dem Verfahrensbeteiligten und dem Kantonsgericht Luzern, 1. Abteilung, schriftlich mitgeteilt.\nLausanne, 6. Mai 2026\nIm Namen der I. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Hurni\nDer Gerichtsschreiber: Leemann",
+  "operator_metadata": {
+    "date": "2026-05-06",
+    "reference": [
+      "4A_136/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-136-2026_2026-05-06.html",
+      "source": "446973/45/2829",
+      "content_length": 3003
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_004_4A-136-2026_2026-05-06",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 06.05.2026 4A_136/2026",
+      "it": "Tribunale federale I Corte di diritto civile 06.05.2026 4A_136/2026",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 06.05.2026 4A_136/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:18:41+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-136-2026_2026-05-06.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "096e1ce83fdab2b3964874bff2ca7901782c23989fef09dbbb3e9aefcf15c610"
+  }
+}

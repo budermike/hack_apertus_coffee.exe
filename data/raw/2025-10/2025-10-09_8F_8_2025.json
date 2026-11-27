@@ -1,0 +1,56 @@
+{
+  "id": "8F_8_2025",
+  "case_id": "8F_8/2025",
+  "case_ids": [
+    "8F_8/2025"
+  ],
+  "decision_date": "2025-10-09",
+  "publication_date": null,
+  "department": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "division": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "subject": "Sozialhilfe (Prozessvoraussetzung)",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://09-10-2025-8F_8-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n8F_8/2025\nUrteil vom 9. Oktober 2025\nIV. öffentlich-rechtliche Abteilung\nBesetzung\nBundesrichterin Viscione, Präsidentin,\nGerichtsschreiber Grünvogel.\nVerfahrensbeteiligte\nA.________,\nGesuchsteller,\ngegen\nSozialausschuss Zurzach,\nHauptstrasse 50, 5330 Bad Zurzach,\nGesuchsgegner.\nGegenstand\nSozialhilfe (Prozessvoraussetzung),\nRevisionsgesuch gegen das Urteil des Schweizerischen Bundesgerichts vom 4. Oktober 2024 (8C_487/2024 [Verfügung WBE.2024.246]).\nNach Einsicht\nin das Revisionsgesuch vom 2. Juni 2025 (Poststempel) gegen das Urteil des Schweizerischen Bundesgerichts vom 4. Oktober 2024,\nin die Verfügung vom 2. Juli 2025, mit welcher das mit dem Revisionsgesuch gestellte Gesuch um unentgeltliche Rechtspflege abgewiesen und eine Frist zur Bezahlung eines Kostenvorschusses von Fr. 500.- gesetzt wurde,\nin die Verfügung vom 5. September 2025, mit welcher A.________ zur Bezahlung eines Kostenvorschusses innert einer Nachfrist bis zum 26. September 2025 verpflichtet wurde, ansonsten auf das Rechtsmittel nicht eingetreten werde,\nin Erwägung,\ndass der Gesuchsteller den Vorschuss auch innerhalb der Nachfrist nicht geleistet hat,\ndass deshalb gestützt auf Art. 62 Abs. 3 BGG im vereinfachten Verfahren nach Art. 108 Abs. 1 lit. a BGG auf das Revisionsgesuch nicht einzutreten ist und der Gesuchsteller nach Art. 66 Abs. 1 und 3 BGG kostenpflichtig wird,\nerkennt die Präsidentin:\n1.\nAuf das Revisionsgesuch wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 200.- werden dem Gesuchsteller auferlegt.\n3.\nDieses Urteil wird den Parteien, dem Verwaltungsgericht des Kantons Aargau und dem Departement Gesundheit und Soziales des Kantons Aargau schriftlich mitgeteilt.\nLuzern, 9. Oktober 2025\nIm Namen der IV. öffentlich-rechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Präsidentin: Viscione\nDer Gerichtsschreiber: Grünvogel",
+  "operator_metadata": {
+    "date": "2025-10-09",
+    "reference": [
+      "8F_8/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8F-8-2025_2025-10-09.html",
+      "source": "446973/45/2851",
+      "content_length": 2237
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+      "it": "Confederazione Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale)",
+      "fr": "Conféderation Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social)"
+    },
+    "scrapedate": "2026-06-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_008"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2851",
+    "id": "CH_BGer_008_8F-8-2025_2025-10-09",
+    "title": {
+      "de": "Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung) 09.10.2025 8F_8/2025",
+      "it": "Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale) 09.10.2025 8F_8/2025",
+      "fr": "Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social) 09.10.2025 8F_8/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:25:34+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8F-8-2025_2025-10-09.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "46b78f13dd796d6a9b237d2895c43d131d05449829a294d9a6b64ad233c3e777"
+  }
+}

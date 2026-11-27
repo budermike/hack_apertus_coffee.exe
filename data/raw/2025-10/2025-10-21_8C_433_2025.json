@@ -1,0 +1,56 @@
+{
+  "id": "8C_433_2025",
+  "case_id": "8C_433/2025",
+  "case_ids": [
+    "8C_433/2025"
+  ],
+  "decision_date": "2025-10-21",
+  "publication_date": null,
+  "department": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "division": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "subject": "Prestation complémentaire à l'AVS/AI (condition de recevabilité)",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://21-10-2025-8C_433-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n8C_433/2025\nArrêt du 21 octobre 2025\nIVe Cour de droit public\nComposition\nM. le Juge fédéral Métral, en qualité de juge unique.\nGreffière : Mme von Zwehl.\nParticipants à la procédure\nA.________,\nrecourant,\ncontre\nService des prestations complémentaires, route de Chêne 54, 1208 Genève,\nintimé.\nObjet\nPrestation complémentaire à l'AVS/AI (condition de recevabilité),\nrecours contre le jugement de la Cour de justice de la République et canton de Genève du 25 janvier 2023 (A/738/2022 ATAS/37/2023).\nConsidérant en fait et en droit :\n1.\nPar arrêt du 25 janvier 2023, la Chambre des assurances sociales de la Cour de Justice de la République et canton de Genève a rejeté le recours formé par A.________ contre la décision sur opposition du 2 février 2022 du Service des prestations complémentaires.\nPar courrier expédié le 31 juillet 2025 au Tribunal fédéral, A.________ déclare interjeter un recours contre cet arrêt.\n2.\nSelon l'art. 108 al. 1 let. a LTF, le président de la cour décide en procédure simplifiée de ne pas entrer en matière sur les recours manifestement irrecevables; il peut confier cette tâche à un autre juge (art. 108 al. 2 LTF).\n3.\n3.1. Le recours contre une décision doit être déposé devant le Tribunal fédéral dans les trente jours qui suivent la notification de l'expédition complète (art. 100 al. 1 LTF). Les délais dont le début dépend d'une communication - comme en l'espèce - ou de la survenance d'un événement courent dès le lendemain de celles-ci (art. 44 al. 1 LTF). Le mémoire de recours doit être remis au plus tard le dernier jour du délai soit au Tribunal fédéral soit, à l'attention de ce dernier, à La Poste Suisse ou à une représentation diplomatique ou consulaire suisse (art. 48 al. 1 LTF).\n3.2. En l'occurrence, selon l'extrait du suivi des envois de La Poste Suisse, le pli contenant l'exemplaire de l'arrêt attaqué a été expédié le vendredi 27 janvier 2023 à l'adresse du recourant, qui l'a réceptionné le lundi 30 janvier 2023. Le délai de recours de 30 jours est donc arrivé à échéance le mercredi 1er mars 2023.\nIl s'ensuit que le recours, expédié au Tribunal fédéral le 31 juillet 2025, est manifestement hors délai, ce qui entraîne son irrecevabilité.\n4.\nAu regard des circonstances, il convient de renoncer à percevoir des frais judiciaires (art. 66 al. 1 seconde phrase LTF),\nPar ces motifs, le Juge unique prononce :\n1.\nLe recours est irrecevable.\n2.\nIl n'est pas perçu de frais judiciaires.\n3.\nLe présent arrêt est communiqué aux parties, à la Chambre des assurances sociales de la Cour de justice de la République et canton de Genève et à l'Office fédéral des assurances sociales.\nLucerne, le 21 octobre 2025\nAu nom de la IVe Cour de droit public\ndu Tribunal fédéral suisse\nLe Juge unique : Métral\nLa Greffière : von Zwehl",
+  "operator_metadata": {
+    "date": "2025-10-21",
+    "reference": [
+      "8C_433/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-433-2025_2025-10-21.html",
+      "source": "446973/45/2851",
+      "content_length": 3225
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+      "it": "Confederazione Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale)",
+      "fr": "Conféderation Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social)"
+    },
+    "scrapedate": "2026-06-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_008"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2851",
+    "id": "CH_BGer_008_8C-433-2025_2025-10-21",
+    "title": {
+      "de": "Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung) 21.10.2025 8C_433/2025",
+      "it": "Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale) 21.10.2025 8C_433/2025",
+      "fr": "Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social) 21.10.2025 8C_433/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:28:22+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-433-2025_2025-10-21.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "3b6d74a257c1a91fdd1a5458b236616bc1c26f1a8aab2a35c5dcf9e371e60247"
+  }
+}

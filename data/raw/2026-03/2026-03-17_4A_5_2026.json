@@ -1,0 +1,56 @@
+{
+  "id": "4A_5_2026",
+  "case_id": "4A_5/2026",
+  "case_ids": [
+    "4A_5/2026"
+  ],
+  "decision_date": "2026-03-17",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "responsabilité civile; retrait du recours",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://17-03-2026-4A_5-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4A_5/2026\nOrdonnance du 17 mars 2026\nIre Cour de droit civil\nComposition\nM. le Juge fédéral Hurni, président.\nGreffier: M. Carruzzo.\nParticipants à la procédure\nA.________,\nreprésenté par Me Michael Anders, avocat,\nrecourant,\ncontre\n1. B.________ AG,\nreprésentée par Me Jean-Rodolphe Fiechter, avocat,\n2. C.________ SA,\nreprésentée par Me Michel Bergmann, avocat,\nintimées.\nObjet\nresponsabilité civile; retrait du recours,\nrecours en matière civile contre l'arrêt rendu le 27 octobre 2025 par la Chambre civile de la Cour de justice du canton de Genève\n(C/7971/2019 ACJC/1570/2025).\nConsidérant en fait et en droit:\n1.\nLe 5 janvier 2026, A.________ (ci-après: le recourant) a formé un recours en matière civile à l'encontre de l'arrêt rendu le 27 octobre 2025 par la Chambre civile de la Cour de justice du canton de Genève dans le cadre du litige divisant le prénommé d'avec B.________ AG et C.________ SA.\nLa demande d'assistance judiciaire présentée par le recourant a été rejetée par ordonnance du 24 février 2026.\nPar ordonnance présidentielle du 26 février 2026, le recourant a été invité à verser une avance de frais de 7'000 fr. dans un délai échéant le 13 mars 2026.\nLe 16 mars 2026, le recourant a informé la Cour de céans qu'il retirait son recours.\n2.\nAux termes de l'art. 32 al. 2 LTF, le juge instructeur statue comme juge unique sur la radiation du rôle des procédures achevées par un retrait.\nEn l'occurrence, le recourant a indiqué retirer son recours. Par conséquent, il y a lieu de prendre acte de ce retrait et de rayer la cause du rôle.\nLorsque la cause est rayée du rôle en raison du retrait du recours, la partie recourante est réputée avoir succombé au sens de l'art. 66 al. 1 LTF. Si l'affaire est liquidée en raison du retrait du recours, les frais judiciaires peuvent être réduits ou remis (art. 66 al. 2 LTF). Au vu des circonstances, des frais judiciaires réduits seront mis à la charge du recourant. Il n'y a pas lieu à l'allocation de dépens.\nPar ces motifs, le Président de la Ire Cour de droit civil ordonne :\n1.\nIl est pris acte du retrait du recours.\n2.\nLa cause 4A_5/2026 est rayée du rôle.\n3.\nLes frais judiciaires, arrêtés à 800 fr., sont mis à la charge du recourant.\n4.\nLa présente ordonnance est communiquée aux mandataires des parties et à la Chambre civile de la Cour de justice du canton de Genève.\nLausanne, le 17 mars 2026\nAu nom de la Ire Cour de droit civil\ndu Tribunal fédéral suisse\nLe Président : Hurni\nLe Greffier : O. Carruzzo",
+  "operator_metadata": {
+    "date": "2026-03-17",
+    "reference": [
+      "4A_5/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-5-2026_2026-03-17.html",
+      "source": "446973/45/2829",
+      "content_length": 2888
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_004_4A-5-2026_2026-03-17",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 17.03.2026 4A_5/2026",
+      "it": "Tribunale federale I Corte di diritto civile 17.03.2026 4A_5/2026",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 17.03.2026 4A_5/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:22:07+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-5-2026_2026-03-17.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "e06e942ae90cb195fb3a8c94b7eb6bd279bf718d9106ea504a3dbf506e89b6d4"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "id": "6B_989_2025",
+  "case_id": "6B_989/2025",
+  "case_ids": [
+    "6B_989/2025"
+  ],
+  "decision_date": "2026-02-11",
+  "publication_date": null,
+  "department": "I. Strafrechtliche Abteilung",
+  "division": "I. Strafrechtliche Abteilung",
+  "subject": "Einsprache gegen Strafbefehl; Gültigkeit der Einsprache (SVG-Widerhandlungen usw.); Nichteintreten",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://11-02-2026-6B_989-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n6B_989/2025\nUrteil vom 11. Februar 2026\nI. strafrechtliche Abteilung\nBesetzung\nBundesrichter von Felten, als präsidierendes Mitglied,\nGerichtsschreiberin Arquint Hill.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nStaatsanwaltschaft des Kantons St. Gallen, Spisergasse 15, 9001 St. Gallen,\nBeschwerdegegnerin.\nGegenstand\nEinsprache gegen Strafbefehl; Gültigkeit der Einsprache (SVG-Widerhandlungen usw.); Nichteintreten,\nBeschwerde gegen den Entscheid der Anklagekammer des Kantons St. Gallen vom 27. November 2025 (AK.2025.576-AK).\nDas präsidierende Mitglied zieht in Erwägung:\n1.\nDer Beschwerdeführer reichte mit Eingabe vom 15. Dezember 2025 Beschwerde gegen den Entscheid der Anklagekammer des Kantons St. Gallen vom 27. November 2025 ein.\n2.\nDie Partei, die das Bundesgericht anruft, hat einen Kostenvorschuss zu bezahlen (Art. 62 Abs. 1 BGG).\n3.\nDer Beschwerdeführer wurde mit Verfügung vom 18. Dezember 2025 aufgefordert, dem Bundesgericht spätestens am 16. Januar 2026 einen Kostenvorschuss von Fr. 800.-- einzuzahlen. Die mit Gerichtsurkunde (GU) versandete Verfügung konnte zugestellt werden. Da der Kostenvorschuss innert Frist nicht einging, wurde dem Beschwerdeführer mit Verfügung vom 23. Januar 2026 die gesetzlich vorgeschriebene nicht erstreckbare Nachfrist bis zum 3. Februar 2026 angesetzt, um den Kostenvorschuss zu bezahlen, unter Androhung, dass ansonsten auf das Rechtsmittel nicht eingetreten werde (vgl. Art. 62 Abs. 3 BGG). Der Beschwerdeführer holte die mittels GU versandte Verfügung auf der Post nicht ab. Da er mit gerichtlichen Zustellungen rechnen musste, gilt sie als zugestellt. Der Kostenvorschuss ging auch innert der Nachfrist nicht ein. Auf die Beschwerde ist folglich androhungsgemäss im Verfahren nach Art. 108 BGG nicht einzutreten.\n4.\nDie Gerichtskosten sind dem Beschwerdeführer aufzuerlegen (Art. 66 Abs. 1 BGG).\nDemnach erkennt das präsidierende Mitglied:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 500.-- werden dem Beschwerdeführer auferlegt.\n3.\nDieses Urteil wird den Parteien und der Anklagekammer des Kantons St. Gallen schriftlich mitgeteilt.\nLausanne, 11. Februar 2026\nIm Namen der I. strafrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDas präsidierende Mitglied: von Felten\nDie Gerichtsschreiberin: Arquint Hill",
+  "operator_metadata": {
+    "date": "2026-02-11",
+    "reference": [
+      "6B_989/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_006_6B-989-2025_2026-02-11.html",
+      "source": "446973/45/2834",
+      "content_length": 2740
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit pénal"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_006"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_006_6B-989-2025_2026-02-11",
+    "title": {
+      "de": "Bundesgericht I. Strafrechtliche Abteilung 11.02.2026 6B_989/2025",
+      "it": "Tribunale federale I Corte di diritto penale 11.02.2026 6B_989/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit pénal 11.02.2026 6B_989/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:12:31+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_006_6B-989-2025_2026-02-11.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "2f2eba5ef797d841479353156179a7fe155d2beecea8b5d70324602e965310e9"
+  }
+}

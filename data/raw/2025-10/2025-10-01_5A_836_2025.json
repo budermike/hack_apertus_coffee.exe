@@ -1,0 +1,56 @@
+{
+  "id": "5A_836_2025",
+  "case_id": "5A_836/2025",
+  "case_ids": [
+    "5A_836/2025"
+  ],
+  "decision_date": "2025-10-01",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "mesures superprovisionnelles (autorité parentale)",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://01-10-2025-5A_836-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5A_836/2025\nArrêt du 1er octobre 2025\nIIe Cour de droit civil\nComposition\nM. le Juge fédéral Bovey, Président.\nGreffière : Mme Mairot.\nParticipants à la procédure\nA.A.________, née (...),\nrecourante,\ncontre\nB.A.________,\nintimé.\nObjet\nmesures superprovisionnelles (autorité parentale),\nrecours contre l'arrêt de la Juge unique de la Cour d'appel civile du Tribunal cantonal du canton de Vaud\ndu 28 août 2025 (TD23.029192-251079 n° 378).\nVu :\nl'ordonnance de mesures superprovisionnelles rendue le 21 août 2025 par la Présidente du Tribunal de l'arrondissement de Lausanne dans la cause divisant A.A.________, née (...), d'avec B.A.________, aux termes de laquelle la mère exercera un droit de visite sur l'enfant C.A.________, née le 22 juin 2014, un week-end sur deux, du samedi à 09h00 au dimanche à 18h00, à charge pour elle d'aller la chercher là où elle se trouve et de l'y ramener, l'ordonnance restant en vigueur jusqu'à droit connu sur les mesures provisionnelles;\nl'arrêt de la Juge unique de la Cour d'appel civile du Tribunal cantonal du canton de Vaud du 28 août 2025, déclarant irrecevable l'appel formé par la prénommée à l'encontre de cette ordonnance;\nle recours en matière civile interjeté au Tribunal fédéral par celle-ci contre l'arrêt cantonal, assorti d'une requête d'assistance judiciaire;\nConsidérant :\nque la décision querellée porte sur des mesures superprovisionnelles;\nque, sous réserve d'exceptions non réalisées en l'espèce, une telle décision n'est susceptible de recours ni auprès de l'autorité cantonale supérieure - comme l'a à juste titre indiqué la Juge unique - ni auprès du Tribunal fédéral, faute d'épuisement des instances cantonales (art. 75 al. 1 LTF; ATF 140 III 289 consid. 1.1 et les arrêts cités);\nqu'il suit de là que le présent recours est manifestement irrecevable, ce qu'il y a lieu de constater selon la procédure simplifiée prévue par l'art. 108 al. 1 let. a LTF;\nqu'il sera exceptionnellement statué sans frais (art. 66 al. 1, 2e phrase LTF);\nque la requête d'assistance judiciaire de la recourante devient par conséquent sans objet;\nPar ces motifs, le Président prononce :\n1.\nLe recours est irrecevable.\n2.\nLa requête d'assistance judiciaire est sans objet.\n3.\nIl n'est pas perçu de frais judiciaires.\n4.\nLe présent arrêt est communiqué aux parties et à la Juge unique de la Cour d'appel civile du Tribunal cantonal du canton de Vaud.\nLausanne, le 1er octobre 2025\nAu nom de la IIe Cour de droit civil\ndu Tribunal fédéral suisse\nLe Président : Bovey\nLa Greffière : Mairot",
+  "operator_metadata": {
+    "date": "2025-10-01",
+    "reference": [
+      "5A_836/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-836-2025_2025-10-01.html",
+      "source": "446973/45/2869",
+      "content_length": 2940
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-06-18",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2869",
+    "id": "CH_BGer_005_5A-836-2025_2025-10-01",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 01.10.2025 5A_836/2025",
+      "it": "Tribunale federale II Corte di diritto civile 01.10.2025 5A_836/2025",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 01.10.2025 5A_836/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:22:34+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-836-2025_2025-10-01.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "44ac592d4c715dbb7b5beed2fc9773ee1ff4b968c4d4b4d4d86ad5f83b098826"
+  }
+}

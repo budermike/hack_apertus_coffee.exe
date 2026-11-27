@@ -1,0 +1,56 @@
+{
+  "id": "7B_869_2025",
+  "case_id": "7B_869/2025",
+  "case_ids": [
+    "7B_869/2025"
+  ],
+  "decision_date": "2026-01-06",
+  "publication_date": null,
+  "department": "II. Strafrechtliche Abteilung",
+  "division": "II. Strafrechtliche Abteilung",
+  "subject": "Nichtanhandnahme; Rückzug",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://06-01-2026-7B_869-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n7B_869/2025\nVerfügung vom 6. Januar 2026\nII. strafrechtliche Abteilung\nBesetzung\nBundesrichterin Koch, als Einzelrichterin,\nGerichtsschreiber Caprara.\nVerfahrensbeteiligte\nVerein A.________,\nvertreten durch Rechtsanwältin Dr. Carol Wiedmer-Scheidegger,\nBeschwerdeführer,\ngegen\nStaatsanwaltschaft See/Oberland,\nPostfach, 8610 Uster,\nBeschwerdegegnerin.\nGegenstand\nNichtanhandnahme; Rückzug,\nBeschwerde gegen den Beschluss des Obergerichts des Kantons Zürich, III. Strafkammer, vom 7. August 2025 (UE250236-O/U/JST).\nErwägungen:\n1.\nMit Eingabe vom 27. Dezember 2025 (Eingangsdatum: 29. Dezember 2025) hat der Beschwerdeführer seine Beschwerde gegen den Beschluss des Obergerichts des Kantons Zürich vom 7. August 2025 zurückgezogen.\n2.\nMit dem Rückzug der Beschwerde wird das Verfahren gegenstandslos und ist von der Instruktionsrichterin als Einzelrichterin im Verfahren nach Art. 32 Abs. 2 BGG abzuschreiben.\n3.\nDer Beschwerdeführer, der seine Beschwerde zurückgezogen und damit das Dahinfallen des Verfahrens verursacht hat, hat für die bisher entstandenen bundesgerichtlichen Kosten aufzukommen (Art. 66 BGG). Die Gerichtskosten sind auf Fr. 300.-- festzusetzen.\nDemnach verfügt die Einzelrichterin:\n1.\nDas Verfahren wird infolge Rückzugs der Beschwerde abgeschrieben.\n2.\nDie Gerichtskosten von Fr. 300.-- werden dem Beschwerdeführer auferlegt.\n3.\nDiese Verfügung wird den Parteien und dem Obergericht des Kantons Zürich, III. Strafkammer, schriftlich mitgeteilt.\nLausanne, 6. Januar 2026\nIm Namen der II. strafrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Einzelrichterin: Koch\nDer Gerichtsschreiber: Caprara",
+  "operator_metadata": {
+    "date": "2026-01-06",
+    "reference": [
+      "7B_869/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-869-2025_2026-01-06.html",
+      "source": "446973/45/2834",
+      "content_length": 2034
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit pénal"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_007"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_007_7B-869-2025_2026-01-06",
+    "title": {
+      "de": "Bundesgericht II. Strafrechtliche Abteilung 06.01.2026 7B_869/2025",
+      "it": "Tribunale federale II Corte di diritto penale 06.01.2026 7B_869/2025",
+      "fr": "Tribunal fédéral IIe Cour de droit pénal 06.01.2026 7B_869/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:01:34+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-869-2025_2026-01-06.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "89c58cb417b2979c0db13382e6021cb244112a955da673e9960d238f2bcbf77b"
+  }
+}

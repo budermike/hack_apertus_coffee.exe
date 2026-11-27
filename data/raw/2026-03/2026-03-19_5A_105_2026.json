@@ -1,0 +1,56 @@
+{
+  "id": "5A_105_2026",
+  "case_id": "5A_105/2026",
+  "case_ids": [
+    "5A_105/2026"
+  ],
+  "decision_date": "2026-03-19",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "Nichtbekanntgabe einer Betreibung an Dritte",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://19-03-2026-5A_105-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5A_105/2026\nUrteil vom 19. März 2026\nII. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Bovey, Präsident,\nGerichtsschreiber Zingg.\nVerfahrensbeteiligte\nA.________ GmbH,\nBeschwerdeführerin,\ngegen\nBetreibungsamt Schaffhausen,\nMünsterplatz 31, 8200 Schaffhausen.\nGegenstand\nNichtbekanntgabe einer Betreibung an Dritte,\nBeschwerde gegen den Entscheid des Obergerichts des Kantons Schaffhausen, Aufsichtsbehörde in Schuldbetreibungs- und Konkurssachen,\nvom 20. Januar 2026 (93/2025/17/A).\nErwägungen:\n1.\nB.________ (Gläubiger) betrieb die Beschwerdeführerin in der Betreibung Nr. xxx des Betreibungsamtes Schaffhausen. Mit Verfügung vom 14. Juli 2025 wies das Kantonsgericht Schaffhausen das Rechtsöffnungsgesuch des Gläubigers ab.\nAm 2. November 2025 verlangte die Beschwerdeführerin vom Betreibungsamt, die genannte Betreibung Dritten nicht bekannt zu geben. Das Betreibungsamt wies das Gesuch mit Verfügung vom 19. November 2025 ab.\nDagegen erhob die Beschwerdeführerin am 24. November 2025 (Postaufgabe) Beschwerde beim Obergericht des Kantons Schaffhausen. Mit Entscheid vom 20. Januar 2026 wies das Obergericht die Beschwerde ab.\nDagegen hat die Beschwerdeführerin mit einer auf den 1. Februar 2026 datierten Eingabe (Datum der Postaufgabe unbekannt) Beschwerde an das Bundesgericht erhoben. Am 16. Februar 2026 (Poststempel) hat die Beschwerdeführerin eine weitere Eingabe eingereicht. Das Bundesgericht hat die Akten beigezogen.\n2.\nNach Art. 42 Abs. 2 BGG ist in der Beschwerdebegründung in gedrängter Form darzulegen, inwiefern der angefochtene Akt Recht verletzt. Die beschwerdeführende Partei hat in gezielter Auseinandersetzung mit den für das Ergebnis des angefochtenen Entscheides massgeblichen Erwägungen aufzuzeigen, welche Rechte bzw. Rechtsnormen die Vorinstanz verletzt haben soll (BGE 140 III 86 E. 2; 140 III 115 E. 2).\n3.\nDie Beschwerdeführerin setzt sich mit den obergerichtlichen Erwägungen nicht auseinander, die noch auf die bis 31. Dezember 2025 geltende Fassung von Art. 8a Abs. 3 lit. d SchKG abstellen. Stattdessen wirft sie dem Gläubiger vor, dass er mit der Betreibung absichtlich ihre Kreditwürdigkeit schädige und dass er genau wisse, dass die Betreibung gegen andere Personen hätte gerichtet werden müssen.\nDie Beschwerde enthält offensichtlich keine hinreichende Begründung. Der Abteilungspräsident tritt auf sie im vereinfachten Verfahren nicht ein (Art. 108 Abs. 1 lit. b BGG).\n4.\nEs rechtfertigt sich ausnahmsweise, auf die Erhebung von Gerichtskosten zu verzichten (Art. 66 Abs. 1 BGG).\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nEs werden keine Gerichtskosten erhoben.\n3.\nDieses Urteil wird den Verfahrensbeteiligten und dem Obergericht des Kantons Schaffhausen, Aufsichtsbehörde in Schuldbetreibungs- und Konkurssachen, mitgeteilt.\nLausanne, 19. März 2026\nIm Namen der II. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Bovey\nDer Gerichtsschreiber: Zingg",
+  "operator_metadata": {
+    "date": "2026-03-19",
+    "reference": [
+      "5A_105/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-105-2026_2026-03-19.html",
+      "source": "446973/45/2829",
+      "content_length": 3400
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_005_5A-105-2026_2026-03-19",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 19.03.2026 5A_105/2026",
+      "it": "Tribunale federale II Corte di diritto civile 19.03.2026 5A_105/2026",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 19.03.2026 5A_105/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:23:14+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-105-2026_2026-03-19.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "b3ca93e82c17ddc379802eed261d8f73885e837e01f40f78923f1e9d23360a64"
+  }
+}

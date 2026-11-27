@@ -1,0 +1,56 @@
+{
+  "id": "4A_246_2026",
+  "case_id": "4A_246/2026",
+  "case_ids": [
+    "4A_246/2026"
+  ],
+  "decision_date": "2026-06-24",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "mainlevée définitive",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://24-06-2026-4A_246-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4A_246/2026\nArrêt du 24 juin 2026\nIre Cour de droit civil\nComposition\nM. le Juge fédéral Hurni, Président.\nGreffier : M. Botteron.\nParticipants à la procédure\nA.________,\nrecourant,\ncontre\nB.________,\nintimé.\nObjet\nmainlevée définitive,\nrecours contre l'arrêt rendu le 22 avril 2026 par la Cour des poursuites et faillite du Tribunal cantonal du canton de Vaud (KC26.000948-260304 93).\nConsidérant en fait et en droit :\n1.\nPar arrêt du 22 avril 2026, la Cour des poursuites et faillites du Tribunal cantonal du canton de Vaud a déclaré irrecevable le recours interjeté par A.________ dirigé contre la décision du 28 janvier 2026 de la Juge de paix, dans la poursuite n° xxx de l'Office des poursuites du district d'Aigle, intentée par B.________, accordant la mainlevée définitive de l'opposition à hauteur de 5'269 fr. 45 plus intérêts à 5 % l'an dès le 30 juillet 2025 et de 766 fr. 55. Le recourant interjette un recours contre cet arrêt le 11 mai 2026.\n2.\nL'arrêt entrepris, se fondant sur l'art. 321 al. 1 CPC, déclare le recours irrecevable, faute de discuter la motivation du prononcé de la Juge de paix selon laquelle la décision de taxation fondant la poursuite, qui n'a pas fait l'objet d'une réclamation, est définitive et exécutoire et constitue ainsi un titre à la mainlevée définitive de l'opposition au sens de l'art. 80 al. 1 LP.\n3.\nEn vertu de l'art. 42 al. 2 LTF et 106 al. 2 LTF le recourant doit discuter, sous peine d'irrecevabilité, les motifs de la décision entreprise et indiquer précisément en quoi il estime que l'autorité précédente a méconnu le droit (ATF 142 III 364 consid. 2.4; 140 III 86 consid. 2).\n4.\nEn l'espèce, le recourant ne s'en prend pas à la motivation d'irrecevabilité de la cour cantonale.\nLe recours ne remplit manifestement pas les exigences de motivation requises pour un recours auprès du Tribunal fédéral (art. 42 al. 2, et art. 106 al. 2 LTF; ATF 142 III 364, consid. 2.4; 140 III 86, consid. 2, 115, consid. 2). Par conséquent, il n'y a pas lieu d'entrer en matière sur celui-ci, faute de motivation suffisante, ce qu'il convient de constater selon la procédure simplifiée de l'art. 108 al. 1 let. b LTF. L'arrêt est motivé par une brève indication de la cause de l'irrecevabilité (art. 108 al. 3 LTF).\n5.\nLe recourant devra supporter les frais judiciaires (art. 66 al. 1 LTF). En revanche, il n'y a pas lieu d'allouer des dépens (art. 68 al. 3 LTF).\npar ces motifs, le Président prononce :\n1.\nLe recours est irrecevable.\n2.\nLes frais judiciaires, arrêtés à 800 fr., sont mis à la charge du recourant.\n3.\nLe présent arrêt est communiqué aux parties et à la Cour des poursuites et faillites du Tribunal cantonal du canton de Vaud.\nLausanne, le 24 juin 2026\nAu nom de la Ire Cour de droit civil\ndu Tribunal fédéral suisse\nLe Président : Hurni\nLe Greffier : Botteron",
+  "operator_metadata": {
+    "date": "2026-06-24",
+    "reference": [
+      "4A_246/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-246-2026_2026-06-24.html",
+      "source": "446973/45/2829",
+      "content_length": 3254
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_004_4A-246-2026_2026-06-24",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 24.06.2026 4A_246/2026",
+      "it": "Tribunale federale I Corte di diritto civile 24.06.2026 4A_246/2026",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 24.06.2026 4A_246/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:19:26+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-246-2026_2026-06-24.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "95251ec5959283d97cb3980d54da49d1b5518c9737d610de5ac763e6008a97d0"
+  }
+}

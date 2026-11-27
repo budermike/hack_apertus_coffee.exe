@@ -1,0 +1,56 @@
+{
+  "id": "4D_154_2025",
+  "case_id": "4D_154/2025",
+  "case_ids": [
+    "4D_154/2025"
+  ],
+  "decision_date": "2025-10-29",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "definitive Rechtsöffnung",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://29-10-2025-4D_154-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4D_154/2025\nUrteil vom 29. Oktober 2025\nI. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Hurni, Präsident,\nGerichtsschreiber Dürst.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nEinwohnergemeinde B.________,\nBeschwerdegegnerin.\nGegenstand\ndefinitive Rechtsöffnung,\nBeschwerde gegen den Entscheid des Kantonsgerichts Wallis, Zivilkammer, vom 11. Juli 2025 (C3 25 55).\nErwägungen:\n1.\nMit Entscheid vom 11. Juli 2025 wies das Kantonsgericht Wallis die Beschwerde des Beschwerdeführers gegen den Rechtsöffnungsentscheid des Bezirksgerichts Brig, Östlich-Raron und Goms vom 1. April 2025 ab. Dagegen erhob der Beschwerdeführer am 23. August 2025 (Poststempel) Beschwerde beim Bundesgericht.\n2.\nDiese Eingabe erfüllt die Begründungsanforderungen, die an eine Beschwerde an das Bundesgericht gestellt werden (Art. 42 Abs. 2 und Art. 106 Abs. 2 BGG; BGE 142 III 364 E. 2.4; 140 III 86 E. 2, 115 E. 2), offensichtlich nicht. Auf die Beschwerde ist somit mangels hinreichender Begründung im vereinfachten Verfahren durch den Abteilungspräsidenten nicht einzutreten (Art. 108 Abs. 1 lit. b BGG). Die Begründung des Entscheids beschränkt sich auf eine kurze Angabe des Unzulässigkeitsgrundes (Art. 108 Abs. 3 BGG).\n3.\nBei diesem Ausgang des Verfahrens sind die Gerichtskosten dem Beschwerdeführer aufzuerlegen (Art. 66 Abs. 1 BGG). Der Beschwerdegegnerin ist keine Parteientschädigung zuzusprechen (Art. 68 Abs. 3 BGG), zumal ihr mangels Einholung einer Vernehmlassung aus dem bundesgerichtlichen Verfahren kein entschädigungspflichtiger Aufwand erwachsen ist.\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 800.-- werden dem Beschwerdeführer auferlegt.\n3.\nDieses Urteil wird den Parteien und dem Kantonsgericht Wallis, Zivilkammer, schriftlich mitgeteilt.\nLausanne, 29. Oktober 2025\nIm Namen der I. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Hurni\nDer Gerichtsschreiber: Dürst",
+  "operator_metadata": {
+    "date": "2025-10-29",
+    "reference": [
+      "4D_154/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-154-2025_2025-10-29.html",
+      "source": "446973/45/2869",
+      "content_length": 2379
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-06-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2869",
+    "id": "CH_BGer_004_4D-154-2025_2025-10-29",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 29.10.2025 4D_154/2025",
+      "it": "Tribunale federale I Corte di diritto civile 29.10.2025 4D_154/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 29.10.2025 4D_154/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:30:27+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-154-2025_2025-10-29.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "9df44910ea17452bc714bf1be776bdc3a6497c032c5cdfef13b82a90d6cac933"
+  }
+}

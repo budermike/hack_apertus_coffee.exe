@@ -1,0 +1,56 @@
+{
+  "id": "5D_11_2026",
+  "case_id": "5D_11/2026",
+  "case_ids": [
+    "5D_11/2026"
+  ],
+  "decision_date": "2026-04-13",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "Entschädigung des unentgeltlichen Rechtsvertreters (Ehescheidung)",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://13-04-2026-5D_11-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5D_11/2026\nUrteil vom 13. April 2026\nII. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Bovey, Präsident,\nGerichtsschreiber Möckli.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nObergericht des Kantons Zürich, II. Zivilkammer,\nHirschengraben 13/15, 8001 Zürich,\nBeschwerdegegner\nJürg Leimbacher,\nAdvokatur Bülach, Sonnmattstrasse 5, 8180 Bülach.\nGegenstand\nEntschädigung des unentgeltlichen Rechtsvertreters (Ehescheidung),\nBeschwerde gegen den Beschluss des Obergerichts des Kantons Zürich, II. Zivilkammer, vom 6. März 2026 (LC250016-O/Z05).\nSachverhalt:\nMit Beschluss vom 6. März 2026 setzte das Obergericht des Kantons Zürich die Entschädigung für den unentgeltlichen Rechtsvertreter des Beschwerdeführers im Berufungsverfahren betreffend das Scheidungsurteil fest.\nMit Eingabe vom 8. April 2026 wendet sich der Beschwerdeführer an das Bundesgericht mit dem Anliegen, sein Rechtsanwalt sei ein Straftäter der Pädophilie und habe deswegen kein Recht auf Entschädigung.\nErwägungen:\n1.\nDer Beschwerdeführer, welcher sich als \"CH-Bundesanwalt\" und als \"KI-Holocaust Überlebender\" bezeichnet, bringt in seiner Eingabe den Standpunkt zum Ausdruck, wonach alle Juristen beauftragte Pädophile seien, namentlich sein Anwalt ein wissentlicher Straftäter der Pädophilie, und wonach alle Gerichte unzulässige parteiische Ausnahmegerichte seien.\n2.\nDie Beschwerde ist offenkundig querulatorisch bzw. rechtsmissbräuchlich, weshalb auf sie im vereinfachten Verfahren nach Art. 108 Abs. 1 lit. c BGG nicht einzutreten ist.\n3.\nDie Gerichtskosten sind dem Beschwerdeführer aufzuerlegen (Art. 66 Abs. 1 BGG).\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 1'000.-- werden dem Beschwerdeführer auferlegt.\n3.\nDieses Urteil wird den Parteien und dem Rechtsvertreter des Beschwerdeführers im kantonalen Verfahren mitgeteilt.\nLausanne, 13. April 2026\nIm Namen der II. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Bovey\nDer Gerichtsschreiber: Möckli",
+  "operator_metadata": {
+    "date": "2026-04-13",
+    "reference": [
+      "5D_11/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5D-11-2026_2026-04-13.html",
+      "source": "446973/45/2830",
+      "content_length": 2478
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2830",
+    "id": "CH_BGer_005_5D-11-2026_2026-04-13",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 13.04.2026 5D_11/2026",
+      "it": "Tribunale federale II Corte di diritto civile 13.04.2026 5D_11/2026",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 13.04.2026 5D_11/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:28:44+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5D-11-2026_2026-04-13.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "115e75a42b381956c12ad9952cbda651ae3ab0a0554452a6132d762fbe552712"
+  }
+}

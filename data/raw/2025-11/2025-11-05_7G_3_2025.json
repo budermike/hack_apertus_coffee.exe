@@ -1,0 +1,56 @@
+{
+  "id": "7G_3_2025",
+  "case_id": "7G_3/2025",
+  "case_ids": [
+    "7G_3/2025"
+  ],
+  "decision_date": "2025-11-05",
+  "publication_date": null,
+  "department": "II. Strafrechtliche Abteilung",
+  "division": "II. Strafrechtliche Abteilung",
+  "subject": "Détention provisoire",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://05-11-2025-7G_3-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n7G_3/2025\nArrêt du 5 novembre 2025\nIIe Cour de droit pénal\nComposition\nMM. et Mme les Juges fédéraux Abrecht, Président,\nvan de Graaf et Hofmann.\nGreffier : M. Magnin.\nParticipants à la procédure\nA.________,\nreprésenté par Me Azzedine Diab, avocat,\nrequérant,\ncontre\nOffice régional du Ministère public du Bas-Valais, place Sainte-Marie 6, case postale 98, 1890 St-Maurice,\nintimé.\nObjet\nDétention provisoire,\nrectification de l'arrêt 7B_964/2025 du Tribunal fédéral suisse du 10 octobre 2025.\nConsidérant en fait et en droit :\n1.\nPar arrêt du 10 octobre 2025 (7B_964/2025), le Tribunal fédéral a rejeté le recours en matière pénale formé par A.________ contre l'arrêt rendu le 14 août 2025 par le Juge unique de la Chambre pénale du Tribunal cantonal du canton du Valais. Il a admis la requête d'assistance judiciaire du recourant en ce sens qu'il lui a désigné Me Olivier Derivaz comme avocat d'office et qu'il a alloué à celui-ci une indemnité de 1'500 fr. à titre d'honoraires, à payer par la caisse du Tribunal fédéral. Il n'a enfin pas perçu de frais judiciaires.\n2.\nSi le dispositif d'un arrêt du Tribunal fédéral est peu clair, incomplet ou équivoque, ou si ses éléments sont contradictoires entre eux ou avec les motifs, ou s'il contient des erreurs de rédaction ou de calcul, le Tribunal fédéral, à la demande écrite d'une partie ou d'office, interprète ou rectifie l'arrêt (art. 129 al. 1 LTF).\n3.\nLe dispositif de l'arrêt du 10 octobre 2025 contient une erreur de rédaction en ce sens qu'il désigne, comme avocat d'office du recourant, Me Olivier Derivaz, alors qu'il doit en réalité s'agir de Me Azzedine Diab (associé du précité). C'est en effet ce dernier qui apparaît dans les conclusions prises par le recourant dans son recours, ainsi qu'au niveau du rubrum de l'arrêt précité. Le chiffre 2.1 du dispositif doit par conséquent être rectifié d'office en ce sens.\nLe présent arrêt sera rendu sans frais ni dépens et sans interpellation formelle préalable des parties, la situation juridique de celles-ci n'étant pas modifiée par cette simple rectification de dispositif.\nPar ces motifs, le Tribunal fédéral prononce :\n1.\nL'arrêt 7B_964/2025 est rectifié comme suit au chiffre 2.1 de son dispositif:\n\"Me Azzedine Diab est désigné comme avocat d'office du recourant et une indemnité de 1'500 fr. lui est allouée à titre d'honoraires, à payer par la caisse du Tribunal fédéral\".\n2.\nUn nouvel exemplaire de l'arrêt du Tribunal fédéral, corrigé dans le sens précité, est notifié aux parties.\n3.\nLe présent arrêt rectificatif est rendu sans frais ni dépens.\n4.\nLe présent arrêt est communiqué aux parties, au Juge unique de la Chambre pénale du Tribunal cantonal du canton du Valais et au Tribunal des mesures de contrainte du canton du Valais.\nLausanne, le 5 novembre 2025\nAu nom de la IIe Cour de droit pénal\ndu Tribunal fédéral suisse\nLe Président : Abrecht\nLe Greffier : Magnin",
+  "operator_metadata": {
+    "date": "2025-11-05",
+    "reference": [
+      "7G_3/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7G-3-2025_2025-11-05.html",
+      "source": "446973/45/2851",
+      "content_length": 3323
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit pénal"
+    },
+    "scrapedate": "2026-06-18",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_007"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2851",
+    "id": "CH_BGer_007_7G-3-2025_2025-11-05",
+    "title": {
+      "de": "Bundesgericht II. Strafrechtliche Abteilung 05.11.2025 7G_3/2025",
+      "it": "Tribunale federale II Corte di diritto penale 05.11.2025 7G_3/2025",
+      "fr": "Tribunal fédéral IIe Cour de droit pénal 05.11.2025 7G_3/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:32:54+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7G-3-2025_2025-11-05.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "49164068fc3cbc4d820c22a5ff2ed05eb8010927d501567576978aaf33af6117"
+  }
+}

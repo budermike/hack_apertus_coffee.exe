@@ -1,0 +1,56 @@
+{
+  "id": "7B_1327_2025",
+  "case_id": "7B_1327/2025",
+  "case_ids": [
+    "7B_1327/2025"
+  ],
+  "decision_date": "2026-01-05",
+  "publication_date": null,
+  "department": "II. Strafrechtliche Abteilung",
+  "division": "II. Strafrechtliche Abteilung",
+  "subject": "Ausstand; Nichteintreten",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://05-01-2026-7B_1327-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n7B_1327/2025\nUrteil vom 5. Januar 2026\nII. strafrechtliche Abteilung\nBesetzung\nBundesrichterin Koch, als Einzelrichterin,\nGerichtsschreiberin Sauthier.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nB.________,\nBeschwerdegegner.\nGegenstand\nAusstand; Nichteintreten,\nBeschwerde gegen den Beschluss des Obergerichts des Kantons Solothurn, Beschwerdekammer, vom 19. November 2025 (BKAUS.2025.10).\nErwägungen:\n1.\nMit Eingabe vom 2. Dezember 2025 führt A.________ Beschwerde in Strafsachen an das Bundesgericht gegen den Beschluss des Obergerichts des Kantons Solothurn, Beschwerdekammer, vom 19. November 2025 betreffend Ausstand.\n2.\nDer Beschwerdeführer setzt sich mit keinem Wort mit der Argumentation der Vorinstanz auseinander, mit der diese ihre Abweisung des Ausstandsgesuchs begründet. Stattdessen verweist er einzig \"nochmals\" auf seine Ausführungen, die er schon beim Obergericht erwähnt habe. Ein Verweis auf frühere Rechtsschriften ist indessen unzulässig (BGE 147 II 125 E. 10.3 mit Hinweisen). Die Beschwerde genügt damit den gesetzlichen Begründungsanforderungen an eine Beschwerde an das Bundesgericht offensichtlich nicht (vgl. Art. 42 Abs. 2 und Art. 106 Abs. 2 BGG; BGE 148 IV 356 E. 2.1, 39 E. 2.3.5; 147 IV 73 E. 4.1.2; 146 IV 297 E. 1.2). Auf die Beschwerde ist somit mangels hinreichender Begründung im vereinfachten Verfahren nicht einzutreten (Art. 108 Abs. 1 lit. b BGG). Die Begründung des Entscheids beschränkt sich auf eine kurze Angabe des Unzulässigkeitsgrundes (Art. 108 Abs. 3 BGG).\n3.\nDie Gerichtskosten sind dem Beschwerdeführer aufzuerlegen (Art. 66 Abs. 1 BGG).\nDemnach erkennt die Einzelrichterin:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 500.-- werden dem Beschwerdeführer auferlegt.\n3.\nDieses Urteil wird den Parteien und dem Obergericht des Kantons Solothurn, Beschwerdekammer, schriftlich mitgeteilt.\nLausanne, 5. Januar 2026\nIm Namen der II. strafrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Einzelrichterin: Koch\nDie Gerichtsschreiberin: Sauthier",
+  "operator_metadata": {
+    "date": "2026-01-05",
+    "reference": [
+      "7B_1327/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-1327-2025_2026-01-05.html",
+      "source": "446973/45/2834",
+      "content_length": 2451
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit pénal"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_007"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_007_7B-1327-2025_2026-01-05",
+    "title": {
+      "de": "Bundesgericht II. Strafrechtliche Abteilung 05.01.2026 7B_1327/2025",
+      "it": "Tribunale federale II Corte di diritto penale 05.01.2026 7B_1327/2025",
+      "fr": "Tribunal fédéral IIe Cour de droit pénal 05.01.2026 7B_1327/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:01:17+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-1327-2025_2026-01-05.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "e6c0000d74956a99f0c90e5b1acb5957757d226cf8e10b5e52ff38fcf874ec3c"
+  }
+}

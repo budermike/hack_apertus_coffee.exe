@@ -1,0 +1,56 @@
+{
+  "id": "4D_26_2026",
+  "case_id": "4D_26/2026",
+  "case_ids": [
+    "4D_26/2026"
+  ],
+  "decision_date": "2026-05-13",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "Rechtsöffnung",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://13-05-2026-4D_26-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4D_26/2026\nUrteil vom 13. Mai 2026\nI. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Hurni, Präsident,\nGerichtsschreiber Dürst.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführerin,\ngegen\nStaat Zürich und Politische Gemeinde Rüti,\nvertreten durch die Gemeinde Rüti ZH\nBeschwerdegegner.\nGegenstand\nRechtsöffnung,\nBeschwerde gegen den Beschluss und das Urteil des Obergerichts des Kantons Zürich, I. Zivilkammer,\nvom 15. Januar 2026 (RT250209-O/U).\nErwägungen:\n1.\nMit Eingabe vom 23. Februar 2026 (Postaufgabe) erklärte die Beschwerdeführerin dem Bundesgericht, gegen den Beschluss und das Urteil des Obergerichts des Kantons Zürich Beschwerde führen zu wollen. Zugleich ersuchte sie um Erstreckung der Beschwerdefrist um ein Jahr.\nMit Schreiben vom 25. Februar 2026 erklärte das Bundesgericht, dass dem Gesuch um Erstreckung der gesetzlich bestimmten Beschwerdefrist nicht entsprochen werden könne. Mit Präsidialverfügung vom 25. Februar 2026 wurde die Beschwerdeführerin aufgefordert, spätestens am 12. März 2026 einen Kostenvorschuss von Fr. 500.-- für das bundesgerichtliche Verfahren einzuzahlen. Diese Verfügung wurde der Beschwerdeführerin am 6. März 2026 zugestellt.\nDa der Kostenvorschuss innerhalb der angesetzten Frist nicht eingegangen war, wurde der Beschwerdeführerin mit Präsidialverfügung vom 25. März 2026 eine nicht erstreckbare Nachfrist zur Vorschussleistung bis zum 24. April 2026 angesetzt, unter Hinweis darauf, dass das Bundesgericht bei Säumnis auf das Rechtsmittel nicht eintreten werde (Art. 62 Abs. 3 BGG). Diese Verfügung wurde der Beschwerdeführerin am 4. April 2026 zugestellt.\nDa die Beschwerdeführerin den ihr auferlegten Kostenvorschuss auch innerhalb der mit Verfügung vom 25. März 2026 angesetzten Nachfrist nicht geleistet hat, ist gestützt auf Art. 62 Abs. 3 BGG auf die Beschwerde nicht einzutreten (Art. 108 Abs. 1 lit. a BGG).\n2.\nDie Gerichtskosten sind dem Verfahrensausgang entsprechend der Beschwerdeführerin aufzuerlegen (Art. 66 Abs. 1 BGG).\nDem Beschwerdegegner ist keine Parteientschädigung zuzusprechen, da ihm im Zusammenhang mit dem bundesgerichtlichen Verfahren kein entschädigungspflichtiger Aufwand entstanden ist (Art. 68 BGG).\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 300.-- werden der Beschwerdeführerin auferlegt.\n3.\nDieses Urteil wird den Parteien und dem Obergericht des Kantons Zürich, I. Zivilkammer, schriftlich mitgeteilt.\nLausanne, 13. Mai 2026\nIm Namen der I. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Hurni\nDer Gerichtsschreiber: Dürst",
+  "operator_metadata": {
+    "date": "2026-05-13",
+    "reference": [
+      "4D_26/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-26-2026_2026-05-13.html",
+      "source": "446973/45/2829",
+      "content_length": 3002
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_004_4D-26-2026_2026-05-13",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 13.05.2026 4D_26/2026",
+      "it": "Tribunale federale I Corte di diritto civile 13.05.2026 4D_26/2026",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 13.05.2026 4D_26/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:38:44+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-26-2026_2026-05-13.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "5c1f14b77a16353f3a8fd3df55cd7d8bb4fd45f6996c7d460d96c3fe6005ecdd"
+  }
+}

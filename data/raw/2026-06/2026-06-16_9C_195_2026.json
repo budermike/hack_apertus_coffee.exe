@@ -1,0 +1,56 @@
+{
+  "id": "9C_195_2026",
+  "case_id": "9C_195/2026",
+  "case_ids": [
+    "9C_195/2026"
+  ],
+  "decision_date": "2026-06-16",
+  "publication_date": null,
+  "department": "IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung)",
+  "division": "IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung)",
+  "subject": "Assurance-invalidité (retrait du recours)",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://16-06-2026-9C_195-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n9C_195/2026\nOrdonnance du 16 juin 2026\nIIIe Cour de droit public\nComposition\nM. le Juge fédéral Beusch, en qualité de juge unique.\nGreffière : Mme Perrenoud.\nParticipants à la procédure\nA.________,\nreprésenté par B.________,\nrecourant,\ncontre\nOffice cantonal AI du Valais,\navenue de la Gare 15, 1950 Sion,\nintimé.\nObjet\nAssurance-invalidité (retrait du recours),\nrecours contre l'arrêt du Tribunal cantonal du Valais du 24 février 2026 (S1 25 23).\nVu :\nla lettre du 11 juin 2026 par laquelle A.________ a déclaré retirer le recours interjeté le 13 mars 2026 (timbre postal) contre l'arrêt du Tribunal cantonal du Valais, Cour des assurances sociales, du 24 février 2026,\nconsidérant :\nque la cause doit être rayée du rôle en application des art. 32 al. 2 et 71 LTF, en relation avec l'art. 73 al. 1 PCF,\nqu'il se justifie en appliquant l'art. 66 al. 2 LTF de statuer sans frais judiciaires,\npar ces motifs, le Juge unique ordonne :\n1.\nLa cause est rayée du rôle par suite de retrait du recours.\n2.\nIl n'est pas perçu de frais judiciaires.\n3.\nLa présente ordonnance est communiquée aux parties, au Tribunal cantonal du Valais, Cour des assurances sociales, et à l'Office fédéral des assurances sociales.\nLucerne, le 16 juin 2026\nAu nom de la IIIe Cour de droit public\ndu Tribunal fédéral suisse\nLe Juge unique : Beusch\nLa Greffière : Perrenoud",
+  "operator_metadata": {
+    "date": "2026-06-16",
+    "reference": [
+      "9C_195/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_009_9C-195-2026_2026-06-16.html",
+      "source": "446973/45/2834",
+      "content_length": 1719
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung)",
+      "it": "Confederazione Tribunale federale IV Corte di diritto pubblico (II Corte di diritto sociale)",
+      "fr": "Conféderation Tribunal fédéral IVe Cour de droit public (IIe Cour de droit social)"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_009"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_009_9C-195-2026_2026-06-16",
+    "title": {
+      "de": "Bundesgericht IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung) 16.06.2026 9C_195/2026",
+      "it": "Tribunale federale IV Corte di diritto pubblico (II Corte di diritto sociale) 16.06.2026 9C_195/2026",
+      "fr": "Tribunal fédéral IVe Cour de droit public (IIe Cour de droit social) 16.06.2026 9C_195/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:47:14+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_009_9C-195-2026_2026-06-16.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "38115c98f94ccbe53bd50b97b4daa0e7ef310dec606e628bf82b7fe1feff3b6b"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "id": "7B_1025_2025",
+  "case_id": "7B_1025/2025",
+  "case_ids": [
+    "7B_1025/2025"
+  ],
+  "decision_date": "2025-10-31",
+  "publication_date": null,
+  "department": "II. Strafrechtliche Abteilung",
+  "division": "II. Strafrechtliche Abteilung",
+  "subject": "Einstellung; Nichteintreten",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://31-10-2025-7B_1025-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n7B_1025/2025\nUrteil vom 31. Oktober 2025\nII. strafrechtliche Abteilung\nBesetzung\nBundesrichterin Koch, Einzelrichterin,\nGerichtsschreiber Clément.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführerin,\ngegen\nStatthalteramt des Bezirks Dietikon,\nBahnhofplatz 10, Postfach, 8953 Dietikon,\nBeschwerdegegner.\nGegenstand\nEinstellung; Nichteintreten,\nBeschwerde gegen die Verfügung des Obergerichts des Kantons Zürich, III. Strafkammer, vom 25. August 2025 (UE250193-O/Z3).\nErwägungen:\n1.\nMit Verfügung vom 25. August 2025 wies das Obergericht des Kantons Zürich das Gesuch um unentgeltliche Rechtspflege der Beschwerdeführerin ab, das sie im Beschwerdeverfahren gegen die Einstellungsverfügung des Statthalteramtes des Bezirks Dietikon vom 6. Mai 2025 gestellt hatte. Mit Beschwerde in Strafsachen vom 30. September 2025 (Postaufgabe) wandte sich die Beschwerdeführerin dagegen an das Bundesgericht.\n2.\nDie als Gerichtsurkunde versandte Verfügung des Obergerichts vom 25. August 2025 wurde der Beschwerdeführerin gemäss Sendungsverfolgung der Schweizerischen Post am 28. August 2025 zugestellt. Die Beschwerdefrist gemäss Art. 100 Abs. 1 BGG begann folglich am 29. August 2025 zu laufen und endete am 29. September 2025. Die Beschwerde hätte daher, um rechtzeitig zu sein, spätestens an diesem Tag beim Bundesgericht eingereicht oder zu dessen Handen der Schweizerischen Post oder einer schweizerischen diplomatischen oder konsularischen Vertretung übergeben werden müssen (vgl. Art. 48 Abs. 1 BGG). Die Beschwerde wurde allerdings erst am 30. September 2025 und damit verspätet der Schweizerischen Post übergeben. Sie ist damit unbeachtlich.\n3.\nAuf die Beschwerde ist im Verfahren nach Art. 108 BGG nicht einzutreten. Die Gerichtskosten sind der Beschwerdeführerin aufzuerlegen (Art. 66 Abs. 1 BGG).\nDemnach erkennt die Einzelrichterin:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 500.-- werden der Beschwerdeführerin auferlegt.\n3.\nDieses Urteil wird den Parteien und dem Obergericht des Kantons Zürich, III. Strafkammer, schriftlich mitgeteilt.\nLausanne, 31. Oktober 2025\nIm Namen der II. strafrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Einzelrichterin: Koch\nDer Gerichtsschreiber: Clément",
+  "operator_metadata": {
+    "date": "2025-10-31",
+    "reference": [
+      "7B_1025/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-1025-2025_2025-10-31.html",
+      "source": "446973/45/2851",
+      "content_length": 2647
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit pénal"
+    },
+    "scrapedate": "2026-06-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_007"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2851",
+    "id": "CH_BGer_007_7B-1025-2025_2025-10-31",
+    "title": {
+      "de": "Bundesgericht II. Strafrechtliche Abteilung 31.10.2025 7B_1025/2025",
+      "it": "Tribunale federale II Corte di diritto penale 31.10.2025 7B_1025/2025",
+      "fr": "Tribunal fédéral IIe Cour de droit pénal 31.10.2025 7B_1025/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:31:36+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-1025-2025_2025-10-31.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "43113a5a61600a46e29efd9ff80bb7ff1c2d5bbd18528404d349f4158812a88a"
+  }
+}

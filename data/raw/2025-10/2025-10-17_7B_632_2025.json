@@ -1,0 +1,56 @@
+{
+  "id": "7B_632_2025",
+  "case_id": "7B_632/2025",
+  "case_ids": [
+    "7B_632/2025"
+  ],
+  "decision_date": "2025-10-17",
+  "publication_date": null,
+  "department": "II. Strafrechtliche Abteilung",
+  "division": "II. Strafrechtliche Abteilung",
+  "subject": "Ordonnance de classement; irrecevabilité du recours en matière pénale (défaut de paiement de l'avance de frais)",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://17-10-2025-7B_632-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n7B_632/2025\nArrêt du 17 octobre 2025\nIIe Cour de droit pénal\nComposition\nM. le Juge fédéral Abrecht, Président.\nGreffier : M. Valentino.\nParticipants à la procédure\nA.________,\nrecourant,\ncontre\nMinistère public de la République et canton de Genève,\nroute de Chancy 6B, 1213 Petit-Lancy,\nintimé.\nObjet\nOrdonnance de classement; irrecevabilité du recours en matière pénale (défaut de paiement de l'avance de frais),\nrecours contre l'arrêt de la Chambre pénale de recours de la Cour de justice de la République et canton de Genève du 4 juin 2025 (ACPR/430/2025 - P/16688/2024).\nFaits :\nA.\nPar arrêt du 4 juin 2025, la Chambre pénale de recours de la Cour de justice de la République et canton de Genève a rejeté le recours formé par A.________ contre l'ordonnance de classement rendue le 7 mai 2025 par le Ministère public de la République et canton de Genève.\nB.\nPar acte du 8 juillet 2025, A.________ (ci-après: le recourant) interjette un recours en matière pénale au Tribunal fédéral contre l'arrêt précité.\nConsidérant en droit :\n1.\n1.1. Selon l'art. 62 LTF, la partie qui saisit le Tribunal fédéral doit avancer les frais présumés de la procédure (al. 1); si elle ne verse pas l'avance requise dans le délai supplémentaire qui lui est fixé à cet effet après un premier non-paiement, son recours est irrecevable (al. 3).\n1.2. En l'espèce, par ordonnance présidentielle du 20 août 2025, le recourant a été invité à s'acquitter d'une avance de frais de 800 fr. jusqu'au 5 septembre 2025. Comme il n'a pas versé l'avance requise, un délai supplémentaire (non prolongeable) jusqu'au 23 septembre 2025 lui a été imparti à cet effet, par ordonnance du 10 septembre 2025; il a été informé qu'à défaut de paiement en temps utile, le recours serait déclaré irrecevable (art. 62 al. 3 LTF).\nNonobstant la notification des deux ordonnances précitées (par acte judiciaire avec avis de réception), le recourant n'a pas effectué l'avance de frais dans le délai supplémentaire imparti. Par conséquent, à défaut de paiement de l'avance de frais, le recours est manifestement irrecevable et doit dès lors être écarté en application de la procédure simplifiée prévue à l'art. 108 al. 1 let. a LTF.\n2.\nLe recourant, qui succombe, supportera les frais judiciaires, lesquels seront fixés en tenant compte des actes d'instruction effectués jusque-là (art. 5 al. 2 PCF, par renvoi de l'art. 71 LTF; art. 66 al. 1 et 2 LTF).\nPar ces motifs, le Président prononce :\n1.\nLe recours est irrecevable.\n2.\nLes frais judiciaires, arrêtés à 500 fr., sont mis à la charge du recourant.\n3.\nLe présent arrêt est communiqué aux parties et à la Chambre pénale de recours de la Cour de justice de la République et canton de Genève.\nLausanne, le 17 octobre 2025\nAu nom de la IIe Cour de droit pénal\ndu Tribunal fédéral suisse\nLe Président : Abrecht\nLe Greffier : Valentino",
+  "operator_metadata": {
+    "date": "2025-10-17",
+    "reference": [
+      "7B_632/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-632-2025_2025-10-17.html",
+      "source": "446973/45/2851",
+      "content_length": 3308
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit pénal"
+    },
+    "scrapedate": "2026-06-18",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_007"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2851",
+    "id": "CH_BGer_007_7B-632-2025_2025-10-17",
+    "title": {
+      "de": "Bundesgericht II. Strafrechtliche Abteilung 17.10.2025 7B_632/2025",
+      "it": "Tribunale federale II Corte di diritto penale 17.10.2025 7B_632/2025",
+      "fr": "Tribunal fédéral IIe Cour de droit pénal 17.10.2025 7B_632/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:27:30+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-632-2025_2025-10-17.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "7acff3d38b14b1d69b98dd1d6c38b4811c49a840cec1495eace34c5c9379f326"
+  }
+}

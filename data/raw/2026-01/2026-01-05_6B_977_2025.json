@@ -1,0 +1,56 @@
+{
+  "id": "6B_977_2025",
+  "case_id": "6B_977/2025",
+  "case_ids": [
+    "6B_977/2025"
+  ],
+  "decision_date": "2026-01-05",
+  "publication_date": null,
+  "department": "I. Strafrechtliche Abteilung",
+  "division": "I. Strafrechtliche Abteilung",
+  "subject": "Kostenerlass; willkürliche Sachverhaltsfeststellung, Verletzung der Verhältnismässigkeit und des Gleichbehandlungsgebots; Nichteintreten",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://05-01-2026-6B_977-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n6B_977/2025\nUrteil vom 5. Januar 2026\nI. strafrechtliche Abteilung\nBesetzung\nBundesrichter von Felten, als präsidierendes Mitglied,\nGerichtsschreiberin Arquint Hill.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nStaatsanwaltschaft des Kantons Basel-Landschaft, Erste Staatsanwältin, Grenzacherstrasse 8, 4132 Muttenz,\nBeschwerdegegnerin.\nGegenstand\nKostenerlass; willkürliche Sachverhaltsfeststellung, Verletzung der Verhältnismässigkeit und des Gleichbehandlungsgebots; Nichteintreten,\nBeschwerde gegen das Urteil des Kantonsgerichts Basel-Landschaft, Abteilung Strafrecht, vom 18. August 2025 (460 25 116).\nDas präsidierende Mitglied zieht in Erwägung:\n1.\nDas Kantonsgericht Basel-Landschaft wies die Berufung des Beschwerdeführers, worin ein gänzlicher Erlass der Verfahrenskosten verlangt wurde, mit Urteil vom 18. August 2025 ab. Dieser wendet sich mit Beschwerde an das Bundesgericht.\n2.\nDas mit Gerichtsurkunde versandte Urteil des Kantonsgerichts vom 18. August 2025 wurde dem Beschwerdeführer gemäss Sendungsverfolgung der Schweizerischen Post am 5. November 2025 am Schalter zugestellt. Der Beschwerdeführer quittierte den Empfang des Urteils mit seiner Unterschrift. Die Beschwerdefrist gemäss Art. 100 Abs. 1 BGG begann folglich am 6. November 2025 zu laufen und endete am 5. Dezember 2025. Die Beschwerde hätte daher, um rechtzeitig zu sein, spätestens an diesem Tag beim Bundesgericht eingereicht oder zu dessen Handen der Schweizerischen Post übergeben werden müssen. Die am 3. Dezember 2025 verfasste Beschwerde wurde der Schweizerischen Post allerdings erst am 11. Dezember 2025 (Poststempel) übergeben und ist damit verspätet; dies gilt im Übrigen auch für die vom Beschwerdeführer als Beilage eingereichte Beschwerdeeingabe vom 28. November 2025, die der Schweizerischen Post gemäss Zustellcouvert am 6. Dezember 2025 (Poststempel) und damit ebenfalls erst nach Ablauf der Beschwerdefrist übergeben wurde. Ein Fristwiederherstellungsgesuch (Art. 50 Abs. 1 BGG) wird weder ausdrücklich noch sinngemäss gestellt. Auf die Beschwerde ist somit wegen Verspätung im Verfahren nach Art. 108 BGG nicht einzutreten.\n3.\nAuf eine Kostenauflage ist ausnahmsweise zu verzichten.\nDemnach erkennt das präsidierende Mitglied:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nEs werden keine Kosten erhoben.\n3.\nDieses Urteil wird den Parteien und dem Kantonsgericht Basel-Landschaft, Abteilung Strafrecht, schriftlich mitgeteilt.\nLausanne, 5. Januar 2026\nIm Namen der I. strafrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDas präsidierende Mitglied: von Felten\nDie Gerichtsschreiberin: Arquint Hill",
+  "operator_metadata": {
+    "date": "2026-01-05",
+    "reference": [
+      "6B_977/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_006_6B-977-2025_2026-01-05.html",
+      "source": "446973/45/2834",
+      "content_length": 3026
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit pénal"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_006"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_006_6B-977-2025_2026-01-05",
+    "title": {
+      "de": "Bundesgericht I. Strafrechtliche Abteilung 05.01.2026 6B_977/2025",
+      "it": "Tribunale federale I Corte di diritto penale 05.01.2026 6B_977/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit pénal 05.01.2026 6B_977/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:01:13+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_006_6B-977-2025_2026-01-05.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "3d3f07cab890803963799b9d6359c705f67505fea1f397c7d2a2290c79fc91a5"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "id": "4D_216_2025",
+  "case_id": "4D_216/2025",
+  "case_ids": [
+    "4D_216/2025"
+  ],
+  "decision_date": "2025-11-26",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "Definitive Rechtsöffnung",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://26-11-2025-4D_216-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4D_216/2025\nUrteil vom 26. November 2025\nI. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Hurni, Präsident,\nGerichtsschreiber Tanner.\nVerfahrensbeteiligte\n1. A.________\n2. B.________,\nBeschwerdeführer,\ngegen\nKanton Schwyz,\nBahnhofstrasse 9, 6430 Schwyz,\nvertreten durch das Amt für Finanzen, Bahnhofstrasse 15, Postfach 1231, 6431 Schwyz,\nBeschwerdegegner.\nGegenstand\nDefinitive Rechtsöffnung,\nBeschwerde gegen den Beschluss des\nKantonsgerichts Schwyz, Beschwerdekammer,\nvom 30. September 2025 (BEK 2025 109).\nErwägungen:\n1.\nMit Verfügung vom 5. August 2025 erteilte der Einzelrichter am Bezirksgericht Küssnacht dem Beschwerdegegner für den Betrag von Fr. 1'000.-- definitive Rechtsöffnung.\nDas Kantonsgericht Schwyz wies mit Beschluss vom 30. September 2025 eine von den Beschwerdeführern dagegen erhobene Beschwerde ab, soweit es darauf eintrat.\n2.\nDagegen erheben die Beschwerdeführer subsidiäre Verfassungsbeschwerde an das Bundesgericht. Es wurden keine Vernehmlassungen eingeholt.\nDie Eingabe der Beschwerdeführer erfüllt die Begründungsanforderungen, die an eine Beschwerde an das Bundesgericht gestellt werden (Art. 42 Abs. 2 und Art. 106 Abs. 2 BGG; BGE 142 III 364 E. 2.4; 140 III 86 E. 2, 115 E. 2), offensichtlich nicht. Auf die Beschwerde ist somit mangels hinreichender Begründung im vereinfachten Verfahren durch den Abteilungspräsidenten nicht einzutreten (Art. 108 Abs. 1 lit. b BGG). Die Begründung des Entscheids beschränkt sich auf eine kurze Angabe des Unzulässigkeitsgrundes (Art. 108 Abs. 3 BGG).\n3.\nBei diesem Ausgang des Verfahrens sind die Gerichtskosten den Beschwerdeführern 1 und 2 unter solidarischer Haftung aufzuerlegen (Art. 66 Abs. 1 und Abs. 5 BGG). Der Beschwerdegegner hat keinen Anspruch auf eine Parteientschädigung, da ihm mangels Einholung einer Vernehmlassung aus dem bundesgerichtlichen Verfahren kein entschädigungspflichtiger Aufwand erwachsen ist (Art. 68 Abs. 2 BGG).\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 800.-- werden den Beschwerdeführern 1 und 2 unter solidarischer Haftbarkeit auferlegt.\n3.\nEs wird keine Parteientschädigung zugesprochen.\n4.\nDieses Urteil wird den Parteien und dem Kantonsgericht Schwyz, Beschwerdekammer, schriftlich mitgeteilt.\nLausanne, 26. November 2025\nIm Namen der I. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Hurni\nDer Gerichtsschreiber: Tanner",
+  "operator_metadata": {
+    "date": "2025-11-26",
+    "reference": [
+      "4D_216/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-216-2025_2025-11-26.html",
+      "source": "446973/45/2869",
+      "content_length": 2865
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-06-18",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2869",
+    "id": "CH_BGer_004_4D-216-2025_2025-11-26",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 26.11.2025 4D_216/2025",
+      "it": "Tribunale federale I Corte di diritto civile 26.11.2025 4D_216/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 26.11.2025 4D_216/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:38:41+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-216-2025_2025-11-26.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "a4b259cf9bde69bd6c4dd320106fb3563d4c3fc581731f2903df36929a8dceab"
+  }
+}

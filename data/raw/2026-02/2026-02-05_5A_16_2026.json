@@ -1,0 +1,56 @@
+{
+  "id": "5A_16_2026",
+  "case_id": "5A_16/2026",
+  "case_ids": [
+    "5A_16/2026"
+  ],
+  "decision_date": "2026-02-05",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "placement à des fins d'assistance",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://05-02-2026-5A_16-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5A_16/2026\nArrêt du 5 février 2026\nIIe Cour de droit civil\nComposition\nM. le Juge fédéral Bovey, Président.\nGreffier : M. Braconi.\nParticipants à la procédure\nA.________,\nrecourant,\ncontre\nJustice de paix des districts du Jura-Nord vaudois et du Gros-de-Vaud,\nrue des Moulins 10, case postale,\n1401 Yverdon-les-Bains.\nObjet\nplacement à des fins d'assistance,\nrecours contre l'arrêt de la Chambre des curatelles\ndu Tribunal cantonal du canton de Vaud du 8 décembre 2025 (OC20.026800-251645 n° 5004).\nVu :\nla décision prise le 5 novembre 2025 par la Justice de paix du district du Jura-Nord vaudois ordonnant le maintien, pour une durée indéterminée, du placement à des fins d'assistance prononcé le 26 février 2025 en faveur de A.________ (né en 1987);\nl'arrêt de la Chambre des curatelles du Tribunal cantonal du canton de Vaud du 8 décembre 2025 confirmant cette décision;\nle recours au Tribunal fédéral déposé le 6 janvier 2026 par la personne concernée contre l'arrêt cantonal, concluant à la levée \" immédiate du PAFA \";\nl'écriture du recourant expédiée le 21 janvier 2026;\nConsidérant :\nque le présent recours est traité en tant que recours en matière civile au sens de l'art. 72 al. 2 let. b ch. 6 LTF;\nque, en l'espèce, le recourant dénonce une violation de ses \" droits les plus fondamentaux \", mais ne soulève pas le moindre grief à l'encontre des constatations de l'autorité précédente relatives à son état de santé psychique (schizophrénie paranoïde chronique et dépendance au THC), fondées notamment sur des expertises et les déclarations de médecins de B.________, ainsi que sur son comportement à l'occasion des phases de décompensation (art. 105 al. 1 LTF);\nque l'écriture du recourant ne contient pas non plus de critiques prises de l'absence des conditions posées par l'art. 426 al. 1 CC pour justifier son placement, singulièrement l'existence d'un trouble psychique et d'un besoin d'assistance ou de traitement;\nque, faute d'observer les exigences légales de motivation (art. 42 al. 2 et 106 al. 2 LTF; ATF 142 III 364 consid. 2.4), le présent recours doit être ainsi déclaré irrecevable par voie de procédure simplifiée (art. 108 al. 1 let. b LTF);\nque, vu les circonstances de l'espèce, il y a lieu de renoncer à percevoir des frais judiciaires (art. 66 al. 1, 2ème phrase, LTF);\nPar ces motifs, le Président prononce :\n1.\nLe recours est irrecevable.\n2.\nIl n'est pas perçu de frais judiciaires.\n3.\nLe présent arrêt est communiqué au recourant, à la Justice de paix des districts du Jura-Nord vaudois et du Gros-de-Vaud, au Service des curatelles et tutelles professionnelles du canton de Vaud, à B.________, à C.________ et à la Chambre des curatelles du Tribunal cantonal du canton de Vaud.\nLausanne, le 5 février 2026\nAu nom de la IIe Cour de droit civil\ndu Tribunal fédéral suisse\nLe Président : Bovey\nLe Greffier : Braconi",
+  "operator_metadata": {
+    "date": "2026-02-05",
+    "reference": [
+      "5A_16/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-16-2026_2026-02-05.html",
+      "source": "446973/45/2829",
+      "content_length": 3256
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_005_5A-16-2026_2026-02-05",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 05.02.2026 5A_16/2026",
+      "it": "Tribunale federale II Corte di diritto civile 05.02.2026 5A_16/2026",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 05.02.2026 5A_16/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:10:12+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-16-2026_2026-02-05.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "cc683652e5c7ddd299e5650438d8bf0775d912dba21d55d8a64cae354dd6bdef"
+  }
+}
