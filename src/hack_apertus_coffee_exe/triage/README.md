@@ -1,4 +1,4 @@
-# Triage (`src/hack_apertus_coffee.exe/triage/`, import `hack_apertus_coffee_exe.triage`)
+# Triage (`src/hack_apertus_coffee_exe/triage/`, import `hack_apertus_coffee_exe.triage`)
 
 ## High-Level Overview
 
