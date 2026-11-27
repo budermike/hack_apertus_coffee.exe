@@ -1188,6 +1188,7 @@ class VectorDB:
         ref_date_to: str | None = None,
         top_k: int = 3,
         negative_weight: float = 0.3,
+        hybrid: bool = True,
     ) -> list[dict[str, Any]]:
         """Fast leakage-safe batch cosine scoring of a period against prior references (#11, #21, #28)."""
         effective_ref_end = ref_date_to
@@ -1206,13 +1207,16 @@ class VectorDB:
         cand_ids = {cid for c in candidates for cid in c["case_ids"]}
         pos_refs = [r for r in pos_refs if not (set(r["case_ids"]) & cand_ids)]
 
-        pos_chunks_list = [r["vectors"] for r in pos_refs if r["vectors"].shape[0] > 0]
-        if not pos_chunks_list:
+        valid_pos_refs = [r for r in pos_refs if r["vectors"].shape[0] > 0]
+        if not valid_pos_refs:
             return []
+        pos_refs = valid_pos_refs
+        pos_chunks_list = [r["vectors"] for r in pos_refs]
         pos_chunk_to_ref = np.concatenate(
-            [np.full(r["vectors"].shape[0], i, dtype=np.int32) for i, r in enumerate(pos_refs) if r["vectors"].shape[0] > 0]
+            [np.full(r["vectors"].shape[0], i, dtype=np.int32) for i, r in enumerate(pos_refs)]
         )
         pos_mat = np.vstack(pos_chunks_list)
+        pos_doc_means = l2_normalize(np.vstack([r["vectors"].mean(axis=0) for r in pos_refs]))
 
         neg_mat: np.ndarray | None = None
         if neg_refs:
@@ -1220,6 +1224,16 @@ class VectorDB:
             if neg_parts:
                 neg_mat = np.vstack(neg_parts)
 
+        fts_domain_keys: set[str] = set()
+        if hybrid and self.fts_path.exists():
+            with self._connect_fts() as fts_conn:
+                fts_has_rows = int(fts_conn.execute("SELECT COUNT(*) FROM judgements_fts").fetchone()[0]) > 0
+            if fts_has_rows:
+                for kw in ("UVG", "LAA", "LAINF", "Suva"):
+                    for hit in self.fulltext_search(kw, top_k=5000, date_from=date_from, date_to=date_to):
+                        fts_domain_keys.add(hit["doc_key"])
+
+        subject_keywords = ("unfall", "accident", "infortun", "uvg", "laa", "lainf")
         scored: list[dict[str, Any]] = []
         for cand in candidates:
             c_vecs = cand.pop("vectors")
@@ -1238,12 +1252,27 @@ class VectorDB:
             max_sim = top_vals[0] if top_vals else 0.0
             mean_sim = float(sum(top_vals) / len(top_vals)) if top_vals else 0.0
 
-            neg_penalty = 0.0
-            if neg_mat is not None and neg_mat.shape[0] > 0:
-                neg_max = float((c_vecs @ neg_mat.T).max())
-                neg_penalty = max(0.0, neg_max) * negative_weight
+            if hybrid:
+                cand_mean = l2_normalize(c_vecs.mean(axis=0))
+                doc_mean_sims = (cand_mean @ pos_doc_means.T).ravel()
+                doc_top_k = np.sort(doc_mean_sims)[-k:]
+                doc_mean_sim = float(doc_top_k.mean()) if doc_top_k.size else 0.0
+                base_sim = 0.25 * doc_mean_sim + 0.75 * mean_sim
 
-            raw_score = max(0.0, mean_sim - neg_penalty) * 100.0
+                domain_bonus = 0.0
+                if any(cid.startswith("8C_") for cid in cand["case_ids"]):
+                    domain_bonus += 0.05
+                subj_low = (cand.get("subject") or "").lower()
+                if any(kw in subj_low for kw in subject_keywords):
+                    domain_bonus += 0.08
+                if cand["doc_key"] in fts_domain_keys:
+                    domain_bonus += 0.06
+                neg_penalty = max(0.0, float((c_vecs @ neg_mat.T).max())) * negative_weight if (neg_mat is not None and neg_mat.shape[0] > 0) else 0.0
+                # Normalize [0, 1.19] -> [0, 100] so top candidates keep full cosine ordering without clamping at 100.
+                raw_score = max(0.0, (base_sim + domain_bonus - neg_penalty) / 1.19) * 100.0
+            else:
+                neg_penalty = max(0.0, float((c_vecs @ neg_mat.T).max())) * negative_weight if (neg_mat is not None and neg_mat.shape[0] > 0) else 0.0
+                raw_score = max(0.0, mean_sim - neg_penalty) * 100.0
             similar_cases = [
                 {
                     "case_id": pos_refs[int(i)]["case_id"],

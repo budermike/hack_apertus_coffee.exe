@@ -437,6 +437,54 @@ def crawl(config, refresh=False):
     return stats
 
 
+def fetch_reference_cases(config, targets):
+    """Fetch specific (case_id, iso_date) judgements without marking their days covered in _index.json."""
+    list_day, fetch = SOURCES[config["source"]]
+    out_dir = Path(config["out_dir"])
+    by_day = {}
+    for case_id, iso_date in targets:
+        by_day.setdefault(iso_date, set()).add(case_id)
+
+    stats = {"downloaded": 0, "skipped": 0, "missing": 0, "failed": 0}
+    for iso_date in sorted(by_day):
+        wanted = set(by_day[iso_date])
+        pending = set()
+        for case_id in wanted:
+            path = record_path(out_dir, {"case_id": case_id, "decision_date": iso_date})
+            if is_valid(path):
+                stats["skipped"] += 1
+            else:
+                pending.add(case_id)
+        if not pending:
+            continue
+
+        day = date.fromisoformat(iso_date)
+        try:
+            entries = list_day(config, day)
+        except (httpx.HTTPError, ValueError, KeyError) as error:
+            log.error("%s: listing failed: %s", day, error)
+            stats["failed"] += len(pending)
+            continue
+
+        matched = set()
+        for entry in entries:
+            if entry["case_id"] not in pending:
+                continue
+            matched.add(entry["case_id"])
+            path = record_path(out_dir, entry)
+            if path.exists():
+                path.rename(path.with_suffix(f".corrupt-{int(time.time())}"))
+            try:
+                html, url = fetch(config, entry)
+                write_json(path, build_record(config, entry, html, url))
+                stats["downloaded"] += 1
+            except (httpx.HTTPError, ValueError, KeyError) as error:
+                log.error("%s: %s", entry["case_id"], error)
+                stats["failed"] += 1
+        stats["missing"] += len(pending - matched)
+    return stats
+
+
 # ---------------------------------------------------------------- report (issue #9)
 
 

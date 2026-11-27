@@ -355,6 +355,17 @@ def test_command_line(site, tmp_path, capsys):
     assert saved_file(json.loads(path.read_text())).exists()
 
 
+def test_fetch_reference_cases_does_not_mark_day_covered(site, tmp_path):
+    config = make_config(tmp_path, "entscheidsuche")
+    stats = crawl.fetch_reference_cases(config, [("8C_123/2026", "2026-05-15"), ("9C_999/2026", "2026-05-15")])
+    assert stats == {"downloaded": 1, "skipped": 0, "missing": 1, "failed": 0}
+    assert saved_file(config).exists()
+    assert not (Path(config["out_dir"]) / "_index.json").exists()
+    # Second call skips the already downloaded valid file:
+    stats2 = crawl.fetch_reference_cases(config, [("8C_123/2026", "2026-05-15")])
+    assert stats2["skipped"] == 1 and stats2["downloaded"] == 0
+
+
 # ---------------------------------------------------------------- integration (real websites)
 
 

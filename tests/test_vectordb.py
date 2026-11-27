@@ -185,9 +185,19 @@ def test_duplicate_case_id_across_dates_and_batch_scoring(tmp_path):
     assert db.get("7B_1356/2025")["decision_date"] == "2026-03-18"
 
     # Leakage-safe batch scoring of Q1/2026 uses ONLY pre-2026-01-01 references (excludes 8C_70/2026!):
-    ranked = db.score_candidates(date_from="2026-01-01", date_to="2026-03-31", top_k=3)
-    assert ranked[0]["case_id"] == "8C_70/2026"
-    assert ranked[0]["similar_cases"][0]["case_id"] == "8C_50/2025"
+    ranked_pure = db.score_candidates(date_from="2026-01-01", date_to="2026-03-31", top_k=3, hybrid=False)
+    ranked_hybrid = db.score_candidates(date_from="2026-01-01", date_to="2026-03-31", top_k=3, hybrid=True)
+    assert ranked_pure[0]["case_id"] == "8C_70/2026"
+    assert ranked_hybrid[0]["case_id"] == "8C_70/2026"
+    assert (ranked_hybrid[0]["score"] - ranked_hybrid[1]["score"]) > (ranked_pure[0]["score"] - ranked_pure[1]["score"])
+    assert ranked_hybrid[0]["similar_cases"][0]["case_id"] == "8C_50/2025"
+
+    # Negative reference feedback (#28/#40) suppresses matching candidates:
+    db.set_reference_flags("8C_50/2025", is_reference=False, is_negative_reference=True)
+    db.ingest_records([_make_record("8C_51/2025", "2025-11-20", "Unfallversicherung UVG.")], reference_ids={"8C_51/2025"})
+    ranked_neg = db.score_candidates(date_from="2026-01-01", date_to="2026-03-31", top_k=3, negative_weight=0.3, hybrid=True)
+    score_after = next(r["score"] for r in ranked_neg if r["case_id"] == "8C_70/2026")
+    assert score_after < ranked_hybrid[0]["score"]
 
 
 def test_fulltext_search_fts5_and_filtered_semantic_search(tmp_path):
