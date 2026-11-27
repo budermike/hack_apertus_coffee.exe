@@ -414,8 +414,13 @@ class VectorDB:
         records: Sequence[dict[str, Any]],
         reference_ids: set[str] | None = None,
         chunk_batch_size: int = 512,
+        rebuild_index: bool = True,
     ) -> dict[str, int]:
-        """Embed and upsert judgements in fast batches; unchanged SHA-256 entries are cached."""
+        """Embed and upsert judgements in fast batches; unchanged SHA-256 entries are cached.
+
+        ``rebuild_index=False`` is for callers that ingest in many small batches (ensure_period):
+        the search index is only dropped, and rebuilt once by the caller or on the next search.
+        """
         stats = {"embedded": 0, "cached": 0, "total": len(records)}
 
         with self._connect() as conn:
@@ -505,7 +510,7 @@ class VectorDB:
                 )
 
         if not to_embed:
-            if not self.search_index_path.exists():
+            if rebuild_index and not self.search_index_path.exists():
                 self.rebuild_search_index()
             return stats
 
@@ -607,7 +612,11 @@ class VectorDB:
                     fts_rows,
                 )
 
-        self.rebuild_search_index()
+        if rebuild_index:
+            self.rebuild_search_index()
+        else:  # a stale index would hide the new judgements; a missing one is rebuilt on demand
+            self.search_index_path.unlink(missing_ok=True)
+            self._search_cache = None
         return stats
 
     def ingest_directory(
@@ -1234,13 +1243,12 @@ class VectorDB:
                 neg_mat = np.vstack(neg_parts)
 
         fts_domain_keys: set[str] = set()
-        if hybrid and self.fts_path.exists():
-            with self._connect_fts() as fts_conn:
-                fts_has_rows = int(fts_conn.execute("SELECT COUNT(*) FROM judgements_fts").fetchone()[0]) > 0
-            if fts_has_rows:
-                for kw in ("UVG", "LAA", "LAINF", "Suva"):
-                    for hit in self.fulltext_search(kw, top_k=5000, date_from=date_from, date_to=date_to):
-                        fts_domain_keys.add(hit["doc_key"])
+        if hybrid:
+            # fts.sqlite3 is not in Git. fulltext_search rebuilds it when it is missing or empty,
+            # so a fresh clone gets the same scores as a machine that already has the index.
+            for kw in ("UVG", "LAA", "LAINF", "Suva"):
+                for hit in self.fulltext_search(kw, top_k=5000, date_from=date_from, date_to=date_to):
+                    fts_domain_keys.add(hit["doc_key"])
 
         subject_keywords = ("unfall", "accident", "infortun", "uvg", "laa", "lainf")
         scored: list[dict[str, Any]] = []

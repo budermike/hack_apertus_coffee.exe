@@ -411,7 +411,7 @@ def crawl_day(config, day, out_dir=None):
             write_json(path, build_record(config, entry, html, url))
             day_stats["downloaded"] += 1
             day_stats["paths"].append(path)
-        except (httpx.HTTPError, ValueError, KeyError) as error:
+        except (httpx.HTTPError, ValueError, KeyError, TypeError) as error:  # TypeError: e.g. "attachment": null
             log.error("%s: %s", entry["case_id"], error)
             day_stats["failed"] += 1
             day_stats["day_ok"] = False

@@ -874,3 +874,81 @@ def test_ensure_period_live_week_integration(tmp_path):
         conn.close()
 
 
+
+
+# --------------------------------------------------------------- review fixes
+
+
+_THREE_DAYS = {
+    "2026-07-01": [{"case_id": "8C_1/2026", "subject": "Unfallversicherung", "body": "Suva UVG Unfall."}],
+    "2026-07-02": [{"case_id": "8C_2/2026", "subject": "Unfallversicherung", "body": "Suva UVG Sturz."}],
+    "2026-07-03": [{"case_id": "8C_3/2026", "subject": "Unfallversicherung", "body": "Suva UVG Baustelle."}],
+}
+
+
+def _three_day_kwargs(tmp_path) -> dict:
+    return {
+        "source": "entscheidsuche",
+        "raw_dir": tmp_path / "raw",
+        "db_dir": tmp_path / "vectordb",
+        "embedder": _tfidf_embedder(),
+        "today": date(2026, 7, 10),
+    }
+
+
+def test_ensure_period_counts_registered_cases_when_period_is_extended(tmp_path, monkeypatch):
+    _install_fake_source(monkeypatch, _THREE_DAYS)
+    first = ensure_period("2026-07-01", "2026-07-02", **_three_day_kwargs(tmp_path))
+    assert (first.cases_saved, first.cases_existing) == (2, 0)
+
+    # Two judgements are already registered, one is new: no double counting, none lost.
+    extended = ensure_period("2026-07-01", "2026-07-03", **_three_day_kwargs(tmp_path))
+    assert (extended.cases_saved, extended.cases_existing, extended.summary_errors) == (1, 2, 0)
+
+    cached = ensure_period("2026-07-01", "2026-07-03", **_three_day_kwargs(tmp_path))
+    assert (cached.cases_saved, cached.cases_existing) == (0, 3)
+
+
+def test_ensure_period_unexpected_fetch_error_fails_only_that_day(tmp_path, monkeypatch):
+    _install_fake_source(monkeypatch, _THREE_DAYS)
+    list_day, fetch = crawl.SOURCES["entscheidsuche"]
+
+    def fetch_with_broken_record(config, entry):
+        if entry["decision_date"] == "2026-07-01":
+            raise TypeError("'NoneType' object is not subscriptable")  # e.g. "attachment": null
+        return fetch(config, entry)
+
+    monkeypatch.setitem(crawl.SOURCES, "entscheidsuche", (list_day, fetch_with_broken_record))
+    status = ensure_period("2026-07-01", "2026-07-03", **_three_day_kwargs(tmp_path))
+
+    assert status.failed_days == ["2026-07-01"]
+    assert status.days_crawled == 2
+    assert set(crawl.load_index(tmp_path / "raw")["days"]) == {"2026-07-02", "2026-07-03"}
+
+
+def test_ensure_period_rebuilds_search_index_once_per_run(tmp_path, monkeypatch):
+    _install_fake_source(monkeypatch, _THREE_DAYS)
+    rebuilds: list[int] = []
+    original = VectorDB.rebuild_search_index
+
+    def counting_rebuild(self):
+        rebuilds.append(1)
+        return original(self)
+
+    monkeypatch.setattr(VectorDB, "rebuild_search_index", counting_rebuild)
+    status = ensure_period("2026-07-01", "2026-07-03", **_three_day_kwargs(tmp_path))
+
+    assert status.ingested_judgements == 3
+    assert len(rebuilds) == 1  # not once per day
+    db = VectorDB(db_dir=tmp_path / "vectordb", embedder=_tfidf_embedder())
+    assert db.search_index_path.exists()
+    assert len(db.similar_to_text("Suva UVG Unfall", top_k=5)) == 3
+
+
+def test_ensure_period_requires_the_crawl_config(tmp_path, monkeypatch):
+    calls = _install_fake_source(monkeypatch, _THREE_DAYS)
+    with pytest.raises(FileNotFoundError, match="Crawl config not found"):
+        ensure_period(
+            "2026-07-01", "2026-07-01", config_path=tmp_path / "missing.json", **_three_day_kwargs(tmp_path)
+        )
+    assert calls["list"] == []  # no request to a hard-coded fallback URL

@@ -297,3 +297,47 @@ def test_verify_quarter_counts_handles_non_prefixed_filenames_and_cli(tmp_path, 
     assert '"embedded": 3' in out
     assert '"match": true' in out
     assert report_csv.exists()
+
+
+def test_hybrid_score_is_the_same_without_a_local_fts_index(tmp_path, monkeypatch):
+    """fts.sqlite3 is not in Git: a fresh clone must score like a machine that has it (#21)."""
+    raw_dir = tmp_path / "raw"
+    db_dir = tmp_path / "db"
+    records = [
+        _make_record("8C_50/2025", "2025-11-15", "Suva Unfallversicherung UVG Sturz."),
+        _make_record("9C_70/2026", "2026-02-10", "Rente nach UVG, Suva als Versicherer.", subject="Invalidenversicherung"),
+        _make_record("5A_80/2026", "2026-02-12", "Ehescheidung Güterrecht ZGB.", subject="Ehescheidung"),
+    ]
+    for record in records:
+        _write_raw(raw_dir, record)
+    monkeypatch.setattr(vectordb, "DEFAULT_RAW_DIR", str(raw_dir))
+
+    db = vectordb.VectorDB(db_dir=db_dir, embedder=_DummyDenseEmbedder())
+    db.ingest_records(records, reference_ids={"8C_50/2025"})
+    with_index = db.score_candidates(date_from="2026-01-01", date_to="2026-03-31")
+
+    for path in db_dir.glob("fts.sqlite3*"):
+        path.unlink()
+    fresh_clone = vectordb.VectorDB(db_dir=db_dir, embedder=_DummyDenseEmbedder())
+    without_index = fresh_clone.score_candidates(date_from="2026-01-01", date_to="2026-03-31")
+
+    assert [(r["case_id"], r["score"]) for r in without_index] == [(r["case_id"], r["score"]) for r in with_index]
+    assert (db_dir / "fts.sqlite3").exists()  # rebuilt from the raw files
+
+    # The comparison is meaningful: without full-text hits 9C_70/2026 scores lower.
+    monkeypatch.setattr(vectordb.VectorDB, "fulltext_search", lambda self, *args, **kwargs: [])
+    no_bonus = {r["case_id"]: r["score"] for r in db.score_candidates(date_from="2026-01-01", date_to="2026-03-31")}
+    assert no_bonus["9C_70/2026"] < {r["case_id"]: r["score"] for r in with_index}["9C_70/2026"]
+
+
+def test_ingest_without_rebuild_drops_stale_search_index(tmp_path):
+    emb = _DummyDenseEmbedder()
+    db = vectordb.VectorDB(db_dir=tmp_path / "db", embedder=emb)
+    db.ingest_records([_make_record("8C_1/2025", "2025-11-10", "Suva Unfallversicherung UVG.")])
+    assert db.search_index_path.exists()
+
+    db.ingest_records([_make_record("8C_2/2025", "2025-11-11", "Suva Sturz UVG.")], rebuild_index=False)
+    assert not db.search_index_path.exists()  # a stale index would hide 8C_2/2025
+
+    hits = db.similar_to_text("Suva Unfall", top_k=5)  # rebuilt on demand
+    assert {h["case_id"] for h in hits} == {"8C_1/2025", "8C_2/2025"}
