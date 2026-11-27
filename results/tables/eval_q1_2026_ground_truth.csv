@@ -1,0 +1,32 @@
+rank,case_id,decision_date,language,score,found,subject
+1,8C_464/2025,2026-02-25,de,97.72,True,Unfallversicherung (Invalidenrente; Einkommensvergleich)
+5,8C_162/2025,2026-01-27,de,97.55,True,Unfallversicherung (Invalidenrente)
+8,8C_385/2025,2026-01-20,de,97.41,True,Unfallversicherung (Kausalzusammenhang)
+9,8C_525/2025,2026-03-17,fr,97.41,True,Assurance-accidents (révision; rente d'invalidité)
+10,8C_477/2024,2026-01-19,de,97.38,True,Unfallversicherung
+13,8C_234/2025,2026-03-12,de,97.31,True,"Unfallversicherung (Invalidenrente, Valideneinkommen)"
+14,8C_348/2025,2026-01-13,fr,97.27,True,Assurance-accidents (lien de causalité; traumatisme cranio-cérébral)
+15,8C_67/2025,2026-01-20,de,97.23,True,Unfallversicherung (Unfallbegriff)
+18,8C_143/2024,2026-01-27,de,97.11,True,Unfallversicherung
+20,8C_328/2025,2026-01-14,de,97.04,True,Unfallversicherung (Kausalzusammenhang; psychisches Leiden)
+21,8C_698/2025,2026-01-30,de,97.02,True,Unfallversicherung
+22,8C_418/2025,2026-03-19,de,96.99,True,Unfallversicherung
+24,8C_644/2025,2026-03-25,de,96.93,True,Unfallversicherung (Nichtberufsunfall; Versicherteneigenschaft)
+27,8C_231/2025,2026-01-29,de,96.80,True,Unfallversicherung
+30,8C_52/2025,2026-02-09,de,96.75,True,Unfallversicherung (Berufskrankheit; Kausalzusammenhang)
+31,8C_802/2023,2026-03-27,de,96.62,True,Unfallversicherung (Heilbehandlung; Taggeld; prozessuale Revision)
+35,8C_508/2025,2026-03-19,fr,96.45,True,Assurance-accidents (indemnité pour atteinte à l'intégrité)
+36,8C_605/2025,2026-03-30,de,96.43,True,Unfallversicherung (Prämien)
+43,8C_223/2025,2026-01-28,fr,91.88,True,Assurance-accidents (révision; revenu sans invalidité)
+46,8C_613/2025,2026-03-27,fr,91.65,True,Assurance-accidents (remise de l'obligation de restituer; bonne foi)
+47,8C_368/2025,2026-01-06,fr,91.62,True,Assurance-accidents (procédure de première instance; condition de recevabilité)
+49,8C_351/2025,2026-01-09,fr,91.59,True,Assurance-accidents (procédure administrative; condition de recevabilité)
+50,8C_18/2026,2026-03-02,de,91.53,True,Unfallversicherung (Taggeld)
+79,8C_377/2025,2026-02-20,de,85.73,False,Invalidenversicherung (Invalidenrente; Arbeitsunfähigkeit)
+81,8C_149/2025,2026-03-26,de,85.64,False,Invalidenversicherung (Invalidenrente)
+85,8C_272/2025,2026-02-11,de,85.53,False,Invalidenversicherung (Invalidenrente)
+104,8C_450/2025,2026-01-07,de,85.19,False,Invalidenversicherung (Invalidenrente; berufliche Massnahmen)
+114,8C_314/2025,2026-02-09,fr,84.84,False,Assurance-invalidité (allocation pour impotent)
+227,9C_311/2025,2026-03-18,de,81.10,False,Invalidenversicherung
+230,9C_145/2025,2026-03-16,de,80.99,False,Invalidenversicherung
+1847,9C_65/2025,2026-01-29,it,76.82,False,Assicurazione per l'invalidità (diniego di giustizia e ritardata giustizia; spese giudiziarie in procedura cantonale)

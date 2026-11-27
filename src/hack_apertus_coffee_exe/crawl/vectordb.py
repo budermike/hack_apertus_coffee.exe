@@ -1185,12 +1185,16 @@ class VectorDB:
         *,
         date_from: str,
         date_to: str,
+        ref_date_from: str | None = None,
         ref_date_to: str | None = None,
         top_k: int = 3,
         negative_weight: float = 0.3,
         hybrid: bool = True,
     ) -> list[dict[str, Any]]:
-        """Fast leakage-safe batch cosine scoring of a period against prior references (#11, #21, #28)."""
+        """Fast leakage-safe batch cosine scoring of a period against prior references (#11, #21, #28).
+
+        ``ref_date_from`` limits the positive references to a window (eval #21: Q4/2025 only).
+        """
         effective_ref_end = ref_date_to
         if effective_ref_end is None:
             from datetime import date, timedelta
@@ -1198,7 +1202,9 @@ class VectorDB:
             effective_ref_end = (date.fromisoformat(date_from) - timedelta(days=1)).isoformat()
 
         candidates = self.query(date_from=date_from, date_to=date_to, include_vectors=True)
-        pos_refs = self.query(date_to=effective_ref_end, is_reference=True, include_vectors=True)
+        pos_refs = self.query(
+            date_from=ref_date_from, date_to=effective_ref_end, is_reference=True, include_vectors=True
+        )
         neg_refs = self.query(date_to=effective_ref_end, is_negative_reference=True, include_vectors=True)
 
         if not candidates or not pos_refs:
