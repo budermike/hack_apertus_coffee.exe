@@ -102,6 +102,15 @@ def test_summarize_retries_failing_language_once(summarizer):
     assert "Profil de style" in completions.calls[2][0]
 
 
+def test_invented_consideration_numbers_are_removed_from_the_facts(summarizer):
+    FACTS["kernerwaegungen"].append({"aussage": "erfunden", "erwaegung": "4.2"})
+    try:
+        facts = summarizer.extract_facts(J)
+    finally:
+        FACTS["kernerwaegungen"].pop()
+    assert [k["erwaegung"] for k in facts["kernerwaegungen"]] == ["3", ""]
+
+
 def test_on_demand_result_is_json_ready(summarizer):
     result = summarize_case(J, summarizer)  # UI "summarise" button
     data = json.loads(json.dumps(result.to_dict(), ensure_ascii=False))

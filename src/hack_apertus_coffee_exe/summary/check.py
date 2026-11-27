@@ -52,7 +52,15 @@ _SUMMARY_OUTCOME = {
     "abgewiesen": re.compile(r"abgewiesen|wies\b[^.]*\bab\b|rejet", re.I),
     "nicht eingetreten": re.compile(r"nicht ein(?:ge)?treten|trat\b[^.]*\bnicht ein|irrecevable|pas entré en matière", re.I),
 }
-_PARTIAL = re.compile(r"teilweise|partiellement", re.I)
+# A partial outcome is also described as "… im Übrigen abgewiesen" / "rejeté pour le surplus".
+_PARTIAL = re.compile(
+    r"teilweise|im Übrigen|im übrigen|partiellement|partiel|pour le surplus|au surplus|à l'exception", re.I
+)
+# Sentences in which the Federal Court itself sends the case back.
+_COURT = re.compile(r"Bundesgericht|Bundesrichter|Tribunal fédéral|juges fédéraux|\bTF\b", re.I)
+_REMAND_WORDS = re.compile(
+    r"zurück(?:ge)?wies|zurückgewiesen|zurückzuweisen|\bwies\b[^.]*\bzurück\b|Rückweisung|renvo(?:i|y)", re.I
+)
 
 
 @dataclass
@@ -123,13 +131,25 @@ def check_language(summary: str, language: str, judgement: Judgement, outcome: O
         closing = _closing_paragraph(summary)
         actual = "gutgeheissen" if outcome.result == "teilweise gutgeheissen" else outcome.result
         mentioned = {name for name, rx in _SUMMARY_OUTCOME.items() if rx.search(closing)}
-        if mentioned and actual not in mentioned:
+        partial = bool(_PARTIAL.search(closing))
+        if outcome.result == "teilweise gutgeheissen" and partial:
+            pass  # "… im Übrigen abgewiesen" / "rejeté pour le surplus" is a correct description
+        elif mentioned and actual not in mentioned:
             issues.append(Issue(
                 language, "error", "outcome",
                 f"Schlussabsatz nennt {', '.join(sorted(mentioned))}, Dispositiv: {outcome.describe_de()}.",
             ))
-        elif outcome.result == "teilweise gutgeheissen" and actual in mentioned and not _PARTIAL.search(closing):
+        elif outcome.result == "teilweise gutgeheissen" and actual in mentioned:
             issues.append(Issue(language, "warning", "outcome", "Dispositiv: teilweise gutgeheissen, Schlussabsatz sagt nicht «teilweise»."))
+
+    if outcome.result is not None and not outcome.remand:
+        for sentence in re.split(r"(?<=[.!?])\s+", summary):
+            if _COURT.search(sentence) and _REMAND_WORDS.search(sentence):
+                issues.append(Issue(
+                    language, "error", "remand",
+                    "Zusammenfassung sagt, das Bundesgericht habe die Sache zurückgewiesen; das Dispositiv enthält keine Rückweisung.",
+                ))
+                break
     return issues
 
 

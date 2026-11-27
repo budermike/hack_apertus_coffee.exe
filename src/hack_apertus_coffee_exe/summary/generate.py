@@ -36,6 +36,15 @@ def _num_key(num: str) -> tuple[int, ...]:
     return tuple(int(p) for p in num.split(".") if p.isdigit())
 
 
+def _drop_unknown_considerations(facts: dict[str, Any], known: set[str]) -> None:
+    """Remove consideration numbers the facts step invented, so the writer cannot copy them."""
+    if not known:
+        return
+    for item in facts.get("kernerwaegungen", []) or []:
+        if isinstance(item, dict) and str(item.get("erwaegung", "")).strip().rstrip(".") not in known:
+            item["erwaegung"] = ""
+
+
 @dataclass
 class SummaryResult:
     case_id: str
@@ -105,6 +114,7 @@ class Summarizer:
         except ValueError:
             # Keep going: the writer still gets the passages and the outcome.
             facts = {"hinweis": "Fakten konnten nicht als JSON gelesen werden", "rohtext": raw[:4000]}
+        _drop_unknown_considerations(facts, consideration_numbers(judgement.text))
         facts["case_id"] = judgement.case_id
         if judgement.decision_date:
             facts["urteilsdatum"] = judgement.decision_date.isoformat()

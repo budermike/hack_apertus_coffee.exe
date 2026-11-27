@@ -36,6 +36,7 @@ Forme spéciale : les pièges de procédure commencent par « cavete collegae: �
 - Considérants : « (consid. 4.4) » ; ne citer que des considérants qui existent dans l'arrêt.
 - Lois : « art. 6 al. 2 LAA », « art. 44 LPGA », « art. 46 al. 1 LTF ». Abréviations sans les développer.
 - Parties anonymes : « l'assuré », « l'assurée », « la recourante », « l'intimée », « la Suva ». Aucun nom.
+- Reprendre le genre de la personne assurée tel qu'il figure dans l'arrêt (« le recourant » → « l'assuré », « la recourante » → « l'assurée ») et le garder dans tout le texte.
 - Juridictions : « le Tribunal fédéral », « les juges fédéraux », « la Cour cantonale », « les premiers juges », « le Tribunal cantonal <canton> ».
 - Temps : passé composé / plus-que-parfait pour les faits et la procédure ; présent pour les règles.
 - Montants : « CHF 67'071.- ».
