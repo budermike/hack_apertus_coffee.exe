@@ -34,6 +34,15 @@ def _num_key(num: str) -> tuple[int, ...]:
     return tuple(int(p) for p in num.split(".") if p.isdigit())
 
 
+def _drop_unknown_considerations(facts: dict[str, Any], known: set[str]) -> None:
+    """Remove consideration numbers the facts step invented, so the writer cannot copy them."""
+    if not known:
+        return
+    for item in facts.get("kernerwaegungen", []) or []:
+        if isinstance(item, dict) and str(item.get("erwaegung", "")).strip().rstrip(".") not in known:
+            item["erwaegung"] = ""
+
+
 @dataclass
 class SummaryResult:
     case_id: str
@@ -55,6 +64,27 @@ class SummaryResult:
 
     def text(self, language: str) -> str:
         return self.summary_de if language == "de" else self.summary_fr
+
+    def to_dict(self) -> dict[str, Any]:
+        """Everything a store or the UI needs, JSON-serialisable.
+
+        ``coherence_notes`` holds the remaining check findings (empty when ok).
+        """
+        return {
+            "case_id": self.case_id,
+            "title_de": self.title_de,
+            "title_fr": self.title_fr,
+            "summary_de": self.summary_de,
+            "summary_fr": self.summary_fr,
+            "model": self.model,
+            "prompt_version": self.prompt_version,
+            "coherence_ok": self.coherence_ok,
+            "coherence_notes": self.check.to_dicts(),
+            "outcome": self.outcome,
+            "facts": self.facts,
+            "examples": self.examples,
+            "attempts": self.attempts,
+        }
 
 
 class Summarizer:
@@ -82,6 +112,7 @@ class Summarizer:
         except ValueError:
             # Keep going: the writer still gets the passages and the outcome.
             facts = {"hinweis": "Fakten konnten nicht als JSON gelesen werden", "rohtext": raw[:4000]}
+        _drop_unknown_considerations(facts, consideration_numbers(judgement.text))
         facts["case_id"] = judgement.case_id
         if judgement.decision_date:
             facts["urteilsdatum"] = judgement.decision_date.isoformat()

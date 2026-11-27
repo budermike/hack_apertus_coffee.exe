@@ -126,3 +126,12 @@ def test_batch_only_green(summarizer):
     done = run_batch(rows, [J], conn, lambda: summarizer)
     assert done == ["8C_901/2026"]
     assert store.list_case_ids(conn) == ["8C_901/2026"]
+
+
+def test_invented_consideration_numbers_are_removed_from_the_facts(summarizer):
+    FACTS["kernerwaegungen"].append({"aussage": "erfunden", "erwaegung": "4.2"})
+    try:
+        facts = summarizer.extract_facts(J)
+    finally:
+        FACTS["kernerwaegungen"].pop()
+    assert [k["erwaegung"] for k in facts["kernerwaegungen"]] == ["3", ""]
