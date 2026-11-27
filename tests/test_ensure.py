@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from datetime import date
+from datetime import date, datetime
 import json
 from pathlib import Path
 import threading
@@ -442,3 +442,210 @@ def test_ensure_cli_prints_json_status(tmp_path, monkeypatch, capsys):
     payload = json.loads(capsys.readouterr().out)
     assert payload["new_judgements"] == 1
     assert payload["complete"] is True
+
+
+def test_ensure_period_ingests_uningested_files_on_covered_day_and_handles_failure(tmp_path, monkeypatch):
+    raw_dir = tmp_path / "raw"
+    db_dir = tmp_path / "vectordb"
+    emb = _tfidf_embedder()
+    _install_fake_source(
+        monkeypatch,
+        {"2026-07-01": [{"case_id": "8C_80/2026", "subject": "UVG", "body": "Suva Covered."}]},
+    )
+
+    # First run crawls and ingests normally.
+    first = ensure_period(
+        "2026-07-01",
+        "2026-07-01",
+        source="entscheidsuche",
+        raw_dir=raw_dir,
+        db_dir=db_dir,
+        embedder=emb,
+        today=date(2026, 7, 10),
+    )
+    assert first.complete is True
+
+    # Simulate a second valid raw file sitting on the covered day that is not yet in VectorDB.
+    extra_rec = {
+        "id": "8C_81_2026",
+        "case_id": "8C_81/2026",
+        "case_ids": ["8C_81/2026"],
+        "decision_date": "2026-07-01",
+        "department": "IV. öffentlich-rechtliche Abteilung",
+        "subject": "UVG",
+        "language": "de",
+        "url": "https://example.invalid/8C_81_2026",
+        "text": "Unfallversicherung Suva nachgereichtes Urteil.",
+        "fetch": {"text_sha256": crawl.sha256("Unfallversicherung Suva nachgereichtes Urteil.")},
+    }
+    crawl.write_json(raw_dir / "2026-07" / "2026-07-01_8C_81_2026.json", extra_rec)
+
+    db = VectorDB(db_dir=db_dir, embedder=emb)
+    real_ingest = db.ingest_records
+    monkeypatch.setattr(db, "ingest_records", lambda *_a, **_kw: (_ for _ in ()).throw(RuntimeError("boom")))
+    failed = ensure_period(
+        "2026-07-01",
+        "2026-07-01",
+        source="entscheidsuche",
+        raw_dir=raw_dir,
+        db_dir=db_dir,
+        db=db,
+        today=date(2026, 7, 10),
+    )
+    assert failed.failed_days == ["2026-07-01"]
+    assert failed.complete is False
+
+    monkeypatch.setattr(db, "ingest_records", real_ingest)
+    repaired = ensure_period(
+        "2026-07-01",
+        "2026-07-01",
+        source="entscheidsuche",
+        raw_dir=raw_dir,
+        db_dir=db_dir,
+        db=db,
+        today=date(2026, 7, 10),
+    )
+    assert repaired.failed_days == []
+    assert repaired.ingested_judgements == 1
+    assert repaired.complete is True
+    assert db.count() == 2
+
+
+def test_ensure_period_recrawls_corrupt_file_on_covered_day(tmp_path, monkeypatch):
+    raw_dir = tmp_path / "raw"
+    db_dir = tmp_path / "vectordb"
+    emb = _tfidf_embedder()
+    calls = _install_fake_source(
+        monkeypatch,
+        {"2026-07-01": [{"case_id": "8C_82/2026", "subject": "UVG", "body": "Suva Repariert."}]},
+    )
+
+    ensure_period(
+        "2026-07-01",
+        "2026-07-01",
+        source="entscheidsuche",
+        raw_dir=raw_dir,
+        db_dir=db_dir,
+        embedder=emb,
+        today=date(2026, 7, 10),
+    )
+    calls["list"].clear()
+    calls["fetch"].clear()
+
+    # Corrupt the saved JSON even though _index.json marks the day covered.
+    target_json = raw_dir / "2026-07" / "2026-07-01_8C_82_2026.json"
+    target_json.write_text("{corrupt json", encoding="utf-8")
+
+    repaired = ensure_period(
+        "2026-07-01",
+        "2026-07-01",
+        source="entscheidsuche",
+        raw_dir=raw_dir,
+        db_dir=db_dir,
+        embedder=emb,
+        today=date(2026, 7, 10),
+    )
+    assert calls["list"] == ["2026-07-01"]
+    assert calls["fetch"] == [("2026-07-01", "8C_82/2026")]
+    assert repaired.days_crawled == 1
+    assert repaired.new_judgements == 1
+    assert repaired.complete is True
+    assert list((raw_dir / "2026-07").glob("*.corrupt-*"))
+    assert crawl.is_valid(target_json)
+
+
+def test_ensure_period_handles_empty_sqlite_and_fingerprint_or_missing_npz(tmp_path, monkeypatch):
+    raw_dir = tmp_path / "raw"
+    db_dir = tmp_path / "vectordb"
+    emb = _tfidf_embedder()
+    _install_fake_source(
+        monkeypatch,
+        {"2026-07-01": [{"case_id": "8C_83/2026", "subject": "UVG", "body": "Suva Vector Check."}]},
+    )
+
+    # Empty 0-byte metadata.sqlite3 must not crash the fast-path SQLite check.
+    db_dir.mkdir(parents=True, exist_ok=True)
+    (db_dir / "metadata.sqlite3").write_bytes(b"")
+
+    status = ensure_period(
+        "2026-07-01",
+        "2026-07-01",
+        source="entscheidsuche",
+        raw_dir=raw_dir,
+        db_dir=db_dir,
+        embedder=emb,
+        today=date(2026, 7, 10),
+    )
+    assert status.complete is True
+    assert status.ingested_judgements == 1
+
+    # Deleting the .npz vector file must trigger re-ingest instead of taking the fast path.
+    npz_path = next((db_dir / "vectors").rglob("*.npz"))
+    npz_path.unlink()
+    rebuilt = ensure_period(
+        "2026-07-01",
+        "2026-07-01",
+        source="entscheidsuche",
+        raw_dir=raw_dir,
+        db_dir=db_dir,
+        embedder=emb,
+        today=date(2026, 7, 10),
+    )
+    assert rebuilt.ingested_judgements == 1
+    assert npz_path.exists()
+
+    # Different embedder fingerprint must also detect stale vectors and re-embed.
+    other_emb = TfidfEmbedder()
+    other_emb.fit(["Suva Unfallversicherung UVG Kausalzusammenhang neues Vokabular"])
+    reembedded = ensure_period(
+        "2026-07-01",
+        "2026-07-01",
+        source="entscheidsuche",
+        raw_dir=raw_dir,
+        db_dir=db_dir,
+        embedder=other_emb,
+        today=date(2026, 7, 10),
+    )
+    assert reembedded.ingested_judgements == 1
+
+
+def test_ensure_period_accepts_datetime_and_no_double_count_on_retry(tmp_path, monkeypatch):
+    raw_dir = tmp_path / "raw"
+    db_dir = tmp_path / "vectordb"
+    emb = _tfidf_embedder()
+    db = VectorDB(db_dir=db_dir, embedder=emb)
+    _install_fake_source(
+        monkeypatch,
+        {"2026-07-01": [{"case_id": "8C_84/2026", "subject": "UVG", "body": "Suva Retry."}]},
+    )
+
+    real_ingest = db.ingest_records
+    monkeypatch.setattr(db, "ingest_records", lambda *_a, **_kw: (_ for _ in ()).throw(RuntimeError("fail once")))
+    failed = ensure_period(
+        datetime(2026, 7, 1, 9, 30),
+        datetime(2026, 7, 1, 18, 0),
+        source="entscheidsuche",
+        raw_dir=raw_dir,
+        db_dir=db_dir,
+        db=db,
+        today=date(2026, 7, 10),
+    )
+    assert failed.complete is False
+
+    monkeypatch.setattr(db, "ingest_records", real_ingest)
+    events: list[ProgressEvent] = []
+    retried = ensure_period(
+        datetime(2026, 7, 1, 0, 0),
+        datetime(2026, 7, 1, 23, 59),
+        source="entscheidsuche",
+        raw_dir=raw_dir,
+        db_dir=db_dir,
+        db=db,
+        on_progress=events.append,
+        today=date(2026, 7, 10),
+    )
+    assert retried.complete is True
+    assert retried.failed_days == []
+    assert retried.ingested_judgements == 1
+    assert all(ev.total_days == 1 for ev in events)
+

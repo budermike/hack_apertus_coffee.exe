@@ -17,7 +17,7 @@ from __future__ import annotations
 import argparse
 from contextlib import contextmanager
 from dataclasses import asdict, dataclass
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
 import json
 import logging
 from pathlib import Path
@@ -25,14 +25,21 @@ import sqlite3
 import threading
 from typing import Any, Callable, Iterator
 
+import numpy as np
+
 try:
     import fcntl
 except ImportError:  # pragma: no cover - non-POSIX fallback
     fcntl = None  # type: ignore[assignment]
 
 from hack_apertus_coffee_exe.crawl import crawl
-from hack_apertus_coffee_exe.crawl.vectordb import DEFAULT_DB_DIR, ISO_DATE_PREFIX_RE, VectorDB
-from hack_apertus_coffee_exe.triage.embeddings import Embedder
+from hack_apertus_coffee_exe.crawl.vectordb import (
+    DEFAULT_DB_DIR,
+    ISO_DATE_PREFIX_RE,
+    VectorDB,
+    embedder_fingerprint,
+)
+from hack_apertus_coffee_exe.triage.embeddings import Embedder, TfidfEmbedder
 
 logger = logging.getLogger(__name__)
 
@@ -74,7 +81,9 @@ class PeriodStatus:
         return asdict(self)
 
 
-def _coerce_date(value: date | str) -> date:
+def _coerce_date(value: date | datetime | str) -> date:
+    if isinstance(value, datetime):
+        return value.date()
     if isinstance(value, date):
         return value
     return date.fromisoformat(str(value))
@@ -130,24 +139,91 @@ def _emit(on_progress: Callable[[ProgressEvent], None] | None, event: ProgressEv
         on_progress(event)
 
 
-def _existing_db_doc_keys(db_dir: Path, date_from: str, date_to: str, db: VectorDB | None) -> set[str]:
-    """Read ingested doc_keys for [date_from, date_to] without loading any embedder."""
+def _record_doc_key(record: dict[str, Any]) -> str:
+    doc_id = record.get("id") or crawl.safe_case_id(record["case_id"])
+    return f"{record['decision_date']}_{doc_id}"
+
+
+def _dedupe_records(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    seen: set[str] = set()
+    unique: list[dict[str, Any]] = []
+    for record in records:
+        dk = _record_doc_key(record)
+        if dk not in seen:
+            seen.add(dk)
+            unique.append(record)
+    return unique
+
+
+def _expected_fingerprint(
+    db_dir: Path,
+    db: VectorDB | None,
+    embedder: Embedder | None,
+) -> str | None:
+    """Resolve the active embedder fingerprint without instantiating PyTorch."""
     if db is not None:
-        return {r["doc_key"] for r in db.query(date_from=date_from, date_to=date_to, include_vectors=False)}
-
-    sqlite_path = db_dir / "metadata.sqlite3"
-    if not sqlite_path.exists():
-        return set()
-
-    conn = sqlite3.connect(f"file:{sqlite_path}?mode=ro", uri=True, timeout=10.0)
+        return db.fingerprint
+    if embedder is not None:
+        return embedder_fingerprint(embedder)
+    meta_path = db_dir / "embedder_meta.json"
+    if not meta_path.exists():
+        return None
     try:
-        rows = conn.execute(
-            "SELECT doc_key FROM judgements WHERE decision_date >= ? AND decision_date <= ?",
-            (date_from, date_to),
-        ).fetchall()
-        return {str(row[0]) for row in rows}
-    finally:
-        conn.close()
+        saved = json.loads(meta_path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return None
+    kind = saved.get("kind")
+    if kind == "tfidf":
+        emb = TfidfEmbedder(
+            use_char_ngrams=bool(saved.get("use_char_ngrams", True)),
+            char_ngram_range=tuple(saved.get("char_ngram_range", (3, 5))),
+        )
+        emb.vocab_ = {k: int(v) for k, v in (saved.get("vocab") or {}).items()}
+        emb.idf_ = np.asarray(saved.get("idf") or [], dtype=np.float32)
+        return embedder_fingerprint(emb)
+    name = saved.get("name")
+    return f"{name}|ctx_chunk=350/50" if name else None
+
+
+def _existing_db_doc_keys(
+    db_dir: Path,
+    date_from: str,
+    date_to: str,
+    db: VectorDB | None,
+    embedder: Embedder | None = None,
+) -> set[str]:
+    """Read ingested doc_keys for [date_from, date_to] without loading any embedder."""
+    expected_fp = _expected_fingerprint(db_dir, db, embedder)
+    rows: list[tuple[Any, Any, Any]] = []
+
+    if db is not None:
+        with db._connect() as conn:
+            rows = conn.execute(
+                "SELECT doc_key, fingerprint, vector_file FROM judgements WHERE decision_date >= ? AND decision_date <= ?",
+                (date_from, date_to),
+            ).fetchall()
+    else:
+        sqlite_path = db_dir / "metadata.sqlite3"
+        if not sqlite_path.exists():
+            return set()
+        conn = sqlite3.connect(f"{sqlite_path.resolve().as_uri()}?mode=ro", uri=True, timeout=10.0)
+        try:
+            rows = conn.execute(
+                "SELECT doc_key, fingerprint, vector_file FROM judgements WHERE decision_date >= ? AND decision_date <= ?",
+                (date_from, date_to),
+            ).fetchall()
+        except sqlite3.OperationalError:
+            return set()
+        finally:
+            conn.close()
+
+    present: set[str] = set()
+    for doc_key, fingerprint, vector_file in rows:
+        if expected_fp is not None and str(fingerprint) != expected_fp:
+            continue
+        if vector_file and (db_dir / str(vector_file)).exists():
+            present.add(str(doc_key))
+    return present
 
 
 def _scan_period_raw_files(out_dir: Path, start: date, end: date) -> list[tuple[str, str, Path]]:
@@ -278,19 +354,33 @@ def ensure_period(
         all_days = list(_iter_days(start, effective_end))
         covered_days = [d for d in all_days if d.isoformat() in index.get("days", {})]
         missing_days = [d for d in all_days if d.isoformat() not in index.get("days", {})]
+        covered_set = {d.isoformat() for d in covered_days}
 
         raw_files = _scan_period_raw_files(out_dir, start, effective_end)
-        existing_keys = _existing_db_doc_keys(db_path, start_iso, effective_end_iso, db)
+        existing_keys = _existing_db_doc_keys(db_path, start_iso, effective_end_iso, db, embedder)
 
-        # Preserve order grouped by day for files already on disk that are missing in VectorDB.
+        # Split raw files strictly: covered days with un-ingested valid JSONs go to
+        # uningested_by_day; covered days with corrupt JSONs move to missing_days so
+        # crawl_day repairs them; uncovered days are handled atomically in missing_days.
         uningested_by_day: dict[str, list[Path]] = {}
+        corrupt_covered_days: set[str] = set()
         preexisting_valid = 0
         for iso_day, doc_key, file_path in raw_files:
             if not crawl.is_valid(file_path):
+                if iso_day in covered_set:
+                    corrupt_covered_days.add(iso_day)
                 continue
             preexisting_valid += 1
-            if doc_key not in existing_keys:
+            if iso_day in covered_set and doc_key not in existing_keys:
                 uningested_by_day.setdefault(iso_day, []).append(file_path)
+
+        if corrupt_covered_days:
+            for iso_day in corrupt_covered_days:
+                covered_set.discard(iso_day)
+                uningested_by_day.pop(iso_day, None)
+            covered_days = [d for d in covered_days if d.isoformat() not in corrupt_covered_days]
+            missing_set = {d.isoformat() for d in missing_days} | corrupt_covered_days
+            missing_days = sorted(date.fromisoformat(d) for d in missing_set)
 
         total_steps = len(missing_days) + len(uningested_by_day)
         _emit(
@@ -345,10 +435,10 @@ def ensure_period(
         failed_days: list[str] = []
         completed_steps = 0
 
-        # Finish ingest for any valid raw judgements already on disk but missing from VectorDB.
+        # Finish ingest for any valid raw judgements on already-covered days missing from VectorDB.
         for iso_day in sorted(uningested_by_day):
             paths = uningested_by_day[iso_day]
-            records = [json.loads(p.read_text(encoding="utf-8")) for p in paths]
+            records = _dedupe_records([json.loads(p.read_text(encoding="utf-8")) for p in paths])
             _emit(
                 on_progress,
                 ProgressEvent(
@@ -364,8 +454,8 @@ def ensure_period(
             try:
                 _get_db().ingest_records(records, reference_ids=None)
                 ingested_judgements += len(records)
-                existing_keys.update(f"{iso_day}_{r.get('id') or crawl.safe_case_id(r['case_id'])}" for r in records)
-            except Exception as exc:  # pragma: no cover - defensive guard
+                existing_keys.update(_record_doc_key(r) for r in records)
+            except Exception as exc:
                 logger.error("%s: ingest failed: %s", iso_day, exc)
                 if iso_day not in failed_days:
                     failed_days.append(iso_day)
@@ -417,11 +507,9 @@ def ensure_period(
                 continue
 
             day_records = [json.loads(p.read_text(encoding="utf-8")) for p in day_res["paths"]]
-            pending_records = [
-                r
-                for r in day_records
-                if f"{r['decision_date']}_{r.get('id') or crawl.safe_case_id(r['case_id'])}" not in existing_keys
-            ]
+            pending_records = _dedupe_records(
+                [r for r in day_records if _record_doc_key(r) not in existing_keys]
+            )
             if pending_records:
                 _emit(
                     on_progress,
@@ -438,10 +526,7 @@ def ensure_period(
                 try:
                     _get_db().ingest_records(pending_records, reference_ids=None)
                     ingested_judgements += len(pending_records)
-                    existing_keys.update(
-                        f"{r['decision_date']}_{r.get('id') or crawl.safe_case_id(r['case_id'])}"
-                        for r in pending_records
-                    )
+                    existing_keys.update(_record_doc_key(r) for r in pending_records)
                 except Exception as exc:
                     logger.error("%s: ingest failed: %s", iso_day, exc)
                     if iso_day not in failed_days:
