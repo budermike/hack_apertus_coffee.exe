@@ -218,6 +218,7 @@ class VectorDB:
         db_dir: str | Path = DEFAULT_DB_DIR,
         embedder: Embedder | None = None,
         judgements_dir: str | Path = DEFAULT_JUDGEMENTS_DIR,
+        raw_dir: str | Path | None = None,
         max_words: int = 350,
         overlap_words: int = 50,
     ) -> None:
@@ -227,6 +228,7 @@ class VectorDB:
         self.fts_path = self.db_dir / "fts.sqlite3"
         self.embedder_meta_path = self.db_dir / "embedder_meta.json"
         self.search_index_path = self.db_dir / "search_index.npz"
+        self.raw_dir: Path | None = Path(raw_dir) if raw_dir is not None else None
         self.max_words = max_words
         self.overlap_words = overlap_words
 
@@ -240,6 +242,7 @@ class VectorDB:
 
         self.fingerprint = embedder_fingerprint(self.embedder, max_words, overlap_words)
         self._search_cache: dict[str, Any] | None = None
+        self._fts_auto_rebuilt = False
         self._init_sqlite()
 
     def _persist_embedder_meta(self, emb: Embedder) -> None:
@@ -921,8 +924,13 @@ class VectorDB:
         self._init_fts_sqlite()
         with self._connect_fts() as fts_conn:
             fts_count = int(fts_conn.execute("SELECT COUNT(*) FROM judgements_fts").fetchone()[0])
-        if fts_count == 0 and self.count() > 0 and Path(DEFAULT_RAW_DIR).exists():
-            self.rebuild_fts_index(DEFAULT_RAW_DIR)
+        if fts_count == 0 and not self._fts_auto_rebuilt and self.count() > 0:
+            fts_raw_dir = self.raw_dir
+            if fts_raw_dir is None and self.db_dir.resolve() == Path(DEFAULT_DB_DIR).resolve():
+                fts_raw_dir = Path(DEFAULT_RAW_DIR)
+            if fts_raw_dir is not None and fts_raw_dir.exists():
+                self._fts_auto_rebuilt = True
+                self.rebuild_fts_index(fts_raw_dir)
 
         with self._connect_fts() as fts_conn:
             fts_rows = fts_conn.execute(

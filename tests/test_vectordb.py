@@ -310,15 +310,14 @@ def test_hybrid_score_is_the_same_without_a_local_fts_index(tmp_path, monkeypatc
     ]
     for record in records:
         _write_raw(raw_dir, record)
-    monkeypatch.setattr(vectordb, "DEFAULT_RAW_DIR", str(raw_dir))
 
-    db = vectordb.VectorDB(db_dir=db_dir, embedder=_DummyDenseEmbedder())
+    db = vectordb.VectorDB(db_dir=db_dir, embedder=_DummyDenseEmbedder(), raw_dir=raw_dir)
     db.ingest_records(records, reference_ids={"8C_50/2025"})
     with_index = db.score_candidates(date_from="2026-01-01", date_to="2026-03-31")
 
     for path in db_dir.glob("fts.sqlite3*"):
         path.unlink()
-    fresh_clone = vectordb.VectorDB(db_dir=db_dir, embedder=_DummyDenseEmbedder())
+    fresh_clone = vectordb.VectorDB(db_dir=db_dir, embedder=_DummyDenseEmbedder(), raw_dir=raw_dir)
     without_index = fresh_clone.score_candidates(date_from="2026-01-01", date_to="2026-03-31")
 
     assert [(r["case_id"], r["score"]) for r in without_index] == [(r["case_id"], r["score"]) for r in with_index]
@@ -341,3 +340,22 @@ def test_ingest_without_rebuild_drops_stale_search_index(tmp_path):
 
     hits = db.similar_to_text("Suva Unfall", top_k=5)  # rebuilt on demand
     assert {h["case_id"] for h in hits} == {"8C_1/2025", "8C_2/2025"}
+
+
+def test_isolated_db_does_not_rebuild_fts_from_repo_raw_dir(tmp_path):
+    db_dir = tmp_path / "isolated_db"
+    db = vectordb.VectorDB(db_dir=db_dir, embedder=_DummyDenseEmbedder())
+    db.ingest_records(
+        [
+            _make_record("8C_50/2025", "2025-11-15", "Suva Unfallversicherung UVG Sturz."),
+            _make_record("9C_70/2026", "2026-02-10", "Rente nach UVG, Suva.", subject="Invalidenversicherung"),
+        ],
+        reference_ids={"8C_50/2025"},
+    )
+    for path in db_dir.glob("fts.sqlite3*"):
+        path.unlink()
+
+    scored = db.score_candidates(date_from="2026-01-01", date_to="2026-03-31", hybrid=True)
+    assert len(scored) == 1
+    with db._connect_fts() as conn:
+        assert conn.execute("SELECT COUNT(*) FROM judgements_fts").fetchone()[0] == 0
