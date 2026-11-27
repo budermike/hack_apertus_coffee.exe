@@ -1,1 +1,1 @@
-"""Evaluation and data analysis helpers (used by the notebooks in ``notebooks/``)."""
+"""Evaluation of the triage ranking against the Suva labels (issue #21)."""
