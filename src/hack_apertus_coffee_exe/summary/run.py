@@ -23,6 +23,8 @@ import sqlite3
 import sys
 from typing import Any, Callable, Sequence
 
+from dotenv import load_dotenv
+
 from . import store
 from .judgement import Judgement, load_judgements, same_case
 from .store import GeneratedSummary, Summary
@@ -176,6 +178,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     p_show.add_argument("--case", required=True)
 
     args = parser.parse_args(argv)
+    load_dotenv()  # SUMMARY_DB_PATH and gateway settings from .env
     logging.basicConfig(level=logging.INFO if args.verbose else logging.WARNING, format="%(levelname)s %(message)s")
     conn = store.connect(args.db)
     factory = _summarizer_factory(args)

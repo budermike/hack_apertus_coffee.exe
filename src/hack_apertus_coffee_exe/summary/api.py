@@ -31,6 +31,8 @@ from pathlib import Path
 from typing import Any
 from urllib.parse import parse_qs, unquote, urlparse
 
+from dotenv import load_dotenv
+
 from . import store
 from .judgement import Judgement, load_judgements, same_case
 from .run import summarize_case, summarizer_factory
@@ -244,6 +246,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--judgements-dir", default="judgements", help="Suva example summaries")
     parser.add_argument("--examples", type=int, default=2, help="Few-shot examples per language")
     args = parser.parse_args(argv)
+    load_dotenv()  # SUMMARY_DB_PATH and gateway settings from .env
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
 
     backend = Backend(args.db, args.input, summarizer_factory(args.model, args.judgements_dir, args.examples))
