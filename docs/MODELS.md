@@ -35,7 +35,7 @@ Hier stehen auch **Coding-Assistenten** und alle Modelle, mit denen Texte, Code,
 | # | Tool / Modell | Version / Modellname | Anbieter | Rolle | Phase | Open-Weights | Eingetragen von / Datum |
 |---|---|---|---|---|---|---|---|
 | D1 | Claude | Claude Sonnet 5.5 | Anthropic | Planung und Entwurf der Teamdokumente (CONTRIBUTING, Leitfaden, AGENTS.md, dieses Register) | Vorbereitung | nein | PM, 20.11.2026 |
-| D2 | <Coding-Assistent, z.B. Claude Code, GitHub Copilot> | <exakter Modellname> | | Code schreiben und prüfen | Entwicklung | nein | |
+| D2 | Claude Code (Coding-Assistent) | Claude Opus 5.5 (`claude-opus-5-5`) | Anthropic | Code schreiben und prüfen: Setup (pip, `requirements.txt`, `.env`), `keera_example.py`, Anpassungen in AGENTS.md | Entwicklung | nein | abirahm, 27.11.2026 |
 | D3 | <Video- oder Sprachtool, z.B. ElevenLabs, Edit with Ava, falls genutzt> | | | Demo-Video / Pitch (nicht in der Lösung) | Entwicklung | nein | |
 
 Hinweis: Diese Tools dürfen beim Entwickeln benutzt werden (Regel 2), aber **nicht zur Laufzeit** der Lösung (Regel 3).

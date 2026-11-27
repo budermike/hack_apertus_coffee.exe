@@ -4,7 +4,9 @@ version = "0.1.0"
 description = "A short description of the project."
 readme = "README.md"
 requires-python = ">=3.13"
-authors = [{ name = "Abirahm Vasanthakumar", email = "abirahm.vasanthakumar@uzh.ch" }]
+authors = [
+    { name = "Abirahm Vasanthakumar", email = "abirahm.vasanthakumar@uzh.ch" },
+]
 # Runtime dependencies come from requirements.txt (single source of truth).
 dynamic = ["dependencies"]
 
