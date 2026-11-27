@@ -5,6 +5,10 @@
 openai==3.60.0
 python-dotenv==1.2.4
 
+# Crawler (HTTP + HTML parsing)
+httpx==0.29.0
+beautifulsoup4==4.15.0
+
 # Analysis
 numpy==2.5.5
 pandas==3.1.1
