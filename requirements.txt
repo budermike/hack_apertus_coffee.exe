@@ -9,10 +9,9 @@ python-dotenv==1.2.4
 httpx==0.29.0
 beautifulsoup4==4.15.0
 
-# Multilingual open-weights embeddings (issue #5, intfloat/multilingual-e5-small, MIT).
-# Needed because Keera gateway serves no /v1/embeddings endpoint (404) and TF-IDF
-# achieved only 9.7 % Q1/2026 Recall@30 (vs. 51.6 % @30 / 90.3 % @100 with e5-small + hybrid).
-sentence-transformers==6.3.0
+# Optional local embeddings (issue #5, intfloat/multilingual-e5-small, MIT):
+# pinned in requirements-dev.txt (pulls PyTorch). Pre-computed vectors are in Git,
+# so reading/scoring/triage/summary/tests work with numpy only.
 
 # Analysis
 numpy==2.5.5
