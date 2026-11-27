@@ -78,6 +78,22 @@ The submission must:
 
 1. Click **Use this template** to create your own repository.
 
+## Deployment
+
+The backend and the web UI run in one container (`Dockerfile`, `docker-compose.yml`). The image holds the code, the UI, `configs/`, `prompts/`, the Suva examples in `judgements/` and `results/`, but no model and no PyTorch: Apertus is reached through `LLM_BASE_URL`, and the app as served needs no embedding model.
+
+**Local.** `cp .env.example .env`, fill in `LLM_API_KEY`, then:
+
+```
+docker compose up --build      # open http://localhost:8000
+```
+
+`data/` is mounted from the host, so the crawled judgements and the summaries database (`data/processed/summaries.db`) survive a restart. The port is published on this machine only (`127.0.0.1`), because the app has no login; `APP_BIND=0.0.0.0` opens it to the network and `APP_PORT=8080` changes the port. Without a key the app still starts; only generating a new summary needs it.
+
+**On-premise or air-gapped.** Build the image on a machine with internet access (`docker compose build`), move it with `docker save coffee-exe-suva | gzip > coffee-exe-suva.tar.gz` and `docker load`, and copy `data/` next to `docker-compose.yml`. Set `LLM_BASE_URL` to an Apertus v1.5 endpoint inside the network (any server with an OpenAI-compatible API). The container then opens no connection except to that endpoint, and the web UI loads no external files. Crawling and embedding new judgements is not part of the image: it needs internet access and the embedding model from `requirements-dev.txt`.
+
+**Azure (not tested).** Nothing in the code or the image is tied to a cloud provider, and all settings are environment variables. To move it, push the image to Azure Container Registry, run it as one replica on Azure Container Apps and set `LLM_NAME`, `LLM_BASE_URL` and `LLM_API_KEY` as secrets. `/app/data` needs persistent storage. The summaries database is a SQLite file in WAL mode: that allows one replica only, and whether it works on a network file share such as Azure Files is not verified.
+
 ## License
 
 All Hack Apertus projects are open-sourced. Please check our Terms & Conditions for specific licensing details (6. What you build is open source): https://hackapertus.ch/terms-and-conditions
