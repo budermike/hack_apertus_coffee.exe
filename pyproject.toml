@@ -1,29 +1,25 @@
 [project]
-name = "hack_apertus_coffee.exe"
+name = "hack_apertus_coffee_exe"
 version = "0.1.0"
 description = "A short description of the project."
 readme = "README.md"
 requires-python = ">=3.13"
 authors = [{ name = "Abirahm Vasanthakumar", email = "abirahm.vasanthakumar@uzh.ch" }]
-# Analysis dependencies — add more with `uv add <pkg>`
-dependencies = [
-    "numpy",
-    "pandas",
-    "matplotlib",
-]
-
-[dependency-groups]
-dev = ["jupyterlab", "ipykernel"]
-test = ["pytest"]
-docs = ["sphinx", "myst-parser"]
-
-[tool.uv]
-default-groups = ["dev", "test"]   # `uv sync` installs these; docs via `uv sync --group docs`
+# Runtime dependencies come from requirements.txt (single source of truth).
+dynamic = ["dependencies"]
 
 [build-system]
-requires = ["uv_build>=0.13,<0.14"]
-build-backend = "uv_build"
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+# The source folder "hack_apertus_coffee.exe" is not a valid Python identifier,
+# so it is installed under the import name "hack_apertus_coffee_exe".
+packages = ["hack_apertus_coffee_exe"]
+package-dir = { "hack_apertus_coffee_exe" = "src/hack_apertus_coffee.exe" }
+
+[tool.setuptools.dynamic]
+dependencies = { file = ["requirements.txt"] }
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-pythonpath = ["src"]

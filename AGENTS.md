@@ -56,6 +56,17 @@ Available model IDs on the gateway:
 
 ## Setup & checks
 
+Plain `venv` + `pip` (no uv/poetry):
+
+```bash
+python3.13 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements-dev.txt   # project (editable) + all deps; runtime only: pip install -e .
+pytest                                # unit tests
+```
+
+Add a dependency: ask first, then add it with a pinned version (`pkg==x.y.z`) to `requirements.txt` (runtime) or `requirements-dev.txt` (dev/test/docs).
+
 
 ## Data, secrets and the public repo
 
@@ -67,7 +78,7 @@ Available model IDs on the gateway:
 
 - Unit tests must **not** call the real gateway: mock the LLM client. Mark tests that need the network (`@pytest.mark.integration`) and keep them out of the default run.
 - Evaluation is part of the deliverable. Evaluation code lives in `src/<package>/eval/`; datasets, metric, and results go to `results/tables/`. Report honest numbers, including failure cases.
-- Reproducibility first: fixed seeds, pinned versions via uv, no hidden state in notebooks.
+- Reproducibility first: fixed seeds, pinned versions in `requirements*.txt`, no hidden state in notebooks.
 
 ## Priorities
 

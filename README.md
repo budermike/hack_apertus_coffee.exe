@@ -1,155 +1,92 @@
-# Hack Apertus Hackathon - Team Coffee.exe 
+# Hack Apertus Zurich — Challenge Partner: Suva
 
-## 1. Overview
+## 🎯 The Challenge
 
-A short project description in 2–4 sentences. Describe the problem, the value created, and the target audience.
+### Identification of relevant Federal Court judgements and preparation of a legal summary
 
-Example:
+`Add your team name`
+<br>
+<br>
 
-> We are developing a solution that helps ...
+Template repository for [Hack Apertus](https://hackapertus.ch/) submissions.
+Every project keeps the same layout, so organizers and judges find the same
+things in the same place.
 
-## 2. Problem Statement
+Submissions must use the v1.5 Apertus model family.
+The submission must comply with the [HackApertus T&C](https://hackapertus.ch/terms-and-conditions) and the [model and challenge requirements](https://hackapertus.notion.site/zurich-challenges-model-requirements)
 
-What is the core problem? Why is it relevant?
 
-- Pain point 1
-- Pain point 2
-- Pain point 3
+## 🔧 Resources & Tools
 
-## 3. Objectives
+Check our resources & tools page for more information:
+[Resources & Tools](https://hackapertus.notion.site/zurich-resources-tools)
 
-What do we want to achieve with this project?
+| Models           | URL                                      |
+|------------------|------------------------------------------|
+| Apertus v1.5 8B  | [huggingface.co/swiss-ai/Apertus-v1.5-8B](https://huggingface.co/swiss-ai/Apertus-v1.5-8B)  |
+| Apertus v1.5 70B | [huggingface.co/swiss-ai/Apertus-v1.5-70B](https://huggingface.co/swiss-ai/Apertus-v1.5-70B) |
 
-- Objective 1
-- Objective 2
-- Objective 3
+## The structure
 
-## 4. Idea / Solution Approach
+Keep the files and directories as shown below — don't rename or move them.
 
-Describe the main concept, the technical approach, and the added value of the solution.
+| Path | What it is |
+| --- | --- |
+| `README.md` | The challenge description and submission requirements |
+| `technical_report.md` | The deeper write-up: architecture, evaluation, limitations |
+| `challenge_description.md` | Complete Challenge description incl. deliverables 
+| `LICENSE` | Apache-2.0 |
+| `src/` | Your code |
 
-### Core Features
+## Environment
 
-- Feature 1
-- Feature 2
-- Feature 3
-- Feature 4
-
-## 5. Team
-
-| Name | Role | Contribution |
-|------|------|-------------|
-| [Name 1] | [Role] | [Task] |
-| [Name 2] | [Role] | [Task] |
-| [Name 3] | [Role] | [Task] |
-
-## 6. Tech Stack
-
-- Language: [Python / R / JavaScript / ...]
-- Frameworks / Libraries: [e.g. Streamlit, FastAPI, Shiny, Pandas, Scikit-learn]
-- Database / Storage: [e.g. SQLite, PostgreSQL, CSV, API]
-- Deployment: [e.g. Docker, Hugging Face, Render, Azure, GitHub Pages]
-
-## 7. Project Structure
-
-```text
-project/
-├── README.md
-├── requirements.txt
-├── .gitignore
-├── data/
-│   ├── raw/
-│   └── processed/
-├── src/
-│   ├── app.py
-│   ├── model.py
-│   ├── preprocessing.py
-│   └── utils.py
-├── notebooks/
-│   └── exploration.ipynb
-├── tests/
-│   └── test_main.py
-├── docs/
-│   └── architecture.md
-├── demo/
-│   └── screenshots/
-└── app/
-    └── ...
+- Include instructions for running the project in your technical report.
+- Use the following environment variables:
+```
+LLM_NAME — name and version of the model
+LLM_BASE_URL — endpoint base URL
+LLM_API_KEY — your API key
 ```
 
-## 8. Installation and Setup
+## 📦 Submission Requirements & Deliverables
 
-```bash
-# Clone the repository
-git clone <repository-url>
-cd <project-name>
+The submission must:
+1. follow the template repo and include all prerequisite files and definitions
+2. run end-to-end when judges try to run it
 
-# Create virtual environment
-python -m venv .venv
-source .venv/bin/activate
+### Git repo (URL)
+- Create your repo from this template (**Use this template**).
+- Keep the layout as it is: don't rename or move its files.
+- Set the repo to PUBLIC (Settings --> Collaborators --> Manage Visibility)
+- Submit the URL of YOUR Git repo (keep it to 'public').
 
-# Install dependencies
-pip install -r requirements.txt
-```
+### Technical Report (pdf)
+- Update [technical_report.md](technical_report.md) in this repository with all the details for your submission.
+- Upload a pdf of your technical report to the root of the repo, named as `TeamName_Report.pdf`.
+- Format: pdf, max. 6 pages w/o references
+- Submit the pdf of the technical report.
 
-## 9. Run the Project
+### Demo video (URL)
+- Max. 2 min demo video of your prototype
+- Add the link to the **Demo** field at the top of [technical_report.md](technical_report.md)
+- Submit the URL of the video.
 
-```bash
-# Example command to start the project
-python src/app.py
-```
+### Pitch deck (pdf)
+- Max. 10 slides
 
-Or for a web app:
+## Getting started
 
-```bash
-streamlit run src/app.py
-```
+1. Click **Use this template** to create your own repository.
 
-## 10. Data and Model
+## License
 
-- Dataset: [Description]
-- Source: [Link or source]
-- Preprocessing: [Short description]
-- Model / Algorithm: [e.g. classification, recommendation, analysis]
-- Metrics: [Accuracy, F1, ROC-AUC, etc.]
+All Hack Apertus projects are open-sourced. Please check our Terms & Conditions for specific licensing details (6. What you build is open source): https://hackapertus.ch/terms-and-conditions
 
-## 11. Results / Demo
+## Support
 
-Describe what the demo shows.
+### FAQ
+💡 https://hackapertus.ch/faq
 
-- Demo 1: [Short description]
-- Demo 2: [Short description]
-- Demo 3: [Short description]
+### Contact
 
-Optional:
-
-- Live Demo: [Link]
-- Video: [Link]
-
-## 12. Challenges and Learnings
-
-- Challenge 1
-- Challenge 2
-- What we learned
-
-## 13. Roadmap / Next Steps
-
-- [ ] MVP completed
-- [ ] Improve usability
-- [ ] Optimize performance
-- [ ] Add more data sources
-- [ ] Productization / deployment
-
-## 14. License
-
-[MIT / Apache 2.0 / Proprietary / Open Source]
-
-## 15. Note
-
-This project was developed as part of the Hack Apertus Hackathon. The goal was to quickly build a functional prototype with a focus on feasibility, user value, and presentation.
-
----
-
-## Short Project Description Template
-
-"We are developing [Project Name], a solution for [main function], to solve [problem] more efficiently. By using [technical approach], we enable [value] for [target audience]."
+💬 In case you have questions, join the conversation on Discord. Alternatively, send an email to “hello@hackapertus.ch”.

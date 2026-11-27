@@ -1,0 +1,5 @@
+# Runtime dependencies — install with: pip install -r requirements.txt
+numpy==2.5.5
+pandas==3.1.1
+matplotlib==3.11.2
+openai==3.60.0  # used only as a client for the Apertus gateway (APERTUS_BASE_URL)
