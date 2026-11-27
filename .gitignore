@@ -32,3 +32,7 @@ build/
 # Crawled court judgements stay local (keep only the empty folder in git)
 data/raw/*
 !data/raw/.gitkeep
+# Local SQLite databases (summaries DB) stay out of git
+*.db
+*.db-wal
+*.db-shm

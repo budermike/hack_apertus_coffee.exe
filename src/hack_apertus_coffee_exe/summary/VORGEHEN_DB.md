@@ -49,6 +49,8 @@ CREATE TABLE case_numbers (
 
 ## Schritte
 
+> Stand: 1–3 erledigt (`summary/store.py`, `tests/test_store.py`). Offen: 4 (Pipeline anbinden), 5 (UI-Backend), 6 (Suche).
+
 1. **Schema festlegen** (Rubberducking, offene Fragen unten) → `docs/SCHEMA.md`.
 2. **`store.py`** mit kleiner API:
    - `init_db(path)` – Tabelle anlegen, falls nicht vorhanden
