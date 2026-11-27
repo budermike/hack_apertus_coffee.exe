@@ -27,13 +27,15 @@ from typing import Any, Callable, Sequence
 
 from dotenv import load_dotenv
 
+from ..config import load_paths
+from ..triage.config import AMPEL_GREEN
 from . import store
 from .judgement import Judgement, load_judgements, same_case
 from .store import GeneratedSummary, Summary
 
 logger = logging.getLogger(__name__)
 
-GREEN = "gruen"
+GREEN = AMPEL_GREEN  # traffic-light value from triage/config.py (#48)
 
 
 def _similar_ids(triage_row: dict[str, Any]) -> list[str]:
@@ -121,10 +123,14 @@ def run_batch(
 
 
 def summarizer_factory(
-    model: str | None = None, judgements_dir: str = "judgements", n_examples: int = 2
+    model: str | None = None, judgements_dir: str | None = None, n_examples: int = 2
 ) -> Callable[[], Any]:
-    """Lazily build one ``Summarizer`` (no gateway access until the first summary)."""
+    """Lazily build one ``Summarizer`` (no gateway access until the first summary).
+
+    ``judgements_dir`` defaults to the Suva reference folder in ``configs/paths.json``.
+    """
     cache: dict[str, Any] = {}
+    judgements_dir = judgements_dir or load_paths().judgements_dir
 
     def factory() -> Any:
         if "s" not in cache:
@@ -162,18 +168,18 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="summary", description="Suva summaries DE/FR with Apertus")
     parser.add_argument("--db", default=None, help=f"SQLite file (default: ${store.DB_PATH_ENV} or {store.DEFAULT_DB_PATH})")
     parser.add_argument("--model", default=None, help="Gateway model ID (default: LLM_NAME / APERTUS_MODEL)")
-    parser.add_argument("--judgements-dir", default="judgements", help="Suva example summaries")
+    parser.add_argument("--judgements-dir", default=load_paths().judgements_dir, help="Suva example summaries")
     parser.add_argument("--examples", type=int, default=2, help="Few-shot examples per language")
     parser.add_argument("-v", "--verbose", action="store_true")
     sub = parser.add_subparsers(dest="cmd", required=True)
 
     p_one = sub.add_parser("one", help="Summarize one judgement")
     p_one.add_argument("--case", required=True)
-    p_one.add_argument("--input", default="data/raw", help="Crawl file or directory")
+    p_one.add_argument("--input", default=load_paths().raw_dir, help="Crawl file or directory")
 
     p_batch = sub.add_parser("batch", help="Summarize all judgements with the given ampel")
     p_batch.add_argument("--triage", required=True, help="Triage results JSON (hack_apertus_coffee_exe.triage.cli score --output)")
-    p_batch.add_argument("--input", default="data/raw")
+    p_batch.add_argument("--input", default=load_paths().raw_dir)
     p_batch.add_argument("--ampel", default=GREEN)
 
     p_show = sub.add_parser("show", help="Print the stored summaries of a case")

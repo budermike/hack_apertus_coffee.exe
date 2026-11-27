@@ -33,6 +33,7 @@ from urllib.parse import parse_qs, unquote, urlparse
 
 from dotenv import load_dotenv
 
+from ..config import load_paths
 from . import store
 from .judgement import Judgement, load_judgements, same_case
 from .run import summarize_case, summarizer_factory
@@ -240,10 +241,10 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--host", default="127.0.0.1")
     parser.add_argument("--port", type=int, default=8000)
     parser.add_argument("--db", default=None, help=f"SQLite file (default: ${store.DB_PATH_ENV} or {store.DEFAULT_DB_PATH})")
-    parser.add_argument("--input", default="data/raw", help="Crawl folder with the judgements")
+    parser.add_argument("--input", default=load_paths().raw_dir, help="Crawl folder with the judgements")
     parser.add_argument("--static", default="src/presentation", help="Folder with the UI files")
     parser.add_argument("--model", default=None, help="Gateway model ID (default: LLM_NAME / APERTUS_MODEL)")
-    parser.add_argument("--judgements-dir", default="judgements", help="Suva example summaries")
+    parser.add_argument("--judgements-dir", default=load_paths().judgements_dir, help="Suva example summaries")
     parser.add_argument("--examples", type=int, default=2, help="Few-shot examples per language")
     args = parser.parse_args(argv)
     load_dotenv()  # SUMMARY_DB_PATH and gateway settings from .env

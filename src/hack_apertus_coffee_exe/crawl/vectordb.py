@@ -32,6 +32,7 @@ from typing import Any, Sequence
 
 import numpy as np
 
+from hack_apertus_coffee_exe.config import load_paths
 from hack_apertus_coffee_exe.crawl.crawl import CASE_ID_RE, safe_case_id, sha256
 from hack_apertus_coffee_exe.embed import (
     MultilingualEmbedder,
@@ -43,10 +44,12 @@ from hack_apertus_coffee_exe.embed import (
 from hack_apertus_coffee_exe.triage.embeddings import Embedder, TfidfEmbedder
 from hack_apertus_coffee_exe.triage.reference_corpus import load_reference_corpus
 
-DEFAULT_DB_DIR = "data/processed/vectordb"
-DEFAULT_RAW_DIR = "data/raw"
-DEFAULT_JUDGEMENTS_DIR = "judgements"
-DEFAULT_REPORT_PATH = "results/tables/vectordb_report.csv"
+# Default folders come from configs/paths.json (#48); the names stay for existing callers.
+_PATHS = load_paths()
+DEFAULT_DB_DIR = _PATHS.vectordb_dir
+DEFAULT_RAW_DIR = _PATHS.raw_dir
+DEFAULT_JUDGEMENTS_DIR = _PATHS.judgements_dir
+DEFAULT_REPORT_PATH = _PATHS.vectordb_report
 FTS_TOKEN_RE = re.compile(r"[0-9a-zA-ZäöüÄÖÜàâéèêëîïôùûüçÀÂÉÈÊËÎÏÔÙÛÜÇìòù]+")
 ISO_DATE_PREFIX_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 
