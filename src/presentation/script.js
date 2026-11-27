@@ -12,6 +12,7 @@ const state = {
     openPanels: {},            // id -> language shown in the open summary panel
     openExplanations: new Set(),
     selected: new Set(),       // ids selected for bulk summarize
+    filter: { text: "", min: 0, max: 100 },
     kbEntries: [],
     kbQuery: "",
     kbLang: {},                // kb entry id -> language shown
@@ -34,30 +35,60 @@ function el(tag, props = {}, children = []) {
     return node;
 }
 
-function toIso(date) {
-    const y = date.getFullYear();
-    const m = String(date.getMonth() + 1).padStart(2, "0");
-    const d = String(date.getDate()).padStart(2, "0");
-    return `${y}-${m}-${d}`;
-}
-
-/** Parse "TT.MM.JJJJ", "TT/MM/JJJJ" or "JJJJ-MM-TT" into an ISO date string, or null. */
-function parseDate(text) {
-    const s = text.trim();
-    let y, m, d;
-    let match = s.match(/^(\d{1,2})[./-](\d{1,2})[./-](\d{4})$/);
-    if (match) [, d, m, y] = match.map(Number);
-    else if ((match = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/))) [, y, m, d] = match.map(Number);
-    else return null;
-    const date = new Date(y, m - 1, d);
-    if (date.getFullYear() !== y || date.getMonth() !== m - 1 || date.getDate() !== d) return null;
-    return toIso(date);
-}
-
 /** Displayed score: base score + net adjustment, clamped to 0..100.
  *  The raw adjustment is kept unclamped, so 97 → (+5) 100 → (−5) 97 round-trips. */
 function effectiveScore(item) {
     return Math.max(0, Math.min(100, item.score + (item.adjustment || 0)));
+}
+
+/* ---------- filters ---------- */
+
+function isFilterActive() {
+    const f = state.filter;
+    return f.text !== "" || f.min > 0 || f.max < 100;
+}
+
+/** Text filter: every word must appear in case number, title or explanation (DE or FR). */
+function matchesFilter(item) {
+    const score = effectiveScore(item);
+    const { text, min, max } = state.filter;
+    if (score < min || score > max) return false;
+    if (!text) return true;
+    const haystack = [
+        item.caseNumber, item.title.de, item.title.fr, item.explanation.de, item.explanation.fr,
+    ].join(" ").toLowerCase();
+    return text.toLowerCase().split(/\s+/).every((term) => haystack.includes(term));
+}
+
+/** Items currently shown: filtered and sorted by score (highest first). */
+function visibleItems() {
+    return state.items
+        .filter(matchesFilter)
+        .sort((a, b) => effectiveScore(b) - effectiveScore(a));
+}
+
+function readScoreInput(input, fallback) {
+    const value = parseInt(input.value, 10);
+    return Number.isNaN(value) ? fallback : Math.max(0, Math.min(100, value));
+}
+
+function onFilterChange() {
+    state.filter = {
+        text: $("#filter-text").value.trim(),
+        min: readScoreInput($("#filter-min"), 0),
+        max: readScoreInput($("#filter-max"), 100),
+    };
+    // keep only selections that are still visible
+    const visible = new Set(visibleItems().map((i) => i.id));
+    state.selected = new Set([...state.selected].filter((id) => visible.has(id)));
+    renderList();
+}
+
+function resetFilters() {
+    $("#filter-text").value = "";
+    $("#filter-min").value = 0;
+    $("#filter-max").value = 100;
+    onFilterChange();
 }
 
 function scoreLevel(score) {
@@ -80,20 +111,13 @@ function toggleTheme() {
 /* ---------- date inputs (typing + calendar) ---------- */
 
 function setupDateInput(textInput) {
-    const picker = document.querySelector(`.native-picker[data-for="${textInput.id}"]`);
     const button = document.querySelector(`.calendar-btn[data-target="${textInput.id}"]`);
-
-    button.addEventListener("click", () => {
-        const iso = parseDate(textInput.value);
-        if (iso) picker.value = iso;
-        if (typeof picker.showPicker === "function") picker.showPicker();
-        else picker.focus();
-    });
-    picker.addEventListener("change", () => {
-        if (picker.value) {
-            setDateInput(textInput, picker.value);
+    createDatePicker(textInput, button, {
+        maxIso: () => toIso(new Date()),   // future dates are not allowed
+        onPick: (iso) => {
+            setDateInput(textInput, iso);
             textInput.classList.remove("invalid");
-        }
+        },
     });
     textInput.addEventListener("blur", () => {
         const iso = parseDate(textInput.value);
@@ -248,7 +272,7 @@ function toggleSelected(id, checked) {
 }
 
 function toggleSelectAll(checked) {
-    state.selected = new Set(checked ? state.items.map((i) => i.id) : []);
+    state.selected = new Set(checked ? visibleItems().map((i) => i.id) : []);
     renderList();
 }
 
@@ -394,13 +418,13 @@ function renderItem(item) {
 }
 
 function renderSelectionToolbar() {
-    const toolbar = $("#selection-toolbar");
-    toolbar.hidden = state.items.length === 0;
+    const visibleCount = visibleItems().length;
+    $("#selection-toolbar").hidden = visibleCount === 0;
 
     const selectAll = $("#select-all");
     const n = state.selected.size;
-    selectAll.checked = n > 0 && n === state.items.length;
-    selectAll.indeterminate = n > 0 && n < state.items.length;
+    selectAll.checked = n > 0 && n === visibleCount;
+    selectAll.indeterminate = n > 0 && n < visibleCount;
 
     const button = $("#summarize-selected");
     button.textContent = t("summarizeSelected", n);
@@ -416,8 +440,8 @@ function renderList() {
         before.set(node.dataset.id, node.getBoundingClientRect().top);
     });
 
-    const sorted = [...state.items].sort((a, b) => effectiveScore(b) - effectiveScore(a));
-    list.replaceChildren(...sorted.map(renderItem));
+    const visible = visibleItems();
+    list.replaceChildren(...visible.map(renderItem));
 
     list.querySelectorAll(".result-item").forEach((node) => {
         const oldTop = before.get(node.dataset.id);
@@ -431,10 +455,18 @@ function renderList() {
         }
     });
 
-    $("#results-count").textContent = state.hasSearched && !state.error ? t("resultsCount", sorted.length) : "";
+    const total = state.items.length;
+    let count = "";
+    if (state.hasSearched && !state.error) {
+        count = isFilterActive() ? t("resultsCountFiltered", visible.length, total) : t("resultsCount", total);
+    }
+    $("#results-count").textContent = count;
+    $("#filter-bar").hidden = total === 0;
+
     if (state.error) setStatus(state.error);
     else if (!state.hasSearched) setStatus("emptyInitial");
-    else if (sorted.length === 0) setStatus("emptyNoResults");
+    else if (total === 0) setStatus("emptyNoResults");
+    else if (visible.length === 0) setStatus("emptyFiltered");
     else setStatus(null);
 
     renderSelectionToolbar();
@@ -489,6 +521,7 @@ function renderKb() {
 /* ---------- language ---------- */
 
 function renderLanguage() {
+    closeAllDatePickers();
     applyTranslations();
     document.querySelectorAll(".lang-switch button").forEach((btn) => {
         const active = btn.dataset.lang === currentLang;
@@ -528,6 +561,11 @@ function init() {
     $("#search-form").addEventListener("submit", onSearch);
     $("#select-all").addEventListener("change", (e) => toggleSelectAll(e.target.checked));
     $("#summarize-selected").addEventListener("click", summarizeSelected);
+
+    for (const id of ["#filter-text", "#filter-min", "#filter-max"]) {
+        $(id).addEventListener("input", onFilterChange);
+    }
+    $("#filter-reset").addEventListener("click", resetFilters);
 
     let kbTimer;
     $("#kb-search").addEventListener("input", (e) => {
