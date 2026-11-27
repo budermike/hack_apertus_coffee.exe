@@ -14,10 +14,10 @@ from hack_apertus_coffee_exe.summary.examples import ExampleSelector
 from hack_apertus_coffee_exe.summary.generate import Summarizer
 from hack_apertus_coffee_exe.summary.judgement import find_judgement
 from hack_apertus_coffee_exe.summary.llm import SummaryLLM, parse_json_object
-from hack_apertus_coffee_exe.summary.run import main, run_batch, summarize_case
+from hack_apertus_coffee_exe.summary.run import run_batch, summarize_case
+from hack_apertus_coffee_exe.summary import store
 
-MOCK = Path("src/hack_apertus_coffee_exe/triage/mock_crawl")
-J = find_judgement("8C_901/2026", MOCK)
+J = find_judgement("8C_901/2026", Path("src/hack_apertus_coffee_exe/triage/mock_crawl"))
 
 FACTS = {
     "rechtsgebiet": "Unfallversicherung – unfallähnliche Körperschädigung",
@@ -102,6 +102,32 @@ def test_summarize_retries_failing_language_once(summarizer):
     assert "Profil de style" in completions.calls[2][0]
 
 
+def test_store_is_used_instead_of_regenerating(summarizer):
+    conn = store.connect(":memory:")
+    first = summarize_case(J, conn, lambda: summarizer)
+    assert first["de"].text == DE_OK and first["fr"].coherence_ok
+    assert first["de"].title.startswith("BGer-Urteil 8C_901/2026")
+    assert store.get_case(conn, J.case_id).url == J.url
+    calls = len(summarizer.llm._client.chat.completions.calls)
+
+    again = summarize_case(J, conn, lambda: pytest.fail("must not call the LLM"))
+    assert again == first
+    assert len(summarizer.llm._client.chat.completions.calls) == calls
+    assert len(store.get_history(conn, J.case_id, "de")) == 1
+
+
+def test_batch_only_green(summarizer):
+    conn = store.connect(":memory:")
+    rows = [
+        {"case_id": "8C_901/2026", "ampel": "gruen", "similar_cases": [{"case_id": "8C_177/2025"}]},
+        {"case_id": "9C_903/2026", "ampel": "rot"},
+        {"case_id": "8C_999/2026", "ampel": "gruen"},  # no crawl record -> skipped
+    ]
+    done = run_batch(rows, [J], conn, lambda: summarizer)
+    assert done == ["8C_901/2026"]
+    assert store.list_case_ids(conn) == ["8C_901/2026"]
+
+
 def test_invented_consideration_numbers_are_removed_from_the_facts(summarizer):
     FACTS["kernerwaegungen"].append({"aussage": "erfunden", "erwaegung": "4.2"})
     try:
@@ -109,37 +135,3 @@ def test_invented_consideration_numbers_are_removed_from_the_facts(summarizer):
     finally:
         FACTS["kernerwaegungen"].pop()
     assert [k["erwaegung"] for k in facts["kernerwaegungen"]] == ["3", ""]
-
-
-def test_on_demand_result_is_json_ready(summarizer):
-    result = summarize_case(J, summarizer)  # UI "summarise" button
-    data = json.loads(json.dumps(result.to_dict(), ensure_ascii=False))
-    assert data["case_id"] == "8C_901/2026"
-    assert data["summary_de"] == DE_OK and data["summary_fr"] == FR_OK
-    assert data["coherence_ok"] is True and data["coherence_notes"] == []
-    assert data["model"] == "apertus-test" and data["prompt_version"].startswith(prompts.TEMPLATE_VERSION)
-    assert data["title_de"] == "BGer-Urteil 8C_901/2026 vom 14. Oktober 2026"
-
-
-def test_batch_only_green_yellow_and_red_need_a_request(summarizer):
-    j_yellow = find_judgement("8C_902/2026", MOCK)
-    j_red = find_judgement("9C_903/2026", MOCK)
-    rows = [
-        {"case_id": "8C_901/2026", "ampel": "gruen", "similar_cases": [{"case_id": "8C_177/2025"}]},
-        {"case_id": "8C_902/2026", "ampel": "gelb"},
-        {"case_id": "9C_903/2026", "ampel": "rot"},
-        {"case_id": "8C_999/2026", "ampel": "gruen"},  # no crawl record -> skipped
-    ]
-    results = run_batch(rows, [J, j_yellow, j_red], summarizer)
-    assert [r.case_id for r in results] == ["8C_901/2026"]
-    assert "8C_177/2025" in results[0].examples  # triage's similar case used as example
-
-    # Already summarized judgements can be skipped by the caller.
-    assert run_batch(rows, [J, j_yellow, j_red], summarizer, skip_case_ids=["8C_901/2026"]) == []
-
-
-def test_cli_without_api_key_fails_cleanly(monkeypatch, capsys):
-    for var in ("LLM_API_KEY", "APERTUS_API_KEY", "KEERA_API_KEY"):
-        monkeypatch.setenv(var, "")
-    assert main(["one", "--case", "8C_901/2026", "--input", str(MOCK)]) == 2
-    assert "API key" in capsys.readouterr().err

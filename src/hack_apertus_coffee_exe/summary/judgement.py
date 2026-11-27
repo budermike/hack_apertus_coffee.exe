@@ -7,7 +7,7 @@ shapes (crawl schema and the triage mock files).
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import date
 from pathlib import Path
 import re
@@ -42,6 +42,9 @@ class Judgement:
     language: str
     decision_date: date | None = None
     url: str | None = None
+    # All case numbers of joined proceedings (crawl ``case_ids``), main number first.
+    case_ids: tuple[str, ...] = field(default=())
+    publication_date: str | None = None
 
     @property
     def safe_id(self) -> str:
@@ -67,6 +70,8 @@ def load_judgements(input_path: str | Path) -> list[Judgement]:
             language=item.language or "de",
             decision_date=_date_from_metadata(item.metadata),
             url=item.metadata.get("url"),
+            case_ids=tuple(item.metadata.get("case_ids") or ()),
+            publication_date=item.metadata.get("publication_date"),
         )
         for item in load_crawl_items(input_path)
     ]

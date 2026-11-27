@@ -2,7 +2,7 @@
 
 Style profiles and glossary live in ``prompts/*.md`` so lawyers can edit them
 without touching code. ``prompt_version()`` changes whenever a template or one
-of those files changes; it is returned with every summary.
+of those files changes; it is stored with every summary.
 """
 
 from __future__ import annotations

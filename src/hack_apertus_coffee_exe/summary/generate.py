@@ -4,9 +4,7 @@
 2. Writing: facts + Suva examples + style profile + glossary -> DE text and,
    separately, FR text (one call each; FR is written, not translated).
 3. Check: rule-based check; a language with errors is regenerated once with the
-   errors as feedback. Remaining issues are returned with the result (for the UI).
-
-Storing results is not part of this module; see ``SummaryResult.to_dict()``.
+   errors as feedback. Remaining issues are stored and shown in the UI.
 """
 
 from __future__ import annotations
