@@ -4,13 +4,14 @@ from __future__ import annotations
 
 from collections import Counter
 from dataclasses import dataclass
+import hashlib
 import math
 import re
 from typing import Protocol, Sequence
 
 import numpy as np
 
-from triage.reference_corpus import ReferenceCase
+from .reference_corpus import ReferenceCase
 
 _TOKEN_RE = re.compile(r"[0-9a-zA-ZäöüÄÖÜàâéèêëîïôùûüçÀÂÉÈÊËÎÏÔÙÛÜÇ]+")
 
@@ -227,28 +228,62 @@ def build_reference_index(
     return ref_texts, ref_vecs
 
 
-def score_against_corpus(
-    candidate_text: str,
-    cases: Sequence[ReferenceCase],
+def embedder_fingerprint(embedder: Embedder, max_words: int = 350, overlap_words: int = 50) -> str:
+    """Identify everything that determines a judgement's chunk vectors.
+
+    Used as the cache key next to the text hash: if the embedder, its fitted
+    vocabulary or the chunking changes, cached vectors are recomputed.
+    """
+    parts = [embedder.name, f"chunk={max_words}/{overlap_words}"]
+    if isinstance(embedder, TfidfEmbedder):
+        digest = hashlib.sha256()
+        digest.update("\n".join(sorted(embedder.vocab_)).encode("utf-8"))
+        digest.update(np.asarray(embedder.idf_, dtype=np.float32).tobytes())
+        parts.append(f"vocab={digest.hexdigest()[:16]}")
+    return "|".join(parts)
+
+
+def embed_chunks(
+    text: str,
     embedder: Embedder,
+    max_words: int = 350,
+    overlap_words: int = 50,
+) -> np.ndarray:
+    """Chunk a judgement and embed the chunks; returns an (n_chunks, D) matrix."""
+    chunks = chunk_text(text, max_words=max_words, overlap_words=overlap_words)
+    if not chunks:
+        return np.zeros((0, 0), dtype=np.float32)
+    return np.asarray(embedder.embed(chunks), dtype=np.float32)
+
+
+def max_chunk_similarity(a_chunks: np.ndarray, b_chunks: np.ndarray) -> float:
+    """Judgement-to-judgement similarity: best-matching pair of chunks."""
+    if a_chunks.size == 0 or b_chunks.size == 0 or a_chunks.shape[1] != b_chunks.shape[1]:
+        return 0.0
+    return float(cosine_similarity_matrix(a_chunks, b_chunks).max())
+
+
+def score_chunk_vectors(
+    chunk_vecs: np.ndarray,
+    cases: Sequence[ReferenceCase],
     ref_vecs: np.ndarray,
     language: str | None = None,
     top_k: int = 3,
-    max_words: int = 350,
-    overlap_words: int = 50,
 ) -> SimilarityScore:
-    """Score a candidate judgement by chunked cosine similarity against Suva precedents."""
-    chunks = chunk_text(candidate_text, max_words=max_words, overlap_words=overlap_words)
-    if not chunks or len(cases) == 0:
+    """Score pre-computed chunk vectors against the given reference cases.
+
+    ``cases`` and ``ref_vecs`` must be aligned row by row, so a caller can pass a
+    subset of the corpus (e.g. without summaries from the scored period).
+    """
+    if chunk_vecs.size == 0 or len(cases) == 0:
         return SimilarityScore(max_similarity=0.0, top_k_mean_similarity=0.0, top_matches=[])
 
-    chunk_vecs = embedder.embed(chunks)
     sim_matrix = cosine_similarity_matrix(chunk_vecs, ref_vecs)
     # Per reference case, take the strongest matching chunk in the candidate judgement.
     per_case_sims = sim_matrix.max(axis=0)
 
     k = max(1, min(top_k, len(cases)))
-    top_indices = np.argsort(-per_case_sims)[:k]
+    top_indices = np.argsort(-per_case_sims, kind="stable")[:k]
     top_scores = [float(per_case_sims[i]) for i in top_indices]
 
     matches: list[ReferenceMatch] = []
@@ -271,3 +306,20 @@ def score_against_corpus(
         top_k_mean_similarity=round(float(sum(top_scores) / len(top_scores)), 4),
         top_matches=matches,
     )
+
+
+def score_against_corpus(
+    candidate_text: str,
+    cases: Sequence[ReferenceCase],
+    embedder: Embedder,
+    ref_vecs: np.ndarray,
+    language: str | None = None,
+    top_k: int = 3,
+    max_words: int = 350,
+    overlap_words: int = 50,
+) -> SimilarityScore:
+    """Score a candidate judgement by chunked cosine similarity against Suva precedents."""
+    if len(cases) == 0:
+        return SimilarityScore(max_similarity=0.0, top_k_mean_similarity=0.0, top_matches=[])
+    chunk_vecs = embed_chunks(candidate_text, embedder, max_words=max_words, overlap_words=overlap_words)
+    return score_chunk_vectors(chunk_vecs, cases, ref_vecs, language=language, top_k=top_k)

@@ -10,16 +10,16 @@ import tempfile
 from types import SimpleNamespace
 import unittest
 
-from triage.cache import TriageCache
-from triage.cli import main as cli_main
-from triage.config import TriageConfig, load_config
-from triage.date_filter import DateRange, parse_date_string
-from triage.embeddings import TfidfEmbedder
-from triage.export import RANKING_COLUMNS, export_period, format_recall_list
-from triage.feedback import FeedbackStore
-from triage.llm import ApertusTriageClient, GatewayConfig
-from triage.pipeline import CrawlItem, TriagePipeline, _normalize_crawl_dict
-from triage.reference_corpus import ReferenceCase, load_reference_corpus
+from hack_apertus_coffee_exe.triage.cache import TriageCache
+from hack_apertus_coffee_exe.triage.cli import main as cli_main
+from hack_apertus_coffee_exe.triage.config import TriageConfig, load_config
+from hack_apertus_coffee_exe.triage.date_filter import DateRange, parse_date_string
+from hack_apertus_coffee_exe.triage.embeddings import TfidfEmbedder
+from hack_apertus_coffee_exe.triage.export import RANKING_COLUMNS, export_period, format_recall_list
+from hack_apertus_coffee_exe.triage.feedback import FeedbackStore
+from hack_apertus_coffee_exe.triage.llm import ApertusTriageClient, GatewayConfig
+from hack_apertus_coffee_exe.triage.pipeline import CrawlItem, TriagePipeline, _normalize_crawl_dict
+from hack_apertus_coffee_exe.triage.reference_corpus import ReferenceCase, load_reference_corpus
 
 ACCIDENT_TEXT = (
     "Beschwerde der Suva betreffend unfallähnliche Körperschädigung nach Art. 6 Abs. 2 UVG. "
@@ -117,7 +117,7 @@ class PeriodAndDateTests(unittest.TestCase):
 
 class CrawlLayoutTests(unittest.TestCase):
     def test_loads_crawler_month_folders_and_skips_index(self) -> None:
-        from triage.pipeline import load_crawl_items
+        from hack_apertus_coffee_exe.triage.pipeline import load_crawl_items
 
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)

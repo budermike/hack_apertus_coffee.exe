@@ -10,15 +10,15 @@ import unittest
 
 import numpy as np
 
-from triage.date_filter import DateRange, OutOfDateRangeError, extract_judgement_date
-from triage.embeddings import (
+from hack_apertus_coffee_exe.triage.date_filter import DateRange, OutOfDateRangeError, extract_judgement_date
+from hack_apertus_coffee_exe.triage.embeddings import (
     TfidfEmbedder,
     chunk_text,
     cosine_similarity_matrix,
 )
-from triage.llm import ApertusTriageClient, GatewayConfig, _parse_json_decision
-from triage.pipeline import TriagePipeline, load_crawl_items
-from triage.reference_corpus import ReferenceCase, load_reference_corpus
+from hack_apertus_coffee_exe.triage.llm import ApertusTriageClient, GatewayConfig, _parse_json_decision
+from hack_apertus_coffee_exe.triage.pipeline import TriagePipeline, load_crawl_items
+from hack_apertus_coffee_exe.triage.reference_corpus import ReferenceCase, load_reference_corpus
 
 
 class _FakeCompletions:

@@ -1,4 +1,4 @@
-# Triage (`triage/`)
+# Triage (`src/hack_apertus_coffee.exe/triage/`, import `hack_apertus_coffee_exe.triage`)
 
 ## High-Level Overview
 
@@ -24,10 +24,12 @@ Crawl JSON (metadata + judgement text)
    │       summaries as context to Apertus v1.5 (temperature=0)
    │       ─► Produces apertus_score (0–100), relevant (bool), reason, key_topics
    │
-   └──► 4. Final Ranking & Output JSON
-           Blend apertus_score (75%) + cosine_max_similarity (25%)
-           (or heuristic fallback in --no-llm mode), sorted descending
-           ─► Ready for Summary and Present (UI)
+   └──► 4. Feedback, Ranking, Ampel & Exports
+           cosine_score = top-k mean cosine * 100; final_score = blend of
+           apertus_score (llm_weight, default 75%) + cosine_score (or heuristic
+           in --no-llm mode). Lawyer feedback adjusts the ranking score, then
+           rank 1..n and ampel gruen/gelb/rot are assigned from configs/triage.json
+           ─► results/ranking_<period>.csv + results/recall_<period>.txt
 ```
 
 Why two stages?
@@ -64,9 +66,9 @@ Centralizes all Keera / Apertus v1.5 gateway communication:
 - `ApertusTriageClient`: Sends metadata, keyword hits, cosine similarity scores, top-$k$ Suva precedent summaries, and the judgement excerpt to **Apertus v1.5** (`apertus-v1-5-8b` by default, `temperature=0.0`), then parses the structured JSON decision (`TriageDecision`: `relevant`, `apertus_score`, `reason`, `key_topics`).
 
 ### `triage/date_filter.py`
-Enforces a **hard time-range filter** (default: last 3 calendar months) so that no incoming judgement outside the configured window (or missing a valid date) is ever embedded or sent to Apertus:
+Enforces a **hard time-range filter** on an explicit period (no rolling default, so runs are reproducible) so that no incoming judgement outside the window (or missing a valid date) is ever embedded or sent to Apertus. `decision_date` is read first (issue #3):
 - `extract_judgement_date()`: Resolves publication dates from `metadata["date"]` (and aliases), `bger.ch` `aza://DD-MM-YYYY-...` URLs, or DE/FR/IT judgement header text.
-- `DateRange`: Inclusive `[since, until]` window with `DateRange.last_n_months(3)` and `DateRange.last_n_days()`.
+- `DateRange`: Inclusive `[since, until]` window; `DateRange.from_period("2026-Q2")` (also `2026-06`, `2026`) and `label()` (`q2_2026`) for export file names.
 - `check_date_in_range()` & `filter_items_in_date_range()`: Rejects out-of-range or dateless items before embedding (raising `OutOfDateRangeError` on single-item `score_item()` calls and recording `SkippedItem` entries on batch `score_items()`).
 
 ### `triage/pipeline.py`
@@ -74,12 +76,26 @@ Orchestrates ingestion, hard date filtering, scoring, blending, and sorting:
 - `load_crawl_items()` & `_normalize_crawl_dict()`: Reads Crawl output from a single JSON object, a JSON array, or a directory of `.json` files, accepting either nested `metadata` dicts or flat fields and common text keys (`judgement_text`, `judgment_text`, `text`, `full_text`, `content`, `body`).
 - `detect_language()`: Reads language from metadata or infers `de` / `fr` / `it` from lightweight lexical cues.
 - `extract_keyword_hits()`: Flags Suva/accident-insurance signals (`Suva`, `UVG/LAA/LAINF`, `Unfall/Accident`, `Berufskrankheit`, `ATSG/LPGA`, `Körperschädigung`, and `Chamber:8C`).
-- `TriagePipeline`: Applies the hard `DateRange` filter before embedding, precomputes language-specific reference indices (`de`, `fr`, `all`), runs Stage 1 (`score_against_corpus`) + optional Stage 2 (`ApertusTriageClient`), blends scores (`0.75 * apertus_score + 0.25 * (cosine_max_similarity * 100)` when LLM is enabled, or `_heuristic_relevance_score()` in `--no-llm` mode), and returns `TriageResult` objects sorted descending by `relevance_score`.
+- `TriagePipeline`: Applies the hard `DateRange` filter, drops reference summaries that would leak (case is being scored, or decided in/after the period), runs Stage 1 + optional Stage 2 (both through the cache), stores `cosine_score` and `final_score`, applies feedback, and returns `TriageResult` objects ranked 1..n with an `ampel`. `config.rank_by` picks which score drives rank and ampel.
+- Crawl records' raw `content_html` is dropped on load, and only whitelisted metadata fields go into the Apertus prompt.
+
+### `triage/config.py` + `configs/triage.json`
+All tunables (issue #12/#28): `rank_by`, `llm_weight`, `top_k`, `green_threshold` (60) / `yellow_threshold` (40) — **placeholders until the eval sweep (#21)** — `recall_top_n` (30), `export_dir`, `cache_dir`, and the feedback weights.
+
+### `triage/cache.py`
+Mirror of the crawler's data index in `data/processed/triage/` (`_index.json` + `<YYYY-MM>/<date>_<case>.npy|.json`). Chunk vectors are reused while the text SHA-256 and embedder fingerprint (name, chunking, TF-IDF vocabulary hash) match; Apertus decisions are reused while the request key (model, temperature, max_tokens, full prompt) matches. A changed text invalidates both. The TF-IDF vocabulary is fitted once on all 55 summaries (vocabulary only, no labels), so cached vectors stay valid across periods; leakage is handled at scoring time. Safe to delete.
+
+### `triage/feedback.py`
+Lawyer ratings `-- - 0 + ++` (issue #28) in `data/processed/triage/feedback.json`. Direct effect: offset on the rated judgement, `++` forces green and `--` forces red. Indirect effect: `+`/`++` judgements act as positive references and `-`/`--` as negative ones; other judgements move by `weight * strength * similarity * 100` (strongest match each way). Re-running `score` re-evaluates (cheap thanks to the cache). Each result's `feedback` field explains the change.
+
+### `triage/export.py`
+Issue #33 deliverables: `ranking_<period>.csv` (`Rang, Geschaeftsnummer, Score, Ampel, Begruendung`) and `recall_<period>.txt` in Suva format (`8C_691/2024, 9C_612/2025, ...`, top `recall_top_n`).
 
 ### `triage/cli.py`
-Command-line interface (`python3 -m triage.cli <command>`):
+Command-line interface (`python -m hack_apertus_coffee_exe.triage.cli <command>`):
 - `check-gateway`: Lists available models on the configured gateway and probes `/embeddings` if supported.
-- `score`: Runs triage on Crawl JSON input(s) and writes sorted results to stdout or `--output`. Supports `--no-llm`, `--embedder`, `--model`, `--top-k`, and date-filter flags (`--months`, `--max-age-days`, `--since`, `--until`, `--all-dates`).
+- `score`: Runs triage for a required period (`--period 2026-Q2` or `--since`/`--until`), writes the ranking CSV + recall list to `results/` and full JSON to `--output`. Also `--no-llm`, `--embedder`, `--model`, `--top-k`, `--config`, `--no-cache`, `--no-feedback`, `--no-export`.
+- `feedback set|clear|list`: Records lawyer ratings (`--rating=--` for negative values).
 - `eval-corpus`: Runs a leave-one-out cosine similarity evaluation across the 55 Suva summaries in `judgements/`.
 
 ### `tests/test_triage.py`
@@ -101,10 +117,12 @@ Offline unit tests covering real HTML corpus parsing (`55` cases), chunking and 
 }
 ```
 
-**Triage output** (JSON array sorted descending by `relevance_score`):
-- `case_id`, `relevance_score` (`0`–`100`), `relevant` (`bool`), `reason` (`str`)
+**Triage output** (JSON array ordered by `rank`):
+- `case_id`, `rank` (1 = best), `ampel` (`gruen`/`gelb`/`rot`), `relevant` (`true` when green), `rank_score` (score after feedback that decided rank/ampel)
+- `final_score`, `cosine_score` (both `0`–`100`), `relevance_reason` (`str`), `similar_cases` (top-k), `feedback` (`null` or the explanation of the adjustment)
+- Aliases kept for PR #34 consumers: `relevance_score` (= `final_score`), `reason`, `top_reference_matches`
 - `cosine_max_similarity`, `cosine_topk_similarity`, `apertus_score` (`float | null`)
-- `keyword_hits`, `key_topics`, `top_reference_matches`, `metadata`, `language`, `embedder`, `llm_model`
+- `keyword_hits`, `key_topics`, `metadata`, `language`, `embedder`, `llm_model`, `judgement_date`
 
 ---
 
@@ -112,17 +130,22 @@ Offline unit tests covering real HTML corpus parsing (`55` cases), chunking and 
 
 ```bash
 # Run offline unit tests
-python3 -m unittest -v tests/test_triage.py
+python3 -m pytest -q tests/test_triage.py tests/test_triage_issues.py
 
 # Check Keera gateway models
-.venv/bin/python -m triage.cli check-gateway
+.venv/bin/python -m hack_apertus_coffee_exe.triage.cli check-gateway
 
 # Evaluate leave-one-out cosine similarity on the 55 Suva reference summaries
-python3 -m triage.cli eval-corpus
+python -m hack_apertus_coffee_exe.triage.cli eval-corpus
 
-# Run offline triage (TF-IDF cosine similarity + keyword signals only)
-python3 -m triage.cli score --input path/to/crawl_output.json --output results/tables/triage.json --no-llm
+# Offline triage for Q2/2026 (TF-IDF + keywords) -> results/ranking_q2_2026.csv, results/recall_q2_2026.txt
+python -m hack_apertus_coffee_exe.triage.cli score --input data/raw --period 2026-Q2 --no-llm
 
-# Run full triage with Apertus v1.5
-.venv/bin/python -m triage.cli score --input path/to/crawl_output.json --output results/tables/triage.json
+# Full triage with Apertus v1.5, also writing the full JSON
+.venv/bin/python -m hack_apertus_coffee_exe.triage.cli score --input data/raw --period 2026-Q2 --output results/tables/triage_q2_2026.json
+
+# Lawyer feedback, then re-score (embeddings and Apertus answers come from the cache)
+python -m hack_apertus_coffee_exe.triage.cli feedback set 8C_123/2026 --rating=++ --comment "Leitentscheid"
+python -m hack_apertus_coffee_exe.triage.cli feedback set 9C_45/2026 --rating=--
+python -m hack_apertus_coffee_exe.triage.cli score --input data/raw --period 2026-Q2
 ```
