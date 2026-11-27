@@ -27,6 +27,8 @@ build/
 .idea/
 .vscode/
 
+# Derived triage data: embedding/Apertus cache
+data/processed/triage/
 #data
 .data/
 # Temporary / corrupt crawler files stay local; public BGer judgements in data/raw/ are tracked

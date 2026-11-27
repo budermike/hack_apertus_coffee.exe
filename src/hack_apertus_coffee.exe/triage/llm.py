@@ -2,13 +2,14 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
+import hashlib
 import json
 import os
 import re
 from typing import Any, Sequence
 
-from triage.embeddings import ReferenceMatch, SimilarityScore
+from .embeddings import ReferenceMatch, SimilarityScore
 
 DEFAULT_BASE_URL = "https://gateway.keera.ch/api/v1"
 DEFAULT_MODEL = "apertus-v1-5-8b"
@@ -25,10 +26,28 @@ Antworte AUSSCHLIESSLICH mit gültigem JSON im folgenden Format:
 {
   "relevant": true oder false,
   "apertus_score": Ganzzahl von 0 bis 100 (0 = völlig irrelevant für die Suva, 100 = hochrelevant für Suva-Rechtspraxis),
-  "reason": "Prägnante juristische Begründung in 2-3 Sätzen, warum das Urteil für die Suva relevant oder nicht relevant ist (mit Bezug auf Rechtsnormen/Themen).",
+  "reason": "Prägnante juristische Begründung in 2-3 Sätzen: Rechtsgebiet, Bezug zur Suva bzw. zum UVG (oder warum dieser fehlt) und Verweis auf den ähnlichsten Referenzfall mit Geschäftsnummer.",
   "key_topics": ["Stichwort 1", "Stichwort 2"]
 }
+
+Begründe auch bei nicht relevanten Urteilen kurz, warum sie für die Suva nicht relevant sind.
 """
+
+# Only these metadata fields go into the prompt; crawl records also carry the raw
+# HTML, hashes and fetch info, which would bloat the prompt and the cache key.
+PROMPT_METADATA_KEYS = (
+    "case_id",
+    "case_ids",
+    "decision_date",
+    "date",
+    "department",
+    "chamber",
+    "subject",
+    "object",
+    "language",
+    "title",
+    "parties",
+)
 
 
 @dataclass(frozen=True)
@@ -99,6 +118,20 @@ class TriageDecision:
     key_topics: list[str]
     model: str
     raw_response: str = ""
+
+    def to_dict(self) -> dict[str, Any]:
+        return asdict(self)
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> "TriageDecision":
+        return cls(
+            relevant=bool(data["relevant"]),
+            apertus_score=float(data["apertus_score"]),
+            reason=str(data["reason"]),
+            key_topics=list(data.get("key_topics", [])),
+            model=str(data["model"]),
+            raw_response=str(data.get("raw_response", "")),
+        )
 
 
 def _build_client(config: GatewayConfig, timeout: int = 60, max_retries: int = 3) -> Any:
@@ -207,17 +240,18 @@ class ApertusTriageClient:
             self.config, timeout=timeout, max_retries=max_retries
         )
 
-    def evaluate(
+    def build_messages(
         self,
         case_id: str,
         judgement_text: str,
         metadata: dict[str, Any],
         similarity: SimilarityScore,
         keyword_hits: Sequence[str],
-    ) -> TriageDecision:
-        """Ask Apertus v1.5 to score Suva relevance and explain why."""
+    ) -> list[dict[str, str]]:
+        """Build the chat messages for one judgement (also the basis of the cache key)."""
         excerpt = _select_judgement_excerpt(judgement_text)
-        meta_preview = json.dumps(metadata, ensure_ascii=False)
+        prompt_meta = {k: metadata[k] for k in PROMPT_METADATA_KEYS if metadata.get(k)}
+        meta_preview = json.dumps(prompt_meta, ensure_ascii=False, sort_keys=True)
         keywords_str = ", ".join(keyword_hits) if keyword_hits else "keine"
         user_prompt = (
             f"Urteil: {case_id}\n"
@@ -229,15 +263,45 @@ class ApertusTriageClient:
             f"{_format_matches(similarity.top_matches)}\n\n"
             f"Urteilstext (Auszug):\n{excerpt}"
         )
+        return [
+            {"role": "system", "content": _SYSTEM_PROMPT},
+            {"role": "user", "content": user_prompt},
+        ]
 
+    def request_key(self, messages: Sequence[dict[str, str]]) -> str:
+        """Hash of everything that determines the answer: model, parameters, prompt."""
+        payload = json.dumps(
+            {
+                "model": self.config.model,
+                "temperature": self.temperature,
+                "max_tokens": self.max_tokens,
+                "messages": list(messages),
+            },
+            ensure_ascii=False,
+            sort_keys=True,
+        )
+        return hashlib.sha256(payload.encode("utf-8")).hexdigest()
+
+    def complete(self, messages: Sequence[dict[str, str]]) -> TriageDecision:
+        """Send prepared messages to Apertus and parse the JSON decision."""
         response = self._client.chat.completions.create(
             model=self.config.model,
-            messages=[
-                {"role": "system", "content": _SYSTEM_PROMPT},
-                {"role": "user", "content": user_prompt},
-            ],
+            messages=list(messages),
             temperature=self.temperature,
             max_tokens=self.max_tokens,
         )
         content = response.choices[0].message.content or ""
         return _parse_json_decision(content, model=self.config.model)
+
+    def evaluate(
+        self,
+        case_id: str,
+        judgement_text: str,
+        metadata: dict[str, Any],
+        similarity: SimilarityScore,
+        keyword_hits: Sequence[str],
+    ) -> TriageDecision:
+        """Ask Apertus v1.5 to score Suva relevance and explain why."""
+        return self.complete(
+            self.build_messages(case_id, judgement_text, metadata, similarity, keyword_hits)
+        )
