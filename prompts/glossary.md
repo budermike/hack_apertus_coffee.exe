@@ -34,6 +34,9 @@ Wird in beide Prompts eingefügt. Immer den Begriff der Zielsprache aus dieser L
 | Beweiswert (ärztlicher Berichte) | valeur probante (des rapports médicaux) |
 | Versicherungsmedizin, versicherungsmedizinischer Dienst | médecine d'assurance |
 | Gutachten, Gutachter/in | expertise, expert/e |
+| Gerichtsgutachten (nicht «gerichtliche Expertise») | expertise judiciaire |
+| Privatgutachten, Parteigutachten | expertise privée |
+| Beschwerde (nicht «Rekurs») | recours |
 | Verfahren nach Art. 44 ATSG | procédure de l'art. 44 LPGA |
 | unfallähnliche Körperschädigung | lésion corporelle assimilée à un accident |
 | Berufskrankheit | maladie professionnelle |

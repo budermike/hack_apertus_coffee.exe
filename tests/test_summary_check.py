@@ -7,7 +7,7 @@ from hack_apertus_coffee_exe.summary.check import (
     cited_articles,
     cited_considerations,
 )
-from hack_apertus_coffee_exe.summary.judgement import find_judgement, operative_outcome
+from hack_apertus_coffee_exe.summary.judgement import Judgement, find_judgement, operative_outcome
 
 J = find_judgement("8C_901/2026", Path("src/hack_apertus_coffee_exe/triage/mock_crawl"))
 OUTCOME = operative_outcome(J.text)
@@ -53,3 +53,34 @@ def test_wrong_outcome_in_closing_paragraph():
 def test_empty_summary_is_error():
     report = check_summaries("", GOOD_FR, J, OUTCOME)
     assert [i.kind for i in report.errors_for("de")] == ["empty"]
+
+
+# Real case 8C_221/2025: partially admitted (CHF 250 report costs), rejected for the rest, no remand.
+PARTIAL_JUDGEMENT = Judgement(
+    case_id="8C_221/2025",
+    language="fr",
+    text=(
+        "Considérant en droit :\n4.\nBla.\n6.\n6.1\nBla.\n7.\nBla.\n"
+        "Par ces motifs, le Tribunal fédéral prononce :\n1.\nLe recours est partiellement admis. "
+        "La CNA est tenue au remboursement des frais du rapport. Le recours est rejeté pour le surplus.\n2.\nFrais."
+    ),
+)
+PARTIAL_OUTCOME = operative_outcome(PARTIAL_JUDGEMENT.text)
+
+
+def test_partial_outcome_described_as_rejected_for_the_rest_is_ok():
+    de = "Bla (E. 6.1).\n\nDie Suva muss die Kosten des Berichts übernehmen. Im Übrigen wird die Beschwerde abgewiesen."
+    fr = "Bla (consid. 6.1).\n\nLe recours est rejeté, à l'exception d'une admission partielle concernant les frais du rapport."
+    report = check_summaries(de, fr, PARTIAL_JUDGEMENT, PARTIAL_OUTCOME)
+    assert report.ok, report.to_dicts()
+
+
+def test_invented_remand_is_an_error():
+    de = (
+        "Das Bundesgericht hob den Entscheid auf und wies die Sache zur weiteren Abklärung zurück.\n\n"
+        "Im Übrigen wird die Beschwerde abgewiesen."
+    )
+    fr = "Le recours est partiellement admis et rejeté pour le surplus."
+    report = check_summaries(de, fr, PARTIAL_JUDGEMENT, PARTIAL_OUTCOME)
+    assert [i.kind for i in report.errors_for("de")] == ["remand"]
+    assert report.errors_for("fr") == []

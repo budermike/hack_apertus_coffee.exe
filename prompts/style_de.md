@@ -33,6 +33,8 @@ Sonderform: Verfahrensfallen beginnen mit «cavete collegae:» und bestehen aus 
 - Erwägungen: «(E. 4.4)» oder «(Erw. 4.4)»; nur Erwägungen nennen, die im Urteil wirklich vorkommen.
 - Gesetze: «Art. 6 Abs. 2 UVG», «Art. 44 ATSG», «Art. 46 Abs. 1 BGG». Abkürzungen ohne Ausschreiben.
 - Parteien anonym: «die Versicherte», «der Versicherte», «die Beschwerdeführerin», «die Suva». Keine Namen.
+- Geschlecht der versicherten Person aus dem Urteil übernehmen («le recourant» → «der Versicherte», «la recourante» → «die Versicherte») und im ganzen Text beibehalten.
+- Rechtsmittel vor Bundesgericht heisst «Beschwerde», nicht «Rekurs».
 - Gerichte: «das Bundesgericht», «die Bundesrichter», «die Vorinstanz», «das Kantonsgericht <Kanton>».
 - Zeitform: Präteritum/Perfekt für Sachverhalt und Verfahren; Präsens für Rechtsregeln.
 - Schweizer Rechtschreibung: «ss» statt «ß».
