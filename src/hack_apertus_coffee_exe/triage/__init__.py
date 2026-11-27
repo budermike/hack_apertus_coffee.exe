@@ -22,8 +22,11 @@ from .embeddings import (
 from .export import export_period, format_recall_list, write_ranking_csv, write_recall_list
 from .pipeline import TriagePipeline, TriageResult, load_crawl_items
 from .reference_corpus import ReferenceCase, load_reference_corpus
+from .relevance import ApertusRelevanceClient
+from .relevance_period import run as run_relevance
 
 __all__ = [
+    "ApertusRelevanceClient",
     "DateRange",
     "Embedder",
     "GatewayEmbedder",
@@ -46,6 +49,7 @@ __all__ = [
     "load_config",
     "load_crawl_items",
     "load_reference_corpus",
+    "run_relevance",
     "score_against_corpus",
     "write_ranking_csv",
     "write_recall_list",

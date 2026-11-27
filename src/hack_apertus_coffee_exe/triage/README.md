@@ -79,6 +79,15 @@ Orchestrates ingestion, hard date filtering, scoring, blending, and sorting:
 - `TriagePipeline`: Applies the hard `DateRange` filter, drops reference summaries that would leak (case is being scored, or decided in/after the period), runs Stage 1 + optional Stage 2 (both through the cache), stores `cosine_score` and `final_score`, and returns `TriageResult` objects ranked 1..n with an `ampel`. `config.rank_by` picks which score drives rank and ampel.
 - Crawl records' raw `content_html` is dropped on load, and only whitelisted metadata fields go into the Apertus prompt.
 
+### `triage/relevance.py`, `triage/calibration.py`, `triage/relevance_period.py` (relevance scoring for the Suva list)
+The scoring that produces the Suva list with the highest recall (reasons and measurements: `docs/ISSUE_RECALL.md`, numbers: `results/relevance_eval.md`). It replaces the single Apertus score and the 75/25 blend for the list; the similarity stage above stays for "similar cases" and the knowledge base.
+- **Candidates:** judgements of the III. and IV. public-law division (`8C`, `9C`, `8F`, `9F`); Apertus reads those on accident, invalidity and military insurance in full (no 24,000-character excerpt), split into citable paragraphs (`[E4.2]`).
+- **Pass 1, triage:** criteria for and against relevance (`K1`–`K5`, `N1`–`N3`), each with a verbatim quote that code checks against the judgement, a two-sentence reason, then a score. Transferable principles from invalidity insurance count explicitly (`K3`).
+- **Pass 2, "Vertiefung"** (triage score >= 50): separate scales for legal principle (0–3) and use for accident insurance (0–3), a one-sentence rule, a second score.
+- **Calibration:** a logistic regression with four parameters turns both scores and the area into a relevance value; fitted only on labelled quarters *before* the scored one. A judgement is on the list when the value is above `F2 / 5`, times `list_factor` from the config.
+- **Robustness:** strict JSON schema, one retry with temperature, every answer cached per judgement; a failed judgement is shown yellow with its error, never dropped.
+- **Output:** the usual `TriageResult` list (`final_score`, `ampel`, `relevance_reason`), so ranking CSV, Suva list, summary batch and UI work unchanged. `final_score` is the relevance value on the 0-100 scale of `configs/triage.json`: the list threshold is mapped onto `green_threshold`, half of it onto `yellow_threshold`. The raw value and the details (criteria, quotes, rule) are in `metadata["relevance"]`.
+
 ### `triage/config.py` + `configs/triage.json`
 All tunables (issue #12): `rank_by`, `llm_weight`, `top_k`, `green_threshold` (60) / `yellow_threshold` (40) — **placeholders until the eval sweep (#21)** — `recall_top_n` (30), `export_dir`, `cache_dir`.
 
@@ -123,6 +132,14 @@ Offline unit tests covering real HTML corpus parsing (`55` cases), chunking and 
 ---
 
 ## Quick Commands
+
+```bash
+# Suva list with the two-pass relevance scoring (Apertus 70B; cached, a second run costs nothing)
+python -m hack_apertus_coffee_exe.triage.cli relevance --period 2026-Q2 --output results/triage_q2_2026.json
+# Hold-out evaluation on the labelled quarters (no gateway needed)
+python -m hack_apertus_coffee_exe.eval.relevance_eval
+```
+
 
 ```bash
 # Run offline unit tests
