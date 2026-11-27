@@ -1,4 +1,4 @@
-# Hack Apertus Hackathon - Team Coffee.exe
+# Hack Apertus Hackathon - Team Coffee.exe 
 
 ## 1. Overview
 
