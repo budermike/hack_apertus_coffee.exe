@@ -1,8 +1,12 @@
 /* script.js — UI state and rendering. Depends on i18n.js, datepicker.js and api.js (loaded before). */
 
-/** From this relevance on a judgement counts as relevant and is summarized automatically. */
-const SUMMARY_THRESHOLD = 70;
-const MEDIUM_THRESHOLD = 40;
+/** From this relevance on a judgement counts as relevant and is summarized automatically.
+ *  Defaults; replaced by the backend's values from configs/triage.json (GET /api/config). */
+let SUMMARY_THRESHOLD = 70;
+let MEDIUM_THRESHOLD = 40;
+/** At most this many relevant judgements are summarized automatically per search (best first);
+ *  the others via the "summarise" button. Each summary takes several Apertus calls. */
+const AUTO_SUMMARY_LIMIT = 10;
 
 /** Relevance levels, highest first. */
 const LEVELS = ["high", "medium", "low"];
@@ -234,7 +238,11 @@ async function onSearch(event) {
 /** Sufficiently relevant judgements are summarized right away, in the background.
  *  All others get a "Zusammenfassen" button in the detail panel. */
 async function autoSummarizeRelevant() {
-    const ids = state.items.filter((i) => itemLevel(i) === "high").map((i) => i.id);
+    const ids = state.items
+        .filter((i) => itemLevel(i) === "high")
+        .sort((a, b) => effectiveScore(b) - effectiveScore(a))
+        .slice(0, AUTO_SUMMARY_LIMIT)
+        .map((i) => i.id);
     if (ids.length === 0) return;
     await Promise.all(ids.map(loadSummary));
     refreshKb();
@@ -881,6 +889,7 @@ function init() {
     }
     $("#filter-reset").addEventListener("click", resetFilters);
     $("#kb-clear").addEventListener("click", onClearDb);
+    $("#kb-clear").hidden = !USE_MOCK;   // the real knowledge base keeps every version (append-only)
 
     let kbTimer;
     $("#kb-search").addEventListener("input", (e) => {
@@ -900,6 +909,18 @@ function init() {
 
     renderLanguage();
     refreshKb();
+    loadThresholds();
+}
+
+/** Takes the traffic-light thresholds from the backend; keeps the defaults if that fails. */
+async function loadThresholds() {
+    const config = await fetchConfig();
+    const high = config?.thresholds?.high;
+    const medium = config?.thresholds?.medium;
+    if (typeof high === "number" && typeof medium === "number" && medium <= high) {
+        SUMMARY_THRESHOLD = high;
+        MEDIUM_THRESHOLD = medium;
+    }
 }
 
 init();

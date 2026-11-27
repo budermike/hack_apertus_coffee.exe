@@ -51,6 +51,9 @@
  *             few-shot examples in the Apertus relevance prompt, so similar new
  *             judgements are scored higher/lower.
  *
+ *   GET  {API_BASE}/config
+ *        -> { thresholds: { high, medium } }   traffic-light thresholds from configs/triage.json
+ *
  *   GET  {API_BASE}/knowledge-base?q=<query>&lang=de|fr
  *        -> [{ id, caseNumber, date, area, subject: {de, fr}, de, fr, storedAt }]
  *        Full-text (later: semantic) search over all stored summaries, newest first.
@@ -59,7 +62,7 @@
  *        Deletes all stored summaries and all relevance feedback.
  */
 
-const USE_MOCK = true;
+const USE_MOCK = false;
 const API_BASE = "/api";
 
 /* ---------- mock data (fictional, for UI development only) ---------- */
@@ -320,6 +323,17 @@ async function sendFeedback(id, adjustment, direction, level) {
 }
 
 /** TEMPORARY (development only): deletes all summaries and feedback. */
+/** Backend settings (thresholds); null in mock mode or when the backend does not answer. */
+async function fetchConfig() {
+    if (USE_MOCK) return null;
+    try {
+        return await jsonFetch(`${API_BASE}/config`);
+    } catch (err) {
+        console.warn("config not loaded, using defaults", err);
+        return null;
+    }
+}
+
 async function clearDatabase() {
     if (USE_MOCK) {
         await delay(150);
