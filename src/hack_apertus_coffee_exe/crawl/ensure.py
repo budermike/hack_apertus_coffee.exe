@@ -35,10 +35,13 @@ except ImportError:  # pragma: no cover - non-POSIX fallback
 from hack_apertus_coffee_exe.crawl import crawl
 from hack_apertus_coffee_exe.crawl.vectordb import (
     DEFAULT_DB_DIR,
+    DEFAULT_JUDGEMENTS_DIR,
     ISO_DATE_PREFIX_RE,
     VectorDB,
     embedder_fingerprint,
+    load_reference_case_ids,
 )
+from hack_apertus_coffee_exe.summary import store
 from hack_apertus_coffee_exe.triage.embeddings import Embedder, TfidfEmbedder
 
 logger = logging.getLogger(__name__)
@@ -76,6 +79,9 @@ class PeriodStatus:
     skipped_future_days: list[str]
     complete: bool
     message: str
+    cases_saved: int = 0
+    cases_existing: int = 0
+    summary_errors: int = 0
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
@@ -248,6 +254,32 @@ def _scan_period_raw_files(out_dir: Path, start: date, end: date) -> list[tuple[
     return found
 
 
+def _case_id_from_doc_key(doc_key: str) -> str:
+    """Recover original ``8C_123/2026`` case_id from ``2026-06-01_8C_123_2026``."""
+    safe_id = doc_key[11:] if len(doc_key) > 11 and doc_key[10] == "_" else doc_key
+    if "/" not in safe_id and "_" in safe_id:
+        head, _, year = safe_id.rpartition("_")
+        return f"{head}/{year}"
+    return safe_id
+
+
+def _existing_summary_numbers(conn: sqlite3.Connection) -> set[str]:
+    rows = conn.execute("SELECT case_number FROM case_numbers").fetchall()
+    return {str(row[0]) for row in rows}
+
+
+def _resolve_reference_ids(
+    db_path: Path, judgements_dir: str | Path | None
+) -> set[str] | None:
+    if judgements_dir is not None:
+        base = Path(judgements_dir)
+        return load_reference_case_ids(base) if base.exists() else None
+    if db_path.resolve() == Path(DEFAULT_DB_DIR).resolve():
+        base = Path(DEFAULT_JUDGEMENTS_DIR)
+        return load_reference_case_ids(base) if base.exists() else None
+    return None
+
+
 def _default_config(start: date, effective_end: date, source: str | None, raw_dir: str | Path | None) -> dict[str, Any]:
     chosen = source or "entscheidsuche"
     base_cfg: dict[str, Any] = {
@@ -302,18 +334,27 @@ def ensure_period(
     *,
     config_path: str | Path = "configs/crawl.json",
     source: str | None = None,
+    refresh: bool = False,
     raw_dir: str | Path | None = None,
     db_dir: str | Path = DEFAULT_DB_DIR,
     embedder: Embedder | None = None,
     db: VectorDB | None = None,
+    vectordb: VectorDB | None = None,
+    conn: sqlite3.Connection | None = None,
+    summary_db_path: str | Path | None = None,
+    judgements_dir: str | Path | None = None,
     on_progress: Callable[[ProgressEvent], None] | None = None,
     today: date | None = None,
 ) -> PeriodStatus:
-    """Ensure every past day in ``[date_from, date_to]`` is crawled AND ingested.
+    """Ensure every past day in ``[date_from, date_to]`` is crawled, in Vector-DB, and in Summaries-DB.
 
-    Re-checking an already covered and ingested period performs zero HTTP
-    requests and returns without loading the embedding model.
+    Re-checking an already covered, ingested, and synced period performs zero
+    HTTP requests and returns without loading the embedding model.
     """
+    if db is not None and vectordb is not None and db is not vectordb:
+        raise ValueError("Pass either 'db' or 'vectordb', not two different instances")
+    injected_db = vectordb if vectordb is not None else db
+
     start = _coerce_date(date_from)
     requested_end = _coerce_date(date_to)
     if start > requested_end:
@@ -352,170 +393,149 @@ def ensure_period(
     with _period_lock(db_path / ".ensure_period.lock"):
         index = crawl.load_index(out_dir)
         all_days = list(_iter_days(start, effective_end))
-        covered_days = [d for d in all_days if d.isoformat() in index.get("days", {})]
-        missing_days = [d for d in all_days if d.isoformat() not in index.get("days", {})]
+        if refresh:
+            covered_days: list[date] = []
+            missing_days = list(all_days)
+        else:
+            covered_days = [d for d in all_days if d.isoformat() in index.get("days", {})]
+            missing_days = [d for d in all_days if d.isoformat() not in index.get("days", {})]
         covered_set = {d.isoformat() for d in covered_days}
 
         raw_files = _scan_period_raw_files(out_dir, start, effective_end)
-        existing_keys = _existing_db_doc_keys(db_path, start_iso, effective_end_iso, db, embedder)
+        existing_keys = _existing_db_doc_keys(db_path, start_iso, effective_end_iso, injected_db, embedder)
 
-        # Split raw files strictly: covered days with un-ingested valid JSONs go to
-        # uningested_by_day; covered days with corrupt JSONs move to missing_days so
-        # crawl_day repairs them; uncovered days are handled atomically in missing_days.
-        uningested_by_day: dict[str, list[Path]] = {}
-        corrupt_covered_days: set[str] = set()
-        preexisting_valid = 0
-        for iso_day, doc_key, file_path in raw_files:
-            if not crawl.is_valid(file_path):
-                if iso_day in covered_set:
-                    corrupt_covered_days.add(iso_day)
-                continue
-            preexisting_valid += 1
-            if iso_day in covered_set and doc_key not in existing_keys:
-                uningested_by_day.setdefault(iso_day, []).append(file_path)
+        summary_conn = conn if conn is not None else store.connect(summary_db_path)
+        owns_conn = conn is None
+        try:
+            existing_summary_numbers = _existing_summary_numbers(summary_conn)
 
-        if corrupt_covered_days:
-            for iso_day in corrupt_covered_days:
-                covered_set.discard(iso_day)
-                uningested_by_day.pop(iso_day, None)
-            covered_days = [d for d in covered_days if d.isoformat() not in corrupt_covered_days]
-            missing_set = {d.isoformat() for d in missing_days} | corrupt_covered_days
-            missing_days = sorted(date.fromisoformat(d) for d in missing_set)
+            # Split raw files strictly: covered days with un-ingested valid JSONs go to
+            # uningested_by_day; covered days with corrupt JSONs move to missing_days so
+            # crawl_day repairs them; uncovered days are handled atomically in missing_days.
+            uningested_by_day: dict[str, list[Path]] = {}
+            unsynced_summary_paths: list[Path] = []
+            corrupt_covered_days: set[str] = set()
+            preexisting_valid = 0
+            for iso_day, doc_key, file_path in raw_files:
+                if not crawl.is_valid(file_path):
+                    if iso_day in covered_set:
+                        corrupt_covered_days.add(iso_day)
+                    continue
+                preexisting_valid += 1
+                if iso_day in covered_set and doc_key not in existing_keys:
+                    uningested_by_day.setdefault(iso_day, []).append(file_path)
+                inferred_cid = _case_id_from_doc_key(doc_key)
+                if iso_day in covered_set and inferred_cid not in existing_summary_numbers:
+                    unsynced_summary_paths.append(file_path)
 
-        total_steps = len(missing_days) + len(uningested_by_day)
-        _emit(
-            on_progress,
-            ProgressEvent(
-                stage="checking",
-                message=f"Prüfe Zeitraum {start_iso} bis {effective_end_iso} ...",
-                completed_days=0,
-                total_days=total_steps,
-                existing_judgements=preexisting_valid,
-            ),
-        )
+            if corrupt_covered_days:
+                for iso_day in corrupt_covered_days:
+                    covered_set.discard(iso_day)
+                    uningested_by_day.pop(iso_day, None)
+                covered_days = [d for d in covered_days if d.isoformat() not in corrupt_covered_days]
+                missing_set = {d.isoformat() for d in missing_days} | corrupt_covered_days
+                missing_days = sorted(date.fromisoformat(d) for d in missing_set)
 
-        # Fast path: all days covered in _index.json AND every valid raw file already in VectorDB.
-        if not missing_days and not uningested_by_day:
-            msg = _status_message(0, preexisting_valid, 0, [], skipped_future_days)
+            total_steps = len(missing_days) + len(uningested_by_day)
             _emit(
                 on_progress,
                 ProgressEvent(
-                    stage="done",
-                    message=msg,
+                    stage="checking",
+                    message=f"Prüfe Zeitraum {start_iso} bis {effective_end_iso} ...",
                     completed_days=0,
-                    total_days=0,
-                    new_judgements=0,
-                    existing_judgements=preexisting_valid,
-                ),
-            )
-            return PeriodStatus(
-                date_from=start_iso,
-                date_to=requested_end.isoformat(),
-                effective_date_to=effective_end_iso,
-                new_judgements=0,
-                existing_judgements=preexisting_valid,
-                ingested_judgements=0,
-                days_already_covered=len(covered_days),
-                days_crawled=0,
-                failed_days=[],
-                skipped_future_days=skipped_future_days,
-                complete=not skipped_future_days,
-                message=msg,
-            )
-
-        active_db: list[VectorDB] = [db] if db is not None else []
-
-        def _get_db() -> VectorDB:
-            if not active_db:
-                active_db.append(VectorDB(db_dir=db_path, embedder=embedder))
-            return active_db[0]
-
-        new_judgements = 0
-        ingested_judgements = 0
-        failed_days: list[str] = []
-        completed_steps = 0
-
-        # Finish ingest for any valid raw judgements on already-covered days missing from VectorDB.
-        for iso_day in sorted(uningested_by_day):
-            paths = uningested_by_day[iso_day]
-            records = _dedupe_records([json.loads(p.read_text(encoding="utf-8")) for p in paths])
-            _emit(
-                on_progress,
-                ProgressEvent(
-                    stage="ingesting",
-                    message=f"{len(records)} vorhandene Urteile werden eingebettet ({iso_day}) ...",
-                    completed_days=completed_steps,
                     total_days=total_steps,
-                    current_day=iso_day,
-                    new_judgements=new_judgements,
                     existing_judgements=preexisting_valid,
                 ),
             )
-            try:
-                _get_db().ingest_records(records, reference_ids=None)
-                ingested_judgements += len(records)
-                existing_keys.update(_record_doc_key(r) for r in records)
-            except Exception as exc:
-                logger.error("%s: ingest failed: %s", iso_day, exc)
-                if iso_day not in failed_days:
-                    failed_days.append(iso_day)
-            completed_steps += 1
 
-        # Crawl and ingest missing days one by one; only covered when BOTH succeed.
-        days_crawled = 0
-        for idx, day in enumerate(missing_days):
-            iso_day = day.isoformat()
-            _emit(
-                on_progress,
-                ProgressEvent(
-                    stage="crawling",
-                    message=f"Lade Urteile für {iso_day} ...",
-                    completed_days=completed_steps,
-                    total_days=total_steps,
-                    current_day=iso_day,
-                    new_judgements=new_judgements,
-                    existing_judgements=preexisting_valid,
-                ),
-            )
-            try:
-                day_res = crawl.crawl_day(cfg, day, out_dir)
-            except crawl.Blocked as exc:
-                logger.error("%s: crawl blocked: %s", iso_day, exc)
-                for rem in missing_days[idx:]:
-                    rem_iso = rem.isoformat()
-                    if rem_iso not in failed_days:
-                        failed_days.append(rem_iso)
+            # Fast path: all days covered in _index.json, every valid raw file in Vector-DB,
+            # and every covered judgement registered in Summaries-DB.
+            if not missing_days and not uningested_by_day and not unsynced_summary_paths:
+                msg = _status_message(0, preexisting_valid, 0, [], skipped_future_days)
                 _emit(
                     on_progress,
                     ProgressEvent(
-                        stage="error",
-                        message=f"Crawler blockiert bei {iso_day}: {exc}",
-                        completed_days=completed_steps,
-                        total_days=total_steps,
-                        current_day=iso_day,
-                        new_judgements=new_judgements,
+                        stage="done",
+                        message=msg,
+                        completed_days=0,
+                        total_days=0,
+                        new_judgements=0,
                         existing_judgements=preexisting_valid,
                     ),
                 )
-                break
+                return PeriodStatus(
+                    date_from=start_iso,
+                    date_to=requested_end.isoformat(),
+                    effective_date_to=effective_end_iso,
+                    new_judgements=0,
+                    existing_judgements=preexisting_valid,
+                    ingested_judgements=0,
+                    days_already_covered=len(covered_days),
+                    days_crawled=0,
+                    failed_days=[],
+                    skipped_future_days=skipped_future_days,
+                    complete=not skipped_future_days,
+                    message=msg,
+                    cases_saved=0,
+                    cases_existing=preexisting_valid,
+                    summary_errors=0,
+                )
 
-            new_judgements += day_res["downloaded"]
-            if not day_res["day_ok"]:
-                if iso_day not in failed_days:
-                    failed_days.append(iso_day)
-                completed_steps += 1
-                continue
+            active_db: list[VectorDB] = [injected_db] if injected_db is not None else []
+            ref_ids = _resolve_reference_ids(db_path, judgements_dir)
 
-            day_records = [json.loads(p.read_text(encoding="utf-8")) for p in day_res["paths"]]
-            pending_records = _dedupe_records(
-                [r for r in day_records if _record_doc_key(r) not in existing_keys]
-            )
-            if pending_records:
+            def _get_db() -> VectorDB:
+                if not active_db:
+                    active_db.append(VectorDB(db_dir=db_path, embedder=embedder))
+                return active_db[0]
+
+            new_judgements = 0
+            ingested_judgements = 0
+            cases_saved = 0
+            cases_existing = 0
+            summary_errors = 0
+            failed_days: list[str] = []
+            completed_steps = 0
+
+            def _sync_records_to_summary_db(records: list[dict[str, Any]]) -> None:
+                nonlocal cases_saved, cases_existing, summary_errors
+                for rec in records:
+                    cid = rec.get("case_id")
+                    if not isinstance(cid, str) or not cid:
+                        summary_errors += 1
+                        continue
+                    numbers = {cid, *(rec.get("case_ids") or ())}
+                    if all(n in existing_summary_numbers for n in numbers):
+                        cases_existing += 1
+                        continue
+                    try:
+                        store.save_case_from_crawl(summary_conn, rec)
+                        existing_summary_numbers.update(numbers)
+                        cases_saved += 1
+                    except (ValueError, KeyError, TypeError, sqlite3.Error) as exc:
+                        logger.warning("Summaries-DB sync failed for %s: %s", cid, exc)
+                        summary_errors += 1
+
+            # Ensure Summaries-DB has cases/case_numbers for already-covered raw files.
+            if unsynced_summary_paths:
+                covered_records: list[dict[str, Any]] = []
+                for p in unsynced_summary_paths:
+                    try:
+                        covered_records.append(json.loads(p.read_text(encoding="utf-8")))
+                    except (OSError, ValueError) as exc:
+                        logger.warning("Failed reading %s for Summaries-DB sync: %s", p, exc)
+                        summary_errors += 1
+                _sync_records_to_summary_db(covered_records)
+
+            # Finish ingest for any valid raw judgements on already-covered days missing from VectorDB.
+            for iso_day in sorted(uningested_by_day):
+                paths = uningested_by_day[iso_day]
+                records = _dedupe_records([json.loads(p.read_text(encoding="utf-8")) for p in paths])
                 _emit(
                     on_progress,
                     ProgressEvent(
                         stage="ingesting",
-                        message=f"{len(pending_records)} neue Urteile werden geladen ({iso_day}) ...",
+                        message=f"{len(records)} vorhandene Urteile werden eingebettet ({iso_day}) ...",
                         completed_days=completed_steps,
                         total_days=total_steps,
                         current_day=iso_day,
@@ -524,68 +544,155 @@ def ensure_period(
                     ),
                 )
                 try:
-                    _get_db().ingest_records(pending_records, reference_ids=None)
-                    ingested_judgements += len(pending_records)
-                    existing_keys.update(_record_doc_key(r) for r in pending_records)
+                    _get_db().ingest_records(records, reference_ids=ref_ids)
+                    ingested_judgements += len(records)
+                    existing_keys.update(_record_doc_key(r) for r in records)
+                    _sync_records_to_summary_db(records)
                 except Exception as exc:
                     logger.error("%s: ingest failed: %s", iso_day, exc)
+                    if iso_day not in failed_days:
+                        failed_days.append(iso_day)
+                completed_steps += 1
+
+            # Crawl and ingest missing days one by one; only covered when BOTH succeed.
+            days_crawled = 0
+            for idx, day in enumerate(missing_days):
+                iso_day = day.isoformat()
+                _emit(
+                    on_progress,
+                    ProgressEvent(
+                        stage="crawling",
+                        message=f"Lade Urteile für {iso_day} ...",
+                        completed_days=completed_steps,
+                        total_days=total_steps,
+                        current_day=iso_day,
+                        new_judgements=new_judgements,
+                        existing_judgements=preexisting_valid,
+                    ),
+                )
+                try:
+                    day_res = crawl.crawl_day(cfg, day, out_dir)
+                except crawl.Blocked as exc:
+                    logger.error("%s: crawl blocked: %s", iso_day, exc)
+                    for rem in missing_days[idx:]:
+                        rem_iso = rem.isoformat()
+                        if rem_iso not in failed_days:
+                            failed_days.append(rem_iso)
+                    _emit(
+                        on_progress,
+                        ProgressEvent(
+                            stage="error",
+                            message=f"Crawler blockiert bei {iso_day}: {exc}",
+                            completed_days=completed_steps,
+                            total_days=total_steps,
+                            current_day=iso_day,
+                            new_judgements=new_judgements,
+                            existing_judgements=preexisting_valid,
+                        ),
+                    )
+                    break
+
+                new_judgements += day_res["downloaded"]
+                if not day_res["day_ok"]:
                     if iso_day not in failed_days:
                         failed_days.append(iso_day)
                     completed_steps += 1
                     continue
 
-            index.setdefault("days", {})[iso_day] = {
-                "source": cfg["source"],
-                "judgements": day_res["judgements"],
-                "crawled_at": crawl.now_utc(),
-                "ingested_at": crawl.now_utc(),
-            }
-            crawl.write_json(out_dir / "_index.json", index)
-            days_crawled += 1
-            completed_steps += 1
+                day_records = _dedupe_records(
+                    [json.loads(p.read_text(encoding="utf-8")) for p in day_res["paths"]]
+                )
+                pending_records = [r for r in day_records if _record_doc_key(r) not in existing_keys]
+                if pending_records:
+                    _emit(
+                        on_progress,
+                        ProgressEvent(
+                            stage="ingesting",
+                            message=f"{len(pending_records)} neue Urteile werden geladen ({iso_day}) ...",
+                            completed_days=completed_steps,
+                            total_days=total_steps,
+                            current_day=iso_day,
+                            new_judgements=new_judgements,
+                            existing_judgements=preexisting_valid,
+                        ),
+                    )
+                    try:
+                        _get_db().ingest_records(pending_records, reference_ids=ref_ids)
+                        ingested_judgements += len(pending_records)
+                        existing_keys.update(_record_doc_key(r) for r in pending_records)
+                    except Exception as exc:
+                        logger.error("%s: ingest failed: %s", iso_day, exc)
+                        if iso_day not in failed_days:
+                            failed_days.append(iso_day)
+                        completed_steps += 1
+                        continue
 
-        msg = _status_message(
-            new_judgements,
-            preexisting_valid,
-            ingested_judgements,
-            failed_days,
-            skipped_future_days,
-        )
-        _emit(
-            on_progress,
-            ProgressEvent(
-                stage="done",
-                message=msg,
-                completed_days=completed_steps,
-                total_days=total_steps,
+                _sync_records_to_summary_db(day_records)
+
+                index.setdefault("days", {})[iso_day] = {
+                    "source": cfg["source"],
+                    "judgements": day_res["judgements"],
+                    "crawled_at": crawl.now_utc(),
+                    "ingested_at": crawl.now_utc(),
+                }
+                crawl.write_json(out_dir / "_index.json", index)
+                days_crawled += 1
+                completed_steps += 1
+
+            # Count covered cases that did not need a summary sync during this run.
+            if cases_existing == 0 and preexisting_valid > cases_saved:
+                cases_existing = max(0, preexisting_valid - cases_saved - summary_errors)
+
+            msg = _status_message(
+                new_judgements,
+                preexisting_valid,
+                ingested_judgements,
+                failed_days,
+                skipped_future_days,
+            )
+            _emit(
+                on_progress,
+                ProgressEvent(
+                    stage="done",
+                    message=msg,
+                    completed_days=completed_steps,
+                    total_days=total_steps,
+                    new_judgements=new_judgements,
+                    existing_judgements=preexisting_valid,
+                ),
+            )
+            return PeriodStatus(
+                date_from=start_iso,
+                date_to=requested_end.isoformat(),
+                effective_date_to=effective_end_iso,
                 new_judgements=new_judgements,
                 existing_judgements=preexisting_valid,
-            ),
-        )
-        return PeriodStatus(
-            date_from=start_iso,
-            date_to=requested_end.isoformat(),
-            effective_date_to=effective_end_iso,
-            new_judgements=new_judgements,
-            existing_judgements=preexisting_valid,
-            ingested_judgements=ingested_judgements,
-            days_already_covered=len(covered_days),
-            days_crawled=days_crawled,
-            failed_days=failed_days,
-            skipped_future_days=skipped_future_days,
-            complete=(not failed_days and not skipped_future_days),
-            message=msg,
-        )
+                ingested_judgements=ingested_judgements,
+                days_already_covered=len(covered_days),
+                days_crawled=days_crawled,
+                failed_days=failed_days,
+                skipped_future_days=skipped_future_days,
+                complete=(not failed_days and not skipped_future_days),
+                message=msg,
+                cases_saved=cases_saved,
+                cases_existing=cases_existing,
+                summary_errors=summary_errors,
+            )
+        finally:
+            if owns_conn:
+                summary_conn.close()
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="Ensure a date span is crawled and ingested into Vector-DB (#35).")
+    parser = argparse.ArgumentParser(description="Ensure a date span is crawled and ingested into Vector-DB (#35, #49).")
     parser.add_argument("--from", dest="date_from", required=True, help="Start date (YYYY-MM-DD)")
     parser.add_argument("--to", dest="date_to", required=True, help="End date (YYYY-MM-DD)")
     parser.add_argument("--source", choices=list(crawl.SOURCES), help="Override crawler source")
+    parser.add_argument("--refresh", action="store_true", help="Re-check days already in _index.json")
     parser.add_argument("--config", default="configs/crawl.json")
     parser.add_argument("--raw-dir", default=None)
     parser.add_argument("--db-dir", default=DEFAULT_DB_DIR)
+    parser.add_argument("--summary-db", default=None, help="Path to summaries.db (default: SUMMARY_DB_PATH)")
     args = parser.parse_args(argv)
 
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
@@ -594,8 +701,10 @@ def main(argv: list[str] | None = None) -> int:
         args.date_to,
         config_path=args.config,
         source=args.source,
+        refresh=args.refresh,
         raw_dir=args.raw_dir,
         db_dir=args.db_dir,
+        summary_db_path=args.summary_db,
     )
     print(json.dumps(status.to_dict(), ensure_ascii=False, indent=2))
     return 0 if not status.failed_days else 1

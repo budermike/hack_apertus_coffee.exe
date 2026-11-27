@@ -13,7 +13,13 @@ import pytest
 
 from hack_apertus_coffee_exe.crawl import PeriodStatus, ProgressEvent, crawl, ensure, ensure_period
 from hack_apertus_coffee_exe.crawl.vectordb import VectorDB
+from hack_apertus_coffee_exe.summary import store
 from hack_apertus_coffee_exe.triage.embeddings import TfidfEmbedder
+
+
+@pytest.fixture(autouse=True)
+def _isolate_summary_db(tmp_path, monkeypatch):
+    monkeypatch.setenv("SUMMARY_DB_PATH", str(tmp_path / "summaries.db"))
 
 
 def _sample_html(case_id: str, subject: str, body: str) -> str:
@@ -648,4 +654,223 @@ def test_ensure_period_accepts_datetime_and_no_double_count_on_retry(tmp_path, m
     assert retried.failed_days == []
     assert retried.ingested_judgements == 1
     assert all(ev.total_days == 1 for ev in events)
+
+
+def test_ensure_period_syncs_raw_vectordb_and_summaries_db_including_joined_cases(tmp_path, monkeypatch):
+    raw_dir = tmp_path / "raw"
+    db_dir = tmp_path / "vectordb"
+    emb = _tfidf_embedder()
+    db = VectorDB(db_dir=db_dir, embedder=emb)
+    conn = store.connect(":memory:")
+
+    # Joined case 1D_1/2025 + 1D_2/2025 in the HTML header + normal case 8C_91/2026
+    def fake_list(_config, day):
+        iso = day.isoformat()
+        fake_list.calls.append(iso)
+        if iso == "2026-06-01":
+            return [
+                {
+                    "case_id": "1D_1/2025",
+                    "decision_date": iso,
+                    "department": "I. öffentlich-rechtliche Abteilung",
+                    "subject": "Strafverfahren",
+                    "language": "de",
+                    "metadata": {"id": "1D_1_2025"},
+                }
+            ]
+        if iso == "2026-06-02":
+            return [
+                {
+                    "case_id": "8C_91/2026",
+                    "decision_date": iso,
+                    "department": "IV. öffentlich-rechtliche Abteilung",
+                    "subject": "Unfallversicherung",
+                    "language": "de",
+                    "metadata": {"id": "8C_91_2026"},
+                }
+            ]
+        return []
+
+    fake_list.calls = []  # type: ignore[attr-defined]
+
+    def fake_fetch(_config, entry):
+        if entry["case_id"] == "1D_1/2025":
+            html = (
+                '<html><body><div class="content">'
+                '<div class="para">1D_1/2025 und 1D_2/2025</div>'
+                '<div class="para">Urteil vom 1. Juni 2026</div>'
+                '<div class="para">Besetzung: X</div>'
+                '<div class="para">Gegenstand</div><div class="para">Strafverfahren,</div>'
+                '<div class="para">Erwägungen</div><div class="para">Vereinigtes Verfahren.</div>'
+                "</div></body></html>"
+            )
+            return html, "https://example.invalid/1D_1_2025"
+        html = _sample_html("8C_91/2026", "Unfallversicherung", "Suva UVG Unfall.")
+        return html, "https://example.invalid/8C_91_2026"
+
+    monkeypatch.setitem(crawl.SOURCES, "entscheidsuche", (fake_list, fake_fetch))
+
+    first = ensure_period(
+        "2026-06-01",
+        "2026-06-03",
+        source="entscheidsuche",
+        raw_dir=raw_dir,
+        db_dir=db_dir,
+        vectordb=db,
+        conn=conn,
+        today=date(2026, 7, 1),
+    )
+    assert first.complete is True
+    assert first.new_judgements == 2
+    assert first.ingested_judgements == 2
+    assert first.cases_saved == 2
+    assert first.summary_errors == 0
+
+    raw_files = sorted(p for p in raw_dir.rglob("*.json") if not p.name.startswith("_"))
+    assert len(raw_files) == 2
+    assert db.count() == 2
+    assert conn.execute("SELECT COUNT(*) FROM cases").fetchone()[0] == 2
+
+    # Joined case: 1 row in Vector-DB and 1 row in cases, but ALL case numbers resolve in both.
+    assert db.resolve_doc_keys("1D_1/2025") == ["2026-06-01_1D_1_2025"]
+    assert db.resolve_doc_keys("1D_2/2025") == ["2026-06-01_1D_1_2025"]
+    assert store.resolve_case_number(conn, "1D_1/2025") == "1D_1/2025"
+    assert store.resolve_case_number(conn, "1D_2/2025") == "1D_1/2025"
+    assert store.resolve_case_number(conn, "1D_2_2025") == "1D_1/2025"
+    joined_case = store.get_case(conn, "1D_2/2025")
+    assert joined_case is not None and joined_case.case_id == "1D_1/2025"
+
+    # Second run: 0 HTTP calls, 0 new embeddings, 0 new summary case inserts.
+    fake_list.calls.clear()  # type: ignore[attr-defined]
+    second = ensure_period(
+        "2026-06-01",
+        "2026-06-03",
+        source="entscheidsuche",
+        raw_dir=raw_dir,
+        db_dir=db_dir,
+        vectordb=db,
+        conn=conn,
+        today=date(2026, 7, 1),
+    )
+    assert fake_list.calls == []  # type: ignore[attr-defined]
+    assert second.new_judgements == 0
+    assert second.ingested_judgements == 0
+    assert second.cases_saved == 0
+    assert second.summary_errors == 0
+
+
+def test_ensure_period_refresh_rechecks_covered_days(tmp_path, monkeypatch):
+    raw_dir = tmp_path / "raw"
+    db_dir = tmp_path / "vectordb"
+    emb = _tfidf_embedder()
+    data = {"2026-07-01": [{"case_id": "8C_95/2026", "subject": "UVG", "body": "Suva Erstlauf."}]}
+    calls = _install_fake_source(monkeypatch, data)
+
+    ensure_period(
+        "2026-07-01",
+        "2026-07-01",
+        source="entscheidsuche",
+        raw_dir=raw_dir,
+        db_dir=db_dir,
+        embedder=emb,
+        today=date(2026, 7, 10),
+    )
+    # New judgement published later for an already covered day.
+    data["2026-07-01"].append({"case_id": "8C_96/2026", "subject": "UVG", "body": "Suva Nachtrag."})
+    calls["list"].clear()
+
+    refreshed = ensure_period(
+        "2026-07-01",
+        "2026-07-01",
+        source="entscheidsuche",
+        refresh=True,
+        raw_dir=raw_dir,
+        db_dir=db_dir,
+        embedder=emb,
+        today=date(2026, 7, 10),
+    )
+    assert calls["list"] == ["2026-07-01"]
+    assert refreshed.new_judgements == 1
+    assert refreshed.ingested_judgements == 1
+    assert refreshed.cases_saved == 1
+    assert VectorDB(db_dir=db_dir, embedder=emb).count() == 2
+
+
+def test_ensure_period_logs_and_counts_summary_conflict_without_aborting(tmp_path, monkeypatch):
+    raw_dir = tmp_path / "raw"
+    db_dir = tmp_path / "vectordb"
+    emb = _tfidf_embedder()
+    db = VectorDB(db_dir=db_dir, embedder=emb)
+    conn = store.connect(":memory:")
+    # Pre-register 8C_99/2026 under a different primary case_id, then crawl a joined case
+    # carrying 8C_99/2026 and 8C_99B/2026 so save_case_from_crawl raises ValueError on conflict.
+    store.save_case(conn, "8C_OTHER/2026", "2026-06-01", None, case_numbers=["8C_99/2026"])
+
+    _install_fake_source(
+        monkeypatch,
+        {
+            "2026-07-01": [
+                {"case_id": "8C_99B/2026", "subject": "UVG", "body": "Suva Konflikt."},
+                {"case_id": "8C_100/2026", "subject": "UVG", "body": "Suva OK."},
+            ]
+        },
+    )
+    orig_list, orig_fetch = crawl.SOURCES["entscheidsuche"]
+
+    def fake_fetch_with_conflict(cfg, entry):
+        if entry["case_id"] == "8C_99B/2026":
+            html = _sample_html("8C_99B/2026 und 8C_99/2026", "UVG", "Suva Konflikt.")
+            return html, "https://example.invalid/8C_99B_2026"
+        return orig_fetch(cfg, entry)
+
+    monkeypatch.setitem(crawl.SOURCES, "entscheidsuche", (orig_list, fake_fetch_with_conflict))
+    status = ensure_period(
+        "2026-07-01",
+        "2026-07-01",
+        source="entscheidsuche",
+        raw_dir=raw_dir,
+        db_dir=db_dir,
+        vectordb=db,
+        conn=conn,
+        today=date(2026, 7, 10),
+    )
+    assert status.complete is True
+    assert status.summary_errors == 1
+    assert status.cases_saved == 1
+    assert store.get_case(conn, "8C_100/2026") is not None
+
+
+@pytest.mark.integration
+def test_ensure_period_live_week_integration(tmp_path):
+    """Live week check against entscheidsuche with default e5 embedder (#49)."""
+    raw_dir = tmp_path / "raw"
+    db_dir = tmp_path / "vectordb"
+    conn = store.connect(tmp_path / "summaries.db")
+    try:
+        first = ensure_period(
+            "2026-06-01",
+            "2026-06-07",
+            source="entscheidsuche",
+            raw_dir=raw_dir,
+            db_dir=db_dir,
+            conn=conn,
+        )
+        assert first.complete is True
+        assert first.new_judgements > 0
+        assert first.cases_saved == first.ingested_judgements
+
+        second = ensure_period(
+            "2026-06-01",
+            "2026-06-07",
+            source="entscheidsuche",
+            raw_dir=raw_dir,
+            db_dir=db_dir,
+            conn=conn,
+        )
+        assert second.new_judgements == 0
+        assert second.ingested_judgements == 0
+        assert second.cases_saved == 0
+    finally:
+        conn.close()
+
 
