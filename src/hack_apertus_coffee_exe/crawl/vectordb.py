@@ -1205,13 +1205,16 @@ class VectorDB:
         pos_refs = self.query(
             date_from=ref_date_from, date_to=effective_ref_end, is_reference=True, include_vectors=True
         )
-        neg_refs = self.query(date_to=effective_ref_end, is_negative_reference=True, include_vectors=True)
+        neg_refs = self.query(
+            date_from=ref_date_from, date_to=effective_ref_end, is_negative_reference=True, include_vectors=True
+        )
 
         if not candidates or not pos_refs:
             return []
 
         cand_ids = {cid for c in candidates for cid in c["case_ids"]}
         pos_refs = [r for r in pos_refs if not (set(r["case_ids"]) & cand_ids)]
+        neg_refs = [r for r in neg_refs if not (set(r["case_ids"]) & cand_ids)]
 
         valid_pos_refs = [r for r in pos_refs if r["vectors"].shape[0] > 0]
         if not valid_pos_refs:

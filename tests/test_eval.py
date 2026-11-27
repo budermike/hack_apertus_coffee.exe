@@ -201,3 +201,118 @@ def test_main_writes_report_and_tables(tmp_path, capsys):
 def test_main_rejects_reference_period_overlapping_candidates(tmp_path):
     with pytest.raises(SystemExit):
         ev.main(["--db-dir", str(tmp_path / "db"), "--period", "2026-Q1", "--ref-period", "2026-Q1"])
+
+
+def test_load_triage_scores_deduplicates_joined_positive_and_rejects_wrong_period(tmp_path):
+    path = tmp_path / "joined.json"
+    path.write_text(
+        json.dumps(
+            [
+                {"case_id": "8C_2/2026", "final_score": 60.0, "judgement_date": "2026-01-06"},
+                {"case_id": "8C_3/2026", "final_score": 85.0, "judgement_date": "2026-01-06"},
+                {"case_id": "5A_9/2026", "final_score": 20.0, "judgement_date": "2026-01-07"},
+            ]
+        ),
+        encoding="utf-8",
+    )
+    labelled = [
+        {
+            "doc_key": "2026-01-06_8C_2_2026",
+            "case_id": "8C_2/2026",
+            "case_ids": ["8C_2/2026", "8C_3/2026"],
+            "is_reference": True,
+            "decision_date": "2026-01-06",
+            "language": "de",
+            "subject": "UV",
+        },
+        {
+            "doc_key": "2026-01-07_5A_9_2026",
+            "case_id": "5A_9/2026",
+            "case_ids": ["5A_9/2026"],
+            "is_reference": False,
+            "decision_date": "2026-01-07",
+            "language": "de",
+            "subject": "ZGB",
+        },
+    ]
+    loaded = ev.load_triage_scores(path, labelled)
+    positives = [c for c in loaded if c.relevant]
+    assert len(positives) == 1
+    assert positives[0].score == 85.0
+
+    wrong_period = tmp_path / "wrong.json"
+    wrong_period.write_text(json.dumps([{"case_id": "8C_999/2025", "final_score": 90.0}]), encoding="utf-8")
+    with pytest.raises(ValueError, match="match the evaluated period"):
+        ev.load_triage_scores(wrong_period, labelled)
+
+
+def test_open_readonly_vectordb_skips_pytorch_for_multilingual_meta(tmp_path, monkeypatch):
+    import numpy as np
+
+    class _FakeDenseEmb:
+        name = "sentence-transformers:intfloat/multilingual-e5-small"
+        dim = 4
+
+        def embed(self, texts):
+            return np.ones((len(texts), 4), dtype=np.float32)
+
+    db_dir = tmp_path / "dense_db"
+    db = vectordb.VectorDB(db_dir=db_dir, embedder=_FakeDenseEmb())
+    # Simulate persisted multilingual metadata written by real E5 backfill.
+    (db_dir / "embedder_meta.json").write_text(
+        json.dumps(
+            {
+                "kind": "multilingual",
+                "name": "sentence-transformers:intfloat/multilingual-e5-small",
+                "model_name": "intfloat/multilingual-e5-small",
+                "dim": 4,
+            }
+        ),
+        encoding="utf-8",
+    )
+    db.ingest_records(
+        [
+            _record("8C_50/2025", "2025-11-15", "Suva Unfallversicherung UVG."),
+            _record("8C_70/2026", "2026-02-10", "Unfallversicherung Suva."),
+        ],
+        reference_ids={"8C_50/2025", "8C_70/2026"},
+    )
+
+    monkeypatch.setattr(
+        vectordb,
+        "get_default_embedder",
+        lambda *_a, **_kw: (_ for _ in ()).throw(AssertionError("PyTorch embedder must not load in eval")),
+    )
+    ro_db = ev._open_readonly_vectordb(db_dir)
+    scored = ev.score_vectordb(ro_db, DateRange.from_period("2026-Q1"), DateRange.from_period("2025-Q4"))
+    assert [c.case_id for c in scored] == ["8C_70/2026"]
+
+
+def test_score_candidates_ref_date_from_filters_neg_refs_and_excludes_candidates(tmp_path):
+    db = _build_db(tmp_path / "db_neg")
+    # Ingest a Q3 negative reference overlapping in domain with 8C_70/2026,
+    # and a Q1 case marked negative_reference to verify candidate exclusion.
+    db.ingest_records(
+        [_record("8C_11/2025", "2025-08-25", "Unfallversicherung Suva Sturz Baustelle Invalidenrente UVG.")],
+        reference_ids=None,
+    )
+    db.set_reference_flags("8C_11/2025", is_reference=False, is_negative_reference=True)
+
+    q4_window = db.score_candidates(
+        date_from="2026-01-01",
+        date_to="2026-03-31",
+        ref_date_from="2025-10-01",
+        ref_date_to="2025-12-31",
+        hybrid=False,
+    )
+    all_window = db.score_candidates(
+        date_from="2026-01-01",
+        date_to="2026-03-31",
+        ref_date_from=None,
+        ref_date_to="2025-12-31",
+        hybrid=False,
+    )
+    score_q4 = {r["case_id"]: r["score"] for r in q4_window}
+    score_all = {r["case_id"]: r["score"] for r in all_window}
+    # Strictly higher when Q3 negative reference is excluded by ref_date_from='2025-10-01'.
+    assert score_q4["8C_70/2026"] > score_all["8C_70/2026"]

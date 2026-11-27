@@ -136,6 +136,29 @@ def evaluate(label: str, cases: Sequence[ScoredCase]) -> Evaluation:
 # ------------------------------------------------------------------ score sources
 
 
+class _ReadOnlyEmbedder:
+    """Metadata-only embedder so eval reads pre-computed vectors without loading PyTorch."""
+
+    def __init__(self, name: str, dim: int = 0) -> None:
+        self.name = name
+        self.dim = dim
+
+    def embed(self, texts: Sequence[str]):  # pragma: no cover - read-only guard
+        raise RuntimeError("Read-only embedder cannot compute new embeddings")
+
+
+def _open_readonly_vectordb(db_dir: str | Path) -> VectorDB:
+    meta_path = Path(db_dir) / "embedder_meta.json"
+    if meta_path.exists():
+        saved = json.loads(meta_path.read_text(encoding="utf-8"))
+        if saved.get("kind") != "tfidf" and saved.get("name"):
+            return VectorDB(
+                db_dir=db_dir,
+                embedder=_ReadOnlyEmbedder(name=saved["name"], dim=int(saved.get("dim") or 0)),
+            )
+    return VectorDB(db_dir=db_dir)
+
+
 def score_vectordb(
     db: VectorDB,
     period: DateRange,
@@ -166,40 +189,75 @@ def score_vectordb(
     ]
 
 
+def _labelled_doc_key(row: dict[str, Any]) -> str:
+    return str(row.get("doc_key") or f"{row.get('decision_date') or ''}_{row['case_id']}")
+
+
 def load_triage_scores(path: str | Path, labelled: Sequence[dict[str, Any]]) -> list[ScoredCase]:
     """Label a triage JSON (``triage.cli score --output``) with the Vector-DB ground truth.
 
-    ``labelled`` are the Vector-DB rows of the period. Suva judgements missing in
-    the file are added with score ``-inf`` so they count as missed.
+    ``labelled`` are the Vector-DB rows of the period. Entries are matched and
+    deduplicated by canonical document key so joined cases are counted once;
+    unscored Suva judgements from ``labelled`` are added with score ``-inf``.
     """
-    positive_ids = {cid for row in labelled if row["is_reference"] for cid in row["case_ids"]}
-    cases: list[ScoredCase] = []
-    for entry in json.loads(Path(path).read_text(encoding="utf-8")):
+    row_by_key: dict[str, dict[str, Any]] = {}
+    by_exact: dict[tuple[str, str], str] = {}
+    by_case_id: dict[str, list[str]] = {}
+    for row in labelled:
+        dk = _labelled_doc_key(row)
+        row_by_key[dk] = row
+        row_date = str(row.get("decision_date") or "")
+        for cid in set(row.get("case_ids") or ()) | {row["case_id"]}:
+            if row_date:
+                by_exact[(cid, row_date)] = dk
+            by_case_id.setdefault(cid, []).append(dk)
+
+    raw_entries = json.loads(Path(path).read_text(encoding="utf-8"))
+    best_by_key: dict[str, ScoredCase] = {}
+    for entry in raw_entries:
+        cid = entry["case_id"]
+        jdate = str(entry.get("judgement_date") or "")
+        doc_key: str | None = None
+        if jdate and (cid, jdate) in by_exact:
+            doc_key = by_exact[(cid, jdate)]
+        elif cid in by_case_id:
+            candidates = by_case_id[cid]
+            doc_key = next((k for k in candidates if k not in best_by_key), candidates[0])
+        if doc_key is None:
+            continue
+
+        row = row_by_key[doc_key]
         score = entry.get("rank_score")
         if score is None:
             score = entry["final_score"]
+        score_f = float(score)
         meta = entry.get("metadata") or {}
-        cases.append(
-            ScoredCase(
-                case_id=entry["case_id"],
-                score=float(score),
-                relevant=entry["case_id"] in positive_ids,
-                decision_date=entry.get("judgement_date") or "",
-                language=entry.get("language") or "",
-                subject=meta.get("subject") or "",
-            )
+        candidate = ScoredCase(
+            case_id=cid,
+            score=score_f,
+            relevant=bool(row["is_reference"]),
+            decision_date=jdate or str(row.get("decision_date") or ""),
+            language=entry.get("language") or str(row.get("language") or ""),
+            subject=meta.get("subject") or str(row.get("subject") or ""),
         )
-    scored_ids = {c.case_id for c in cases}
-    for row in labelled:
-        if row["is_reference"] and not scored_ids & set(row["case_ids"]):
+        prev = best_by_key.get(doc_key)
+        if prev is None or score_f > prev.score:
+            best_by_key[doc_key] = candidate
+
+    if raw_entries and not best_by_key:
+        raise ValueError("No entries in triage scores match the evaluated period")
+
+    cases = list(best_by_key.values())
+    for dk, row in row_by_key.items():
+        if row["is_reference"] and dk not in best_by_key:
             cases.append(
                 ScoredCase(
                     case_id=row["case_id"],
                     score=-math.inf,
                     relevant=True,
-                    decision_date=row["decision_date"],
-                    language=row["language"] or "",
-                    subject=row["subject"] or "",
+                    decision_date=str(row.get("decision_date") or ""),
+                    language=str(row.get("language") or ""),
+                    subject=str(row.get("subject") or ""),
                 )
             )
     return cases
@@ -372,7 +430,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     if ref_period.until >= period.since:
         raise SystemExit("--ref-period must end before --period starts (no leakage)")
 
-    db = VectorDB(db_dir=args.db_dir)
+    db = _open_readonly_vectordb(args.db_dir)
     ref_label = args.ref_period.upper()
     main_eval = evaluate(
         f"Vector-DB Stufe 1, hybrid (Cosine + Fachgebiets-Bonus), Referenzen {ref_label}, ohne Apertus",
