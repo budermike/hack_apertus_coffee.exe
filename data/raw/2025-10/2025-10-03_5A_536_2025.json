@@ -1,0 +1,56 @@
+{
+  "id": "5A_536_2025",
+  "case_id": "5A_536/2025",
+  "case_ids": [
+    "5A_536/2025"
+  ],
+  "decision_date": "2025-10-03",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "effet suspensif (faillite)",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://03-10-2025-5A_536-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5A_536/2025\nArrêt du 3 octobre 2025\nIIe Cour de droit civil\nComposition\nM. le Juge fédéral Bovey, Président.\nGreffier : M. Braconi.\nParticipants à la procédure\nA.________ Sàrl,\nrecourante,\ncontre\nB.________,\nintimé.\nObjet\neffet suspensif (faillite),\nrecours contre la décision du Président de la Cour des poursuites et faillites du Tribunal cantonal du canton de Vaud du 1er juillet 2025 (FF25.018793-250819).\nVu :\nle recours en matière civile formé le 4 juillet 2025 par A.________ Sàrl contre la décision rendue le 1er juillet 2025 par le Président de la Cour des poursuites et faillites du Tribunal cantonal vaudois;\nl'ordonnance du 8 juillet 2025 invitant la recourante à verser une avance de frais de 1'500 fr. jusqu'au 25 juillet 2025;\nl'ordonnance du 11 juillet 2025 prolongeant jusqu'au 15 août 2025 le délai pour payer le montant réclamé;\nl'ordonnance du 13 août 2025 prolongeant à titre exceptionnel jusqu'au 25 août 2025 le délai pour s'en acquitter;\nl'ordonnance du 9 septembre 2025 impartissant à la recourante un délai supplémentaire au 19 septembre 2025 pour s'exécuter;\nl'attestation de la Caisse du Tribunal fédéral du 2 octobre 2025;\nconsidérant :\nque la recourante n'a pas versé l'avance de frais requise dans le délai supplémentaire imparti à cette fin;\nque, partant, le présent recours doit être déclaré irrecevable par voie de procédure simplifiée (art. 108 al. 1 let. a LTF, en relation avec l'art. 62 al. 3 LTF);\nque les frais judiciaires incombent à la recourante (art. 66 al. 1 LTF);\nque la requête d'effet suspensif est sans objet;\npar ces motifs, le Président prononce :\n1.\nLe recours est irrecevable.\n2.\nLes frais judiciaires, arrêtés à 500 fr., sont mis à la charge de la recourante.\n3.\nLe présent arrêt est communiqué aux parties, à l' C.________, à l'Office des poursuites du district de la Riviera - Pays-d'Enhaut, au Conservateur du Registre foncier de l'Office de l'Est vaudois, au D.________et au Président de la Cour des poursuites et faillites du Tribunal cantonal du canton de Vaud.\nLausanne, le 3 octobre 2025\nAu nom de la IIe Cour de droit civil\ndu Tribunal fédéral suisse\nLe Président : Bovey\nLe Greffier : Braconi",
+  "operator_metadata": {
+    "date": "2025-10-03",
+    "reference": [
+      "5A_536/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-536-2025_2025-10-03.html",
+      "source": "446973/45/2869",
+      "content_length": 2549
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-06-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2869",
+    "id": "CH_BGer_005_5A-536-2025_2025-10-03",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 03.10.2025 5A_536/2025",
+      "it": "Tribunale federale II Corte di diritto civile 03.10.2025 5A_536/2025",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 03.10.2025 5A_536/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:23:47+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-536-2025_2025-10-03.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "f70b98066f1baa0253a5ab9e9b77b7d2482fd001b8b0b863fb39c2e1569cf010"
+  }
+}

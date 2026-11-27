@@ -1,0 +1,56 @@
+{
+  "id": "9C_574_2025",
+  "case_id": "9C_574/2025",
+  "case_ids": [
+    "9C_574/2025"
+  ],
+  "decision_date": "2026-02-23",
+  "publication_date": null,
+  "department": "IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung)",
+  "division": "IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung)",
+  "subject": "Krankenversicherung",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://23-02-2026-9C_574-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n9C_574/2025\nUrteil vom 23. Februar 2026\nIII. öffentlich-rechtliche Abteilung\nBesetzung\nBundesrichterin Moser-Szeless, Präsidentin,\nGerichtsschreiber Williner.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nAssura-Basis SA,\nAvenue Charles-Ferdinand Ramuz 70, 1009 Pully,\nBeschwerdegegnerin.\nGegenstand\nKrankenversicherung,\nBeschwerde gegen das Urteil\ndes Kantonsgerichts Basel-Landschaft\nvom 20. August 2025 (730 25 172).\nNach Einsicht\nin die Beschwerde vom 9. Oktober 2025 (Poststempel) gegen das Urteil des Kantonsgerichts Basel-Landschaft, Abteilung Sozialversicherungsrecht, vom 20. August 2025,\nin die dem Bundesgericht als \"nicht abgeholt\" retournierte Verfügung vom 21. Oktober 2025, mit welcher A.________ zur Bezahlung eines Kostenvorschusses von Fr. 500.- bis am 5. November 2025 aufgefordert wurde,\nin die Mitteilung vom 3. November 2025, mit welcher A.________ die Verfügung vom 21. Oktober 2025 nochmals mit A-Post zugestellt wurde,\nin die Eingabe von A.________ vom 5. November 2025 (Poststempel),\nin die Verfügung vom 12. November 2025, mit welcher A.________ zur Bezahlung eines Kostenvorschusses innert einer Nachfrist bis zum 24. November 2025 verpflichtet wurde, ansonsten auf das Rechtsmittel nicht eingetreten werde,\nin Erwägung,\ndass der Beschwerdeführer den Vorschuss auch innerhalb der Nachfrist nicht geleistet hat,\ndass deshalb gestützt auf Art. 62 Abs. 3 BGG im vereinfachten Verfahren nach Art. 108 Abs. 1 lit. a BGG auf die Beschwerde nicht einzutreten ist und der Beschwerdeführer nach Art. 66 Abs. 1 und 3 BGG kostenpflichtig wird,\nerkennt die Präsidentin:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 300.- werden dem Beschwerdeführer auferlegt.\n3.\nDieses Urteil wird den Parteien, dem Kantonsgericht Basel-Landschaft, Abteilung Sozialversicherungsrecht, und dem Bundesamt für Gesundheit schriftlich mitgeteilt.\nLuzern, 23. Februar 2026\nIm Namen der III. öffentlich-rechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Präsidentin: Moser-Szeless\nDer Gerichtsschreiber: Williner",
+  "operator_metadata": {
+    "date": "2026-02-23",
+    "reference": [
+      "9C_574/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_009_9C-574-2025_2026-02-23.html",
+      "source": "446973/45/2834",
+      "content_length": 2459
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung)",
+      "it": "Confederazione Tribunale federale IV Corte di diritto pubblico (II Corte di diritto sociale)",
+      "fr": "Conféderation Tribunal fédéral IVe Cour de droit public (IIe Cour de droit social)"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_009"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_009_9C-574-2025_2026-02-23",
+    "title": {
+      "de": "Bundesgericht IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung) 23.02.2026 9C_574/2025",
+      "it": "Tribunale federale IV Corte di diritto pubblico (II Corte di diritto sociale) 23.02.2026 9C_574/2025",
+      "fr": "Tribunal fédéral IVe Cour de droit public (IIe Cour de droit social) 23.02.2026 9C_574/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:15:51+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_009_9C-574-2025_2026-02-23.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "781ce53537ea1ff7a6ed852edb75cf84ff463c35cd288a5f5cbd799d4a109e4b"
+  }
+}

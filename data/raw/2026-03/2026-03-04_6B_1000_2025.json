@@ -1,0 +1,56 @@
+{
+  "id": "6B_1000_2025",
+  "case_id": "6B_1000/2025",
+  "case_ids": [
+    "6B_1000/2025"
+  ],
+  "decision_date": "2026-03-04",
+  "publication_date": null,
+  "department": "I. Strafrechtliche Abteilung",
+  "division": "I. Strafrechtliche Abteilung",
+  "subject": "Irrecevabilité formelle du recours en matière pénale (opposition à une ordonnance pénale considérée comme retirée [défaut de la partie à l'audience])",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://04-03-2026-6B_1000-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n6B_1000/2025\nArrêt du 4 mars 2026\nIre Cour de droit pénal\nComposition\nM. le Juge fédéral\nvon Felten, Juge présidant.\nGreffier : M. Dyens.\nParticipants à la procédure\nA.________,\nrecourant,\ncontre\nMinistère public central du canton de Vaud, avenue de Longemalle 1, 1020 Renens VD,\nintimé.\nObjet\nIrrecevabilité formelle du recours en matière pénale (opposition à une ordonnance pénale considérée comme retirée [défaut de la partie à l'audience]),\nrecours contre l'arrêt du Tribunal cantonal\ndu canton de Vaud, Chambre des recours pénale,\ndu 5 novembre 2025, (n° 848 PE23.023893-BMW).\nConsidérant en fait et en droit :\n1.\nPar acte daté du 18 décembre 2025, A.________ a déposé un recours en matière pénale au Tribunal fédéral contre le jugement rendu le 5 novembre 2025 par la Chambre des recours pénale du Tribunal cantonal vaudois.\n2.\nLa partie qui saisit le Tribunal fédéral doit avancer les frais présumés de la procédure (art. 62 al. 1 LTF). Si elle ne verse pas l'avance requise dans le délai supplémentaire qui lui est fixé à cet effet après un premier non-paiement, son recours est irrecevable (art. 62 al. 3 LTF).\nEn l'espèce, le recourant a, dans un premier temps, été invité, par ordonnance du 23 décembre 2025, adressé par pli recommandé, à verser, dans un délai échéant au 16 janvier 2026, une avance de frais de 800 francs.\nLe pli recommandé précité a été retourné avec la mention \"non réclamé\". Il a été réexpédié au prénommé par courrier A en date du 6 janvier 2026.\nFaute pour le recourant d'avoir effectué le versement requis dans le délai imparti, à savoir le 16 janvier 2026, et compte tenu également du courrier du recourant daté du 31 janvier 2026 sollicitant un délai pour effectuer le versement en question, ce dernier s'est vu impartir, par ordonnance du 9 février 2026, un délai supplémentaire échéant le 20 février suivant pour s'acquitter de l'avance de frais. Il a été précisé à cette occasion au recourant qu'à défaut de paiement en temps utile, le recours serait déclaré irrecevable (art. 62 al. 3 LTF).\nMalgré ce qui précède, le recourant n'a pas effectué l'avance de frais requise en temps utile.\nPar conséquent, à défaut de paiement de l'avance de frais, le recours est manifestement irrecevable et doit dès lors être écarté en application de la procédure simplifiée prévue à l'art. 108 al. 1 let. a LTF.\n3.\nLe présent arrêt est exceptionnellement rendu sans frais (art. 66 al. 1 2 e phrase LTF).\nPar ces motifs, le Juge présidant prononce :\n1.\nLe recours est irrecevable.\n2.\nIl n'est pas perçu de frais judiciaires.\n3.\nLe présent arrêt est communiqué aux parties et au Tribunal cantonal du canton de Vaud, Chambre des recours pénale.\nLausanne, le 4 mars 2026\nAu nom de la Ire Cour de droit pénal\ndu Tribunal fédéral suisse\nLe Juge présidant : von Felten\nLe Greffier : Dyens",
+  "operator_metadata": {
+    "date": "2026-03-04",
+    "reference": [
+      "6B_1000/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_006_6B-1000-2025_2026-03-04.html",
+      "source": "446973/45/2830",
+      "content_length": 3228
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit pénal"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_006"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2830",
+    "id": "CH_BGer_006_6B-1000-2025_2026-03-04",
+    "title": {
+      "de": "Bundesgericht I. Strafrechtliche Abteilung 04.03.2026 6B_1000/2025",
+      "it": "Tribunale federale I Corte di diritto penale 04.03.2026 6B_1000/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit pénal 04.03.2026 6B_1000/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:18:48+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_006_6B-1000-2025_2026-03-04.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "375626fdee6a23d6209152bb734f2129d15f6fdedbbe92ab1371054b84632e98"
+  }
+}

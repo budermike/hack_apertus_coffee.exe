@@ -1,0 +1,56 @@
+{
+  "id": "6B_136_2026",
+  "case_id": "6B_136/2026",
+  "case_ids": [
+    "6B_136/2026"
+  ],
+  "decision_date": "2026-03-20",
+  "publication_date": null,
+  "department": "I. Strafrechtliche Abteilung",
+  "division": "I. Strafrechtliche Abteilung",
+  "subject": "Irrecevabilité formelle du recours en matière pénale (défaut de procuration)",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://20-03-2026-6B_136-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n6B_136/2026\nArrêt du 20 mars 2026\nIre Cour de droit pénal\nComposition\nM. le Juge fédéral\nvon Felten, Juge présidant.\nGreffier : M. Rosselet.\nParticipants à la procédure\nA.________,\nreprésenté par Me Samir Djaziri, avocat,\nrecourant,\ncontre\nMinistère public de la République et canton de Genève,\nroute de Chancy 6B, 1213 Petit-Lancy,\nintimé.\nObjet\nIrrecevabilité formelle du recours en matière pénale (défaut de procuration),\nrecours contre l'arrêt de la Cour de justice\nde la République et canton de Genève,\nChambre pénale d'appel et de révision,\ndu 29 janvier 2026 (AARP/41/2026 P/17231/2024).\nConsidérant en fait et en droit :\n1.\nDéclarant agir au nom de A.________, l'avocat Samir Djaziri a formé, le 4 mars 2026, un recours en matière pénale au Tribunal fédéral contre l'arrêt rendu le 29 janvier 2026 par la Chambre pénale d'appel et de révision de la Cour de justice genevoise, sans toutefois produire de procuration justifiant de ses pouvoirs.\n2.\nÀ teneur de l'art. 40 al. 2 LTF, les mandataires doivent justifier de leurs pouvoirs par une procuration. Si la procuration fait défaut, le Tribunal fédéral impartit un délai approprié à la partie pour remédier à l'irrégularité et l'avertit qu'à défaut le mémoire ne sera pas pris en considération (art. 42 al. 5 LTF).\nPar ordonnance du 6 mars 2026, le Président de la I re Cour de droit pénal du Tribunal fédéral a imparti à Me Samir Djaziri un délai échéant au 17 mars 2026 afin de justifier de ses pouvoirs, lui précisant qu'à défaut, le mémoire ne serait pas pris en considération.\nPar courrier daté du 17 mars 2026, Me Samir Djaziri a informé la cour de céans ne pas avoir été en mesure de contacter son client, lequel était injoignable, de sorte qu'il ne lui était pas possible de produire une procuration. Il s'ensuit que, faute d'avoir produit la procuration sollicitée dans le délai supplémentaire ainsi imparti, le recours doit être déclaré irrecevable selon la procédure simplifiée de l'art. 108 al. 1 let. a LTF.\n3.\nIl sera exceptionnellement statué sans frais (art. 66 al. 1 LTF).\nPar ces motifs, le Juge présidant prononce :\n1.\nLe recours est irrecevable.\n2.\nIl n'est pas perçu de frais judiciaires.\n3.\nLe présent arrêt est communiqué aux parties et à la Cour de justice de la République et canton de Genève, Chambre pénale d'appel et de révision.\nLausanne, le 20 mars 2026\nAu nom de la Ire Cour de droit pénal\ndu Tribunal fédéral suisse\nLe Juge présidant : von Felten\nLe Greffier : Rosselet",
+  "operator_metadata": {
+    "date": "2026-03-20",
+    "reference": [
+      "6B_136/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_006_6B-136-2026_2026-03-20.html",
+      "source": "446973/45/2830",
+      "content_length": 2883
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit pénal"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_006"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2830",
+    "id": "CH_BGer_006_6B-136-2026_2026-03-20",
+    "title": {
+      "de": "Bundesgericht I. Strafrechtliche Abteilung 20.03.2026 6B_136/2026",
+      "it": "Tribunale federale I Corte di diritto penale 20.03.2026 6B_136/2026",
+      "fr": "Tribunal fédéral Ire Cour de droit pénal 20.03.2026 6B_136/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:23:43+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_006_6B-136-2026_2026-03-20.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "029c81b6d0f0585a2865ee4a0d9dd802cb89cd2033ab7e06b132f7c98c257e50"
+  }
+}

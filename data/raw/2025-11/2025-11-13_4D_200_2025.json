@@ -1,0 +1,56 @@
+{
+  "id": "4D_200_2025",
+  "case_id": "4D_200/2025",
+  "case_ids": [
+    "4D_200/2025"
+  ],
+  "decision_date": "2025-11-13",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "Arbeitsvertrag; Rückzug der Beschwerde",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://13-11-2025-4D_200-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4D_200/2025\nVerfügung vom 13. November 2025\nI. zivilrechtliche Abteilung\nBesetzung\nBundesrichterin Kiss, präsidierendes Mitglied,\nGerichtsschreiber Leemann.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nB.________,\nvertreten durch Advokatin Ladina Wirthner,\nBeschwerdegegner.\nGegenstand\nArbeitsvertrag; Rückzug der Beschwerde,\nBeschwerde gegen den Entscheid des Kantonsgerichts Basel-Landschaft, Abteilung Zivilrecht, vom 13. Mai 2025 (400 24 327 [B 72] 150 2024 2627).\nErwägungen:\n1.\nMit Eingabe vom 13. Oktober 2025 erhob der Beschwerdeführer Beschwerde gegen den Entscheid des Kantonsgerichts Basel-Landschaft vom 13. Mai 2025.\nMit Eingabe vom 26. Oktober 2025 ersuchte der Beschwerdeführer um Gewährung der unentgeltlichen Rechtspflege.\nMit Eingabe vom 5. November 2025 erklärte der Beschwerdeführer dem Bundesgericht, er ziehe die Beschwerde zurück.\n2.\nAufgrund des erklärten Rückzugs ist das Verfahren als erledigt abzuschreiben (Art. 32 Abs. 2 BGG).\nUnter den gegebenen Umständen ist ausnahmsweise auf die Erhebung von Gerichtskosten zu verzichten (Art. 66 Abs. 1 zweiter Satz BGG), womit das Gesuch um Gewährung der unentgeltlichen Rechtspflege gegenstandslos wird. Dem Beschwerdegegner ist keine Parteientschädigung zuzusprechen, da ihm im Zusammenhang mit dem bundesgerichtlichen Verfahren kein entschädigungspflichtiger Aufwand entstanden ist (Art. 68 Abs. 2 BGG).\nDemnach verfügt das präsidierende Mitglied:\n1.\nDas Verfahren 4D_200/2025 wird infolge Rückzugs der Beschwerde abgeschrieben.\n2.\nEs werden keine Gerichtskosten erhoben.\n3.\nEs wird keine Parteientschädigung zugesprochen.\n4.\nDiese Verfügung wird den Parteien und dem Kantonsgericht Basel-Landschaft, Abteilung Zivilrecht, schriftlich mitgeteilt.\nLausanne, 13. November 2025\nIm Namen der I. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDas präsidierende Mitglied: Kiss\nDer Gerichtsschreiber: Leemann",
+  "operator_metadata": {
+    "date": "2025-11-13",
+    "reference": [
+      "4D_200/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-200-2025_2025-11-13.html",
+      "source": "446973/45/2869",
+      "content_length": 2315
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-06-18",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2869",
+    "id": "CH_BGer_004_4D-200-2025_2025-11-13",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 13.11.2025 4D_200/2025",
+      "it": "Tribunale federale I Corte di diritto civile 13.11.2025 4D_200/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 13.11.2025 4D_200/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:35:06+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-200-2025_2025-11-13.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "1a545c10e14cdc84228b043963a8df10c7c677c8daa2712c3324f07f448fd36f"
+  }
+}

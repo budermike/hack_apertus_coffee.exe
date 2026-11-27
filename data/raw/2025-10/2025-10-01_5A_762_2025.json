@@ -1,0 +1,56 @@
+{
+  "id": "5A_762_2025",
+  "case_id": "5A_762/2025",
+  "case_ids": [
+    "5A_762/2025"
+  ],
+  "decision_date": "2025-10-01",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "curatelle de représentation en faveur d'enfants mineurs",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://01-10-2025-5A_762-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5A_762/2025\nOrdonnance du 1er octobre 2025\nIIe Cour de droit civil\nComposition\nM. le Juge fédéral Bovey, Président.\nGreffier : M. Braconi.\nParticipants à la procédure\n1. A.A.________,\n2. B.A.________,\nrecourants,\ncontre\nTribunal de protection de l'adulte et de l'enfant\ndu canton de Genève,\nrue des Glacis-de-Rive 6, 1207 Genève,\nC.A._________, D.A.________, E.A.________, et F.A.________,\nreprésentés par Me Camille Maulini, avocate,\nObjet\ncuratelle de représentation en faveur d'enfants mineurs,\nrecours contre la décision de la Chambre de surveillance de la Cour de justice du canton de Genève du 4 août 2025 (C/10969/2025-CS).\nVu :\nle recours formé le 10 septembre 2025 par A.A.________et B.A.________ contre la décision de la Chambre de surveillance de la Cour de justice du canton de Genève du 4 août 2025;\nla déclaration de retrait du recours du 29 septembre 2025;\nConsidérant :\nqu'il y a lieu de prendre acte du retrait du recours et de rayer la cause du rôle;\nque le Président de la Cour de céans est compétent à cet effet (art. 32 al. 1 et 2 LTF);\nque les frais judiciaires (réduits) incombent aux recourants (art. 66 al. 1 et 2 LTF), solidairement entre eux (art. 66 al. 5 LTF);\nPar ces motifs, le Président ordonne :\n1.\nLa cause est rayée du rôle par suite de retrait du recours.\n2.\nLes frais judiciaires, arrêtés à 300 fr., sont mis solidairement à la charge des recourants.\n3.\nLa présente ordonnance est communiquée aux recourants, au Tribunal de protection de l'adulte et de l'enfant du canton de Genève, à Camille Maulini (curatrice de représentation) et à la Chambre de surveillance de la Cour de justice du canton de Genève.\nLausanne, le 1er octobre 2025\nAu nom de la IIe Cour de droit civil\ndu Tribunal fédéral suisse\nLe Président : Bovey\nLe Greffier : Braconi",
+  "operator_metadata": {
+    "date": "2025-10-01",
+    "reference": [
+      "5A_762/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-762-2025_2025-10-01.html",
+      "source": "446973/45/2869",
+      "content_length": 2164
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-06-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2869",
+    "id": "CH_BGer_005_5A-762-2025_2025-10-01",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 01.10.2025 5A_762/2025",
+      "it": "Tribunale federale II Corte di diritto civile 01.10.2025 5A_762/2025",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 01.10.2025 5A_762/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:22:32+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-762-2025_2025-10-01.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "5ba737f8962b0b28028bdf83797ddab29ab8512f5ba9bca4ad530204c8ddec9b"
+  }
+}

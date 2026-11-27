@@ -1,0 +1,56 @@
+{
+  "id": "4D_159_2025",
+  "case_id": "4D_159/2025",
+  "case_ids": [
+    "4D_159/2025"
+  ],
+  "decision_date": "2025-10-24",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "azione creditoria",
+  "language": "it",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://24-10-2025-4D_159-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4D_159/2025\nSentenza del 24 ottobre 2025\nI Corte di diritto civile\nComposizione\nGiudice federale Hurni, Presidente,\nCancelliere G. Piatti.\nPartecipanti al procedimento\nA.________,\nricorrente,\ncontro\nB.________ AG,\nopponente.\nOggetto\nazione creditoria,\nricorso contro la sentenza emanata il 25 luglio 2025 dalla Camera civile dei reclami del Tribunale d'appello del Cantone Ticino (16.2025.4).\nConsiderando:\nche il Giudice di pace del circolo di Paradiso, adito dalla B.________ AG, ha condannato con decisione 31 ottobre 2024 A.________ a versare all'attrice fr. 3'657.05;\nche con sentenza 25 luglio 2025 la Camera civile dei reclami del Tribunale di appello del Cantone Ticino ha dichiarato inammissibile, siccome tardivo, il reclamo 3 gennaio 2025 presentato da A.________;\nche quest'ultimo è insorto al Tribunale federale con ricorso 3 settembre 2025;\nche non è stato ordinato uno scambio di scritti;\nche con decreto 4 settembre 2025 il ricorrente è invano stato invitato a versare entro il 19 settembre 2025 un anticipo per le spese presunte del processo di fr. 500.--;\nche il 25 settembre 2025 è stato impartito al ricorrente il termine suppletorio dell'art. 62 cpv. 3 LTF per effettuare il predetto versamento entro il 10 ottobre 2025 con l'indicazione delle conseguenze di un mancato tempestivo pagamento;\nche il 21 ottobre 2025 la Cassa del Tribunale federale ha constatato che il richiesto anticipo non è stato pagato né accreditato sul suo conto postale e che non le è pervenuto alcun avviso di addebito di un conto bancario o postale;\nche in queste circostanze il Tribunale federale non può entrare nel merito del ricorso (art. 48 cpv. 4 e 62 cpv. 3 LTF);\nche, come indicato nei predetti decreti, un eventuale ritiro del ricorso doveva essere dichiarato per iscritto, il mancato pagamento del richiesto anticipo non supplendo a una tale dichiarazione;\nche il ricorso, manifestamente inammissibile, va deciso dal Presidente della Corte adita nella procedura semplificata (art. 108 cpv. 1 lett. a LTF);\nche le spese giudiziarie seguono la soccombenza (art. 66 cpv. 1 LTF), mentre non si giustifica assegnare ripetibili, l'opponente non essendo stata invitata a determinarsi sul ricorso;\nPer questi motivi, il Presidente pronuncia:\n1.\nIl ricorso è inammissibile.\n2.\nLe spese giudiziarie di fr. 300.-- sono poste a carico del ricorrente.\n3.\nComunicazione alle parti e alla Camera civile dei reclami del Tribunale d'appello del Cantone Ticino.\nLosanna, 24 ottobre 2025\nIn nome della I Corte di diritto civile\ndel Tribunale federale svizzero\nIl Presidente: Hurni\nIl Cancelliere: G. Piatti",
+  "operator_metadata": {
+    "date": "2025-10-24",
+    "reference": [
+      "4D_159/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "it",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-159-2025_2025-10-24.html",
+      "source": "446973/45/2869",
+      "content_length": 2959
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-06-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "it",
+    "source": "446973/45/2869",
+    "id": "CH_BGer_004_4D-159-2025_2025-10-24",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 24.10.2025 4D_159/2025",
+      "it": "Tribunale federale I Corte di diritto civile 24.10.2025 4D_159/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 24.10.2025 4D_159/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:29:31+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-159-2025_2025-10-24.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "236a1eea1e8aeb5ed8daf75a1c72c269e77b4c8ad18e4f087d6f129e38c39b8b"
+  }
+}

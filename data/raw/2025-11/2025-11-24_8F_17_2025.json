@@ -1,0 +1,56 @@
+{
+  "id": "8F_17_2025",
+  "case_id": "8F_17/2025",
+  "case_ids": [
+    "8F_17/2025"
+  ],
+  "decision_date": "2025-11-24",
+  "publication_date": null,
+  "department": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "division": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "subject": "Arbeitslosenversicherung",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://24-11-2025-8F_17-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n8F_17/2025\nUrteil vom 24. November 2025\nIV. öffentlich-rechtliche Abteilung\nBesetzung\nBundesrichterin Viscione, Präsidentin,\nGerichtsschreiber Hochuli.\nVerfahrensbeteiligte\nA.________,\nGesuchsteller,\ngegen\nAmt für Arbeit, Arbeitslosenkasse,\nLückenstrasse 8, 6430 Schwyz,\nGesuchsgegner.\nGegenstand\nArbeitslosenversicherung,\nRevisionsgesuch gegen das Urteil des Schweizerischen Bundesgerichts vom 19. September 2025 (8C_495/2025 [Entscheid II 2025 37]).\nNach Einsicht\nin das Revisionsgesuch vom 6. Oktober 2025 (Poststempel) gegen das Urteil des Schweizerischen Bundesgerichts vom 19. September 2025,\nin die Verfügung vom 9. Oktober 2025, mit welcher eine Frist zur Bezahlung eines Kostenvorschusses von Fr. 500.- gesetzt wurde,\nin die Verfügung vom 4. November 2025, mit welcher A.________ - nach Einsicht in dessen Eingabe vom 20. Oktober 2025 - zur Bezahlung eines Kostenvorschusses innert einer Nachfrist bis zum 17. November 2025 verpflichtet wurde, ansonsten auf das Rechtsmittel nicht eingetreten werde,\nin Erwägung,\ndass der Gesuchsteller den Vorschuss auch innerhalb der Nachfrist nicht geleistet hat,\ndass aus der Eingabe vom 7. November 2025 nicht ersichtlich ist, inwiefern diese Vorbringen an der Nachfristansetzung für die Leistung eines Kostenvorschusses bis zum 17. November 2025 gemäss Verfügung vom 4. November 2025 etwas zu ändern vermöchten, zumal der Gesuchsteller nicht um Gewährung der unentgeltlichen Rechtspflege ersuchte, sondern wiederholt - entgegen dem klarer Wortlaut - aus Art. 65 Abs. 4 lit. a BGG auf Kostenfreiheit des Verfahrens schliesst,\ndass deshalb gestützt auf Art. 62 Abs. 3 BGG im vereinfachten Verfahren nach Art. 108 Abs. 1 lit. a BGG auf das Revisionsgesuch nicht einzutreten ist und der Gesuchsteller nach Art. 66 Abs. 1 und 3 BGG kostenpflichtig wird,\nerkennt die Präsidentin:\n1.\nAuf das Revisionsgesuch wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 200.- werden dem Gesuchsteller auferlegt.\n3.\nDieses Urteil wird den Parteien, dem Staatssekretariat für Wirtschaft (SECO) und dem Verwaltungsgericht des Kantons Schwyz schriftlich mitgeteilt.\nLuzern, 24. November 2025\nIm Namen der IV. öffentlich-rechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Präsidentin: Viscione\nDer Gerichtsschreiber: Hochuli",
+  "operator_metadata": {
+    "date": "2025-11-24",
+    "reference": [
+      "8F_17/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8F-17-2025_2025-11-24.html",
+      "source": "446973/45/2851",
+      "content_length": 2649
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+      "it": "Confederazione Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale)",
+      "fr": "Conféderation Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social)"
+    },
+    "scrapedate": "2026-06-18",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_008"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2851",
+    "id": "CH_BGer_008_8F-17-2025_2025-11-24",
+    "title": {
+      "de": "Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung) 24.11.2025 8F_17/2025",
+      "it": "Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale) 24.11.2025 8F_17/2025",
+      "fr": "Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social) 24.11.2025 8F_17/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:38:08+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8F-17-2025_2025-11-24.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "29ae75df27f388050989750be930c2cf8536920e0393730cc4eda9ab8ad78c29"
+  }
+}

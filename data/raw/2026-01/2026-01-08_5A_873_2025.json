@@ -1,0 +1,56 @@
+{
+  "id": "5A_873_2025",
+  "case_id": "5A_873/2025",
+  "case_ids": [
+    "5A_873/2025"
+  ],
+  "decision_date": "2026-01-08",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "demande de révision (nullité de la poursuite)",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://08-01-2026-5A_873-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5A_873/2025\nArrêt du 8 janvier 2026\nIIe Cour de droit civil\nComposition\nM. le Juge fédéral Bovey, Président.\nGreffière : Mme Hildbrand\nParticipants à la procédure\nA.________,\nrecourant,\ncontre\nOffice cantonal des poursuites de Genève, rue du Stand 46, 1204 Genève.\nObjet\ndemande de révision (nullité de la poursuite),\nrecours contre la décision de la Cour de justice du canton de Genève, Chambre de surveillance des Offices des poursuites et faillites, du 25 septembre 2025 (A/2329/2025-CS DCSO/502/25).\nVu :\nle recours interjeté le 13 octobre 2025 par A.________ contre la décision du 25 septembre 2025 de la Chambre de surveillance des Offices des poursuites et faillites de la Cour de justice du canton de Genève;\nl'ordonnance du 15 octobre 2025 invitant le recourant à verser une avance de frais de 1'500 fr. jusqu'au 30 octobre 2025 au plus tard;\nle courrier du recourant du 30 octobre 2025 sollicitant la prolongation de ce délai;\nl'ordonnance du 3 novembre 2025 impartissant au recourant un délai supplémentaire pour le paiement de l'avance de frais échéant le 14 novembre 2025;\nl'ordonnance du 26 novembre 2025 impartissant au recourant un ultime délai non prolongeable échéant le 8 décembre 2025 pour le paiement de l'avance de frais;\nl'avis de la Caisse du Tribunal fédéral du 22 décembre 2025 constatant que l'avance de frais exigée n'avait été ni payée ni créditée sur son compte postal et qu'aucune attestation de débit d'un compte postal ou bancaire ne lui était parvenue;\nconsidérant :\nque l'avance de frais n'a pas été versée dans le délai supplémentaire imparti à cet effet;\nque, partant, le présent recours doit être déclaré irrecevable par voie de procédure simplifiée (art. 62 al. 3 LTF, en relation avec l'art. 108 al. 1 let. a LTF);\nque les frais incombent au recourant (art. 66 al. 1 LTF);\npar ces motifs, le Président prononce :\n1.\nLe recours est irrecevable.\n2.\nLes frais judiciaires, arrêtés à 1'000 fr., sont mis à la charge du recourant.\n3.\nLe présent arrêt est communiqué au recourant, à l'Office cantonal des poursuites de Genève et à la Cour de justice du canton de Genève, Chambre de surveillance des Offices des poursuites et faillites.\nLausanne, le 8 janvier 2026\nAu nom de la IIe Cour de droit civil\ndu Tribunal fédéral suisse\nLe Président : Bovey\nLa Greffière : Hildbrand",
+  "operator_metadata": {
+    "date": "2026-01-08",
+    "reference": [
+      "5A_873/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-873-2025_2026-01-08.html",
+      "source": "446973/45/2830",
+      "content_length": 2696
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2830",
+    "id": "CH_BGer_005_5A-873-2025_2026-01-08",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 08.01.2026 5A_873/2025",
+      "it": "Tribunale federale II Corte di diritto civile 08.01.2026 5A_873/2025",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 08.01.2026 5A_873/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:02:10+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-873-2025_2026-01-08.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "f9f983e7447c3e482cc1a342ccd89db0c7ef9bbd26d865f7666215eface1024f"
+  }
+}

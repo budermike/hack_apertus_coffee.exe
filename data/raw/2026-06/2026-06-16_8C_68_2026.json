@@ -1,0 +1,56 @@
+{
+  "id": "8C_68_2026",
+  "case_id": "8C_68/2026",
+  "case_ids": [
+    "8C_68/2026"
+  ],
+  "decision_date": "2026-06-16",
+  "publication_date": null,
+  "department": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "division": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "subject": "Sozialhilfe (Prozessvoraussetzung)",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://16-06-2026-8C_68-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n8C_68/2026\nUrteil vom 16. Juni 2026\nIV. öffentlich-rechtliche Abteilung\nBesetzung\nBundesrichter Maillard, als Einzelrichter,\nGerichtsschreiber Grünvogel.\nVerfahrensbeteiligte\nA.A.________,\nvertreten durch Frau A.B.________,\nBeschwerdeführerin,\ngegen\nGemeinderat Untersiggenthal,\nKornfeldweg 2, 5417 Untersiggenthal,\nBeschwerdegegner.\nGegenstand\nSozialhilfe (Prozessvoraussetzung),\nBeschwerde gegen das Urteil des Verwaltungsgerichts des Kantons Aargau vom 14. Januar 2026 (WBE.2025.430).\nNach Einsicht\nin die am 14. (Poststempel) und 19. Februar 2026 ergänzte Beschwerde vom 23. Januar 2026 gegen das Urteil des Verwaltungsgerichts des Kantons Aargau vom 14. Januar 2026,\nin die Verfügung vom 26. März 2026, mit welcher A.A.________ in Ablehnung des in der Beschwerdeschrift gestellten Gesuchs um unentgeltliche Rechtspflege zur Bezahlung des Kostenvorschusses in der Höhe von Fr. 500.- aufgefordert wurde,\nin die Verfügung vom 4. Mai 2026, mit welcher A.A.________eine Nachfrist zur Bezahlung des Kostenvorschusses bis zum 15. Mai 2026 gesetzt wurde, ansonsten auf das Rechtsmittel nicht eingetreten werde,\nin Erwägung,\ndass die Beschwerdeführerin den Vorschuss auch innerhalb der Nachfrist nicht geleistet hat,\ndass deshalb gestützt auf Art. 62 Abs. 3 BGG im vereinfachten Verfahren nach Art. 108 Abs. 1 lit. a und Abs. 2 BGG auf die Beschwerde nicht einzutreten ist,\ndass ein ausnahmsweiser Verzicht auf die Erhebung von Gerichtskosten mit Blick auf die querulatorisch anmutende Beschwerdeführung (dazu siehe die Verfügung vom 26. März 2026 E. 6) ausser Betracht fällt (Art. 66 Abs. 1 Satz 1 BGG),\nerkennt der Einzelrichter:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 200.- werden der Beschwerdeführerin auferlegt.\n3.\nDieses Urteil wird den Parteien, dem Verwaltungsgericht des Kantons Aargau und dem Departement Gesundheit und Soziales des Kantons Aargau schriftlich mitgeteilt.\nLuzern, 16. Juni 2026\nIm Namen der IV. öffentlich-rechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Einzelrichter: Maillard\nDer Gerichtsschreiber: Grünvogel",
+  "operator_metadata": {
+    "date": "2026-06-16",
+    "reference": [
+      "8C_68/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-68-2026_2026-06-16.html",
+      "source": "446973/45/2834",
+      "content_length": 2481
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+      "it": "Confederazione Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale)",
+      "fr": "Conféderation Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social)"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_008"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_008_8C-68-2026_2026-06-16",
+    "title": {
+      "de": "Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung) 16.06.2026 8C_68/2026",
+      "it": "Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale) 16.06.2026 8C_68/2026",
+      "fr": "Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social) 16.06.2026 8C_68/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:47:11+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-68-2026_2026-06-16.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "9d7d3c82c7fbcc81e8e5c24bee70105df015e8aeefc101cba6bc926e8d7882a4"
+  }
+}

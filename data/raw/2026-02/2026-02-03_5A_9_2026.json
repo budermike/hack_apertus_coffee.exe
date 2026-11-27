@@ -1,0 +1,56 @@
+{
+  "id": "5A_9_2026",
+  "case_id": "5A_9/2026",
+  "case_ids": [
+    "5A_9/2026"
+  ],
+  "decision_date": "2026-02-03",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "avance de frais (nomination d'office d'un curateur)",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://03-02-2026-5A_9-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5A_9/2026\nArrêt du 3 février 2026\nIIe Cour de droit civil\nComposition\nM. le Juge fédéral Bovey, Président.\nGreffier : M. Braconi.\nParticipants à la procédure\nA.________,\nrecourante,\ncontre\nChambre de surveillance de la Cour de justice du canton de Genève,\nplace du Bourg-de-Four 1, 1204 Genève.\nObjet\navance de frais (nomination d'office d'un curateur),\nrecours contre la décision de la Chambre de\nsurveillance de la Cour de justice du canton de Genève du 12 décembre 2025 (C/28228/2025 DCJC/1131/2025).\nVu :\nla décision prise le 12 décembre 2025 par la Chambre de surveillance de la Cour de justice du canton de Genève invitant A.________ à verser une avance de frais de 400 fr. jusqu'au 30 décembre 2025;\nle recours (en matière civile) formé le 5 janvier 2026 par la prénommée à l'encontre de cette décision;\nconsidérant :\nque le présent recours est traité en tant que recours en matière civile au sens de l'art. 72 al. 2 let. b ch. 6 LTF;\nque la recourante ne démontre aucunement que la décision incidente attaquée pourrait lui causer un préjudice (juridique) irrecevable au sens de l'art. 93 al. 1 let. a LTF (ATF 142 III 798 consid. 2 et les nombreux arrêts cités);\nque, de surcroît, elle n'expose pas en quoi cette décision - fondée sur le droit cantonal - serait arbitraire (art. 9 Cst.) ou contraire à d'autres droits constitutionnels (art. 106 al. 2 LTF; ATF 143 III 65 consid. 4.3 et la jurisprudence citée), son argumentation étant incompréhensible;\nque, en conclusion, le présent recours doit être déclaré irrecevable par voie de procédure simplifiée (art. 108 al. 1 let. aet b LTF);\nque, vu les circonstances de l'espèce, le présent arrêt est rendu sans frais (art. 66 al. 1, 2ème phrase, LTF);\npar ces motifs, le Président prononce :\n1.\nLe recours est irrecevable.\n2.\nIl n'est pas perçu de frais judiciaires.\n3.\nLe présent arrêt est communiqué à la recourante et à la Chambre de surveillance de la Cour de justice du canton de Genève.\nLausanne, le 3 février 2026\nAu nom de la IIe Cour de droit civil\ndu Tribunal fédéral suisse\nLe Président : Bovey\nLe Greffier : Braconi",
+  "operator_metadata": {
+    "date": "2026-02-03",
+    "reference": [
+      "5A_9/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-9-2026_2026-02-03.html",
+      "source": "446973/45/2830",
+      "content_length": 2472
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2830",
+    "id": "CH_BGer_005_5A-9-2026_2026-02-03",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 03.02.2026 5A_9/2026",
+      "it": "Tribunale federale II Corte di diritto civile 03.02.2026 5A_9/2026",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 03.02.2026 5A_9/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:09:24+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-9-2026_2026-02-03.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "840b798b614919fbc88488b2e6608acd50d45832e16d3467f1141bc98b2e6ca4"
+  }
+}

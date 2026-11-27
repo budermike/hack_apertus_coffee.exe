@@ -1,0 +1,56 @@
+{
+  "id": "4F_2_2026",
+  "case_id": "4F_2/2026",
+  "case_ids": [
+    "4F_2/2026"
+  ],
+  "decision_date": "2026-05-04",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "Revision; Nichtleistung des Kostenvorschusses",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://04-05-2026-4F_2-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4F_2/2026\nUrteil vom 4. Mai 2026\nI. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Hurni, Präsident,\nGerichtsschreiberin Säuberli.\nVerfahrensbeteiligte\nA.________AG in Liquidation,\nGesuchstellerin,\ngegen\nObergericht des Kantons Aargau,\nZivilgericht, 4. Kammer,\nObere Vorstadt 38, 5000 Aarau,\nGesuchsgegner,\nHandelsregisteramt des Kantons Aargau, Bahnhofplatz 3c, 5001 Aarau 1 Fächer,\nweitere Verfahrensbeteiligte.\nGegenstand\nRevision; Nichtleistung des Kostenvorschusses,\nRevisionsgesuch gegen das Urteil des Schweizerischen Bundesgerichts vom 8. Januar 2026 (4A_515/2025 [Entscheid ZSU.2025.212]).\nIn Erwägung,\ndass die Gesuchstellerin gegen das Urteil 4A_515/2025 vom 8. Januar 2026 ein Revisionsgesuch einreichte;\ndass die Gesuchstellerin mit Präsidialverfügung vom 5. Februar 2026 aufgefordert wurde, spätestens bis am 20. Februar 2026 einen Kostenvorschuss von Fr. 1'000.-- einzuzahlen;\ndass der Gesuchstellerin, da der Kostenvorschuss innerhalb der angesetzten Frist nicht eingegangen war, mit Präsidialverfügung vom 3. März 2026 eine nicht erstreckbare Nachfrist zur Vorschussleistung bis zum 18. März 2026 angesetzt wurde, unter Hinweis darauf, dass das Bundesgericht bei Säumnis auf das Rechtsmittel nicht eintreten werde (Art. 62 Abs. 3 BGG);\ndass die Gesuchstellerin mit weiterer Eingabe vom 24. März 2026 erklärte, gegen das Urteil 4A_515/2025 vom 8. Januar 2026 Beschwerde erheben zu wollen, eine Beschwerde gegen Urteile des Bundesgerichts aber nicht offensteht, weshalb auf diese Eingabe nicht einzugehen ist und diesbezüglich kein separates Dossier eröffnet wurde;\ndass die Gesuchstellerin den ihr auferlegten Kostenvorschuss auch innerhalb der angesetzten Nachfrist nicht geleistet hat, weshalb gestützt auf Art. 62 Abs. 3 BGG auf das Revisionsgesuch nicht einzutreten ist;\ndass die Gerichtskosten dem Verfahrensausgang entsprechend der Gesuchstellerin aufzuerlegen sind (Art. 66 Abs. 1 BGG);\ndass dem Gesuchsgegner keine Parteientschädigung zuzusprechen ist (Art. 68 Abs. 3 BGG);\nerkennt der Präsident:\n1.\nAuf das Revisionsgesuch wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 300.-- werden der Gesuchstellerin auferlegt.\n3.\nEs wird keine Parteientschädigung zugesprochen.\n4.\nDieses Urteil wird den Parteien, dem Handelsregisteramt des Kantons Aargau, dem Regionalen Betreibungsamt Heitersberg-Reusstal, dem Konkursamt Aargau und dem Grundbuchamt Baden schriftlich mitgeteilt.\nLausanne, 4. Mai 2026\nIm Namen der I. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Hurni\nDie Gerichtsschreiberin: Säuberli",
+  "operator_metadata": {
+    "date": "2026-05-04",
+    "reference": [
+      "4F_2/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4F-2-2026_2026-05-04.html",
+      "source": "446973/45/2829",
+      "content_length": 2954
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_004_4F-2-2026_2026-05-04",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 04.05.2026 4F_2/2026",
+      "it": "Tribunale federale I Corte di diritto civile 04.05.2026 4F_2/2026",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 04.05.2026 4F_2/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:36:42+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4F-2-2026_2026-05-04.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "06f825aaaead202c85ad585e3689e67b377b76fc167fccd897ba1872959faa92"
+  }
+}

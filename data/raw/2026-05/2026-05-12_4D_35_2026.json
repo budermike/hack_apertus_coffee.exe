@@ -1,0 +1,56 @@
+{
+  "id": "4D_35_2026",
+  "case_id": "4D_35/2026",
+  "case_ids": [
+    "4D_35/2026"
+  ],
+  "decision_date": "2026-05-12",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "Rechtsöffnung",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://12-05-2026-4D_35-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4D_35/2026\nUrteil vom 12. Mai 2026\nI. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Hurni, Präsident,\nGerichtsschreiber Dürst.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nEinwohnergemeinde Riehen,\nvertreten durch die Gemeindeverwaltung Riehen,\nBeschwerdegegnerin.\nGegenstand\nRechtsöffnung,\nBeschwerde gegen den Entscheid des Appellationsgerichts des Kantons Basel-Stadt vom 26. Januar 2026 (BEZ.2025.93).\nErwägungen:\n1.\nDer Beschwerdeführer erhob beim Bundesgericht mit Eingabe vom 9. März 2026 (Postaufgabe) Beschwerde gegen den Entscheid des Appellationsgerichts des Kantons Basel-Stadt vom 26. Januar 2026.\nMit Präsidialverfügung vom 17. März 2026 wurde der Beschwerdeführer aufgefordert, spätestens am 16. April 2026 einen Kostenvorschuss von Fr. 500.-- für das bundesgerichtliche Verfahren einzuzahlen.\nMit Eingabe vom 13. April 2026 beschwerte sich der Beschwerdeführer über den Kostenvorschuss und äusserte sich zur Sache.\nDa der Kostenvorschuss innerhalb der angesetzten Frist nicht eingegangen war, wurde dem Beschwerdeführer mit Präsidialverfügung vom 21. April 2026 eine nicht erstreckbare Nachfrist zur Vorschussleistung bis zum 6. Mai 2026 angesetzt, unter Hinweis darauf, dass das Bundesgericht bei Säumnis auf das Rechtsmittel nicht eintreten werde (Art. 62 Abs. 3 BGG). Diese Verfügung wurde dem Beschwerdeführer am 28. April 2026 zugestellt.\nDa der Beschwerdeführer den ihm auferlegten Kostenvorschuss auch innerhalb der mit Verfügung vom 21. April 2026 angesetzten Nachfrist nicht geleistet hat, ist gestützt auf Art. 62 Abs. 3 BGG auf die Beschwerde nicht einzutreten (Art. 108 Abs. 1 lit. a BGG).\n2.\nDie Gerichtskosten sind dem Verfahrensausgang entsprechend dem Beschwerdeführer aufzuerlegen (Art. 66 Abs. 1 BGG).\nDer Beschwerdegegnerin ist keine Parteientschädigung zuzusprechen, da ihr im Zusammenhang mit dem bundesgerichtlichen Verfahren kein entschädigungspflichtiger Aufwand entstanden ist (Art. 68 BGG).\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 300.-- werden dem Beschwerdeführer auferlegt.\n3.\nDieses Urteil wird den Parteien und dem Appellationsgericht des Kantons Basel-Stadt schriftlich mitgeteilt.\nLausanne, 12. Mai 2026\nIm Namen der I. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Hurni\nDer Gerichtsschreiber: Dürst",
+  "operator_metadata": {
+    "date": "2026-05-12",
+    "reference": [
+      "4D_35/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-35-2026_2026-05-12.html",
+      "source": "446973/45/2829",
+      "content_length": 2762
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_004_4D-35-2026_2026-05-12",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 12.05.2026 4D_35/2026",
+      "it": "Tribunale federale I Corte di diritto civile 12.05.2026 4D_35/2026",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 12.05.2026 4D_35/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:38:33+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-35-2026_2026-05-12.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "afa6d808666c2e98b74f020f6200df12bbc1daf4fb7e4604bbedf2c142e6eeb3"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "id": "4A_566_2025",
+  "case_id": "4A_566/2025",
+  "case_ids": [
+    "4A_566/2025"
+  ],
+  "decision_date": "2026-01-29",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "assurance-maladie complémentaire",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://29-01-2026-4A_566-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4A_566/2025\nOrdonnance du 29 janvier 2026\nIre Cour de droit civil\nComposition\nMme la Juge fédérale Kiss, juge présidant.\nGreffier: M. O. Carruzzo.\nParticipants à la procédure\nA.________,\nrecourante,\ncontre\nB.________ SA,\nintimée.\nObjet\nassurance-maladie complémentaire,\ncourrier du 27 octobre 2025 concernant l'arrêt rendu le 16 octobre 2025 par la Chambre des assurances sociales de la Cour de justice du canton de Genève\n(A/3873/2024, ATAS/782/2025).\nConsidérant en fait et en droit:\n1.\nPar arrêt du 16 octobre 2025, la Chambre des assurances sociales de la Cour de justice du canton de Genève, statuant en tant qu'instance cantonale unique, a condamné la défenderesse A.________ à payer à la demanderesse B.________ SA les sommes de 34'131 fr. 30 et de 2'340 fr. 69, intérêts en sus.\nCette décision a été notifiée à la défenderesse le 22 octobre 2025.\n2.\nLe 4 novembre 2025, la Cour de justice du canton de Genève a transmis au Tribunal fédéral un courrier daté du 27 octobre 2025 que lui avait adressé C.________ au sujet de cet arrêt.\nAprès réception de cette lettre, la Cour de céans a ouvert un dossier sous la référence 4A_566/2025.\n3.\nLe Tribunal fédéral examine d'office et librement la recevabilité des actes qui lui sont soumis (ATF 137 III 417 consid. 1).\nEn l'occurrence, dans son courrier du 27 octobre 2025, C.________ formule certaines observations relatives à l'arrêt cantonal du 16 octobre 2025 et indique, au terme de sa missive, que \" la suite de cette affaire, plus que banale, sera soumise au tribunal fédéral \". Il apparaît toutefois que l'intéressé, qui précise être le représentant légal de la défenderesse, n'a pas formé de recours au Tribunal fédéral, dans le délai prévu à cet effet, en vue de contester l'arrêt cantonal du 16 octobre 2025. Dans ces circonstances, il convient de rayer l'affaire 4A_566/2025 du rôle. Il n'y a pas lieu de percevoir de frais judiciaires ni d'allouer de dépens à la partie intimée.\nPar ces motifs, la Juge présidant la Ire Cour de droit civil ordonne :\n1.\nLa cause 4A_566/2025 est rayée du rôle.\n2.\nll n'est pas perçu de frais ni alloué de dépens.\n3.\nLa présente ordonnance est communiquée aux parties et à la Chambre des assurances sociales de la Cour de justice du canton de Genève.\nLausanne, le 29 janvier 2026\nAu nom de la Ire Cour de droit civil\ndu Tribunal fédéral suisse\nLa Juge présidant : Kiss\nLe Greffier : O. Carruzzo",
+  "operator_metadata": {
+    "date": "2026-01-29",
+    "reference": [
+      "4A_566/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-566-2025_2026-01-29.html",
+      "source": "446973/45/2829",
+      "content_length": 2785
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_004_4A-566-2025_2026-01-29",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 29.01.2026 4A_566/2025",
+      "it": "Tribunale federale I Corte di diritto civile 29.01.2026 4A_566/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 29.01.2026 4A_566/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:08:08+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-566-2025_2026-01-29.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "8dc7144cedf426d5db06131ea132733d97e362940eeb014f1ada473b1992a1d8"
+  }
+}

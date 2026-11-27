@@ -1,0 +1,56 @@
+{
+  "id": "5A_320_2026",
+  "case_id": "5A_320/2026",
+  "case_ids": [
+    "5A_320/2026"
+  ],
+  "decision_date": "2026-04-16",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "Fürsorgerische Unterbringung",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://16-04-2026-5A_320-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5A_320/2026\nUrteil vom 16. April 2026\nII. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Bovey, Präsident,\nGerichtsschreiber Möckli.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nKindes- und Erwachsenenschutzbehörde Münchwilen, Wilerstrasse 19, 8370 Sirnach.\nGegenstand\nFürsorgerische Unterbringung,\nBeschwerde gegen den Entscheid des Obergerichts des Kantons Thurgau vom 31. März 2026 (KES.2026.22).\nSachverhalt:\nDer Beschwerdeführer leidet an einer paranoiden Schizophrenie und hat bereits eine längere Unterbringungsgeschichte hinter sich. Vorliegend geht es um die mit Entscheid der KESB Münchwilen vom 24. März 2026 angeordnete Verlängerung der fürsorgerischen Unterbringung in der Klinik B.________. Die hiergegen erhobene Beschwerde wies das Obergericht des Kantons Thurgau mit Entscheid vom 31. März 2026 ab. Mit Eingabe vom 11. April 2026 wendet sich der Beschwerdeführer an das Bundesgericht.\nErwägungen:\n1.\nDie Beschwerde hat eine Begründung zu enthalten, in welcher in gedrängter Form dargelegt wird, inwiefern der angefochtene Entscheid Recht verletzt (Art. 42 Abs. 2 BGG), was eine sachbezogene Auseinandersetzung mit dessen Erwägungen erfordert (BGE 140 III 115 E. 2; 142 III 364 E. 2.4).\n2.\nDer Beschwerdeführer hält einzig fest, er lebe jetzt schon seit über einem Jahr in Gefangenschaft und dies nur, weil seinerzeit die Verkäuferin in der Bäckerei die Polizei angelogen habe; er habe sie weder getreten noch angefasst. Darin liegt keine Auseinandersetzung mit den Erwägungen des 20-seitigen angefochtenen Entscheides, in welchen unter Bezugnahme auf das erstellte Gutachten, den neusten Zwischenbericht und die weiteren Akten der Schwächezustand sowie das selbst- und fremdgefährdende Verhalten, die einstweilen noch gegebene Erforderlichkeit der Unterbringung und die Eignung der Klinik dargestellt werden. Eine Rechtsverletzung wird in der Beschwerde nicht aufgezeigt und eine solche ist auch nicht ersichtlich.\n3.\nNach dem Gesagten erweist sich die Beschwerde als offensichtlich nicht hinreichend begründet, weshalb auf sie nicht eingetreten werden kann und der Präsident im vereinfachten Verfahren entscheidet (Art. 108 Abs. 1 lit. b BGG).\n4.\nAngesichts der konkreten Umstände ist auf die Erhebung von Gerichtskosten zu verzichten (Art. 66 Abs. 1 BGG).\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nEs werden keine Gerichtskosten gesprochen.\n3.\nDieses Urteil wird dem Beschwerdeführer, der Kindes- und Erwachsenenschutzbehörde Münchwilen und dem Obergericht des Kantons Thurgau mitgeteilt.\nLausanne, 16. April 2026\nIm Namen der II. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Bovey\nDer Gerichtsschreiber: Möckli",
+  "operator_metadata": {
+    "date": "2026-04-16",
+    "reference": [
+      "5A_320/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-320-2026_2026-04-16.html",
+      "source": "446973/45/2830",
+      "content_length": 3156
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2830",
+    "id": "CH_BGer_005_5A-320-2026_2026-04-16",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 16.04.2026 5A_320/2026",
+      "it": "Tribunale federale II Corte di diritto civile 16.04.2026 5A_320/2026",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 16.04.2026 5A_320/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:29:59+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-320-2026_2026-04-16.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "0e13164d956013b3660f61433106d588f869418f106e154283f37336b3e13796"
+  }
+}

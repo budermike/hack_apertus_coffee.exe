@@ -1,0 +1,56 @@
+{
+  "id": "5A_169_2026",
+  "case_id": "5A_169/2026",
+  "case_ids": [
+    "5A_169/2026"
+  ],
+  "decision_date": "2026-02-23",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "mesures provisionnelles (protection de la personnalité, art. 28b CC)",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://23-02-2026-5A_169-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5A_169/2026\nArrêt du 23 février 2026\nIIe Cour de droit civil\nComposition\nM. le Juge fédéral Herrmann, Juge présidant.\nGreffière : Mme Mairot.\nParticipants à la procédure\nA.A.________ et B.A.________,\nrecourants,\ncontre\nC.A.________,\nreprésentée par Me Philippe Loretan, avocat,\nintimée.\nObjet\nmesures provisionnelles (protection de la personnalité, art. 28b CC),\nrecours contre l'arrêt de la Juge unique de la\nCour civile II du Tribunal cantonal du canton du\nValais du 16 décembre 2025 (C1 25 180).\nConsidérant en fait et en droit :\n1.\n1.1. Par décision de mesures provisionnelles du 6 août 2025, la Juge IV du district de Sierre a interdit à A.A.________ et B.A.________, sous la menace de la peine prévue à l'art. 292 CP, de prendre contact, de quelque manière que ce soit, avec C.A.________ ou son entourage, en particulier D.________ et leur fils E.________, ou de lui causer d'autres désagréments, d'approcher à moins de 200 mètres du domicile de C.A.________ et de fréquenter l'atelier de fabrication de celle-ci. Un délai échéant le 18 novembre 2025 a été imparti à C.A.________ pour introduire l'action au fond, à peine de caducité des mesures provisionnelles.\n1.2. Par arrêt du 16 décembre 2025, la Juge unique de la Cour civile II du Tribunal cantonal valaisan a rejeté l'appel formé par A.A.________ et B.A.________.\n2.\nPar courrier posté le 13 février 2026, A.A.________ et B.A.________ ont saisi le Tribunal fédéral d'une demande \" d'intervention gracieuse et bienveillante sur [leur] dossier \", en produisant une copie - incomplète - de l'arrêt du 16 décembre 2025.\n3.\nLe présent recours - pour autant qu'il faille le considérer comme tel - est traité comme un recours en matière civile au sens de l'art. 72 al. 1 LTF. Il n'y a pas lieu d'examiner les autres conditions de recevabilité, ce procédé étant voué à l'échec.\n4.\nEn l'espèce, l'arrêt cantonal a été communiqué aux intéressés le 20 décembre 2025, de sorte que le délai de recours (30 jours) a commencé à courir dès le lendemain (art. 44 al. 1 LTF) - même si ce jour était un dimanche (cf. FRÉSARD, in: Commentaire de la LTF, 3e éd. 2022, n° 8 ad art. 44 LTF) - pour expirer le 19 janvier 2026, étant précisé que l'art. 46 al. 1 LTF sur la suspension des délais ne s'applique pas en matière de mesures provisionnelles (cf. art. 46 al. 2 let. a LTF). Déposé le 13 février 2026, le recours est ainsi tardif, partant irrecevable.\n5.\nEn conclusion, le présent recours doit être déclaré irrecevable par voie de procédure simplifiée (art. 108 al. 1 let. a LTF). Il peut être exceptionnellement statué sans frais (art. 66 al. 1 in fine LTF).\nPar ces motifs, le Juge présidant prononce :\n1.\nLe recours est irrecevable.\n2.\nIl n'est pas perçu de frais judiciaires.\n3.\nLe présent arrêt est communiqué aux parties et à la Juge unique de la Cour civile II du Tribunal cantonal du canton du Valais.\nLausanne, le 23 février 2026\nAu nom de la IIe Cour de droit civil\ndu Tribunal fédéral suisse\nLe Juge présidant : Herrmann\nLa Greffière : Mairot",
+  "operator_metadata": {
+    "date": "2026-02-23",
+    "reference": [
+      "5A_169/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-169-2026_2026-02-23.html",
+      "source": "446973/45/2829",
+      "content_length": 3486
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_005_5A-169-2026_2026-02-23",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 23.02.2026 5A_169/2026",
+      "it": "Tribunale federale II Corte di diritto civile 23.02.2026 5A_169/2026",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 23.02.2026 5A_169/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:15:39+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-169-2026_2026-02-23.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "151216dfec15d14d39b21d062554f40b7b94f430ad814a146ccb5cdf81b2713f"
+  }
+}

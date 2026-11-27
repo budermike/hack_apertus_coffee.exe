@@ -1,0 +1,56 @@
+{
+  "id": "5A_792_2025",
+  "case_id": "5A_792/2025",
+  "case_ids": [
+    "5A_792/2025"
+  ],
+  "decision_date": "2025-12-19",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "divorce (liquidation du régime matrimonial)",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://19-12-2025-5A_792-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5A_792/2025\nOrdonnance du 19 décembre 2025\nIIe Cour de droit civil\nComposition\nM. le Juge fédéral Bovey, Président.\nGreffier : M. Braconi.\nParticipants à la procédure\nA.________,\nreprésenté par Me Jérôme Reymond, avocat,\nrecourant,\ncontre\nB.________,\nreprésentée par Me Joël Crettaz, avocat,\nintimée.\nObjet\ndivorce (liquidation du régime matrimonial),\nrecours contre l'arrêt de la Cour d'appel civile du\nTribunal cantonal du canton de Vaud du 21 juillet 2025 (TD16.030970-240646, TD16.030970-240647 330).\nVu :\nle recours en matière civile interjeté le 15 septembre 2025 par A.________ contre l'arrêt rendu le 21 juillet 2025 par la Cour d'appel civile du Tribunal cantonal du canton de Vaud dans la cause opposant le recourant à B.________;\nl'ordonnance du 3 novembre 2025 suspendant l'instruction de la cause jusqu'au 21 novembre 2025 en raison de la conclusion d'un accord;\nles ordonnances des 24 novembre et 15 décembre 2025 prolongeant la suspension de la cause jusqu'au 12 décembre 2025, respectivement le 19 décembre 2025;\nla déclaration de retrait du recours du 18 décembre 2025;\nConsidérant :\nqu'il convient de prendre acte du retrait du recours et de rayer la cause du rôle (art. 73 PCF, par renvoi de l'art. 71 LTF);\nque le Président de la Cour de céans est compétent à cet effet (art. 32 al. 1 et 2 LTF);\nque, conformément à l'accord des parties, les frais judiciaires (réduits) sont \" partagés par deux \";\nque les parties renoncent en outre à l'allocation de dépens;\nPar ces motifs, le Président ordonne :\n1.\nLa cause est rayée du rôle par suite de retrait du recours.\n2.\nLes frais judiciaires, arrêtés à 800 fr., sont mis par moitié à la charge de chacune des parties.\n3.\nIl n'est pas alloué de dépens.\n4.\nLa présente ordonnance est communiquée aux parties et à la Cour d'appel civile du Tribunal cantonal du canton de Vaud.\nLausanne, le 19 décembre 2025\nAu nom de la IIe Cour de droit civil\ndu Tribunal fédéral suisse\nLe Président : Bovey\nLe Greffier : Braconi",
+  "operator_metadata": {
+    "date": "2025-12-19",
+    "reference": [
+      "5A_792/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-792-2025_2025-12-19.html",
+      "source": "446973/45/2869",
+      "content_length": 2383
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-06-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2869",
+    "id": "CH_BGer_005_5A-792-2025_2025-12-19",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 19.12.2025 5A_792/2025",
+      "it": "Tribunale federale II Corte di diritto civile 19.12.2025 5A_792/2025",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 19.12.2025 5A_792/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:59:31+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-792-2025_2025-12-19.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "a1f7f280efce237f3ece465f47bf04734d6f4b8acf5e52aab8e2c38e13a7b2fc"
+  }
+}

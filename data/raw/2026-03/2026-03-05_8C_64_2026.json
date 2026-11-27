@@ -1,0 +1,56 @@
+{
+  "id": "8C_64_2026",
+  "case_id": "8C_64/2026",
+  "case_ids": [
+    "8C_64/2026"
+  ],
+  "decision_date": "2026-03-05",
+  "publication_date": null,
+  "department": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "division": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "subject": "Sozialhilfe (Prozessvoraussetzung)",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://05-03-2026-8C_64-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n8C_64/2026\nUrteil vom 5. März 2026\nIV. öffentlich-rechtliche Abteilung\nBesetzung\nBundesrichterin Viscione, Präsidentin,\nGerichtsschreiber Grünvogel.\nVerfahrensbeteiligte\nA.________, vertreten durch B.________, \"Gesellschaft\" /\nBeschwerdeführerin,\ngegen\n1. C.________,\n2. D.________,\n3. Staatsanwaltschaft des Kantons St. Gallen, Spisergasse 15, 9001 St. Gallen,\n4. E.________,\nBeschwerdegegner.\nGegenstand\nSozialhilfe (Prozessvoraussetzung),\nBeschwerde gegen den Entscheid des Verwaltungsgerichts des Kantons St. Gallen vom 20. Januar 2026 (B 2026/8).\nErwägungen:\n1.\nB.________ erhebt am 25. Januar 2026 im Namen von A.________ Beschwerde gegen den Entscheid B 2026/8 des Verwaltungsgerichts des Kantons St. Gallen vom 20. Januar 2026.\n2.\nAm 27. Januar 2026 teilt A.________ dem Bundesgericht schriftlich mit, keine Beschwerde führen zu wollen. B.________ habe diese ohne ihre Zustimmung in ihrem Namen erhoben.\n3.\nBei offensichtlich fehlendem Beschwerdewillen ist auf die Beschwerde im vereinfachten Verfahren nach Art. 108 Abs. 1 lit. a BGG nicht einzutreten.\n4.\nDie Gerichtskosten sind gestützt auf Art. 66 Abs. 3 BGG dem ohne Zustimmung der Vertretenen Beschwerde führenden B.________ zu überbinden.\nDemnach erkennt die Präsidentin:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 200.- werden B.________ auferlegt.\n3.\nDieses Urteil wird A.________, B.________, den übrigen Parteien und dem Verwaltungsgericht des Kantons St. Gallen, Abteilung III, schriftlich mitgeteilt.\nLuzern, 5. März 2026\nIm Namen der IV. öffentlich-rechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Präsidentin: Viscione\nDer Gerichtsschreiber: Grünvogel",
+  "operator_metadata": {
+    "date": "2026-03-05",
+    "reference": [
+      "8C_64/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-64-2026_2026-03-05.html",
+      "source": "446973/45/2834",
+      "content_length": 2097
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+      "it": "Confederazione Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale)",
+      "fr": "Conféderation Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social)"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_008"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_008_8C-64-2026_2026-03-05",
+    "title": {
+      "de": "Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung) 05.03.2026 8C_64/2026",
+      "it": "Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale) 05.03.2026 8C_64/2026",
+      "fr": "Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social) 05.03.2026 8C_64/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:19:22+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-64-2026_2026-03-05.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "424cdfc28edd259cd41c81215a49d27e8dbc22aeaec8fd79d8b8fcb93cf185e8"
+  }
+}

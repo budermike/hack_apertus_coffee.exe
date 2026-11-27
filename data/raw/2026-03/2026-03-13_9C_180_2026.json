@@ -1,0 +1,56 @@
+{
+  "id": "9C_180_2026",
+  "case_id": "9C_180/2026",
+  "case_ids": [
+    "9C_180/2026"
+  ],
+  "decision_date": "2026-03-13",
+  "publication_date": null,
+  "department": "IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung)",
+  "division": "IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung)",
+  "subject": "Staats- und Gemeindesteuern des Kantons Solothurn und direkte Bundessteuer, Steuerperiode 2024",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://13-03-2026-9C_180-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n9C_180/2026\nVerfügung vom 13. März 2026\nIII. öffentlich-rechtliche Abteilung\nBesetzung\nBundesrichterin Moser-Szeless, Präsidentin,\nGerichtsschreiber Kocher.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nSteueramt des Kantons Solothurn, Schanzmühle, Werkhofstrasse 29c, 4509 Solothurn,\nBeschwerdegegner.\nGegenstand\nStaats- und Gemeindesteuern des Kantons Solothurn und direkte Bundessteuer, Steuerperiode 2024,\nBeschwerde gegen das Urteil des Kantonalen Steuergerichts Solothurn vom 12. Januar 2026 (SGSTA.2025.34, BST.2025.30).\nNach Einsicht\nin das Schreiben vom 11. März 2026, worin der Beschwerdeführer seine Beschwerde in öffentlich-rechtlichen Angelegenheiten vom 7. März 2026 (Poststempel: 9. März 2026) gegen das Urteil des Kantonalen Steuergerichts Solothurn vom 12. Januar 2026 zurückzieht,\nin Erwägung,\ndass die Beschwerde gemäss Art. 71 BGG in Verbindung mit Art. 73 Abs. 1 BZP im Verfahren nach Art. 32 Abs. 2 BGG abzuschreiben ist,\ndass in Anwendung von Art. 66 Abs. 2 BGG auf die Erhebung von Gerichtskosten verzichtet wird,\nverfügt die Präsidentin:\n1.\nDas Verfahren wird infolge Rückzugs der Beschwerde als erledigt abgeschrieben.\n2.\nFür das bundesgerichtliche Verfahren werden keine Kosten erhoben.\n3.\nDiese Verfügung wird den Verfahrensbeteiligten, dem Kantonalen Steuergericht Solothurn und der Eidgenössischen Steuerverwaltung schriftlich mitgeteilt.\nLuzern, 13. März 2026\nIm Namen der III. öffentlich-rechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Präsidentin: Moser-Szeless\nDer Gerichtsschreiber: Kocher",
+  "operator_metadata": {
+    "date": "2026-03-13",
+    "reference": [
+      "9C_180/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_009_9C-180-2026_2026-03-13.html",
+      "source": "446973/45/2834",
+      "content_length": 1927
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung)",
+      "it": "Confederazione Tribunale federale IV Corte di diritto pubblico (II Corte di diritto sociale)",
+      "fr": "Conféderation Tribunal fédéral IVe Cour de droit public (IIe Cour de droit social)"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_009"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_009_9C-180-2026_2026-03-13",
+    "title": {
+      "de": "Bundesgericht IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung) 13.03.2026 9C_180/2026",
+      "it": "Tribunale federale IV Corte di diritto pubblico (II Corte di diritto sociale) 13.03.2026 9C_180/2026",
+      "fr": "Tribunal fédéral IVe Cour de droit public (IIe Cour de droit social) 13.03.2026 9C_180/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:21:35+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_009_9C-180-2026_2026-03-13.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "fdbd29c8ddbaad1706171ce41e3c3abf54dbd366c5d153754000ce555f54ee5a"
+  }
+}

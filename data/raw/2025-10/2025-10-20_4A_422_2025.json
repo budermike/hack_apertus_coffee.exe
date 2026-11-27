@@ -1,0 +1,56 @@
+{
+  "id": "4A_422_2025",
+  "case_id": "4A_422/2025",
+  "case_ids": [
+    "4A_422/2025"
+  ],
+  "decision_date": "2025-10-20",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "arbitrage international en matière de sport",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://20-10-2025-4A_422-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4A_422/2025\nOrdonnance du 20 octobre 2025\nIre Cour de droit civil\nComposition\nMme la Juge fédérale Kiss, juge présidant.\nGreffier: M. O. Carruzzo.\nParticipants à la procédure\nA.________,\nreprésenté par Mes Alexandre Zen-Ruffinen et Emilie Weible, avocats,\nrecourant,\ncontre\nAnti-Doping Center of the Republic of Bulgaria,\nintimé.\nObjet\narbitrage international en matière de sport,\nrecours en matière civile contre la sentence rendue le 4 août 2025 par le Tribunal Arbitral du Sport (CAS 2024/A/10831).\nLa Juge présidant:\nVu le recours en matière civile, assorti d'une requête d'effet suspensif, formé le 8 septembre 2025 par A.________ (ci-après: le recourant) contre la sentence rendue le 4 août 2025 par le Tribunal Arbitral du Sport (TAS) dans la cause divisant le recourant d'avec l'Anti-Doping Centre of the Republic of Bulgaria (ci-après: l'intimé);\nVu la lettre du 15 octobre 2025 par laquelle le conseil du recourant informe le Tribunal fédéral que son mandant retire son recours;\nConsidérant que le juge instructeur statue en qualité de juge unique sur la radiation du rôle des procédures devenues sans objet ou achevées par un retrait ou une transaction judiciaire (art. 32 al. 2 LTF),\nqu'il y a lieu de prendre acte du retrait du recours et de rayer la cause 4A_422/2025 du rôle (art. 32 al. 2 LTF),\nque lorsque la cause est rayée du rôle à la suite du retrait du recours, la partie recourante est réputée avoir succombé au sens de l'art. 66 LTF (ordonnance 4A_3/2019 du 11 avril 2019 et les références citées),\nque l'émolument judiciaire doit être fixé en tenant compte du fait que la cause est liquidée en raison du retrait du recours (art. 66 al. 2 LTF),\nqu'en conséquence, un émolument judiciaire réduit, fixé à 500 fr., sera mis à la charge du recourant,\nqu'il n'y a pas lieu d'allouer de dépens, puisque l'intimé n'a pas été invité à répondre au recours.\nPar ces motifs, la Juge présidant la I re Cour de droit civil ordonne:\n1.\nIl est pris acte du retrait du recours.\n2.\nLa cause 4A_422/2025 est rayée du rôle.\n3.\nLes frais judiciaires, arrêtés à 500 fr., sont mis à la charge du recourant.\n4.\nLa présente ordonnance est communiquée aux parties et au Tribunal Arbitral du Sport (TAS).\nLausanne, le 20 octobre 2025\nAu nom de la Ire Cour de droit civil\ndu Tribunal fédéral suisse\nLa Juge présidant : Kiss\nLe Greffier : O. Carruzzo",
+  "operator_metadata": {
+    "date": "2025-10-20",
+    "reference": [
+      "4A_422/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-422-2025_2025-10-20.html",
+      "source": "446973/45/2869",
+      "content_length": 2719
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-06-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2869",
+    "id": "CH_BGer_004_4A-422-2025_2025-10-20",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 20.10.2025 4A_422/2025",
+      "it": "Tribunale federale I Corte di diritto civile 20.10.2025 4A_422/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 20.10.2025 4A_422/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:27:49+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-422-2025_2025-10-20.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "d5dd22949a434d72547676cd67171a7d43a2ea4c5b8f2584bc1cd32a1ae3b681"
+  }
+}

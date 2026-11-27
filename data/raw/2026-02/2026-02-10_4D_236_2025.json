@@ -1,0 +1,56 @@
+{
+  "id": "4D_236_2025",
+  "case_id": "4D_236/2025",
+  "case_ids": [
+    "4D_236/2025"
+  ],
+  "decision_date": "2026-02-10",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "definitive Rechtsöffnung",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://10-02-2026-4D_236-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4D_236/2025\nUrteil vom 10. Februar 2026\nI. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Hurni, Präsident,\nGerichtsschreiber Dürst.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nKanton Bern,\nvertreten durch die Steuerverwaltung des Kantons Bern, Inkassostelle, Region Oberland,\nBeschwerdegegner.\nGegenstand\ndefinitive Rechtsöffnung,\nBeschwerde gegen den Entscheid des Obergerichts des Kantons Bern, 1. Zivilkammer, vom 21. Oktober 2025\n(ZK 25 399).\nErwägungen:\n1.\nMit Entscheid vom 25. August 2025 erteilte das Regionalgericht Oberland dem Beschwerdegegner die definitive Rechtsöffnung für Fr. 10'415.90. Mit Entscheid vom 21. Oktober 2025 trat das Obergericht des Kantons Bern auf die Beschwerde des Beschwerdeführers gegen den Entscheid des Regionalgerichts Oberland nicht ein.\nDagegen erhob der Beschwerdeführer mit Eingabe vom 1. Dezember 2025 Beschwerde an das Bundesgericht.\nEs wurden keine Vernehmlassungen eingeholt.\n2.\nDie Eingabe des Beschwerdeführers erfüllt die Begründungsanforderungen, die an eine Beschwerde an das Bundesgericht gestellt werden (Art. 42 Abs. 2 und Art. 106 Abs. 2 BGG; BGE 142 III 364 E. 2.4; 140 III 86 E. 2, 115 E. 2), offensichtlich nicht. Auf die Beschwerde ist somit mangels hinreichender Begründung im vereinfachten Verfahren durch den Abteilungspräsidenten nicht einzutreten (Art. 108 Abs. 1 lit. b BGG). Die Begründung dieses Entscheids beschränkt sich auf eine kurze Angabe des Unzulässigkeitsgrundes (Art. 108 Abs. 3 BGG).\n3.\nDer Beschwerdeführer wird bei diesem Verfahrensausgang kostenpflichtig (Art. 66 Abs. 1 BGG). Der Beschwerdegegner hat keinen Anspruch auf eine Parteientschädigung, da ihm mangels Einholung einer Vernehmlassung aus dem bundesgerichtlichen Verfahren kein entschädigungspflichtiger Aufwand erwachsen ist (Art. 68 Abs. 2 BGG).\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 500.-- werden dem Beschwerdeführer auferlegt.\n3.\nDieses Urteil wird den Parteien und dem Obergericht des Kantons Bern, 1. Zivilkammer, schriftlich mitgeteilt.\nLausanne, 10. Februar 2026\nIm Namen der I. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Hurni\nDer Gerichtsschreiber: Dürst",
+  "operator_metadata": {
+    "date": "2026-02-10",
+    "reference": [
+      "4D_236/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-236-2025_2026-02-10.html",
+      "source": "446973/45/2829",
+      "content_length": 2639
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_004_4D-236-2025_2026-02-10",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 10.02.2026 4D_236/2025",
+      "it": "Tribunale federale I Corte di diritto civile 10.02.2026 4D_236/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 10.02.2026 4D_236/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:11:45+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-236-2025_2026-02-10.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "8105108a7928ed37eb87c39d834e24a77c4fb04ae9ce022b793ea8523ae43cb1"
+  }
+}

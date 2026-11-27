@@ -1,0 +1,56 @@
+{
+  "id": "7B_888_2025",
+  "case_id": "7B_888/2025",
+  "case_ids": [
+    "7B_888/2025"
+  ],
+  "decision_date": "2025-10-09",
+  "publication_date": null,
+  "department": "II. Strafrechtliche Abteilung",
+  "division": "II. Strafrechtliche Abteilung",
+  "subject": "Decreto di non luogo a procedere",
+  "language": "it",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://09-10-2025-7B_888-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n7B_888/2025\nSentenza del 9 ottobre 2025\nII Corte di diritto penale\nComposizione\nGiudice federale Abrecht, Presidente,\nCancelliere Caprara.\nPartecipanti al procedimento\nA.________,\nricorrente,\ncontro\nMinistero pubblico del Cantone Ticino, Ufficio di Bellinzona, viale S. Franscini 3, 6500 Bellinzona,\nopponente.\nOggetto\nDecreto di non luogo a procedere,\nricorso contro la sentenza emanata il 22 agosto 2025 dalla Corte dei reclami penali del Tribunale d'appello\ndel Cantone Ticino (60.2024.254).\nRitenuto in fatto e considerando in diritto:\n1.\nCon ricorso del 30 agosto 2025 A.________ è insorto al Tribunale federale contro la sentenza emanata il 22 agosto 2025 dalla Corte dei reclami penali del Tribunale d'appello del Cantone Ticino. Egli chiede inoltre di essere ammesso al beneficio dell'assistenza giudiziaria.\n2.\nGiusta l'art. 42 cpv. 1 LTF, gli atti scritti devono contenere le conclusioni, i motivi e l'indicazione dei mezzi di prova ed essere firmati.\n3.\nConstatata l'assenza di una firma apposta di proprio pugno sul ricorso, dove è presente unicamente una fotocopia della stessa, ciò che risulta insufficiente (DTF 121 II 252 consid. 3; sentenze 6B_553/2024 del 13 settembre 2024 consid. 3; 6B_505/2023 del 15 maggio 2023 consid. 2), con decreto dell'11 settembre 2025 l'impugnativa è stata ritornata al ricorrente, con l'invito a sanare il vizio entro il 2 ottobre 2025 e l'avvertenza che in caso di inosservanza l'atto scritto non sarebbe stato preso in considerazione (art. 42 cpv. 5 LTF).\nDall'estratto \"Track and Trace\" (tracciamento degli invii della Posta svizzera) risulta che il summenzionato decreto è stato notificato al ricorrente in data 13 settembre 2025 mediante invio raccomandato all'indirizzo di recapito indicato nella richiesta di assistenza giudiziaria.\n4.\nEntro il termine assegnato, il ricorrente non ha trasmesso al Tribunale federale un esemplare dell'atto di ricorso con firma autografa. Per tale motivo, il ricorso dev'essere dichiarato manifestamente inammissibile mediante la procedura semplificata dell'art. 108 cpv. 1 lett. a LTF.\nLa domanda di assistenza giudiziaria va respinta per mancanza di possibilità di esito favorevole del ricorso (art. 64 cpv. 1 LTF), indipendentemente da un'eventuale indigenza del ricorrente, peraltro non comprovata. Le spese giudiziarie seguono la soccombenza (art. 66 cpv. 1 prima frase LTF) e vanno pertanto poste a carico del ricorrente.\nPer questi motivi, il Presidente pronuncia:\n1.\nIl ricorso è inammissibile.\n2.\nLa domanda di assistenza giudiziaria è respinta.\n3.\nLe spese giudiziarie di fr. 800.-- sono poste a carico del ricorrente.\n4.\nComunicazione alle parti, alla Corte dei reclami penali del Tribunale d'appello del Cantone Ticino e a B.________, X.________.\nLosanna, 9 ottobre 2025\nIn nome della II Corte di diritto penale\ndel Tribunale federale svizzero\nIl Presidente: Abrecht\nIl Cancelliere: Caprara",
+  "operator_metadata": {
+    "date": "2025-10-09",
+    "reference": [
+      "7B_888/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "it",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-888-2025_2025-10-09.html",
+      "source": "446973/45/2851",
+      "content_length": 3321
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit pénal"
+    },
+    "scrapedate": "2026-06-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_007"
+    ],
+    "canton": "CH",
+    "language": "it",
+    "source": "446973/45/2851",
+    "id": "CH_BGer_007_7B-888-2025_2025-10-09",
+    "title": {
+      "de": "Bundesgericht II. Strafrechtliche Abteilung 09.10.2025 7B_888/2025",
+      "it": "Tribunale federale II Corte di diritto penale 09.10.2025 7B_888/2025",
+      "fr": "Tribunal fédéral IIe Cour de droit pénal 09.10.2025 7B_888/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:25:27+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-888-2025_2025-10-09.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "694667024c391e35fec67202c210a83d11a620ede66655a7f37ccd5d7ce25cb9"
+  }
+}

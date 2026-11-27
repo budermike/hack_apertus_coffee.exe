@@ -1,0 +1,56 @@
+{
+  "id": "5A_453_2026",
+  "case_id": "5A_453/2026",
+  "case_ids": [
+    "5A_453/2026"
+  ],
+  "decision_date": "2026-06-08",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "retrait du recours (exécution d'un séquestre)",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://08-06-2026-5A_453-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5A_453/2026\nOrdonnance du 8 juin 2026\nIIe Cour de droit civil\nComposition\nM. le Juge fédéral Bovey, Président.\nGreffière : Mme Mairot.\nParticipants à la procédure\nA.________,\nreprésenté par Mes Rodrigo Da Silva et Marco Villa, avocats,\nrecourant,\ncontre\nB.________,\nreprésenté par Me Benoît Mauron, avocat,\nintimé,\nOffice cantonal des poursuites de Genève, rue du Stand 46, case postale 208, 1211 Genève 8,\nObjet\nretrait du recours (exécution d'un séquestre),\nrecours contre la décision de la Chambre de surveillance\ndes Offices des poursuites et faillites de la Cour de justice\ndu canton de Genève du 7 mai 2026 (A/4061/2025-CS).\nVu :\nle recours en matière civile interjeté le 18 mai 2026 par A.________ contre la décision rendue le 7 mai 2026 par la Chambre de surveillance des Offices des poursuites et faillites de la Cour de justice du canton de Genève, assorti d'une requête d'effet suspensif;\nla déclaration de retrait du recours du 3 juin 2026 reçue le lendemain;\nles déterminations de l'intimé sur la requête d'effet suspensif du 4 juin 2026;\nConsidérant :\nqu'il convient de prendre acte du retrait du recours et de rayer la cause du rôle (art. 73 PCF, par renvoi de l'art. 71 LTF);\nque le Président de la Cour de céans est compétent à cet effet (art. 32 al. 1 et 2 LTF);\nque les frais judiciaires (réduits) incombent à la recourante (art. 66 al. 1 et 2 LTF; ordonnances 5A_1072//2025 du 8 janvier 2026; 5A_72/2024 du 4 novembre 2025);\nqu'il y a lieu d'allouer à l'intimé des dépens à raison de ses écritures devenues inutiles à la suite du retrait du recours (art. 66 al. 3 LTF, par renvoi de l'art. 68 al. 4 LTF).\nPar ces motifs, le Président ordonne :\n1.\nLa cause est rayée du rôle par suite de retrait du recours.\n2.\nLes frais judiciaires, arrêtés à 500 fr., sont mis à la charge du recourant.\n3.\nUne indemnité de 500 fr., à payer à l'intimé à titre de dépens, est mise à la charge du recourant.\n4.\nLa présente ordonnance est communiquée aux parties, à l'Office cantonal des poursuites de Genève et à la Chambre de surveillance des Offices des poursuites et faillites de la Cour de justice du canton de Genève.\nLausanne, le 8 juin 2026\nAu nom de la IIe Cour de droit civil\ndu Tribunal fédéral suisse\nLe Président : Bovey\nLa Greffière : Mairot",
+  "operator_metadata": {
+    "date": "2026-06-08",
+    "reference": [
+      "5A_453/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-453-2026_2026-06-08.html",
+      "source": "446973/45/2830",
+      "content_length": 2665
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2830",
+    "id": "CH_BGer_005_5A-453-2026_2026-06-08",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 08.06.2026 5A_453/2026",
+      "it": "Tribunale federale II Corte di diritto civile 08.06.2026 5A_453/2026",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 08.06.2026 5A_453/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:44:37+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-453-2026_2026-06-08.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "f6af11e1ec4fb60dffb3e7fd1d460092c41d378408292ebd7939ac2f65180a55"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "id": "8F_1_2026",
+  "case_id": "8F_1/2026",
+  "case_ids": [
+    "8F_1/2026"
+  ],
+  "decision_date": "2026-05-01",
+  "publication_date": null,
+  "department": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "division": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "subject": "Sozialhilfe (Prozessvoraussetzung)",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://01-05-2026-8F_1-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n8F_1/2026\nUrteil vom 1. Mai 2026\nIV. öffentlich-rechtliche Abteilung\nBesetzung\nBundesrichterin Viscione, Präsidentin,\nGerichtsschreiber Grünvogel.\nVerfahrensbeteiligte\nA.________,\nGesuchstellerin,\ngegen\nFürsorgebehörde Küssnacht,\nSeemattweg 6, 6403 Küssnacht am Rigi,\nGesuchsgegnerin.\nGegenstand\nSozialhilfe (Prozessvoraussetzung),\nRevisionsgesuch gegen das Urteil des Schweizerischen Bundesgerichts vom 16. Dezember 2025 (8C_707/2025).\nNach Einsicht\nin das Revisionsgesuch vom 2. Januar 2026 gegen das Urteil des Schweizerischen Bundesgerichts vom 16. Dezember 2025,\nin die Verfügung vom 23. März 2026, mit welcher das nach Erhalt der Kostenvorschussverfügung vom 13. Januar 2026 gestellte Gesuch von A.________ um Gewährung der unentgeltlichen Rechtspflege abgewiesen wurde, wobei sie zur Bezahlung des Kostenvorschusses innert einer nicht verlängerbaren Nachfrist von 10 Tagen ab Empfang der Verfügung verpflichtete wurde, anderenfalls auf das Revisionsgesuch nicht eingetreten werde,\nin Erwägung,\ndass die Gesuchstellerin den Vorschuss auch innerhalb der Nachfrist nicht geleistet hat,\ndass deshalb gestützt auf Art. 62 Abs. 3 BGG im Verfahren nach Art. 108 BGG (vgl. CHRISTIAN DENYS, in: Commentaire de la LTF, 3. Aufl. 2022, N. 8 zu Art. 128 BGG) auf das Revisionsgesuch nicht einzutreten ist,\ndass die Gesuchstellerin nach Art. 66 Abs. 1 und 3 BGG kostenpflichtig wird,\ndass sich das Gericht vorbehält, allfällige weitere ähnliche Eingaben in dieser Angelegenheit, insbesondere von Vornherein untauglich begründete Revisionsgesuche, inskünftig unbeantwortet abzulegen,\nerkennt die Präsidentin:\n1.\nAuf das Revisionsgesuch wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 200.- werden der Gesuchstellerin auferlegt.\n3.\nDieses Urteil wird den Parteien, dem Verwaltungsgericht des Kantons Schwyz und dem Regierungsrat des Kantons Schwyz schriftlich mitgeteilt.\nLuzern, 1. Mai 2026\nIm Namen der IV. öffentlich-rechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Präsidentin: Viscione\nDer Gerichtsschreiber: Grünvogel",
+  "operator_metadata": {
+    "date": "2026-05-01",
+    "reference": [
+      "8F_1/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8F-1-2026_2026-05-01.html",
+      "source": "446973/45/2834",
+      "content_length": 2428
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+      "it": "Confederazione Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale)",
+      "fr": "Conféderation Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social)"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_008"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_008_8F-1-2026_2026-05-01",
+    "title": {
+      "de": "Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung) 01.05.2026 8F_1/2026",
+      "it": "Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale) 01.05.2026 8F_1/2026",
+      "fr": "Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social) 01.05.2026 8F_1/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:36:31+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8F-1-2026_2026-05-01.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "a09064f97497629b9fd94484a69c8a2994f7a58ea560cd447b2c0711aec2a37f"
+  }
+}

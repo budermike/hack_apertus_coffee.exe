@@ -1,0 +1,56 @@
+{
+  "id": "5A_461_2026",
+  "case_id": "5A_461/2026",
+  "case_ids": [
+    "5A_461/2026"
+  ],
+  "decision_date": "2026-06-08",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "Pfändung",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://08-06-2026-5A_461-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5A_461/2026\nUrteil vom 8. Juni 2026\nII. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Bovey, Präsident,\nGerichtsschreiber Zingg.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nBetreibungsamt Emmental-Oberaargau, Dienststelle Oberaargau, Jurastrasse 22, 4900 Langenthal.\nGegenstand\nPfändung,\nBeschwerde gegen den Entscheid des Obergerichts des Kantons Bern, Aufsichtsbehörde in Betreibungs- und Konkurssachen, vom 27. April 2026 (ABS 26 97).\nErwägungen:\n1.\nDer Beschwerdeführer wird in den Pfändungsgruppen Nrn. xxx und yyy des Betreibungsamtes Emmental-Oberaargau, Dienststelle Oberaargau, betrieben. In der erstgenannten Pfändungsgruppe erliess das Betreibungsamt am 8. Dezember 2025 die Pfändungsurkunde und die Existenzminimumsberechnung. In der zweitgenannten Pfändungsgruppe ergingen per 19. und 29. Januar sowie 10. Februar 2026 drei Pfändungsankündigungen.\nAm 18. Februar 2026 gelangte der Beschwerdeführer an das Obergericht des Kantons Bern. Am 27. Februar 2026 revidierte das Betreibungsamt die Existenzminimumsberechnung. Mit Entscheid vom 27. April 2026 trat das Obergericht auf die Beschwerde nicht ein, soweit es sie nicht als gegenstandslos abschrieb.\nAm 21. Mai 2026 (Postaufgabe) ist der Beschwerdeführer an das Bundesgericht gelangt.\n2.\nDer Beschwerdeführer hat den Entscheid des Obergerichts am 30. April 2026 in Empfang genommen. Die zehntägige Beschwerdefrist ist nach der Verlängerung über das Wochenende am Montag, 11. Mai 2026, abgelaufen (Art. 100 Abs. 2 lit. a i.V.m. Art. 45 BGG). Die erst am 21. Mai 2026 der Post übergebene Beschwerde ist verspätet.\nIm Übrigen setzt sich der Beschwerdeführer mit den Erwägungen des Obergerichts nicht auseinander. Nicht einzugehen ist auf Ausführungen aus dem Umfeld der Staatsverweigerer- und ähnlicher Bewegungen. Er zeigt auch nicht auf, dass das Obergericht seine Eingabe zu Unrecht als Beschwerde statt als Strafklage gegen das Betreibungsamt qualifiziert hätte.\nDie Beschwerde ist offensichtlich unzulässig und sie enthält offensichtlich keine hinreichende Begründung (Art. 42 Abs. 2 BGG). Der Abteilungspräsident tritt auf sie im vereinfachten Verfahren nicht ein (Art. 108 Abs. 1 lit. a und b BGG).\n3.\nBei diesem Ausgang des Verfahrens trägt der Beschwerdeführer die Gerichtskosten (Art. 66 Abs. 1 BGG).\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 500.-- werden dem Beschwerdeführer auferlegt.\n3.\nDieses Urteil wird den Verfahrensbeteiligten und dem Obergericht des Kantons Bern, Aufsichtsbehörde in Betreibungs- und Konkurssachen, mitgeteilt.\nLausanne, 8. Juni 2026\nIm Namen der II. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Bovey\nDer Gerichtsschreiber: Zingg",
+  "operator_metadata": {
+    "date": "2026-06-08",
+    "reference": [
+      "5A_461/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-461-2026_2026-06-08.html",
+      "source": "446973/45/2830",
+      "content_length": 3154
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2830",
+    "id": "CH_BGer_005_5A-461-2026_2026-06-08",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 08.06.2026 5A_461/2026",
+      "it": "Tribunale federale II Corte di diritto civile 08.06.2026 5A_461/2026",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 08.06.2026 5A_461/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:44:37+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-461-2026_2026-06-08.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "aa44a3a46474c703f1a97b82a01d7cf398b9a4019ce2b6f9fd0274ca39b44c93"
+  }
+}

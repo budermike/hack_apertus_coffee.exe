@@ -1,0 +1,56 @@
+{
+  "id": "4A_194_2026",
+  "case_id": "4A_194/2026",
+  "case_ids": [
+    "4A_194/2026"
+  ],
+  "decision_date": "2026-06-01",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "mainlevée définitive",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://01-06-2026-4A_194-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4A_194/2026\nArrêt du 1er juin 2026\nIre Cour de droit civil\nComposition\nM. le Juge fédéral Hurni, Président.\nGreffier : M. Botteron.\nParticipants à la procédure\nA.________,\nrecourant,\ncontre\nETAT DE VAUD, Département de la santé et de\nl'action sociale,\nService de prévoyance et d'aide sociales,\nagissant par la Direction générale de la cohésion sociale (DGCS), Unité juridique, avenue des Casernes 2, 1014 Lausanne,\nintimé.\nObjet\nmainlevée définitive,\nrecours contre l'arrêt rendu le 30 mars 2026 par la Chambre civile du Tribunal cantonal du Valais\n(C3 26 35).\nConsidérant en fait et en droit :\n1.\nPar arrêt du 30 mars 2026, la Chambre civile du Tribunal cantonal du Valais a rejeté le recours interjeté par A.________ dans la mesure où il était recevable et a réformé la décision du 12 janvier 2026 du Tribunal des districts de Martigny et St-Maurice, dans la poursuite n° xxx de l'office des poursuites des districts de Martigny et Entremont, intentée par l'Etat de Vaud, en accordant la mainlevée définitive de l'opposition à hauteur de 238'606 fr. 11. Le recourant interjette un recours contre cet arrêt le 29 avril 2026.\n2.\nLe recours ne remplit manifestement pas les exigences de motivation requises pour un recours auprès du Tribunal fédéral (art. 42 al. 2, et art. 106, al. 2, LTF; ATF 142 III 364, consid. 2.4; 140 III 86, consid. 2, 115, consid. 2). Par conséquent, il n'y a pas lieu d'entrer en matière sur celui-ci, faute de motivation suffisante, ce qu'il convient de constater selon la procédure simplifiée de l'art. 108 al. 1 let. b LTF. L'arrêt est motivé par une brève indication de la cause de l'irrecevabilité (art. 108 al. 3 LTF).\n3.\nLa procédure entreprise devant la Cour de céans était dépourvue de chances de succès, ce qui entraîne le rejet de la demande d'assistance judiciaire du recourant (art. 64 al. 1 LTF).\n4.\nLe recourant devra supporter les frais judiciaires (art. 66 al. 1 LTF). En revanche, il n'y a pas lieu d'allouer des dépens (art. 68 al. 3 LTF).\npar ces motifs, le Président prononce :\n1.\nLe recours est irrecevable.\n2.\nLa requête d'assistance judiciaire est rejetée.\n3.\nLes frais judiciaires, arrêtés à 500 fr., sont mis à la charge du recourant.\n4.\nLe présent arrêt est communiqué aux parties et à la Chambre civile du Tribunal cantonal du Valais.\nLausanne, le 1er juin 2026\nAu nom de la Ire Cour de droit civil\ndu Tribunal fédéral suisse\nLe Président : Hurni\nLe Greffier : Botteron",
+  "operator_metadata": {
+    "date": "2026-06-01",
+    "reference": [
+      "4A_194/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-194-2026_2026-06-01.html",
+      "source": "446973/45/2829",
+      "content_length": 2869
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_004_4A-194-2026_2026-06-01",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 01.06.2026 4A_194/2026",
+      "it": "Tribunale federale I Corte di diritto civile 01.06.2026 4A_194/2026",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 01.06.2026 4A_194/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:19:08+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-194-2026_2026-06-01.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "d15a60c905bb279d5f4f902f1022a6216d3a7e2008723f2198641527161e37bc"
+  }
+}

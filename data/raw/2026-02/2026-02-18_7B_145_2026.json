@@ -1,0 +1,56 @@
+{
+  "id": "7B_145_2026",
+  "case_id": "7B_145/2026",
+  "case_ids": [
+    "7B_145/2026"
+  ],
+  "decision_date": "2026-02-18",
+  "publication_date": null,
+  "department": "II. Strafrechtliche Abteilung",
+  "division": "II. Strafrechtliche Abteilung",
+  "subject": "Établissement d'un profil ADN (retrait du recours)",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://18-02-2026-7B_145-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n7B_145/2026\nOrdonnance du 18 février 2026\nIIe Cour de droit pénal\nComposition\nM. le Juge fédéral Abrecht, Président.\nGreffier : M. Porchet.\nParticipants à la procédure\nA.________,\nreprésenté par Me Dina Bazarbachi, avocate,\nrecourant,\ncontre\nMinistère public de la République et canton de Genève,\nroute de Chancy 6B, 1213 Petit-Lancy.\nObjet\nÉtablissement d'un profil ADN (retrait du recours),\nrecours contre l'arrêt de la Chambre pénale de recours de la Cour de justice de la République\net canton de Genève du 16 décembre 2025\n(ACPR/1061/2025 - P/25521/2025).\nConsidérant en fait et en droit :\n1.\nPar acte du 16 janvier 2026, A.________ a interjeté un recours en matière pénale au Tribunal fédéral contre l'arrêt de la Chambre pénale de recours de la Cour de justice de la République et canton de Genève du 16 décembre 2025 (cause 7B_74/2026).\nPar acte du 2 février 2026, A.________ a interjeté un second recours en matière pénale au Tribunal fédéral contre cet arrêt (cause 7B_145/2026).\nPar courrier du 9 février 2026, le Tribunal fédéral a invité le recourant à préciser s'il maintenait ses deux recours, respectivement s'il en retirait un.\nPar courrier du 11 février 2026, A.________ a déclaré retirer le recours interjeté le 2 février 2026.\n2.\nIl y a par conséquent lieu de prendre acte du retrait du recours dans la cause 7B_145/2026 et de rayer la cause du rôle (cf. art. 32 al. 2 LTF), sans frais judiciaires au vu des circonstances, en particulier de l'état de la procédure (cf. art. 66 al. 1 in fineet 2 LTF).\nPar ces motifs, le Président ordonne :\n1.\nIl est pris acte du retrait du recours et l'affaire 7B_145/2026 est rayée du rôle.\n2.\nIl n'est pas perçu de frais judiciaires.\n3.\nLa présente ordonnance est communiquée au recourant, au Ministère public de la République et canton de Genève et à la Cour de justice de la République et canton de Genève, Chambre pénale de recours.\nLausanne, le 18 février 2026\nAu nom de la IIe Cour de droit pénal\ndu Tribunal fédéral suisse\nLe Président : Abrecht\nLe Greffier : Porchet",
+  "operator_metadata": {
+    "date": "2026-02-18",
+    "reference": [
+      "7B_145/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-145-2026_2026-02-18.html",
+      "source": "446973/45/2834",
+      "content_length": 2415
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit pénal"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_007"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_007_7B-145-2026_2026-02-18",
+    "title": {
+      "de": "Bundesgericht II. Strafrechtliche Abteilung 18.02.2026 7B_145/2026",
+      "it": "Tribunale federale II Corte di diritto penale 18.02.2026 7B_145/2026",
+      "fr": "Tribunal fédéral IIe Cour de droit pénal 18.02.2026 7B_145/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:14:48+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-145-2026_2026-02-18.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "b9f4550152395c4977fe1b05345f427fcc8fe7be6f3f5f136cc06eac1d28c485"
+  }
+}

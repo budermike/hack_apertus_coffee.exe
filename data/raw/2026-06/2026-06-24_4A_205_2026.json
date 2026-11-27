@@ -1,0 +1,56 @@
+{
+  "id": "4A_205_2026",
+  "case_id": "4A_205/2026",
+  "case_ids": [
+    "4A_205/2026"
+  ],
+  "decision_date": "2026-06-24",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "Mieterausweisung",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://24-06-2026-4A_205-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4A_205/2026\nUrteil vom 24. Juni 2026\nI. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Hurni, Präsident,\nGerichtsschreiber Leemann.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nB.________,\nBeschwerdegegner,\nC.________,\nVerfahrensbeteiligte.\nGegenstand\nMieterausweisung,\nBeschwerde gegen die Präsidialverfügung des Obergerichts des Kantons Zug, II. Zivilabteilung, vom 28. April 2026 (Z2 2026 22).\nIn Erwägung,\ndass der Beschwerdeführer beim Bundesgericht mit Eingabe vom 1. Mai 2026 Beschwerde gegen die Präsidialverfügung des Obergerichts des Kantons Zug vom 28. April 2026 erhob;\ndass der Beschwerdeführer mit Präsidialverfügung vom 7. Mai 2026 aufgefordert wurde, spätestens am 22. Mai 2026 einen Kostenvorschuss von Fr. 800.-- einzuzahlen;\ndass dem Beschwerdeführer, da der Kostenvorschuss innerhalb dieser Frist nicht eingegangen war, mit Verfügung vom 27. Mai 2026 eine nicht erstreckbare Nachfrist zur Vorschussleistung bis zum 11. Juni 2026 angesetzt wurde, unter Hinweis darauf, dass das Bundesgericht bei Säumnis auf das Rechtsmittel nicht eintreten werde (Art. 62 Abs. 3 BGG);\ndass der Beschwerdeführer den ihm auferlegten Kostenvorschuss auch innerhalb der angesetzten Nachfrist nicht geleistet hat, weshalb gestützt auf Art. 62 Abs. 3 BGG auf die Beschwerde nicht einzutreten ist (Art. 108 Abs. 1 lit. a BGG);\ndass die Gerichtskosten dem Verfahrensausgang entsprechend dem Beschwerdeführer aufzuerlegen sind (Art. 66 Abs. 1 BGG);\ndass den Beschwerdegegnern und der Verfahrensbeteiligten keine Parteientschädigungen zuzusprechen sind (Art. 68 Abs. 1 und 2 BGG);\nerkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 300.-- werden dem Beschwerdeführer auferlegt.\n3.\nEs werden keine Parteientschädigungen zugesprochen.\n4.\nDieses Urteil wird den Parteien, der Verfahrensbeteiligten und dem Obergericht des Kantons Zug, II. Zivilabteilung, schriftlich mitgeteilt.\nLausanne, 24. Juni 2026\nIm Namen der I. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Hurni\nDer Gerichtsschreiber: Leemann",
+  "operator_metadata": {
+    "date": "2026-06-24",
+    "reference": [
+      "4A_205/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-205-2026_2026-06-24.html",
+      "source": "446973/45/2829",
+      "content_length": 2474
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_004_4A-205-2026_2026-06-24",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 24.06.2026 4A_205/2026",
+      "it": "Tribunale federale I Corte di diritto civile 24.06.2026 4A_205/2026",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 24.06.2026 4A_205/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:19:12+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-205-2026_2026-06-24.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "49cf8413e1bec2ccab99bc1a7c7a5418cabecba6e1962e4dc7f2d34298f8c8a7"
+  }
+}

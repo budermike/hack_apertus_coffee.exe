@@ -1,0 +1,56 @@
+{
+  "id": "5A_142_2026",
+  "case_id": "5A_142/2026",
+  "case_ids": [
+    "5A_142/2026"
+  ],
+  "decision_date": "2026-03-27",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "Aufschiebende Wirkung (Konkurseröffnung)",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://27-03-2026-5A_142-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5A_142/2026\nVerfügung vom 27. März 2026\nII. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Bovey, Präsident,\nGerichtsschreiber Zingg.\nVerfahrensbeteiligte\nA.________ GmbH in Liquidation,\nvertreten durch Rechtsanwalt Visar Keraj,\nBeschwerdeführerin,\ngegen\nSVA Aargau, Kyburgerstrasse 15, Postfach, 5001 Aarau,\nBeschwerdegegnerin.\nGegenstand\nAufschiebende Wirkung (Konkurseröffnung),\nBeschwerde gegen die Verfügung des Obergerichts des Kantons Aargau, Zivilgericht, 4. Kammer, vom 6. Februar 2026 (ZSU.2026.38).\nErwägungen:\n1.\nMit Entscheid vom 20. Januar 2026 eröffnete das Bezirksgericht Zurzach über die Beschwerdeführerin per Urteilsdatum den Konkurs.\nDagegen erhob die Beschwerdeführerin Beschwerde. Mit Verfügung vom 6. Februar 2026 wies das Obergericht des Kantons Aargau das Gesuch um aufschiebende Wirkung ab.\nGegen diese Verfügung hat die Beschwerdeführerin am 13. Februar 2026 Beschwerde an das Bundesgericht erhoben. Mit Verfügung vom 16. Februar 2026 hat das Bundesgericht das Gesuch um aufschiebende Wirkung (recte: um eine vorsorgliche Massnahme dahingehend, der am Obergericht hängigen Beschwerde die aufschiebende Wirkung zuzuerkennen) abgewiesen. Das Bundesgericht hat Beschwerdeantworten eingeholt. Die Beschwerdegegnerin hat sich nicht vernehmen lassen. Das Obergericht hat am 17. Februar 2026 auf Vernehmlassung verzichtet und mitgeteilt, dass es gleichentags die Beschwerde der Beschwerdeführerin abgewiesen hat. Am 25. März 2026 hat die Beschwerdeführerin die Beschwerde zurückgezogen. Sie bittet darum, von einer Parteientschädigung abzusehen und die Gerichtskosten auf ein Minimum zu beschränken.\n2.\nDas Beschwerdeverfahren ist demnach durch den Abteilungspräsidenten (Art. 32 Abs. 2 BGG) als durch Rückzug der Beschwerde erledigt abzuschreiben (Art. 71 BGG i.V.m. Art. 73 BZP [SR 273]).\n3.\nAufgrund der Umstände rechtfertigt es sich, auf die Erhebung von Gerichtskosten zu verzichten (Art. 66 Abs. 1 BGG). Parteientschädigungen sind nicht geschuldet (Art. 68 Abs. 1 BGG).\nDemnach verfügt der Präsident:\n1.\nDas Verfahren 5A_142/2026 wird als durch Rückzug der Beschwerde erledigt abgeschrieben.\n2.\nEs werden keine Gerichtskosten erhoben.\n3.\nEs werden keine Parteientschädigungen zugesprochen.\n4.\nDiese Verfügung wird den Parteien, dem Konkursamt Aargau, dem Regionalen Betreibungsamt Zurzach, dem Handelsregisteramt des Kantons Aargau, dem Grundbuchamt Baden und dem Obergericht des Kantons Aargau, Zivilgericht, 4. Kammer, mitgeteilt.\nLausanne, 27. März 2026\nIm Namen der II. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Bovey\nDer Gerichtsschreiber: Zingg",
+  "operator_metadata": {
+    "date": "2026-03-27",
+    "reference": [
+      "5A_142/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-142-2026_2026-03-27.html",
+      "source": "446973/45/2829",
+      "content_length": 3041
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_005_5A-142-2026_2026-03-27",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 27.03.2026 5A_142/2026",
+      "it": "Tribunale federale II Corte di diritto civile 27.03.2026 5A_142/2026",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 27.03.2026 5A_142/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:25:47+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-142-2026_2026-03-27.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "cf8f602491b7d75db1bc49301b394e2811f0463ab7fc0c80b3b3c0381229fa63"
+  }
+}

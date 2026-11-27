@@ -1,0 +1,56 @@
+{
+  "id": "6B_182_2026",
+  "case_id": "6B_182/2026",
+  "case_ids": [
+    "6B_182/2026"
+  ],
+  "decision_date": "2026-03-09",
+  "publication_date": null,
+  "department": "I. Strafrechtliche Abteilung",
+  "division": "I. Strafrechtliche Abteilung",
+  "subject": "Diebstahl usw.; Nichteintreten",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://09-03-2026-6B_182-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n6B_182/2026\nUrteil vom 9. März 2026\nI. strafrechtliche Abteilung\nBesetzung\nBundesrichter von Felten, als präsidierendes Mitglied,\nGerichtsschreiberin Arquint Hill.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nOberstaatsanwaltschaft des Kantons Aargau, Frey-Herosé-Strasse 20, 5001 Aarau,\nBeschwerdegegnerin.\nGegenstand\nDiebstahl usw.; Nichteintreten,\nBeschwerde gegen das Urteil des Obergerichts des Kantons Aargau, Strafgericht, 1. Kammer, vom 5. März 2026 (SST.2025.138).\nDas präsidierende Mitglied zieht in Erwägung:\n1.\nDer Beschwerdeführer erhebt mit Eingabe vom 6. März 2026 Beschwerde gegen das Urteil des Obergerichts des Kantons Aargau vom 5. März 2026. Das fragliche Urteil wurde indessen lediglich mündlich eröffnet und enthält noch keine durch das Bundesgericht überprüfbare Begründung. Nach Art. 100 Abs. 1 BGG ist eine Beschwerde gegen einen Entscheid innert 30 Tagen nach der Eröffnung der vollständigen Ausfertigung beim Bundesgericht einzureichen. Die vorliegend eingereichte Beschwerde erweist sich damit als verfrüht, weshalb darauf im Verfahren nach Art. 108 BGG nicht eingetreten werden kann.\n2.\nAuf eine Kostenauflage ist ausnahmsweise zu verzichten.\nDemnach erkennt das präsidierende Mitglied:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nEs werden keine Kosten erhoben.\n3.\nDieses Urteil wird den Parteien und dem Obergericht des Kantons Aargau, Strafgericht, 1. Kammer, schriftlich mitgeteilt.\nLausanne, 9. März 2026\nIm Namen der I. strafrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDas präsidierende Mitglied: von Felten\nDie Gerichtsschreiberin: Arquint Hill",
+  "operator_metadata": {
+    "date": "2026-03-09",
+    "reference": [
+      "6B_182/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_006_6B-182-2026_2026-03-09.html",
+      "source": "446973/45/2830",
+      "content_length": 1997
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit pénal"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_006"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2830",
+    "id": "CH_BGer_006_6B-182-2026_2026-03-09",
+    "title": {
+      "de": "Bundesgericht I. Strafrechtliche Abteilung 09.03.2026 6B_182/2026",
+      "it": "Tribunale federale I Corte di diritto penale 09.03.2026 6B_182/2026",
+      "fr": "Tribunal fédéral Ire Cour de droit pénal 09.03.2026 6B_182/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:19:53+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_006_6B-182-2026_2026-03-09.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "e538563e03e9330546d594a1978e6d6d08be134f0337fb01eacd22ec2bf6aa74"
+  }
+}

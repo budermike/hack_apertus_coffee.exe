@@ -1,0 +1,56 @@
+{
+  "id": "5A_222_2026",
+  "case_id": "5A_222/2026",
+  "case_ids": [
+    "5A_222/2026"
+  ],
+  "decision_date": "2026-03-27",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "Pfändungsankündigung",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://27-03-2026-5A_222-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5A_222/2026\nUrteil vom 27. März 2026\nII. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Bovey, Präsident,\nGerichtsschreiber Zingg.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nBetreibungsamt Region Solothurn,\nRötistrasse 4, Postfach 463, 4502 Solothurn.\nGegenstand\nPfändungsankündigung,\nBeschwerde gegen das Urteil der Aufsichtsbehörde für Schuldbetreibung und Konkurs des Kantons Solothurn vom 19. Februar 2026 (SCBES.2026.12).\nErwägungen:\n1.\nMit Eingabe vom 25. Januar 2026 erhob der Beschwerdeführer Beschwerde gegen die Pfändungsankündigung vom 19. Januar 2026. Mit Urteil vom 19. Februar 2026 trat die Aufsichtsbehörde für Schuldbetreibung und Konkurs des Kantons Solothurn auf die Beschwerde nicht ein.\nAm 11. März 2026 (Postaufgabe) hat der Beschwerdeführer Beschwerde in Zivilsachen an das Bundesgericht erhoben. Am 17. März 2026 und am 26. März 2026 (Postaufgabe) hat er weitere Eingaben und Beilagen eingereicht.\n2.\nDer Beschwerdeführer hat das ihm zur Abholung gemeldete Urteil auf der Post nicht abgeholt. Es gilt am siebten Tag nach dem ersten Zustellungsversuch als zugestellt, vorliegend am 3. März 2026. Die zehntägige Beschwerdefrist (Art. 100 Abs. 2 lit. a BGG) lief am 13. März 2026 ab. Die danach erfolgten Eingaben sind verspätet, soweit mit ihnen die Beschwerde ergänzt wird. Die angekündigten weiteren Eingaben brauchen nicht abgewartet zu werden.\n3.\nAngefochten ist ein Nichteintretensentscheid. Thema des bundesgerichtlichen Verfahrens ist demnach grundsätzlich nur, ob die Aufsichtsbehörde zu Recht auf die kantonale Beschwerde nicht eingetreten ist. Diesbezüglich hat die Beschwerde an das Bundesgericht eine Begründung zu enthalten (Art. 42 Abs. 2 BGG), in der in gezielter Auseinandersetzung mit den für das Ergebnis des angefochtenen Entscheides massgeblichen Erwägungen aufzuzeigen ist, welche Rechte bzw. Rechtsnormen die Vorinstanz verletzt haben soll (BGE 140 III 86 E. 2; 140 III 115 E. 2). Der Beschwerdeführer legt jedoch nicht dar, weshalb die Aufsichtsbehörde auf seine Beschwerde hätte eintreten müssen. Es genügt nicht, geltend zu machen, dass die Aufsichtsbehörde ihre Sorgfaltspflicht nicht eingehalten habe, und auf die - später eingereichten - Akten zu verweisen, denen die Sachlage entnommen werden könne.\nDie Beschwerde enthält offensichtlich keine hinreichende Begründung. Der Abteilungspräsident tritt auf sie im vereinfachten Verfahren nicht ein (Art. 108 Abs. 1 lit. b BGG).\n4.\nBei diesem Ausgang des Verfahrens trägt der Beschwerdeführer die Gerichtskosten (Art. 66 Abs. 1 BGG).\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 500.-- werden dem Beschwerdeführer auferlegt.\n3.\nDieses Urteil wird den Verfahrensbeteiligten und der Aufsichtsbehörde für Schuldbetreibung und Konkurs des Kantons Solothurn mitgeteilt.\nLausanne, 27. März 2026\nIm Namen der II. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Bovey\nDer Gerichtsschreiber: Zingg",
+  "operator_metadata": {
+    "date": "2026-03-27",
+    "reference": [
+      "5A_222/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-222-2026_2026-03-27.html",
+      "source": "446973/45/2830",
+      "content_length": 3424
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2830",
+    "id": "CH_BGer_005_5A-222-2026_2026-03-27",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 27.03.2026 5A_222/2026",
+      "it": "Tribunale federale II Corte di diritto civile 27.03.2026 5A_222/2026",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 27.03.2026 5A_222/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:25:49+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-222-2026_2026-03-27.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "e5e8a4ca6b9f32fd04073de95a8866e4a1638443d5769ccc80b6f31ef4eb48cc"
+  }
+}

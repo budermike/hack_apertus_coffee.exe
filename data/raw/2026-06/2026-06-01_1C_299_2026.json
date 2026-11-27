@@ -1,0 +1,56 @@
+{
+  "id": "1C_299_2026",
+  "case_id": "1C_299/2026",
+  "case_ids": [
+    "1C_299/2026"
+  ],
+  "decision_date": "2026-06-01",
+  "publication_date": null,
+  "department": "I. Öffentlich-rechtliche Abteilung",
+  "division": "I. Öffentlich-rechtliche Abteilung",
+  "subject": "Baupolizei; Wiederherstellung des rechtmässigen Zustands",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://01-06-2026-1C_299-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n1C_299/2026\nUrteil vom 1. Juni 2026\nI. öffentlich-rechtliche Abteilung\nBesetzung\nBundesrichter Haag, Präsident,\nGerichtsschreiber Baur.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nEinwohnergemeinde Uebeschi,\nBaupolizeibehörde, p.A. RegioBV Westamt,\nVorgasse 1, 3665 Wattenwil,\nBau- und Verkehrsdirektion des Kantons Bern,\nRechtsamt, Reiterstrasse 11, 3013 Bern.\nGegenstand\nBaupolizei; Wiederherstellung des rechtmässigen Zustands,\nBeschwerde gegen das Urteil des Verwaltungsgerichts des Kantons Bern, Verwaltungsrechtliche Abteilung, Einzelrichter, vom 10. März 2026 (100.2026.16U).\nErwägungen:\n1.\nMit einzelrichterlichem Urteil vom 10. März 2026 trat das Verwaltungsgericht des Kantons Bern auf die Verwaltungsgerichtsbeschwerde von A.________ gegen den Entscheid der kantonalen Bau- und Verkehrsdirektion vom 11. Dezember 2025 betreffend Wiederherstellung des rechtmässigen Zustands nicht ein und auferlegte A.________ die Kosten seines Verfahrens von Fr. 500.--.\n2.\nGegen den Entscheid des Verwaltungsgerichts erhob A.________ mit Eingabe vom 12. April 2026 Beschwerde beim Bundesgericht, wobei er ankündigte, \"Begründungen und Belege\" so bald als möglich nachzusenden. Bis zum Ablauf der in Bezug auf den angefochtenen Entscheid laufenden Rechtsmittelfrist und bis heute erfolgte indes keine weitere Eingabe. Damit beschränkt sich die Beschwerdeschrift auf die blosse Erklärung, gegen den angefochtenen Entscheid Beschwerde zu erheben, was den gesetzlichen Formerfordernissen, insbesondere den Begründungsanforderungen (vgl. Art. 42 Abs. 2, Art. 106 Abs. 2 BGG), offensichtlich nicht genügt. Auf die Beschwerde ist deshalb im vereinfachten Verfahren nach Art. 108 Abs. 1 BGG nicht einzutreten.\n3.\nBei diesem Verfahrensausgang ist der Beschwerdeführer an sich kostenpflichtig; auf eine Beschwerdeerhebung kann jedoch verzichtet werden (Art. 66 Abs. 1 BGG). Parteientschädigungen sind keine zuzusprechen (Art. 68 BGG).\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nEs werden keine Kosten erhoben.\n3.\nDieses Urteil wird dem Beschwerdeführer, der Einwohnergemeinde Uebeschi, der Bau- und Verkehrsdirektion des Kantons Bern und dem Verwaltungsgericht des Kantons Bern, Verwaltungsrechtliche Abteilung, Einzelrichter, schriftlich mitgeteilt.\nLausanne, 1. Juni 2026\nIm Namen der I. öffentlich-rechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Haag\nDer Gerichtsschreiber: Baur",
+  "operator_metadata": {
+    "date": "2026-06-01",
+    "reference": [
+      "1C_299/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_001_1C-299-2026_2026-06-01.html",
+      "source": "446973/45/2829",
+      "content_length": 2854
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Öffentlich-rechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto pubblico",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit public"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_001"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_001_1C-299-2026_2026-06-01",
+    "title": {
+      "de": "Bundesgericht I. Öffentlich-rechtliche Abteilung 01.06.2026 1C_299/2026",
+      "it": "Tribunale federale I Corte di diritto pubblico 01.06.2026 1C_299/2026",
+      "fr": "Tribunal fédéral Ire Cour de droit public 01.06.2026 1C_299/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:14:52+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_001_1C-299-2026_2026-06-01.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "d47ccf72e1f3dae49e56c0e1298616ba7a1f9b69a16f73cb916823e2adaff7d9"
+  }
+}

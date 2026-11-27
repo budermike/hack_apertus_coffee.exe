@@ -1,0 +1,56 @@
+{
+  "id": "7B_332_2026",
+  "case_id": "7B_332/2026",
+  "case_ids": [
+    "7B_332/2026"
+  ],
+  "decision_date": "2026-05-13",
+  "publication_date": null,
+  "department": "II. Strafrechtliche Abteilung",
+  "division": "II. Strafrechtliche Abteilung",
+  "subject": "Sistierung; Nichteintreten",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://13-05-2026-7B_332-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n7B_332/2026\nUrteil vom 13. Mai 2026\nII. strafrechtliche Abteilung\nBesetzung\nBundesrichterin Koch, als Einzelrichterin,\nGerichtsschreiberin Sauthier.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nKantonsgericht Luzern, 2. Abteilung, Hirschengraben 16, 6003 Luzern.\nGegenstand\nSistierung; Nichteintreten,\nBeschwerde gegen die Verfügung des Kantonsgerichts Luzern, 2. Abteilung, vom 4. März 2026 (4P 26 7 / 4T 26 1).\nErwägungen:\n1.\nMit Schreiben vom 12. und 18. März 2026 leitete das Kantonsgericht Luzern eine von A.________ gegen die Verfügung vom 4. März 2026 betreffend Sistierung erhobene Beschwerde zuständigkeitshalber dem Bundesgericht weiter.\n2.\nMit Verfügung vom 17. März 2026 wurde dem Beschwerdeführer eine Frist bis zum 16. April 2026 angesetzt, um einen Kostenvorschuss von Fr. 800.-- für das bundesgerichtliche Verfahren zu bezahlen. Da der Kostenvorschuss innert Frist nicht beim Bundesgericht einging, wurde dem Beschwerdeführer mit Verfügung vom 21. April 2026 eine Nachfrist bis zum 4. Mai 2026 angesetzt, um den einverlangten Kostenvorschuss zu bezahlen, ansonsten auf die Beschwerde nicht eingetreten werde.\nDiese Verfügung, die als Gerichtsurkunde an die in der Beschwerdeschrift angegebene Adresse des Beschwerdeführers versandt und mit dem Vermerk \"Post zurückbehalten bis zum 3. August 2026\" an das Bundesgericht retourniert wurde, gilt nach Art. 44 Abs. 2 BGG als zugestellt. Der Beschwerdeführer, dem die erste Verfügung betreffend die Bezahlung des Kostenvorschusses zugestellt werden konnte und der mit Eingangsanzeige vom 16. März 2026 über das beim Bundesgericht hängige Verfahren informiert worden war, musste mit Zustellungen an die angegebene Adresse rechnen und hatte die erforderlichen Massnahmen zu treffen, damit ihm Mitteilungen des Bundesgerichts unter dieser Adresse zugestellt werden können. Dies wird mit der Erteilung eines Postrückbehaltungsauftrags nicht gewährleistet (BGE 141 II 429 E. 3.1 und 3.2).\n3.\nBis zum Ablauf der nicht erstreckbaren Nachfrist hat der Beschwerdeführer den Kostenvorschuss nicht geleistet. Androhungsgemäss ist daher gestützt auf Art. 62 Abs. 3 BGG im vereinfachten Verfahren nach Art. 108 BGG auf die Beschwerde nicht einzutreten.\nDemnach erkennt die Einzelrichterin:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 500.-- werden dem Beschwerdeführer auferlegt.\n3.\nDieses Urteil wird dem Beschwerdeführer und dem Kantonsgericht Luzern, 2. Abteilung, schriftlich mitgeteilt.\nLausanne, 13. Mai 2026\nIm Namen der II. strafrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Einzelrichterin: Koch\nDie Gerichtsschreiberin: Sauthier",
+  "operator_metadata": {
+    "date": "2026-05-13",
+    "reference": [
+      "7B_332/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-332-2026_2026-05-13.html",
+      "source": "446973/45/2834",
+      "content_length": 3049
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit pénal"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_007"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_007_7B-332-2026_2026-05-13",
+    "title": {
+      "de": "Bundesgericht II. Strafrechtliche Abteilung 13.05.2026 7B_332/2026",
+      "it": "Tribunale federale II Corte di diritto penale 13.05.2026 7B_332/2026",
+      "fr": "Tribunal fédéral IIe Cour de droit pénal 13.05.2026 7B_332/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:38:49+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-332-2026_2026-05-13.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "4e8914a2293c007ec03dc19afd0b57a1cbeee98c3cb6f35f50fdc077875a9f00"
+  }
+}

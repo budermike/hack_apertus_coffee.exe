@@ -1,0 +1,56 @@
+{
+  "id": "4D_43_2026",
+  "case_id": "4D_43/2026",
+  "case_ids": [
+    "4D_43/2026"
+  ],
+  "decision_date": "2026-05-15",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "Provisorische Rechtsöffnung",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://15-05-2026-4D_43-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4D_43/2026\nUrteil vom 15. Mai 2026\nI. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Hurni, Präsident,\nGerichtsschreiber Tanner.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführerin,\ngegen\nB.________ AG,\nBeschwerdegegnerin.\nGegenstand\nProvisorische Rechtsöffnung,\nBeschwerde gegen den Entscheid des Obergerichts des Kantons Aargau, Zivilgericht, 5. Kammer, vom 25. Februar 2026 (ZSU.2026.14).\nErwägungen:\n1.\nMit Entscheid vom 25. Februar 2026 trat das Obergericht des Kantons Aargau, Zivilgericht, 5. Kammer, auf die Beschwerde der Beschwerdeführerin gegen den Rechtsöffnungsentscheid des Präsidenten des Bezirksgerichts Aarau vom 24. November 2025 nicht ein.\n2.\nDagegen erhob die Beschwerdeführerin am 19. März 2026 Beschwerde an das Bundesgericht.\nMit Präsidialverfügung vom 23. März 2026 wurde das Gesuch der Beschwerdeführerin um aufschiebende Wirkung abgewiesen.\nEs wurden keine Vernehmlassungen eingeholt.\nDiese Eingabe erfüllt die Begründungsanforderungen, die an eine Beschwerde an das Bundesgericht gestellt werden (Art. 42 Abs. 2 und Art. 106 Abs. 2 BGG; BGE 142 III 364 E. 2.4; 140 III 86 E. 2, 115 E. 2), offensichtlich nicht. Auf die Beschwerde ist somit mangels hinreichender Begründung im vereinfachten Verfahren durch den Abteilungspräsidenten nicht einzutreten (Art. 108 Abs. 1 lit. b BGG). Die Begründung dieses Entscheids beschränkt sich auf eine kurze Angabe des Unzulässigkeitsgrundes (Art. 108 Abs. 3 BGG).\n3.\nDas Gesuch der Beschwerdeführerin um unentgeltliche Rechtspflege für das bundesgerichtliche Verfahren ist wegen Aussichtslosigkeit abzuweisen (Art. 64 Abs. 1 BGG).\nDie Beschwerdeführerin wird bei diesem Verfahrensausgang kostenpflichtig (Art. 66 Abs. 1 BGG).\nDie Beschwerdegegnerin hat keinen Anspruch auf eine Parteientschädigung, da ihr mangels Einholung einer Vernehmlassung aus dem bundesgerichtlichen Verfahren kein entschädigungspflichtiger Aufwand erwachsen ist (Art. 68 Abs. 2 BGG).\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDas Gesuch der Beschwerdeführerin um unentgeltliche Rechtspflege für das bundesgerichtliche Verfahren wird abgewiesen.\n3.\nDie Gerichtskosten von Fr. 800.-- werden der Beschwerdeführerin auferlegt.\n4.\nEs wird keine Parteientschädigung zugesprochen.\n5.\nDieses Urteil wird den Parteien und dem Obergericht des Kantons Aargau, Zivilgericht, 5. Kammer, schriftlich mitgeteilt.\nLausanne, 15. Mai 2026\nIm Namen der I. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Hurni\nDer Gerichtsschreiber: Tanner",
+  "operator_metadata": {
+    "date": "2026-05-15",
+    "reference": [
+      "4D_43/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-43-2026_2026-05-15.html",
+      "source": "446973/45/2829",
+      "content_length": 2977
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_004_4D-43-2026_2026-05-15",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 15.05.2026 4D_43/2026",
+      "it": "Tribunale federale I Corte di diritto civile 15.05.2026 4D_43/2026",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 15.05.2026 4D_43/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:38:55+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-43-2026_2026-05-15.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "74612e183753fe491ce553f959dee2869017597c9dacef7d0504a3c6367dcad0"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "id": "5A_92_2026",
+  "case_id": "5A_92/2026",
+  "case_ids": [
+    "5A_92/2026"
+  ],
+  "decision_date": "2026-02-06",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "Revision (Erbschein, Personenstand)",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://06-02-2026-5A_92-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5A_92/2026\nUrteil vom 6. Februar 2026\nII. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Bovey, Präsident,\nGerichtsschreiber Möckli.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\n1. Bezirksgericht Affoltern,\nIm Grund 15, 8910 Affoltern am Albis,\n2. Kirche B.________,\nBeschwerdegegner.\nGegenstand\nRevision (Erbschein, Personenstand),\nBeschwerde gegen den Beschluss des Obergerichts des Kantons Zürich, I. Zivilkammer, vom 15. Januar 2026 (RY250013-O/U).\nSachverhalt:\nFür die Vorgeschichte kann auf das Urteil 5A_825/2025 vom 26. September 2025 verwiesen werden.\nIn Bezug auf das Urteil des Obergerichts des Kantons Zürich vom 15. Dezember 2025 betreffend Ungültigkeit eines Erbscheins reichte der Beschwerdeführer am 22. Dezember 2025 ein Revisionsgesuch ein. Mit Beschluss vom 15. Januar 2026 trat das Obergericht darauf nicht ein mit der Begründung, der Beschwerdeführer mache keine Revisionsgründe geltend, sondern behaupte lediglich die Unrichtigkeit des Urteils vom 15. Dezember 2025.\nDagegen hat der Beschwerdeführer am 26. Januar 2026 beim Obergericht des Kantons Zürich eine Beschwerde eingereicht mit dem Anliegen, sein Personenstand müsse korrigiert werden. Das Obergericht hat die Beschwerde dem Bundesgericht übermittelt.\nErwägungen:\n1.\nDie Beschwerde hat eine Begründung zu enthalten, in welcher in gedrängter Form dargelegt wird, inwiefern der angefochtene Entscheid Recht verletzt (Art. 42 Abs. 2 BGG), was eine sachbezogene Auseinandersetzung mit dessen Erwägungen erfordert (BGE 140 III 115 E. 2; 142 III 364 E. 2.4).\n2.\nKernerwägung des angefochtenen Nichteintretensbeschlusses ist, dass mit der Revision keine materielle Unrichtigkeit eines Urteils geltend gemacht werden kann.\nDer Beschwerdeführer setzt sich mit dieser Begründung nicht sachgerichtet auseinander, sondern er behauptet, dies sei faustdick gelogen und seine Revision sei offensichtlich begründet, denn seine Mutter sei nicht gestorben, sondern mit seinem Vater verheiratet und gemäss seiner Einsprache müsse im parallelen Verfahren das Verwaltungsgericht den gefälschten Grabstein entfernen.\n3.\nNach dem Gesagten erweist sich die Beschwerde als offensichtlich nicht hinreichend begründet, weshalb auf sie nicht eingetreten werden kann und der Präsident im vereinfachten Verfahren entscheidet (Art. 108 Abs. 1 lit. b BGG).\n4.\nAngesichts der konkreten Umstände ist auf die Erhebung von Gerichtskosten zu verzichten (Art. 66 Abs. 1 BGG).\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nEs werden keine Gerichtskosten erhoben.\n3.\nDieses Urteil wird den Parteien und dem Obergericht des Kantons Zürich, I. Zivilkammer, mitgeteilt.\nLausanne, 6. Februar 2026\nIm Namen der II. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Bovey\nDer Gerichtsschreiber: Möckli",
+  "operator_metadata": {
+    "date": "2026-02-06",
+    "reference": [
+      "5A_92/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-92-2026_2026-02-06.html",
+      "source": "446973/45/2830",
+      "content_length": 3280
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2830",
+    "id": "CH_BGer_005_5A-92-2026_2026-02-06",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 06.02.2026 5A_92/2026",
+      "it": "Tribunale federale II Corte di diritto civile 06.02.2026 5A_92/2026",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 06.02.2026 5A_92/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:10:50+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-92-2026_2026-02-06.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "8b46755ca8bb794a1b0b397f30b1b25ba6ea696c900327400aeea363abcc4f0c"
+  }
+}

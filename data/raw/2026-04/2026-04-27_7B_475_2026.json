@@ -1,0 +1,56 @@
+{
+  "id": "7B_475_2026",
+  "case_id": "7B_475/2026",
+  "case_ids": [
+    "7B_475/2026"
+  ],
+  "decision_date": "2026-04-27",
+  "publication_date": null,
+  "department": "II. Strafrechtliche Abteilung",
+  "division": "II. Strafrechtliche Abteilung",
+  "subject": "Unentgeltliche Rechtspflege; Nichteintreten",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://27-04-2026-7B_475-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n7B_475/2026\nUrteil vom 27. April 2026\nII. strafrechtliche Abteilung\nBesetzung\nBundesrichterin Koch, als Einzelrichterin,\nGerichtsschreiber Hahn.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführerin,\ngegen\nStaatsanwaltschaft des Kantons Graubünden, Rohanstrasse 5, 7000 Chur,\nBeschwerdegegnerin.\nGegenstand\nUnentgeltliche Rechtspflege; Nichteintreten,\nBeschwerde gegen die Verfügung des Obergerichts des Kantons Graubünden, Zweite strafrechtliche Kammer, vom 16. März 2026 (SR2 25 95).\nErwägungen:\n1.\nMit Eingabe vom 21. März 2026, ergänzt am 14. April 2026, führt A.________ Beschwerde in Strafsachen gegen die Verfügung des Obergerichts des Kantons Graubünden vom 16. März 2026 betreffend Ehrverletzung (Auferlegung einer Sicherheitsleistung nach Art. 303a Abs. 1 StPO).\nEs wurden keine Vernehmlassungen eingeholt.\n2.\nDie Beschwerdeführerin setzt sich mit keinem Wort mit den Erwägungen der angefochtenen vorinstanzlichen Verfügung auseinander, sondern schildert Sachverhaltsumstände betreffend die Streitigkeiten, welche sie in ihrer Nachbarschaft zu haben scheint. Solche appellatorische Kritik genügt den gesetzlichen Begründungsanforderungen an eine Beschwerde an das Bundesgericht offensichtlich nicht (vgl. Art. 42 Abs. 2 und Art. 106 Abs. 2 BGG; BGE 148 IV 356 E. 2.1, 39 E. 2.3.5; 147 IV 73 E. 4.1.2; 146 IV 297 E. 1.2). Auf die Beschwerde ist somit mangels hinreichender Begründung im vereinfachten Verfahren nicht einzutreten (Art. 108 Abs. 1 lit. b BGG). Umständehalber wird ausnahmsweise auf eine Kostenauflage verzichtet (Art. 66 Abs. 1 Satz 2 BGG).\nDemnach erkennt die Einzelrichterin:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nEs werden keine Gerichtskosten erhoben.\n3.\nDieses Urteil wird den Parteien, dem Obergericht des Kantons Graubünden, Zweite strafrechtliche Kammer, und B.________, schriftlich mitgeteilt.\nLausanne, 27. April 2026\nIm Namen der II. strafrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Einzelrichterin: Koch\nDer Gerichtsschreiber: Hahn",
+  "operator_metadata": {
+    "date": "2026-04-27",
+    "reference": [
+      "7B_475/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-475-2026_2026-04-27.html",
+      "source": "446973/45/2834",
+      "content_length": 2383
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit pénal"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_007"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_007_7B-475-2026_2026-04-27",
+    "title": {
+      "de": "Bundesgericht II. Strafrechtliche Abteilung 27.04.2026 7B_475/2026",
+      "it": "Tribunale federale II Corte di diritto penale 27.04.2026 7B_475/2026",
+      "fr": "Tribunal fédéral IIe Cour de droit pénal 27.04.2026 7B_475/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:33:19+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-475-2026_2026-04-27.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "151194a385dfd17b38f784ce017cdbad8ea4bea58c60295abe63166bebbcc4fc"
+  }
+}

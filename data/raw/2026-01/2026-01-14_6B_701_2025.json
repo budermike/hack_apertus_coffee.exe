@@ -1,0 +1,56 @@
+{
+  "id": "6B_701_2025",
+  "case_id": "6B_701/2025",
+  "case_ids": [
+    "6B_701/2025"
+  ],
+  "decision_date": "2026-01-14",
+  "publication_date": null,
+  "department": "I. Strafrechtliche Abteilung",
+  "division": "I. Strafrechtliche Abteilung",
+  "subject": "Irrecevabilité du recours en matière pénale; défaut de paiement de l'avance de frais (infraction à la loi sur les manifestations sur le domaine public [LMDPu]; arbitraire)",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://14-01-2026-6B_701-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n6B_701/2025\nArrêt du 14 janvier 2026\nIre Cour de droit pénal\nComposition\nM. le Juge fédéral\nvon Felten, Juge présidant,\nGreffier : M. Rosselet.\nParticipants à la procédure\nA.________,\nreprésenté par Me Isabelle Moeschler, avocate,\nrecourant,\ncontre\nMinistère public de la République et canton de Genève,\nroute de Chancy 6B, 1213 Petit-Lancy,\nintimé.\nObjet\nIrrecevabilité du recours en matière pénale; défaut de paiement de l'avance de frais (infraction à la loi sur les manifestations sur le domaine public [LMDPu]; arbitraire),\nrecours contre l'arrêt de la Cour de justice de la République et canton de Genève, Chambre pénale d'appel et de révision, du 2 septembre 2025 (P/25508/2023 AARP/319/2025).\nConsidérant en fait et en droit :\n1.\nPar acte daté du 8 octobre 2025, A.________ a formé un recours en matière pénale au Tribunal fédéral contre l'arrêt rendu le 2 septembre 2025 par la Chambre pénale d'appel et de révision de la Cour de justice genevoise.\n2.\nLa partie qui saisit le Tribunal fédéral doit avancer les frais présumés de la procédure (art. 62 al. 1 LTF). Si elle ne verse pas l'avance requise dans le délai supplémentaire qui lui est fixé à cet effet après un premier non-paiement, son recours est irrecevable (art. 62 al. 3 LTF).\nEn l'espèce, le recourant a été invité, par ordonnance du 4 novembre 2025, à verser, dans un délai échéant au 19 novembre suivant, une avance de frais de 3'000 francs.\nFaute pour le recourant d'avoir effectué le versement requis dans le délai imparti, ce dernier s'est vu impartir, par ordonnance du 27 novembre 2025, un délai supplémentaire échéant le 8 décembre suivant pour s'acquitter de l'avance de frais. Les deux ordonnances en question ont été adressées par acte judiciaire avec avis de réception. Il a été précisé au recourant qu'à défaut de paiement en temps utile, le recours serait déclaré irrecevable (art. 62 al. 3 LTF).\nMalgré ce qui précède, le recourant n'a pas effectué l'avance de frais requise. Par conséquent, à défaut de paiement de l'avance de frais, le recours est manifestement irrecevable et doit dès lors être écarté en application de la procédure simplifiée prévue à l'art. 108 al. 1 let. a LTF.\n3.\nLe présent arrêt est exceptionnellement rendu sans frais (art. 66 al. 1 2 e phrase LTF).\nPar ces motifs, le Juge présidant prononce :\n1.\nLe recours est irrecevable.\n2.\nIl n'est pas perçu de frais judiciaires.\n3.\nLe présent arrêt est communiqué aux parties et à la Cour de justice de la République et canton de Genève, Chambre pénale d'appel et de révision.\nLausanne, le 14 janvier 2026\nAu nom de la Ire Cour de droit pénal\ndu Tribunal fédéral suisse\nLe Juge présidant: von Felten\nLe Greffier : Rosselet",
+  "operator_metadata": {
+    "date": "2026-01-14",
+    "reference": [
+      "6B_701/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_006_6B-701-2025_2026-01-14.html",
+      "source": "446973/45/2834",
+      "content_length": 3095
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit pénal"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_006"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_006_6B-701-2025_2026-01-14",
+    "title": {
+      "de": "Bundesgericht I. Strafrechtliche Abteilung 14.01.2026 6B_701/2025",
+      "it": "Tribunale federale I Corte di diritto penale 14.01.2026 6B_701/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit pénal 14.01.2026 6B_701/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:03:52+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_006_6B-701-2025_2026-01-14.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "d9fb278caec56debe7efb0108ec40a52354def6641f7c2882f7440f9728cef4e"
+  }
+}

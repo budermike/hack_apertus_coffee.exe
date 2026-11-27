@@ -1,0 +1,56 @@
+{
+  "id": "6B_239_2026",
+  "case_id": "6B_239/2026",
+  "case_ids": [
+    "6B_239/2026"
+  ],
+  "decision_date": "2026-05-19",
+  "publication_date": null,
+  "department": "I. Strafrechtliche Abteilung",
+  "division": "I. Strafrechtliche Abteilung",
+  "subject": "Betrug (Covid-19-Kredite); Rückzug",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://19-05-2026-6B_239-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n6B_239/2026\nVerfügung vom 19. Mai 2026\nI. strafrechtliche Abteilung\nBesetzung\nBundesrichter von Felten, als präsidierendes Mitglied,\nGerichtsschreiberin Arquint Hill.\nVerfahrensbeteiligte\nOberstaatsanwaltschaft des Kantons Zürich, Güterstrasse 33, Postfach, 8010 Zürich,\nBeschwerdeführerin,\ngegen\nA.________,\nBeschwerdegegner.\nGegenstand\nBetrug (Covid-19-Kredite); Rückzug,\nBeschwerde gegen das Urteil des Obergerichts des Kantons Zürich, I. Strafkammer, vom 27. Januar 2026 (SB250275-O/U/bs).\nDas präsidierende Mitglied zieht in Erwägung:\n1.\nDie Beschwerde vom 10. April 2026 gegen das Urteil des Obergerichts des Kantons Zürich vom 27. Januar 2026 wurde mit Eingabe vom 12. Mai 2026 zurückgezogen. Das Verfahren ist infolge Beschwerderückzugs abzuschreiben.\n2.\nEs sind keine Kosten zu erheben.\nDemnach verfügt das präsidierende Mitglied :\n1.\nDas Verfahren wird infolge Rückzugs der Beschwerde abgeschrieben.\n2.\nEs werden keine Gerichtskosten erhoben.\n3.\nDiese Verfügung wird den Parteien und dem Obergericht des Kantons Zürich, I. Strafkammer, schriftlich mitgeteilt.\nLausanne, 19. Mai 2026\nIm Namen der I. strafrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDas präsidierende Mitglied: von Felten\nDie Gerichtsschreiberin: Arquint Hill",
+  "operator_metadata": {
+    "date": "2026-05-19",
+    "reference": [
+      "6B_239/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_006_6B-239-2026_2026-05-19.html",
+      "source": "446973/45/2830",
+      "content_length": 1634
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit pénal"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_006"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2830",
+    "id": "CH_BGer_006_6B-239-2026_2026-05-19",
+    "title": {
+      "de": "Bundesgericht I. Strafrechtliche Abteilung 19.05.2026 6B_239/2026",
+      "it": "Tribunale federale I Corte di diritto penale 19.05.2026 6B_239/2026",
+      "fr": "Tribunal fédéral Ire Cour de droit pénal 19.05.2026 6B_239/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:39:55+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_006_6B-239-2026_2026-05-19.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "a0bb3ae45b5f91a13770dbe6493295ca0aed0f0295ef66ec1da6903b332b72af"
+  }
+}

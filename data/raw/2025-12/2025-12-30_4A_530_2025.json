@@ -1,0 +1,56 @@
+{
+  "id": "4A_530_2025",
+  "case_id": "4A_530/2025",
+  "case_ids": [
+    "4A_530/2025"
+  ],
+  "decision_date": "2025-12-30",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "droit de responsabilité civile",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://30-12-2025-4A_530-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4A_530/2025\nArrêt du 30 décembre 2025\nIre Cour de droit civil\nComposition\nM. le Juge fédéral Hurni, Président.\nGreffier : M. Widmer.\nParticipants à la procédure\nA.________,\nrecourant,\ncontre\n1. B.________,\nreprésenté par Me Cyrielle Kern, avocate,\n2. C.________,\nreprésentée par Me Marina Kilchenmann, avocate,\nintimés.\nObjet\ndroit de responsabilité civile,\nrecours contre l'arrêt rendu le 28 mars 2025 par la Cour d'appel civile du Tribunal cantonal du canton de Vaud (PT22.016215-241476, 137).\nLe Président :\nVu le recours formé le 22 octobre 2025 par A.________ contre l'arrêt rendu le 28 mars 2025 par la Cour d'appel civile du Tribunal cantonal du canton de Vaud dans la cause divisant le recourant d'avec B.________ et C.________, intimés;\nVu l'ordonnance présidentielle du 20 novembre 2025 invitant le recourant à verser, jusqu'au 5 décembre 2025 au plus tard, une avance de frais de 800 fr.;\nVu l'ordonnance du 12 décembre 2025 par laquelle un délai supplémentaire venant à échéance le 29 décembre 2025 a été imparti au recourant conformément à l'art. 62 al. 3 de la loi fédérale sur le Tribunal fédéral (LTF);\nConsidérant que ces deux ordonnances ont été l'une et l'autre notifiées par envoi postal dit « acte judiciaire », à remettre contre signature,\nque le recourant a été invité à retirer ces envois à l'office postal respectivement les 21 novembre et 15 décembre 2025,\nque les envois n'ont pas été retirés et les ordonnances ont été renvoyées au Tribunal fédéral avec la mention \" Non réclamé \",\nqu'en vertu de l'art. 44 al. 2 LTF, la notification de chacune des ordonnances est réputée accomplie le septième jour suivant celui de l'invitation au retrait correspondante,\nque l'avance de frais n'a pas été versée dans le délai supplémentaire imparti par l'ordonnance du 12 décembre 2025,\nque le recours est par conséquent irrecevable en vertu de l'art. 62 al. 3 LTF,\nqu'il y a lieu, partant, de faire application de la procédure simplifiée prévue par l'art. 108 al. 1 LTF,\nque les frais judiciaires seront mis à la charge du recourant (art. 66 al. 1 LTF),\nque les intimés, qui n'ont pas été invités à déposer des réponses, n'ont pas droit à des dépens (art. 68 LTF).\nPar ces motifs, le Président prononce :\n1.\nLe recours est irrecevable.\n2.\nLe recourant acquittera un émolument judiciaire de 500 francs.\n3.\nLe présent arrêt est communiqué aux parties et à la Cour d'appel civile du Tribunal cantonal du canton de Vaud.\nLausanne, le 30 décembre 2025\nAu nom de la Ire Cour de droit civil\ndu Tribunal fédéral suisse\nLe Président : Hurni\nLe Greffier : Widmer",
+  "operator_metadata": {
+    "date": "2025-12-30",
+    "reference": [
+      "4A_530/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-530-2025_2025-12-30.html",
+      "source": "446973/45/2869",
+      "content_length": 2950
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-06-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2869",
+    "id": "CH_BGer_004_4A-530-2025_2025-12-30",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 30.12.2025 4A_530/2025",
+      "it": "Tribunale federale I Corte di diritto civile 30.12.2025 4A_530/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 30.12.2025 4A_530/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:00:47+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-530-2025_2025-12-30.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "aef9b99d34dee203a8b7a736e821968347b172c25868bb2d3f467f4d14c0e274"
+  }
+}

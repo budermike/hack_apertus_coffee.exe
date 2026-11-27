@@ -1,0 +1,56 @@
+{
+  "id": "7B_513_2025",
+  "case_id": "7B_513/2025",
+  "case_ids": [
+    "7B_513/2025"
+  ],
+  "decision_date": "2025-10-02",
+  "publication_date": null,
+  "department": "II. Strafrechtliche Abteilung",
+  "division": "II. Strafrechtliche Abteilung",
+  "subject": "Nichtanhandnahme; Nichteintreten",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://02-10-2025-7B_513-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n7B_513/2025\nUrteil vom 2. Oktober 2025\nII. strafrechtliche Abteilung\nBesetzung\nBundesrichterin Koch, als Einzelrichterin,\nGerichtsschreiber Clément.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nStaatsanwaltschaft des Kantons Graubünden, Rohanstrasse 5, 7000 Chur,\nBeschwerdegegnerin.\nGegenstand\nNichtanhandnahme; Nichteintreten,\nBeschwerde gegen die Verfügung des Obergerichts des Kantons Graubünden, Zweite strafrechtliche Kammer, vom 14. Mai 2025 (SR2 25 23).\nErwägungen:\n1.\nMit Verfügung vom 14. Mai 2025 trat das Obergericht des Kantons Graubünden (nachfolgend: Obergericht) nicht auf die Beschwerde des Beschwerdeführers gegen die Nichtanhandnahmeverfügung der Staatsanwaltschaft Graubünden vom 31. März 2025 ein. Gegen diese Verfügung wandte sich der Beschwerdeführer mit Eingabe vom 26. Mai 2025 an den Präsidenten des Obergerichts, welcher die Eingabe an das Bundesgericht weiterleitete.\n2.\nDiese Eingabe erfüllt offensichtlich nicht die Anforderungen an die Begründung einer Beschwerde an das Bundesgericht (Art. 42 Abs. 2 und Art. 106 Abs. 2 BGG; BGE 148 IV 356 E. 2.1, 39 E. 2.3.5; 142 III 364 E. 2.4), namentlich bezüglich eines Zivilanspruchs im Sinne von Art. 81 Abs. 1 lit. b Ziff. 5 BGG (Urteile 7B_1201/2024 vom 22. Januar 2025 E. 1.2; 7B_182/2024 vom 26. März 2024 E. 2.1.2; 7B_18/2024 vom 14. März 2024 E. 2; je mit Hinweisen). Formelle Rügen, zu deren Geltendmachung der Beschwerdeführer unbesehen der fehlenden Legitimation in der Sache befugt wäre, da sie namentlich von der Prüfung der Sache getrennt werden können (sog. \"Star-Praxis\"; vgl. BGE 146 IV 76 E. 2; 141 IV 1 E. 1.1), werden nicht erhoben. Auf die Beschwerde ist somit mangels hinreichender Begründung im vereinfachten Verfahren nicht einzutreten (Art. 108 Abs. 1 lit. b BGG). Die Begründung des Entscheids beschränkt sich auf eine kurze Angabe des Unzulässigkeitsgrundes (Art. 108 Abs. 3 BGG).\n3.\nDie Gerichtskosten sind dem Beschwerdeführer aufzuerlegen (Art. 66 Abs. 1 BGG).\nDemnach erkennt die Einzelrichterin:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 500.-- werden dem Beschwerdeführer auferlegt.\n3.\nDieses Urteil wird den Parteien und dem Obergericht des Kantons Graubünden, Zweite strafrechtliche Kammer, schriftlich mitgeteilt.\nLausanne, 2. Oktober 2025\nIm Namen der II. strafrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Einzelrichterin: Koch\nDer Gerichtsschreiber: Clément",
+  "operator_metadata": {
+    "date": "2025-10-02",
+    "reference": [
+      "7B_513/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-513-2025_2025-10-02.html",
+      "source": "446973/45/2851",
+      "content_length": 2833
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit pénal"
+    },
+    "scrapedate": "2026-06-18",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_007"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2851",
+    "id": "CH_BGer_007_7B-513-2025_2025-10-02",
+    "title": {
+      "de": "Bundesgericht II. Strafrechtliche Abteilung 02.10.2025 7B_513/2025",
+      "it": "Tribunale federale II Corte di diritto penale 02.10.2025 7B_513/2025",
+      "fr": "Tribunal fédéral IIe Cour de droit pénal 02.10.2025 7B_513/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:23:26+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-513-2025_2025-10-02.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "00e665a64346f1902547004192d94c2ae5c69ced3f1edc76e139487f192a540d"
+  }
+}

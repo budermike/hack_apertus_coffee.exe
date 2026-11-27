@@ -1,0 +1,56 @@
+{
+  "id": "4A_413_2025",
+  "case_id": "4A_413/2025",
+  "case_ids": [
+    "4A_413/2025"
+  ],
+  "decision_date": "2025-11-12",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "contrat d'entreprise",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://12-11-2025-4A_413-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4A_413/2025\nArrêt du 12 novembre 2025\nIre Cour de droit civil\nComposition\nMme la Juge fédérale Kiss, juge présidant\nGreffier : M. Widmer.\nParticipants à la procédure\nA.________ Sàrl,\nrecourante,\ncontre\n1. B.________ S.A.,\nreprésentée par Me Pierre-Xavier Luciani, avocat,\n2. C.________,\nreprésentée par Me Vivian Kühnlein, avocat,\nintimées.\nObjet\ncontrat d'entreprise,\nrecours contre l'arrêt rendu le 15 juillet 2025 par la Chambre des recours civile du Tribunal cantonal du canton de Vaud (JG24.037753-250873 156).\nLa Juge présidant :\nVu le recours formé le 3 septembre 2025 (date du timbre postal) par A.________ Sàrl (ci-après: la recourante) contre l'arrêt rendu le 15 juillet 2025 par la Chambre des recours civile du Tribunal cantonal du canton de Vaud dans la cause divisant la recourante d'avec B.________ S.A. et la C.________ (ci-après: les intimées);\nVu l'ordonnance présidentielle du 9 septembre 2025 rejetant une demande tendant à ce que le Tribunal fédéral renonce à exiger une avance de frais et invitant la partie recourante à verser, jusqu'au 24 septembre 2025 au plus tard, une avance de frais de 800 fr.;\nVu l'arrêt 1C_546/2025 du 25 septembre 2025 au terme duquel la Ire Cour de droit public du Tribunal fédéral n'est pas entrée en matière sur le recours formé par la recourante contre ladite ordonnance;\nVu l'ordonnance du 13 octobre 2025 par laquelle un délai supplémentaire venant à échéance le 28 octobre 2025 a été imparti à la recourante conformément à l'art. 62 al. 3 LTF;\nAttendu que l'avance de frais requise n'a pas été effectuée dans le délai imparti par cette ordonnance;\nConsidérant, dès lors, que le recours est irrecevable en vertu de l'art. 62 al. 3 LTF,\nqu'il y a lieu, partant, de faire application de la procédure simplifiée prévue par l'art. 108 al. 1 LTF,\nque les frais judiciaires seront mis à la charge de la recourante (art. 66 al. 1 et 3 LTF),\nque les intimées, qui n'ont pas été invitées à répondre au recours, n'ont pas droit à des dépens.\nPar ces motifs, la Juge présidant prononce :\n1.\nLe recours est irrecevable.\n2.\nLa recourante acquittera un émolument judiciaire de 500 fr.\n3.\nLe présent arrêt est communiqué aux parties et à la Chambre des recours civile du Tribunal cantonal du canton de Vaud.\nLausanne, le 12 novembre 2025\nAu nom de la Ire Cour de droit civil\ndu Tribunal fédéral suisse\nLa Juge présidant : Kiss\nLe Greffier : Widmer",
+  "operator_metadata": {
+    "date": "2025-11-12",
+    "reference": [
+      "4A_413/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-413-2025_2025-11-12.html",
+      "source": "446973/45/2869",
+      "content_length": 2764
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-06-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2869",
+    "id": "CH_BGer_004_4A-413-2025_2025-11-12",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 12.11.2025 4A_413/2025",
+      "it": "Tribunale federale I Corte di diritto civile 12.11.2025 4A_413/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 12.11.2025 4A_413/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:34:28+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-413-2025_2025-11-12.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "db1ef6b8085f17544dffcb72acf7d97c3347aeecb05f5c0486154e65133f3e4b"
+  }
+}

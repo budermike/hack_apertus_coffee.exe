@@ -1,0 +1,56 @@
+{
+  "id": "5A_1072_2025",
+  "case_id": "5A_1072/2025",
+  "case_ids": [
+    "5A_1072/2025"
+  ],
+  "decision_date": "2026-01-08",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "notification d'un commandement de payer, for de la poursuite",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://08-01-2026-5A_1072-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5A_1072/2025\nOrdonnance du 8 janvier 2026\nIIe Cour de droit civil\nComposition\nM. le Juge fédéral Bovey, Président.\nGreffier : M. Braconi.\nParticipants à la procédure\nA.________,\nreprésentée par\nMes Daniel Tunik et Nicolas Rouvinez, avocats,\nrecourante,\ncontre\nB.________,\nreprésentée par Me Mauro Poggia, avocat,\nintimée,\nOffice cantonal des poursuites de Genève, rue du Stand 46, 1204 Genève,\nObjet\nnotification d'un commandement de payer, for de la poursuite,\nrecours contre la décision de la Chambre de surveillance des Offices des poursuites et faillites de la Cour de justice du canton de Genève du 27 novembre 2025 (A/2070/2025-CS, DCSO/675/2025).\nVu :\nle recours en matière civile interjeté par A.________ à l'encontre de la décision prise le 27 novembre 2025 par la Chambre de surveillance des Offices des poursuites et faillites de la Cour de justice du canton de Genève;\nla requête de mesures provisionnelles contenue dans le mémoire;\nla déclaration de retrait de recours du 24 décembre 2025;\nconsidérant :\nqu'il convient de prendre acte du retrait du recours et de rayer la cause du rôle (art. 73 PCF, par renvoi de l'art. 71 LTF);\nque le Président de la Cour de céans est compétent à cet effet (art. 32 al. 1 et 2 LTF);\nque les frais judiciaires (réduits) incombent à la recourante (art. 66 al. 1 et 2 LTF; ordonnance 5A_72/2024 du 4 novembre 2025);\nqu'il n'y a pas lieu d'allouer de dépens à l'intimée, qui n'a pas déposé d'observations sur la requête de mesures provisionnelles;\nque la requête de mesures provisionnelles est sans objet;\npar ces motifs, le Président ordonne :\n1.\nLa cause est rayée du rôle par suite de retrait du recours.\n2.\nLes frais judiciaires, arrêtés à 500 fr., sont mis à la charge de la recourante.\n3.\nIl n'est pas alloué de dépens à l'intimée.\n4.\nLa présente ordonnance est communiquée aux parties, à l'Office cantonal des poursuites de Genève et à la Chambre de surveillance des Offices des poursuites et faillites de la Cour de justice du canton de Genève.\nLausanne, le 8 janvier 2026\nAu nom de la IIe Cour de droit civil\ndu Tribunal fédéral suisse\nLe Président : Bovey\nLe Greffier : Braconi",
+  "operator_metadata": {
+    "date": "2026-01-08",
+    "reference": [
+      "5A_1072/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-1072-2025_2026-01-08.html",
+      "source": "446973/45/2829",
+      "content_length": 2534
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_005_5A-1072-2025_2026-01-08",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 08.01.2026 5A_1072/2025",
+      "it": "Tribunale federale II Corte di diritto civile 08.01.2026 5A_1072/2025",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 08.01.2026 5A_1072/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:02:07+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-1072-2025_2026-01-08.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "75dfdf2cb16684cc04b4cb6329e3defde962b4afc5f5b1bdfbdc542521962e8d"
+  }
+}

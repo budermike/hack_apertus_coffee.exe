@@ -1,0 +1,56 @@
+{
+  "id": "5A_450_2026",
+  "case_id": "5A_450/2026",
+  "case_ids": [
+    "5A_450/2026"
+  ],
+  "decision_date": "2026-06-29",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "Arresteinsprache",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://29-06-2026-5A_450-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5A_450/2026\nVerfügung vom 29. Juni 2026\nII. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Bovey, Präsident,\nGerichtsschreiber Zingg.\nVerfahrensbeteiligte\nC.________ AG,\nvertreten durch Rechtsanwalt Andreas R. Bihrer und/oder\nRechtsanwältin Marie-Louise Weisse,\nBeschwerdeführerin,\ngegen\nA.________ Ltd. SPC,\nvertreten durch Rechtsanwalt Urs Boller und Rechtsanwältin Mimoza Ademaj,\nBeschwerdegegnerin.\nGegenstand\nArresteinsprache,\nBeschwerde gegen das Urteil des Obergerichts des Kantons Zürich, II. Zivilkammer, vom 14. April 2026 (PS250166-O/U).\nErwägungen:\n1.\nFür die Vorgeschichte kann auf die Abschreibungsverfügung des Bundesgerichts 5A_74/2026 vom 26. Februar 2026 verwiesen werden. Im damaligen Verfahren führte die heutige Beschwerdegegnerin (Arrestgläubigerin), deren Vertretungsverhältnisse umstritten waren, Beschwerde an das Bundesgericht und die heutige Beschwerdeführerin (eine der Dritteinsprecherinnen gegen den Arrestbefehl) war Beschwerdegegnerin 2.\nMit Urteil vom 14. April 2026 wies das Obergericht des Kantons Zürich die Beschwerde der Beschwerdeführerin und einer weiteren Dritteinsprecherin ab, soweit es darauf eintrat.\nDagegen hat die Beschwerdeführerin am 15. Mai 2026 Beschwerde in Zivilsachen an das Bundesgericht erhoben. Am 3. Juni 2026 hat die Beschwerdeführerin um Erstreckung der Frist zur Zahlung des Kostenvorschusses ersucht. Mit Verfügung vom 5. Juni 2026 hat das Bundesgericht die Frist bis zum 26. Juni 2026 erstreckt. Am 25. Juni 2026 hat die Beschwerdeführerin die Beschwerde zurückgezogen.\n2.\nDas Beschwerdeverfahren ist demnach durch den Abteilungspräsidenten (Art. 32 Abs. 2 BGG) als durch Rückzug der Beschwerde erledigt abzuschreiben (Art. 71 BGG i.V.m. Art. 73 BZP [SR 273]).\n3.\nDas Bundesgericht hat in der Verfügung 5A_74/2026 vom 26. Februar 2026 aufgrund der aussergewöhnlichen Umstände ausnahmsweise auf die Erhebung von Gerichtskosten verzichtet. Solche Umstände bestehen vorliegend nicht. Die Beschwerdeführerin gilt als unterliegend und ihr sind die reduzierten Gerichtskosten aufzuerlegen (Art. 66 Abs. 1 BGG). Parteientschädigungen sind nicht geschuldet (Art. 68 Abs. 1 BGG).\nDemnach verfügt der Präsident:\n1.\nDas Verfahren 5A_450/2026 wird als durch Rückzug der Beschwerde erledigt abgeschrieben.\n2.\nDie Gerichtskosten von Fr. 2'000.-- werden der Beschwerdeführerin auferlegt.\n3.\nDiese Verfügung wird den Parteien, dem Betreibungsamt Zürich 6 und dem Obergericht des Kantons Zürich, II. Zivilkammer, mitgeteilt.\nLausanne, 29. Juni 2026\nIm Namen der II. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Bovey\nDer Gerichtsschreiber: Zingg",
+  "operator_metadata": {
+    "date": "2026-06-29",
+    "reference": [
+      "5A_450/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-450-2026_2026-06-29.html",
+      "source": "446973/45/2830",
+      "content_length": 3042
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2830",
+    "id": "CH_BGer_005_5A-450-2026_2026-06-29",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 29.06.2026 5A_450/2026",
+      "it": "Tribunale federale II Corte di diritto civile 29.06.2026 5A_450/2026",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 29.06.2026 5A_450/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:49:56+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-450-2026_2026-06-29.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "adf5f2d7518cc476a27324f1330facf0639cddfdd9fe0ba3e9f254f11084872e"
+  }
+}

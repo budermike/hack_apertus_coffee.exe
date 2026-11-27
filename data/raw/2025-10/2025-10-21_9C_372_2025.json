@@ -1,0 +1,56 @@
+{
+  "id": "9C_372_2025",
+  "case_id": "9C_372/2025",
+  "case_ids": [
+    "9C_372/2025"
+  ],
+  "decision_date": "2025-10-21",
+  "publication_date": null,
+  "department": "IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung)",
+  "division": "IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung)",
+  "subject": "Assurance-invalidité",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://21-10-2025-9C_372-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n9C_372/2025\nOrdonnance du 21 octobre 2025\nIIIe Cour de droit public\nComposition\nMme la Juge fédérale Moser-Szeless, Présidente.\nGreffier : M. Cretton.\nParticipants à la procédure\nA.________,\nreprésentée par Me Blaise Christe, avocat,\nrecourante,\ncontre\nOffice de l'assurance-invalidité du canton du Jura, rue Bel-Air 3, 2350 Saignelégier,\nintimé.\nObjet\nAssurance-invalidité,\nrecours contre l'arrêt du Tribunal cantonal de la République et canton du Jura du 4 juin 2025\n(AI 88/2024 - AI 140/2024 - AI 19/2025).\nVu :\nla lettre du 10 octobre 2025, par laquelle A.________ a déclaré retirer le recours interjeté le 30 juin 2025 (timbre postal) contre l'arrêt rendu par le Tribunal cantonal de la République et canton du Jura, Cour des assurances, le 4 juin 2025,\nconsidérant :\nque la cause doit être rayée du rôle en application des art. 32 al. 2 et 71 LTF, en relation avec l'art. 73 al. 1 PCF,\nqu'il se justifie de statuer sans frais judiciaires (art. 66 al. 2 LTF),\npar ces motifs, la Présidente ordonne :\n1.\nLa cause est rayée du rôle par suite de retrait du recours.\n2.\nIl n'est pas perçu de frais judiciaires.\n3.\nLa présente ordonnance est communiquée aux parties, au Tribunal cantonal de la République et canton du Jura, Cour des assurances, et à l'Office fédéral des assurances sociales.\nLucerne, le 21 octobre 2025\nAu nom de la IIIe Cour de droit public\ndu Tribunal fédéral suisse\nLa Présidente : Moser-Szeless\nLe Greffier : Cretton",
+  "operator_metadata": {
+    "date": "2025-10-21",
+    "reference": [
+      "9C_372/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_009_9C-372-2025_2025-10-21.html",
+      "source": "446973/45/2851",
+      "content_length": 1814
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung)",
+      "it": "Confederazione Tribunale federale IV Corte di diritto pubblico (II Corte di diritto sociale)",
+      "fr": "Conféderation Tribunal fédéral IVe Cour de droit public (IIe Cour de droit social)"
+    },
+    "scrapedate": "2026-06-18",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_009"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2851",
+    "id": "CH_BGer_009_9C-372-2025_2025-10-21",
+    "title": {
+      "de": "Bundesgericht IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung) 21.10.2025 9C_372/2025",
+      "it": "Tribunale federale IV Corte di diritto pubblico (II Corte di diritto sociale) 21.10.2025 9C_372/2025",
+      "fr": "Tribunal fédéral IVe Cour de droit public (IIe Cour de droit social) 21.10.2025 9C_372/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:28:25+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_009_9C-372-2025_2025-10-21.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "1f124de543aafe2556df5b62b2f2a7f0c29127c99704c7b512fbef40e8c2c535"
+  }
+}

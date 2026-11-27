@@ -1,0 +1,56 @@
+{
+  "id": "4D_190_2025",
+  "case_id": "4D_190/2025",
+  "case_ids": [
+    "4D_190/2025"
+  ],
+  "decision_date": "2025-11-27",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "definitive Rechtsöffnung",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://27-11-2025-4D_190-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4D_190/2025\nUrteil vom 27. November 2025\nI. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Hurni, Präsident,\nGerichtsschreiber Dürst.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nEinwohnergemeinde B.________,\nBeschwerdegegnerin.\nGegenstand\ndefinitive Rechtsöffnung,\nBeschwerde gegen den Entscheid des Kantonsgerichts des Kantons Wallis, I. Zivilrechtliche Abteilung,\nvom 2. Oktober 2025 (C3 25 142).\nErwägungen:\n1.\nMit Entscheid vom 2. Oktober 2025 trat das Kantonsgericht Wallis auf die Beschwerde des Beschwerdeführers gegen den Entscheid des Bezirksgerichts Visp vom 22. September 2025 nicht ein. Dagegen erhebt der Beschwerdeführer mit Eingabe vom 3. Oktober 2025 Beschwerde an das Bundesgericht.\n2.\nDas Bundesgericht forderte den Beschwerdeführer mit Präsidialverfügung vom 10. Oktober 2025 auf, spätestens am 27. Oktober 2025 einen Kostenvorschuss von Fr. 800.-- einzuzahlen. Da der Kostenvorschuss innerhalb dieser Frist nicht eingegangen war, wurde dem Beschwerdeführer mit Verfügung vom 30. Oktober 2025 eine nicht erstreckbare Nachfrist zur Vorschussleistung bis zum 14. November 2025 angesetzt, unter Hinweis darauf, dass das Bundesgericht bei Säumnis auf das Rechtsmittel nicht eintreten werde (Art. 62 Abs. 3 BGG). Der Beschwerdeführer hat den ihm auferlegten Kostenvorschuss auch innerhalb der angesetzten Nachfrist nicht geleistet.\nNachdem der Kostenvorschuss auch innert Nachfrist nicht bezahlt wurde, ist auf die Beschwerde im vereinfachten Verfahren nach Art. 108 Abs. 1 lit. a BGG (androhungsgemäss) gestützt auf Art. 62 Abs. 3 BGG nicht einzutreten.\n3.\nIm Übrigen wäre auf die Beschwerde auch deshalb nicht einzutreten, weil sie den Begründungsanforderungen von Art. 42 Abs. 2 BGG offensichtlich nicht genügt.\n4.\nBei diesem Ausgang des Verfahrens sind die Gerichtskosten dem Beschwerdeführer aufzuerlegen (Art. 66 Abs. 1 BGG). Dem Beschwerdegegner ist keine Parteientschädigung zuzusprechen (Art. 68 Abs. 3 BGG), zumal ihm mangels Einholung einer Vernehmlassung aus dem bundesgerichtlichen Verfahren kein entschädigungspflichtiger Aufwand erwachsen ist.\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 500.-- werden dem Beschwerdeführer auferlegt.\n3.\nDieses Urteil wird den Parteien und dem Kantonsgericht des Kantons Wallis, I. Zivilrechtliche Abteilung, schriftlich mitgeteilt.\nLausanne, 27. November 2025\nIm Namen der I. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Hurni\nDer Gerichtsschreiber: Dürst",
+  "operator_metadata": {
+    "date": "2025-11-27",
+    "reference": [
+      "4D_190/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-190-2025_2025-11-27.html",
+      "source": "446973/45/2869",
+      "content_length": 2955
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-06-18",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2869",
+    "id": "CH_BGer_004_4D-190-2025_2025-11-27",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 27.11.2025 4D_190/2025",
+      "it": "Tribunale federale I Corte di diritto civile 27.11.2025 4D_190/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 27.11.2025 4D_190/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:39:01+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-190-2025_2025-11-27.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "76521d44b0be9ea69d6e1527955cdf620d9a21cbd0d1bba7b00b987f133942a4"
+  }
+}

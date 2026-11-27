@@ -1,0 +1,56 @@
+{
+  "id": "5A_172_2026",
+  "case_id": "5A_172/2026",
+  "case_ids": [
+    "5A_172/2026"
+  ],
+  "decision_date": "2026-03-19",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "Rückweisung des Betreibungsbegehrens",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://19-03-2026-5A_172-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5A_172/2026\nUrteil vom 19. März 2026\nII. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Bovey, Präsident,\nGerichtsschreiber Zingg.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nBetreibungsamt Wettingen,\nAlberich Zwyssig-Strasse 76, 5430 Wettingen.\nGegenstand\nRückweisung des Betreibungsbegehrens,\nBeschwerde gegen den Entscheid des Obergerichts des Kantons Aargau, Schuldbetreibungs- und Konkurskommission als obere betreibungsrechtliche Aufsichtsbehörde, vom 9. Februar 2026 (KBE.2025.76).\nErwägungen:\n1.\nDer Beschwerdeführer reichte am 14. Oktober 2025 beim Betreibungsamt Wettingen ein Betreibungsbegehren gegen die Sozialen Dienste Wettingen ein. Das Betreibungsamt wies das Betreibungsbegehren mit Verfügung vom 15. Oktober 2025 zurück.\nDagegen erhob der Beschwerdeführer am 27. Oktober 2025 (Postaufgabe) Beschwerde beim Bezirksgericht Baden. Mit Entscheid vom 21. November 2025 wies das Bezirksgericht Baden die Beschwerde ab. In Anwendung von Art. 32 Abs. 2 SchKG ersuchte es das Betreibungsamt, das Betreibungsbegehren an das Konkursamt Aargau zu übermitteln.\nGegen diesen Entscheid erhob der Beschwerdeführer am 5. Dezember 2025 Beschwerde beim Obergericht des Kantons Aargau. Mit Entscheid vom 9. Februar 2026 trat das Obergericht auf die Beschwerde mangels genügender Begründung nicht ein.\nDagegen hat der Beschwerdeführer am 20. Februar 2026 (Postaufgabe) Beschwerde an das Bundesgericht erhoben.\n2.\nAngefochten ist ein Nichteintretensentscheid. Thema des bundesgerichtlichen Verfahrens ist demnach grundsätzlich nur, ob das Obergericht zu Recht auf die kantonale Beschwerde nicht eingetreten ist. Diesbezüglich hat die Beschwerde an das Bundesgericht eine Begründung zu enthalten (Art. 42 Abs. 2 BGG), in der in gezielter Auseinandersetzung mit den für das Ergebnis des angefochtenen Entscheides massgeblichen Erwägungen aufzuzeigen ist, welche Rechte bzw. Rechtsnormen die Vorinstanz verletzt haben soll (BGE 140 III 86 E. 2; 140 III 115 E. 2). Der Beschwerdeführer setzt sich jedoch nicht damit auseinander, dass seine Beschwerde an das Obergericht keine genügende Begründung enthielt. Stattdessen begründet er die gegen die Sozialen Dienste Wettingen geltend gemachte Forderung.\nDie Beschwerde enthält offensichtlich keine hinreichende Begründung. Der Abteilungspräsident tritt auf sie im vereinfachten Verfahren nicht ein (Art. 108 Abs. 1 lit. b BGG).\n3.\nBei diesem Ausgang des Verfahrens trägt der Beschwerdeführer die Gerichtskosten (Art. 66 Abs. 1 BGG).\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 1'000.-- werden dem Beschwerdeführer auferlegt.\n3.\nDieses Urteil wird den Verfahrensbeteiligten und dem Obergericht des Kantons Aargau, Schuldbetreibungs- und Konkurskommission als obere betreibungsrechtliche Aufsichtsbehörde, mitgeteilt.\nLausanne, 19. März 2026\nIm Namen der II. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Bovey\nDer Gerichtsschreiber: Zingg",
+  "operator_metadata": {
+    "date": "2026-03-19",
+    "reference": [
+      "5A_172/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-172-2026_2026-03-19.html",
+      "source": "446973/45/2829",
+      "content_length": 3405
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_005_5A-172-2026_2026-03-19",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 19.03.2026 5A_172/2026",
+      "it": "Tribunale federale II Corte di diritto civile 19.03.2026 5A_172/2026",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 19.03.2026 5A_172/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:23:15+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-172-2026_2026-03-19.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "e83846ff4c81a99b883492dde72627aea59a7df0e8563c739f4a1502e1db1fae"
+  }
+}

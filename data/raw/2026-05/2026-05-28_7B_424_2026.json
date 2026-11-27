@@ -1,0 +1,56 @@
+{
+  "id": "7B_424_2026",
+  "case_id": "7B_424/2026",
+  "case_ids": [
+    "7B_424/2026"
+  ],
+  "decision_date": "2026-05-28",
+  "publication_date": null,
+  "department": "II. Strafrechtliche Abteilung",
+  "division": "II. Strafrechtliche Abteilung",
+  "subject": "Nichtanhandnahme; Nichteintreten",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://28-05-2026-7B_424-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n7B_424/2026\nUrteil vom 28. Mai 2026\nII. strafrechtliche Abteilung\nBesetzung\nBundesrichterin Koch, als Einzelrichterin,\nGerichtsschreiber Clément.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführerin,\ngegen\nStaatsanwaltschaft Winterthur/Unterland,\nHermann-Götz-Strasse 24, 8400 Winterthur,\nBeschwerdegegnerin.\nGegenstand\nNichtanhandnahme; Nichteintreten,\nBeschwerde gegen den Beschluss des Obergerichts des Kantons Zürich, III. Strafkammer, vom 24. Februar 2026 (UE250427-O/U/TRU>JST).\nErwägungen:\n1.\nMit Beschluss vom 24. Februar 2026 wies das Obergericht des Kantons Zürich die Beschwerde der Beschwerdeführerin gegen die Nichtanhandnahmeverfügung der Staatsanwaltschaft Winterthur/Unterland vom 1. Oktober 2025 ab. Die Beschwerdeführerin wendet sich dagegen mit Beschwerde in Strafsachen vom 31. März 2026 (Postaufgabe) an das Bundesgericht.\n2.\nDiese Eingabe ist mangels eines Zivilanspruchs, der der Beschwerdeführerin zustehen und der sie zur Beschwerde in Strafsachen berechtigen könnte (Art. 81 Abs. 1 lit. b Ziff. 5 BGG; BGE 146 IV 76 E. 3.1; 133 IV 228 E. 2.3.3; 131 I 455 E. 1.2.4; je mit Hinweisen; § 6 i.V.m. § 1 ff. des Haftungsgesetzes des Kantons Zürich vom 14. September 1969 [HG/ZH; LS 170.1]), offensichtlich unzulässig. Auf die Beschwerde ist somit im vereinfachten Verfahren nicht einzutreten (Art. 108 Abs. 1 lit. a BGG). Die Begründung des Entscheids beschränkt sich auf eine kurze Angabe des Unzulässigkeitsgrundes (Art. 108 Abs. 3 BGG). Die Gesuche um vorsorgliche Massnahmen und aufschiebende Wirkung werden mit diesem Entscheid gegen-standslos.\n3.\nDie Gerichtskosten sind der Beschwerdeführerin aufzuerlegen (Art. 66 Abs. 1 BGG). Das Gesuch um unentgeltliche Rechtspflege ist wegen offensichtlicher Aussichtslosigkeit der Begehren abzuweisen (Art. 64 Abs. 1 BGG). Die geltend gemachte Bedürftigkeit der Beschwerdeführerin wurde ferner trotz Aufforderung nicht hinreichend belegt.\nDemnach erkennt die Einzelrichterin:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDas Gesuch um unentgeltliche Rechtspflege wird abgewiesen.\n3.\nDie Gerichtskosten von Fr. 500.-- werden der Beschwerdeführerin auferlegt.\n4.\nDieses Urteil wird den Parteien, dem Obergericht des Kantons Zürich, III. Strafkammer, und B.________, Winterthur, schriftlich mitgeteilt.\nLausanne, 28. Mai 2026\nIm Namen der II. strafrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Einzelrichterin: Koch\nDer Gerichtsschreiber: Clément",
+  "operator_metadata": {
+    "date": "2026-05-28",
+    "reference": [
+      "7B_424/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-424-2026_2026-05-28.html",
+      "source": "446973/45/2834",
+      "content_length": 2851
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit pénal"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_007"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_007_7B-424-2026_2026-05-28",
+    "title": {
+      "de": "Bundesgericht II. Strafrechtliche Abteilung 28.05.2026 7B_424/2026",
+      "it": "Tribunale federale II Corte di diritto penale 28.05.2026 7B_424/2026",
+      "fr": "Tribunal fédéral IIe Cour de droit pénal 28.05.2026 7B_424/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:42:11+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-424-2026_2026-05-28.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "ce075f89a4123e19c4e7b60246c7ad5d981a5f2f09a4d67caabc9c2f5b972d64"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "id": "4A_617_2025",
+  "case_id": "4A_617/2025",
+  "case_ids": [
+    "4A_617/2025"
+  ],
+  "decision_date": "2026-02-09",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "Mietvertrag; Nichtleistung des Kostenvorschusses",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://09-02-2026-4A_617-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4A_617/2025\nUrteil vom 9. Februar 2026\nI. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Hurni, Präsident,\nGerichtsschreiber Widmer.\nVerfahrensbeteiligte\n1. A.________,\n2. B.________,\nBeschwerdeführer,\ngegen\nC.________ AG,\nvertreten durch Rechtsanwalt Nicolas Kurz,\nBeschwerdegegnerin.\nGegenstand\nMietvertrag; Nichtleistung des Kostenvorschusses,\nBeschwerde gegen den Entscheid des Appellationsgerichts des Kantons Basel-Stadt, Dreiergericht, vom 19. November 2025\n(BEZ.2025.84 (85)).\nIn Erwägung,\ndass die Beschwerdeführer mit Eingabe vom 29. November 2025 (Poststempel vom 1. Dezember 2025) Beschwerde gegen den Entscheid des Appellationsgerichts des Kantons Basel-Stadt, Dreiergericht, vom 19. November 2025 erhoben;\ndass die Beschwerdeführer mit Präsidialverfügung vom 4. Dezember 2025 aufgefordert wurden, unter solidarischer Haftbarkeit spätestens am 5. Januar 2026 einen Kostenvorschuss von Fr. 10'000.-- einzuzahlen;\ndass den Beschwerdeführern, da der Kostenvorschuss innerhalb der angesetzten Frist nicht eingegangen war, mit Verfügung vom 9. Januar 2026 eine nicht erstreckbare Nachfrist zur Vorschussleistung bis zum 26. Januar 2026 angesetzt wurde, unter Hinweis darauf, dass das Bundesgericht bei Säumnis auf das Rechtsmittel nicht eintreten werde (Art. 62 Abs. 3 BGG);\ndass die Beschwerdeführer den ihnen auferlegten Kostenvorschuss auch innerhalb der angesetzten Nachfrist nicht geleistet haben, weshalb gestützt auf Art. 62 Abs. 3 BGG auf die Beschwerde nicht einzutreten ist (Art. 108 Abs. 1 lit. a BGG);\ndass die Gerichtskosten dem Verfahrensausgang entsprechend den Beschwerdeführern unter solidarischer Haftbarkeit aufzuerlegen sind (Art. 66 Abs. 1 und 5 BGG);\ndass der Beschwerdegegnerin keine Parteientschädigung zuzusprechen ist, da ihr im Zusammenhang mit dem bundesgerichtlichen Verfahren kein Aufwand erwachsen ist (Art. 68 Abs. 1 BGG);\nerkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 800.-- werden den Beschwerdeführern unter solidarischer Haftbarkeit auferlegt.\n3.\nDieses Urteil wird den Parteien und dem Appellationsgericht des Kantons Basel-Stadt, Dreiergericht, schriftlich mitgeteilt.\nLausanne, 9. Februar 2026\nIm Namen der I. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Hurni\nDer Gerichtsschreiber: Widmer",
+  "operator_metadata": {
+    "date": "2026-02-09",
+    "reference": [
+      "4A_617/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-617-2025_2026-02-09.html",
+      "source": "446973/45/2829",
+      "content_length": 2696
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_004_4A-617-2025_2026-02-09",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 09.02.2026 4A_617/2025",
+      "it": "Tribunale federale I Corte di diritto civile 09.02.2026 4A_617/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 09.02.2026 4A_617/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:11:10+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-617-2025_2026-02-09.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "1fdefc948a6fe706d6be0f67e5e232033afa79047fbdaa74d7f101fa66b3de80"
+  }
+}

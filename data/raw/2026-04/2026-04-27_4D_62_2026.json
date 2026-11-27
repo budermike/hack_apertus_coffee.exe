@@ -1,0 +1,56 @@
+{
+  "id": "4D_62_2026",
+  "case_id": "4D_62/2026",
+  "case_ids": [
+    "4D_62/2026"
+  ],
+  "decision_date": "2026-04-27",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "responsabilité civile du mandataire; incompétence de l'autorité judiciaire saisie",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://27-04-2026-4D_62-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4D_62/2026\nArrêt du 27 avril 2026\nIre Cour de droit civil\nComposition\nM. le Juge fédéral Hurni, président.\nGreffier: M. Carruzzo.\nParticipants à la procédure\nA.________,\nrecourante,\ncontre\nB.________,\nintimé.\nObjet\nresponsabilité civile du mandataire; incompétence de l'autorité judiciaire saisie,\nrecours contre le prononcé du 23 février 2026 de la Cour civile du Tribunal cantonal du canton de Vaud (CO26.010483 6/2026).\nConsidérant en fait et en droit:\n1.\nLe 19 février 2026, A.________ a adressé une demande au \"Tribunal civil du canton de Vaud\" dans laquelle elle a pris plusieurs conclusions non chiffrées à l'encontre de l'avocat B.________.\nPar prononcé du 23 février 2026, le juge délégué de la Cour civile du Tribunal cantonal du canton de Vaud a jugé cette écriture irrecevable et a rayé la cause du rôle. En bref, il a notamment considéré que la demande ne contenait pas de conclusions chiffrées permettant de déterminer la compétence matérielle ainsi que la procédure applicable, si bien que le Tribunal cantonal vaudois n'était pas compétent.\n2.\nLe 2 avril 2026, A.________ (ci-après: la recourante) a recouru au Tribunal fédéral contre cette décision. Elle a sollicité le bénéfice de l'assistance judiciaire.\nPar pli du 10 avril 2026, la recourante a été rendue attentive au fait qu'il n'était pas possible de lui octroyer un délai supplémentaire pour compléter la motivation de son recours.\nLe Tribunal fédéral n'a pas requis le dépôt d'une réponse au recours.\n3.\nLe Tribunal fédéral examine d'office et librement la recevabilité des recours qui lui sont soumis (ATF 139 III 252 consid. 1.1).\n3.1. À teneur de l'art. 42 al. 1 et 2 de la loi sur le Tribunal fédéral du 17 juin 2005 (LTF; RS 173.110), le recours adressé au Tribunal fédéral doit comprendre des conclusions et il doit être motivé (al. 1); les motifs doivent exposer succinctement en quoi la décision attaquée viole le droit (al. 2). La partie recourante doit discuter les motifs de cette décision et indiquer précisément en quoi elle estime que l'autorité précédente a méconnu le droit (ATF 142 III 364 consid. 2.4 et les références citées).\n3.2. En l'occurrence, ces exigences ne sont manifestement pas remplies. La recourante ne discute en effet nullement les considérants de la décision entreprise. Il suit de là que le recours est manifestement irrecevable, ce qu'il convient de constater selon la procédure simplifiée de l'art. 108 al. 1 let. b LTF.\n4.\nComme les conclusions du recours étaient vouées à l'échec, la requête d'assistance judiciaire présentée par la recourante ne peut qu'être rejetée (art. 64 al. 1 LTF). La recourante, qui succombe, supportera dès lors les frais de la présente procédure (art. 66 al. 1 LTF). Il n'y a pas lieu à l'allocation de dépens.\nPar ces motifs, le Président de la I re Cour de droit civil prononce :\n1.\nLe recours est irrecevable.\n2.\nLa demande d'assistance judiciaire est rejetée.\n3.\nLes frais judiciaires, arrêtés à 800 fr., sont mis à la charge de la recourante.\n4.\nLe présent arrêt est communiqué aux parties et à la Cour civile du Tribunal cantonal du canton de Vaud.\nLausanne, le 27 avril 2026\nAu nom de la Ire Cour de droit civil\ndu Tribunal fédéral suisse\nLe Président : Hurni\nLe Greffier : Carruzzo",
+  "operator_metadata": {
+    "date": "2026-04-27",
+    "reference": [
+      "4D_62/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-62-2026_2026-04-27.html",
+      "source": "446973/45/2829",
+      "content_length": 3704
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_004_4D-62-2026_2026-04-27",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 27.04.2026 4D_62/2026",
+      "it": "Tribunale federale I Corte di diritto civile 27.04.2026 4D_62/2026",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 27.04.2026 4D_62/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:33:07+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-62-2026_2026-04-27.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "1e5c8d8657945e0c9e11159d639d0e37d47b7bb7b74d5b7d095d10ab41125c43"
+  }
+}
