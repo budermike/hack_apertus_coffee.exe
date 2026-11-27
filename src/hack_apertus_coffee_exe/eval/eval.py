@@ -22,12 +22,15 @@ import argparse
 import csv
 from dataclasses import dataclass
 import json
+import logging
 import math
 from pathlib import Path
 from typing import Any, Sequence
 
 from hack_apertus_coffee_exe.crawl.vectordb import DEFAULT_DB_DIR, VectorDB
 from hack_apertus_coffee_exe.triage.date_filter import DateRange
+
+logger = logging.getLogger(__name__)
 
 DEFAULT_REPORT_PATH = "results/eval.md"
 DEFAULT_TABLES_DIR = "results/tables"
@@ -214,6 +217,7 @@ def load_triage_scores(path: str | Path, labelled: Sequence[dict[str, Any]]) -> 
 
     raw_entries = json.loads(Path(path).read_text(encoding="utf-8"))
     best_by_key: dict[str, ScoredCase] = {}
+    ignored = 0
     for entry in raw_entries:
         cid = entry["case_id"]
         jdate = str(entry.get("judgement_date") or "")
@@ -224,6 +228,7 @@ def load_triage_scores(path: str | Path, labelled: Sequence[dict[str, Any]]) -> 
             candidates = by_case_id[cid]
             doc_key = next((k for k in candidates if k not in best_by_key), candidates[0])
         if doc_key is None:
+            ignored += 1
             continue
 
         row = row_by_key[doc_key]
@@ -246,6 +251,12 @@ def load_triage_scores(path: str | Path, labelled: Sequence[dict[str, Any]]) -> 
 
     if raw_entries and not best_by_key:
         raise ValueError("No entries in triage scores match the evaluated period")
+    if ignored:
+        # Ignored entries are not counted as false positives, so precision may look better than it is.
+        logger.warning(
+            "%s: %d of %d scored judgements are not in the Vector-DB for this period and were ignored",
+            path, ignored, len(raw_entries),
+        )
 
     cases = list(best_by_key.values())
     for dk, row in row_by_key.items():

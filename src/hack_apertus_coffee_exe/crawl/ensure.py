@@ -280,31 +280,6 @@ def _resolve_reference_ids(
     return None
 
 
-def _default_config(start: date, effective_end: date, source: str | None, raw_dir: str | Path | None) -> dict[str, Any]:
-    chosen = source or "entscheidsuche"
-    base_cfg: dict[str, Any] = {
-        "source": chosen,
-        "from_date": start,
-        "to_date": effective_end,
-        "out_dir": str(raw_dir or "data/raw"),
-        "report_path": "results/tables/crawl_report.csv",
-        "sources": {
-            "bger": {
-                "base_url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php",
-                "delay_seconds": 2.0,
-            },
-            "entscheidsuche": {
-                "base_url": "https://entscheidsuche.ch/_searchV2.php",
-                "delay_seconds": 0.5,
-            },
-        },
-    }
-    if chosen not in base_cfg["sources"]:
-        raise ValueError(f"source must be one of {list(base_cfg['sources'])}")
-    base_cfg.update(base_cfg["sources"][chosen])
-    return base_cfg
-
-
 def _status_message(
     new_judgements: int,
     existing_judgements: int,
@@ -373,17 +348,17 @@ def ensure_period(
         effective_end = ref_today - timedelta(days=1)
         skipped_future_days = [d.isoformat() for d in _iter_days(ref_today, requested_end)]
 
+    # Source URLs come only from the config file (AGENTS.md rule 4: no hard-coded external URLs).
     cfg_path = Path(config_path)
-    if cfg_path.exists():
-        cfg = crawl.load_config(
-            cfg_path,
-            from_date=start.isoformat(),
-            to_date=effective_end.isoformat(),
-            source=source,
-            out_dir=str(raw_dir) if raw_dir is not None else None,
-        )
-    else:
-        cfg = _default_config(start, effective_end, source, raw_dir)
+    if not cfg_path.exists():
+        raise FileNotFoundError(f"Crawl config not found: {cfg_path}")
+    cfg = crawl.load_config(
+        cfg_path,
+        from_date=start.isoformat(),
+        to_date=effective_end.isoformat(),
+        source=source,
+        out_dir=str(raw_dir) if raw_dir is not None else None,
+    )
 
     out_dir = Path(cfg["out_dir"])
     db_path = Path(db_dir)
@@ -416,17 +391,24 @@ def ensure_period(
             unsynced_summary_paths: list[Path] = []
             corrupt_covered_days: set[str] = set()
             preexisting_valid = 0
+            # doc_keys already counted in cases_existing / cases_saved / summary_errors,
+            # so a judgement that is looked at twice in one run is counted once.
+            counted_keys: set[str] = set()
             for iso_day, doc_key, file_path in raw_files:
                 if not crawl.is_valid(file_path):
                     if iso_day in covered_set:
                         corrupt_covered_days.add(iso_day)
                     continue
                 preexisting_valid += 1
-                if iso_day in covered_set and doc_key not in existing_keys:
+                if iso_day not in covered_set:
+                    continue
+                if doc_key not in existing_keys:
                     uningested_by_day.setdefault(iso_day, []).append(file_path)
-                inferred_cid = _case_id_from_doc_key(doc_key)
-                if iso_day in covered_set and inferred_cid not in existing_summary_numbers:
+                if _case_id_from_doc_key(doc_key) in existing_summary_numbers:
+                    counted_keys.add(doc_key)
+                else:
                     unsynced_summary_paths.append(file_path)
+            already_registered = len(counted_keys)
 
             if corrupt_covered_days:
                 for iso_day in corrupt_covered_days:
@@ -477,7 +459,7 @@ def ensure_period(
                     complete=not skipped_future_days,
                     message=msg,
                     cases_saved=0,
-                    cases_existing=preexisting_valid,
+                    cases_existing=already_registered,
                     summary_errors=0,
                 )
 
@@ -492,7 +474,7 @@ def ensure_period(
             new_judgements = 0
             ingested_judgements = 0
             cases_saved = 0
-            cases_existing = 0
+            cases_existing = already_registered
             summary_errors = 0
             failed_days: list[str] = []
             completed_steps = 0
@@ -504,6 +486,10 @@ def ensure_period(
                     if not isinstance(cid, str) or not cid:
                         summary_errors += 1
                         continue
+                    key = _record_doc_key(rec)
+                    if key in counted_keys:
+                        continue
+                    counted_keys.add(key)
                     numbers = {cid, *(rec.get("case_ids") or ())}
                     if all(n in existing_summary_numbers for n in numbers):
                         cases_existing += 1
@@ -544,7 +530,7 @@ def ensure_period(
                     ),
                 )
                 try:
-                    _get_db().ingest_records(records, reference_ids=ref_ids)
+                    _get_db().ingest_records(records, reference_ids=ref_ids, rebuild_index=False)
                     ingested_judgements += len(records)
                     existing_keys.update(_record_doc_key(r) for r in records)
                     _sync_records_to_summary_db(records)
@@ -617,7 +603,7 @@ def ensure_period(
                         ),
                     )
                     try:
-                        _get_db().ingest_records(pending_records, reference_ids=ref_ids)
+                        _get_db().ingest_records(pending_records, reference_ids=ref_ids, rebuild_index=False)
                         ingested_judgements += len(pending_records)
                         existing_keys.update(_record_doc_key(r) for r in pending_records)
                     except Exception as exc:
@@ -639,9 +625,13 @@ def ensure_period(
                 days_crawled += 1
                 completed_steps += 1
 
-            # Count covered cases that did not need a summary sync during this run.
-            if cases_existing == 0 and preexisting_valid > cases_saved:
-                cases_existing = max(0, preexisting_valid - cases_saved - summary_errors)
+            # The per-day ingests only dropped the search index (a rebuild reads every vector
+            # file); build it once here. If this fails it is rebuilt on the next search.
+            if ingested_judgements:
+                try:
+                    _get_db().rebuild_search_index()
+                except Exception as exc:
+                    logger.error("search index rebuild failed: %s", exc)
 
             msg = _status_message(
                 new_judgements,

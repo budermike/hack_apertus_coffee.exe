@@ -316,3 +316,25 @@ def test_score_candidates_ref_date_from_filters_neg_refs_and_excludes_candidates
     score_all = {r["case_id"]: r["score"] for r in all_window}
     # Strictly higher when Q3 negative reference is excluded by ref_date_from='2025-10-01'.
     assert score_q4["8C_70/2026"] > score_all["8C_70/2026"]
+
+
+def test_load_triage_scores_warns_about_entries_outside_the_labelled_period(tmp_path, caplog):
+    path = tmp_path / "triage.json"
+    path.write_text(
+        json.dumps(
+            [
+                {"case_id": "8C_1/2026", "final_score": 80.0, "judgement_date": "2026-01-05"},
+                {"case_id": "8C_77/2026", "final_score": 95.0, "judgement_date": "2026-05-05"},
+            ]
+        ),
+        encoding="utf-8",
+    )
+    labelled = [
+        {"doc_key": "2026-01-05_8C_1_2026", "case_id": "8C_1/2026", "case_ids": ["8C_1/2026"],
+         "is_reference": True, "decision_date": "2026-01-05", "language": "de", "subject": "UV"},
+    ]  # fmt: skip
+    with caplog.at_level("WARNING"):
+        cases = ev.load_triage_scores(path, labelled)
+
+    assert [c.case_id for c in cases] == ["8C_1/2026"]
+    assert "1 of 2 scored judgements are not in the Vector-DB" in caplog.text
