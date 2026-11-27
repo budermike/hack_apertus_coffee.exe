@@ -14,6 +14,8 @@ Owner: Mike (DB mit Abi)
 
 ## Schema-Entwurf (Diskussionsgrundlage)
 
+> Verbindliche Fassung: [`docs/SCHEMA.md`](../../../docs/SCHEMA.md). Bei Änderungen dort pflegen.
+
 ```sql
 CREATE TABLE summaries (
     id             INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -60,11 +62,44 @@ CREATE TABLE case_numbers (
 5. **UI** liest über `list_latest` / `get_latest`; „Neu generieren“ / „Bearbeiten“ erzeugt neue Version.
 6. **Suche** (falls Zeit): SQLite FTS5 über `text` + `case_id`.
 
+## Zusatz: Triage-Feedback (Entwurf, noch nicht entschieden)
+
+Anforderung: Tabelle `feedback` mit `case_id, chosen_ampel, old_ampel, old_score, new_score, comment, user, created_at`.
+In der Triage: `manual_override = true`, `model_score` bleibt erhalten. Re-Scoring durch das Modell überschreibt manuelle Werte nicht.
+
+```sql
+CREATE TABLE triage (                 -- aktueller Triage-Stand pro Urteil
+    case_id         TEXT PRIMARY KEY,
+    model_score     REAL NOT NULL,    -- 0–100, nur das Modell schreibt hier
+    model_ampel     TEXT NOT NULL,    -- rot / gelb / gruen
+    reason          TEXT,
+    model           TEXT,
+    scored_at       TEXT NOT NULL,
+    manual_override INTEGER NOT NULL DEFAULT 0
+);
+
+CREATE TABLE feedback (               -- append-only Log jeder manuellen Korrektur
+    id           INTEGER PRIMARY KEY AUTOINCREMENT,
+    case_id      TEXT NOT NULL,
+    chosen_ampel TEXT NOT NULL,
+    old_ampel    TEXT,                -- angezeigter Wert vor der Korrektur
+    old_score    REAL,
+    new_score    REAL,
+    comment      TEXT,
+    user         TEXT NOT NULL,
+    created_at   TEXT NOT NULL
+);
+```
+
+- Angezeigter Wert = letzte `feedback`-Zeile, falls `manual_override = 1`, sonst `model_*`.
+- Re-Scoring aktualisiert nur `model_*`, nie `manual_override` oder `feedback`.
+- Feldnamen an Triage-Branch angleichen (`relevance_score`, Ampel-Werte aus `feat/crawl`-Schema).
+
 ## Offene Fragen fürs Rubberducking
 
 - ~~Statuswechsel~~ → entschieden: `approved` = neue Zeile.
 - ~~Zusammengelegte Verfahren~~ → entschieden: Zuordnungstabelle `case_numbers`.
-- **`edited`:** Neue Zeile mit `model = "human"` oder Original-Modell behalten + Feld `edited_by`?
+- ~~`edited`~~ → entschieden: `model = "human"`, `prompt_version = NULL`.
 - **Coherence-Check:** Läuft er vor dem Speichern (Wert sofort gesetzt) oder später (Wert nachträglich per `UPDATE`)?
 - **Metadaten zum Urteil** (Datum, Abteilung, URL, `text_sha256`): eigene Tabelle `cases`, oder bleibt das im Crawl-JSON?
 - **Gleichzeitigkeit:** Schreiben Batch-Job und UI gleichzeitig? → WAL-Modus (`PRAGMA journal_mode=WAL`).
