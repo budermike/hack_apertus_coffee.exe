@@ -5,24 +5,7 @@ description = "A short description of the project."
 readme = "README.md"
 requires-python = ">=3.13"
 authors = [{ name = "Abirahm Vasanthakumar", email = "abirahm.vasanthakumar@uzh.ch" }]
-# Analysis dependencies — add more with `uv add <pkg>`
-dependencies = [
-    "numpy",
-    "pandas",
-    "matplotlib",
-]
-
-[dependency-groups]
-dev = ["jupyterlab", "ipykernel"]
-test = ["pytest"]
-docs = ["sphinx", "myst-parser"]
-
-[tool.uv]
-default-groups = ["dev", "test"]   # `uv sync` installs these; docs via `uv sync --group docs`
-
-[build-system]
-requires = ["uv_build>=0.13,<0.14"]
-build-backend = "uv_build"
+# Dependencies live in requirements.txt (installed with pip), not here.
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

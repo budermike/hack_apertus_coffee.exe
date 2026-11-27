@@ -56,6 +56,19 @@ Available model IDs on the gateway:
 
 ## Setup & checks
 
+We use **pip with `requirements.txt` only. Do not use uv** (no `uv add`, `uv sync`, `uv run`, no `uv.lock`).
+
+```
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env          # then fill in APERTUS_API_KEY
+python keera_example.py       # smoke test against the Apertus gateway
+pytest                        # unit tests (no network)
+```
+
+- Dependencies live **only** in `requirements.txt` with exact pins (`package==x.y.z`). Do not add them to `pyproject.toml`.
+- To add a dependency (after asking): `pip install <pkg>`, then add the line with the installed version from `pip freeze` to `requirements.txt`.
 
 ## Data, secrets and the public repo
 
@@ -67,7 +80,7 @@ Available model IDs on the gateway:
 
 - Unit tests must **not** call the real gateway: mock the LLM client. Mark tests that need the network (`@pytest.mark.integration`) and keep them out of the default run.
 - Evaluation is part of the deliverable. Evaluation code lives in `src/<package>/eval/`; datasets, metric, and results go to `results/tables/`. Report honest numbers, including failure cases.
-- Reproducibility first: fixed seeds, pinned versions via uv, no hidden state in notebooks.
+- Reproducibility first: fixed seeds, pinned versions in `requirements.txt`, no hidden state in notebooks.
 
 ## Priorities
 
