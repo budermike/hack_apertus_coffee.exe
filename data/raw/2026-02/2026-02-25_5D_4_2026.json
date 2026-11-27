@@ -1,0 +1,56 @@
+{
+  "id": "5D_4_2026",
+  "case_id": "5D_4/2026",
+  "case_ids": [
+    "5D_4/2026"
+  ],
+  "decision_date": "2026-02-25",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "Superprovisorische Massnahme (Herausgabe eines Fernsehgeräts)",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://25-02-2026-5D_4-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5D_4/2026\nUrteil vom 25. Februar 2026\nII. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Bovey, Präsident,\nGerichtsschreiber Zingg.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nB.________,\nvertreten durch Rechtsanwältin Denise Galbier,\nBeschwerdegegnerin.\nGegenstand\nSuperprovisorische Massnahme (Herausgabe eines Fernsehgeräts),\nBeschwerde gegen den Entscheid des Kantonsgerichts St. Gallen, Einzelrichter im Familienrecht, vom 18. Februar 2026 (FS.2026.2-EZE2; ZV.2026.39-EZE2).\nErwägungen:\n1.\nAm 3. Februar 2026 beantragte der Beschwerdeführer beim Kreisgericht St. Gallen superprovisorisch bzw. vorsorglich die Herausgabe eines im Besitz der Beschwerdegegnerin befindlichen Fernsehgeräts. Mit Entscheid vom 9. Februar 2026 wies das Kreisgericht das Gesuch um superprovisorische Anordnung vorsorglicher Massnahmen ab und setzte der Beschwerdegegnerin Frist an zur Stellungnahme.\nGegen diesen Entscheid erhob der Beschwerdeführer am 10. Februar 2026 Beschwerde beim Kantonsgericht St. Gallen. Mit Entscheid vom 18. Februar 2026 trat das Kantonsgericht auf die Beschwerde nicht ein.\nGegen diesen Entscheid hat der Beschwerdeführer am 20. Februar 2026 (Poststempel) subsidiäre Verfassungsbeschwerde an das Bundesgericht erhoben.\n2.\nVorliegend geht es um eine superprovisorische Massnahme. Diesbezüglich besteht grundsätzlich kein Rechtsmittel an das Bundesgericht (Art. 75 Abs. 1 BGG; BGE 137 III 417; 140 III 289 E. 1.1). Der Beschwerdeführer macht zwar geltend, es bestehe die konkrete Gefahr der Veräusserung oder Weitergabe, der weiteren Entwertung und der faktischen Vereitelung der späteren Vollstreckung. Mit diesen unbelegten Behauptungen kann er jedoch nicht dartun, dass vorliegend ausnahmsweise ein Rechtsmittel an das Bundesgericht gegeben wäre.\nDie Beschwerde ist offensichtlich unzulässig. Der Abteilungspräsident tritt auf sie im vereinfachten Verfahren nicht ein (Art. 117 i.V.m. Art. 108 Abs. 1 lit. a BGG).\n3.\nBei diesem Ausgang des Verfahrens trägt der Beschwerdeführer die Gerichtskosten (Art. 66 Abs. 1 BGG). Es bestehen keine Gründe, um auf deren Erhebung zu verzichten. Der Beschwerdeführer verweist zwar auf seine Mittellosigkeit, stellt im bundesgerichtlichen Verfahren aber kein Gesuch um unentgeltliche Rechtspflege. Ein solches wäre infolge Aussichtslosigkeit der Beschwerde abzuweisen gewesen (Art. 64 Abs. 1 BGG).\nDemnach erkennt der Präsident:\n1.\nAuf die Verfassungsbeschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 500.-- werden dem Beschwerdeführer auferlegt.\n3.\nDieses Urteil wird den Parteien und dem Kantonsgericht St. Gallen, Einzelrichter im Familienrecht, mitgeteilt.\nLausanne, 25. Februar 2026\nIm Namen der II. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Bovey\nDer Gerichtsschreiber: Zingg",
+  "operator_metadata": {
+    "date": "2026-02-25",
+    "reference": [
+      "5D_4/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5D-4-2026_2026-02-25.html",
+      "source": "446973/45/2830",
+      "content_length": 3204
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2830",
+    "id": "CH_BGer_005_5D-4-2026_2026-02-25",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 25.02.2026 5D_4/2026",
+      "it": "Tribunale federale II Corte di diritto civile 25.02.2026 5D_4/2026",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 25.02.2026 5D_4/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:16:27+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5D-4-2026_2026-02-25.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "56f342fdb1f4232787d7921bc9bcb4e1fa7cc98651b9fc29585aff64836e229a"
+  }
+}

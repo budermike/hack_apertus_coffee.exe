@@ -1,0 +1,56 @@
+{
+  "id": "4D_162_2025",
+  "case_id": "4D_162/2025",
+  "case_ids": [
+    "4D_162/2025"
+  ],
+  "decision_date": "2025-11-04",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "Auftrag; Nichtleistung des Kostenvorschusses",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://04-11-2025-4D_162-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4D_162/2025\nUrteil vom 4. November 2025\nI. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Hurni, Präsident,\nGerichtsschreiber Widmer.\nVerfahrensbeteiligte\nA.________ GmbH,\nBeschwerdeführerin,\ngegen\nB.________ GmbH,\nBeschwerdegegnerin.\nGegenstand\nAuftrag; Nichtleistung des Kostenvorschusses,\nBeschwerde gegen die Verfügung des Präsidiums\ndes Obergerichts Appenzell Ausserrhoden\nvom 14. August 2025 (ERZ 25 55).\nIn Erwägung,\ndass die Beschwerdeführerin beim Bundesgericht mit Eingabe vom 1. September 2025 (Postaufgabe am 4. September 2025) Beschwerde gegen die Verfügung des Präsidiums des Obergerichts Appenzell Ausserrhoden vom 14. August 2025 erhob;\ndass die Beschwerdeführerin mit Präsidialverfügung vom 9. September 2025 aufgefordert wurde, spätestens am 24. September 2025 einen Kostenvorschuss von Fr. 500.-- einzuzahlen;\ndass der Beschwerdeführerin, da der Kostenvorschuss innerhalb dieser Frist nicht eingegangen war, mit Verfügung vom 29. September 2025 eine nicht erstreckbare Nachfrist zur Vorschussleistung bis zum 14. Oktober 2025 angesetzt wurde, unter Hinweis darauf, dass das Bundesgericht bei Säumnis auf das Rechtsmittel nicht eintreten werde (Art. 62 Abs. 3 BGG);\ndass die Beschwerdeführerin den ihr auferlegten Kostenvorschuss auch innerhalb der angesetzten Nachfrist nicht geleistet hat, weshalb gestützt auf Art. 62 Abs. 3 BGG auf die Beschwerde nicht einzutreten ist (Art. 108 Abs. 1 lit. a BGG);\ndass die Gerichtskosten dem Verfahrensausgang entsprechend der Beschwerdeführerin aufzuerlegen sind (Art. 66 Abs. 1 BGG);\ndass der Beschwerdegegnerin keine Parteientschädigung zuzusprechen ist, da ihr im Zusammenhang mit dem bundesgerichtlichen Verfahren kein Aufwand erwachsen ist (Art. 68 Abs. 1 BGG);\nerkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 300.-- werden der Beschwerdeführerin auferlegt.\n3.\nDieses Urteil wird den Parteien und dem Präsidium des Obergerichts Appenzell Ausserrhoden schriftlich mitgeteilt.\nLausanne, 4. November 2025\nIm Namen der I. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Hurni\nDer Gerichtsschreiber: Widmer",
+  "operator_metadata": {
+    "date": "2025-11-04",
+    "reference": [
+      "4D_162/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-162-2025_2025-11-04.html",
+      "source": "446973/45/2869",
+      "content_length": 2516
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-06-18",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2869",
+    "id": "CH_BGer_004_4D-162-2025_2025-11-04",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 04.11.2025 4D_162/2025",
+      "it": "Tribunale federale I Corte di diritto civile 04.11.2025 4D_162/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 04.11.2025 4D_162/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:32:18+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-162-2025_2025-11-04.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "7a459c47bb5ac25f02102fbaca3d265b92fb0fe656db5418bcdf3c2c51b7f6e1"
+  }
+}

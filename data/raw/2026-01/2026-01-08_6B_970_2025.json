@@ -1,0 +1,56 @@
+{
+  "id": "6B_970_2025",
+  "case_id": "6B_970/2025",
+  "case_ids": [
+    "6B_970/2025"
+  ],
+  "decision_date": "2026-01-08",
+  "publication_date": null,
+  "department": "I. Strafrechtliche Abteilung",
+  "division": "I. Strafrechtliche Abteilung",
+  "subject": "Einsprache gegen Strafbefehl, Abschreibung; Nichteintreten; Nichteintreten",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://08-01-2026-6B_970-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n6B_970/2025\nUrteil vom 8. Januar 2026\nI. strafrechtliche Abteilung\nBesetzung\nBundesrichter von Felten, als präsidierendes Mitglied,\nGerichtsschreiberin Arquint Hill.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nGeneralstaatsanwaltschaft des Kantons Thurgau, Maurerstrasse 8, 8510 Frauenfeld,\nBeschwerdegegnerin.\nGegenstand\nEinsprache gegen Strafbefehl, Abschreibung; Nichteintreten; Nichteintreten,\nBeschwerde gegen den Entscheid des Obergerichts des Kantons Thurgau vom 3. November 2025 (SW.2025.118).\nDas präsidierende Mitglied zieht in Erwägung:\n1.\nDas Obergericht des Kantons Thurgau trat mit Entscheid vom 3. November 2025 auf die Beschwerde von A.________ gegen die Abschreibungsverfügung der Staatsanwaltschaft Kreuzlingen vom 10. September 2025 wegen mangelnder Beschwerdebegründung (Art. 396 Abs. 1 und Art. 385 Abs. 1 StPO) sowie Versäumnis der Rechtsmittelfrist nicht ein.\n2.\nGemäss Art. 42 Abs. 1 BGG haben Rechtsschriften ein Begehren und deren Begründung zu enthalten. Gemäss Art. 42 Abs. 2 BGG ist in der Beschwerdebegründung in gedrängter Form unter Bezugnahme auf den angefochtenen Entscheid darzulegen, inwiefern dieser Recht verletzt.\n3.\nVorliegend kann es nur um die Frage gehen, ob die Vorinstanz auf die Beschwerde zu Recht nicht eingetreten ist. Die Eingabe des Beschwerdeführers vom 6. Dezember 2025 entspricht den gesetzlichen Begründungsanforderungen gemäss Art. 42 Abs. 1 und 2 BGG nicht ansatzweise. Sie enthält kein Begehren im Sinne von Art. 42 Abs. 1 BGG und auch sonst keine sachbezogene Begründung (vgl. zu den Beschwerdegründen Art. 95 ff. BGG). Aus diesem Grund wurde der Beschwerdeführer mit Schreiben vom 9. Dezember 2025 unter Hinweis auf die einschlägigen Gesetzesbestimmungen auf die Begründungsanforderungen einer Beschwerde an das Bundesgericht aufmerksam gemacht und dahingehend informiert, die Beschwerde bis zum Ablauf der Beschwerdefrist ergänzen zu können. Der Beschwerdeführer reagierte darauf nicht innert Frist; seine nach Ablauf der Beschwerdefrist eingereichte Eingabe vom 30. Dezember 2025 (Poststempel) ist verspätet und bleibt unbeachtlich. Auf die Beschwerde ist im Verfahren nach Art. 108 BGG mangels einer tauglichen Begründung nicht einzutreten.\n4.\nAusnahmsweise ist von einer Kostenauflage abzusehen (Art. 66 Abs. 1 BGG\nDemnach erkennt das präsidierende Mitglied:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nEs werden keine Kosten erhoben.\n3.\nDieses Urteil wird den Parteien und dem Obergericht des Kantons Thurgau schriftlich mitgeteilt.\nLausanne, 8. Januar 2026\nIm Namen der I. strafrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDas präsidierende Mitglied: von Felten\nDie Gerichtsschreiberin: Arquint Hill",
+  "operator_metadata": {
+    "date": "2026-01-08",
+    "reference": [
+      "6B_970/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_006_6B-970-2025_2026-01-08.html",
+      "source": "446973/45/2834",
+      "content_length": 3116
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit pénal"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_006"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_006_6B-970-2025_2026-01-08",
+    "title": {
+      "de": "Bundesgericht I. Strafrechtliche Abteilung 08.01.2026 6B_970/2025",
+      "it": "Tribunale federale I Corte di diritto penale 08.01.2026 6B_970/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit pénal 08.01.2026 6B_970/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:02:13+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_006_6B-970-2025_2026-01-08.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "897c75bfcdadd9655be55c499221186d26af9e336c983634be9f56a5e3ae14f5"
+  }
+}

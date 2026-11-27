@@ -1,0 +1,56 @@
+{
+  "id": "8C_343_2026",
+  "case_id": "8C_343/2026",
+  "case_ids": [
+    "8C_343/2026"
+  ],
+  "decision_date": "2026-06-25",
+  "publication_date": null,
+  "department": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "division": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "subject": "Condition de recevabilité",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://25-06-2026-8C_343-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n8C_343/2026\nArrêt du 25 juin 2026\nIVe Cour de droit public\nComposition\nM. le Juge fédéral Métral, en qualité de juge unique.\nGreffier : M. Ourny.\nParticipants à la procédure\nA.________,\nrecourant,\ncontre\nintimé inconnu.\nObjet\nCondition de recevabilité,\nrecours contre un arrêt du Tribunal cantonal du Valais\ndu 10 mars 2026.\nFaits :\nA.\nPar acte du 8 avril 2026 (date du timbre postal) adressé au Tribunal fédéral, A.________ a recouru contre un \"arrêt rendu le 10 mars 2026 par le Tribunal cantonal du Valais, Cour des assurances sociales\", sans produire la décision attaquée.\nB.\nPar ordonnance du 9 avril 2026, le Tribunal fédéral a, en application de l'art. 42 al. 5 LTF, accordé au recourant un délai supplémentaire pour remédier à l'irrégularité en produisant la décision attaquée de l'instance précédente, en l'informant qu'à défaut, son mémoire ne serait pas pris en considération. Le recourant n'a pas donné suite à cette ordonnance.\nConsidérant en droit :\n1.\nSelon l'art. 108 al. 1 let. a LTF, le président de la cour décide en procédure simplifiée de ne pas entrer en matière sur les recours manifestement irrecevables. Il peut confier cette tâche à un autre juge (art. 108 al. 2 LTF).\n2.\n2.1. En vertu de l'art. 42 al. 1 et 2 LTF, le recours doit indiquer, entre autres exigences, les conclusions, les motifs et les moyens de preuve, en exposant en quoi l'acte attaqué est contraire au droit. La décision attaquée doit être jointe au mémoire de recours si celui-ci est dirigé contre une décision (art. 42 al. 3 LTF). Si cette annexe fait défaut, le Tribunal fédéral impartit un délai approprié à la partie recourante pour remédier à cette irrégularité et l'avertit qu'à défaut, le mémoire ne sera pas pris en considération (art. 42 al. 5 LTF).\n2.2. En l'occurrence, le recourant n'a pas produit la décision attaquée. Le recours doit dès lors être déclaré irrecevable selon la procédure simplifiée de l'art. 108 al. 1 let. a LTF.\n3.\nEn application de l'art. 66 al. 1, 2 e phrase, LTF, il convient de renoncer exceptionnellement à la perception de frais judiciaires.\nPar ces motifs, le Juge unique prononce :\n1.\nLe recours est irrecevable.\n2.\nIl n'est pas perçu de frais judiciaires.\n3.\nLe présent arrêt est communiqué au recourant et à la Cour des assurances sociales du Tribunal cantonal du Valais.\nLucerne, le 25 juin 2026\nAu nom de la IVe Cour de droit public\ndu Tribunal fédéral suisse\nLe Juge unique : Métral\nLe Greffier : Ourny",
+  "operator_metadata": {
+    "date": "2026-06-25",
+    "reference": [
+      "8C_343/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-343-2026_2026-06-25.html",
+      "source": "446973/45/2834",
+      "content_length": 2928
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+      "it": "Confederazione Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale)",
+      "fr": "Conféderation Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social)"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_008"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_008_8C-343-2026_2026-06-25",
+    "title": {
+      "de": "Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung) 25.06.2026 8C_343/2026",
+      "it": "Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale) 25.06.2026 8C_343/2026",
+      "fr": "Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social) 25.06.2026 8C_343/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:49:39+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-343-2026_2026-06-25.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "0b5abf2d26ad87043317c71140408efde967674f185b8c15ccd9cc2f1ca2f1e3"
+  }
+}

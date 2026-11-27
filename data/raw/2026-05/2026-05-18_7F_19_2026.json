@@ -1,0 +1,56 @@
+{
+  "id": "7F_19_2026",
+  "case_id": "7F_19/2026",
+  "case_ids": [
+    "7F_19/2026"
+  ],
+  "decision_date": "2026-05-18",
+  "publication_date": null,
+  "department": "II. Strafrechtliche Abteilung",
+  "division": "II. Strafrechtliche Abteilung",
+  "subject": "Revisionsgesuch gegen das Urteil 7B_735/2025 des Schweizerischen Bundesgerichts vom 16. September 2025.",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://18-05-2026-7F_19-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n7F_19/2026\nUrteil vom 18. Mai 2026\nII. strafrechtliche Abteilung\nBesetzung\nBundesrichter Abrecht, Präsident,\nBundesrichterin Koch, Bundesrichter Kölz,\nGerichtsschreiber Stadler.\nVerfahrensbeteiligte\nA.________,\nGesuchsteller,\ngegen\nStaatsanwaltschaft Winterthur/Unterland,\nHermann-Götz-Strasse 24, 8400 Winterthur,\nGesuchsgegnerin,\nObergericht des Kantons Zürich, III. Strafkammer, Hirschengraben 13/15, Postfach 2401, 8021 Zürich.\nGegenstand\nRevisionsgesuch gegen das Urteil 7B_735/2025 des Schweizerischen Bundesgerichts vom 16. September 2025.\nErwägungen:\n1.\nMit Urteil 7B_735/2025 vom 16. September 2025 trat das Bundesgericht auf die Beschwerde von A.________ gegen die Verfügung des Obergerichts des Kantons Zürich vom 2. Juli 2025 nicht ein.\nA.________ ersucht um Revision des bundesgerichtlichen Urteils.\n2.\nDem Gesuchsteller wurde mit Verfügung vom 20. März 2026 Frist bis zum 21. April 2026 angesetzt, um dem Bundesgericht einen Kostenvorschuss von Fr. 1'200.-- zu leisten. Da dies nicht innert Frist erfolgte, wurde dem Gesuchsteller mit Verfügung vom 23. April 2026 die gesetzlich vorgeschriebene und nicht erstreckbare Nachfrist zur Leistung des Kostenvorschusses bis zum 4. Mai 2026 angesetzt, ansonsten nicht auf das Rechtsmittel eingetreten werde. Die Verfügungen vom 20. März 2026 und 23. April 2026 gingen dem Gesuchsteller nachweislich zu.\n3.\nDie Partei, die das Bundesgericht anruft, hat einen Kostenvorschuss zu bezahlen (Art. 62 Abs. 1 BGG). Der Kostenvorschuss ging innert der angesetzten Nachfrist nicht ein, weshalb auf das Revisionsgesuch androhungsgemäss, gestützt auf Art. 62 Abs. 3 BGG, nicht einzutreten ist.\nDer Gesuchsteller ist nach Art. 66 Abs. 1 und 3 BGG kostenpflichtig.\n4.\nDas Bundesgericht behält sich vor, weitere Eingaben in dieser Sache und insbesondere offensichtlich unbegründete Revisionsgesuche ohne förmliche Erledigung zu den Akten zu legen.\nDemnach erkennt das Bundesgericht:\n1.\nAuf das Revisionsgesuch wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 600.-- werden dem Gesuchsteller auferlegt.\n3.\nDieses Urteil wird den Parteien und dem Obergericht des Kantons Zürich, III. Strafkammer, schriftlich mitgeteilt.\nLausanne, 18. Mai 2026\nIm Namen der II. strafrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Abrecht\nDer Gerichtsschreiber: Stadler",
+  "operator_metadata": {
+    "date": "2026-05-18",
+    "reference": [
+      "7F_19/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7F-19-2026_2026-05-18.html",
+      "source": "446973/45/2834",
+      "content_length": 2751
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit pénal"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_007"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_007_7F-19-2026_2026-05-18",
+    "title": {
+      "de": "Bundesgericht II. Strafrechtliche Abteilung 18.05.2026 7F_19/2026",
+      "it": "Tribunale federale II Corte di diritto penale 18.05.2026 7F_19/2026",
+      "fr": "Tribunal fédéral IIe Cour de droit pénal 18.05.2026 7F_19/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:39:36+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7F-19-2026_2026-05-18.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "a19742327acd53ec19ce01f408980f74db4f04a5acdc938f5927a00f8598364c"
+  }
+}

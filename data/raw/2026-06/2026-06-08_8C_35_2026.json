@@ -1,0 +1,56 @@
+{
+  "id": "8C_35_2026",
+  "case_id": "8C_35/2026",
+  "case_ids": [
+    "8C_35/2026"
+  ],
+  "decision_date": "2026-06-08",
+  "publication_date": null,
+  "department": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "division": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "subject": "Invalidenversicherung",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://08-06-2026-8C_35-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n8C_35/2026\nUrteil vom 8. Juni 2026\nIV. öffentlich-rechtliche Abteilung\nBesetzung\nBundesrichterin Scherrer Reber, als Einzelrichterin,\nGerichtsschreiber Grünenfelder.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführerin,\ngegen\nIV-Stelle Bern, Scheibenstrasse 70, 3014 Bern,\nBeschwerdegegnerin.\nGegenstand\nInvalidenversicherung,\nBeschwerde gegen das Urteil des Verwaltungsgerichts des Kantons Bern vom 19. Dezember 2025\n(IV 200 2025 624).\nNach Einsicht\nin die Beschwerde vom 16. Januar 2026 gegen das Urteil des Verwaltungsgerichts des Kantons Bern vom 19. Dezember 2025,\nin die Verfügung vom 13. März 2026, mit welcher das Bundesgericht das Gesuch der A.________ um unentgeltliche Rechtspflege wegen Aussichtslosigkeit der Beschwerde abgewiesen und ihr eine Frist von 14 Tagen zur Bezahlung eines Kostenvorschusses von Fr. 800.- angesetzt hat,\nin die Verfügung vom 4. Mai 2026, mit welcher A.________ zur Bezahlung eines Kostenvorschusses innert einer Nachfrist bis zum 15. Mai 2026 verpflichtet wurde, ansonsten auf das Rechtsmittel nicht eingetreten werde,\nin Erwägung,\ndass die Beschwerdeführerin den ihr auferlegten Kostenvorschuss auch innerhalb der Nachfrist nicht geleistet hat,\ndass deshalb gestützt auf Art. 62 Abs. 3 BGG im vereinfachten Verfahren nach Art. 108 Abs. 1 lit. a und Abs. 2 BGG auf die Beschwerde nicht einzutreten ist,\ndass in Anwendung von Art. 66 Abs. 1 Satz 2 BGG umständehalber auf die Erhebung von Gerichtskosten verzichtet wird,\nerkennt die Einzelrichterin:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nEs werden keine Gerichtskosten erhoben.\n3.\nDieses Urteil wird den Parteien, dem Verwaltungsgericht des Kantons Bern und dem Bundesamt für Sozialversicherungen schriftlich mitgeteilt.\nLuzern, 8. Juni 2026\nIm Namen der IV. öffentlich-rechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Einzelrichterin: Scherrer Reber\nDer Gerichtsschreiber: Grünenfelder",
+  "operator_metadata": {
+    "date": "2026-06-08",
+    "reference": [
+      "8C_35/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-35-2026_2026-06-08.html",
+      "source": "446973/45/2834",
+      "content_length": 2291
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+      "it": "Confederazione Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale)",
+      "fr": "Conféderation Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social)"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_008"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_008_8C-35-2026_2026-06-08",
+    "title": {
+      "de": "Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung) 08.06.2026 8C_35/2026",
+      "it": "Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale) 08.06.2026 8C_35/2026",
+      "fr": "Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social) 08.06.2026 8C_35/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:44:52+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-35-2026_2026-06-08.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "beb71607670b1cef33a7549be81bca26092a1ffe65cd211cf326470924e6b479"
+  }
+}

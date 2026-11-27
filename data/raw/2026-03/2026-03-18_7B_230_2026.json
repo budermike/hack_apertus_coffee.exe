@@ -1,0 +1,56 @@
+{
+  "id": "7B_230_2026",
+  "case_id": "7B_230/2026",
+  "case_ids": [
+    "7B_230/2026"
+  ],
+  "decision_date": "2026-03-18",
+  "publication_date": null,
+  "department": "II. Strafrechtliche Abteilung",
+  "division": "II. Strafrechtliche Abteilung",
+  "subject": "Decreto di non luogo a procedere",
+  "language": "it",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://18-03-2026-7B_230-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n7B_230/2026\nSentenza del 18 marzo 2026\nII Corte di diritto penale\nComposizione\nGiudice federale Abrecht, Presidente,\nCancelliere Caprara.\nPartecipanti al procedimento\nA.________,\nricorrente,\ncontro\nMinistero pubblico del Cantone Ticino, palazzo di giustizia, via Pretorio 16, 6901 Lugano,\nopponente.\nOggetto\nDecreto di non luogo a procedere,\nricorso contro la decisione emanata il 5 febbraio 2026\ndal Presidente della Corte dei reclami penali del Tribunale d'appello del Cantone Ticino (60.2026.2).\nRitenuto in fatto e considerando in diritto:\n1.\nCon ricorso del 23 febbraio 2026 (data di ricezione), A.________ è insorto al Tribunale federale contro la decisione emanata il 5 febbraio 2026 dal Presidente della Corte dei reclami penali del Tribunale d'appello del Cantone Ticino.\n2.\nGiusta l'art. 42 cpv. 1 LTF, gli atti scritti devono contenere le conclusioni, i motivi e l'indicazione dei mezzi di prova ed essere firmati.\n3.\nConstatata l'assenza di una firma apposta di proprio pugno sul ricorso, con decreto del 24 febbraio 2026 l'impugnativa è stata ritornata al ricorrente, con l'invito a sanare il vizio entro il 13 marzo 2026 e l'avvertenza che in caso di inosservanza l'atto scritto non sarebbe stato preso in considerazione (art. 42 cpv. 5 LTF).\n4.\nEntro il termine assegnato, il ricorrente non ha trasmesso al Tribunale federale un esemplare dell'atto di ricorso con firma autografa. Si è invece limitato a inviare un ulteriore scritto redatto in lingua inglese, pervenuto al Tribunale federale il 9 marzo 2026. Per tale motivo, il ricorso dev'essere dichiarato manifestamente inammissibile mediante la procedura semplificata dell'art. 108 cpv. 1 lett. a LTF.\n5.\nPer abbondanza si rileva che il ricorso sarebbe stato dichiarato inammissibile in virtù dell'art. 108 cpv. 1 lett. b LTF anche in presenza di una firma autografa, ritenuto che il ricorrente non si è confrontato minimamente con la motivazione con la quale il Presidente della Corte cantonale ha dichiarato irricevibile il reclamo (art. 42 cpv. 2 LTF; v. DTF 150 I 183 consid. 2.1; sentenza 7B_97/2026 del 9 febbraio 2026 consid. 2.1).\n6.\nLe spese giudiziarie seguono la soccombenza (art. 66 cpv. 1 prima frase LTF) e vanno pertanto poste a carico del ricorrente.\nPer questi motivi, il Presidente pronuncia:\n1.\nIl ricorso è inammissibile.\n2.\nLe spese giudiziarie di fr. 800.-- sono poste a carico del ricorrente.\n3.\nComunicazione alle parti e al Presidente della Corte dei reclami penali del Tribunale d'appello del Cantone Ticino.\nLosanna, 18 marzo 2026\nIn nome della II Corte di diritto penale\ndel Tribunale federale svizzero\nIl Presidente: Abrecht\nIl Cancelliere: Caprara",
+  "operator_metadata": {
+    "date": "2026-03-18",
+    "reference": [
+      "7B_230/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "it",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-230-2026_2026-03-18.html",
+      "source": "446973/45/2834",
+      "content_length": 3092
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit pénal"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_007"
+    ],
+    "canton": "CH",
+    "language": "it",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_007_7B-230-2026_2026-03-18",
+    "title": {
+      "de": "Bundesgericht II. Strafrechtliche Abteilung 18.03.2026 7B_230/2026",
+      "it": "Tribunale federale II Corte di diritto penale 18.03.2026 7B_230/2026",
+      "fr": "Tribunal fédéral IIe Cour de droit pénal 18.03.2026 7B_230/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:22:51+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-230-2026_2026-03-18.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "b70dd73d85051b95188c5ea655d1edd0cd86efae8c4faee9b85856c27ac302f1"
+  }
+}

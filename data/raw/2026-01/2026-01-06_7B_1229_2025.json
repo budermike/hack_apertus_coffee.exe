@@ -1,0 +1,56 @@
+{
+  "id": "7B_1229_2025",
+  "case_id": "7B_1229/2025",
+  "case_ids": [
+    "7B_1229/2025"
+  ],
+  "decision_date": "2026-01-06",
+  "publication_date": null,
+  "department": "II. Strafrechtliche Abteilung",
+  "division": "II. Strafrechtliche Abteilung",
+  "subject": "Decreto di abbandono (ritiro del ricorso)",
+  "language": "it",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://06-01-2026-7B_1229-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n7B_1229/2025\nDecreto del 6 gennaio 2026\nII Corte di diritto penale\nComposizione\nGiudice federale Abrecht, Presidente,\nCancelliere Valentino.\nPartecipanti al procedimento\nA.________,\npatrocinato dall'avv. Dr. Pascal Frischkopf,\nricorrente,\ncontro\n1. Ministero pubblico del Cantone Ticino, Ufficio di Bellinzona, viale S. Franscini 3, 6500 Bellinzona,\n2. B.________,\nopponenti.\nOggetto\nDecreto di abbandono (ritiro del ricorso),\nricorso contro la sentenza emanata il 10 ottobre 2025 dalla Corte dei reclami penali del Tribunale d'appello\ndel Cantone Ticino (60.2025 236).\nRitenuto in fatto e considerando in diritto:\n1.\nCon decreto del 9 luglio 2025, la Procuratrice pubblica del Cantone Ticino, a seguito della querela sporta da A.________, ha decretato l'abbandono del procedimento penale aperto nei confronti di B.________ per reati di ingiuria, diffamazione e calunnia.\nCon sentenza del 10 ottobre 2025, la Corte dei reclami penali del Tribunale d'appello del Cantone Ticino ha respinto il reclamo presentato da A.________ contro questo decreto e ha posto la tassa di giustizia e le spese a suo carico.\n2.\nA.________ ha impugnato la sentenza del 10 ottobre 2025 con un ricorso in materia penale del 13 novembre 2025 al Tribunale federale.\n3.\nCon scritto del 27 dicembre 2025, il ricorrente ha comunicato al Tribunale federale di ritirare il suo ricorso.\n4.\nGiusta l'art. 32 cpv. 1 LTF il Presidente della Corte dirige il procedimento fino alla pronuncia della sentenza; in virtù dell'art. 32 cpv. 2 LTF decide quale giudice unico circa lo stralcio dal ruolo delle cause ritirate.\n5.\nQuando la causa viene stralciata dal ruolo a seguito del ritiro del ricorso, la parte ricorrente è considerata soccombente ai sensi dell'art. 66 cpv. 1 prima frase LTF (ordinanza 7B_55/2025 dell'11 settembre 2025 consid. 2.1; GRÉGORY BOVEY, in Commentaire de la LTF, 3a ed. 2022, n. 38 ad art. 66 LTF). La tassa di giustizia è stabilita in particolare in funzione dell'ampiezza e della difficoltà della causa, del modo di condotta processuale e della situazione finanziaria delle parti (art. 65 cpv. 2 LTF).\nConsiderato lo stadio della procedura in cui è intervenuto il ritiro, si deve ritenere che il ricorso non ha causato un lavoro considerevole al tribunale, per cui è opportuno prelevare spese giudiziarie ridotte (art. 66 cpv. 2 LTF) e restituire al ricorrente il saldo dell'anticipo delle spese versato il 1° dicembre 2025.\nPer questi motivi, il Presidente decreta:\n1.\nLa causa è stralciata dal ruolo a seguito del ritiro del ricorso.\n2.\nLe spese giudiziarie di fr. 300.-- sono poste a carico del ricorrente.\n3.\nComunicazione alle parti e alla Corte dei reclami penali del Tribunale d'appello del Cantone Ticino.\nLosanna, 6 gennaio 2026\nIn nome della II Corte di diritto penale\ndel Tribunale federale svizzero\nIl Presidente: Abrecht\nIl Cancelliere: Valentino",
+  "operator_metadata": {
+    "date": "2026-01-06",
+    "reference": [
+      "7B_1229/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "it",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-1229-2025_2026-01-06.html",
+      "source": "446973/45/2834",
+      "content_length": 3275
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit pénal"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_007"
+    ],
+    "canton": "CH",
+    "language": "it",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_007_7B-1229-2025_2026-01-06",
+    "title": {
+      "de": "Bundesgericht II. Strafrechtliche Abteilung 06.01.2026 7B_1229/2025",
+      "it": "Tribunale federale II Corte di diritto penale 06.01.2026 7B_1229/2025",
+      "fr": "Tribunal fédéral IIe Cour de droit pénal 06.01.2026 7B_1229/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:01:31+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-1229-2025_2026-01-06.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "c8cc6b463e93e9886effe7c12e16b9f1af0f9823c8ec8f2f3040a82e37de6a9e"
+  }
+}

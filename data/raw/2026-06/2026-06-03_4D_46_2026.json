@@ -1,0 +1,56 @@
+{
+  "id": "4D_46_2026",
+  "case_id": "4D_46/2026",
+  "case_ids": [
+    "4D_46/2026"
+  ],
+  "decision_date": "2026-06-03",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "mainlevée",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://03-06-2026-4D_46-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4D_46/2026\nArrêt du 3 juin 2026\nIre Cour de droit civil\nComposition\nM. le Juge fédéral Hurni, Président.\nGreffier : M. Botteron.\nParticipants à la procédure\nA.________,\nrecourant,\ncontre\nB.________,\nreprésenté par Me Christian Favre, avocat,\nintimé.\nObjet\nmainlevée,\nrecours contre l'arrêt rendu le 20 février 2026 par la Cour des poursuites et faillites du Tribunal cantonal du canton de Vaud (KC25.034746-260036 30).\nConsidérant en fait et en droit :\n1.\nPar arrêt du 20 février 2026, la Cour des poursuites et faillites du Tribunal cantonal du canton de Vaud a déclaré irrecevable le recours dirigé par A.________ contre le jugement du 30 octobre 2025 de la Juge de paix du district de l'Ouest lausannois prononçant la mainlevée de l'opposition qu'il a formée à la poursuite n. xxx introduite par B.________.\nPar acte du 23 mars 2026, A.________ (ci-après: le recourant) a introduit un recours au Tribunal fédéral.\n2.\nPar courrier du 11 avril 2026, le recourant a refusé de payer l'avance de frais de 500 fr. que le Tribunal fédéral l'a invité à verser jusqu'au 27 avril 2026.\nPar ordonnance du 1 er mai 2026, le Président de la Ire Cour de droit civil lui a imparti un délai non prolongeable au 18 mai 2026 pour s'acquitter de l'avance de frais.\nPar courrier du 13 mai 2026, le recourant a à nouveau refusé de payer l'avance de frais.\n3.\nLa partie qui saisit le Tribunal fédéral doit fournir une avance de frais d'un montant correspondant aux frais judiciaires présumés (art. 62 al. 1 LTF). Le juge instructeur fixe un délai approprié pour fournir l'avance de frais ou les sûretés. Si le versement n'est pas fait dans ce délai, il fixe un délai supplémentaire. Si l'avance n'est pas versée dans ce second délai, le recours est irrecevable (art. 62 al. 3 LTF).\nLe recourant n'ayant pas réglé d'avance de frais, son recours est irrecevable, ce qu'il convient de constater selon la procédure simplifiée de l'art. 108 al. 1 let. a LTF. Le recourant supportera les frais judiciaires, arrêtés à 500 fr. (art. 66 al. 1 LTF). Il n'y a pas lieu d'allouer des dépens à l'intimé, qui n'a pas été invité à se déterminer (art. 68 al. 1-2 LTF).\npar ces motifs, le Président prononce :\n1.\nLe recours est irrecevable.\n2.\nLes frais judiciaires, arrêtés à 500 fr., sont mis à la charge du recourant.\n3.\nIl n'est pas alloué de dépens.\n4.\nLe présent arrêt est communiqué aux parties et à la Cour des poursuites et faillites du Tribunal cantonal du canton de Vaud.\nLausanne, le 3 juin 2026\nAu nom de la Ire Cour de droit civil\ndu Tribunal fédéral suisse\nLe Président : Hurni\nLe Greffier : Botteron",
+  "operator_metadata": {
+    "date": "2026-06-03",
+    "reference": [
+      "4D_46/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-46-2026_2026-06-03.html",
+      "source": "446973/45/2829",
+      "content_length": 3013
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_004_4D-46-2026_2026-06-03",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 03.06.2026 4D_46/2026",
+      "it": "Tribunale federale I Corte di diritto civile 03.06.2026 4D_46/2026",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 03.06.2026 4D_46/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:43:31+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-46-2026_2026-06-03.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "0a8766d620b0bdfbad6e38ab640cb830b79a97544bb526ef945322370794a79c"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "id": "4D_247_2025",
+  "case_id": "4D_247/2025",
+  "case_ids": [
+    "4D_247/2025"
+  ],
+  "decision_date": "2025-12-30",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "Rechtsöffnung",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://30-12-2025-4D_247-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4D_247/2025\nUrteil vom 30. Dezember 2025\nI. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Hurni, Präsident,\nGerichtsschreiber Dürst.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nB.________,\nvertreten durch Rechtsanwalt Alexander Schawalder,\nBeschwerdegegnerin.\nGegenstand\nRechtsöffnung,\nBeschwerde gegen den Entscheid des Obergerichts\ndes Kantons Aargau, Zivilgericht, 3. Kammer,\nvom 18. November 2025 (ZSU.2025.210).\nErwägungen:\n1.\nMit Entscheid vom 18. November 2025 wies das Obergericht des Kantons Aargau die Beschwerde des Beschwerdeführers gegen den Entscheid des Bezirksgerichts Bremgarten vom 31. Juli 2025 ab, mit welchem es der Beschwerdegegnerin in der Betreibung Nr. xxx des Regionalen Betreibungsamts Mutschellen-Kelleramt für eine Unterhaltsforderung von Fr. 28'448.40 nebst Zins zu 5% seit dem 28. Februar 2025 sowie Betreibungskosten von Fr. 104.-- gegen den Beschwerdeführer definitive Rechtsöffnung erteilte.\nDagegen erhob der Beschwerdeführer mit Eingabe vom 22. Dezember 2025 Beschwerde an das Bundesgericht. Gleichzeitig ersucht er um Sistierung des Verfahrens, bis die unterhaltsrechtlichen Fragen im Abänderungsverfahren geklärt sind. Zudem seien durch das Bundesgericht \"die migrationsrechtlichen Akten\" beizuziehen, die wirtschaftlichen Verhältnisse der Beschwerdegegnerin umfassend abzuklären und einen möglichen Rechtsmissbrauch festzustellen. Er wirft der Beschwerdegegnerin im Wesentlichen vor, zur Verlängerung ihrer Aufenthaltsbewilligung beim Migrationsamt ein Konkubinat angegeben zu haben, während sie im zivilrechtlichen Abänderungsverfahren ein Konkubinat abstreite, weshalb \"die Frauenrechte\" rückwirkend auf Fr. 0.-- herabzusetzen seien. Der Vorinstanz wirft er \"staatliche Willkür\" vor.\n2.\nDie Eingabe des Beschwerdeführers beruht augenfällig auf querulatorischer und rechtsmissbräuchlicher Prozessführung und ist als solche unzulässig (Art. 42 Abs. 7 BGG). Auf die Beschwerde ist demnach im vereinfachten Verfahren durch den Abteilungspräsidenten nicht einzutreten (Art. 108 Abs. 1 lit. c BGG). Die Begründung des Entscheids beschränkt sich dabei auf eine kurze Angabe des Unzulässigkeitsgrundes (Art. 108 Abs. 3 BGG).\n3.\nBei diesem Ausgang des Verfahrens sind die Gerichtskosten dem Beschwerdeführer aufzuerlegen (Art. 66 Abs. 1 BGG). Die Beschwerdegegnerin hat keinen Anspruch auf eine Parteientschädigung, da ihr mangels Einholung einer Vernehmlassung aus dem bundesgerichtlichen Verfahren kein entschädigungspflichtiger Aufwand erwachsen ist (Art. 68 Abs. 2 BGG).\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 500.-- werden dem Beschwerdeführer auferlegt.\n3.\nEs wird keine Parteientschädigung zugesprochen.\n4.\nDieses Urteil wird den Parteien und dem Obergericht des Kantons Aargau, Zivilgericht, 3. Kammer, schriftlich mitgeteilt.\nLausanne, 30. Dezember 2025\nIm Namen der I. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Hurni\nDer Gerichtsschreiber: Dürst",
+  "operator_metadata": {
+    "date": "2025-12-30",
+    "reference": [
+      "4D_247/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-247-2025_2025-12-30.html",
+      "source": "446973/45/2869",
+      "content_length": 3437
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-06-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2869",
+    "id": "CH_BGer_004_4D-247-2025_2025-12-30",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 30.12.2025 4D_247/2025",
+      "it": "Tribunale federale I Corte di diritto civile 30.12.2025 4D_247/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 30.12.2025 4D_247/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:00:49+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-247-2025_2025-12-30.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "60b5f8d548d1a8a02e5254f9ea0fee99252ea966bcff272e871507c07240813f"
+  }
+}

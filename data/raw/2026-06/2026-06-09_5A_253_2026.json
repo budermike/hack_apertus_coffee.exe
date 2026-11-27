@@ -1,0 +1,56 @@
+{
+  "id": "5A_253_2026",
+  "case_id": "5A_253/2026",
+  "case_ids": [
+    "5A_253/2026"
+  ],
+  "decision_date": "2026-06-09",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "placement à des fins d'assistance",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://09-06-2026-5A_253-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5A_253/2026\nArrêt du 9 juin 2026\nIIe Cour de droit civil\nComposition\nM. le Juge fédéral Bovey, Président.\nGreffière : Mme Hildbrand.\nParticipants à la procédure\nA.________,\nrecourant,\ncontre\nTribunal de protection de l'adulte et de l'enfant du canton de Genève,\nrue des Glacis-de-Rive 6, 1207 Genève,\nB.________, curateur,\nObjet\nplacement à des fins d'assistance,\nrecours contre l'ordonnance du Tribunal de protection de l'adulte et de l'enfant du canton de Genève du 17 mars 2026 (PUI/mdn/C/17657/2016 DTAE/2093/2026).\nConsidérant en fait et en droit :\n1.\nPar ordonnance du 17 mars 2026, le Tribunal de protection de l'adulte et de l'enfant du canton de Genève a rejeté le recours formé le 10 mars 2026 par A.________ contre la décision médicale du même jour ordonnant l'application de mesures limitant sa liberté de mouvement. Il a également rejeté sa demande de libération immédiate.\n2.\nPar courrier du 17 mars 2026 adressé au Tribunal fédéral et ses compléments des 18, 24, 25 mars et 13 avril 2026, A.________ conteste l'ordonnance du 17 mars 2026.\n3.\nSelon l'art. 75 al. 1 LTF, le recours en matière civile est recevable contre les décisions prises par les autorités cantonales de dernière instance, par le Tribunal administratif fédéral ou par le Tribunal fédéral des brevets.\nEn l'espèce, l'ordonnance attaquée émane du Tribunal de protection de l'adulte et de l'enfant du canton de Genève, à savoir une autorité de première instance. Il y est d'ailleurs indiqué que cette décision peut faire l'objet d'un recours devant la Chambre de surveillance de la Cour de justice du canton de Genève.\nIl s'ensuit que l'ordonnance attaquée n'est pas susceptible de faire l'objet d'un recours en matière civile au Tribunal fédéral faute d'épuisement des instances.\n4.\nLe recours en matière civile est donc manifestement irrecevable, ce qui doit être constaté dans le cadre de la procédure simplifiée prévue par l'art. 108 al. 1 let. a LTF.\nL'acte de recours et ses compléments seront transmis à la Chambre de surveillance de la Cour de justice du canton de Genève comme objet de sa compétence (cf. art. 30 al. 2 LTF par analogie).\nAu vu des circonstances, il convient exceptionnellement de renoncer à percevoir des frais judiciaires (art. 66 al. 1 2 e phrase LTF).\nPar ces motifs, le Président prononce :\n1.\nLe recours en matière civile est irrecevable.\n2.\nL'acte de recours et ses compléments sont transmis à la Chambre de surveillance de la Cour de justice du canton de Genève comme objet de sa compétence.\n3.\nIl n'est pas perçu de frais judiciaires.\n4.\nLe présent arrêt est communiqué aux parties, à B.________ et au Tribunal de protection de l'adulte et de l'enfant du canton de Genève.\nLausanne, le 9 juin 2026\nAu nom de la IIe Cour de droit civil\ndu Tribunal fédéral suisse\nLe Président : Bovey\nLa Greffière : Hildbrand",
+  "operator_metadata": {
+    "date": "2026-06-09",
+    "reference": [
+      "5A_253/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-253-2026_2026-06-09.html",
+      "source": "446973/45/2830",
+      "content_length": 3291
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2830",
+    "id": "CH_BGer_005_5A-253-2026_2026-06-09",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 09.06.2026 5A_253/2026",
+      "it": "Tribunale federale II Corte di diritto civile 09.06.2026 5A_253/2026",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 09.06.2026 5A_253/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:45:02+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-253-2026_2026-06-09.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "a3e988abd0b4471b561d9ea90a3d25c5b015e2626dcaf52ed0de45a278915029"
+  }
+}

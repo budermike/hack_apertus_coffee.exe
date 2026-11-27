@@ -1,0 +1,56 @@
+{
+  "id": "5A_459_2026",
+  "case_id": "5A_459/2026",
+  "case_ids": [
+    "5A_459/2026"
+  ],
+  "decision_date": "2026-05-29",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "saisie de salaire (minimum d'existence)",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://29-05-2026-5A_459-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5A_459/2026\nArrêt du 29 mai 2026\nIIe Cour de droit civil\nComposition\nM. le Juge fédéral Bovey, Président.\nGreffière : Mme Mairot.\nParticipants à la procédure\nA.________,\nrecourante,\ncontre\nOffice des poursuites de la Veveyse, avenue de la Gare 33, 1618 Châtel-St-Denis.\nObjet\nsaisie de salaire (minimum d'existence),\nrecours contre l'arrêt de la Chambre des poursuites et faillites du Tribunal cantonal de l'État de Fribourg du 28 avril 2026 (105 2026 51, 105 2026 66).\nConsidérant en fait et en droit :\n1.\nLe 31 mars 2026, A.________ a déposé plainte à l'encontre de la décision de saisie de salaire prise le 25 mars 2026 par l'Office des poursuites de la Veveyse.\nPar arrêt du 28 avril 2026, la Chambre des poursuites et faillites du Tribunal cantonal de l'État de Fribourg a rejeté la plainte.\n2.\nPar acte posté le 19 mai 2026, A.________exerce un \" recours \" au Tribunal fédéral contre l'arrêt cantonal.\nDes observations n'ont pas été requises.\n3.\nLa présente écriture est traitée comme recours en matière civile (art. 72 al. 2 let. a LTF). Il n'y a pas lieu de discuter les autres conditions de recevabilité, ce procédé étant voué à l'échec.\n4.\nComme l'indique correctement la décision attaquée (art. 112 al. 1 let. d LTF), le délai de recours contre les décisions d'une autorité cantonale de surveillance en matière de poursuite pour dettes et de faillite est de 10 jours (art. 100 al. 2 let. a LTF). Or, il ressort du suivi des envois de la Poste Suisse que cette décision a été communiquée à la recourante le 4 mai 2026. Le délai de recours a donc commencé à courir le lendemain (art. 44 al. 1 LTF) et expirait ainsi le 14 mai 2026. Il s'ensuit que le recours, expédié le 19 mai 2026, est tardif.\nAu demeurant, l'écriture de la recourante eût été de toute façon déclarée irrecevable en raison de sa motivation déficiente (art. 42 al. 2 et 106 al. 2 LTF; cf. ATF 142 III 364 consid. 2.4; 140 III 115 consid. 2 et les arrêts cités).\n5.\nEn conclusion, le recours doit être déclaré irrecevable par voie de procédure simplifiée (art. 108 al. 1 let. a et b LTF). Il peut être exceptionnellement renoncé à percevoir des frais judiciaires (art. 66 al. 1 in fine LTF).\nPar ces motifs, le Président prononce :\n1.\nLe recours est irrecevable.\n2.\nIl n'est pas perçu de frais judiciaires.\n3.\nLe présent arrêt est communiqué à la recourante, à l'Office des poursuites de la Veveyse et à la Chambre des poursuites et faillites du Tribunal cantonal de l'État de Fribourg.\nLausanne, le 29 mai 2026\nAu nom de la IIe Cour de droit civil\ndu Tribunal fédéral suisse\nLe Président : Bovey\nLa Greffière : Mairot",
+  "operator_metadata": {
+    "date": "2026-05-29",
+    "reference": [
+      "5A_459/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-459-2026_2026-05-29.html",
+      "source": "446973/45/2830",
+      "content_length": 3055
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2830",
+    "id": "CH_BGer_005_5A-459-2026_2026-05-29",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 29.05.2026 5A_459/2026",
+      "it": "Tribunale federale II Corte di diritto civile 29.05.2026 5A_459/2026",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 29.05.2026 5A_459/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:42:33+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-459-2026_2026-05-29.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "da5e00ee7c31b626ae64c1f3c6e58926070fa2ae0f2413433f6472098f8e05ee"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "id": "5A_892_2025",
+  "case_id": "5A_892/2025",
+  "case_ids": [
+    "5A_892/2025"
+  ],
+  "decision_date": "2025-12-18",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "Zahlungsbefehl",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://18-12-2025-5A_892-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5A_892/2025\nUrteil vom 18. Dezember 2025\nII. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Bovey, Präsident,\nGerichtsschreiber Zingg.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführerin,\ngegen\nBetreibungsamt Menziken,\nHauptstrasse 44, Postfach, 5737 Menziken,\nB.________ GmbH.\nGegenstand\nZahlungsbefehl,\nBeschwerde gegen den Entscheid des Obergerichts des Kantons Aargau, Schuldbetreibungs- und Konkurskommission als obere betreibungsrechtliche Aufsichtsbehörde, vom 29. September 2025 (KBE.2025.48).\nErwägungen:\n1.\nDie B.________ GmbH betreibt die Beschwerdeführerin mit Zahlungsbefehl vom 25. April 2025 (Betreibung Nr. xxx des Betreibungsamtes Menziken).\nAm 2. Mai 2025 erhob die Beschwerdeführerin Beschwerde gegen die Betreibung. Mit Entscheid vom 24. Juli 2025 wies das Bezirksgericht Kulm die Beschwerde ab.\nDagegen erhob die Beschwerdeführerin am 2. August 2025 Beschwerde beim Obergericht des Kantons Aargau. Mit Entscheid vom 29. September 2025 wies das Obergericht die Beschwerde ab, soweit es darauf eintrat.\nDagegen hat die Beschwerdeführerin am 17. Oktober 2025 Beschwerde in Zivilsachen an das Bundesgericht erhoben. Mit Verfügung vom 20. Oktober 2025 hat das Bundesgericht die Beschwerdeführerin zur Zahlung eines Kostenvorschusses von Fr. 1'000.-- aufgefordert. Mit Verfügung vom 21. November 2025 hat das Bundesgericht der Beschwerdeführerin eine Nachfrist bis zum 4. Dezember 2025 zur Leistung des Kostenvorschusses angesetzt (unter Androhung des Nichteintretens auf das Rechtsmittel bei nicht rechtzeitiger Bezahlung; Art. 62 Abs. 3 BGG). Die Beschwerdeführerin hat den Kostenvorschuss nicht bezahlt.\n2.\nAndrohungsgemäss ist demnach auf die Beschwerde nicht einzutreten. Der Abteilungspräsident entscheidet darüber im vereinfachten Verfahren (Art. 62 Abs. 3 i.V.m. Art. 108 Abs. 1 lit. a BGG).\n3.\nBei diesem Ausgang des Verfahrens trägt die Beschwerdeführerin die Gerichtskosten, die angesichts des geringen entstandenen Aufwands reduziert werden (Art. 66 Abs. 1 BGG).\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 500.-- werden der Beschwerdeführerin auferlegt.\n3.\nDieses Urteil wird den Verfahrensbeteiligten und dem Obergericht des Kantons Aargau, Schuldbetreibungs- und Konkurskommission als obere betreibungsrechtliche Aufsichtsbehörde, mitgeteilt.\nLausanne, 18. Dezember 2025\nIm Namen der II. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Bovey\nDer Gerichtsschreiber: Zingg",
+  "operator_metadata": {
+    "date": "2025-12-18",
+    "reference": [
+      "5A_892/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-892-2025_2025-12-18.html",
+      "source": "446973/45/2869",
+      "content_length": 2910
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-06-18",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2869",
+    "id": "CH_BGer_005_5A-892-2025_2025-12-18",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 18.12.2025 5A_892/2025",
+      "it": "Tribunale federale II Corte di diritto civile 18.12.2025 5A_892/2025",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 18.12.2025 5A_892/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:59:01+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-892-2025_2025-12-18.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "ee09a13edd4549d6ebdbf0b37071a04fd70d86e6d798db098a9c433096b12013"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "id": "4D_1_2026",
+  "case_id": "4D_1/2026",
+  "case_ids": [
+    "4D_1/2026"
+  ],
+  "decision_date": "2026-02-25",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "droit de travail",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://25-02-2026-4D_1-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4D_1/2026\nArrêt du 25 février 2026\nIre Cour de droit civil\nComposition\nM. le Juge fédéral Hurni, Président.\nGreffier : M. Widmer.\nParticipants à la procédure\nA.________ SA,\nrecourante,\ncontre\nB.________,\nintimé.\nObjet\ndroit de travail,\nrecours contre l'arrêt rendu le 5 décembre 2025 par la Chambre des recours civile du Tribunal cantonal du canton de Vaud (P525.018937-251606 5003).\nLe Président :\nVu le recours formé le 7 janvier 2026 (date du timbre postal) par A.________ SA (ci-après: la recourante) contre l'arrêt rendu le 5 décembre 2025 par la Chambre des recours civile du Tribunal cantonal du canton de Vaud dans la cause divisant la recourante d'avec B.________ (ci-après: l' intimé);\nVu l'ordonnance présidentielle du 8 janvier 2026 invitant la recourante à verser, jusqu'au 23 janvier 2026 au plus tard, une avance de frais de 300 fr.;\nVu l'ordonnance du 26 janvier 2026 impartissant à la recourante, en application de l'art. 62 al. 3 LTF, un délai supplémentaire pour s'exécuter jusqu'au 10 février 2026;\nConsidérant que cette ordonnance a été notifiée par envoi postal dit « acte judiciaire », à remettre contre signature à l'adresse de la recourante,\nque la recourante a été invitée à retirer cet envoi à l'office postal le 27 janvier 2026,\nque l'envoi n'a pas été retiré et l'ordonnance a été renvoyée au Tribunal fédéral avec la mention \" Non réclamé \",\nqu'en vertu de l'art. 44 al. 2 LTF, la notification de cette ordonnance est réputée intervenue au plus tard sept jours après la première tentative infructueuse de distribution;\nAttendu que l'avance de frais requise n'a pas été effectuée dans le délai fixé par cette ordonnance;\nConsidérant, dès lors, que le recours est irrecevable en vertu de l'art. 62 al. 3 LTF,\nqu'il y a lieu, partant, de faire application de la procédure simplifiée prévue par l'art. 108 al. 1 LTF,\nque les frais judiciaires seront mis à la charge de la recourante (art. 66 al. 1 LTF),\nque l'intimé n'a pas droit à des dépens (art. 68 LTF).\nPar ces motifs, le Président prononce :\n1.\nLe recours est irrecevable.\n2.\nLa recourante acquittera un émolument judiciaire de 200 fr.\n3.\nLe présent arrêt est communiqué aux parties et à la Chambre des recours civile du Tribunal cantonal du canton de Vaud.\nLausanne, le 25 février 2026\nAu nom de la Ire Cour de droit civil\ndu Tribunal fédéral suisse\nLe Président : Hurni\nLe Greffier : Widmer",
+  "operator_metadata": {
+    "date": "2026-02-25",
+    "reference": [
+      "4D_1/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-1-2026_2026-02-25.html",
+      "source": "446973/45/2829",
+      "content_length": 2752
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_004_4D-1-2026_2026-02-25",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 25.02.2026 4D_1/2026",
+      "it": "Tribunale federale I Corte di diritto civile 25.02.2026 4D_1/2026",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 25.02.2026 4D_1/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:16:23+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-1-2026_2026-02-25.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "40d9ec56d3d331b1f90c264cc4100e928bb4019a2e9d12886ac56e2a9144cc4d"
+  }
+}

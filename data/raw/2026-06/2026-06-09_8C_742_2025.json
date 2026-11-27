@@ -1,0 +1,56 @@
+{
+  "id": "8C_742_2025",
+  "case_id": "8C_742/2025",
+  "case_ids": [
+    "8C_742/2025"
+  ],
+  "decision_date": "2026-06-09",
+  "publication_date": null,
+  "department": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "division": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "subject": "Assurance-accidents (condition de recevabilité)",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://09-06-2026-8C_742-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n8C_742/2025\nArrêt du 9 juin 2026\nIVe Cour de droit public\nComposition\nM. le Juge fédéral Métral, en qualité de juge unique.\nGreffière : Mme Barman Ionta.\nParticipants à la procédure\nA.________,\nrecourant,\ncontre\nCaisse nationale suisse d'assurance en cas d'accidents (CNA), Division juridique, Fluhmattstrasse 1, 6002 Lucerne,\nintimée.\nObjet\nAssurance-accidents (condition de recevabilité),\nrecours contre l'arrêt du Tribunal cantonal\nde la République et canton de Neuchâtel du 7 novembre 2025 (CDP.2025.353-AA).\nConsidérant en fait et en droit :\n1.\nPar décision du 7 novembre 2025, la Cour de droit public du Tribunal cantonal de la République et canton de Neuchâtel a rejeté la requête de mesures provisionnelles tendant au versement de prestations d'assurance déposée par A.________ dans le cadre d'une procédure introduite par le prénommé contre une décision sur opposition du 9 septembre 2025 de la Caisse nationale suisse d'assurance en cas d'accidents (CNA).\nPar acte du 16 décembre 2025, A.________ a interjeté un recours en matière de droit public contre la décision du 7 novembre 2025. Invité à verser une avance de frais, il a requis le bénéfice de l'assistance judiciaire. Par ordonnance du 25 mars 2026, le Tribunal fédéral a rejeté cette requête, au motif que le recours paraissait voué à l'échec; un délai supplémentaire non prolongeable de 10 jours, dès réception de l'ordonnance, a été imparti au recourant pour payer l'avance de frais de 800 fr., qui n'a pas été versée dans ce délai supplémentaire.\n2.\nSelon l'art. 62 al. 1 LTF, la partie qui saisit le Tribunal fédéral doit fournir une avance de frais d'un montant correspondant aux frais judiciaires présumés. Aux termes de l'art. 62 al. 3 LTF, le juge instructeur fixe un délai approprié pour ce faire et si le versement n'est pas fait dans ce délai, il fixe un délai supplémentaire; si l'avance n'est pas versée dans ce second délai, le recours est irrecevable.\n3.\nEn l'espèce, le recourant n'a pas payé l'avance de frais requise dans le délai supplémentaire ni produit d'attestation établissant que la somme requise aurait été débitée de son compte postal ou bancaire en faveur du Tribunal fédéral avant l'échéance du délai (art. 48 al. 4 LTF). Partant, le recours doit être déclaré irrecevable, conformément à l'art. 62 al. 3 LTF, le présent arrêt relevant de la compétence du juge unique (art. 108 al. 1 let. a et al. 2 LTF).\n4.\nCompte tenu des circonstances, il convient de renoncer à percevoir des frais judiciaires (art. 66 al. 1, seconde phrase, LTF).\nPar ces motifs, le Juge unique prononce :\n1.\nLe recours est irrecevable.\n2.\nIl n'est pas perçu de frais judiciaires.\n3.\nLe présent arrêt est communiqué aux parties, au Tribunal cantonal de la République et canton de Neuchâtel, Cour de droit public, et à l'Office fédéral de la santé publique.\nLucerne, le 9 juin 2026\nAu nom de la IVe Cour de droit public\ndu Tribunal fédéral suisse\nLe Juge unique : Métral\nLa Greffière : Barman Ionta",
+  "operator_metadata": {
+    "date": "2026-06-09",
+    "reference": [
+      "8C_742/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-742-2025_2026-06-09.html",
+      "source": "446973/45/2834",
+      "content_length": 3387
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+      "it": "Confederazione Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale)",
+      "fr": "Conféderation Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social)"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_008"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_008_8C-742-2025_2026-06-09",
+    "title": {
+      "de": "Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung) 09.06.2026 8C_742/2025",
+      "it": "Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale) 09.06.2026 8C_742/2025",
+      "fr": "Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social) 09.06.2026 8C_742/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:45:17+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-742-2025_2026-06-09.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "d02268b2bc2865934731041ffdd5a524d4f6746ca607da16e1e98b15417f7da3"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "id": "4A_584_2025",
+  "case_id": "4A_584/2025",
+  "case_ids": [
+    "4A_584/2025"
+  ],
+  "decision_date": "2025-12-18",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "motivation manifestement insuffisante du recours",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://18-12-2025-4A_584-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4A_584/2025\nArrêt du 18 décembre 2025\nIre Cour de droit civil\nComposition\nM. le Juge fédéral Hurni, président.\nGreffier: M. O. Carruzzo.\nParticipants à la procédure\nA.________,\nrecourant,\ncontre\nB.________ SA,\nintimée.\nObjet\nmotivation manifestement insuffisante du recours,\nrecours contre l'arrêt rendu le 4 novembre 2025 par la Chambre des baux et loyers de la Cour de justice du canton de Genève (C/6699/2025, ACJC/1578/2025).\nConsidérant en fait et en droit:\n1.\nPar jugement du 4 septembre 2025, le Tribunal des baux et loyers genevois a condamné A.________ à évacuer immédiatement de sa personne et de ses biens, ainsi que de toute autre personne faisant ménage commun avec lui, l'appartement de deux pièces qu'il occupe dans un immeuble situé à U.________, a autorisé la bailleresse B.________ SA à requérir l'évacuation par la force publique de A.________ dès l'entrée en force du jugement, condamné ce dernier à verser à la bailleresse la somme de 4'476 fr. et autorisé la libération de la garantie de loyer, à concurrence dudit montant.\n2.\nPar arrêt du 4 novembre 2025, la Chambre des baux et loyers de la Cour de justice du canton de Genève a déclaré irrecevable le recours interjeté par A.________ contre ledit jugement.\n3.\nLe 17 novembre 2025, A.________ (ci-après: le recourant) a formé un recours au Tribunal fédéral à l'encontre de cet arrêt.\nLe Tribunal fédéral n'a pas requis le dépôt d'une réponse au recours.\n4.\n4.1. À teneur de l'art. 42 al. 1 et 2 LTF, le recours adressé au Tribunal fédéral doit indiquer, notamment, les conclusions et les motifs (al. 1); ceux-ci doivent exposer succinctement en quoi la décision attaquée viole le droit (al. 2). La partie recourante doit discuter les motifs de cette décision et indiquer précisément en quoi elle estime que l'autorité précédente a méconnu le droit (ATF 142 III 364 consid. 2.4).\n4.2. Ces exigences ne sont manifestement pas remplies en l'espèce puisque le mémoire ne contient pas de conclusions et ne répond nullement aux exigences de motivation de l'art. 42 al. 2 LTF. Il suit de là que le recours est irrecevable ce qu'il convient de constater selon la procédure simplifiée prévue par l'art. 108 al. 1 let. b LTF.\n5.\nLe recourant, qui succombe, supportera les frais de la présente procédure (art. 66 al. 1 LTF). Il n'y a pas lieu à l'allocation de dépens.\nPar ces motifs, le Président de la I re Cour de droit civil prononce:\n1.\nLe recours est irrecevable.\n2.\nLes frais judiciaires, arrêtés à 800 fr., sont mis à la charge du recourant.\n3.\nLe présent arrêt est communiqué aux parties et à la Chambre des baux et loyers de la Cour de justice du canton de Genève.\nLausanne, le 18 décembre 2025\nAu nom de la Ire Cour de droit civil\ndu Tribunal fédéral suisse\nLe Président : Hurni\nLe Greffier : O. Carruzzo",
+  "operator_metadata": {
+    "date": "2025-12-18",
+    "reference": [
+      "4A_584/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-584-2025_2025-12-18.html",
+      "source": "446973/45/2869",
+      "content_length": 3246
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-06-18",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2869",
+    "id": "CH_BGer_004_4A-584-2025_2025-12-18",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 18.12.2025 4A_584/2025",
+      "it": "Tribunale federale I Corte di diritto civile 18.12.2025 4A_584/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 18.12.2025 4A_584/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:58:52+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-584-2025_2025-12-18.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "23da7c50a29f99cff5ae748e5e551d73ae0fb105f0efeb87d0e2a4626f0c805d"
+  }
+}

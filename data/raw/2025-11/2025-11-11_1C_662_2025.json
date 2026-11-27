@@ -1,0 +1,56 @@
+{
+  "id": "1C_662_2025",
+  "case_id": "1C_662/2025",
+  "case_ids": [
+    "1C_662/2025"
+  ],
+  "decision_date": "2025-11-11",
+  "publication_date": null,
+  "department": "I. Öffentlich-rechtliche Abteilung",
+  "division": "I. Öffentlich-rechtliche Abteilung",
+  "subject": "Nichteintreten",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://11-11-2025-1C_662-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n1C_662/2025\nUrteil vom 11. November 2025\nI. öffentlich-rechtliche Abteilung\nBesetzung\nBundesrichter Haag, Präsident,\nGerichtsschreiber Baur.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nStrassenverkehrsamt des Kantons Zürich, Bereich Administrativmassnahmen,\nLessingstrasse 33, Postfach, 8090 Zürich.\nGegenstand\nNichteintreten,\nBeschwerde gegen die Verfügung\ndes Verwaltungsgerichts des Kantons Zürich,\n1. Abteilung, Einzelrichter, vom 30. September 2025 (VB.2025.00499).\nErwägungen:\n1.\nA.________erhob am 14. August 2025 beim Verwaltungsgericht des Kantons Zürich Beschwerde gegen den Rekursentscheid der kantonalen Sicherheitsdirektion vom 7. Juli 2025 betreffend Gebühren. Mit Präsidialverfügung vom 15. August 2025 setzte ihm das Verwaltungsgericht eine Frist von 20 Tagen an, um die ihn allenfalls treffenden Verfahrenskosten durch einen Vorschuss von einstweilen Fr. 570.-- sicherzustellen, ansonsten auf die Beschwerde nicht eingetreten werde. A.________ liess diese Frist unbenutzt verstreichen. Mit einzelrichterlicher Verfügung vom 30. September 2025 trat das Verwaltungsgericht androhungsgemäss auf das Rechtsmittel nicht ein und auferlegte A.________ die Gerichtskosten von Fr. 370.--.\n2.\nMit Eingabe vom 7. November 2025 erhebt A.________ beim Bundesgericht Beschwerde in öffentlich-rechtlichen Angelegenheiten und subsidiäre Verfassungsbeschwerde gegen die verwaltungsgerichtliche Verfügung vom 30. September 2025.\nDas Bundesgericht verzichtet auf die Einholung von Vernehmlassungen.\n3.\nNach Art. 42 Abs. 1 BGG haben Rechtsschriften die Begehren, deren Begründung mit Angabe der Beweismittel und die Unterschrift zu enthalten. Gemäss Art. 42 Abs. 2 BGG ist in der Begründung in gedrängter Form darzulegen, inwiefern der angefochtene Akt Recht verletzt. Die Beschwerde muss sich wenigstens kurz mit den Erwägungen des angefochtenen Entscheids auseinandersetzen. Genügt die Beschwerde den Begründungsanforderungen nicht, ist auf sie nicht einzutreten (BGE 140 V 136 E. 1.1; 138 I 171 E. 1.4).\nVorliegend erfüllt die Beschwerde die Begründungsanforderungen offensichtlich nicht, setzt sich der Beschwerdeführer doch in keiner Weise mit dem angefochtenen Entscheid auseinander. Auf die Beschwerde ist daher im vereinfachten Verfahren nach Art. 108 Abs. 1 BGG nicht einzutreten.\n4.\nBei diesem Verfahrensausgang ist der Beschwerdeführer kostenpflichtig (Art. 66 Abs. 1 BGG). Parteientschädigungen sind keine zuzusprechen (Art. 68 BGG).\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 500.-- werden dem Beschwerdeführer auferlegt.\n3.\nDieses Urteil wird dem Beschwerdeführer, dem Strassenverkehrsamt des Kantons Zürich, Bereich Administrativmassnahmen, und dem Verwaltungsgericht des Kantons Zürich, 1. Abteilung, Einzelrichter, schriftlich mitgeteilt.\nLausanne, 11. November 2025\nIm Namen der I. öffentlich-rechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Haag\nDer Gerichtsschreiber: Baur",
+  "operator_metadata": {
+    "date": "2025-11-11",
+    "reference": [
+      "1C_662/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_001_1C-662-2025_2025-11-11.html",
+      "source": "446973/45/2870",
+      "content_length": 3418
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Öffentlich-rechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto pubblico",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit public"
+    },
+    "scrapedate": "2026-06-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_001"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2870",
+    "id": "CH_BGer_001_1C-662-2025_2025-11-11",
+    "title": {
+      "de": "Bundesgericht I. Öffentlich-rechtliche Abteilung 11.11.2025 1C_662/2025",
+      "it": "Tribunale federale I Corte di diritto pubblico 11.11.2025 1C_662/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit public 11.11.2025 1C_662/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:34:03+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_001_1C-662-2025_2025-11-11.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "dcc756381d301e12dd8866a9a36c7d25366c953c1120296a1edb2ab2b317dce7"
+  }
+}

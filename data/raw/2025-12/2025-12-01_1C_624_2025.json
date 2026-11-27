@@ -1,0 +1,56 @@
+{
+  "id": "1C_624_2025",
+  "case_id": "1C_624/2025",
+  "case_ids": [
+    "1C_624/2025"
+  ],
+  "decision_date": "2025-12-01",
+  "publication_date": null,
+  "department": "I. Öffentlich-rechtliche Abteilung",
+  "division": "I. Öffentlich-rechtliche Abteilung",
+  "subject": "Polizeiliche Fernhaltung",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://01-12-2025-1C_624-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n1C_624/2025\nUrteil vom 1. Dezember 2025\nI. öffentlich-rechtliche Abteilung\nBesetzung\nBundesrichter Haag, Präsident,\nGerichtsschreiber Dold.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nSicherheitsdirektion des Kantons Bern (SID), Kramgasse 20, 3011 Bern.\nGegenstand\nPolizeiliche Fernhaltung,\nBeschwerde gegen das Urteil des Verwaltungsgerichts des Kantons Bern, Verwaltungsrechtliche Abteilung, Einzelrichter, vom 15. Oktober 2025 (100.2025.332U).\nErwägungen:\n1.\nMit Eingabe vom 20. Oktober 2025 erhob A.________ Beschwerde in öffentlich-rechtlichen Angelegenheiten gegen ein Urteil des Verwaltungsgerichts des Kantons Bern vom 15. Oktober 2025 betreffend polizeiliche Fernhaltung (aufschiebende Wirkung, superprovisorische Massnahme).\nMit Verfügung vom 23. Oktober 2025 wurde der Beschwerdeführer aufgefordert, spätestens am 7. November 2025 einen Kostenvorschuss von Fr. 2'000.-- einzuzahlen (vgl. Art. 62 Abs. 1 BGG). Mit Eingabe vom 24. Oktober 2025 stellte er ein Gesuch um Sistierung des Verfahrens.\nDa der Kostenvorschuss innert Frist nicht geleistet worden war, setzte das Bundesgericht dem Beschwerdeführer mit Verfügung vom 12. November 2025 eine nicht erstreckbare Nachfrist zur Vorschussleistung bis zum 24. November 2025 an. Unter Hinweis auf Art. 62 Abs. 3 BGG wurde er zudem darauf hingewiesen, dass das Bundesgericht bei Säumnis auf das Rechtsmittel nicht eintreten werde. Bis zum Ablauf der Nachfrist hat der Beschwerdeführer keine Zahlung geleistet.\n2.\nAuf die Beschwerde ist in Anwendung von Art. 62 Abs. 3 BGG im vereinfachten Verfahren gemäss Art. 108 BGG nicht einzutreten.\nBei diesem Verfahrensausgang trägt der Beschwerdeführer die Gerichtskosten (vgl. Art. 66 BGG). Eine Parteientschädigung wird nicht zugesprochen (vgl. Art. 68 BGG).\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 500.-- werden dem Beschwerdeführer auferlegt.\n3.\nDieses Urteil wird dem Beschwerdeführer, der Sicherheitsdirektion des Kantons Bern (SID) und dem Verwaltungsgericht des Kantons Bern, Verwaltungsrechtliche Abteilung, Einzelrichter, schriftlich mitgeteilt.\nLausanne, 1. Dezember 2025\nIm Namen der I. öffentlich-rechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Haag\nDer Gerichtsschreiber: Dold",
+  "operator_metadata": {
+    "date": "2025-12-01",
+    "reference": [
+      "1C_624/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_001_1C-624-2025_2025-12-01.html",
+      "source": "446973/45/2870",
+      "content_length": 2691
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Öffentlich-rechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto pubblico",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit public"
+    },
+    "scrapedate": "2026-06-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_001"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2870",
+    "id": "CH_BGer_001_1C-624-2025_2025-12-01",
+    "title": {
+      "de": "Bundesgericht I. Öffentlich-rechtliche Abteilung 01.12.2025 1C_624/2025",
+      "it": "Tribunale federale I Corte di diritto pubblico 01.12.2025 1C_624/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit public 01.12.2025 1C_624/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:39:49+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_001_1C-624-2025_2025-12-01.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "086fb8fd5a33771baa18ad5e96fef3565f02f6a2f4b2c300d4c666cb5a42f5cb"
+  }
+}

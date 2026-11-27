@@ -1,0 +1,56 @@
+{
+  "id": "6B_315_2026",
+  "case_id": "6B_315/2026",
+  "case_ids": [
+    "6B_315/2026"
+  ],
+  "decision_date": "2026-05-28",
+  "publication_date": null,
+  "department": "I. Strafrechtliche Abteilung",
+  "division": "I. Strafrechtliche Abteilung",
+  "subject": "Einfache Verletzung der Verkehrsregeln (Halterhaftung); Nichteintreten",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://28-05-2026-6B_315-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n6B_315/2026\nUrteil vom 28. Mai 2026\nI. strafrechtliche Abteilung\nBesetzung\nBundesrichter von Felten, als präsidierendes Mitglied,\nGerichtsschreiberin Frey Krieger.\nVerfahrensbeteiligte\nA.________ GmbH,\nBeschwerdeführerin,\ngegen\nGeneralstaatsanwaltschaft des Kantons Thurgau, Maurerstrasse 8, 8510 Frauenfeld,\nBeschwerdegegnerin.\nGegenstand\nEinfache Verletzung der Verkehrsregeln (Halterhaftung); Nichteintreten,\nBeschwerde gegen den Entscheid des Obergerichts des Kantons Thurgau vom 18. Februar 2026 (SBR.2025.74).\nDas präsidierende Mitglied zieht in Erwägung:\n1.\nMit Schreiben vom 6. Mai 2026 leitet das Obergericht des Kantons Thurgau dem Bundesgericht einen von der Beschwerdeführerin bei der Generalstaatsanwaltschaft des Kantons Thurgau per E-Mail erhobenen \"Widerspruch\" weiter. Dieser richtet sich gegen das Urteil des Obergerichts des Kantons Thurgau vom 18. Februar 2026 (SBR.2025.74). Das Obergericht geht zu Recht von der Zuständigkeit des Bundesgerichts für die Beurteilung der Rechtzeitig- und Formrichtigkeit der (sinngemäss) gegen den genannten Entscheid erhobenen Beschwerde in Strafsachen aus.\n2.\nEine Beschwerde muss innert 30 Tagen nach der Eröffnung des angefochtenen Entscheides beim Bundesgericht eingereicht werden (Art. 100 Abs. 1 BGG). Gemäss Rückschein der Post wurde der angefochtene Entscheid der Beschwerdeführerin am 26. Februar 2026 zugestellt. Die Frist zur Einreichung einer Beschwerde begann folglich am 27. Februar 2026 zu laufen und endete - unter Berücksichtigung von Art. 46 Abs. 1 lit. a BGG - am 13. April 2026. Damit hätte die Beschwerdeführerin zwecks fristgerechter Einreichung der Beschwerde diese spätestens am letzten Tag der Frist, d.h. am 13. April 2026 dem Bundesgericht einreichen oder zu dessen Handen der Schweizerischen Post oder einer schweizerischen diplomatischen oder konsularischen Vertretung übergeben müssen (Art. 48 Abs. 1 BGG; zur elektronischen Einreichung vgl. Art. 42 Abs. 4 und Art. 48 Abs. 2 BGG).\nDie fragliche E-Mail ging indes erst am 5. Mai 2026 bei der Staatsanwaltschaft ein. Damit wurde die Beschwerde erst nach Ablauf der Beschwerdefrist eingereicht und ist folglich verspätet. Dass die Frist unverschuldet verpasst worden wäre, wird nicht geltend gemacht. Es wird auch kein Gesuch um Fristwiederherstellung gestellt. Auf die Beschwerde ist daher bereits infolge Verspätung im Verfahren nach Art. 108 BGG nicht einzutreten. Damit erübrigen sich Ausführungen zur Frage der Form (un) gültigkeit mittels gewöhnlicher E-Mails versandter Mitteilungen.\n3.\nAuf eine Kostenauflage kann ausnahmsweise verzichtet werden (Art. 66 Abs. 1 BGG).\nDemnach erkennt das präsidierende Mitglied:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDieses Urteil wird den Parteien und dem Obergericht des Kantons Thurgau schriftlich mitgeteilt.\nLausanne, 28. Mai 2026\nIm Namen der I. strafrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDas präsidierende Mitglied: von Felten\nDie Gerichtsschreiberin: Frey Krieger",
+  "operator_metadata": {
+    "date": "2026-05-28",
+    "reference": [
+      "6B_315/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_006_6B-315-2026_2026-05-28.html",
+      "source": "446973/45/2830",
+      "content_length": 3363
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit pénal"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_006"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2830",
+    "id": "CH_BGer_006_6B-315-2026_2026-05-28",
+    "title": {
+      "de": "Bundesgericht I. Strafrechtliche Abteilung 28.05.2026 6B_315/2026",
+      "it": "Tribunale federale I Corte di diritto penale 28.05.2026 6B_315/2026",
+      "fr": "Tribunal fédéral Ire Cour de droit pénal 28.05.2026 6B_315/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:42:05+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_006_6B-315-2026_2026-05-28.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "284d79ddf1759dda824d4791a2ff05c34cc07bd4bfd944c2549764293018497f"
+  }
+}

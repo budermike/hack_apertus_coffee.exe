@@ -1,0 +1,56 @@
+{
+  "id": "4A_189_2026",
+  "case_id": "4A_189/2026",
+  "case_ids": [
+    "4A_189/2026"
+  ],
+  "decision_date": "2026-06-22",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "contrat de travail; retrait du recours",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://22-06-2026-4A_189-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4A_189/2026\nOrdonnance du 22 juin 2026\nIre Cour de droit civil\nComposition\nM. le Juge fédéral Hurni, Président.\nGreffier : M. Leemann.\nParticipants à la procédure\nA.________,\nreprésenté par Me Cedric Berger et Me Nathalie Subilia,\nrecourant,\ncontre\nB.________ SA,\nreprésentée par Me Fabio Spirgi et Me Gabriel Hodler,\nintimée.\nObjet\ncontrat de travail; retrait du recours,\nrecours contre l'arrêt de la Cour de justice du canton de Genève, Chambre des prud'hommes, du 3 mars 2026 (C/26499/2020 ACJC/396/2026).\nLe Président :\nVu le recours en matière civile formé le 27 avril 2026 par A.________ (ci-après: le recourant) contre la décision rendue le 3 mars 2026 par la Cour de justice du canton de Genève dans la cause divisant le recourant d'avec B.________ SA, intimée;\nVu la lettre du 17 juin 2026 par laquelle le recourant informe le Tribunal fédéral qu'il retire son recours;\nConsidérant qu'il y a lieu de prendre acte de ce retrait et de rayer la cause 4A_189/2026 du rôle (art. 32 al. 2 LTF),\nque les frais judiciaires, réduits, sont mis à la charge du recourant (art. 66 al. 1 et 2 LTF);\nConsidérant que l'intimée, qui n'a pas été invitée à déposer de réponse, n'a pas droit à des dépens;\nVu l'art. 32 al. 2 LTF.\nOrdonne :\n1.\nIl est pris acte du retrait du recours.\n2.\nLa cause 4A_189/2026 est rayée du rôle.\n3.\nUn émolument judiciaire de 500 fr. est mis à la charge du recourant.\n4.\nIl n'est pas alloué de dépens.\n5.\nLa présente ordonnance est communiquée aux parties, à la Cour de justice du canton de Genève, Chambre des prud'hommes, et à la Caisse cantonale genevoise de chômage.\nLausanne, le 22 juin 2026\nAu nom de la Ire Cour de droit civil\ndu Tribunal fédéral suisse\nLe Président : Hurni\nLe Greffier : Leemann",
+  "operator_metadata": {
+    "date": "2026-06-22",
+    "reference": [
+      "4A_189/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-189-2026_2026-06-22.html",
+      "source": "446973/45/2829",
+      "content_length": 2110
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_004_4A-189-2026_2026-06-22",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 22.06.2026 4A_189/2026",
+      "it": "Tribunale federale I Corte di diritto civile 22.06.2026 4A_189/2026",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 22.06.2026 4A_189/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:19:07+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-189-2026_2026-06-22.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "346f07a01bbf0be7f0ae89ef2f630804caaf70cb3d591651da20fa757be17967"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "id": "4D_225_2025",
+  "case_id": "4D_225/2025",
+  "case_ids": [
+    "4D_225/2025"
+  ],
+  "decision_date": "2025-12-04",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "Forderung",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://04-12-2025-4D_225-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4D_225/2025\nUrteil vom 4. Dezember 2025\nI. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Hurni, Präsident,\nGerichtsschreiber Tanner.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführerin,\ngegen\nHotel B.________ AG,\nvertreten durch Rechtsanwalt Georg Friedli,\nBeschwerdegegnerin.\nGegenstand\nForderung,\nBeschwerde gegen den Entscheid des Obergerichts des Kantons Bern, 1. Zivilkammer, vom 13. Oktober 2025\n(ZK 25 51 [423]).\nErwägungen:\n1.\nMit Klage vom 22. Februar 2024 beantragte die Beschwerdeführerin beim Regionalgericht Oberland sinngemäss, die Beschwerdegegnerin sei zu verpflichten, ihr EUR 6'800.-- und Fr. 7'000.-- je zuzüglich Zins zu 5% seit dem 15. Juni 2020 sowie Schadenersatz in gerichtlich zu bestimmender Höhe, mindestens jedoch Fr. 1'000.--, zu bezahlen. Mit Entscheid vom 6. Januar 2025 wies das Regionalgericht Oberland diese Klage ab.\nDas Obergericht des Kantons Bern wies mit Entscheid vom 13. Oktober 2025 eine von der Beschwerdeführerin dagegen erhobene Berufung ab, soweit es darauf eintrat.\nDagegen erhob die Beschwerdeführerin am 15. November 2025 Beschwerde an das Bundesgericht.\nMit Präsidialverfügung vom 20. November 2025 wurde das sinngemässe Gesuch der Beschwerdeführerirn um Verzicht auf die Erhebung eines Kostenvorschusses abgewiesen.\n2.\nDiese Eingabe erfüllt die Begründungsanforderungen, die an eine Beschwerde an das Bundesgericht gestellt werden (Art. 42 Abs. 2 und Art. 106 Abs. 2 BGG; BGE 142 III 364 E. 2.4; 140 III 86 E. 2, 115 E. 2), offensichtlich nicht. Auf die Beschwerde ist somit mangels hinreichender Begründung im vereinfachten Verfahren durch den Abteilungspräsidenten nicht einzutreten (Art. 108 Abs. 1 lit. b BGG). Die Begründung dieses Entscheids beschränkt sich auf eine kurze Angabe des Unzulässigkeitsgrundes (Art. 108 Abs. 3 BGG).\n3.\nDie Beschwerdeführerin wird bei diesem Verfahrensausgang kostenpflichtig (Art. 66 Abs. 1 BGG). Die Beschwerdegegnerin hat keinen Anspruch auf eine Parteientschädigung, da ihr mangels Einholung einer Vernehmlassung aus dem bundesgerichtlichen Verfahren kein entschädigungspflichtiger Aufwand erwachsen ist (Art. 68 Abs. 2 BGG).\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 800.-- werden der Beschwerdeführerin auferlegt.\n3.\nEs wird keine Parteientschädigung zugesprochen.\n4.\nDieses Urteil wird den Parteien und dem Obergericht des Kantons Bern, 1. Zivilkammer, schriftlich mitgeteilt.\nLausanne, 4. Dezember 2025\nIm Namen der I. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Hurni\nDer Gerichtsschreiber: Tanner",
+  "operator_metadata": {
+    "date": "2025-12-04",
+    "reference": [
+      "4D_225/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-225-2025_2025-12-04.html",
+      "source": "446973/45/2869",
+      "content_length": 3027
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-06-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2869",
+    "id": "CH_BGer_004_4D-225-2025_2025-12-04",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 04.12.2025 4D_225/2025",
+      "it": "Tribunale federale I Corte di diritto civile 04.12.2025 4D_225/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 04.12.2025 4D_225/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:41:08+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-225-2025_2025-12-04.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "b2f782cb20ede060e693d0e74c5412c52086b0cc50ccd85e2a0adc804d1895bc"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "id": "5A_635_2025",
+  "case_id": "5A_635/2025",
+  "case_ids": [
+    "5A_635/2025"
+  ],
+  "decision_date": "2025-10-07",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "curatelle de représentation et de gestion",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://07-10-2025-5A_635-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5A_635/2025\nArrêt du 7 octobre 2025\nIIe Cour de droit civil\nComposition\nM. le Juge fédéral Bovey, Président.\nGreffier : M. Braconi.\nParticipants à la procédure\nA.________,\nrecourante,\ncontre\nAutorité de protection de l'enfant et de l'adulte des districts de Martigny et de St-Maurice, avenue du Grand-St-Bernard 4, case postale 173, 1920 Martigny,\nintimée.\nObjet\ncuratelle de représentation et de gestion,\nrecours contre la décision de l'Autorité de recours\nen matière de protection de l'enfant et de l'adulte du\nTribunal cantonal du canton du Valais du 10 juillet 2025\n(C1 25 143).\nConsidérant en fait et en droit :\n1.\nStatuant le 10 juillet 2025, l'Autorité de recours en matière de protection de l'enfant et de l'adulte du Tribunal cantonal du canton du Valais a déclaré irrecevable, faute d'intérêt, le recours déposé le 1er juillet 2025 par A.________ contre la décision prise le 16 septembre 2024 par l'Autorité de protection de l'enfant et de l'adulte des districts de Martigny et de St-Maurice; elle a retenu que la personne concernée (B.________), mère de la recourante, était décédée en décembre 2024, de sorte que la curatelle instituée en sa faveur avait automatiquement pris fin à cette date en vertu de l'art. 399 al. 1 CC.\n2.\nPar écriture expédiée le 8 août 2025, A.________ forme un recours au Tribunal fédéral contre la décision précitée; sur le fond, elle conclut à l'annulation de la décision de l'APEA.\nDes observations n'ont pas été requises.\n3.\nLa présente écriture est traitée en tant que recours en matière civile au sens de l'art. 72 al. 2 let. b ch. 6 LTF. Il n'y a pas lieu d'examiner les autres conditions de recevabilité, ce procédé étant voué à l'échec.\n4.\nAux termes de l'art. 42 al. 2 LTF, les motifs de recours doivent exposer succinctement en quoi l'acte attaqué viole le droit; en d'autres termes, la partie recourante doit discuter, au moins de manière sommaire, les considérants de cette décision et indiquer en quoi l'autorité précédente aurait méconnu la loi (parmi d'autres: ATF 142 III 364 consid. 2.4; 140 III 86 consid. 2 et les citations). Or, la présente écriture ne satisfait pas à cette exigence: la recourante se borne à soutenir que le \" décès (de sa mère) n'enlève pas l'intérêt actuel de (son recours) \", sans réfuter pour autant l'argumentation de la juridiction précédente fondée sur l'art. 399 al. 1 CC, applicable à tous les types de curatelle (art. 393 ss CC; parmi d'autres: FOUNTOULAKIS, in : CR CC I, 2e éd., 2024, n° 2 ad art. 399 CC et les références).\n5.\nEn conclusion, le présent recours doit être déclaré irrecevable par voie de procédure simplifiée (art. 108 al. 1 let. b LTF), avec suite de frais à la charge de la recourante (art. 66 al. 1 LTF).\nPar ces motifs, le Président prononce :\n1.\nLe recours est irrecevable.\n2.\nLes frais judiciaires, arrêtés à 800 fr., sont mis à la charge de la recourante.\n3.\nLe présent arrêt est communiqué aux parties et à l'Autorité de recours en matière de protection de l'enfant et de l'adulte du Tribunal cantonal du canton du Valais.\nLausanne, le 7 octobre 2025\nAu nom de la IIe Cour de droit civil\ndu Tribunal fédéral suisse\nLe Président : Bovey\nLe Greffier : Braconi",
+  "operator_metadata": {
+    "date": "2025-10-07",
+    "reference": [
+      "5A_635/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-635-2025_2025-10-07.html",
+      "source": "446973/45/2869",
+      "content_length": 3626
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-06-18",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2869",
+    "id": "CH_BGer_005_5A-635-2025_2025-10-07",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 07.10.2025 5A_635/2025",
+      "it": "Tribunale federale II Corte di diritto civile 07.10.2025 5A_635/2025",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 07.10.2025 5A_635/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:24:23+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-635-2025_2025-10-07.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "2675b4c67ce30c473a68443500684e1c006b3f32ee8b835ee92ea1c94d0db214"
+  }
+}

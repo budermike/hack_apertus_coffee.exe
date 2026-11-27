@@ -1,0 +1,56 @@
+{
+  "id": "4A_406_2025",
+  "case_id": "4A_406/2025",
+  "case_ids": [
+    "4A_406/2025"
+  ],
+  "decision_date": "2025-10-10",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "Arbeitsvertrag",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://10-10-2025-4A_406-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4A_406/2025\nUrteil vom 10. Oktober 2025\nI. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Hurni, Präsident,\nGerichtsschreiber Leemann.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nB.________ AG,\nvertreten durch Rechtsanwältin Martina Aepli-Wirz,\nBeschwerdegegnerin.\nGegenstand\nArbeitsvertrag,\nBeschwerde gegen den Beschluss des Obergerichts des Kantons Zürich, I. Zivilkammer, vom 28. Mai 2025 (LU250003-O/U).\nErwägungen:\n1.\nMit Beschluss vom 28. Mai 2025 wies das Obergericht des Kantons Zürich ein Fristwiederherstellungsgesuch des Beschwerdeführers zur Berufungsfrist ab.\nMit undatierter Eingabe (Posteingang: 29. August 2025) erklärte der Beschwerdeführer dem Bundesgericht, den Beschluss des Obergerichts des Kantons Zürich vom 28. Mai 2025 mit Beschwerde anfechten zu wollen.\nEs wurden keine Vernehmlassungen eingeholt.\n2.\nDie Eingabe des Beschwerdeführers erfüllt die Begründungsanforderungen, die an eine Beschwerde an das Bundesgericht gestellt werden, offensichtlich nicht (Art. 42 Abs. 2 und Art. 106 Abs. 2 BGG; BGE 142 III 364 E. 2.4; 140 III 86 E. 2, 115 E. 2).\nAuf die Beschwerde ist somit mangels hinreichender Begründung nicht einzutreten (Art. 108 Abs. 1 lit. b BGG).\n3.\nUnter den gegebenen Umständen ist ausnahmsweise auf die Erhebung von Gerichtskosten zu verzichten (Art. 66 Abs. 1 zweiter Satz BGG), womit das Gesuch um Befreiung von diesen Kosten im bundesgerichtlichen Verfahren gegenstandslos wird. Der Beschwerdegegnerin steht keine Parteientschädigung zu, da ihr im bundesgerichtlichen Verfahren kein Aufwand entstanden ist (Art. 68 Abs. 2 BGG).\nDer Beschwerdeführer kam seiner gesetzlichen Obliegenheit zur Bezeichnung eines Zustellungsdomizils in der Schweiz für das bundesgerichtliche Verfahren nicht nach, obschon sich diese klar aus Art. 39 Abs. 3 BGG ergibt und er überdies mit der Mitteilung des Bundesgerichts vom 1. September 2025 ausdrücklich auf diese hingewiesen wurde. Gestützt auf Art. 39 Abs. 3 Satz 2 BGG können damit Mitteilungen an den Beschwerdeführer unterbleiben (dazu das Urteil 4A_408/2022 vom 14. November 2022 E. 6.2 und 6.3).\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nEs werden keine Gerichtskosten erhoben.\n3.\nEs wird keine Parteientschädigung zugesprochen.\n4.\nDieses Urteil wird der Beschwerdegegnerin und dem Obergericht des Kantons Zürich, I. Zivilkammer, schriftlich mitgeteilt. Für den Beschwerdeführer wird ein Urteilsexemplar im Dossier behalten.\nLausanne, 10. Oktober 2025\nIm Namen der I. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Hurni\nDer Gerichtsschreiber: Leemann",
+  "operator_metadata": {
+    "date": "2025-10-10",
+    "reference": [
+      "4A_406/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-406-2025_2025-10-10.html",
+      "source": "446973/45/2869",
+      "content_length": 3048
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-06-18",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2869",
+    "id": "CH_BGer_004_4A-406-2025_2025-10-10",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 10.10.2025 4A_406/2025",
+      "it": "Tribunale federale I Corte di diritto civile 10.10.2025 4A_406/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 10.10.2025 4A_406/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:25:37+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-406-2025_2025-10-10.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "e16cf2d248582dd1bc94be57fa0bfff6bf1c1120c1c31e5ed05043d2f71aba50"
+  }
+}

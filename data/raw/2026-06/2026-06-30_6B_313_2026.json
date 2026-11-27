@@ -1,0 +1,56 @@
+{
+  "id": "6B_313_2026",
+  "case_id": "6B_313/2026",
+  "case_ids": [
+    "6B_313/2026"
+  ],
+  "decision_date": "2026-06-30",
+  "publication_date": null,
+  "department": "I. Strafrechtliche Abteilung",
+  "division": "I. Strafrechtliche Abteilung",
+  "subject": "Benützen eines öffentlichen Verkehrsmittels ohne gültigen Fahrausweis; Nichteintreten",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://30-06-2026-6B_313-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n6B_313/2026\nUrteil vom 30. Juni 2026\nI. strafrechtliche Abteilung\nBesetzung\nBundesrichter Muschietti, Präsident,\nGerichtsschreiberin Arquint Hill.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nOberstaatsanwaltschaft des Kantons Luzern, Postfach 3439, 6002 Luzern,\nBeschwerdegegnerin.\nGegenstand\nBenützen eines öffentlichen Verkehrsmittels ohne gültigen Fahrausweis; Nichteintreten,\nBeschwerde gegen das Urteil des Kantonsgerichts Luzern, 2. Abteilung, vom 31. März 2026 (4M 25 47).\nDer Präsident zieht in Erwägung:\n1.\nDer Beschwerdeführer reichte am 5. Mai 2026 Beschwerde gegen das Urteil des Kantonsgerichts Luzern vom 31. März 2026 ein.\n2.\nDie Partei, die das Bundesgericht anruft, hat einen Kostenvorschuss zu bezahlen (Art. 62 Abs. 1 BGG).\n3.\nMit Verfügung vom 13. Mai 2026 wurde dem Beschwerdeführer eine Frist bis zum 27. Mai 2026 angesetzt, um dem Bundesgericht einen Kostenvorschuss in Höhe von Fr. 800.-- einzuzahlen. Die mittels Gerichtsurkunde (GU) versandte Verfügung wurde vom Beschwerdeführer am 15. Mai 2026 am Postschalter in Empfang genommen. Da der Kostenvorschuss innert Frist nicht einging, wurde ihm mit Verfügung vom 5. Juni 2026 die gesetzlich vorgeschriebene, nicht erstreckbare Nachfrist bis zum 16. Juni 2026 angesetzt, um den Kostenvorschuss zu bezahlen, unter der Androhung, dass ansonsten auf das Rechtsmittel nicht eingetreten werde (vgl. Art. 62 Ab. 3 BGG). Die ebenfalls mittels GU an den Beschwerdeführer versandte Verfügung wurde dem Bundesgericht mit dem Vermerk \"nicht abgeholt\" retourniert. Da er mit Post des Bundesgerichts rechnen musste, gilt sie dennoch als zugestellt. Der Kostenvorschuss ging auch innert Nachfrist nicht ein, weshalb auf die Beschwerde androhungsgemäss im Verfahren nach Art. 108 BGG nicht einzutreten ist.\n4.\nAbgesehen davon wäre die Beschwerde auch deshalb unzulässig, weil sie den Begründungsanforderungen gemäss Art. 42 Abs. 2 BGG nicht genügt.\n5.\nDie Gerichtskosten sind dem Beschwerdeführer aufzuerlegen (Art. 66 Abs. 1 BGG).\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 500.-- werden dem Beschwerdeführer auferlegt.\n3.\nDieses Urteil wird den Parteien und dem Kantonsgericht Luzern, 2. Abteilung, schriftlich mitgeteilt.\nLausanne, 30. Juni 2026\nIm Namen der I. strafrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Muschietti\nDie Gerichtsschreiberin: Arquint Hill",
+  "operator_metadata": {
+    "date": "2026-06-30",
+    "reference": [
+      "6B_313/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_006_6B-313-2026_2026-06-30.html",
+      "source": "446973/45/2830",
+      "content_length": 2864
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit pénal"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_006"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2830",
+    "id": "CH_BGer_006_6B-313-2026_2026-06-30",
+    "title": {
+      "de": "Bundesgericht I. Strafrechtliche Abteilung 30.06.2026 6B_313/2026",
+      "it": "Tribunale federale I Corte di diritto penale 30.06.2026 6B_313/2026",
+      "fr": "Tribunal fédéral Ire Cour de droit pénal 30.06.2026 6B_313/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:50:18+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_006_6B-313-2026_2026-06-30.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "0d1cf5b037a1a77f1938b5fc1760268ebd14f20c0fd9c3d1129446f32ad15862"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "id": "4A_51_2026",
+  "case_id": "4A_51/2026",
+  "case_ids": [
+    "4A_51/2026"
+  ],
+  "decision_date": "2026-05-27",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "responsabilité civile; frais et dépens; retrait du recours",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://27-05-2026-4A_51-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4A_51/2026\nOrdonnance du 27 mai 2026\nIre Cour de droit civil\nComposition\nM. le Juge fédéral Hurni, Président.\nGreffier : M. Widmer.\nParticipants à la procédure\nA.________ SA,\nreprésentée par Me Michel Bergmann, avocat,\nrecourante,\ncontre\nB.________,\nreprésentée par Me Eric Maugué, avocat,\nintimée.\nObjet\nresponsabilité civile; frais et dépens; retrait du recours,\nrecours contre l'arrêt rendu le 15 décembre 2025 par la Chambre civile de la Cour de justice du canton de Genève (C/19666/2019 ACJC/1815/2025).\nLe Président,\nVu le recours en matière civile déposé le 2 février 2026 par A.________ SA contre l'arrêt rendu le 15 décembre 2025 par la Chambre civile de la Cour de justice du canton de Genève;\nVu les ordonnances présidentielles du 13 février 2026 fixant à B.________ (ci-après: l'intimée) et à la cour cantonale un délai au 6 mars 2026 pour déposer leurs réponses éventuelles;\nVu la lettre du 18 février 2026 par laquelle la cour cantonale déclare se référer aux considérants de son arrêt;\nVu l'ordonnance du 6 mars 2026 par laquelle le délai imparti à l'intimée pour déposer une réponse a été prolongé jusqu'au 26 mars 2026;\nVu l'ordonnance du 26 mars 2026 suspendant la présente procédure à la demande des parties;\nVu la lettre du 26 mai 2026 par laquelle le conseil de la recourante informe le Tribunal fédéral que sa mandante retire son recours suite à un accord à l'amiable trouvé entre les parties concernant le litige;\nConsidérant qu'il y a lieu de prendre acte de ce retrait et de rayer la cause 4A_51/2026 du rôle (art. 32 al. 2 LTF),\nque les frais judiciaires, réduits, sont mis à la charge de la recourante (art. 66 al. 1 et 2 LTF);\nAttendu que dans la lettre susmentionnée du 26 mai 2026, contresignée pour accord par le conseil de l'intimée, les parties déclarent que les dépens sont compensés;\nConsidérant, qu'il n'y a pas lieu d'allouer des dépens, conformément à la volonté exprimée par les parties,;\nVu l'art. 32 al. 2 LTF,\nOrdonne :\n1.\nIl est pris acte du retrait du recours.\n2.\nLa cause 4A_51/2026 est rayée du rôle.\n3.\nUn émolument judiciaire de 500 fr. est mis à la charge de la recourante.\n4.\nIl n'est pas alloué de dépens.\n5.\nLa présente ordonnance est communiquée aux parties et à la Chambre civile de la Cour de justice du canton de Genève.\nLausanne, le 27 mai 2026\nAu nom de la Ire Cour de droit civil\ndu Tribunal fédéral suisse\nLe Président : Hurni\nLe Greffier : Widmer",
+  "operator_metadata": {
+    "date": "2026-05-27",
+    "reference": [
+      "4A_51/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-51-2026_2026-05-27.html",
+      "source": "446973/45/2829",
+      "content_length": 2805
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_004_4A-51-2026_2026-05-27",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 27.05.2026 4A_51/2026",
+      "it": "Tribunale federale I Corte di diritto civile 27.05.2026 4A_51/2026",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 27.05.2026 4A_51/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:41:39+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-51-2026_2026-05-27.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "bc9c5d1cd1152277bd82a3f2432e36367749ff00253dbcbb509093eaf9800c7c"
+  }
+}

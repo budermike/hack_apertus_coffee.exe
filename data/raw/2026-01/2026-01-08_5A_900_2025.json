@@ -1,0 +1,56 @@
+{
+  "id": "5A_900_2025",
+  "case_id": "5A_900/2025",
+  "case_ids": [
+    "5A_900/2025"
+  ],
+  "decision_date": "2026-01-08",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "Rechtzeitigkeit der Berufung (Eheschutz)",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://08-01-2026-5A_900-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5A_900/2025\nVerfügung vom 8. Januar 2026\nII. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Bovey, Präsident,\nGerichtsschreiber Möckli.\nVerfahrensbeteiligte\nA.________,\nvertreten durch Rechtsanwalt Severin Bellwald,\nBeschwerdeführer,\ngegen\nB.________,\nvertreten durch Rechtsanwalt Andreas Ehrsam,\nBeschwerdegegnerin.\nGegenstand\nRechtzeitigkeit der Berufung (Eheschutz),\nBeschwerde gegen das Urteil des Obergerichts des Kantons Solothurn, Zivilkammer, vom 17. September 2025 (ZKBER.2025.31, ZKBER.2025.35).\nSachverhalt:\nMit Entscheid vom 25. März 2024 regelte das Amtsgericht Olten-Gösgen und mit Entscheid vom 17. September 2025 modifizierte das Obergericht des Kantons Solothurn die Eheschutzbelange der Parteien.\nGegen den obergerichtlichen Eheschutzentscheid hat der Ehemann am 20. Oktober 2025 eine Beschwerde in Zivilsachen eingereicht. Mit Erklärung vom 5. Januar 2025 hat er diese zurückgezogen.\nErwägungen:\n1.\nZufolge des erklärten Beschwerderückzuges ist das Beschwerdeverfahren 5A_900/2025 durch den Abteilungspräsidenten als erledigt abzuschreiben (Art. 32 Abs. 2 BGG).\n2.\nDie bislang angefallenen Gerichtskosten sind dem Beschwerdeführer aufzuerlegen (Art 66 Abs. 1 BGG). Sodann hat er ausgangsgemäss die Beschwerdegegnerin für die Stellungnahme zum Gesuch um aufschiebende Wirkung, welche mit Verfügung vom 13. November 2025 verweigert wurde, zu entschädigen (Art. 68 Abs. 2 BGG).\nDemnach verfügt der Präsident:\n1.\nDas Beschwerdeverfahren 5A_900/2025 wird zufolge Beschwerderückzuges als gegenstandslos geworden abgeschrieben.\n2.\nDie Gerichtskosten von Fr. 500.-- werden dem Beschwerdeführer auferlegt.\n3.\nDer Beschwerdeführer hat die Beschwerdeführerin für das bundesgerichtliche Verfahren mit Fr. 500.-- zu entschädigen.\n4.\nDieses Urteil wird den Parteien, der Beiständin und dem Obergericht des Kantons Solothurn, Zivilkammer mitgeteilt.\nLausanne, 8. Januar 2026\nIm Namen der II. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Bovey\nDer Gerichtsschreiber: Möckli",
+  "operator_metadata": {
+    "date": "2026-01-08",
+    "reference": [
+      "5A_900/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-900-2025_2026-01-08.html",
+      "source": "446973/45/2830",
+      "content_length": 2448
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2830",
+    "id": "CH_BGer_005_5A-900-2025_2026-01-08",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 08.01.2026 5A_900/2025",
+      "it": "Tribunale federale II Corte di diritto civile 08.01.2026 5A_900/2025",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 08.01.2026 5A_900/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:02:10+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-900-2025_2026-01-08.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "ae2f999a33fe2be48e50b10a171cb13298a3bb8fb4f086653e9f90c4530672a4"
+  }
+}

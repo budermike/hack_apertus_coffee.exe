@@ -1,0 +1,56 @@
+{
+  "id": "9C_461_2025",
+  "case_id": "9C_461/2025",
+  "case_ids": [
+    "9C_461/2025"
+  ],
+  "decision_date": "2026-01-06",
+  "publication_date": null,
+  "department": "IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung)",
+  "division": "IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung)",
+  "subject": "Assurance-invalidité (condition de recevabilité)",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://06-01-2026-9C_461-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n9C_461/2025\nArrêt du 6 janvier 2026\nIIIe Cour de droit public\nComposition\nMme la Juge fédérale Moser-Szeless, Présidente.\nGreffier : M. Cretton.\nParticipants à la procédure\nA.________,\nreprésentée par B.________,\nrecourante,\ncontre\nOffice de l'assurance-invalidité pour le canton de Vaud,\navenue du Général-Guisan 8, 1800 Vevey,\nintimé.\nObjet\nAssurance-invalidité (condition de recevabilité),\nrecours contre l'arrêt du Tribunal cantonal du canton de Vaud du 21 juillet 2025 (AI 185/25 - 227/2025).\nConsidérant en fait et en droit :\n1.\nPar acte du 28 août 2025, A.________ a interjeté un recours en matière de droit public contre un arrêt rendu par la Cour des assurances sociales du Tribunal cantonal du canton de Vaud le 21 juillet 2025. Elle a aussi requis le bénéfice de l'assistance judiciaire pour la procédure fédérale. Par ordonnance du 3 novembre 2025, le Tribunal fédéral a rejeté sa demande d'assistance judiciaire et lui a imparti un délai de 14 jours dès réception de l'ordonnance pour qu'elle s'acquitte d'une avance de frais de 800 fr. Par ordonnance du 2 décembre 2025, un délai supplémentaire non prolongeable échéant le 12 décembre 2025 lui a été accordé pour verser l'avance de frais. Le Tribunal fédéral l'a en outre avertie qu'en l'absence de paiement dans cet ultime délai, son recours serait déclaré irrecevable.\n2.\nSelon l'art. 62 LTF, la partie qui saisit le Tribunal fédéral doit fournir une avance de frais d'un montant correspondant aux frais judiciaires présumés (al. 1); le juge instructeur fixe un délai approprié pour ce faire (al. 3, première phrase); si le versement n'est pas fait dans ce délai, il fixe un délai supplémentaire (al. 3, deuxième phrase); si l'avance n'est pas versée dans ce second délai, le recours est irrecevable (al. 3, troisième phrase).\n3.\nEn l'espèce, la recourante n'a pas payé l'avance de frais requise dans les délais impartis. Partant, le recours doit être déclaré irrecevable, conformément à l'art. 62 al. 3 troisième phrase LTF. Le présent arrêt relève de la compétence du juge unique (art. 108 al. 1 let. a LTF). Vu les circonstances, il convient de renoncer à percevoir des frais judiciaires (art. 66 al. 1 seconde phrase LTF).\nPar ces motifs, la Présidente prononce :\n1.\nLe recours est irrecevable.\n2.\nIl n'est pas perçu de frais judiciaires.\n3.\nLe présent arrêt est communiqué aux parties, au Tribunal cantonal du canton de Vaud, Cour des assurances sociales, et à l'Office fédéral des assurances sociales.\nLucerne, le 6 janvier 2026\nAu nom de la IIIe Cour de droit public\ndu Tribunal fédéral suisse\nLa Présidente : Moser-Szeless\nLe Greffier : Cretton",
+  "operator_metadata": {
+    "date": "2026-01-06",
+    "reference": [
+      "9C_461/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_009_9C-461-2025_2026-01-06.html",
+      "source": "446973/45/2834",
+      "content_length": 3026
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung)",
+      "it": "Confederazione Tribunale federale IV Corte di diritto pubblico (II Corte di diritto sociale)",
+      "fr": "Conféderation Tribunal fédéral IVe Cour de droit public (IIe Cour de droit social)"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_009"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_009_9C-461-2025_2026-01-06",
+    "title": {
+      "de": "Bundesgericht IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung) 06.01.2026 9C_461/2025",
+      "it": "Tribunale federale IV Corte di diritto pubblico (II Corte di diritto sociale) 06.01.2026 9C_461/2025",
+      "fr": "Tribunal fédéral IVe Cour de droit public (IIe Cour de droit social) 06.01.2026 9C_461/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:01:38+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_009_9C-461-2025_2026-01-06.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "714cd5a08ada245fea6bb73fffaa4ef345072ac77fae04512bd20fe78b1bfc8b"
+  }
+}

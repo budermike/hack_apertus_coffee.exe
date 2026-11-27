@@ -1,0 +1,56 @@
+{
+  "id": "5A_643_2025",
+  "case_id": "5A_643/2025",
+  "case_ids": [
+    "5A_643/2025"
+  ],
+  "decision_date": "2025-10-03",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "mainlevée de la curatelle",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://03-10-2025-5A_643-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5A_643/2025\nArrêt du 3 octobre 2025\nIIe Cour de droit civil\nComposition\nM. le Juge fédéral Bovey, Président.\nGreffier : M. Braconi.\nParticipants à la procédure\nA.________,\nrecourante,\ncontre\nTribunal de protection de l'adulte et de l'enfant du canton de Genève,\nrue des Glacis-de-Rive 6, 1207 Genève,\nOffice de protection de l'adulte (OPAD), route des Jeunes 1C, case postale 107, 1211 Genève 8.\nObjet\nmainlevée de la curatelle,\nrecours contre la décision de la Chambre de\nsurveillance de la Cour de justice du canton de Genève du 7 juillet 2025 (C/11575/2024-CS DAS/133/2025).\nConsidérant en fait et en droit :\n1.\nPar ordonnance du 16 janvier 2025, le Tribunal de protection de l'adulte et de l'enfant du canton de Genève a rejeté la demande de mainlevée de la curatelle instituée en faveur de A.________ (1975).\nPar décision du 7 juillet 2025, la Chambre de surveillance de la Cour de justice du canton de Genève a déclaré irrecevable le recours que la prénommée a déposé contre cette ordonnance.\n2.\nPar écriture du 13 août 2025, complétée le 18 août 2025, la personne concernée exerce un recours au Tribunal fédéral contre la décision de la cour cantonale; elle conclut à la levée de la curatelle.\nDes observations n'ont pas été requises.\n3.\nLe présent recours est traité comme recours en matière civile au sens de l'art. 72 al. 2 let. b ch. 6 LTF. Il n'y a pas lieu d'examiner les autres conditions de recevabilité, ce procédé étant voué à l'échec.\n4.\n4.1. En l'espèce, la juridiction précédente a retenu que le recours de la personne concernée était \" dépourvu de tout grief \" contre l'ordonnance attaquée, l'intéressée n'exposant pas en quoi le Tribunal de protection aurait arbitrairement constaté les faits et/ou enfreint la loi. Faute d'être motivé conformément aux exigences posées par l'art. 450 al. 3 CC, le recours est dès lors irrecevable.\n4.2. En l'espèce, la recourante ne soulève pas le moindre grief contre le motif d'irrecevabilité retenu par l'autorité précédente; en particulier, elle ne soutient pas que celle-ci aurait violé l'art. 450 al. 3 CC (art. 42 al. 2 LTF) ou appliqué cette disposition d'une manière excessivement formaliste (art. 106 al. 2 LTF, en relation avec l'art. 29 al. 1 Cst.). Il s'ensuit que le recours, dénué de motivation topique, est entièrement irrecevable (ATF 142 III 364 consid. 2.4 et les arrêts cités).\n5.\nVu ce qui précède, le présent recours doit être déclaré irrecevable par voie de procédure simplifiée (art. 108 al. 1 let. b LTF), sans percevoir de frais judiciaires (art. 66 al. 1, 2ème phrase, LTF).\nPar ces motifs, le Président prononce :\n1.\nLe recours est irrecevable.\n2.\nIl n'est pas perçu de frais judiciaires.\n3.\nLe présent arrêt est communiqué aux participants à la procédure et à la Chambre de surveillance de la Cour de justice du canton de Genève.\nLausanne, le 3 octobre 2025\nAu nom de la IIe Cour de droit civil\ndu Tribunal fédéral suisse\nLe Président : Bovey\nLe Greffier : Braconi",
+  "operator_metadata": {
+    "date": "2025-10-03",
+    "reference": [
+      "5A_643/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-643-2025_2025-10-03.html",
+      "source": "446973/45/2869",
+      "content_length": 3429
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-06-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2869",
+    "id": "CH_BGer_005_5A-643-2025_2025-10-03",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 03.10.2025 5A_643/2025",
+      "it": "Tribunale federale II Corte di diritto civile 03.10.2025 5A_643/2025",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 03.10.2025 5A_643/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:23:47+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-643-2025_2025-10-03.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "fb1b367c73dfa226f21c56c7cf36cfcd4558222f494dbca125103922ad061da8"
+  }
+}

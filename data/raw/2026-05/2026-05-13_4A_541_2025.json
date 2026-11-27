@@ -1,0 +1,56 @@
+{
+  "id": "4A_541_2025",
+  "case_id": "4A_541/2025",
+  "case_ids": [
+    "4A_541/2025"
+  ],
+  "decision_date": "2026-05-13",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "mutuo",
+  "language": "it",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://13-05-2026-4A_541-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4A_541/2025\nDecreto del 13 maggio 2026\nI Corte di diritto civile\nComposizione\nGiudice federale Hurni, Presidente,\nCancelliere G. Piatti.\nPartecipanti al procedimento\nA.________ SA,\npatrocinata dall'avv. Adriano Alessio Sala,\nricorrente,\ncontro\nB.________ SA,\npatrocinata dall'avv. Gabriele Gilardi,\nopponente.\nOggetto\nmutuo,\nricorso contro la sentenza emanata il 24 settembre 2025 dalla II Camera civile del Tribunale d'appello del\nCantone Ticino (12.2025.36).\nConsiderando:\nche il Pretore aggiunto del distretto di Bellinzona ha respinto, con giudizio 16 aprile 2025, la petizione inoltrata dalla B.________ SA nei confronti della A.________ SA;\nche con sentenza 24 settembre 2025 la II Camera civile del Tribunale di appello del Cantone Ticino ha, in parziale accoglimento dell'appello dell'attrice, condannato la convenuta al pagamento di fr. 30'000.--;\nche con ricorso in materia civile del 27 ottobre 2025 la A.________ SA ha postulato, in riforma della sentenza di appello, la reiezione della petizione;\nche con risposta del 28 novembre 2025 la B.________ SA ha proposto la reiezione del ricorso;\nche le parti hanno proceduto spontaneamente a un secondo scambio di scritti;\nche con lettera 18 marzo 2026 la ricorrente ha chiesto al Tribunale federale di stralciare la causa in seguito alla conclusione di un accordo extragiudiziale, di compensare le ripetibili e di contenere al minimo le spese da porre a carico di chi le ha anticipate;\nche tale scritto è stato inviato all'opponente il 27 aprile 2026;\nche la domanda di stralcio presentata dalla ricorrente va interpretata quale ritiro del ricorso, la transazione non essendo stata consegnata a questo Tribunale;\nche giusta l'art. 32 cpv. 1 LTF il presidente della Corte dirige il procedimento quale giudice dell'istruzione fino alla pronuncia della sentenza e che in virtù dell'art. 32 cpv. 2 LTF il giudice dell'istruzione decide quale giudice unico lo stralcio dal ruolo delle cause ritirate;\nche le spese giudiziarie della presente procedura - ridotte in applicazione dell'art. 66 cpv. 2 LTF - seguono la soccombenza (art. 66 cpv. 1 LTF), mentre le ripetibili sono, come pacificamente richiesto, compensate;\nper questi motivi, il Presidente decreta:\n1.\nLa causa è stralciata dai ruoli a seguito del ritiro del ricorso.\n2.\nLe spese giudiziarie di fr. 500.-- sono poste a carico della ricorrente. Le ripetibili sono compensate.\n3.\nComunicazione ai patrocinatori delle parti e alla II Camera civile del Tribunale d'appello del Cantone Ticino.\nLosanna, 13 maggio 2026\nIn nome della I Corte di diritto civile\ndel Tribunale federale svizzero\nIl Presidente: Hurni\nIl Cancelliere: G. Piatti",
+  "operator_metadata": {
+    "date": "2026-05-13",
+    "reference": [
+      "4A_541/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "it",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-541-2025_2026-05-13.html",
+      "source": "446973/45/2829",
+      "content_length": 2996
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "it",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_004_4A-541-2025_2026-05-13",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 13.05.2026 4A_541/2025",
+      "it": "Tribunale federale I Corte di diritto civile 13.05.2026 4A_541/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 13.05.2026 4A_541/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:38:43+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-541-2025_2026-05-13.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "d8ac7424d667bf0b5418be198177aacf4ce82c07c39fb5e5a25af2f45cacc3f8"
+  }
+}

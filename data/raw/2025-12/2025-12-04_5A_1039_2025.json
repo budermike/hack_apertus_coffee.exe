@@ -1,0 +1,56 @@
+{
+  "id": "5A_1039_2025",
+  "case_id": "5A_1039/2025",
+  "case_ids": [
+    "5A_1039/2025"
+  ],
+  "decision_date": "2025-12-04",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "Beistandschaft für A.A.________",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://04-12-2025-5A_1039-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5A_1039/2025\nUrteil vom 4. Dezember 2025\nII. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Bovey, Präsident,\nGerichtsschreiber Möckli.\nVerfahrensbeteiligte\n1. A.A.________,\n2. B.A.________,\nBeschwerdeführer,\ngegen\nKindes- und Erwachsenenschutzbehörde der Stadt Zürich,\nStauffacherstrasse 45, 8004 Zürich.\nGegenstand\nBeistandschaft für A.A.________,\nBeschwerde gegen den Beschluss des Obergerichts des Kantons Zürich, II. Zivilkammer, vom 20. Oktober 2025 (PQ250058-O/U).\nSachverhalt:\nMit Beschluss vom 11. März 2025 ordnete die KESB der Stadt Zürich für A.A.________ eine Vertretungsbeistandschaft mit Vermögensverwaltung an. Mit Urteil vom 21. August 2025 wies der Bezirksrat Zürich die hiergegen erhobene Beschwerde ab. Auf die hiergegen erhobene Beschwerde trat das Obergericht des Kantons Zürich mit Beschluss vom 20. Oktober 2025 mangels hinreichender Begründung nicht ein. Mit auf 29. November 2025 datierter und am 30. November 2025 der Post übergebener Beschwerde wendet sich das Ehepaar A.________ an das Bundesgericht.\nErwägungen:\n1.\nDer angefochtene Beschluss wurde am 29. Oktober 2025 zugestellt. Die 30-tägige Beschwerdefrist (Art. 100 Abs. 1 BGG) begann folglich am 30. Oktober 2025 zu laufen (Art. 44 Abs. 1 BGG) und endete am Freitag 28. November 2025. Die erst am 30. November 2025 der Post übergebene Beschwerde ist somit verspätet und es kann auf sie nicht eingetreten werden.\n2.\nOhnehin würde es der Beschwerde an einem hinreichenden Rechtsbegehren und mangels sachgerichteter Auseinandersetzung mit den Erwägungen des angefochtenen Beschlusses auch an einer hinreichenden Begründung mangeln (Art. 42 Abs. 1 und 2 BGG).\n3.\nNach dem Gesagten ist auf die Beschwerde im vereinfachten Verfahren nach Art. 108 Abs. 1 lit. a und b BGG nicht einzutreten.\n4.\nDie Gerichtskosten sind den Beschwerdeführern unter solidarischer Haftbarkeit aufzuerlegen (Art. 66 Abs. 1 und 5 BGG).\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 1'000.-- werden den Beschwerdeführern unter solidarischer Haftbarkeit auferlegt.\n3.\nDieses Urteil wird den Beschwerdeführern, der Kindes- und Erwachsenenschutzbehörde der Stadt Zürich und dem Obergericht des Kantons Zürich, II. Zivilkammer, mitgeteilt.\nLausanne, 4. Dezember 2025\nIm Namen der II. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Bovey\nDer Gerichtsschreiber: Möckli",
+  "operator_metadata": {
+    "date": "2025-12-04",
+    "reference": [
+      "5A_1039/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-1039-2025_2025-12-04.html",
+      "source": "446973/45/2869",
+      "content_length": 2855
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-06-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2869",
+    "id": "CH_BGer_005_5A-1039-2025_2025-12-04",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 04.12.2025 5A_1039/2025",
+      "it": "Tribunale federale II Corte di diritto civile 04.12.2025 5A_1039/2025",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 04.12.2025 5A_1039/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:41:11+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-1039-2025_2025-12-04.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "ebd739206031d4190504269873a34a98b73ca2812ca5cce6135681447799f465"
+  }
+}

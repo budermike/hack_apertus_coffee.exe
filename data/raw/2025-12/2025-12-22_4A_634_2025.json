@@ -1,0 +1,56 @@
+{
+  "id": "4A_634_2025",
+  "case_id": "4A_634/2025",
+  "case_ids": [
+    "4A_634/2025"
+  ],
+  "decision_date": "2025-12-22",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "Arbeitsvertrag; unentgeltliche Rechtspflege",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://22-12-2025-4A_634-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4A_634/2025\nUrteil vom 22. Dezember 2025\nI. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Hurni, Präsident,\nGerichtsschreiber Leemann.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nObergericht des Kantons Schaffhausen, Beschwerdegegner,\nB.________ GmbH,\nweitere Verfahrensbeteiligte.\nGegenstand\nArbeitsvertrag; unentgeltliche Rechtspflege,\nBeschwerde gegen die Verfügung des Obergerichts\ndes Kantons Schaffhausen vom 11. November 2025 (40/2025/38).\nErwägungen:\n1.\nMit Verfügung vom 23. Oktober 2025 wies das Kantonsgericht Schaffhausen in einem Forderungsprozess das Gesuch des Beschwerdeführers um Erteilung der unentgeltlichen Rechtspflege, eventualiter um Reduktion des Kostenvorschusses, ab.\nMit Verfügung vom 11. November 2025 trat das Obergericht des Kantons Schaffhausen auf eine vom Beschwerdeführer gegen die kantonsgerichtliche Verfügung vom 23. Oktober 2025 erhobene Beschwerde infolge unzureichender Begründung der Rechtsmitteleingabe nicht ein.\nMit Eingabe vom 10. Dezember 2025 erklärte der Beschwerdeführer dem Bundesgericht, die Verfügung des Obergerichts des Kantons Schaffhausen vom 11. November 2025 mit Beschwerde anfechten zu lassen.\nEs wurden keine Vernehmlassungen eingeholt.\n2.\nDie Eingabe des Beschwerdeführers vom 10. Dezember 2025 erfüllt die Begründungsanforderungen, die an eine Beschwerde an das Bundesgericht gestellt werden, offensichtlich nicht (Art. 42 Abs. 2 und Art. 106 Abs. 2 BGG; BGE 142 III 364 E. 2.4; 140 III 86 E. 2, 115 E. 2).\nAuf die Beschwerde ist somit mangels hinreichender Begründung im Verfahren nach Art. 108 Abs. 1 lit. b nicht einzutreten.\n3.\nDas Gesuch des Beschwerdeführers um Gewährung der unentgeltlichen Rechtspflege für das bundesgerichtliche Verfahren ist abzuweisen, weil die Beschwerde als von vornherein aussichtslos erschien (Art. 64 Abs. 1 BGG).\nDer Beschwerdeführer wird bei diesem Verfahrensausgang kostenpflichtig (Art. 66 Abs. 1 BGG). Dem Beschwerdegegner und der weiteren Verfahrensbeteiligten stehen keine Parteientschädigungen zu (Art. 68 Abs. 2 und 3 BGG).\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDas Gesuch des Beschwerdeführers um unentgeltliche Rechtspflege für das bundesgerichtliche Verfahren wird abgewiesen.\n3.\nDie Gerichtskosten von Fr. 800.-- werden dem Beschwerdeführer auferlegt.\n4.\nEs werden keine Parteientschädigungen zugesprochen.\n5.\nDieses Urteil wird dem Beschwerdeführer, dem Obergericht des Kantons Schaffhausen und der weiteren Verfahrensbeteiligten schriftlich mitgeteilt.\nLausanne, 22. Dezember 2025\nIm Namen der I. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Hurni\nDer Gerichtsschreiber: Leemann",
+  "operator_metadata": {
+    "date": "2025-12-22",
+    "reference": [
+      "4A_634/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-634-2025_2025-12-22.html",
+      "source": "446973/45/2869",
+      "content_length": 3135
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-06-18",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2869",
+    "id": "CH_BGer_004_4A-634-2025_2025-12-22",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 22.12.2025 4A_634/2025",
+      "it": "Tribunale federale I Corte di diritto civile 22.12.2025 4A_634/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 22.12.2025 4A_634/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:59:45+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-634-2025_2025-12-22.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "042d0300b8c868c924611c40d6d7e22015c9526703c7d02ef523dbd2cfa7f8bb"
+  }
+}

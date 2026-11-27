@@ -27,10 +27,21 @@ build/
 .idea/
 .vscode/
 
+# Derived triage data: embedding/Apertus cache
+data/processed/triage/
 #data
 .data/
-data/processed/*
-!data/processed/.gitkeep
-# Crawled court judgements stay local (keep only the empty folder in git)
-data/raw/*
-!data/raw/.gitkeep
+# Temporary / corrupt crawler files stay local; public BGer judgements in data/raw/ are tracked
+data/raw/**/*.tmp
+data/raw/**/*.corrupt-*
+# Local SQLite databases (summaries DB) stay out of git
+*.db
+*.db-wal
+*.db-shm
+# Vector-DB: metadata.sqlite3 (~2 MB), embedder_meta.json and vectors/ (~79 MB) are tracked;
+# large rebuildable local caches (fts.sqlite3, search_index.npz, SQLite WAL/SHM) stay local.
+data/processed/vectordb/fts.sqlite3*
+data/processed/vectordb/search_index.npz
+data/processed/vectordb/*.sqlite3-wal
+data/processed/vectordb/*.sqlite3-shm
+data/processed/vectordb/**/*.tmp*

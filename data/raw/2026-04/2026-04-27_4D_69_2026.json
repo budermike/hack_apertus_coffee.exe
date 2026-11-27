@@ -1,0 +1,56 @@
+{
+  "id": "4D_69_2026",
+  "case_id": "4D_69/2026",
+  "case_ids": [
+    "4D_69/2026"
+  ],
+  "decision_date": "2026-04-27",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "azione di disconoscimento del debito",
+  "language": "it",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://27-04-2026-4D_69-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4D_69/2026\nSentenza del 27 aprile 2026\nI Corte di diritto civile\nComposizione\nGiudice federale Hurni, Presidente,\nCancelliere G. Piatti.\nPartecipanti al procedimento\nA.________ SAGL,\npatrocinata dall'avv. Michele Campini,\nricorrente,\ncontro\nCassa cantonale di compensazione AVS/AI/IPG,\nopponente.\nOggetto\nazione di disconoscimento del debito,\nricorso contro la sentenza emanata il 5 marzo 2026\ndalla Camera civile dei reclami del Tribunale d'appello\ndel Cantone Ticino (16.2025.67).\nRitenuto in fatto e considerando in diritto:\n1.\nCon decisione 10 novembre 2025 il Giudice di pace del circolo di Paradiso ha respinto l'azione di disconoscimento del debito inoltrata dalla A.________ SAGL nei confronti della Cassa cantonale di compensazione AVS/AI/IPG. Con sentenza 5 marzo 2026 la Camera civile dei reclami del Tribunale di appello del Cantone Ticino ha respinto il reclamo inoltrato dalla A.________ SAGL.\n2.\nLa A.________ SAGL è insorta al Tribunale federale con ricorso 22 aprile 2026.\n3.\nGiusta l'art. 100 cpv. 1 LTF il ricorso contro una decisione dev'essere depositato al Tribunale federale entro 30 giorni dalla notificazione del testo integrale della decisione. In virtù dell'art. 46 cpv. 1 lett. a LTF i termini stabiliti in giorni dalla legge o dal giudice sono sospesi dal settimo giorno precedente la Pasqua al settimo giorno successivo alla Pasqua incluso.\nSia dall'estratto del sistema di tracciamento degli invii raccomandati della Posta sia dalle indicazioni contenute nel ricorso risulta che la sentenza della Camera civile dei reclami è stata notificata alla ricorrente venerdì 6 marzo 2026. Giusta l'art. 44 cpv. 1 LTF il termine di ricorso ha quindi iniziato a decorrere il giorno seguente (e non come preteso dalla ricorrente unicamente il lunedì 9 marzo 2026). Esso è poi rimasto sospeso durante le ferie giudiziarie pasquali ed è così scaduto il 20 aprile 2026. Il ricorso, consegnato alla Posta svizzera solo il 22 aprile 2026, si palesa quindi tardivo.\n4.\nDa quanto precede discende che il ricorso si rivela manifestamente inammissibile e va deciso dal Presidente della Corte adita nella procedura semplificata giusta l'art. 108 cpv. 1 lett. a LTF. Le spese giudiziarie seguono la soccombenza (art. 66 cpv. 1 LTF).\nper questi motivi, il Presidente pronuncia:\n1.\nIl ricorso è inammissibile.\n2.\nLe spese giudiziarie di fr. 500.-- sono poste a carico della ricorrente.\n3.\nComunicazione alle parti e alla Camera civile dei reclami del Tribunale d'appello del Cantone Ticino.\nLosanna, 27 aprile 2026\nIn nome della I Corte di diritto civile\ndel Tribunale federale svizzero\nIl Presidente: Hurni\nIl Cancelliere: G. Piatti",
+  "operator_metadata": {
+    "date": "2026-04-27",
+    "reference": [
+      "4D_69/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "it",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-69-2026_2026-04-27.html",
+      "source": "446973/45/2829",
+      "content_length": 3056
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "it",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_004_4D-69-2026_2026-04-27",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 27.04.2026 4D_69/2026",
+      "it": "Tribunale federale I Corte di diritto civile 27.04.2026 4D_69/2026",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 27.04.2026 4D_69/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:33:08+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-69-2026_2026-04-27.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "8a1e6d80a137c2478599517638807c8d9133fa8c6d495bf578cc64d1e1895d21"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "id": "7B_1262_2025",
+  "case_id": "7B_1262/2025",
+  "case_ids": [
+    "7B_1262/2025"
+  ],
+  "decision_date": "2026-01-19",
+  "publication_date": null,
+  "department": "II. Strafrechtliche Abteilung",
+  "division": "II. Strafrechtliche Abteilung",
+  "subject": "Nichtanhandnahme; Sicherheitsleistung; Nichteintreten",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://19-01-2026-7B_1262-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n7B_1262/2025\nUrteil vom 19. Januar 2026\nII. strafrechtliche Abteilung\nBesetzung\nBundesrichterin Koch, als Einzelrichterin,\nGerichtsschreiber Clément.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nAnklagekammer des Kantons St. Gallen,\nKlosterhof 1, 9001 St. Gallen.\nGegenstand\nNichtanhandnahme; Sicherheitsleistung; Nichteintreten,\nBeschwerde gegen die Verfügung der Anklagekammer des Kantons St. Gallen vom 13. November 2025 (AK.2025.578-AK).\nErwägungen:\n1.\nMit Verfügung vom 13. November 2025 forderte der Präsident der Anklagekammer des Kantons St. Gallen den Beschwerdeführer auf, in dem von ihm eingeleiteten Beschwerdeverfahren, das sich gegen die Nichtanhandnahmeverfügung der Staatsanwaltschaft St. Gallen, Untersuchungsamt St. Gallen, vom 30. September 2025 richtet, in Anwendung von Art. 383 StPO innert Frist Fr. 1'500.-- Sicherheit zu leisten. Dagegen gelangte der Beschwerdeführer mit Beschwerde in Strafsachen vom 20. November 2025 (Postaufgabe) an das Bundesgericht.\n2.\nEin Gesuch um Erteilung des Rechts zur unentgeltlichen Prozessführung und damit zum Verzicht auf eine Prozesskaution bzw. Sicherheitsleistung ist beim Kantonsgericht zu stellen, bei dem das Beschwerdeverfahren hängig ist. Der Beschwerdeführer hat kein solches Gesuch gestellt und das Kantonsgericht hat dementsprechend nicht darüber entschieden, weshalb insofern kein kantonal letztinstanzlicher Entscheid und damit kein zulässiges Anfechtungsobjekt vorliegt. Auf die Beschwerde ist im vereinfachten Verfahren nach Art. 108 BGG nicht einzutreten. Die Begründung des Entscheids beschränkt sich auf eine kurze Angabe des Unzulässigkeitsgrundes (Art. 108 Abs. 3 BGG).\n3.\nDie Gerichtskosten sind dem Beschwerdeführer aufzuerlegen (Art. 66 Abs. 1 BGG). Das Gesuch um unentgeltliche Rechtspflege ist wegen offensichtlicher Aussichtslosigkeit der Begehren abzuweisen (Art. 64 Abs. 1 BGG). Die geltend gemachte Bedürftigkeit des Beschwerdeführers blieb im Übrigen trotz entsprechender Aufforderung unbelegt.\nDemnach erkennt die Einzelrichterin:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 500.-- werden dem Beschwerdeführer auferlegt.\n3.\nDieses Urteil wird den Parteien, der Anklagekammer des Kantons St. Gallen und der Staatsanwaltschaft des Kantons St. Gallen schriftlich mitgeteilt.\nLausanne, 19. Januar 2026\nIm Namen der II. strafrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Einzelrichterin: Koch\nDer Gerichtsschreiber: Clément",
+  "operator_metadata": {
+    "date": "2026-01-19",
+    "reference": [
+      "7B_1262/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-1262-2025_2026-01-19.html",
+      "source": "446973/45/2834",
+      "content_length": 2870
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit pénal"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_007"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_007_7B-1262-2025_2026-01-19",
+    "title": {
+      "de": "Bundesgericht II. Strafrechtliche Abteilung 19.01.2026 7B_1262/2025",
+      "it": "Tribunale federale II Corte di diritto penale 19.01.2026 7B_1262/2025",
+      "fr": "Tribunal fédéral IIe Cour de droit pénal 19.01.2026 7B_1262/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:05:04+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-1262-2025_2026-01-19.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "2491c9ebd066c77c3ebc6e53617f27f0c9d0c6605b2454cca9d937ca0f054843"
+  }
+}

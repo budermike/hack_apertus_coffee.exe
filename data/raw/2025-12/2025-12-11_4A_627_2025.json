@@ -1,0 +1,56 @@
+{
+  "id": "4A_627_2025",
+  "case_id": "4A_627/2025",
+  "case_ids": [
+    "4A_627/2025"
+  ],
+  "decision_date": "2025-12-11",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "contrat de bail",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://11-12-2025-4A_627-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4A_627/2025\nArrêt du 11 décembre 2025\nIre Cour de droit civil\nComposition\nM. le Juge fédéral Hurni, président.\nGreffier: M. O. Carruzzo.\nParticipants à la procédure\nA.________,\nrecourant,\ncontre\nB.________,\nintimée.\nObjet\ncontrat de bail,\nrecours contre l'arrêt rendu le 29 octobre 2025 par la Chambre des baux et loyers de la Cour de justice (C/17467/2024 ACJC/1539/2025).\nConsidérant en fait et en droit:\n1.\nPar jugement du 1er septembre 2025, le Tribunal des baux et loyers genevois a condamné A.________ et C.________ à évacuer immédiatement de leur personne et de leurs biens, ainsi que de toute autre personne faisant ménage commun avec eux, le studio qu'ils occupent à Genève, autorisé la bailleresse B.________ à requérir l'évacuation forcée des prénommés dès le 30ème jour après l'entrée en force du jugement et condamné A.________ à verser à la bailleresse la somme de 4'346 fr. 70.\n2.\nPar arrêt du 29 octobre 2025, la Chambre des baux et loyers de la Cour de justice du canton de Genève a déclaré irrecevable, pour cause de tardiveté, le recours interjeté par A.________ contre cette décision.\n3.\nLe 8 décembre 2025, A.________ (ci-après: le recourant) a formé un recours au Tribunal fédéral à l'encontre de cet arrêt.\nB.________ (ci-après: l'intimée) et la cour cantonale n'ont pas été invitées à répondre au recours.\n4.\nLe Tribunal fédéral examine d'office et librement la recevabilité des recours qui lui sont soumis (ATF 145 I 239 consid. 2).\n4.1. À teneur de l'art. 42 al. 1 et 2 LTF, le recours adressé au Tribunal fédéral doit être motivé (al. 1); les motifs doivent exposer succinctement en quoi la décision attaquée viole le droit (al. 2). La partie recourante doit discuter les motifs de cette décision et indiquer précisément en quoi elle estime que l'autorité précédente a méconnu le droit (ATF 142 III 364 consid. 2.4 et les références citées).\n4.2. Le présent recours ne satisfait manifestement pas aux exigences de motivation rappelées ci-dessus. En effet, le recourant ne tente pas d'établir que la juridiction cantonale aurait enfreint le droit fédéral en jugeant que le recours cantonal avait été introduit tardivement devant elle. Il suit de là que le recours est manifestement irrecevable, ce qu'il y a lieu de constater en procédure simplifiée (art. 108 al. 1 let. b LTF).\n5.\nLe recourant, qui succombe, supportera les frais de la présente procédure (art. 66 al. 1 LTF). En revanche, il n'aura pas à verser de dépens à l'intimée, puisque celle-ci n'a pas été invitée à déposer une réponse.\nPar ces motifs, le Président de la I re Cour de droit civil prononce:\n1.\nLe recours est irrecevable.\n2.\nLes frais judiciaires, arrêtés à 500 fr., sont mis à la charge du recourant.\n3.\nLe présent arrêt est communiqué aux parties et à la Chambre des baux et loyers de la Cour de justice du canton de Genève.\nLausanne, le 11 décembre 2025\nAu nom de la Ire Cour de droit civil\ndu Tribunal fédéral suisse\nLe Président : Hurni\nLe Greffier : O. Carruzzo",
+  "operator_metadata": {
+    "date": "2025-12-11",
+    "reference": [
+      "4A_627/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-627-2025_2025-12-11.html",
+      "source": "446973/45/2869",
+      "content_length": 3436
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-06-18",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2869",
+    "id": "CH_BGer_004_4A-627-2025_2025-12-11",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 11.12.2025 4A_627/2025",
+      "it": "Tribunale federale I Corte di diritto civile 11.12.2025 4A_627/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 11.12.2025 4A_627/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:42:59+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-627-2025_2025-12-11.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "6bb3d4abcb9ec8e5ba1b79addf63af7e6ff1f7511a886f92d2a9012c5097113c"
+  }
+}

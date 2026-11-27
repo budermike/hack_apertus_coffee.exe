@@ -1,0 +1,56 @@
+{
+  "id": "9C_672_2025",
+  "case_id": "9C_672/2025",
+  "case_ids": [
+    "9C_672/2025"
+  ],
+  "decision_date": "2026-03-02",
+  "publication_date": null,
+  "department": "IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung)",
+  "division": "IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung)",
+  "subject": "Assurance-invalidité (retrait du recours)",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://02-03-2026-9C_672-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n9C_672/2025\nOrdonnance du 2 mars 2026\nIIIe Cour de droit public\nComposition\nM. le Juge fédéral Parrino, en qualité de juge unique.\nGreffière : Mme Perrenoud.\nParticipants à la procédure\nA.________,\nrecourante,\ncontre\nOffice de l'assurance-invalidité\npour le canton de Vaud,\navenue du Général-Guisan 8, 1800 Vevey,\nintimé.\nObjet\nAssurance-invalidité (retrait du recours),\nrecours contre l'arrêt du Tribunal cantonal du canton de Vaud du 27 octobre 2025 (AI 265/24 - 332/2025).\nVu :\nla lettre du 20 février 2026 par laquelle A.________ a déclaré retirer le recours interjeté le 29 novembre 2025 (timbre postal) contre l'arrêt du Tribunal cantonal du canton de Vaud, Cour des assurances sociales, du 27 octobre 2025,\nconsidérant :\nque la cause doit être rayée du rôle en application des art. 32 al. 2 et 71 LTF, en relation avec l'art. 73 al. 1 PCF,\nqu'il se justifie en appliquant l'art. 66 al. 2 LTF de statuer sans frais judiciaires,\npar ces motifs, le Juge unique ordonne :\n1.\nLa cause est rayée du rôle par suite de retrait du recours.\n2.\nIl n'est pas perçu de frais judiciaires.\n3.\nLa présente ordonnance est communiquée aux parties, au Tribunal cantonal du canton de Vaud, Cour des assurances sociales, et à l'Office fédéral des assurances sociales.\nLucerne, le 2 mars 2026\nAu nom de la IIIe Cour de droit public\ndu Tribunal fédéral suisse\nLe Juge unique : Parrino\nLa Greffière : Perrenoud",
+  "operator_metadata": {
+    "date": "2026-03-02",
+    "reference": [
+      "9C_672/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_009_9C-672-2025_2026-03-02.html",
+      "source": "446973/45/2834",
+      "content_length": 1770
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung)",
+      "it": "Confederazione Tribunale federale IV Corte di diritto pubblico (II Corte di diritto sociale)",
+      "fr": "Conféderation Tribunal fédéral IVe Cour de droit public (IIe Cour de droit social)"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_009"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_009_9C-672-2025_2026-03-02",
+    "title": {
+      "de": "Bundesgericht IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung) 02.03.2026 9C_672/2025",
+      "it": "Tribunale federale IV Corte di diritto pubblico (II Corte di diritto sociale) 02.03.2026 9C_672/2025",
+      "fr": "Tribunal fédéral IVe Cour de droit public (IIe Cour de droit social) 02.03.2026 9C_672/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:18:04+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_009_9C-672-2025_2026-03-02.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "ff674cc306310f8222a827af42c11c7e672e1b607410277a15b2f8f5ed5151aa"
+  }
+}

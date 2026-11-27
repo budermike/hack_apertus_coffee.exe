@@ -1,0 +1,56 @@
+{
+  "id": "4D_243_2025",
+  "case_id": "4D_243/2025",
+  "case_ids": [
+    "4D_243/2025"
+  ],
+  "decision_date": "2025-12-22",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "Erlass der Gerichtskosten",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://22-12-2025-4D_243-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4D_243/2025\nUrteil vom 22. Dezember 2025\nI. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Hurni, Präsident,\nGerichtsschreiber Tanner.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführerin,\ngegen\nObergericht des Kantons Obwalden, Gerichtspräsidentin II,\nPostfach, 6060 Sarnen,\nBeschwerdegegner.\nGegenstand\nErlass der Gerichtskosten,\nBeschwerde gegen den Entscheid des Obergerichts des Kantons Obwalden, Gerichtspräsidentin II, vom 4. November 2025 (SE25/006+007).\nErwägungen:\n1.\nMit Entscheid vom 4. November 2025 wies die Präsidentin II des Obergerichts des Kantons Obwalden die Gesuche der Beschwerdeführerin um Erlass der Gerichtskosten in den Verfahren BZ 24/008 und BZ 24/014 ab.\nDagegen erhebt die Beschwerdeführerin am 15. Dezember 2025 Beschwerde an das Bundesgericht.\nMit Präsidialverfügung vom 17. Dezember 2025 wurde das Gesuch der Beschwerdeführerin um Gewährung der aufschiebenden Wirkung abgewiesen.\n2.\nDie Eingabe der Beschwerdeführerin erfüllt die Begründungsanforderungen, die an eine Beschwerde an das Bundesgericht gestellt werden (Art. 42 Abs. 2 und Art. 106 Abs. 2 BGG; BGE 142 III 364 E. 2.4; 140 III 86 E. 2, 115 E. 2), offensichtlich nicht. Auf die Beschwerde ist somit mangels hinreichender Begründung im vereinfachten Verfahren durch den Abteilungspräsidenten nicht einzutreten (Art. 108 Abs. 1 lit. b BGG). Die Begründung dieses Entscheids beschränkt sich auf eine kurze Angabe des Unzulässigkeitsgrundes (Art. 108 Abs. 3 BGG).\n3.\nDas Gesuch der Beschwerdeführerin um unentgeltliche Rechtspflege und Verbeiständung für das bundesgerichtliche Verfahren ist wegen Aussichtslosigkeit abzuweisen (Art. 64 Abs. 1 BGG).\nDie Beschwerdeführerin wird bei diesem Verfahrensausgang kostenpflichtig (Art. 66 Abs. 1 BGG). Der Beschwerdegegner hat keinen Anspruch auf eine Parteientschädigung, da ihm mangels Einholung einer Vernehmlassung aus dem bundesgerichtlichen Verfahren kein entschädigungspflichtiger Aufwand erwachsen ist (Art. 68 Abs. 2 BGG).\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDas Gesuch der Beschwerdeführerin um unentgeltliche Rechtspflege und Verbeiständung für das bundesgerichtliche Verfahren wird abgewiesen.\n3.\nDie Gerichtskosten von Fr. 500.-- werden der Beschwerdeführerin auferlegt.\n4.\nEs wird keine Parteientschädigung zugesprochen.\n5.\nDieses Urteil wird den Parteien schriftlich mitgeteilt.\nLausanne, 22. Dezember 2025\nIm Namen der I. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Hurni\nDer Gerichtsschreiber: Tanner",
+  "operator_metadata": {
+    "date": "2025-12-22",
+    "reference": [
+      "4D_243/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-243-2025_2025-12-22.html",
+      "source": "446973/45/2869",
+      "content_length": 2975
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-06-18",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2869",
+    "id": "CH_BGer_004_4D-243-2025_2025-12-22",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 22.12.2025 4D_243/2025",
+      "it": "Tribunale federale I Corte di diritto civile 22.12.2025 4D_243/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 22.12.2025 4D_243/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:59:48+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-243-2025_2025-12-22.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "76871e0f1adad55a54077faa0e69a82267ab9bf37a40d42e758e4880c1b73c02"
+  }
+}

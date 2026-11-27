@@ -1,0 +1,56 @@
+{
+  "id": "5A_272_2026",
+  "case_id": "5A_272/2026",
+  "case_ids": [
+    "5A_272/2026"
+  ],
+  "decision_date": "2026-03-25",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "Aufhebung Beistandschaft",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://25-03-2026-5A_272-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5A_272/2026\nUrteil vom 25. März 2026\nII. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Bovey, Präsident,\nGerichtsschreiber Möckli.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nKindes- und Erwachsenenschutzbehörde Arbon,\nSchlossgasse 4, 9320 Arbon.\nGegenstand\nAufhebung Beistandschaft,\nBeschwerde gegen den Entscheid des Obergerichts des Kantons Thurgau vom 4. März 2026 (KES.2025.87).\nSachverhalt:\nBei der Scheidung der Eltern des Beschwerdeführers im Oktober 2001 ordnete das Bezirksgericht St. Gallen für diesen eine Vormundschaft nach Art. 368 aZGB an. In der Folge wurden die Massnahmen mehrmals von verschiedenen Behörden übernommen bzw. angepasst. Im Zuge der Volljährigkeit errichtete die KESB Arbon am 10. November 2016 eine Vertretungsbeistandschaft mit Einkommens- und Vermögensverwaltung.\nAm 20. August 2025 beantragte der Beschwerdeführer die Aufhebung der Beistandschaft. Nach Anhörung und Einholung diverser Berichte wies die KESB Arbon den Antrag mit Entscheid vom 4. Dezember 2025 ab. Mit Entscheid vom 4. März 2026 wies das Obergericht des Kantons Thurgau die hiergegen erhobene Beschwerde ab.\nMit Eingabe vom 23. März 2026 wendet sich der Beschwerdeführer an das Bundesgericht.\nErwägungen:\n1.\nDie Beschwerde hat ein Rechtsbegehren und eine Begründung zu enthalten (Art. 42 Abs. 1 BGG), in welcher in gedrängter Form dargelegt wird, inwiefern der angefochtene Entscheid Recht verletzt (Art. 42 Abs. 2 BGG), was eine sachbezogene Auseinandersetzung mit dessen Erwägungen erfordert (BGE 140 III 115 E. 2; 142 III 364 E. 2.4).\n2.\nDie Beschwerde enthält weder ein Rechtsbegehren noch eine Auseinandersetzung mit den ausführlichen Erwägungen des 14-seitigen obergerichtlichen Entscheides. Der Beschwerdeführer hält einzig fest, es sei nichts unternommen worden, die Schweiz sei hierzu nicht in der Lage, es brauche härtere Gesetze und keine EU.\n3.\nNach dem Gesagten erweist sich die Beschwerde als offensichtlich nicht hinreichend begründet, weshalb auf sie nicht eingetreten werden kann und der Präsident im vereinfachten Verfahren entscheidet (Art. 108 Abs. 1 lit. b BGG).\n4.\nAngesichts der konkreten Umstände ist auf die Erhebung von Gerichtskosten zu verzichten (Art. 66 Abs. 1 BGG).\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nEs werden keine Gerichtskosten erhoben.\n3.\nDieses Urteil wird dem Beschwerdeführer, der Kindes- und Erwachsenenschutzbehörde Arbon und dem Obergericht des Kantons Thurgau mitgeteilt.\nLausanne, 25. März 2026\nIm Namen der II. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Bovey\nDer Gerichtsschreiber: Möckli",
+  "operator_metadata": {
+    "date": "2026-03-25",
+    "reference": [
+      "5A_272/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-272-2026_2026-03-25.html",
+      "source": "446973/45/2830",
+      "content_length": 3087
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2830",
+    "id": "CH_BGer_005_5A-272-2026_2026-03-25",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 25.03.2026 5A_272/2026",
+      "it": "Tribunale federale II Corte di diritto civile 25.03.2026 5A_272/2026",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 25.03.2026 5A_272/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:24:52+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-272-2026_2026-03-25.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "3b771816126e56332c677ee4961df900b5579dc3e8bd8ef804fc0f9a25a83800"
+  }
+}

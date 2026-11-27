@@ -1,0 +1,56 @@
+{
+  "id": "4A_114_2026",
+  "case_id": "4A_114/2026",
+  "case_ids": [
+    "4A_114/2026"
+  ],
+  "decision_date": "2026-03-26",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "mainlevée",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://26-03-2026-4A_114-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4A_114/2026\nArrêt du 26 mars 2026\nIre Cour de droit civil\nComposition\nM. le Juge fédéral Hurni, Président.\nGreffier : M. Botteron.\nParticipants à la procédure\nA.________ SA,\nrecourante,\ncontre\n1. B.________,\n2. C.________,\n3. D.________,\n4. E.________,\n5. F.________,\n6. G.________,\n7. H.________,\n8. I.________,\n9. J.________,\n10. K.________,\n11. L.________,\n12. M.________,\np.a. N.________ SA,\nintimés.\nObjet\nmainlevée,\nrecours contre l'arrêt rendu le 2 février 2026 par la Chambre civile du Tribunal cantonal du Valais\n(C3 25 163).\nConsidérant en fait et en droit :\n1.\nSur réquisition des familles (...) & consorts, représentés par N.________ SA, l'Office des poursuites des districts de Sion, Hérens et Conthey a notifié à A.________ SA un commandement de payer 42'832 fr. 30 dans la poursuite n. xxx.\nPar jugement du 11 novembre 2025, le Tribunal de Sion a admis la requête des poursuivants en mainlevée provisoire de l'opposition qu'avait formée la poursuivie, à hauteur de 31'500 fr.\nPar arrêt du 2 février 2026, la Chambre civile du Tribunal cantonal du canton du Valais a déclaré irrecevable le recours formé par la poursuivie. La recourante ne s'en prenait pas aux motifs du Tribunal de première instance.\n2.\nContre cet arrêt, la poursuivie a formé un recours au Tribunal fédéral. Elle invoque une violation des devoirs du bailleur dans le cadre de son contrat de bail. Elle ne s'en prend pas à la motivation de la cour cantonale selon laquelle elle ne s'en prenait pas à la motivation de première instance.\n3.\nLe Tribunal fédéral applique en principe d'office le droit (art. 106 al. 1 LTF) à l'état de fait constaté dans l'arrêt cantonal (ou à l'état de fait qu'il aura rectifié). Cela ne signifie pas que le Tribunal fédéral examine, comme le ferait un juge de première instance, toutes les questions juridiques qui pourraient se poser. Compte tenu de l'obligation de motiver imposée par l'art. 42 al. 2 LTF, il ne traite que les questions qui sont soulevées devant lui par les parties, à moins que la violation du droit ne soit manifeste (ATF 140 III 115 consid. 2, 86 consid. 2).\n4.\nÉtant donné que la recourante ne soutient ni n'établit que la cour cantonale aurait violé le droit fédéral en retenant que son recours cantonal était irrecevable, elle ne s'en prend pas valablement à l'argumentation de la cour cantonale et son recours est irrecevable (art. 42 al. 2 LTF; ATF 140 III 115 consid. 2), ce qu'il y a lieu de constater par voie de procédure simplifiée (art. 108 al. 1 let. b LTF).\n5.\nLa recourante, qui succombe, supportera les frais judiciaires (art. 66 al. 1 LTF). Dans la mesure où les intimés n'ont pas été invités à se déterminer, il ne leur sera pas alloué de dépens.\npar ces motifs, le Président prononce :\n1.\nLe recours est irrecevable.\n2.\nLes frais judiciaires, arrêtés à 500 fr., sont mis à la charge de la recourante.\n3.\nIl n'est pas alloué de dépens.\n4.\nLe présent arrêt est communiqué aux parties et à la Chambre civile du Tribunal cantonal du Valais.\nLausanne, le 1er avril 2026\nAu nom de la Ire Cour de droit civil\ndu Tribunal fédéral suisse\nLe Président : Hurni\nLe Greffier : Botteron",
+  "operator_metadata": {
+    "date": "2026-03-26",
+    "reference": [
+      "4A_114/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-114-2026_2026-03-26.html",
+      "source": "446973/45/2829",
+      "content_length": 3613
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_004_4A-114-2026_2026-03-26",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 26.03.2026 4A_114/2026",
+      "it": "Tribunale federale I Corte di diritto civile 26.03.2026 4A_114/2026",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 26.03.2026 4A_114/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:25:17+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-114-2026_2026-03-26.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "16696964d133955fb4506f9a63b8e8151335bc1c7acfc1aab6ddfe870a6bbe67"
+  }
+}

@@ -1,9 +1,11 @@
 """Local persistent Vector-DB + FTS5 index for BGer judgements (#5, #8, #9, #30, #37).
 
-Persists metadata + FTS5 full-text index in SQLite (WAL mode) and L2-normalized
-chunk vectors in compressed NumPy archives under ``data/processed/vectordb/``:
+Persists metadata in SQLite (WAL mode), FTS5 full-text index in a separate
+rebuildable SQLite file, and L2-normalized chunk vectors in compressed NumPy
+archives under ``data/processed/vectordb/``:
 
-    data/processed/vectordb/metadata.sqlite3          metadata + case aliases + FTS5
+    data/processed/vectordb/metadata.sqlite3          metadata + case aliases (~2 MB)
+    data/processed/vectordb/fts.sqlite3               FTS5 full-text index (local)
     data/processed/vectordb/embedder_meta.json        persisted embedder config/vocab
     data/processed/vectordb/vectors/<YYYY-MM>/<doc_key>.npz   per-judgement chunks
     data/processed/vectordb/search_index.npz          consolidated fast cosine index
@@ -38,8 +40,8 @@ from hack_apertus_coffee_exe.embed import (
     get_default_embedder,
     l2_normalize,
 )
-from triage.embeddings import Embedder, TfidfEmbedder
-from triage.reference_corpus import load_reference_corpus
+from hack_apertus_coffee_exe.triage.embeddings import Embedder, TfidfEmbedder
+from hack_apertus_coffee_exe.triage.reference_corpus import load_reference_corpus
 
 DEFAULT_DB_DIR = "data/processed/vectordb"
 DEFAULT_RAW_DIR = "data/raw"
@@ -222,6 +224,7 @@ class VectorDB:
         self.db_dir = Path(db_dir)
         self.db_dir.mkdir(parents=True, exist_ok=True)
         self.sqlite_path = self.db_dir / "metadata.sqlite3"
+        self.fts_path = self.db_dir / "fts.sqlite3"
         self.embedder_meta_path = self.db_dir / "embedder_meta.json"
         self.search_index_path = self.db_dir / "search_index.npz"
         self.max_words = max_words
@@ -232,7 +235,8 @@ class VectorDB:
             self._persist_embedder_meta(embedder)
         else:
             self.embedder = self._load_persisted_or_default_embedder()
-            self._persist_embedder_meta(self.embedder)
+            if not self.embedder_meta_path.exists():
+                self._persist_embedder_meta(self.embedder)
 
         self.fingerprint = embedder_fingerprint(self.embedder, max_words, overlap_words)
         self._search_cache: dict[str, Any] | None = None
@@ -292,6 +296,27 @@ class VectorDB:
         conn.execute("PRAGMA busy_timeout=5000;")
         return conn
 
+    def _connect_fts(self) -> sqlite3.Connection:
+        conn = sqlite3.connect(self.fts_path, timeout=10.0)
+        conn.row_factory = sqlite3.Row
+        conn.execute("PRAGMA journal_mode=WAL;")
+        conn.execute("PRAGMA busy_timeout=5000;")
+        return conn
+
+    def _init_fts_sqlite(self) -> None:
+        with self._connect_fts() as conn:
+            conn.execute(
+                """
+                CREATE VIRTUAL TABLE IF NOT EXISTS judgements_fts USING fts5(
+                    doc_key UNINDEXED,
+                    case_id,
+                    subject,
+                    text,
+                    tokenize='unicode61'
+                );
+                """
+            )
+
     def _init_sqlite(self) -> None:
         with self._connect() as conn:
             conn.executescript(
@@ -329,14 +354,6 @@ class VectorDB:
                     PRIMARY KEY (alias, doc_key)
                 );
                 CREATE INDEX IF NOT EXISTS idx_lookup_alias ON case_lookup(alias);
-
-                CREATE VIRTUAL TABLE IF NOT EXISTS judgements_fts USING fts5(
-                    doc_key UNINDEXED,
-                    case_id,
-                    subject,
-                    text,
-                    tokenize='unicode61'
-                );
                 """
             )
             cols = {r["name"] for r in conn.execute("PRAGMA table_info(judgements)")}
@@ -385,12 +402,12 @@ class VectorDB:
             ).fetchone()
         if row is None:
             raise KeyError(f"Unknown doc_key: {doc_key}")
-        npz = np.load(self.db_dir / row["vector_file"], allow_pickle=False)
-        fmt = str(npz["format"])
-        if fmt == "csr":
-            shape = tuple(int(x) for x in npz["shape"])
-            return csr_to_dense(npz["indptr"], npz["indices"], npz["data"], shape)
-        return np.asarray(npz["dense"], dtype=np.float32)
+        with np.load(self.db_dir / row["vector_file"], allow_pickle=False) as npz:
+            fmt = str(npz["format"])
+            if fmt == "csr":
+                shape = tuple(int(x) for x in npz["shape"])
+                return csr_to_dense(npz["indptr"], npz["indices"], npz["data"], shape)
+            return np.asarray(npz["dense"], dtype=np.float32)
 
     def ingest_records(
         self,
@@ -463,6 +480,16 @@ class VectorDB:
                             """,
                             (desired_ref, subject, division, language, case_ids_json, url, doc_key),
                         )
+                        if prev["case_ids"] != case_ids_json:
+                            conn.execute("DELETE FROM case_lookup WHERE doc_key = ?", (doc_key,))
+                            aliases = {doc_key, doc_id, case_id}
+                            for cid in case_ids:
+                                aliases.add(cid)
+                                aliases.add(safe_case_id(cid))
+                            conn.executemany(
+                                "INSERT OR REPLACE INTO case_lookup (alias, doc_key, decision_date) VALUES (?, ?, ?)",
+                                [(alias, doc_key, decision_date) for alias in aliases],
+                            )
                     stats["cached"] += 1
                     continue
 
@@ -484,6 +511,7 @@ class VectorDB:
 
         is_tfidf = isinstance(self.embedder, TfidfEmbedder)
 
+        self._init_fts_sqlite()
         batch_start = 0
         while batch_start < len(to_embed):
             batch_items = []
@@ -500,6 +528,7 @@ class VectorDB:
                 dense_batch = l2_normalize(self.embedder.embed(batch_chunks))
 
             chunk_cursor = 0
+            fts_rows: list[tuple[str, str, str, str]] = []
             with self._connect() as conn:
                 for (
                     record,
@@ -568,12 +597,15 @@ class VectorDB:
                         "INSERT OR REPLACE INTO case_lookup (alias, doc_key, decision_date) VALUES (?, ?, ?)",
                         [(alias, doc_key, decision_date) for alias in aliases],
                     )
-                    conn.execute("DELETE FROM judgements_fts WHERE doc_key = ?", (doc_key,))
-                    conn.execute(
-                        "INSERT INTO judgements_fts (doc_key, case_id, subject, text) VALUES (?, ?, ?, ?)",
-                        (doc_key, " ".join(case_ids), subject or "", text),
-                    )
+                    fts_rows.append((doc_key, " ".join(case_ids), subject or "", text))
                     stats["embedded"] += 1
+
+            with self._connect_fts() as fts_conn:
+                fts_conn.executemany("DELETE FROM judgements_fts WHERE doc_key = ?", [(r[0],) for r in fts_rows])
+                fts_conn.executemany(
+                    "INSERT INTO judgements_fts (doc_key, case_id, subject, text) VALUES (?, ?, ?, ?)",
+                    fts_rows,
+                )
 
         self.rebuild_search_index()
         return stats
@@ -624,15 +656,15 @@ class VectorDB:
             chunk_docs: list[np.ndarray] = []
             offset = 0
             for doc_idx, row in enumerate(rows):
-                npz = np.load(self.db_dir / row["vector_file"], allow_pickle=False)
-                ip = npz["indptr"]
-                n_c = len(ip) - 1
-                if n_c > 0:
-                    indptr_parts.append(ip[1:] + offset)
-                    idx_parts.append(npz["indices"])
-                    dat_parts.append(npz["data"])
-                    chunk_docs.append(np.full(n_c, doc_idx, dtype=np.int32))
-                    offset = int(indptr_parts[-1][-1])
+                with np.load(self.db_dir / row["vector_file"], allow_pickle=False) as npz:
+                    ip = npz["indptr"]
+                    n_c = len(ip) - 1
+                    if n_c > 0:
+                        indptr_parts.append(ip[1:] + offset)
+                        idx_parts.append(npz["indices"])
+                        dat_parts.append(npz["data"])
+                        chunk_docs.append(np.full(n_c, doc_idx, dtype=np.int32))
+                        offset = int(indptr_parts[-1][-1])
 
             indptr = np.concatenate(indptr_parts)
             indices = np.concatenate(idx_parts) if idx_parts else np.zeros(0, dtype=np.int32)
@@ -654,7 +686,8 @@ class VectorDB:
             dense_parts: list[np.ndarray] = []
             chunk_docs = []
             for doc_idx, row in enumerate(rows):
-                vecs = self.load_vectors(row["doc_key"])
+                with np.load(self.db_dir / row["vector_file"], allow_pickle=False) as npz:
+                    vecs = np.asarray(npz["dense"], dtype=np.float32)
                 if vecs.ndim == 2 and vecs.shape[0] > 0:
                     dense_parts.append(vecs)
                     chunk_docs.append(np.full(vecs.shape[0], doc_idx, dtype=np.int32))
@@ -676,9 +709,28 @@ class VectorDB:
         if self._search_cache is None:
             if not self.search_index_path.exists():
                 self.rebuild_search_index()
-            npz = np.load(self.search_index_path, allow_pickle=False)
-            self._search_cache = {k: npz[k] for k in npz.files}
+            with np.load(self.search_index_path, allow_pickle=False) as npz:
+                self._search_cache = {k: npz[k] for k in npz.files}
         return self._search_cache
+
+    def rebuild_fts_index(self, raw_dir: str | Path = DEFAULT_RAW_DIR) -> int:
+        """Build or rebuild the separate fts.sqlite3 full-text index from crawled raw JSONs."""
+        self._init_fts_sqlite()
+        base = Path(raw_dir)
+        files = sorted(p for p in base.rglob("*.json") if not p.name.startswith("_"))
+        fts_rows: list[tuple[str, str, str, str]] = []
+        for path in files:
+            rec = json.loads(path.read_text(encoding="utf-8"))
+            doc_key = self.doc_key_for(rec)
+            case_ids = rec.get("case_ids") or [rec["case_id"]]
+            fts_rows.append((doc_key, " ".join(case_ids), rec.get("subject") or "", rec.get("text") or ""))
+        with self._connect_fts() as fts_conn:
+            fts_conn.execute("DELETE FROM judgements_fts")
+            fts_conn.executemany(
+                "INSERT INTO judgements_fts (doc_key, case_id, subject, text) VALUES (?, ?, ?, ?)",
+                fts_rows,
+            )
+        return len(fts_rows)
 
     @staticmethod
     def _row_to_dict(row: sqlite3.Row) -> dict[str, Any]:
@@ -735,12 +787,12 @@ class VectorDB:
             raise KeyError(f"Case not found in VectorDB: {identifier}")
         item = self._row_to_dict(row)
         if include_vectors:
-            npz = np.load(self.db_dir / row["vector_file"], allow_pickle=False)
-            if str(npz["format"]) == "csr":
-                shape = tuple(int(x) for x in npz["shape"])
-                item["vectors"] = csr_to_dense(npz["indptr"], npz["indices"], npz["data"], shape)
-            else:
-                item["vectors"] = np.asarray(npz["dense"], dtype=np.float32)
+            with np.load(self.db_dir / row["vector_file"], allow_pickle=False) as npz:
+                if str(npz["format"]) == "csr":
+                    shape = tuple(int(x) for x in npz["shape"])
+                    item["vectors"] = csr_to_dense(npz["indptr"], npz["indices"], npz["data"], shape)
+                else:
+                    item["vectors"] = np.asarray(npz["dense"], dtype=np.float32)
         return item
 
     def set_reference_flags(
@@ -857,37 +909,73 @@ class VectorDB:
         if not match_expr:
             return []
 
-        clauses, params = self._filter_sql(
-            date_from=date_from,
-            date_to=date_to,
-            language=language,
-            division=division,
-            is_reference=is_reference,
-            table_alias="j",
-        )
-        clauses.insert(0, "judgements_fts MATCH ?")
-        params.insert(0, match_expr)
-        params.append(int(top_k))
+        self._init_fts_sqlite()
+        with self._connect_fts() as fts_conn:
+            fts_count = int(fts_conn.execute("SELECT COUNT(*) FROM judgements_fts").fetchone()[0])
+        if fts_count == 0 and self.count() > 0 and Path(DEFAULT_RAW_DIR).exists():
+            self.rebuild_fts_index(DEFAULT_RAW_DIR)
 
-        sql = f"""
-            SELECT j.*,
-                   -bm25(judgements_fts) AS bm25_score,
-                   snippet(judgements_fts, 3, '[', ']', ' … ', 20) AS snippet
-            FROM judgements_fts
-            JOIN judgements j ON j.doc_key = judgements_fts.doc_key
-            WHERE {' AND '.join(clauses)}
-            ORDER BY bm25(judgements_fts) ASC
-            LIMIT ?
-        """
+        with self._connect_fts() as fts_conn:
+            fts_rows = fts_conn.execute(
+                """
+                SELECT doc_key,
+                       -bm25(judgements_fts) AS bm25_score,
+                       snippet(judgements_fts, 3, '[', ']', ' … ', 20) AS snippet
+                FROM judgements_fts
+                WHERE judgements_fts MATCH ?
+                ORDER BY bm25(judgements_fts) ASC
+                """,
+                (match_expr,),
+            ).fetchall()
+
+        if not fts_rows:
+            return []
+
+        has_filters = any(v is not None for v in (date_from, date_to, language, division, is_reference))
+        if has_filters:
+            allowed_clauses, allowed_params = self._filter_sql(
+                date_from=date_from,
+                date_to=date_to,
+                language=language,
+                division=division,
+                is_reference=is_reference,
+            )
+            with self._connect() as conn:
+                allowed = {
+                    r["doc_key"]: self._row_to_dict(r)
+                    for r in conn.execute(
+                        f"SELECT * FROM judgements WHERE {' AND '.join(allowed_clauses)}",
+                        allowed_params,
+                    )
+                }
+            picked = [r for r in fts_rows if r["doc_key"] in allowed][:top_k]
+            return [
+                {
+                    **allowed[r["doc_key"]],
+                    "bm25_score": round(float(r["bm25_score"]), 4),
+                    "snippet": r["snippet"],
+                }
+                for r in picked
+            ]
+
+        picked = fts_rows[:top_k]
+        placeholders = ",".join("?" for _ in picked)
         with self._connect() as conn:
-            rows = conn.execute(sql, params).fetchall()
+            by_key = {
+                r["doc_key"]: self._row_to_dict(r)
+                for r in conn.execute(
+                    f"SELECT * FROM judgements WHERE doc_key IN ({placeholders})",
+                    [r["doc_key"] for r in picked],
+                )
+            }
         return [
             {
-                **self._row_to_dict(r),
+                **by_key[r["doc_key"]],
                 "bm25_score": round(float(r["bm25_score"]), 4),
                 "snippet": r["snippet"],
             }
-            for r in rows
+            for r in picked
+            if r["doc_key"] in by_key
         ]
 
     def _rank_against_index(
@@ -1066,20 +1154,20 @@ class VectorDB:
         if row is None:
             raise KeyError(f"Unknown doc_key: {doc_key}")
 
-        npz = np.load(self.db_dir / row["vector_file"], allow_pickle=False)
-        if str(npz["format"]) == "csr":
-            return self._rank_against_index(
-                query_csr=(npz["indptr"], npz["indices"], npz["data"]),
-                top_k=top_k,
-                exclude_doc_keys=set(doc_keys),
-                date_from=date_from,
-                date_to=date_to,
-                language=language,
-                division=division,
-                is_reference=is_reference,
-                is_negative_reference=is_negative_reference,
-            )
-        q_vecs = np.asarray(npz["dense"], dtype=np.float32)
+        with np.load(self.db_dir / row["vector_file"], allow_pickle=False) as npz:
+            if str(npz["format"]) == "csr":
+                return self._rank_against_index(
+                    query_csr=(npz["indptr"], npz["indices"], npz["data"]),
+                    top_k=top_k,
+                    exclude_doc_keys=set(doc_keys),
+                    date_from=date_from,
+                    date_to=date_to,
+                    language=language,
+                    division=division,
+                    is_reference=is_reference,
+                    is_negative_reference=is_negative_reference,
+                )
+            q_vecs = np.asarray(npz["dense"], dtype=np.float32)
         return self._rank_against_index(
             query_dense=q_vecs,
             top_k=top_k,

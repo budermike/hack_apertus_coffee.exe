@@ -1,0 +1,56 @@
+{
+  "id": "8C_658_2025",
+  "case_id": "8C_658/2025",
+  "case_ids": [
+    "8C_658/2025"
+  ],
+  "decision_date": "2026-01-08",
+  "publication_date": null,
+  "department": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "division": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "subject": "Assurance sociale cantonale (retrait du recours)",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://08-01-2026-8C_658-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n8C_658/2025\nOrdonnance du 8 janvier 2026\nIVe Cour de droit public\nComposition\nM. le Juge fédéral Métral, en qualité de juge unique.\nGreffière : Mme von Zwehl.\nParticipants à la procédure\nA.A.________ et B.A.________,\nreprésentés par Service Social International - Suisse, Me Gian-Luigi Berardi, avocat,\nrecourants,\ncontre\nHospice général,\ncours de Rive 12, 1204 Genève,\nintimé.\nObjet\nAssurance sociale cantonale (retrait du recours),\nrecours contre la décision de la Cour de justice de la République et canton de Genève du 4 novembre 2025 (A/3257/2025-AIDSO ATA/1243/2025).\nVu :\nla lettre du 23 décembre 2025 par laquelle A.A.________ et B.A.________ ont déclaré retirer le recours interjeté le 10 novembre 2025 (timbre postal) contre la décision de la Chambre administrative de la Cour de justice de la République et canton de Genève du 4 novembre 2025,\nconsidérant :\nque la cause doit être rayée du rôle en application des art. 32 al. 2 et 71 LTF, en relation avec l'art. 73 al. 1 PCF,\nqu'il se justifie en appliquant l'art. 66 al. 2 LTF de statuer sans frais judiciaires,\npar ces motifs, le Juge unique ordonne :\n1.\nLa cause est rayée du rôle par suite de retrait du recours.\n2.\nIl n'est pas perçu de frais judiciaires.\n3.\nLa présente ordonnance est communiquée aux parties et à la Chambre administrative de la Cour de justice de la République et canton de Genève.\nLucerne, le 8 janvier 2026\nAu nom de la IVe Cour de droit public\ndu Tribunal fédéral suisse\nLe Juge unique : Métral\nLa Greffière : von Zwehl",
+  "operator_metadata": {
+    "date": "2026-01-08",
+    "reference": [
+      "8C_658/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-658-2025_2026-01-08.html",
+      "source": "446973/45/2834",
+      "content_length": 1885
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+      "it": "Confederazione Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale)",
+      "fr": "Conféderation Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social)"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_008"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_008_8C-658-2025_2026-01-08",
+    "title": {
+      "de": "Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung) 08.01.2026 8C_658/2025",
+      "it": "Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale) 08.01.2026 8C_658/2025",
+      "fr": "Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social) 08.01.2026 8C_658/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:02:18+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-658-2025_2026-01-08.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "796a498484b42749fd96745d6bdf065d88efaccb28ebe0dad9b70d40e63cff6d"
+  }
+}

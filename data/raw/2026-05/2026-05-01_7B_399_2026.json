@@ -1,0 +1,56 @@
+{
+  "id": "7B_399_2026",
+  "case_id": "7B_399/2026",
+  "case_ids": [
+    "7B_399/2026"
+  ],
+  "decision_date": "2026-05-01",
+  "publication_date": null,
+  "department": "II. Strafrechtliche Abteilung",
+  "division": "II. Strafrechtliche Abteilung",
+  "subject": "Entschädigung der amtlichen Verteidigung; Rückzug",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://01-05-2026-7B_399-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n7B_399/2026\nVerfügung vom 1. Mai 2026\nII. strafrechtliche Abteilung\nBesetzung\nBundesrichterin Koch, als Einzelrichterin,\nGerichtsschreiber Clément.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführerin,\ngegen\nSicherheitsdirektion des Kantons Bern (SID), Kramgasse 20, 3011 Bern,\nBeschwerdegegnerin.\nGegenstand\nEntschädigung der amtlichen Verteidigung; Rückzug,\nBeschwerde gegen den Beschluss des Obergerichts des Kantons Bern, 2. Strafkammer, vom 23. Februar 2026 (SK 25 422).\nErwägungen:\n1.\nDie Beschwerde in Strafsachen vom 24. März 2026 gegen den Beschluss des Obergerichts des Kantons Bern vom 23. Februar 2026 betreffend die amtliche Entschädigung von Rechtsanwältin A.________ wurde mit Eingabe vom 27. April 2026 zurückgezogen. Sie ist damit als gegenstandslos geworden vom Geschäftsverzeichnis abzuschreiben (Art. 32 Abs. 2 BGG).\n2.\nDie Gerichtskosten sind auf Fr. 300.-- festzusetzen.\nDemnach verfügt die Einzelrichterin:\n1.\nDas Verfahren wird zufolge Rückzugs der Beschwerde abgeschrieben.\n2.\nDie Gerichtskosten von Fr. 300.-- werden der Beschwerdeführerin auferlegt.\n3.\nDiese Verfügung wird den Parteien, dem Obergericht des Kantons Bern, 2. Strafkammer, und der Generalstaatsanwaltschaft des Kantons Bern schriftlich mitgeteilt.\nLausanne, 1. Mai 2026\nIm Namen der II. strafrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Einzelrichterin: Koch\nDer Gerichtsschreiber: Clément",
+  "operator_metadata": {
+    "date": "2026-05-01",
+    "reference": [
+      "7B_399/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-399-2026_2026-05-01.html",
+      "source": "446973/45/2834",
+      "content_length": 1783
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit pénal"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_007"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_007_7B-399-2026_2026-05-01",
+    "title": {
+      "de": "Bundesgericht II. Strafrechtliche Abteilung 01.05.2026 7B_399/2026",
+      "it": "Tribunale federale II Corte di diritto penale 01.05.2026 7B_399/2026",
+      "fr": "Tribunal fédéral IIe Cour de droit pénal 01.05.2026 7B_399/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:36:22+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-399-2026_2026-05-01.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "039a94ce11d1e3b6c824ed53545ef23c03f29a16e3e6190923174bcb81be3a7e"
+  }
+}

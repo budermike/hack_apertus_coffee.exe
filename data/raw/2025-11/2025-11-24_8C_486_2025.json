@@ -1,0 +1,56 @@
+{
+  "id": "8C_486_2025",
+  "case_id": "8C_486/2025",
+  "case_ids": [
+    "8C_486/2025"
+  ],
+  "decision_date": "2025-11-24",
+  "publication_date": null,
+  "department": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "division": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "subject": "Arbeitslosenversicherung (Prozessvoraussetzung)",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://24-11-2025-8C_486-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n8C_486/2025\nUrteil vom 24. November 2025\nIV. öffentlich-rechtliche Abteilung\nBesetzung\nBundesrichterin Viscione, Präsidentin,\nGerichtsschreiber Grünvogel.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nArbeitslosenkasse des Kantons Thurgau,\nMultiplex 1, Langfeldstrasse 53A, 8510 Frauenfeld,\nBeschwerdegegnerin.\nGegenstand\nArbeitslosenversicherung (Prozessvoraussetzung),\nBeschwerde gegen den Entscheid des Verwaltungsgerichts des Kantons Thurgau vom 23. Juli 2025 (VV.2025.66/E).\nNach Einsicht\nin die Beschwerde vom 2. September 2025 (Poststempel) gegen den Entscheid des Verwaltungsgerichts des Kantons Thurgau vom 23. Juli 2025,\nin die gemäss postamtlicher Bescheinigung am 3. November 2024 erfolglos zugestellte und mit dem Vermerk \"nicht abgeholt\" retournierte Verfügung vom 31. Oktober 2025, mit welcher A.________ zur Bezahlung eines Kostenvorschusses innert einer Nachfrist bis zum 11. November 2025 verpflichtet wurde, ansonsten auf das Rechtsmittel nicht eingetreten werde,\nin Erwägung,\ndass eine gegen Unterschrift des Adressaten oder der Adressatin überbrachte Mitteilung als spätestes am siebten Tag nach dem ersten erfolglosen Zustellungsversuch als eröffnet gilt (Art. 44 Abs. 2 BGG),\ndass daher die vom Beschwerdeführer nicht abgeholte Verfügung vom 31. Oktober 2025 als am 10. November 2024 zugestellt gilt (zur prozessualen Pflicht, dafür zu sorgen, dass behördliche Akten während des Prozessrechtsverhältnisses zugestellt werden können, siehe BGE 130 III 396 E. 1.2.3),\ndass der Beschwerdeführer den Vorschuss auch innerhalb der Nachfrist nicht geleistet hat,\ndass deshalb gestützt auf Art. 62 Abs. 3 BGG im vereinfachten Verfahren nach Art. 108 Abs. 1 lit. a BGG auf die Beschwerde nicht einzutreten ist und der Beschwerdeführer nach Art. 66 Abs. 1 und 3 BGG kostenpflichtig wird,\nerkennt die Präsidentin:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 200.- werden dem Beschwerdeführer auferlegt.\n3.\nDieses Urteil wird den Parteien, dem Verwaltungsgericht des Kantons Thurgau und dem Staatssekretariat für Wirtschaft (SECO) schriftlich mitgeteilt.\nLuzern, 24. November 2025\nIm Namen der IV. öffentlich-rechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Präsidentin: Viscione\nDer Gerichtsschreiber: Grünvogel",
+  "operator_metadata": {
+    "date": "2025-11-24",
+    "reference": [
+      "8C_486/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-486-2025_2025-11-24.html",
+      "source": "446973/45/2851",
+      "content_length": 2673
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+      "it": "Confederazione Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale)",
+      "fr": "Conféderation Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social)"
+    },
+    "scrapedate": "2026-06-18",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_008"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2851",
+    "id": "CH_BGer_008_8C-486-2025_2025-11-24",
+    "title": {
+      "de": "Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung) 24.11.2025 8C_486/2025",
+      "it": "Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale) 24.11.2025 8C_486/2025",
+      "fr": "Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social) 24.11.2025 8C_486/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:38:07+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-486-2025_2025-11-24.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "1b4cadfad9fd34c2ced63882bdca3218e2b74d5d07f3ed10d6e0d0c56d266fd6"
+  }
+}

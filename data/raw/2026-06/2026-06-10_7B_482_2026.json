@@ -1,0 +1,56 @@
+{
+  "id": "7B_482_2026",
+  "case_id": "7B_482/2026",
+  "case_ids": [
+    "7B_482/2026"
+  ],
+  "decision_date": "2026-06-10",
+  "publication_date": null,
+  "department": "II. Strafrechtliche Abteilung",
+  "division": "II. Strafrechtliche Abteilung",
+  "subject": "Einstellung; Nichteintreten",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://10-06-2026-7B_482-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n7B_482/2026\nUrteil vom 10. Juni 2026\nII. strafrechtliche Abteilung\nBesetzung\nBundesrichterin Koch, als Einzelrichterin,\nGerichtsschreiber Stadler.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführerin,\ngegen\nStatthalteramt des Bezirks Uster,\nAmtsstrasse 3, 8610 Uster,\nBeschwerdegegner.\nGegenstand\nEinstellung; Nichteintreten,\nBeschwerde gegen die Verfügung des Obergerichts des Kantons Zürich, III. Strafkammer, vom 30. Januar 2026 (UE250507-O/U/GRO).\nErwägungen:\n1.\nAm 26. November 2025 stellte das Statthalteramt des Bezirks Uster eine Strafuntersuchung gegen B.________ betreffend Tätlichkeiten ein. Dagegen erhob A.________ (nachfolgend: die Beschwerdeführerin) Beschwerde. Mit Verfügung vom 15. Dezember 2025 forderte das Obergericht des Kantons Zürich die Beschwerdeführerin auf, innert 10 Tagen zur Deckung der allfällig sie treffenden Prozesskosten eine Prozesskaution zu leisten, unter der Androhung, dass ansonsten auf die Beschwerde nicht eingetreten werde. Die Beschwerdeführerin holte diese Verfügung, welche am 6. Januar 2026 zur Abholung gemeldet wurde, nicht ab. Nachdem innert der angesetzten Frist und auch danach weder eine Prozesskaution noch eine weitere Eingabe der Beschwerdeführerin eingegangen war, trat das Obergericht mit Verfügung vom 30. Januar 2026 auf die Beschwerde nicht ein.\nDie Beschwerdeführerin gelangt ans Bundesgericht.\n2.\nDie Eingaben der Beschwerdeführerin erfüllen offensichtlich nicht die Anforderungen an die Begründung einer Beschwerde an das Bundesgericht (Art. 42 Abs. 2 und Art. 106 Abs. 2 BGG; BGE 148 IV 356 E. 2.1, 39 E. 2.3.5; 142 III 364 E. 2.4). Eine inhaltliche Auseinandersetzung mit dem angefochtenen Entscheid fehlt gänzlich: Die Beschwerdeführerin legt nicht dar, inwiefern die Vorinstanz bei ihren tatsächlichen Feststellungen in Willkür verfallen wäre und/oder beim von ihr festgestellten Sachverhalt gegen das Recht verstossen hätte. Auf die Beschwerde ist somit mangels hinreichender Begründung im vereinfachten Verfahren nicht einzutreten (Art. 108 Abs. 1 lit. b BGG). Die Begründung des Entscheids beschränkt sich auf eine kurze Angabe des Unzulässigkeitsgrundes (Art. 108 Abs. 3 BGG).\n3.\nDie Beschwerdeführerin ist kostenpflichtig (Art. 66 Abs. 1 BGG).\nDemnach erkennt die Einzelrichterin:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 500.-- werden der Beschwerdeführerin auferlegt.\n3.\nDieses Urteil wird den Parteien und dem Obergericht des Kantons Zürich, III. Strafkammer, schriftlich mitgeteilt.\nLausanne, 10. Juni 2026\nIm Namen der II. strafrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Einzelrichterin: Koch\nDer Gerichtsschreiber: Stadler",
+  "operator_metadata": {
+    "date": "2026-06-10",
+    "reference": [
+      "7B_482/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-482-2026_2026-06-10.html",
+      "source": "446973/45/2834",
+      "content_length": 3064
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit pénal"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_007"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_007_7B-482-2026_2026-06-10",
+    "title": {
+      "de": "Bundesgericht II. Strafrechtliche Abteilung 10.06.2026 7B_482/2026",
+      "it": "Tribunale federale II Corte di diritto penale 10.06.2026 7B_482/2026",
+      "fr": "Tribunal fédéral IIe Cour de droit pénal 10.06.2026 7B_482/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:45:32+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-482-2026_2026-06-10.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "bee06a582c1669ac8a9ce2851a8d486e59f0f86c001e48670d27bbbfad0d1807"
+  }
+}

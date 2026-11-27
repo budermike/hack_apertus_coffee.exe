@@ -10,7 +10,7 @@ import numpy as np
 
 from hack_apertus_coffee_exe.crawl import vectordb
 from hack_apertus_coffee_exe.embed import chunk_judgement, l2_normalize
-from triage.embeddings import TfidfEmbedder
+from hack_apertus_coffee_exe.triage.embeddings import TfidfEmbedder
 
 
 def _sample_tfidf() -> TfidfEmbedder:
@@ -215,6 +215,28 @@ def test_fulltext_search_fts5_and_filtered_semantic_search(tmp_path):
         top_k=3,
     )
     assert [r["case_id"] for r in fr_refs] == ["8C_2/2025"]
+
+
+def test_fts_is_separate_from_metadata_and_rebuildable_from_raw(tmp_path):
+    raw_dir = tmp_path / "raw"
+    db_dir = tmp_path / "db"
+    emb = _DummyDenseEmbedder()
+    r1 = _make_record("8C_1/2025", "2025-11-10", "Unfallversicherung nach Art. 6 Abs. 2 UVG und Suva.")
+    r2 = _make_record("4A_9/2026", "2026-06-18", "Mietvertrag Kündigung nach OR.", subject="Mietrecht")
+    _write_raw(raw_dir, r1)
+    _write_raw(raw_dir, r2)
+
+    db = vectordb.VectorDB(db_dir=db_dir, embedder=emb)
+    db.ingest_records([r1, r2])
+    assert (db_dir / "fts.sqlite3").exists()
+    assert [h["case_id"] for h in db.fulltext_search("Art. 6 UVG")] == ["8C_1/2025"]
+
+    # Delete fts.sqlite3 + sidecars and verify rebuild_fts_index restores FTS5 cleanly:
+    for p in db_dir.glob("fts.sqlite3*"):
+        p.unlink()
+    rebuilt = db.rebuild_fts_index(raw_dir)
+    assert rebuilt == 2
+    assert [h["case_id"] for h in db.fulltext_search("Art. 6 UVG")] == ["8C_1/2025"]
 
 
 def test_long_judgement_chunks_point_back_to_parent_case_in_similarity_search(tmp_path):

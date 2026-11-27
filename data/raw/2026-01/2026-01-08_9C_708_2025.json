@@ -1,0 +1,56 @@
+{
+  "id": "9C_708_2025",
+  "case_id": "9C_708/2025",
+  "case_ids": [
+    "9C_708/2025"
+  ],
+  "decision_date": "2026-01-08",
+  "publication_date": null,
+  "department": "IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung)",
+  "division": "IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung)",
+  "subject": "Liegenschaftssteuer des Kantons Bern, Steuerperiode 2024",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://08-01-2026-9C_708-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n9C_708/2025\nUrteil vom 8. Januar 2026\nIII. öffentlich-rechtliche Abteilung\nBesetzung\nBundesrichterin Moser-Szeless, Präsidentin,\nGerichtsschreiberin Keel Baumann.\nVerfahrensbeteiligte\nA.A.________ und B.A.________,\nBeschwerdeführer,\ngegen\nEinwohnergemeinde Diemtigen, Diemtigtalstrasse 15, 3753 Oey,\nBeschwerdegegnerin.\nGegenstand\nLiegenschaftssteuer des Kantons Bern, Steuerperiode 2024,\nBeschwerde gegen das Urteil des Verwaltungsgerichts des Kantons Bern, Verwaltungsrechtliche Abteilung, vom 10. November 2025 (100.2025.347).\nNach Einsicht\nin die Beschwerde vom 17. Dezember 2025 (Poststempel) gegen das Nichteintretensurteil des Verwaltungsgerichts des Kantons Bern, Verwaltungsrechtliche Abteilung, vom 10. November 2025,\nin Erwägung,\ndass ein Rechtsmittel gemäss Art. 42 Abs. 1 und 2 BGG unter anderem die Begehren und deren Begründung zu enthalten hat, wobei in der Begründung in gedrängter Form darzulegen ist, inwiefern der angefochtene Akt Recht verletzt,\ndass nach der Rechtsprechung eine Beschwerdeschrift, welche sich bei Nichteintretensentscheiden lediglich mit der materiellen Seite des Falles auseinandersetzt, keine sachbezogene Begründung aufweist und damit keine rechtsgenügliche Beschwerde darstellt (vgl. BGE 123 V 335; Urteil 9C_514/2024 vom 3. Dezember 2024 E. 2),\ndass die Vorinstanz auf die der Post am 21. Oktober 2025 übergebene Beschwerde gegen den Entscheid der Steuerrekurskommission des Kantons Bern vom 10. September 2025, welcher den Beschwerdeführern am 16. September 2025 zugestellt worden war, nicht eintrat mit der Begründung, diese sei erst nach Ablauf der Rechtsmittelfrist (d.h. nach dem 16. Oktober 2025) und damit verspätet eingereicht worden,\ndass die Beschwerdeführer sich letztinstanzlich auch nicht ansatzweise zu den Gründen äussern, die zum vorinstanzlichen Nichteintreten geführt haben, sondern lediglich zu materiellen Fragen Stellung nehmen, was nicht genügt,\ndass deshalb im vereinfachten Verfahren nach Art. 108 Abs. 1 lit. b BGG auf die Beschwerde nicht einzutreten ist und die Beschwerdeführer nach Art. 66 Abs. 1 und 3 BGG kostenpflichtig werden,\nerkennt die Präsidentin:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 1'000.- werden den Beschwerdeführern auferlegt.\n3.\nDieses Urteil wird den Parteien, dem Verwaltungsgericht des Kantons Bern, Verwaltungsrechtliche Abteilung, und der Steuerverwaltung des Kantons Bern schriftlich mitgeteilt.\nLuzern, 8. Januar 2026\nIm Namen der III. öffentlich-rechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Präsidentin: Moser-Szeless\nDie Gerichtsschreiberin: Keel Baumann",
+  "operator_metadata": {
+    "date": "2026-01-08",
+    "reference": [
+      "9C_708/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_009_9C-708-2025_2026-01-08.html",
+      "source": "446973/45/2834",
+      "content_length": 3000
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung)",
+      "it": "Confederazione Tribunale federale IV Corte di diritto pubblico (II Corte di diritto sociale)",
+      "fr": "Conféderation Tribunal fédéral IVe Cour de droit public (IIe Cour de droit social)"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_009"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_009_9C-708-2025_2026-01-08",
+    "title": {
+      "de": "Bundesgericht IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung) 08.01.2026 9C_708/2025",
+      "it": "Tribunale federale IV Corte di diritto pubblico (II Corte di diritto sociale) 08.01.2026 9C_708/2025",
+      "fr": "Tribunal fédéral IVe Cour de droit public (IIe Cour de droit social) 08.01.2026 9C_708/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:02:23+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_009_9C-708-2025_2026-01-08.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "ae83025e6f1caed4ffdb1fd22c6393e2d08ab5dcc1b53bf85762849e4dc94f28"
+  }
+}

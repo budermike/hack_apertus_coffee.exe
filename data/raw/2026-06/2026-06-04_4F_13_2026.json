@@ -1,0 +1,56 @@
+{
+  "id": "4F_13_2026",
+  "case_id": "4F_13/2026",
+  "case_ids": [
+    "4F_13/2026"
+  ],
+  "decision_date": "2026-06-04",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "mainlevée; demande de révision",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://04-06-2026-4F_13-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4F_13/2026\nArrêt du 4 juin 2026\nIre Cour de droit civil\nComposition\nMM. et Mme les Juges fédéraux\nHurni, Président, Kiss et Rüedi.\nGreffier : M. Botteron.\nParticipants à la procédure\nA.________,\nrequérante,\ncontre\nB.________ SARL,\nreprésentée par Me Rayan Houdrouge, avocat,\nintimée,\nCour de justice du canton de Genève, Chambre civile, place du Bourg-de-Four 1, 1204 Genève.\nObjet\nmainlevée; demande de révision,\ndemande de révision de l'arrêt du Tribunal fédéral suisse du 22 avril 2026\n(4A_658/2025 [arrêt C/21080/2025, ACJC/1748/2025]).\nConsidérant en fait et en droit :\n1.\nPar arrêt 4A_658/2025 du 22 avril 2026, la Ire Cour de droit civil du Tribunal fédéral a déclaré irrecevable, selon la procédure simplifiée prévue par l'art. 108 al. 1 LTF, le recours interjeté par A.________ (ci-après: la requérante) contre l'arrêt de la Chambre civile de la Cour de justice du canton de Genève du 4 décembre 2025 rejetant sa requête de mainlevée.\nLe 6 mai 2026, la requérante a formé une demande de révision de l'arrêt 4A_658/2025.\nDes déterminations n'ont pas été demandées.\n2.\nSelon l'art. 61 LTF, les arrêts du Tribunal fédéral entrent en force dès leur prononcé. Cela signifie qu'il n'existe pas de voie de recours ou d'opposition à leur encontre. Seule est envisageable une demande de révision pour les motifs énumérés aux art. 121 à 123 LTF. La demande de révision est soumise aux exigences de motivation découlant de l'art. 42 al. 1 et 2 LTF (arrêts 5F_14/2016 du 14 mars 2017 consid. 1.1; 2F_13/2014 du 14 août 2014 consid. 4; 2F_4/2014 du 20 mars 2014 consid. 2.1).\nEn l'espèce, la requérante n'entreprend pas de démontrer que l'arrêt entrepris présente un quelconque motif de révision. Elle ne satisfait ainsi pas aux exigences de motivation de l'art. 42 al. 2 LTF, ce qui conduit à l'irrecevabilité de sa demande.\n3.\nAu vu de ce qui précède, la demande de révision est irrecevable. La requérante supportera les frais judiciaires, arrêtés à 1'000 fr. (art. 66 al. 1 LTF). L'intimée n'ayant pas été invitée à se déterminer sur la demande de révision, il ne lui sera pas alloué de dépens (art. 68 al. 1 et 2 LTF).\npar ces motifs, le Tribunal fédéral prononce :\n1.\nLa demande de révision est irrecevable.\n2.\nLes frais judiciaires, arrêtés à 1'000 fr., sont mis à la charge de la requérante.\n3.\nIl n'est pas alloué de dépens.\n4.\nLe présent arrêt est communiqué aux parties et à la Chambre civile de la Cour de justice du canton de Genève.\nLausanne, le 4 juin 2026\nAu nom de la Ire Cour de droit civil\ndu Tribunal fédéral suisse\nLe Président : Hurni\nLe Greffier : Botteron",
+  "operator_metadata": {
+    "date": "2026-06-04",
+    "reference": [
+      "4F_13/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4F-13-2026_2026-06-04.html",
+      "source": "446973/45/2829",
+      "content_length": 3012
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_004_4F-13-2026_2026-06-04",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 04.06.2026 4F_13/2026",
+      "it": "Tribunale federale I Corte di diritto civile 04.06.2026 4F_13/2026",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 04.06.2026 4F_13/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:43:52+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4F-13-2026_2026-06-04.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "49ec9f41e1c0c6415ad399cf1240d37ec3919a55c4026d2ed42045bc5865d4f6"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "id": "4D_233_2025",
+  "case_id": "4D_233/2025",
+  "case_ids": [
+    "4D_233/2025"
+  ],
+  "decision_date": "2025-12-11",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "Provisorische Rechtsöffnung",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://11-12-2025-4D_233-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4D_233/2025\nUrteil vom 11. Dezember 2025\nI. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Hurni, Präsident,\nGerichtsschreiber Tanner.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nB.________ AG,\nBeschwerdegegnerin.\nGegenstand\nProvisorische Rechtsöffnung,\nBeschwerde gegen den Beschluss des Obergerichts des Kantons Zürich, I. Zivilkammer, vom 23. Oktober 2025 (RT250075-O/U).\nErwägungen:\n1.\nMit Urteil vom 22. April 2025 wies das Einzelgericht Audienz am Bezirksgericht Zürich das Gesuch der Beschwerdegegnerin um Erteilung der provisorischen Rechtsöffnung ab.\nGegen dieses Urteil erhob die Beschwerdegegnerin am 30. April 2025 Beschwerde an das Obergericht des Kantons Zürich. Mit Beschluss vom 23. Oktober 2025 hob das Obergericht dieses Urteil auf und wies die Sache zur Fortsetzung des Verfahrens und zu neuer Entscheidung im Sinne seiner Erwägungen an das Bezirksgericht zurück.\nDagegen erhob der Beschwerdeführer am 25. November 2025 Beschwerde an das Bundesgericht.\n2.\nDiese Eingabe erfüllt die Begründungsanforderungen, die an eine Beschwerde an das Bundesgericht gestellt werden (Art. 42 Abs. 2 und Art. 106 Abs. 2 BGG; BGE 142 III 364 E. 2.4; 140 III 86 E. 2, 115 E. 2), offensichtlich nicht. Auf die Beschwerde ist somit mangels hinreichender Begründung im vereinfachten Verfahren durch den Abteilungspräsidenten nicht einzutreten (Art. 108 Abs. 1 lit. b BGG). Die Begründung dieses Entscheids beschränkt sich auf eine kurze Angabe des Unzulässigkeitsgrundes (Art. 108 Abs. 3 BGG).\n3.\nDer Beschwerdeführer wird bei diesem Verfahrensausgang kostenpflichtig (Art. 66 Abs. 1 BGG). Die Beschwerdegegnerin hat keinen Anspruch auf eine Parteientschädigung, da ihr mangels Einholung einer Vernehmlassung aus dem bundesgerichtlichen Verfahren kein entschädigungspflichtiger Aufwand erwachsen ist (Art. 68 Abs. 2 BGG).\nDemnach erkennt das Bundesgericht:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 800.-- werden dem Beschwerdeführer auferlegt.\n3.\nEs wird keine Parteientschädigung zugesprochen.\n4.\nDieses Urteil wird den Parteien und dem Obergericht des Kantons Zürich, I. Zivilkammer, schriftlich mitgeteilt.\nLausanne, 11. Dezember 2025\nIm Namen der I. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Hurni\nDer Gerichtsschreiber: Tanner",
+  "operator_metadata": {
+    "date": "2025-12-11",
+    "reference": [
+      "4D_233/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-233-2025_2025-12-11.html",
+      "source": "446973/45/2869",
+      "content_length": 2740
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-06-18",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2869",
+    "id": "CH_BGer_004_4D-233-2025_2025-12-11",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 11.12.2025 4D_233/2025",
+      "it": "Tribunale federale I Corte di diritto civile 11.12.2025 4D_233/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 11.12.2025 4D_233/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:42:59+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-233-2025_2025-12-11.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "bc2000a136901c380895a4556b4bb4ad66b8be693064f47e282c0ae9f95ed5e1"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "id": "8C_62_2026",
+  "case_id": "8C_62/2026",
+  "case_ids": [
+    "8C_62/2026"
+  ],
+  "decision_date": "2026-06-09",
+  "publication_date": null,
+  "department": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "division": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "subject": "Unfallversicherung",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://09-06-2026-8C_62-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n8C_62/2026\nUrteil vom 9. Juni 2026\nIV. öffentlich-rechtliche Abteilung\nBesetzung\nBundesrichterin Scherrer Reber, als Einzelrichterin,\nGerichtsschreiber Nabold.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nSchweizerische Unfallversicherungsanstalt (Suva), Rechtsabteilung, Fluhmattstrasse 1, 6002 Luzern,\nBeschwerdegegnerin.\nGegenstand\nUnfallversicherung,\nBeschwerde gegen das Urteil des Sozialversicherungsgerichts des Kantons Zürich vom 2. Dezember 2025 (UV.2024.00159).\nNach Einsicht\nin die Beschwerde vom 21. Januar 2026 gegen das Urteil des Sozialversicherungsgerichts des Kantons Zürich vom 2. Dezember 2025,\nin die Verfügung vom 24. März 2026, mit welcher das Gesuch um unentgeltliche Rechtspflege abgewiesen und A.________ zur Leistung eines Kostenverschusses innert 14 Tagen seit Empfang der Verfügung verpflichtet wurde,\nin die Verfügung vom 4. Mai 2026, mit welcher A.________ zur Bezahlung eines Kostenvorschusses innert einer Nachfrist bis zum 22. Mai 2026 verpflichtet wurde, ansonsten auf das Rechtsmittel nicht eingetreten werde,\nin Erwägung,\ndass der Beschwerdeführer den Vorschuss auch innerhalb der Nachfrist nicht geleistet hat,\ndass deshalb gestützt auf Art. 62 Abs. 3 BGG im vereinfachten Verfahren nach Art. 108 Abs. 1 lit. a und Abs. 2 BGG auf die Beschwerde nicht einzutreten ist und in Anwendung von Art. 66 Abs. 1 Satz 2 BGG auf die Erhebung von Gerichtskosten verzichtet wird,\nerkennt die Einzelrichterin:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nEs werden keine Gerichtskosten erhoben.\n3.\nDieses Urteil wird den Parteien, dem Sozialversicherungsgericht des Kantons Zürich und dem Bundesamt für Gesundheit schriftlich mitgeteilt.\nLuzern, 9. Juni 2026\nIm Namen der IV. öffentlich-rechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Einzelrichterin: Scherrer Reber\nDer Gerichtsschreiber: Nabold",
+  "operator_metadata": {
+    "date": "2026-06-09",
+    "reference": [
+      "8C_62/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-62-2026_2026-06-09.html",
+      "source": "446973/45/2834",
+      "content_length": 2240
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+      "it": "Confederazione Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale)",
+      "fr": "Conféderation Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social)"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_008"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_008_8C-62-2026_2026-06-09",
+    "title": {
+      "de": "Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung) 09.06.2026 8C_62/2026",
+      "it": "Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale) 09.06.2026 8C_62/2026",
+      "fr": "Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social) 09.06.2026 8C_62/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:45:15+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-62-2026_2026-06-09.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "416a0ca9d0b9e6033de2f5cdc085f59df2f8cfd6aeed4fc1c8264b81941e8b09"
+  }
+}

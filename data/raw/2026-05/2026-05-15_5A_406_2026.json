@@ -1,0 +1,56 @@
+{
+  "id": "5A_406_2026",
+  "case_id": "5A_406/2026",
+  "case_ids": [
+    "5A_406/2026"
+  ],
+  "decision_date": "2026-05-15",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "commination de faillite",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://15-05-2026-5A_406-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5A_406/2026\nArrêt du 15 mai 2026\nIIe Cour de droit civil\nComposition\nM. le Juge fédéral Bovey, Président.\nGreffière : Mme Mairot.\nParticipants à la procédure\nA.________ Sàrl,\nrecourante,\ncontre\nOffice des poursuites et faillites de Porrentruy, rue A. Cuenin 15, 2900 Porrentruy.\nObjet\ncommination de faillite,\nrecours contre l'arrêt de la Cour des poursuites et faillites du Tribunal cantonal du canton du Jura du 21 avril 2026 (CPF 2 / 2026).\nVu :\nl'arrêt rendu le 21 avril 2026 par la Cour des poursuites et faillites du Tribunal cantonal du canton du Jura, rejetant, dans la mesure de sa recevabilité, la plainte formée par A.________ Sàrl relativement aux comminations de faillite notifiées dans deux poursuites dirigées à son encontre;\nl'\" opposition \" (\" Einsprache \") à cet arrêt formée au Tribunal fédéral le 10 mai 2026 par la poursuivie;\nConsidérant :\nque l'écriture de la recourante est traitée en tant que recours en matière civile au sens de l'art. 72 al. 2 let. a LTF;\nqu'ayant pour objet une décision prise par une autorité de surveillance en matière de poursuite pour dettes et de faillite, le délai de recours est de dix jours (art. 100 al. 2 let. a LTF), comme l'indique correctement l'arrêt déféré;\nque, en l'espèce, il ressort du suivi des envois de la Poste Suisse que la décision attaquée a été notifiée à la recourante le 24 avril 2026;\nque le délai a ainsi commencé à courir le lendemain (art. 44 al. 1 LTF), même si ce jour était un samedi (FRÉSARD, in Commentaire de la LTF, 3e éd. 2022, n° 8 ad art. 44 LTF), pour expirer le 4 mai 2026;\nque, remis à la poste le 10 mai 2026 (date du sceau postal), le recours est dès lors manifestement tardif, partant irrecevable;\nqu'en conséquence, le recours doit être déclaré irrecevable par voie de procédure simplifiée (art. 108 al. 1 let. a LTF), aux frais de la recourante;\nque la demande de suspension de l'affaire jusqu'à reddition de l'arrêt du Tribunal fédéral devient ainsi sans objet;\nPar ces motifs, le Président prononce :\n1.\nLe recours est irrecevable.\n2.\nLes frais judiciaires, arrêtés à 200 fr., sont mis à la charge de la recourante.\n3.\nLe présent arrêt est communiqué à la recourante, à l'Office des poursuites et faillites de Porrentruy et à la Cour des poursuites et faillites du Tribunal cantonal du canton du Jura.\nLausanne, le 15 mai 2026\nAu nom de la IIe Cour de droit civil\ndu Tribunal fédéral suisse\nLe Président : Bovey\nLa Greffière : Mairot",
+  "operator_metadata": {
+    "date": "2026-05-15",
+    "reference": [
+      "5A_406/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-406-2026_2026-05-15.html",
+      "source": "446973/45/2830",
+      "content_length": 2830
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2830",
+    "id": "CH_BGer_005_5A-406-2026_2026-05-15",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 15.05.2026 5A_406/2026",
+      "it": "Tribunale federale II Corte di diritto civile 15.05.2026 5A_406/2026",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 15.05.2026 5A_406/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:39:07+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-406-2026_2026-05-15.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "a686011555cbcbf0265c21768dd7c96a75f840ad715894120cab671d1bf81b0b"
+  }
+}

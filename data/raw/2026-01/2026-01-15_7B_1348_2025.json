@@ -1,0 +1,56 @@
+{
+  "id": "7B_1348_2025",
+  "case_id": "7B_1348/2025",
+  "case_ids": [
+    "7B_1348/2025"
+  ],
+  "decision_date": "2026-01-15",
+  "publication_date": null,
+  "department": "II. Strafrechtliche Abteilung",
+  "division": "II. Strafrechtliche Abteilung",
+  "subject": "Conditions de détention; irrecevabilité du recours en matière pénale",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://15-01-2026-7B_1348-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n7B_1348/2025\nArrêt du 15 janvier 2026\nIIe Cour de droit pénal\nComposition\nM. le Juge fédéral\nAbrecht, Président.\nGreffière : Mme Paris.\nParticipants à la procédure\nA.________,\nrecourant,\ncontre\nMinistère public central du canton de Vaud, avenue de Longemalle 1, 1020 Renens,\nintimé.\nObjet\nConditions de détention; irrecevabilité du recours en matière pénale,\nrecours contre l'arrêt de la Chambre des recours pénale du Tribunal cantonal du canton de Vaud, du 18 novembre 2025 (n° 889 - AP.25.024391).\nFaits :\nA.\nPar acte du 10 décembre 2025, A.________ a adressé au Tribunal fédéral un recours contre l'arrêt de la Chambre des recours pénale du Tribunal cantonal vaudois du 18 novembre 2025.\nB.\nPar ordonnance du 11 décembre 2025, la Chancellerie de la IIe Cour de droit pénal du Tribunal fédéral a, par ordre du Président, imparti à l'intéressé un délai au 7 janvier 2026 pour produire l'arrêt attaqué et remédier ainsi à l'irrégularité relevée, faute de quoi son mémoire ne serait pas pris en considération. A.________ n'a pas produit l'arrêt attaqué.\nIl n'a pas été ordonné d'échange d'écritures.\nConsidérant en droit :\n1.\n1.1. En vertu de l'art. 42 al. 1 LTF, les mémoires doivent être rédigés dans une langue officielle, indiquer les conclusions, les motifs et les moyens de preuve, et être signés. Les pièces invoquées comme moyens de preuve doivent être jointes au mémoire, pour autant qu'elles soient en mains de la partie; il en va de même de la décision attaquée si le mémoire est dirigé contre une décision (art. 42 al. 3 LTF). Si les annexes prescrites font défaut, le Tribunal fédéral impartit un délai approprié à la partie pour remédier à l'irrégularité et l'avertit qu'à défaut, le mémoire ne sera pas pris en considération (art. 42 al. 5 LTF).\n1.2. En l'espèce, le recourant n'a pas produit l'arrêt attaqué dans le délai imparti au 7 janvier 2026. Son mémoire ne peut donc pas être pris en considération.\n2.\nLe recours doit être déclaré manifestement irrecevable selon la procédure simplifiée de l'art. 108 al. 1 let. a LTF.\nIl sera exceptionnellement statué sans frais (art. 66 al. 1 LTF).\nPar ces motifs, le Président prononce :\n1.\nLe recours est irrecevable.\n2.\nIl n'est pas perçu de frais de judiciaires.\n3.\nLe présent arrêt est communiqué aux parties et à la Chambre des recours pénale du Tribunal cantonal du canton de Vaud.\nLausanne, le 15 janvier 2026\nAu nom de la IIe Cour de droit pénal\ndu Tribunal fédéral suisse\nLe Président : Abrecht\nLa Greffière : Paris",
+  "operator_metadata": {
+    "date": "2026-01-15",
+    "reference": [
+      "7B_1348/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-1348-2025_2026-01-15.html",
+      "source": "446973/45/2834",
+      "content_length": 2958
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit pénal"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_007"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_007_7B-1348-2025_2026-01-15",
+    "title": {
+      "de": "Bundesgericht II. Strafrechtliche Abteilung 15.01.2026 7B_1348/2025",
+      "it": "Tribunale federale II Corte di diritto penale 15.01.2026 7B_1348/2025",
+      "fr": "Tribunal fédéral IIe Cour de droit pénal 15.01.2026 7B_1348/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:04:26+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-1348-2025_2026-01-15.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "c732b0f5fc3d38c8736146564598f4b76b6856dd2db35bb4dcac55101c27b187"
+  }
+}

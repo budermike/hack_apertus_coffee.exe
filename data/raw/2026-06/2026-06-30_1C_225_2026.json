@@ -1,0 +1,56 @@
+{
+  "id": "1C_225_2026",
+  "case_id": "1C_225/2026",
+  "case_ids": [
+    "1C_225/2026"
+  ],
+  "decision_date": "2026-06-30",
+  "publication_date": null,
+  "department": "I. Öffentlich-rechtliche Abteilung",
+  "division": "I. Öffentlich-rechtliche Abteilung",
+  "subject": "Baubewilligung / Erschliessung und Überbauung Chrützeralp",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://30-06-2026-1C_225-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n1C_225/2026\nUrteil vom 30. Juni 2026\nI. öffentlich-rechtliche Abteilung\nBesetzung\nBundesrichter Haag, Präsident,\nGerichtsschreiber Baur.\nVerfahrensbeteiligte\nA.________ AG,\nBeschwerdeführerin,\nvertreten durch Rechtsanwalt Rolf Müller,\ngegen\nBaukommission der Einwohnergemeinde Trimbach, Baslerstrasse 122, 4632 Trimbach,\nvertreten durch Rechtsanwalt Christian Rudolf von Rohr,\nBau- und Justizdepartement des Kantons Solothurn, Rötihof, Werkhofstrasse 65, 4509 Solothurn.\nGegenstand\nBaubewilligung / Erschliessung und Überbauung Chrützeralp,\nBeschwerde gegen das Urteil des Verwaltungsgerichts des Kantons Solothurn vom 9. März 2026 (VWBES.2024.227).\nErwägungen:\n1.\nDie A.________ AG erhob am 27. April 2026 beim Bundesgericht Beschwerde in öffentlich-rechtlichen Angelegenheiten gegen das Urteil des Verwaltungsgerichts des Kantons Solothurn vom 9. März 2026 betreffend Baubewilligung. Mit Verfügung vom 29. April 2026 wurde ihr Frist bis zum 15. Mai 2026 angesetzt, um einen Kostenvorschuss von Fr. 4'000.-- zu leisten (vgl. Art. 62 Abs. 1 BGG). Am gleichen Tag wurde den weiteren Verfahrensbeteiligten jeweils Frist für eine allfällige Vernehmlassung in der Hauptsache sowie eine Stellungnahme zum Gesuch um aufschiebende Wirkung der Beschwerdeführerin angesetzt. Eingaben der weiteren Verfahrensbeteiligten erfolgten am 7., 19. und 29. Mai 2026. Mit Verfügung vom 19. Mai 2026 wurde das Gesuch um aufschiebende Wirkung abgewiesen.\nDie Frist zur Leistung des Kostenvorschusses wurde der Beschwerdeführerin auf ihr Ersuchen hin zunächst mit Verfügung vom 18. Mai 2026 bis zum 26. Mai 2026 und danach mit Verfügung vom 28. Mai 2026 letztmals bis zum 5. Juni 2026 erstreckt. Innert der zweimal erstreckten Frist leistete die Beschwerdeführerin den Kostenvorschuss nicht, weshalb ihr mit Verfügung vom 9. Juni 2026 eine Nachfrist bis zum 22. Juni 2026 zur Zahlung des Kostenvorschusses angesetzt wurde, ansonsten auf die Beschwerde nicht eingetreten werde (Art. 62 Abs. 3 BGG). Auch innert der angesetzten Nachfrist (und bis heute) leistete sie den Kostenvorschuss nicht. Damit ist androhungsgemäss und im vereinfachten Verfahren nach Art. 108 Abs. 1 BGG auf die Beschwerde nicht einzutreten.\n2.\nBei diesem Verfahrensausgang ist die Beschwerdeführerin kostenpflichtig (Art. 66 Abs. 1 BGG). Parteientschädigungen sind keine zuzusprechen (Art. 68 Abs. 3 BGG).\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 1'000.-- werden der Beschwerdeführerin auferlegt.\n3.\nDieses Urteil wird der Beschwerdeführerin, der Baukommission der Einwohnergemeinde Trimbach, dem Bau- und Justizdepartement des Kantons Solothurn sowie dem Verwaltungsgericht des Kantons Solothurn schriftlich mitgeteilt.\nLausanne, 30. Juni 2026\nIm Namen der I. öffentlich-rechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Haag\nDer Gerichtsschreiber: Baur",
+  "operator_metadata": {
+    "date": "2026-06-30",
+    "reference": [
+      "1C_225/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_001_1C-225-2026_2026-06-30.html",
+      "source": "446973/45/2829",
+      "content_length": 3289
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Öffentlich-rechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto pubblico",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit public"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_001"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_001_1C-225-2026_2026-06-30",
+    "title": {
+      "de": "Bundesgericht I. Öffentlich-rechtliche Abteilung 30.06.2026 1C_225/2026",
+      "it": "Tribunale federale I Corte di diritto pubblico 30.06.2026 1C_225/2026",
+      "fr": "Tribunal fédéral Ire Cour de droit public 30.06.2026 1C_225/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:14:38+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_001_1C-225-2026_2026-06-30.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "29fcb996744822ac1682e44e6c9c42aeef965101984f091864f80896500c1911"
+  }
+}

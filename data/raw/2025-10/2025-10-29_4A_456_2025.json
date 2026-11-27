@@ -1,0 +1,56 @@
+{
+  "id": "4A_456_2025",
+  "case_id": "4A_456/2025",
+  "case_ids": [
+    "4A_456/2025"
+  ],
+  "decision_date": "2025-10-29",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "arbitrage international",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://29-10-2025-4A_456-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4A_456/2025\nOrdonnance du 29 octobre 2025\nIre Cour de droit civil\nComposition\nMme la Juge fédérale Kiss, juge présidant.\nGreffier: M. O. Carruzzo.\nParticipants à la procédure\n1. A.________,\n2. B.________,\ntoutes deux représentées par Me Fabien V. Rutz, avocat,\nrecourantes,\ncontre\n1. C.________,\n2. D.________,\nintimées.\nObjet\narbitrage international,\nrecours en matière civile contre la \"sentence partielle\" (\"Partial Award\") rendue le 11 juillet 2025 par une arbitre siégeant à Genève\n(Swiss Arbitration Centre n. 300625/300635-2023).\nLa Juge présidant:\nVu le recours en matière civile formé le 15 septembre 2025 par A.________ et B.________ (ci-après: les recourantes) à l'encontre de la \"sentence partielle\" (\"Partial Award\") rendue le 11 juillet 2025 par une arbitre unique siégeant à Genève sous l'égide du Swiss Arbitration Centre dans le cadre du litige divisant notamment les sociétés précitées d'avec C.________ et D.________ (ci-après: les intimées);\nVu l'ordonnance présidentielle du 25 septembre 2025 invitant les recourantes à verser une avance de frais de 200'000 fr. jusqu'au 10 octobre 2025;\nVu l'ordonnance présidentielle du 13 octobre 2025 prolongeant ledit délai jusqu'au 10 novembre 2025 à la demande des recourantes;\nVu la lettre du 27 octobre 2025 par laquelle le conseil des recourantes informe le Tribunal fédéral que ses mandantes retirent leur recours et concluent à la remise intégrale des frais judiciaires, subsidiairement à leur \"réduction au montant minimal\";\nConsidérant que le juge instructeur statue en qualité de juge unique sur la radiation du rôle des procédures devenues sans objet ou achevées par un retrait ou une transaction judiciaire (art. 32 al. 2 LTF),\nqu'il y a lieu de prendre acte du retrait du recours et de rayer la cause 4A_456/2025 du rôle (art. 32 al. 2 LTF),\nque lorsque la cause est rayée du rôle à la suite du retrait du recours, la partie recourante est réputée avoir succombé au sens de l'art. 66 LTF (ordonnance 4A_3/2019 du 11 avril 2019 et les références citées),\nque la remise intégrale des frais en application de l'art. 66 al. 2 LTF ne se justifie pas en l'espèce,\nque les frais judiciaires peuvent toutefois être réduits afin de tenir compte du fait que la cause est liquidée en raison du retrait du recours,\nqu'en conséquence, des frais judiciaires réduits, fixés à 2'000 fr., seront mis solidairement à la charge des recourantes (art. 66 al. 1, 2 et 5 LTF),\nqu'il n'y a pas lieu d'allouer de dépens, puisque les intimées n'ont pas été invitées à répondre au recours.\nPar ces motifs, la Juge présidant la I re Cour de droit civil ordonne:\n1.\nIl est pris acte du retrait du recours.\n2.\nLa cause 4A_456/2025 est rayée du rôle.\n3.\nLes frais judiciaires, arrêtés à 2'000 fr., sont mis solidairement à la charge des recourantes.\n4.\nLa présente ordonnance est communiquée aux parties et à l'arbitre siégeant à Genève.\nLausanne, le 29 octobre 2025\nAu nom de la Ire Cour de droit civil\ndu Tribunal fédéral suisse\nLe Juge présidant : Kiss\nLe Greffier : O. Carruzzo",
+  "operator_metadata": {
+    "date": "2025-10-29",
+    "reference": [
+      "4A_456/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-456-2025_2025-10-29.html",
+      "source": "446973/45/2869",
+      "content_length": 3407
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-06-18",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2869",
+    "id": "CH_BGer_004_4A-456-2025_2025-10-29",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 29.10.2025 4A_456/2025",
+      "it": "Tribunale federale I Corte di diritto civile 29.10.2025 4A_456/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 29.10.2025 4A_456/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:30:21+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-456-2025_2025-10-29.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "3e4e3ed994308b7b6d1ab14ef10ff05e4220715e5145b230503b8b4b06ba85a6"
+  }
+}

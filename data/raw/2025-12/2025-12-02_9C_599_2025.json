@@ -1,0 +1,56 @@
+{
+  "id": "9C_599_2025",
+  "case_id": "9C_599/2025",
+  "case_ids": [
+    "9C_599/2025"
+  ],
+  "decision_date": "2025-12-02",
+  "publication_date": null,
+  "department": "IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung)",
+  "division": "IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung)",
+  "subject": "Invalidenversicherung",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://02-12-2025-9C_599-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n9C_599/2025\nUrteil vom 2. Dezember 2025\nIII. öffentlich-rechtliche Abteilung\nBesetzung\nBundesrichterin Moser-Szeless, Präsidentin,\nGerichtsschreiberin Keel Baumann.\nVerfahrensbeteiligte\nA.________,\nvertreten durch Rechtsanwalt Bernhard Zollinger,\nBeschwerdeführer,\ngegen\nIV-Stelle des Kantons Zürich, Röntgenstrasse 17, 8005 Zürich,\nBeschwerdegegnerin.\nGegenstand\nInvalidenversicherung,\nBeschwerde gegen das Urteil des Sozialversicherungsgerichts des Kantons Zürich vom 20. August 2025 (IV.2024.00270).\nNach Einsicht\nin die Beschwerde vom 27. Oktober 2025 (Poststempel) gegen das gemäss postamtlicher Bescheinigung am 24. September 2025 an A.________ ausgehändigte Urteil des Sozialversicherungsgerichts des Kantons Zürich vom 20. August 2025,\nin Erwägung,\ndass die Beschwerde nicht innert der nach Art. 100 Abs. 1 BGG 30-tägigen, gemäss Art. 44 - 48 BGG am 24. Oktober 2025 abgelaufenen Rechtsmittelfrist eingereicht worden ist,\ndass deshalb im vereinfachten Verfahren nach Art. 108 Abs. 1 lit. a BGG auf die Beschwerde nicht einzutreten ist und in Anwendung von Art. 66 Abs. 1 Satz 2 BGG auf die Erhebung von Gerichtskosten umständehalber verzichtet wird,\nerkennt die Präsidentin:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nEs werden keine Gerichtskosten erhoben.\n3.\nDieses Urteil wird den Parteien, dem Sozialversicherungsgericht des Kantons Zürich und dem Bundesamt für Sozialversicherungen schriftlich mitgeteilt.\nLuzern, 2. Dezember 2025\nIm Namen der III. öffentlich-rechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Präsidentin: Moser-Szeless\nDie Gerichtsschreiberin: Keel Baumann",
+  "operator_metadata": {
+    "date": "2025-12-02",
+    "reference": [
+      "9C_599/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_009_9C-599-2025_2025-12-02.html",
+      "source": "446973/45/2851",
+      "content_length": 1994
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung)",
+      "it": "Confederazione Tribunale federale IV Corte di diritto pubblico (II Corte di diritto sociale)",
+      "fr": "Conféderation Tribunal fédéral IVe Cour de droit public (IIe Cour de droit social)"
+    },
+    "scrapedate": "2026-06-18",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_009"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2851",
+    "id": "CH_BGer_009_9C-599-2025_2025-12-02",
+    "title": {
+      "de": "Bundesgericht IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung) 02.12.2025 9C_599/2025",
+      "it": "Tribunale federale IV Corte di diritto pubblico (II Corte di diritto sociale) 02.12.2025 9C_599/2025",
+      "fr": "Tribunal fédéral IVe Cour de droit public (IIe Cour de droit social) 02.12.2025 9C_599/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:40:30+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_009_9C-599-2025_2025-12-02.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "f623e4a0380264c02eedaefc2e5134c993e013c0f39d3ec24e56e69515c8fca3"
+  }
+}

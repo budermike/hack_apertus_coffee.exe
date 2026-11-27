@@ -1,0 +1,56 @@
+{
+  "id": "7B_592_2026",
+  "case_id": "7B_592/2026",
+  "case_ids": [
+    "7B_592/2026"
+  ],
+  "decision_date": "2026-06-15",
+  "publication_date": null,
+  "department": "II. Strafrechtliche Abteilung",
+  "division": "II. Strafrechtliche Abteilung",
+  "subject": "Ordonnance de classement (retrait de recours)",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://15-06-2026-7B_592-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n7B_592/2026\nOrdonnance du 15 juin 2026\nIIe Cour de droit pénal\nComposition\nM. le Juge fédéral Abrecht, Président.\nGreffier : M. Fragnière.\nParticipants à la procédure\n1. A.________,\n2. B.________,\ntous les deux représentés par Me Giorgio Campá, avocat,\nrecourants,\ncontre\n1. Ministère public de la République\net canton de Genève,\nroute de Chancy 6B, 1213 Petit-Lancy,\n2. C.________ SA,\nreprésentée par Me Clara Poglia, avocate,\nintimés.\nObjet\nOrdonnance de classement (retrait de recours),\nrecours contre l'arrêt de la Chambre pénale de recours de la Cour de justice de la République et canton de Genève du 30 mars 2026\n(ACPR/331/2026 - P/11842/2017).\nConsidérant en fait et en droit :\n1.\nPar acte du 10 juin 2026, A.________ et B.________ déclarent retirer le recours interjeté dans la cause 7B_592/2026.\nIl y a lieu d'en prendre acte et de rayer la cause du rôle (art. 32 al. 2 LTF).\n2.\nLes recourants, considérés comme les parties succombantes, supporteront - solidairement entre eux (cf. art. 66 al. 5 LTF) - les frais judiciaires, lesquels seront fixés en tenant compte des actes d'instruction effectués jusque-là (art. 5 al. 2 PCF, par renvoi de l'art. 71 LTF; art. 66 al. 1 et 2 LTF).\nPar ces motifs, le Président ordonne :\n1.\nIl est pris acte du retrait du recours et l'affaire 7B_592/2026 est rayée du rôle.\n2.\nLes frais judiciaires, arrêtés à 300 fr., sont mis à la charge des recourants, solidairement entre eux.\n3.\nLa présente ordonnance est communiquée aux parties, à la Chambre pénale de recours de la Cour de justice de la République et canton de Genève, à D.________, à E.________ SA, à F.________ Ltd, à G.________ Ltd, à H.________ Ltd et à I.________.\nLausanne, le 15 juin 2026\nAu nom de la IIe Cour de droit pénal\ndu Tribunal fédéral suisse\nLe Président : Abrecht\nLe Greffier : Fragnière",
+  "operator_metadata": {
+    "date": "2026-06-15",
+    "reference": [
+      "7B_592/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-592-2026_2026-06-15.html",
+      "source": "446973/45/2834",
+      "content_length": 2200
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit pénal"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_007"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_007_7B-592-2026_2026-06-15",
+    "title": {
+      "de": "Bundesgericht II. Strafrechtliche Abteilung 15.06.2026 7B_592/2026",
+      "it": "Tribunale federale II Corte di diritto penale 15.06.2026 7B_592/2026",
+      "fr": "Tribunal fédéral IIe Cour de droit pénal 15.06.2026 7B_592/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:46:36+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-592-2026_2026-06-15.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "025d1f734e8f8c67ac682b0a1dfa7dd85a8e94cc693114c4bc00a358cbe36f52"
+  }
+}

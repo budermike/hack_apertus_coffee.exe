@@ -1,0 +1,56 @@
+{
+  "id": "5A_906_2025",
+  "case_id": "5A_906/2025",
+  "case_ids": [
+    "5A_906/2025"
+  ],
+  "decision_date": "2025-10-23",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "Fürsorgerische Unterbringung",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://23-10-2025-5A_906-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5A_906/2025\nUrteil vom 23. Oktober 2025\nII. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Bovey, Präsident,\nGerichtsschreiber Zingg.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführerin,\ngegen\nKindes- und Erwachsenenschutzbehörde (KESB) Appenzell Ausserrhoden, Gutenberg Zentrum, Kasernenstrasse 4, Postfach 1259, 9102 Herisau.\nGegenstand\nFürsorgerische Unterbringung,\nBeschwerde gegen die Verfügung des Obergerichts Appenzell Ausserrhoden, Einzelrichter, vom 17. Oktober 2025 (ERV 25 59).\nErwägungen:\n1.\nMit Entscheid vom 2. Oktober 2025 verfügte die KESB Appenzell Ausserrhoden unter anderem, dass die Beschwerdeführerin zur Behandlung und Betreuung fürsorgerisch im Alters- und Pflegeheim B.________ auf der geschlossenen Station C.________ untergebracht bleibe.\nDagegen erhob die Beschwerdeführerin, vertreten durch Rechtsanwalt D.________, mit Eingabe vom 6. Oktober 2025 Beschwerde beim Obergericht Appenzell Ausserrhoden. Am 15. Oktober 2025 fand die Anhörung der Beschwerdeführerin im Alters- und Pflegeheim B.________ statt. Dabei teilte sie mit, dass es ihr im Haus B.________ gefalle und sie derzeit nicht entlassen werden wolle. Mit Verfügung vom 17. Oktober 2025 schrieb das Obergericht die Beschwerde als gegenstandslos ab. Es erhob keine Kosten und entschädigte Rechtsanwalt D.________ für seine Bemühungen als unentgeltlicher Rechtsvertreter aus der Staatskasse.\nAm 20. Oktober 2025 hat die Beschwerdeführerin (die sich nicht A.________, sondern E.________ nennt) persönlich Beschwerde an das Bundesgericht erhoben. Sie richtet sich gegen einen Entscheid der KESB vom 17. Oktober 2025.\n2.\nEinen Entscheid der KESB vom 17. Oktober 2025 gibt es nicht. Es ist davon auszugehen, dass die Beschwerdeführerin vielmehr den Entscheid des Obergerichts vom 17. Oktober 2025 anfechten möchte. Sie macht einzig geltend, sie sei gegen den Entscheid. Sie stellt jedoch keine Anträge (Art. 42 Abs. 1 BGG). Es bleibt damit unklar, ob sie nun doch entlassen werden möchte oder eine andere Abänderung des angefochtenen Entscheids wünscht. Bereits aus diesem Grund ist die Beschwerde unzulässig. Ausserdem setzt sich die Beschwerdeführerin mit dem angefochtenen Entscheid nicht auseinander und sie macht insbesondere nicht geltend, dass das Verfahren nicht als gegenstandslos hätte abgeschrieben werden dürfen. Die Beschwerde enthält damit offensichtlich auch keine hinreichende Begründung (Art. 42 Abs. 2 BGG).\nDer Abteilungspräsident tritt auf die Beschwerde im vereinfachten Verfahren nicht ein (Art. 108 Abs. 1 lit. a und b BGG).\n3.\nAuf die Erhebung von Gerichtskosten ist zu verzichten (Art. 66 Abs. 1 BGG).\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nEs werden keine Gerichtskosten erhoben.\n3.\nDieses Urteil wird den Verfahrensbeteiligten und dem Obergericht Appenzell Ausserrhoden, Einzelrichter, mitgeteilt.\nLausanne, 23. Oktober 2025\nIm Namen der II. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Bovey\nDer Gerichtsschreiber: Zingg",
+  "operator_metadata": {
+    "date": "2025-10-23",
+    "reference": [
+      "5A_906/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-906-2025_2025-10-23.html",
+      "source": "446973/45/2869",
+      "content_length": 3415
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-06-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2869",
+    "id": "CH_BGer_005_5A-906-2025_2025-10-23",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 23.10.2025 5A_906/2025",
+      "it": "Tribunale federale II Corte di diritto civile 23.10.2025 5A_906/2025",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 23.10.2025 5A_906/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:29:14+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-906-2025_2025-10-23.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "369e8058f77ca998d7e15ec05d7f62009a3f4f120789a9a4349c9b8981389436"
+  }
+}

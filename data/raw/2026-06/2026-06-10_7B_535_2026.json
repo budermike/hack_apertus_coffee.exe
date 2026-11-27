@@ -1,0 +1,56 @@
+{
+  "id": "7B_535_2026",
+  "case_id": "7B_535/2026",
+  "case_ids": [
+    "7B_535/2026"
+  ],
+  "decision_date": "2026-06-10",
+  "publication_date": null,
+  "department": "II. Strafrechtliche Abteilung",
+  "division": "II. Strafrechtliche Abteilung",
+  "subject": "Nichtanhandnahme; Nichteintreten",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://10-06-2026-7B_535-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n7B_535/2026\nUrteil vom 10. Juni 2026\nII. strafrechtliche Abteilung\nBesetzung\nBundesrichterin Koch, als Einzelrichterin,\nGerichtsschreiber Stadler.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nOberstaatsanwaltschaft des Kantons Solothurn, Franziskanerhof, Barfüssergasse 28, Postfach 157, 4502 Solothurn,\nBeschwerdegegnerin.\nGegenstand\nNichtanhandnahme; Nichteintreten,\nBeschwerde gegen die Verfügung des Obergerichts des Kantons Solothurn, Beschwerdekammer, vom 16. März 2026 (BKBES.2026.29).\nErwägungen:\n1.\nMit Verfügung vom 6. Februar 2026 nahm die Staatsanwaltschaft des Kantons Solothurn die Strafanzeige von A.________ (fortan: der Beschwerdeführer) gegen die Amtsgerichtspräsidentin von Solothurn-Lebern wegen diverser Vorhalte, u.a. Amtsmissbrauch, Körperverletzung, Mord, nicht an die Hand. Dagegen erhob der Beschwerdeführer Beschwerde, auf welche das Obergericht des Kantons Solothurn mit Verfügung vom 16. März 2026 nicht eintrat.\nDer Beschwerdeführer gelangt ans Bundesgericht.\n2.\nDie - über weite Strecken schwer verständliche - Eingabe des Beschwerdeführers erfüllt offensichtlich nicht die Anforderungen an die Begründung einer Beschwerde an das Bundesgericht (Art. 42 Abs. 2 und Art. 106 Abs. 2 BGG; BGE 148 IV 356 E. 2.1, 39 E. 2.3.5; 142 III 364 E. 2.4). Eine inhaltliche Auseinandersetzung mit dem angefochtenen Entscheid fehlt gänzlich: Der Beschwerdeführer legt nicht dar, inwiefern die Vorinstanz bei ihren tatsächlichen Feststellungen in Willkür verfallen wäre und/oder beim von ihr festgestellten Sachverhalt gegen das Recht verstossen hätte. Auf die Beschwerde ist somit mangels hinreichender Begründung im vereinfachten Verfahren nicht einzutreten (Art. 108 Abs. 1 lit. b BGG). Die Begründung des Entscheids beschränkt sich auf eine kurze Angabe des Unzulässigkeitsgrundes (Art. 108 Abs. 3 BGG).\n3.\nAusgangsgemäss trägt der Beschwerdeführer die Kosten des bundesgerichtlichen Verfahrens (Art. 66 Abs. 1 BGG). Sein Gesuch um Gewährung der unentgeltlichen Rechtspflege ist abzuweisen, da die Beschwerde von vornherein aussichtslos war.\nDemnach erkennt die Einzelrichterin:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDas Gesuch um unentgeltliche Rechtspflege wird abgewiesen.\n3.\nDie Gerichtskosten von Fr. 500.-- werden dem Beschwerdeführer auferlegt.\n4.\nDieses Urteil wird den Parteien und dem Obergericht des Kantons Solothurn, Beschwerdekammer, schriftlich mitgeteilt.\nLausanne, 10. Juni 2026\nIm Namen der II. strafrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Einzelrichterin: Koch\nDer Gerichtsschreiber: Stadler",
+  "operator_metadata": {
+    "date": "2026-06-10",
+    "reference": [
+      "7B_535/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-535-2026_2026-06-10.html",
+      "source": "446973/45/2834",
+      "content_length": 2996
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit pénal"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_007"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_007_7B-535-2026_2026-06-10",
+    "title": {
+      "de": "Bundesgericht II. Strafrechtliche Abteilung 10.06.2026 7B_535/2026",
+      "it": "Tribunale federale II Corte di diritto penale 10.06.2026 7B_535/2026",
+      "fr": "Tribunal fédéral IIe Cour de droit pénal 10.06.2026 7B_535/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:45:36+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-535-2026_2026-06-10.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "761f274c933b3fc902036ea66e6a5f49f3bf3bea971adb758b872980e690893f"
+  }
+}

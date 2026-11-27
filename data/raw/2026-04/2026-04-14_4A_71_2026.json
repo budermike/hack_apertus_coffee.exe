@@ -1,0 +1,56 @@
+{
+  "id": "4A_71_2026",
+  "case_id": "4A_71/2026",
+  "case_ids": [
+    "4A_71/2026"
+  ],
+  "decision_date": "2026-04-14",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "contrat de travail",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://14-04-2026-4A_71-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4A_71/2026\nArrêt du 14 avril 2026\nIre Cour de droit civil\nComposition\nM. le Juge fédéral Hurni, Président.\nGreffier : M. Widmer.\nParticipants à la procédure\nA.________ Sàrl,\nrecourante,\ncontre\n1. B.________,\n2. Caisse de chômage SYNA,\nintimés.\nObjet\ncontrat de travail,\nrecours contre l'arrêt rendu le 5 janvier 2026 par la Cour d'appel civile du Tribunal cantonal du canton de Vaud (P324.013832-250846 4041).\nLe Président :\nVu le recours formé le 10 février 2026 par A.________ Sàrl (ci-après: la recourante) contre l'arrêt rendu le 5 janvier 2026 par la Cour d'appel civile du Tribunal cantonal du canton de Vaud dans la cause divisant la recourante d'avec B.________et la Caisse de chômage SYNA (ci-après: les intimés);\nVu l'ordonnance présidentielle du 12 février 2026 invitant la recourante à verser, jusqu'au 27 février 2026 au plus tard, une avance de frais de 500 fr.;\nVu l'ordonnance du 5 mars 2026 par laquelle un délai supplémentaire venant à échéance le 20 mars 2026 a été imparti à la recourante conformément à l'art. 62 al. 3 LTF;\nAttendu que l'avance de frais requise n'a pas été effectuée dans le délai imparti par cette ordonnance;\nConsidérant, dès lors, que le recours est irrecevable en vertu de l'art. 62 al. 3 LTF,\nqu'il y a lieu, partant, de faire application de la procédure simplifiée prévue par l'art. 108 al. 1 LTF,\nque les frais judiciaires seront mis à la charge de la recourante (art. 66 al. 1 et 3 LTF),\nque les intimés, qui n'ont pas été invités à répondre au recours, n'ont pas droit à des dépens.\nPar ces motifs, le Président prononce :\n1.\nLe recours est irrecevable.\n2.\nLa recourante acquittera un émolument judiciaire de 300 fr.\n3.\nLe présent arrêt est communiqué aux parties et à la Cour d'appel civile du Tribunal cantonal du canton de Vaud.\nLausanne, le 14 avril 2026\nAu nom de la Ire Cour de droit civil\ndu Tribunal fédéral suisse\nLe Président : Hurni\nLe Greffier : Widmer",
+  "operator_metadata": {
+    "date": "2026-04-14",
+    "reference": [
+      "4A_71/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-71-2026_2026-04-14.html",
+      "source": "446973/45/2829",
+      "content_length": 2282
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_004_4A-71-2026_2026-04-14",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 14.04.2026 4A_71/2026",
+      "it": "Tribunale federale I Corte di diritto civile 14.04.2026 4A_71/2026",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 14.04.2026 4A_71/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:28:59+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-71-2026_2026-04-14.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "ead72158f6b319f9df9500e97cfb47516f212409aebfda6d0aaba33087a8521a"
+  }
+}

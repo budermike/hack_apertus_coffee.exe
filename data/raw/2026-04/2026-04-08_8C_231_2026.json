@@ -1,0 +1,56 @@
+{
+  "id": "8C_231_2026",
+  "case_id": "8C_231/2026",
+  "case_ids": [
+    "8C_231/2026"
+  ],
+  "decision_date": "2026-04-08",
+  "publication_date": null,
+  "department": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "division": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "subject": "unbekannt",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://08-04-2026-8C_231-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n8C_231/2026\nUrteil vom 8. April 2026\nIV. öffentlich-rechtliche Abteilung\nBesetzung\nBundesrichterin Viscione, Präsidentin,\nGerichtsschreiber Grünvogel.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nunbekannt,\nBeschwerdegegner.\nGegenstand\nunbekannt,\nBeschwerde gegen eine Verfügung des Bundesverwaltungsgerichts vom 4. Februar 2026 (C-9712/2025).\nNach Einsicht\nin die Beschwerde vom 3. März 2026 gegen eine nicht beigelegte Verfügung C-9712/2025 des Bundesverwaltungsgerichts vom 4. Februar 2026,\nin die Verfügung vom 6. März 2026, mit welcher das Bundesgericht A.________erklärt, weshalb die Rechtsmittelfrist als gerichtliche Frist nicht erstreckbar ist, und ihn überdies auffordert, bis zum 19. März 2026 die angefochtene Verfügung beizubringen, andernfalls die Rechtsschrift unbeachtet bleibe,\nin Erwägung,\ndass der Beschwerdeführer den ihm vom Gericht gemäss Art. 42 Abs. 5 BGG angezeigten Formmangel der fehlenden Beilagen nicht innerhalb der mit Verfügung vom 6. März 2026 angesetzten, am 19. März 2026 abgelaufenen (Art. 44 - 48 BGG) Nachfrist behoben hat,\ndass abgesehen davon die Beschwerdeschrift lediglich verfahrensleitende Anträge, nicht jedoch solche in der Sache selbst umfasst, geschweige denn diese näher begründet,\ndass damit die Beschwerde auch nicht den minimalen Begründungsanforderungen gemäss Art. 42 Abs. 1 und 2 BGG genügt,\ndass deshalb im vereinfachten Verfahren nach Art. 108 Abs. 1 lit. a und b BGG auf die Beschwerde nicht einzutreten ist,\ndass in Anwendung von Art. 66 Abs. 1 Satz 2 BGG ausnahmsweise auf die Erhebung von Gerichtskosten verzichtet wird,\nerkennt die Präsidentin:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nEs werden keine Gerichtskosten erhoben.\n3.\nDieses Urteil wird dem Beschwerdeführer und dem Bundesverwaltungsgericht schriftlich mitgeteilt.\nLuzern, 8. April 2026\nIm Namen der IV. öffentlich-rechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Präsidentin: Viscione\nDer Gerichtsschreiber: Grünvogel",
+  "operator_metadata": {
+    "date": "2026-04-08",
+    "reference": [
+      "8C_231/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-231-2026_2026-04-08.html",
+      "source": "446973/45/2834",
+      "content_length": 2369
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+      "it": "Confederazione Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale)",
+      "fr": "Conféderation Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social)"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_008"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_008_8C-231-2026_2026-04-08",
+    "title": {
+      "de": "Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung) 08.04.2026 8C_231/2026",
+      "it": "Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale) 08.04.2026 8C_231/2026",
+      "fr": "Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social) 08.04.2026 8C_231/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:27:55+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-231-2026_2026-04-08.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "b30cb42296d8735c3e971fd79585969b1cc13d224799b3397278874c900782e9"
+  }
+}

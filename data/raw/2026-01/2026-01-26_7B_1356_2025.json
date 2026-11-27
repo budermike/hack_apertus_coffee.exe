@@ -1,0 +1,56 @@
+{
+  "id": "7B_1356_2025",
+  "case_id": "7B_1356/2025",
+  "case_ids": [
+    "7B_1356/2025"
+  ],
+  "decision_date": "2026-01-26",
+  "publication_date": null,
+  "department": "II. Strafrechtliche Abteilung",
+  "division": "II. Strafrechtliche Abteilung",
+  "subject": "Ausstand; Nichteintreten",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://26-01-2026-7B_1356-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n7B_1356/2025\nUrteil vom 26. Januar 2026\nII. strafrechtliche Abteilung\nBesetzung\nBundesrichterin Koch, als Einzelrichterin,\nGerichtsschreiberin Sauthier.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nBezirksgericht Dietikon,\nBahnhofplatz 10, 8953 Dietikon.\nGegenstand\nAusstand; Nichteintreten,\nBeschwerde gegen den Beschluss des Obergerichts des Kantons Zürich, III. Strafkammer, vom 24. November 2025 (UA250035-O/U/JST).\nErwägungen:\n1.\nMit Beschluss vom 24. November 2025 trat das Obergericht des Kantons Zürich, III. Strafkammer, nicht auf das Ausstandsgesuch von A.________ ein. Dagegen gelangte A.________ mit Beschwerde vom 9. Dezember 2025 an das Bundesgericht.\n2.\nDie Vorinstanz legt in Auseinandersetzung mit der bundesgerichtlichen Rechtsprechung zum Normgehalt von Art. 58 StPO detailliert dar, weshalb sie auf das verspätet gestellte Ausstandsgesuch nicht eingetreten ist. Mit diesen Erwägungen setzt sich der Beschwerdeführer nicht hinreichend auseinander. Stattdessen legt er lediglich seine Sichtweise dar und macht diverse Rügen geltend, wie unter anderem die angebliche \"Aneinanderreihung schwerer Verfahrensfehler\", \"Verdacht einer befangenheitsbedingten Ungleichbehandlung\" sowie die angebliche Verhandlung in seiner Abwesenheit. Solche appellatorische Kritik genügt den gesetzlichen Begründungsanforderungen an eine Beschwerde an das Bundesgericht offensichtlich nicht (vgl. Art. 42 Abs. 2 und Art. 106 Abs. 2 BGG; BGE 148 IV 356 E. 2.1, 39 E. 2.3.5; 147 IV 73 E. 4.1.2; 146 IV 297 E. 1.2). Auf die Beschwerde ist somit mangels hinreichender Begründung im vereinfachten Verfahren nicht einzutreten (Art. 108 Abs. 1 lit. b BGG). Die Begründung des Entscheids beschränkt sich auf eine kurze Angabe des Unzulässigkeitsgrundes (Art. 108 Abs. 3 BGG).\n3.\nBei diesem Ausgang des Verfahrens wird der Beschwerdeführer kostenpflichtig (Art. 66 Abs. 1 BGG).\nDemnach erkennt die Einzelrichterin:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 500.-- werden dem Beschwerdeführer auferlegt.\n3.\nDieses Urteil wird dem Beschwerdeführer, dem Bezirksgericht Dielsdorf und dem Obergericht des Kantons Zürich, III. Strafkammer, schriftlich mitgeteilt.\nLausanne, 26. Januar 2026\nIm Namen der II. strafrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Einzelrichterin: Koch\nDie Gerichtsschreiberin: Sauthier",
+  "operator_metadata": {
+    "date": "2026-01-26",
+    "reference": [
+      "7B_1356/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-1356-2025_2026-01-26.html",
+      "source": "446973/45/2834",
+      "content_length": 2758
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit pénal"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_007"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_007_7B-1356-2025_2026-01-26",
+    "title": {
+      "de": "Bundesgericht II. Strafrechtliche Abteilung 26.01.2026 7B_1356/2025",
+      "it": "Tribunale federale II Corte di diritto penale 26.01.2026 7B_1356/2025",
+      "fr": "Tribunal fédéral IIe Cour de droit pénal 26.01.2026 7B_1356/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:07:03+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-1356-2025_2026-01-26.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "183ecd81875421492ed7683c671be62cffd3eb0cd8fe7c30065676517d98b256"
+  }
+}

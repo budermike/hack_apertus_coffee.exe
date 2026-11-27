@@ -1,0 +1,56 @@
+{
+  "id": "5A_999_2025",
+  "case_id": "5A_999/2025",
+  "case_ids": [
+    "5A_999/2025"
+  ],
+  "decision_date": "2025-12-19",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "divorce (liquidation du régime matrimonial)",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://19-12-2025-5A_999-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5A_999/2025\nOrdonnance du 19 décembre 2025\nIIe Cour de droit civil\nComposition\nM. le Juge fédéral Bovey, Président.\nGreffier : M. Braconi.\nParticipants à la procédure\nA.A.________,\nrecourante,\ncontre\nB.A.________,\nintimé,\nObjet\ndivorce (liquidation du régime matrimonial),\nrecours contre l'arrêt de la Cour d'appel civile du\nTribunal cantonal du canton de Vaud du 9 octobre 2025 (TD19.053830-250850 n° 456).\nVu :\nle recours en matière civile déposé le 11 novembre 2025 par A.A.________ contre l'arrêt rendu le 9 octobre 2025 par la Cour d'appel civile du Tribunal cantonal du canton de Vaud dans la cause opposant la recourante à B.A.________;\nle mémoire complémentaire du 13 novembre 2025;\nla déclaration de retrait du recours du 10 novembre 2025 (parvenue au Tribunal fédéral le 19 décembre 2025);\nConsidérant :\nqu'il convient de prendre acte du retrait du recours et de rayer la cause du rôle (art. 73 PCF, par renvoi de l'art. 71 LTF);\nque le Président de la Cour de céans est compétent à cet effet (art. 32 al. 1 et 2 LTF);\nque les frais judiciaires (réduits) incombent à la recourante (art. 66 al. 1 et 2 LTF);\nque, la présente affaire étant désormais close, le Tribunal fédéral n'a pas à se prononcer sur les prétendus \" dysfonctionnements \" affectant la procédure devant le Tribunal d'arrondissement de l'Est vaudois, étant rappelé que le Tribunal fédéral n'est pas une autorité de surveillance;\nPar ces motifs, le Président ordonne :\n1.\nLa cause est rayée du rôle par suite de retrait du recours.\n2.\nLes frais judiciaires, arrêtés à 500 fr., sont mis à la charge de la recourante.\n3.\nLa présente ordonnance est communiquée aux parties et à la Cour d'appel civile du Tribunal cantonal du canton de Vaud.\nLausanne, le 19 décembre 2025\nAu nom de la IIe Cour de droit civil\ndu Tribunal fédéral suisse\nLe Président : Bovey\nLe Greffier : Braconi",
+  "operator_metadata": {
+    "date": "2025-12-19",
+    "reference": [
+      "5A_999/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-999-2025_2025-12-19.html",
+      "source": "446973/45/2869",
+      "content_length": 2232
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-06-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2869",
+    "id": "CH_BGer_005_5A-999-2025_2025-12-19",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 19.12.2025 5A_999/2025",
+      "it": "Tribunale federale II Corte di diritto civile 19.12.2025 5A_999/2025",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 19.12.2025 5A_999/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:59:32+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-999-2025_2025-12-19.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "73ee022de696ec70079648a2dcb38820875c53a7f260026220eeeac1242efa8e"
+  }
+}

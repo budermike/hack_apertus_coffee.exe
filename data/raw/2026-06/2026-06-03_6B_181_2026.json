@@ -1,0 +1,56 @@
+{
+  "id": "6B_181_2026",
+  "case_id": "6B_181/2026",
+  "case_ids": [
+    "6B_181/2026"
+  ],
+  "decision_date": "2026-06-03",
+  "publication_date": null,
+  "department": "I. Strafrechtliche Abteilung",
+  "division": "I. Strafrechtliche Abteilung",
+  "subject": "Landesverweisung; Nichteintreten",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://03-06-2026-6B_181-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n6B_181/2026\nUrteil vom 3. Juni 2026\nI. strafrechtliche Abteilung\nBesetzung\nBundesrichter von Felten, als präsidierendes Mitglied,\nGerichtsschreiberin Arquint Hill.\nVerfahrensbeteiligte\nA.________,\nvertreten durch Rechtsanwalt Dr. Kenad Melunovic,\nBeschwerdeführer,\ngegen\nOberstaatsanwaltschaft des Kantons Aargau,\nFrey-Herosé-Strasse 20, 5001 Aarau,\nBeschwerdegegnerin.\nGegenstand\nLandesverweisung; Nichteintreten,\nBeschwerde gegen das Urteil des Obergerichts des Kantons Aargau, Strafgericht, 2. Kammer,\nvom 14. Januar 2026 (SST.2025.177).\nDas präsidierende Mitglied zieht in Erwägung:\n1.\nDer anwaltlich vertretene Beschwerdeführer erhebt Beschwerde in Strafsachen gegen das Urteil des Obergerichts des Kantons Aargau vom 14. Januar 2026.\n2.\nDie Partei, die das Bundesgericht anruft, hat einen Kostenvorschuss zu bezahlen (Art. 62 Abs. 1 BGG).\n3.\nNachdem sein Gesuch um unentgeltliche Rechtspflege und Verbeiständung abgewiesen worden war, wurde dem Beschwerdeführer mit Verfügung vom 17. April 2026 Frist bis spätestens zum 4. Mai 2026 und mit Verfügung vom 11. Mai 2026 die gesetzlich vorgeschriebene und nicht erstreckbare Nachfrist bis zum 22. Mai 2026 angesetzt, um dem Bundesgericht einen Kostenvorschuss von Fr. 3'000.-- zu bezahlen, unter der Androhung, dass ansonsten auf das Rechtsmittel nicht eingetreten werde (Art. 62 Abs. 3 BGG).\nBeide mittels Gerichtsurkunden versandten Verfügungen konnten zugestellt werden. Da der Kostenvorschuss auch innert Nachfrist nicht einging, ist auf die Beschwerde androhungsgemäss im Verfahren nach Art. 108 BGG nicht einzutreten.\n4.\nDie Gerichtskosten sind ausgangsgemäss dem Beschwerdeführer aufzuerlegen (Art. 66 Abs. 1 BGG).\nDemnach erkennt das präsidierende Mitglied:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 500.-- werden dem Beschwerdeführer auferlegt.\n3.\nDieses Urteil wird den Parteien und dem Obergericht des Kantons Aargau, Strafgericht, 2. Kammer, schriftlich mitgeteilt.\nLausanne, 3. Juni 2026\nIm Namen der I. strafrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDas präsidierende Mitglied: von Felten\nDie Gerichtsschreiberin: Arquint Hill",
+  "operator_metadata": {
+    "date": "2026-06-03",
+    "reference": [
+      "6B_181/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_006_6B-181-2026_2026-06-03.html",
+      "source": "446973/45/2830",
+      "content_length": 2571
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit pénal"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_006"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2830",
+    "id": "CH_BGer_006_6B-181-2026_2026-06-03",
+    "title": {
+      "de": "Bundesgericht I. Strafrechtliche Abteilung 03.06.2026 6B_181/2026",
+      "it": "Tribunale federale I Corte di diritto penale 03.06.2026 6B_181/2026",
+      "fr": "Tribunal fédéral Ire Cour de droit pénal 03.06.2026 6B_181/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:43:36+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_006_6B-181-2026_2026-06-03.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "b66779afaac348bf75ea9a216903175209e591c2812cf96584230170bb2037d4"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "id": "7B_724_2025",
+  "case_id": "7B_724/2025",
+  "case_ids": [
+    "7B_724/2025"
+  ],
+  "decision_date": "2025-10-10",
+  "publication_date": null,
+  "department": "II. Strafrechtliche Abteilung",
+  "division": "II. Strafrechtliche Abteilung",
+  "subject": "Récusation; irrecevabilité du recours en matière pénale (motivation insuffisante)",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://10-10-2025-7B_724-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n7B_724/2025\nArrêt du 10 octobre 2025\nIIe Cour de droit pénal\nComposition\nM. le Juge fédéral Abrecht, Président.\nGreffier : M. Porchet.\nParticipants à la procédure\nA.________,\nrecourante,\ncontre\nB.________,\nintimé.\nObjet\nRécusation; irrecevabilité du recours en matière pénale (motivation insuffisante),\nrecours contre l'arrêt de la Chambre pénale de recours de la Cour de justice de la République et canton de Genève du 18 juillet 2025\n(ACPR/560/2025 - PS/54/2024).\nFaits :\nA.\nPar arrêt du 18 juillet 2025, la Chambre pénale de recours de la Cour de justice de la République et canton de Genève a déclaré irrecevable la requête de récusation formée par A.________ contre B.________, juge au Tribunal de police.\nB.\nPar acte du 24 juillet 2025, A.________ interjette un recours en matière pénale au Tribunal fédéral contre l'arrêt précité. Elle sollicite par ailleurs l'assistance judiciaire pour la procédure devant le Tribunal fédéral.\nConsidérant en droit :\n1.\n1.1. Selon l'art. 42 al. 1 LTF, les mémoires de recours au Tribunal fédéral doivent indiquer les conclusions, les motifs et les moyens de preuves, et être signés. En particulier, le recourant doit motiver son recours en exposant succinctement en quoi la décision attaquée viole le droit (cf. art. 42 al. 2 LTF). Pour satisfaire à cette exigence, il appartient au recourant de discuter au moins brièvement les considérants de la décision litigieuse (ATF 140 III 86 consid. 2 et 115 consid. 2); en particulier, la motivation doit être topique, c'est-à-dire se rapporter à la question juridique tranchée par l'autorité cantonale (ATF 123 V 335).\n1.2. Dans son recours, la recourante se contente toutefois de déclarer \"faire opposition à l'arrêt du vendredi 18 juillet 2025\" sans aucunement discuter les considérants de l'arrêt attaqué (cf. arrêt attaqué, p. 3), ni exposer en quoi l'arrêt entrepris violerait le droit constitutionnel ou fédéral.\n1.3. Ne répondant ainsi manifestement pas aux exigences de motivation d'un recours en matière pénale au Tribunal fédéral, le recours doit être déclaré irrecevable selon la procédure simplifiée prévue par l'art. 108 al. 1 let. b LTF.\n2.\nComme le recours était d'emblée dénué de chances de succès, la demande d'assistance judiciaire doit être rejetée (art. 64 al. 1 LTF), ce qui relève également de la compétence du juge unique prévue par l'art. 108 LTF (art. 64 al. 3 2e phrase LTF; arrêt 7B_343/2025 du 18 juillet 2025 consid. 3). La recourante, qui succombe, supportera les frais judiciaires; ceux-ci seront toutefois fixés en tenant compte de sa situation financière, qui n'apparaît pas favorable (art. 65 al. 2 et 66 al. 1 LTF).\nPar ces motifs, le Président prononce :\n1.\nLe recours est irrecevable.\n2.\nLa demande d'assistance judiciaire est rejetée.\n3.\nLes frais judiciaires, arrêtés à 500 fr., sont mis à la charge de la recourante.\n4.\nLe présent arrêt est communiqué aux parties et à la Chambre pénale de recours de la Cour de justice de la République et canton de Genève.\nLausanne, le 10 octobre 2025\nAu nom de la IIe Cour de droit pénal\ndu Tribunal fédéral suisse\nLe Président : Abrecht\nLe Greffier : Porchet",
+  "operator_metadata": {
+    "date": "2025-10-10",
+    "reference": [
+      "7B_724/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-724-2025_2025-10-10.html",
+      "source": "446973/45/2851",
+      "content_length": 3623
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit pénal"
+    },
+    "scrapedate": "2026-06-18",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_007"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2851",
+    "id": "CH_BGer_007_7B-724-2025_2025-10-10",
+    "title": {
+      "de": "Bundesgericht II. Strafrechtliche Abteilung 10.10.2025 7B_724/2025",
+      "it": "Tribunale federale II Corte di diritto penale 10.10.2025 7B_724/2025",
+      "fr": "Tribunal fédéral IIe Cour de droit pénal 10.10.2025 7B_724/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:25:47+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-724-2025_2025-10-10.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "f8afa2762987fcb2bd8e5759d1aa1cc7b005fb584dedcfec54bf2737f72ad4cc"
+  }
+}

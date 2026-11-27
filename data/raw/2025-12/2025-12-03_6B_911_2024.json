@@ -1,0 +1,56 @@
+{
+  "id": "6B_911_2024",
+  "case_id": "6B_911/2024",
+  "case_ids": [
+    "6B_911/2024"
+  ],
+  "decision_date": "2025-12-03",
+  "publication_date": null,
+  "department": "I. Strafrechtliche Abteilung",
+  "division": "I. Strafrechtliche Abteilung",
+  "subject": "Entschädigung der amtlichen Verteidigung; Rückzug",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://03-12-2025-6B_911-2024",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n6B_911/2024\nVerfügung vom 3. Dezember 2025\nI. strafrechtliche Abteilung\nBesetzung\nBundesrichter von Felten, als Einzelrichter,\nGerichtsschreiberin Lupi De Bruycker.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nOberstaatsanwaltschaft des Kantons Aargau, Frey-Herosé-Strasse 20, 5001 Aarau,\nBeschwerdegegnerin.\nGegenstand\nEntschädigung der amtlichen Verteidigung; Rückzug,\nBeschwerde gegen den Beschluss des Obergerichts\ndes Kantons Aargau, Strafgericht, 1. Kammer, vom 19. September 2024 (SST.2023.251).\nErwägungen:\n1.\nA.________erhob mit Schreiben vom 7. November 2024 Beschwerde in Strafsachen. Er beantragte zusammengefasst, Dispositiv-Ziff. 3 des Beschlusses vom 19. September 2024 des Obergerichts des Kantons Aargau sei aufzuheben und er sei für seinen Aufwand als amtlicher Verteidiger von B.________ in der Strafsache SST.2023.251 mit einem Betrag von insgesamt Fr. 9'779.60 (zzgl. MWST) zu entschädigen. Eventualiter sei die genannte Dispositiv-Ziffer aufzuheben und die Sache zur Neubeurteilung und neuerlichen Festsetzung bzw. Bemessung einer Entschädigung an das Obergericht des Kantons Aargau zurückzuweisen.\nMit Schreiben vom 25. November 2025 zog der Beschwerdeführer seine Beschwerde zurück.\n2.\nZufolge des Rückzugs der Beschwerde ist das Verfahren in Anwendung von Art. 32 Abs. 2 BGG durch den Instruktionsrichter als Einzelrichter als erledigt abzuschreiben.\nWer eine Beschwerde zurückzieht, ist in der Regel, vorbehältlich besonderer Umstände, die hier nicht gegeben sind, als unterliegende Partei zu betrachten.\nAuf die Erhebung von Gerichtskosten kann in Anwendung von Art. 66 Abs. 2 BGG verzichtet werden.\nDemnach verfügt der Einzelrichter:\n1.\nDas Verfahren wird infolge Rückzugs der Beschwerde abgeschrieben.\n2.\nEs werden keine Kosten erhoben.\n3.\nDiese Verfügung wird den Parteien und dem Obergericht des Kantons Aargau, Strafgericht, 1. Kammer, schriftlich mitgeteilt.\nLausanne, 3. Dezember 2025\nIm Namen der I. strafrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Einzelrichter: von Felten\nDie Gerichtsschreiberin: Lupi De Bruycker",
+  "operator_metadata": {
+    "date": "2025-12-03",
+    "reference": [
+      "6B_911/2024"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_006_6B-911-2024_2025-12-03.html",
+      "source": "446973/45/2851",
+      "content_length": 2475
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit pénal"
+    },
+    "scrapedate": "2026-06-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_006"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2851",
+    "id": "CH_BGer_006_6B-911-2024_2025-12-03",
+    "title": {
+      "de": "Bundesgericht I. Strafrechtliche Abteilung 03.12.2025 6B_911/2024",
+      "it": "Tribunale federale I Corte di diritto penale 03.12.2025 6B_911/2024",
+      "fr": "Tribunal fédéral Ire Cour de droit pénal 03.12.2025 6B_911/2024"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:40:53+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_006_6B-911-2024_2025-12-03.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "fd8cac78fd4c4d93ce27fde0c01f421769398036aa672f251b855120e3ae5654"
+  }
+}
