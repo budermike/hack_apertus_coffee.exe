@@ -4,10 +4,18 @@ from __future__ import annotations
 
 from dataclasses import asdict, dataclass, field
 import json
+import logging
 from pathlib import Path
 import re
 from typing import Any, Sequence
 
+from triage.date_filter import (
+    DateRange,
+    SkippedItem,
+    check_date_in_range,
+    extract_judgement_date,
+    filter_items_in_date_range,
+)
 from triage.embeddings import (
     Embedder,
     ReferenceMatch,
@@ -18,6 +26,9 @@ from triage.embeddings import (
 )
 from triage.llm import ApertusTriageClient, TriageDecision
 from triage.reference_corpus import ReferenceCase, load_reference_corpus
+
+logger = logging.getLogger(__name__)
+_DEFAULT_DATE_RANGE = object()
 
 _KEYWORD_PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = (
     ("Suva", re.compile(r"\bsuva\b", re.IGNORECASE)),
@@ -59,6 +70,7 @@ class TriageResult:
     language: str
     embedder: str
     llm_model: str | None
+    judgement_date: str | None = None
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
@@ -202,6 +214,7 @@ class TriagePipeline:
         top_k: int = 3,
         llm_weight: float = 0.75,
         relevance_threshold: float = 50.0,
+        date_range: DateRange | None | Any = _DEFAULT_DATE_RANGE,
     ) -> None:
         self.reference_cases = (
             list(reference_cases)
@@ -213,6 +226,10 @@ class TriagePipeline:
         self.top_k = top_k
         self.llm_weight = llm_weight
         self.relevance_threshold = relevance_threshold
+        self.date_range: DateRange | None = (
+            DateRange.last_n_months(3) if date_range is _DEFAULT_DATE_RANGE else date_range
+        )
+        self.last_skipped: list[SkippedItem] = []
 
         # Fit TF-IDF once on combined DE+FR vocabulary, then keep per-language reference matrices.
         if isinstance(self.embedder, TfidfEmbedder) and not self.embedder.vocab_:
@@ -232,7 +249,12 @@ class TriagePipeline:
         return self._ref_vecs_by_lang["all"]
 
     def score_item(self, item: CrawlItem) -> TriageResult:
-        """Compute cosine similarity and optional Apertus v1.5 triage for one judgement."""
+        """Validate date range (hard filter), then embed and score one judgement."""
+        if self.date_range is not None:
+            resolved_date = check_date_in_range(item.text, item.metadata, self.date_range)
+        else:
+            resolved_date = extract_judgement_date(item.text, item.metadata)
+
         similarity = score_against_corpus(
             candidate_text=item.text,
             cases=self.reference_cases,
@@ -283,10 +305,25 @@ class TriagePipeline:
             language=item.language or "de",
             embedder=self.embedder.name,
             llm_model=llm_model,
+            judgement_date=resolved_date.isoformat() if resolved_date else None,
         )
 
     def score_items(self, items: Sequence[CrawlItem]) -> list[TriageResult]:
-        """Score all items and return them sorted descending by relevance_score."""
-        results = [self.score_item(item) for item in items]
+        """Hard-filter items by date_range before embedding, then score and sort."""
+        if self.date_range is not None:
+            accepted, skipped = filter_items_in_date_range(items, self.date_range)
+            self.last_skipped = skipped
+            for entry in skipped:
+                logger.warning(
+                    "Hard date filter skipped %s (date=%s): %s",
+                    entry.case_id,
+                    entry.parsed_date,
+                    entry.reason,
+                )
+        else:
+            accepted = list(items)
+            self.last_skipped = []
+
+        results = [self.score_item(item) for item in accepted]
         results.sort(key=lambda r: (r.relevance_score, r.cosine_max_similarity), reverse=True)
         return results

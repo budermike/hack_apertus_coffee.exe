@@ -63,17 +63,23 @@ Centralizes all Keera / Apertus v1.5 gateway communication:
 - `_select_judgement_excerpt()`: Keeps head (facts/parties) and tail (legal reasoning/ruling) up to `24,000` characters when a judgement exceeds prompt limits.
 - `ApertusTriageClient`: Sends metadata, keyword hits, cosine similarity scores, top-$k$ Suva precedent summaries, and the judgement excerpt to **Apertus v1.5** (`apertus-v1-5-8b` by default, `temperature=0.0`), then parses the structured JSON decision (`TriageDecision`: `relevant`, `apertus_score`, `reason`, `key_topics`).
 
+### `triage/date_filter.py`
+Enforces a **hard time-range filter** (default: last 3 calendar months) so that no incoming judgement outside the configured window (or missing a valid date) is ever embedded or sent to Apertus:
+- `extract_judgement_date()`: Resolves publication dates from `metadata["date"]` (and aliases), `bger.ch` `aza://DD-MM-YYYY-...` URLs, or DE/FR/IT judgement header text.
+- `DateRange`: Inclusive `[since, until]` window with `DateRange.last_n_months(3)` and `DateRange.last_n_days()`.
+- `check_date_in_range()` & `filter_items_in_date_range()`: Rejects out-of-range or dateless items before embedding (raising `OutOfDateRangeError` on single-item `score_item()` calls and recording `SkippedItem` entries on batch `score_items()`).
+
 ### `triage/pipeline.py`
-Orchestrates ingestion, scoring, blending, and sorting:
+Orchestrates ingestion, hard date filtering, scoring, blending, and sorting:
 - `load_crawl_items()` & `_normalize_crawl_dict()`: Reads Crawl output from a single JSON object, a JSON array, or a directory of `.json` files, accepting either nested `metadata` dicts or flat fields and common text keys (`judgement_text`, `judgment_text`, `text`, `full_text`, `content`, `body`).
 - `detect_language()`: Reads language from metadata or infers `de` / `fr` / `it` from lightweight lexical cues.
 - `extract_keyword_hits()`: Flags Suva/accident-insurance signals (`Suva`, `UVG/LAA/LAINF`, `Unfall/Accident`, `Berufskrankheit`, `ATSG/LPGA`, `Körperschädigung`, and `Chamber:8C`).
-- `TriagePipeline`: Precomputes language-specific reference indices (`de`, `fr`, `all`), runs Stage 1 (`score_against_corpus`) + optional Stage 2 (`ApertusTriageClient`), blends scores (`0.75 * apertus_score + 0.25 * (cosine_max_similarity * 100)` when LLM is enabled, or `_heuristic_relevance_score()` in `--no-llm` mode), and returns `TriageResult` objects sorted descending by `relevance_score`.
+- `TriagePipeline`: Applies the hard `DateRange` filter before embedding, precomputes language-specific reference indices (`de`, `fr`, `all`), runs Stage 1 (`score_against_corpus`) + optional Stage 2 (`ApertusTriageClient`), blends scores (`0.75 * apertus_score + 0.25 * (cosine_max_similarity * 100)` when LLM is enabled, or `_heuristic_relevance_score()` in `--no-llm` mode), and returns `TriageResult` objects sorted descending by `relevance_score`.
 
 ### `triage/cli.py`
 Command-line interface (`python3 -m triage.cli <command>`):
 - `check-gateway`: Lists available models on the configured gateway and probes `/embeddings` if supported.
-- `score`: Runs triage on Crawl JSON input(s) and writes sorted results to stdout or `--output`. Supports `--no-llm`, `--embedder`, `--model`, `--top-k`.
+- `score`: Runs triage on Crawl JSON input(s) and writes sorted results to stdout or `--output`. Supports `--no-llm`, `--embedder`, `--model`, `--top-k`, and date-filter flags (`--months`, `--max-age-days`, `--since`, `--until`, `--all-dates`).
 - `eval-corpus`: Runs a leave-one-out cosine similarity evaluation across the 55 Suva summaries in `judgements/`.
 
 ### `tests/test_triage.py`

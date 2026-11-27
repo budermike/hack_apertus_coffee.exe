@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+from datetime import date
 import json
 from pathlib import Path
 import sys
@@ -10,6 +11,7 @@ from typing import Sequence
 
 import numpy as np
 
+from triage.date_filter import DateRange
 from triage.embeddings import (
     Embedder,
     GatewayEmbedder,
@@ -76,20 +78,45 @@ def _cmd_check_gateway(args: argparse.Namespace) -> int:
     return 0
 
 
+def _resolve_date_range(args: argparse.Namespace) -> DateRange | None:
+    if args.all_dates:
+        return None
+    until = date.fromisoformat(args.until) if args.until else date.today()
+    if args.since:
+        return DateRange(since=date.fromisoformat(args.since), until=until)
+    if args.max_age_days is not None:
+        return DateRange.last_n_days(days=args.max_age_days, until=until)
+    return DateRange.last_n_months(months=args.months, until=until)
+
+
 def _cmd_score(args: argparse.Namespace) -> int:
     cfg = GatewayConfig.from_env(model=args.model, embedding_model=args.embedding_model)
     embedder = _build_embedder(args.embedder, args.embedding_model, cfg)
     llm_client = None if args.no_llm else ApertusTriageClient(config=cfg)
+    date_range = _resolve_date_range(args)
 
     pipeline = TriagePipeline(
         judgements_dir=args.judgements_dir,
         embedder=embedder,
         llm_client=llm_client,
         top_k=args.top_k,
+        date_range=date_range,
     )
     items = load_crawl_items(args.input)
     results = pipeline.score_items(items)
     payload = [res.to_dict() for res in results]
+
+    if pipeline.last_skipped:
+        print(
+            f"Hard date filter excluded {len(pipeline.last_skipped)}/{len(items)} item(s) "
+            f"outside [{date_range.since.isoformat()}, {date_range.until.isoformat()}]:",
+            file=sys.stderr,
+        )
+        for skipped in pipeline.last_skipped:
+            print(
+                f"  - {skipped.case_id} (date={skipped.parsed_date}): {skipped.reason}",
+                file=sys.stderr,
+            )
 
     if args.output:
         out_path = Path(args.output)
@@ -149,6 +176,11 @@ def build_parser() -> argparse.ArgumentParser:
     p_score.add_argument("--model", default=None, help="Apertus model ID override")
     p_score.add_argument("--top-k", type=int, default=3, help="Number of nearest Suva precedents to retrieve")
     p_score.add_argument("--no-llm", action="store_true", help="Skip Apertus LLM call (embedding + keyword score only)")
+    p_score.add_argument("--since", default=None, help="Inclusive start date YYYY-MM-DD (overrides --months)")
+    p_score.add_argument("--until", default=None, help="Inclusive end date YYYY-MM-DD (default: today)")
+    p_score.add_argument("--months", type=int, default=3, help="Lookback window in calendar months (default: 3)")
+    p_score.add_argument("--max-age-days", type=int, default=None, help="Lookback window in days (overrides --months)")
+    p_score.add_argument("--all-dates", action="store_true", help="Disable the hard date-range filter")
     p_score.set_defaults(func=_cmd_score)
 
     p_eval = sub.add_parser("eval-corpus", help="Evaluate leave-one-out cosine similarity on reference corpus")
