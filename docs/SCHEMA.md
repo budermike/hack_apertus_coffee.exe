@@ -5,7 +5,7 @@ Ein JSON pro Bundesgerichtsurteil unter `data/raw/<YYYY-MM>/<decision_date>_<saf
 ## Konventionen & Annahmen
 
 - **ID-Normalisierung (`/` → `_`):** In Dateinamen, Vector-DB-IDs und UI-URLs wird `/` in der Geschäftsnummer durch `_` ersetzt (z. B. `1D_1/2025` → `1D_1_2025`, Datei `2026-04-01_1D_1_2025.json`). In den Feldern `case_id` und `case_ids` bleibt die Originalschreibweise (`1D_1/2025`) für den Abgleich mit Suva erhalten.
-- **Datumsfilter (`decision_date` vs. `publication_date`):** `publication_date` ist aktuell `null`, da weder `entscheidsuche.ch` noch die Ergebnisliste von `search.bger.ch` das Publikationsdatum liefern. **Annahme:** Bis Suva klärt, ob für Q2/2026 das Urteils- oder das Publikationsdatum zählt, wird nach `decision_date` gefiltert.
+- **Datumsfilter (`decision_date`):** Empirisch gegen Suvas Referenzliste (`BG_Urteile_2025_Q4_2026_Q1.xlsx`) verifiziert: **59 von 59 (100 %)** der Suva-Referenzfälle für Q4/2025 (28) und Q1/2026 (31) liegen mit ihrem `decision_date` exakt in `2025-10-01`..`2026-03-31`. Der Zeitfilter arbeitet daher verbindlich auf `decision_date`. `publication_date` bleibt `null`, da weder `entscheidsuche.ch` noch die Trefferliste von `search.bger.ch` dieses Feld liefern.
 - **Kein HTML gespeichert:** `content_html` wird nicht gespeichert, um unnötige Daten zu vermeiden. Die Integritätsprüfung erfolgt über `fetch.text_sha256` auf `text`.
 
 ## Felder im Rohdaten-JSON (`data/raw/`)
@@ -43,9 +43,14 @@ Nachgelagerte Pipeline-Schritte ergänzen gemäss Issue `#3` folgende Felder:
 
 | Feld | Typ | Beschreibung |
 |---|---|---|
-| `score` | `number` | Relevanz-Score für Suva. |
-| `ampel` | `string` | Ampel-Einstufung (z. B. `"rot"`, `"gelb"`, `"grün"`). |
+| `score` | `number` | Relevanz-Score für Suva (`0`–`100`). |
+| `ampel` | `string` | Ampel-Einstufung: `"gruen"`, `"gelb"` oder `"rot"` (ASCII ohne Umlaut gemäss `#12`/`#28`/`#40`). |
 | `relevance_reason` | `string` | Begründung der Triage-Einstufung. |
-| `similar_cases` | `list[string]` | Ähnliche Fälle (z. B. über Vektorsuche). |
+| `similar_cases` | `list[object]` | Ähnlichste Referenzfälle (`case_id`, `id`, `decision_date`, `subject`, `similarity`). |
 | `summary_de` | `string` | Zusammenfassung auf Deutsch. |
 | `summary_fr` | `string` | Zusammenfassung auf Französisch. |
+
+## Persistente Vector-DB & FTS5 (`data/processed/vectordb/metadata.sqlite3`)
+
+- **Tabelle `judgements`:** `doc_key` (`<decision_date>_<id>`), `id` (`/` → `_`), `case_id`, `case_ids` (JSON), `decision_date`, `language`, `division`, `subject`, `is_reference` (`0`/`1`), `is_negative_reference` (`0`/`1` für rotes Juristen-Feedback aus `#28`/`#40`), `manual_reference` (`0`/`1`), `url`, `text_sha256`, `fingerprint`, `n_chunks`, `vector_file`.
+- **Virtuelle Tabelle `judgements_fts` (SQLite FTS5):** Volltextindex über `case_id`, `subject` und `text` für exakte Gesetzes-/Begriffssuche (`#30`, z. B. `"Art. 6 UVG"`).

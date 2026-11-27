@@ -29,6 +29,8 @@ build/
 
 #data
 .data/
+data/processed/*
+!data/processed/.gitkeep
 # Crawled court judgements stay local (keep only the empty folder in git)
 data/raw/*
 !data/raw/.gitkeep

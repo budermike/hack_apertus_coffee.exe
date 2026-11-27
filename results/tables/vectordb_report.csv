@@ -1,0 +1,4 @@
+quarter,raw_count,vectordb_count,chunks,reference_cases,match
+2025-Q4,1930,1930,15126,28,True
+2026-Q1,2004,2004,16796,31,True
+2026-Q2,2096,2096,17187,0,True
