@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Urteils-Radar</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="i18n.js" defer></script>
+    <script src="api.js" defer></script>
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <header class="topbar">
+        <div class="brand">
+            <span class="brand-mark" aria-hidden="true">§</span>
+            <div>
+                <h1 data-i18n="appTitle">Urteils-Radar</h1>
+                <p class="subtitle" data-i18n="appSubtitle"></p>
+            </div>
+        </div>
+        <div class="lang-switch" role="group" aria-label="Language">
+            <button type="button" data-lang="de">DE</button>
+            <button type="button" data-lang="fr">FR</button>
+        </div>
+    </header>
+
+    <main>
+        <section class="card search-card">
+            <h2 data-i18n="searchTitle">Zeitraum</h2>
+            <form id="search-form" novalidate>
+                <div class="field">
+                    <label for="date-from" data-i18n="from">Von</label>
+                    <div class="date-input">
+                        <input id="date-from" type="text" inputmode="numeric" autocomplete="off"
+                               data-i18n-attr="placeholder:datePlaceholder">
+                        <button type="button" class="icon-btn calendar-btn" data-target="date-from" data-i18n-attr="aria-label:openCalendar">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+                        </button>
+                        <input type="date" class="native-picker" tabindex="-1" aria-hidden="true" data-for="date-from">
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="date-to" data-i18n="to">Bis</label>
+                    <div class="date-input">
+                        <input id="date-to" type="text" inputmode="numeric" autocomplete="off"
+                               data-i18n-attr="placeholder:datePlaceholder">
+                        <button type="button" class="icon-btn calendar-btn" data-target="date-to" data-i18n-attr="aria-label:openCalendar">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+                        </button>
+                        <input type="date" class="native-picker" tabindex="-1" aria-hidden="true" data-for="date-to">
+                    </div>
+                </div>
+                <button id="search-btn" type="submit" class="primary-btn">
+                    <span class="spinner" aria-hidden="true"></span>
+                    <span class="label" data-i18n="search">Suchen</span>
+                </button>
+            </form>
+            <p id="form-error" class="form-error" role="alert"></p>
+        </section>
+
+        <section class="results">
+            <div class="results-header">
+                <h2 data-i18n="resultsTitle">Ergebnisse</h2>
+                <span id="results-count" class="muted"></span>
+            </div>
+            <p id="results-status" class="status muted" data-i18n="emptyInitial"></p>
+            <ol id="results-list" class="results-list"></ol>
+        </section>
+    </main>
+
+    <footer class="muted" data-i18n="footer"></footer>
+</body>
+</html>
