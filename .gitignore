@@ -34,3 +34,7 @@ data/processed/triage/
 # Temporary / corrupt crawler files stay local; public BGer judgements in data/raw/ are tracked
 data/raw/**/*.tmp
 data/raw/**/*.corrupt-*
+# Local SQLite databases (summaries DB) stay out of git
+*.db
+*.db-wal
+*.db-shm

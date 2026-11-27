@@ -15,16 +15,18 @@ requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
-# The source folder "hack_apertus_coffee.exe" is not a valid Python identifier,
-# so it is installed under the import name "hack_apertus_coffee_exe".
-packages = ["hack_apertus_coffee_exe", "hack_apertus_coffee_exe.triage", "hack_apertus_coffee_exe.crawl"]
-package-dir = { "hack_apertus_coffee_exe" = "src/hack_apertus_coffee.exe" }
+# The project name "hack_apertus_coffee.exe" is not a valid Python identifier,
+# so the source folder and import name are "hack_apertus_coffee_exe".
+packages = ["hack_apertus_coffee_exe", "hack_apertus_coffee_exe.triage", "hack_apertus_coffee_exe.crawl", "hack_apertus_coffee_exe.summary"]
+package-dir = { "hack_apertus_coffee_exe" = "src/hack_apertus_coffee_exe" }
 
 [tool.setuptools.dynamic]
 dependencies = { file = ["requirements.txt"] }
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+# Import the package from src/ without installing it
+pythonpath = ["src"]
 # Network tests hit the real websites; run them with: pytest -m integration
 markers = ["integration: needs network access to external websites"]
 addopts = "-m 'not integration'"
