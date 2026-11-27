@@ -23,7 +23,12 @@ CREATE TABLE IF NOT EXISTS summaries (
     created_at     TEXT    NOT NULL,
     status         TEXT    NOT NULL CHECK (status IN ('generated', 'edited', 'approved')),
     coherence_ok   INTEGER CHECK (coherence_ok IN (0, 1)),
-    UNIQUE (case_id, language, version)
+    UNIQUE (case_id, language, version),
+    -- Modell-Text vs. menschlich bearbeiteter Text
+    CHECK (
+        (status = 'generated' AND model <> 'human')
+        OR (status IN ('edited', 'approved') AND model = 'human' AND prompt_version IS NULL)
+    )
 );
 ```
 
@@ -34,26 +39,33 @@ CREATE TABLE IF NOT EXISTS summaries (
 | `language` | Sprache der **Summary** (`de` / `fr`), nicht die Sprache des Urteils |
 | `version` | Laufende Nummer pro `(case_id, language)`, beginnend bei 1 |
 | `text` | Text der Summary |
-| `model` | Herkunft des Texts: `apertus-v1-5-8b`, `apertus-v1-5-70b` usw. bei `generated`; `human` bei `edited`. `approved` übernimmt den Wert der freigegebenen Version |
+| `model` | Herkunft des Texts: Apertus-Modell-ID (z. B. `apertus-v1-5-70b`) bei `generated`; immer `human` bei `edited` und `approved` (wird vom Code automatisch gesetzt) |
 | `prompt_version` | Prompt-Fassung, mit der generiert wurde (z. B. `v2`); für Evaluation und gezieltes Neu-Generieren. `NULL` bei bearbeiteten Texten |
 | `created_at` | Zeitpunkt der Erstellung, ISO-8601 in UTC (`2026-11-27T14:16:14+00:00`) |
-| `status` | `generated` (vom Modell), `edited` (von Jurist:in geändert), `approved` (freigegeben) |
-| `coherence_ok` | Ergebnis des Coherence-Checks: `1` = bestanden, `0` = Problem gefunden, `NULL` = nicht geprüft |
+| `status` | `generated` (vom Modell, gilt ohne weiteren Schritt als freigegeben), `edited` (von Jurist:in geändert, wartet auf Freigabe), `approved` (bearbeitete Fassung freigegeben) |
+| `coherence_ok` | Ergebnis des Coherence-Checks: `1` = bestanden, `0` = Problem gefunden, `NULL` = nicht geprüft. Der Check ist Teil der Summary-Pipeline: Beim Generieren wird die Summary inhaltlich mit dem Originalurteil verglichen, der Wert wird beim Einfügen gesetzt und danach nie geändert. `edited`/`approved`: `NULL` (kein Check auf menschlich bearbeiteten Text) |
 
 ### Versionierung
 
 - **Aktuelle Version** = Zeile mit der höchsten `version` pro `(case_id, language)`.
+- **Modell-Summaries brauchen keine Freigabe:** `generated` gilt direkt als freigegeben.
+- **Nur menschlich bearbeitete Fassungen werden freigegeben:** `approved` ist nur erlaubt, wenn die aktuelle Version `edited` ist (geprüft im Code, `store.py`).
+- **Bearbeiten setzt automatisch** `status = 'edited'`, `model = 'human'`, `prompt_version = NULL`; der Aufrufer übergibt nur den neuen Text. Der `CHECK` in der Tabelle verhindert inkonsistente Zeilen.
 - Ablauf Generieren → Bearbeiten → Freigeben ergibt drei Zeilen:
 
 | version | status | model | prompt_version | text |
 |---|---|---|---|---|
-| 1 | `generated` | `apertus-v1-5-70b` | `v2` | Modell-Output |
+| 1 | `generated` | `apertus-v1-5-70b` | `v2` | Modell-Output (bereits gültig) |
 | 2 | `edited` | `human` | `NULL` | bearbeiteter Text |
 | 3 | `approved` | `human` | `NULL` | Kopie von v2 |
 
-- Wird eine Summary ohne Bearbeitung freigegeben, kopiert `approved` die `generated`-Zeile (inkl. `model` und `prompt_version`).
-
 - Neu-Generieren (z. B. mit neuem Prompt) erzeugt ebenfalls eine neue Version mit Status `generated`.
+
+### Generieren und Anzeigen
+
+- **Pro `(case_id, language)` wird höchstens einmal generiert.** Existiert bereits eine Zeile (egal welcher Status), ruft weder Batch noch UI das LLM erneut auf. Neue Versionen entstehen nur durch Bearbeiten und Freigeben.
+- **Angezeigte Version:** neueste `approved`-Zeile, sonst die `generated`-Zeile.
+- **Offene Bearbeitung** (neueste Zeile ist `edited`): wird als Entwurf „wartet auf Freigabe“ angezeigt, ersetzt die angezeigte Version aber erst nach `approved`.
 
 ## Tabelle `case_numbers`
 
@@ -82,5 +94,5 @@ CREATE INDEX IF NOT EXISTS idx_summaries_case_lang
 
 ## Offene Punkte
 
-- **Coherence-Check:** Was genau geprüft wird, ist noch nicht festgelegt. Bis dahin bleibt `coherence_ok` = `NULL`. Mögliche Erweiterung: `coherence_notes TEXT` für die Begründung in der UI.
+- **Coherence-Begründung:** Mögliche Erweiterung `coherence_notes TEXT`, damit die UI anzeigen kann, was beim Check nicht gepasst hat.
 - **Volltextsuche:** optional per SQLite FTS5 über `text` und `case_id`.

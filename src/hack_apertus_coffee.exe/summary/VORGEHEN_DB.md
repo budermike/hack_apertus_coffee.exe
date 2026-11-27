@@ -62,7 +62,9 @@ CREATE TABLE case_numbers (
 5. **UI** liest über `list_latest` / `get_latest`; „Neu generieren“ / „Bearbeiten“ erzeugt neue Version.
 6. **Suche** (falls Zeit): SQLite FTS5 über `text` + `case_id`.
 
-## Zusatz: Triage-Feedback (Entwurf, noch nicht entschieden)
+## Zusatz: Triage-Feedback (Entwurf, **zurückgestellt**)
+
+> Ampel-System ist noch nicht definiert → wird später geklärt. Zuerst wird nur die Tabelle `summaries` (+ `case_numbers`) umgesetzt.
 
 Anforderung: Tabelle `feedback` mit `case_id, chosen_ampel, old_ampel, old_score, new_score, comment, user, created_at`.
 In der Triage: `manual_override = true`, `model_score` bleibt erhalten. Re-Scoring durch das Modell überschreibt manuelle Werte nicht.
@@ -92,7 +94,11 @@ CREATE TABLE feedback (               -- append-only Log jeder manuellen Korrekt
 ```
 
 - Angezeigter Wert = letzte `feedback`-Zeile, falls `manual_override = 1`, sonst `model_*`.
-- Re-Scoring aktualisiert nur `model_*`, nie `manual_override` oder `feedback`.
+- Entschieden: Re-Scoring **darf** `model_score`/`model_ampel` überschreiben (kein Verlauf), ändert aber nie `manual_override` oder `feedback`.
+- Entschieden: Ampel und Score hängen zusammen. Nutzer:in wählt die Ampel, `new_score` wird daraus abgeleitet:
+  - gleiche Ampel wie angezeigt → nichts passiert (keine `feedback`-Zeile, kein Override)
+  - andere Ampel → `new_score` = Durchschnitt der aktuell angezeigten Scores aller Urteile, die gerade diese Ampel haben (zum Zeitpunkt der Korrektur berechnet und in `feedback.new_score` festgehalten)
+  - offen: Fallback, wenn noch kein Urteil diese Ampel hat; woher die Ampel eines Urteils kommt (gespeichert oder aus Grenzwerten)
 - Feldnamen an Triage-Branch angleichen (`relevance_score`, Ampel-Werte aus `feat/crawl`-Schema).
 
 ## Offene Fragen fürs Rubberducking
@@ -100,7 +106,8 @@ CREATE TABLE feedback (               -- append-only Log jeder manuellen Korrekt
 - ~~Statuswechsel~~ → entschieden: `approved` = neue Zeile.
 - ~~Zusammengelegte Verfahren~~ → entschieden: Zuordnungstabelle `case_numbers`.
 - ~~`edited`~~ → entschieden: `model = "human"`, `prompt_version = NULL`.
-- **Coherence-Check:** Läuft er vor dem Speichern (Wert sofort gesetzt) oder später (Wert nachträglich per `UPDATE`)?
+- **Ampel:** Gespeichert (`model_ampel` vom Modell) oder aus Score-Grenzwerten abgeleitet? Fallback für leere Farbe? Wer speichert Triage-Ergebnisse in die DB?
+- ~~Coherence-Check~~ → entschieden: läuft beim Generieren (Urteil vs. Summary), Wert wird beim Einfügen gesetzt, nie nachträglich geändert.
 - **Metadaten zum Urteil** (Datum, Abteilung, URL, `text_sha256`): eigene Tabelle `cases`, oder bleibt das im Crawl-JSON?
 - **Gleichzeitigkeit:** Schreiben Batch-Job und UI gleichzeitig? → WAL-Modus (`PRAGMA journal_mode=WAL`).
 - **Human-Summaries von Suva:** auch in diese Tabelle (für Vergleich/Eval), oder getrennt halten?
