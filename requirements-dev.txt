@@ -1,5 +1,7 @@
 # Development / test / docs dependencies — install with: pip install -r requirements-dev.txt
--e .  # installs the project (editable) + requirements.txt
+# `-e .` installs the project itself (editable) plus everything in requirements.txt.
+# Needed so `python -m hack_apertus_coffee_exe...` works from the project folder.
+-e .
 jupyterlab==4.6.6
 ipykernel==7.4.0
 pytest==9.2.0
