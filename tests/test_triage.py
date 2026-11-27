@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from datetime import date
 import json
 from pathlib import Path
 from types import SimpleNamespace
@@ -9,6 +10,7 @@ import unittest
 
 import numpy as np
 
+from triage.date_filter import DateRange, OutOfDateRangeError, extract_judgement_date
 from triage.embeddings import (
     TfidfEmbedder,
     chunk_text,
@@ -87,12 +89,19 @@ class TriageUnitTests(unittest.TestCase):
                 source_file="dummy2.html",
             ),
         ]
-        pipeline = TriagePipeline(reference_cases=refs, embedder=TfidfEmbedder(), llm_client=None)
+        window = DateRange(since=date(2026, 8, 27), until=date(2026, 11, 27))
+        pipeline = TriagePipeline(
+            reference_cases=refs,
+            embedder=TfidfEmbedder(),
+            llm_client=None,
+            date_range=window,
+        )
 
         relevant_item = load_crawl_items_from_dicts(
             [
                 {
                     "case_id": "8C_999/2026",
+                    "date": "2026-11-01",
                     "language": "de",
                     "judgement_text": (
                         "Beschwerde der Suva gegen das Urteil des Kantonsgerichts betreffend "
@@ -101,6 +110,7 @@ class TriageUnitTests(unittest.TestCase):
                 },
                 {
                     "case_id": "5A_100/2026",
+                    "date": "2026-11-01",
                     "language": "de",
                     "judgement_text": (
                         "Scheidungsrecht, Güterrecht und Unterhaltsbeiträge für minderjährige Kinder "
@@ -115,6 +125,90 @@ class TriageUnitTests(unittest.TestCase):
         self.assertGreater(results[0].relevance_score, results[1].relevance_score)
         self.assertTrue(results[0].relevant)
         self.assertFalse(results[1].relevant)
+
+    def test_extract_judgement_date_sources(self) -> None:
+        self.assertEqual(
+            extract_judgement_date("text", {"date": "2026-10-14"}),
+            date(2026, 10, 14),
+        )
+        self.assertEqual(
+            extract_judgement_date(
+                "text",
+                {"url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?highlight_docid=aza://11-12-2025-8C_177-2025&lang=de"},
+            ),
+            date(2025, 12, 11),
+        )
+        self.assertEqual(
+            extract_judgement_date("Urteil vom 14. Oktober 2026", {}),
+            date(2026, 10, 14),
+        )
+        self.assertEqual(
+            extract_judgement_date("Arrêt du 28 septembre 2026", {}),
+            date(2026, 9, 28),
+        )
+        self.assertEqual(
+            extract_judgement_date("Sentenza del 10 ottobre 2026", {}),
+            date(2026, 10, 10),
+        )
+
+    def test_hard_date_filter_prevents_embedding_out_of_range_items(self) -> None:
+        class _SpyTfidfEmbedder(TfidfEmbedder):
+            def __init__(self) -> None:
+                super().__init__()
+                self.embedded_batches: list[list[str]] = []
+
+            def embed(self, texts):
+                self.embedded_batches.append(list(texts))
+                return super().embed(texts)
+
+        spy = _SpyTfidfEmbedder()
+        window = DateRange(since=date(2026, 8, 27), until=date(2026, 11, 27))
+        pipeline = TriagePipeline(
+            judgements_dir="judgements",
+            embedder=spy,
+            llm_client=None,
+            date_range=window,
+        )
+        # Reset counter after indexing the 55 historical reference summaries.
+        spy.embedded_batches.clear()
+
+        items = load_crawl_items_from_dicts(
+            [
+                {
+                    "case_id": "8C_IN_RANGE/2026",
+                    "date": "2026-10-15",
+                    "judgement_text": "Suva UVG Unfallversicherung.",
+                },
+                {
+                    "case_id": "8C_TOO_OLD/2025",
+                    "date": "2025-12-01",
+                    "judgement_text": "Altes Suva UVG Urteil.",
+                },
+                {
+                    "case_id": "8C_IN_FUTURE/2027",
+                    "date": "2027-01-05",
+                    "judgement_text": "Zukünftiges Urteil.",
+                },
+                {
+                    "case_id": "8C_NO_DATE/2026",
+                    "judgement_text": "Urteil ohne Datum.",
+                },
+            ]
+        )
+
+        results = pipeline.score_items(items)
+        self.assertEqual([r.case_id for r in results], ["8C_IN_RANGE/2026"])
+        self.assertEqual(results[0].judgement_date, "2026-10-15")
+        self.assertEqual(len(pipeline.last_skipped), 3)
+        # Only the single in-range item reached embed().
+        self.assertEqual(len(spy.embedded_batches), 1)
+        self.assertEqual(spy.embedded_batches[0], ["Suva UVG Unfallversicherung."])
+
+        # Direct score_item() also enforces the hard filter before embedding.
+        spy.embedded_batches.clear()
+        with self.assertRaises(OutOfDateRangeError):
+            pipeline.score_item(items[1])
+        self.assertEqual(spy.embedded_batches, [])
 
     def test_parse_json_decision_with_markdown_fence(self) -> None:
         raw = """```json
@@ -142,7 +236,13 @@ class TriageUnitTests(unittest.TestCase):
             model="apertus-v1-5-8b",
         )
         llm_client = ApertusTriageClient(config=cfg, client=fake_llm, temperature=0.0)
-        pipeline = TriagePipeline(judgements_dir="judgements", embedder=TfidfEmbedder(), llm_client=llm_client)
+        window = DateRange(since=date(2026, 8, 27), until=date(2026, 11, 27))
+        pipeline = TriagePipeline(
+            judgements_dir="judgements",
+            embedder=TfidfEmbedder(),
+            llm_client=llm_client,
+            date_range=window,
+        )
 
         with tempfile.TemporaryDirectory() as tmpdir:
             p1 = Path(tmpdir) / "case1.json"
