@@ -1,0 +1,56 @@
+{
+  "id": "8C_759_2025",
+  "case_id": "8C_759/2025",
+  "case_ids": [
+    "8C_759/2025"
+  ],
+  "decision_date": "2026-02-04",
+  "publication_date": null,
+  "department": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "division": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "subject": "Invalidenversicherung (Prozessvoraussetzung)",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://04-02-2026-8C_759-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n8C_759/2025\nUrteil vom 4. Februar 2026\nIV. öffentlich-rechtliche Abteilung\nBesetzung\nBundesrichterin Viscione, Präsidentin,\nGerichtsschreiber Grünvogel.\nVerfahrensbeteiligte\nA.________, vertreten durch B.________,\nBeschwerdeführerin,\ngegen\nIV-Stelle des Kantons Zürich,\nRöntgenstrasse 17, 8005 Zürich,\nBeschwerdegegnerin.\nGegenstand\nInvalidenversicherung (Prozessvoraussetzung),\nBeschwerde gegen den Beschluss des Sozialversicherungsgerichts des Kantons Zürich vom 3. Dezember 2025 (IV.2025.00742).\nNach Einsicht\nin die Beschwerde vom 22. Dezember 2025 gegen den Nichteintretensbeschluss des Sozialversicherungsgerichts des Kantons Zürich vom 3. Dezember 2025,\nin Erwägung,\ndass die Beschwerdeführerin den ihr vom Gericht gemäss Art. 42 Abs. 5 BGG angezeigten Formmangel der fehlenden Beilagen (vollständiger angefochtener Entscheid) nicht innerhalb der mit Verfügung vom 8. Januar 2026 angesetzten, am 19. Januar 2025 abgelaufenen (Art. 44 - 48 BGG) Nachfrist behoben hat,\ndass die Beschwerde überdies den Minimalanforderungen an eine Rechtsmittelbegründung gemäss Art. 42 Abs. 2 BGG offensichtlich nicht genügt, da darin mit keinen Wort auf das vorinstanzliche Nichteintreten eingegangen wird (vgl. BGE 123 V 335),\ndass deshalb im vereinfachten Verfahren nach Art. 108 Abs. 1 lit. a und b BGG auf die Beschwerde nicht einzutreten ist,\ndass in Anwendung von Art. 66 Abs. 1 Satz 2 BGG ausnahmsweise auf die Erhebung von Gerichtskosten verzichtet wird,\nerkennt die Präsidentin:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nEs werden keine Gerichtskosten erhoben.\n3.\nDieses Urteil wird den Parteien, dem Sozialversicherungsgericht des Kantons Zürich und dem Bundesamt für Sozialversicherungen schriftlich mitgeteilt.\nLuzern, 4. Februar 2026\nIm Namen der IV. öffentlich-rechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Präsidentin: Viscione\nDer Gerichtsschreiber: Grünvogel",
+  "operator_metadata": {
+    "date": "2026-02-04",
+    "reference": [
+      "8C_759/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-759-2025_2026-02-04.html",
+      "source": "446973/45/2834",
+      "content_length": 2280
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+      "it": "Confederazione Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale)",
+      "fr": "Conféderation Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social)"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_008"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_008_8C-759-2025_2026-02-04",
+    "title": {
+      "de": "Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung) 04.02.2026 8C_759/2025",
+      "it": "Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale) 04.02.2026 8C_759/2025",
+      "fr": "Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social) 04.02.2026 8C_759/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:10:04+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-759-2025_2026-02-04.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "9c79b0d5067f4a817aa99dfa2384afb10e395fb6043d819e220679d3d94cd82f"
+  }
+}

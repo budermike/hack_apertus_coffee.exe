@@ -1,0 +1,56 @@
+{
+  "id": "4A_467_2025",
+  "case_id": "4A_467/2025",
+  "case_ids": [
+    "4A_467/2025"
+  ],
+  "decision_date": "2025-12-01",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "contrat d'entreprise",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://01-12-2025-4A_467-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4A_467/2025\nArrêt du 1er décembre 2025\nIre Cour de droit civil\nComposition\nM. le Juge fédéral Hurni, Président.\nGreffier : M. Widmer.\nParticipants à la procédure\nA.________ Sàrl,\nrecourante,\ncontre\nB.________,\nreprésentée par Me Vivian Kühnlein, avocate,\nintimée.\nObjet\ncontrat d'entreprise,\nrecours contre l'arrêt rendu le 13 août 2025 par la Cour d'appel civile du Tribunal cantonal du canton de Vaud (PT25.000356-250789 357).\nLe Président :\nVu le recours formé le 22 septembre 2025 (date du timbre postal) par A.________ Sàrl (ci-après: la recourante) contre l'arrêt rendu le 13 août 2025 par la Cour d'appel civile du Tribunal cantonal du canton de Vaud dans la cause divisant la recourante d'avec B.________ (ci-après: l'intimée);\nVu l'ordonnance présidentielle du 1er octobre 2025 invitant la recourante à verser, jusqu'au 16 octobre 2025 au plus tard, une avance de frais de 800 fr.;\nVu l'ordonnance du 21 octobre 2025 par laquelle un délai supplémentaire venant à échéance le 5 novembre 2025 a été imparti à la recourante conformément à l'art. 62 al. 3 LTF;\nAttendu que l'avance de frais requise n'a pas été effectuée dans le délai imparti par cette ordonnance;\nConsidérant, dès lors, que le recours est irrecevable en vertu de l'art. 62 al. 3 LTF,\nqu'il y a lieu, partant, de faire application de la procédure simplifiée prévue par l'art. 108 al. 1 LTF,\nque les frais judiciaires seront mis à la charge de la recourante (art. 66 al. 1 et 3 LTF),\nque l'intimée, qui n'a pas été invitée à répondre au recours, n'a pas droit à des dépens.\npar ces motifs, le Président prononce :\n1.\nLe recours est irrecevable.\n2.\nLa recourante acquittera un émolument judiciaire de 500 fr.\n3.\nLe présent arrêt est communiqué aux parties et à la Cour d'appel civile du Tribunal cantonal du canton de Vaud.\nLausanne, le 1er décembre 2025\nAu nom de la Ire Cour de droit civil\ndu Tribunal fédéral suisse\nLe Président : Hurni\nLe Greffier : Widmer",
+  "operator_metadata": {
+    "date": "2025-12-01",
+    "reference": [
+      "4A_467/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-467-2025_2025-12-01.html",
+      "source": "446973/45/2869",
+      "content_length": 2301
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-06-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2869",
+    "id": "CH_BGer_004_4A-467-2025_2025-12-01",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 01.12.2025 4A_467/2025",
+      "it": "Tribunale federale I Corte di diritto civile 01.12.2025 4A_467/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 01.12.2025 4A_467/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:39:55+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-467-2025_2025-12-01.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "d37f2dd6d40355ffea75b7b1c2129f0b16fb72f883f15b5d9b2945d4ac1e57ad"
+  }
+}

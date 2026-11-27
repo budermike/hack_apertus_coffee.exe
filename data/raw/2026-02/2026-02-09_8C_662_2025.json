@@ -1,0 +1,56 @@
+{
+  "id": "8C_662_2025",
+  "case_id": "8C_662/2025",
+  "case_ids": [
+    "8C_662/2025"
+  ],
+  "decision_date": "2026-02-09",
+  "publication_date": null,
+  "department": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "division": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "subject": "Arbeitslosenversicherung",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://09-02-2026-8C_662-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n8C_662/2025\nUrteil vom 9. Februar 2026\nIV. öffentlich-rechtliche Abteilung\nBesetzung\nBundesrichterin Viscione, Präsidentin,\nGerichtsschreiber Hochuli.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführerin,\ngegen\nAmt für Arbeit, Arbeitslosenkasse, Lückenstrasse 8, 6430 Schwyz,\nBeschwerdegegner.\nGegenstand\nArbeitslosenversicherung,\nBeschwerde gegen den Entscheid des Verwaltungsgerichts des Kantons Schwyz vom 20. Oktober 2025 (II 2025 54).\nNach Einsicht\nin die Beschwerde vom 7. November 2025 gegen den Entscheid des Verwaltungsgerichts des Kantons Schwyz vom 20. Oktober 2025,\nin die Verfügung vom 16. Dezember 2025, mit welcher in Ablehnung des mit der Beschwerdeerhebung gestellten Gesuchs um unentgeltliche Rechtspflege A.________ zur Bezahlung eines Kostenvorschusses innert gesetzter Frist verpflichtet wurde,\nin die Verfügung vom 23. Januar 2026, mit welcher A.________ zur Bezahlung eines Kostenvorschusses innert einer Nachfrist bis zum 3. Februar 2026 verpflichtet wurde, ansonsten auf das Rechtsmittel nicht eingetreten werde,\nin Erwägung,\ndass die Beschwerdeführerin den Vorschuss auch innerhalb der Nachfrist nicht geleistet hat,\ndass deshalb gestützt auf Art. 62 Abs. 3 BGG im vereinfachten Verfahren nach Art. 108 Abs. 1 lit. a BGG auf die Beschwerde nicht einzutreten ist,\ndass in Anwendung von Art. 66 Abs. 1 Satz 2 BGG ausnahmsweise auf die Erhebung von Gerichtskosten verzichtet wird; indessen inskünftig mit dieser Rechtswohltat nicht mehr gerechnet werden darf,\nerkennt die Präsidentin:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nEs werden keine Gerichtskosten erhoben.\n3.\nDieses Urteil wird den Parteien, dem Verwaltungsgericht des Kantons Schwyz und dem Staatssekretariat für Wirtschaft (SECO) schriftlich mitgeteilt.\nLuzern, 9. Februar 2026\nIm Namen der IV. öffentlich-rechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Präsidentin: Viscione\nDer Gerichtsschreiber: Hochuli",
+  "operator_metadata": {
+    "date": "2026-02-09",
+    "reference": [
+      "8C_662/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-662-2025_2026-02-09.html",
+      "source": "446973/45/2834",
+      "content_length": 2296
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+      "it": "Confederazione Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale)",
+      "fr": "Conféderation Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social)"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_008"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_008_8C-662-2025_2026-02-09",
+    "title": {
+      "de": "Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung) 09.02.2026 8C_662/2025",
+      "it": "Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale) 09.02.2026 8C_662/2025",
+      "fr": "Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social) 09.02.2026 8C_662/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:11:30+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-662-2025_2026-02-09.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "44fa45308492c2ba3c22e7862858527582c427cadd4ee7990ba528a85ec9d1a9"
+  }
+}

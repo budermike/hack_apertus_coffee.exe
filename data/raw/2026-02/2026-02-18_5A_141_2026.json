@@ -1,0 +1,56 @@
+{
+  "id": "5A_141_2026",
+  "case_id": "5A_141/2026",
+  "case_ids": [
+    "5A_141/2026"
+  ],
+  "decision_date": "2026-02-18",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "Sistierung (Ehescheidung)",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://18-02-2026-5A_141-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5A_141/2026\nUrteil vom 18. Februar 2026\nII. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Bovey, Präsident,\nGerichtsschreiber Zingg.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nB.________,\nBeschwerdegegnerin.\nGegenstand\nSistierung (Ehescheidung),\nBeschwerde gegen den Beschluss des Obergerichts des Kantons Zürich, I. Zivilkammer, vom 6. Januar 2026 (PC250058-O/U).\nErwägungen:\n1.\nDie Parteien führen am Bezirksgericht Dietikon ein Scheidungsverfahren. Am 24. Oktober 2025 verfügte das Bezirksgericht die Sistierung des Scheidungsverfahrens bis einstweilen am 31. Januar 2026, da sich der Beschwerdeführer (Beklagter im Scheidungsverfahren) in einer Justizvollzugsanstalt in Deutschland in Untersuchungshaft befinde, seine Anwesenheit an einer Einigungsverhandlung aber zwingend erforderlich sei und sich seine Auslieferung bzw. Zuführung erst nach Abschluss des Verfahrens in Deutschland abzeichne.\nDagegen erhob der Beschwerdeführer Beschwerde. Mit Beschluss vom 6. Januar 2026 trat das Obergericht auf die Beschwerde nicht ein. Es auferlegte dem Beschwerdeführer die Gerichtskosten von Fr. 100.--.\nGegen diesen Beschluss hat der Beschwerdeführer mit einer auf den 5. Februar 2026 datierten Eingabe (Postaufgabe in Deutschland am 9. Februar 2026, Grenzübertritt der Sendung am 12. Februar 2026) Beschwerde an das Bundesgericht erhoben.\n2.\nDie erstinstanzlich verfügte Sistierung des Scheidungsverfahrens ist am 31. Januar 2026 abgelaufen. Eine allfällige Verlängerung der Sistierung ist nicht Gegenstand des vorliegenden Verfahrens. Insoweit fehlte dem Beschwerdeführer bereits bei Erhebung der Beschwerde ein schutzwürdiges Interesse an der Beschwerdeführung (Art. 76 Abs. 1 lit. b BGG). Ein solches Interesse besteht einzig noch in Bezug auf die ihm durch das Obergericht auferlegten Gerichtskosten. Entgegen Art. 42 Abs. 1 und Abs. 2 BGG enthält die Beschwerde jedoch keine Anträge und keine Begründung. Sie erschöpft sich in der reinen Beschwerdeerhebung.\nDie Beschwerde ist offensichtlich unzulässig und sie enthält offensichtlich keine hinreichende Begründung. Der Abteilungspräsident tritt auf sie im vereinfachten Verfahren nicht ein (Art. 108 Abs. 1 lit. a und b BGG).\n3.\nEs rechtfertigt sich ausnahmsweise, auf die Erhebung von Gerichtskosten zu verzichten (Art. 66 Abs. 1 BGG).\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nEs werden keine Gerichtskosten erhoben.\n3.\nDieses Urteil wird den Parteien, dem Bezirksgericht Dietikon und dem Obergericht des Kantons Zürich, I. Zivilkammer, mitgeteilt.\nLausanne, 18. Februar 2026\nIm Namen der II. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Bovey\nDer Gerichtsschreiber: Zingg",
+  "operator_metadata": {
+    "date": "2026-02-18",
+    "reference": [
+      "5A_141/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-141-2026_2026-02-18.html",
+      "source": "446973/45/2829",
+      "content_length": 3125
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_005_5A-141-2026_2026-02-18",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 18.02.2026 5A_141/2026",
+      "it": "Tribunale federale II Corte di diritto civile 18.02.2026 5A_141/2026",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 18.02.2026 5A_141/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:14:38+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-141-2026_2026-02-18.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "a5c7816062e8846facede107250762fb0dad8adeaf740f104976ac5e6e9f7989"
+  }
+}

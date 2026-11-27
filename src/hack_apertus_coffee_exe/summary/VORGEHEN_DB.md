@@ -49,7 +49,23 @@ CREATE TABLE case_numbers (
 
 ## Schritte
 
-> Stand: 1–3 erledigt (`summary/store.py`, `tests/test_store.py`). Offen: 4 (Pipeline anbinden), 5 (UI-Backend), 6 (Suche).
+> **Stand: Issue #26 umgesetzt.** Alle Schritte erledigt, ausser FTS5 (einfache Suche reicht vorerst).
+>
+> | Schritt | Umsetzung |
+> |---|---|
+> | 1 Schema | `docs/SCHEMA.md`, Teil 2 |
+> | 2 Store | `summary/store.py` |
+> | 3 Tests | `tests/test_summary_store.py` (inkl. Neustart-Test), `tests/test_summary_api.py` |
+> | 4 Batch + On-demand | `summary/run.py` → `store.get_or_generate_languages` (kein `--force` mehr) |
+> | 5 UI-Backend | `summary/api.py` (stdlib `http.server`), Endpunkte siehe Modul-Docstring |
+> | 6 Suche | `store.search` (Teilstring), `GET /api/knowledge-base?q=` |
+>
+> Starten:
+> ```
+> python -m hack_apertus_coffee_exe.summary.run batch --triage results/triage.json --input data/raw
+> python -m hack_apertus_coffee_exe.summary.api --input data/raw --static src/presentation
+> ```
+> Der ursprüngliche Plan unten bleibt zur Nachvollziehbarkeit stehen (Funktionsnamen weichen leicht ab).
 
 1. **Schema festlegen** (Rubberducking, offene Fragen unten) → `docs/SCHEMA.md`.
 2. **`store.py`** mit kleiner API:

@@ -1,0 +1,56 @@
+{
+  "id": "7B_1406_2025",
+  "case_id": "7B_1406/2025",
+  "case_ids": [
+    "7B_1406/2025"
+  ],
+  "decision_date": "2026-03-02",
+  "publication_date": null,
+  "department": "II. Strafrechtliche Abteilung",
+  "division": "II. Strafrechtliche Abteilung",
+  "subject": "Ordonnance de non-entrée en matière; irrecevabilité du recours en matière pénale (défaut de paiement de l'avance de frais)",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://02-03-2026-7B_1406-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n7B_1406/2025\nArrêt du 2 mars 2026\nIIe Cour de droit pénal\nComposition\nM. le Juge fédéral Abrecht, Président.\nGreffier : M. Fragnière.\nParticipants à la procédure\nA.________,\nrecourant,\ncontre\nMinistère public de la République\net canton de Neuchâtel,\npassage de la Bonne-Fontaine 41, 2300 La Chaux-de-Fonds,\nintimé.\nObjet\nOrdonnance de non-entrée en matière; irrecevabilité du recours en matière pénale (défaut de paiement de l'avance de frais),\nrecours contre l'arrêt du Président de l'Autorité de recours en matière pénale du Tribunal cantonal de la République et canton de Neuchâtel du 21 novembre 2025 (ARMP.2025.127/sk).\nFaits :\nA.\nPar ordonnance du 21 novembre 2026, le Président de l'Autorité de recours en matière pénale du Tribunal cantonal neuchâtelois n'est pas entré en matière sur le recours formé par A.________ contre l'ordonnance de non-entrée en matière rendue le 30 octobre 2025 par le Ministère public de la République et canton de Neuchâtel.\nB.\nPar acte du 22 décembre 2025, A.________ interjette un recours en matière pénale contre l'ordonnance précitée.\nConsidérant en droit :\n1.\nSelon l'art. 62 LTF, la partie qui saisit le Tribunal fédéral doit avancer les frais présumés de la procédure (al. 1); si elle ne verse pas l'avance requise dans le délai supplémentaire qui lui est fixé à cet effet après un premier non-paiement, son recours est irrecevable (al. 3).\nEn l'espèce, le recourant a été invité, par ordonnance présidentielle du 16 janvier 2025, à verser une avance de frais de 800 fr. jusqu'au 3 février 2025 au plus tard. Dans la mesure où seul un montant de 80 fr. a été versé jusqu'alors, le recourant s'est vu impartir par ordonnance du 9 février 2026 un délai supplémentaire (non prolongeable) jusqu'au 20 février 2026 pour fournir le solde de l'avance de frais de 720 francs; il a été informé qu'à défaut de paiement en temps utile, le recours serait déclaré irrecevable (art. 62 al. 3 LTF).\nNonobstant la notification des deux ordonnances précitées (par acte judiciaire avec avis de réception), le recourant n'a pas effectué l'avance de frais dans le délai supplémentaire imparti. Par conséquent, à défaut de paiement de l'avance de frais, le recours est manifestement irrecevable et doit dès lors être écarté en application de la procédure simplifiée prévue à l'art. 108 al. 1 let. a LTF.\n2.\nLe recourant, qui succombe, supportera les frais judiciaires, lesquels seront fixés en tenant compte des actes d'instruction effectués jusque-là (art. 5 al. 2 PCF, par renvoi de l'art. 71 LTF; art. 66 al. 1 et 2 LTF).\nPar ces motifs, le Président prononce :\n1.\nLe recours est irrecevable.\n2.\nLes frais judiciaires, arrêtés à 500 fr., sont mis à la charge du recourant.\n3.\nLe présent arrêt est communiqué aux parties et au Président de l'Autorité de recours en matière pénale du Tribunal cantonal de la République et canton de Neuchâtel.\nLausanne, le 2 mars 2026\nAu nom de la IIe Cour de droit pénal\ndu Tribunal fédéral suisse\nLe Président : Abrecht\nLe Greffier : Fragnière",
+  "operator_metadata": {
+    "date": "2026-03-02",
+    "reference": [
+      "7B_1406/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-1406-2025_2026-03-02.html",
+      "source": "446973/45/2834",
+      "content_length": 3457
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit pénal"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_007"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_007_7B-1406-2025_2026-03-02",
+    "title": {
+      "de": "Bundesgericht II. Strafrechtliche Abteilung 02.03.2026 7B_1406/2025",
+      "it": "Tribunale federale II Corte di diritto penale 02.03.2026 7B_1406/2025",
+      "fr": "Tribunal fédéral IIe Cour de droit pénal 02.03.2026 7B_1406/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:17:53+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-1406-2025_2026-03-02.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "c627ccf1d0067bea54c080115c37d535b47d215305fcfd0d20a64f08b2cadde8"
+  }
+}

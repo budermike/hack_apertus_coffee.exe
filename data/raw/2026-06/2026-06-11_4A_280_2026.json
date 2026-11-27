@@ -1,0 +1,56 @@
+{
+  "id": "4A_280_2026",
+  "case_id": "4A_280/2026",
+  "case_ids": [
+    "4A_280/2026"
+  ],
+  "decision_date": "2026-06-11",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "Ausstand",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://11-06-2026-4A_280-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4A_280/2026\nUrteil vom 11. Juni 2026\nI. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Hurni, Präsident,\nGerichtsschreiber Tanner.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführerin,\ngegen\n1. Anna Katharina Glauser Jung, Obergericht des Kantons Thurgau, Promenadenstrasse 12A, 8500 Frauenfeld,\n2. Marcel Ogg,\nObergericht des Kantons Thurgau, Promenadenstrasse 12A, 8500 Frauenfeld,\n3. Marianne Bommer,\nObergericht des Kantons Thurgau, Promenadenstrasse 12A, 8500 Frauenfeld,\n4. Cornel Inauen sel.,\nObergericht des Kantons Thurgau, Promenadenstrasse 12A, 8500 Frauenfeld,\n5. Irene Herzog,\nObergericht des Kantons Thurgau, Promenadenstrasse 12A, 8500 Frauenfeld,\n6. Peter Dünner,\nObergericht des Kantons Thurgau, Promenadenstrasse 12A, 8500 Frauenfeld,\n7. Christian Stähle,\nObergericht des Kantons Thurgau, Promenadenstrasse 12A, 8500 Frauenfeld,\n8. I.________,\n9. J.________,\n10. K.________,\n11. L.________,\nBeschwerdegegner.\nGegenstand\nAusstand,\nBeschwerde gegen die Verfügung des Obergerichts des Kantons Thurgau vom 30. März 2026 (ZPR.2025.16).\nErwägungen:\n1.\nMit Präsidialverfügung vom 30. März 2026 wies das Obergericht des Kantons Thurgau das Sistierungsgesuch der Beschwerdeführerin vom 27. März 2026 ab.\nDagegen erhob die Beschwerdeführerin am 7. Mai 2026 Beschwerde an das Bundesgericht.\nAm 23. Mai 2026 reichte sie eine Ergänzung und einen Nachtrag zu ihrer Beschwerde ein.\nEs wurden keine Vernehmlassungen eingeholt.\n2.\nDie Eingabe der Beschwerdeführerin beruht augenfällig auf querulatorischer und rechtsmissbräuchlicher Prozessführung und ist als solche unzulässig (Art. 42 Abs. 7 BGG). Auf die Beschwerde ist demnach im vereinfachten Verfahren durch den Abteilungspräsidenten nicht einzutreten (Art. 108 Abs. 1 lit. c BGG). Die Begründung dieses Entscheids beschränkt sich dabei auf eine kurze Angabe des Unzulässigkeitsgrundes (Art. 108 Abs. 3 BGG).\n3.\nDie Beschwerdeführerin wird bei diesem Verfahrensausgang kostenpflichtig (Art. 66 Abs. 1 BGG).\nDie Beschwerdegegner haben keinen Anspruch auf eine Parteientschädigung, da ihnen mangels Einholung einer Vernehmlassung aus dem bundesgerichtlichen Verfahren kein entschädigungspflichtiger Aufwand erwachsen ist (Art. 68 Abs. 2 BGG).\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 800.-- werden der Beschwerdeführerin auferlegt.\n3.\nEs werden keine Parteientschädigungen zugesprochen.\n4.\nDieses Urteil wird den Parteien und dem Obergericht des Kantons Thurgau schriftlich mitgeteilt.\nLausanne, 11. Juni 2026\nIm Namen der I. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Hurni\nDer Gerichtsschreiber: Tanner",
+  "operator_metadata": {
+    "date": "2026-06-11",
+    "reference": [
+      "4A_280/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-280-2026_2026-06-11.html",
+      "source": "446973/45/2829",
+      "content_length": 3136
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_004_4A-280-2026_2026-06-11",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 11.06.2026 4A_280/2026",
+      "it": "Tribunale federale I Corte di diritto civile 11.06.2026 4A_280/2026",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 11.06.2026 4A_280/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:19:37+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-280-2026_2026-06-11.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "b07295092cf427929aa63219fda9c45a8d0d8dea97e0e5176e68833184b680cf"
+  }
+}

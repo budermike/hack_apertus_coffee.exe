@@ -1,0 +1,56 @@
+{
+  "id": "4D_129_2025",
+  "case_id": "4D_129/2025",
+  "case_ids": [
+    "4D_129/2025"
+  ],
+  "decision_date": "2025-10-01",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "Rechtsöffnung",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://01-10-2025-4D_129-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4D_129/2025\nUrteil vom 1. Oktober 2025\nI. zivilrechtliche Abteilung\nBesetzung\nBundesrichterin Kiss, präsidierendes Mitglied,\nGerichtsschreiber Dürst.\nVerfahrensbeteiligte\n1. A._________\n2. B.________\nBeschwerdeführer,\ngegen\nC.________\nvertreten durch Fürsprecher D.________,\nBeschwerdegegner.\nGegenstand\nRechtsöffnung,\nBeschwerde gegen den Entscheid des Obergerichts des Kantons Bern, 2. Zivilkammer, vom 30. Juni 2025\n(ZK 25 223).\nErwägungen:\n1.\nMit Entscheid vom 30. Juni 2025 wies das Obergericht des Kantons Bern die von den Beschwerdeführern gegen den Rechtsöffnungsentscheid des Regionalgerichts Oberland vom 10. April 2025 erhobene Beschwerde ab. Dagegen erhoben die Beschwerdeführer mit Eingabe vom 15. Juli 2025 Beschwerde beim Bundesverwaltungsgericht, welches die Eingabe zuständigkeitshalber an das Bundesgericht weiterleitete.\n2.\nDiese Eingabe erfüllt die Begründungsanforderungen, die an eine Beschwerde an das Bundesgericht gestellt werden (Art. 42 Abs. 2 und Art. 106 Abs. 2 BGG; BGE 142 III 364 E. 2.4; 140 III 86 E. 2, 115 E. 2), offensichtlich nicht. Auf die Beschwerde ist somit mangels hinreichender Begründung im vereinfachten Verfahren nicht einzutreten (Art. 108 Abs. 1 lit. b BGG). Die Begründung des Entscheids beschränkt sich auf eine kurze Angabe des Unzulässigkeitsgrundes (Art. 108 Abs. 3 BGG).\n3.\nBei diesem Ausgang des Verfahrens sind die Gerichtskosten den Beschwerdeführern in solidarischer Haftbarkeit aufzuerlegen (Art. 66 Abs. 1 und 5 BGG). Der Beschwerdegegner hat keinen Anspruch auf eine Parteientschädigung, da ihm mangels Einholung einer Vernehmlassung aus dem bundesgerichtlichen Verfahren kein entschädigungspflichtiger Aufwand erwachsen ist (Art. 68 Abs. 2 BGG).\nDemnach erkennt das präsidierende Mitglied:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 800.-- werden den Beschwerdeführern in solidarischer Haftbarkeit auferlegt.\n3.\nEs wird keine Parteientschädigung zugesprochen.\n4.\nDieses Urteil wird den Parteien und dem Obergericht des Kantons Bern, 2. Zivilkammer, schriftlich mitgeteilt.\nLausanne, 1. Oktober 2025\nIm Namen der I. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDas präsidierende Mitglied: Kiss\nDer Gerichtsschreiber: Dürst",
+  "operator_metadata": {
+    "date": "2025-10-01",
+    "reference": [
+      "4D_129/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-129-2025_2025-10-01.html",
+      "source": "446973/45/2869",
+      "content_length": 2662
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-06-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2869",
+    "id": "CH_BGer_004_4D-129-2025_2025-10-01",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 01.10.2025 4D_129/2025",
+      "it": "Tribunale federale I Corte di diritto civile 01.10.2025 4D_129/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 01.10.2025 4D_129/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:22:26+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-129-2025_2025-10-01.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "a4e9b0f1d48b09b224849390d3e517cb119b5c2847378070a8518cc3cd9713b0"
+  }
+}

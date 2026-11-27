@@ -1,0 +1,56 @@
+{
+  "id": "6B_687_2025",
+  "case_id": "6B_687/2025",
+  "case_ids": [
+    "6B_687/2025"
+  ],
+  "decision_date": "2025-10-07",
+  "publication_date": null,
+  "department": "I. Strafrechtliche Abteilung",
+  "division": "I. Strafrechtliche Abteilung",
+  "subject": "Retrait du recours (expulsion)",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://07-10-2025-6B_687-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n6B_687/2025\nOrdonnance du 7 octobre 2025\nIre Cour de droit pénal\nComposition\nM. le Juge fédéral Muschietti, Juge présidant.\nGreffier : M. Vallat.\nParticipants à la procédure\nA.________,\nreprésentée par Me Aba Neeman, avocat,\nrecourante,\ncontre\nMinistère public du canton du Valais, Procureure générale,\nrue des Vergers 9, case postale, 1950 Sion,\nintimé.\nObjet\nRetrait du recours (expulsion),\nrecours contre l'arrêt du Tribunal cantonal\ndu canton du Valais, Cour pénale II,\ndu 18 juin 2025 (P1 25 18).\nConsidérant en fait et en droit :\nPar lettre du 6 octobre 2025, A.________ déclare retirer le recours interjeté le 25 août 2025 contre l'arrêt cité sous rubrique. Il sied d'en prendre acte et de rayer la cause du rôle (cf. art. 32 al. 2 LTF), sans frais (cf. art. 66 al. 2 LTF).\nPar ces motifs, le Juge présidant ordonne :\n1.\nIl est pris acte du retrait du recours et l'affaire 6B_687/2025 est rayée du rôle.\n2.\nIl n'est pas perçu de frais judiciaires.\n3.\nLa présente ordonnance est communiquée aux parties et au Tribunal cantonal du canton du Valais, Cour pénale II.\nLausanne, le 7 octobre 2025\nAu nom de la Ire Cour de droit pénal\ndu Tribunal fédéral suisse\nLe Juge présidant : Muschietti\nLe Greffier : Vallat",
+  "operator_metadata": {
+    "date": "2025-10-07",
+    "reference": [
+      "6B_687/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_006_6B-687-2025_2025-10-07.html",
+      "source": "446973/45/2851",
+      "content_length": 1561
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit pénal"
+    },
+    "scrapedate": "2026-06-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_006"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2851",
+    "id": "CH_BGer_006_6B-687-2025_2025-10-07",
+    "title": {
+      "de": "Bundesgericht I. Strafrechtliche Abteilung 07.10.2025 6B_687/2025",
+      "it": "Tribunale federale I Corte di diritto penale 07.10.2025 6B_687/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit pénal 07.10.2025 6B_687/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:24:28+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_006_6B-687-2025_2025-10-07.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "2fa4c1104dc70109326e53311d372c8bbffde06031bb09215958cf72f62cce7f"
+  }
+}

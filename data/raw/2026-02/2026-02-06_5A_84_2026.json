@@ -1,0 +1,56 @@
+{
+  "id": "5A_84_2026",
+  "case_id": "5A_84/2026",
+  "case_ids": [
+    "5A_84/2026"
+  ],
+  "decision_date": "2026-02-06",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "Aufschiebende Wirkung (Besuchskontakte)",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://06-02-2026-5A_84-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5A_84/2026\nVerfügung vom 6. Februar 2026\nII. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Bovey, Präsident,\nGerichtsschreiber Möckli.\nVerfahrensbeteiligte\nA.________,\nvertreten durch Advokat Daniel Senn,\nBeschwerdeführerin,\ngegen\nB.________,\nvertreten durch Advokat Simon Furler,\nBeschwerdegegner.\nGegenstand\nAufschiebende Wirkung (Besuchskontakte),\nBeschwerde gegen die Verfügung des Appellationsgerichts Basel-Stadt vom 19. Januar 2026 (KE.2025.58).\nNach Einsicht\nin die Verfügung des Appellationsgerichts Basel-Stadt vom 19. Januar 2026, mit welcher im Beschwerdeverfahren gegen den Entscheid der KESB Basel-Stadt die aufschiebende Wirkung weiterhin entzogen blieb, so dass die vorerst zwei begleiteten Kontakte zwischen dem Vater und dem Kind sollen stattfinden können, unter Aufforderung der besuchsbegleitetenden Person, dem Appellationsgericht nach den Kontakten hierüber Bericht zu erstatten,\nin die hiergegen erhobene Beschwerde der Mutter vom 26. Januar 2026,\nin das mit der Beschwerde gestellte Gesuch um aufschiebende Wirkung, welches vom Bundesgericht mit Verfügung vom 27. Januar 2026 abgewiesen wurde,\nin die Erklärung der Mutter bzw. ihres Anwaltes vom 4. Februar 2026, wonach die Beschwerde vollständig zurückgezogen werde,\nin Erwägung,\ndass das Beschwerdeverfahren 5A_84/2026 zufolge Beschwerderückzuges durch den Abteilungspräsidenten abzuschreiben ist (Art. 32 Abs. 2 BGG),\ndass die bislang angefallenen Gerichtskosten der Beschwerdeführerin aufzuerlegen sind (Art. 66 Abs. 1 BGG),\ndass auf der Gegenseite bislang kein entschädigungspflichtiger Aufwand angefallen ist, weil weder eine Stellungnahme zum Gesuch um aufschiebende Wirkung noch eine Vernehmlassung in der Sache selbst eingeholt wurde,\nverfügt der Präsident:\n1.\nDas Beschwerdeverfahren 5A_84/2026 wird zufolge Rückzuges abgeschrieben.\n2.\nDie Gerichtskosten von Fr. 500.-- werden der Beschwerdeführerin auferlegt.\n3.\nDiese Verfügung wird den Parteien, dem Appellationsgericht Basel-Stadt und der Kindes- und Erwachsenenschutzbehörde Basel-Stadt mitgeteilt.\nLausanne, 6. Februar 2026\nIm Namen der II. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Bovey\nDer Gerichtsschreiber: Möckli",
+  "operator_metadata": {
+    "date": "2026-02-06",
+    "reference": [
+      "5A_84/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-84-2026_2026-02-06.html",
+      "source": "446973/45/2830",
+      "content_length": 2589
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2830",
+    "id": "CH_BGer_005_5A-84-2026_2026-02-06",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 06.02.2026 5A_84/2026",
+      "it": "Tribunale federale II Corte di diritto civile 06.02.2026 5A_84/2026",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 06.02.2026 5A_84/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:10:48+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-84-2026_2026-02-06.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "b8ea5d93a8d29ac2dbef28bb6cd8e1185e7e0806b9483c15dd726ad74b3c5faf"
+  }
+}

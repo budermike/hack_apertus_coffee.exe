@@ -1,0 +1,56 @@
+{
+  "id": "4D_186_2025",
+  "case_id": "4D_186/2025",
+  "case_ids": [
+    "4D_186/2025"
+  ],
+  "decision_date": "2025-10-29",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "Rechtsöffnung",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://29-10-2025-4D_186-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4D_186/2025\nUrteil vom 29. Oktober 2025\nI. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Hurni, Präsident,\nGerichtsschreiber Dürst.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nKanton Zug,\nvertreten durch Gerichtskasse des Kantons Zug, Kirchenstrasse 6, 6301 Zug,\nBeschwerdegegner.\nGegenstand\nRechtsöffnung,\nBeschwerde gegen das Urteil des Obergerichts des Kantons Zug, II. Beschwerdeabteilung, vom 21. August 2025 (BZ 2025 40).\nErwägungen:\n1.\nDas Obergericht des Kantons Zug wies mit Urteil vom 21. August 2025 die Beschwerde des Beschwerdeführers gegen den Rechtsöffnungsentscheid des Kantonsgerichts Zug vom 11. Februar 2025 ab, soweit es darauf eintrat. Dagegen erhebt der Beschwerdeführer mit Eingabe vom 22. September 2025 (Postaufgabe) Beschwerde an das Bundesgericht.\n2.\nDie Eingabe des Beschwerdeführers erfüllt die Begründungsanforderungen, die an eine Beschwerde an das Bundesgericht gestellt werden (Art. 42 Abs. 2 und Art. 106 Abs. 2 BGG; BGE 142 III 364 E. 2.4; 140 III 86 E. 2, 115 E. 2), offensichtlich nicht. Auf die Beschwerde ist somit mangels hinreichender Begründung im vereinfachten Verfahren durch den Abteilungspräsidenten nicht einzutreten (Art. 108 Abs. 1 lit. b BGG). Die Begründung des Entscheids beschränkt sich auf eine kurze Angabe des Unzulässigkeitsgrundes (Art. 108 Abs. 3 BGG).\n3.\nDas sinngemässe Gesuch um Gewährung der unentgeltlichen Rechtspflege für das bundesgerichtliche Verfahren ist abzuweisen, weil die Beschwerde als von vornherein aussichtslos erscheint (Art. 64 Abs. 1 BGG). Darüber musste unter den gegebenen Umständen nicht vorgängig separat entschieden werden (vgl. Urteil 4A_20/2011 vom 11. April 2011 E. 7.2.2).\n4.\nBei diesem Ausgang des Verfahrens sind die Gerichtskosten dem Beschwerdeführer aufzuerlegen (Art. 66 Abs. 1 BGG). Dem Beschwerdegegner ist keine Parteientschädigung zuzusprechen (Art. 68 Abs. 3 BGG), zumal ihm mangels Einholung einer Vernehmlassung aus dem bundesgerichtlichen Verfahren kein entschädigungspflichtiger Aufwand erwachsen ist.\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDas Gesuch des Beschwerdeführers um unentgeltliche Rechtspflege für das bundesgerichtliche Verfahren wird abgewiesen.\n3.\nDie Gerichtskosten von Fr. 800.-- werden dem Beschwerdeführer auferlegt.\n4.\nDieses Urteil wird den Parteien und dem Obergericht des Kantons Zug, II. Beschwerdeabteilung, schriftlich mitgeteilt.\nLausanne, 29. Oktober 2025\nIm Namen der I. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Hurni\nDer Gerichtsschreiber: Dürst",
+  "operator_metadata": {
+    "date": "2025-10-29",
+    "reference": [
+      "4D_186/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-186-2025_2025-10-29.html",
+      "source": "446973/45/2869",
+      "content_length": 3013
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-06-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2869",
+    "id": "CH_BGer_004_4D-186-2025_2025-10-29",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 29.10.2025 4D_186/2025",
+      "it": "Tribunale federale I Corte di diritto civile 29.10.2025 4D_186/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 29.10.2025 4D_186/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:30:35+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-186-2025_2025-10-29.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "9c4d2d5b59f511f3b7f9574521385628406e853aa1e4371016ab29fcfb50d1f4"
+  }
+}

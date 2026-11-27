@@ -1,0 +1,56 @@
+{
+  "id": "8C_634_2025",
+  "case_id": "8C_634/2025",
+  "case_ids": [
+    "8C_634/2025"
+  ],
+  "decision_date": "2025-12-23",
+  "publication_date": null,
+  "department": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "division": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "subject": "Assurance-chômage (retrait du recours)",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://23-12-2025-8C_634-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n8C_634/2025\nOrdonnance du 23 décembre 2025\nIVe Cour de droit public\nComposition\nM. le Juge fédéral Métral, en qualité de juge unique.\nGreffière : Mme Castella.\nParticipants à la procédure\nA.________,\nrecourant,\ncontre\nDirection générale de l'emploi et du marché du travail du canton de Vaud,\nrue Caroline 11, 1014 Lausanne,\nintimée.\nObjet\nAssurance-chômage (retrait du recours),\nrecours contre l'arrêt du Tribunal cantonal du canton de Vaud du 6 octobre 2025 (ACH 87/25 - 165/2025).\nVu :\nla lettre du 9 décembre 2025 par laquelle A.________ a déclaré retirer le recours interjeté le 27 octobre 2025 (timbre postal) contre l'arrêt de la Cour des assurances sociales du Tribunal cantonal du canton de Vaud du 6 octobre 2025,\nconsidérant :\nque la cause doit être rayée du rôle en application des art. 32 al. 2 et 71 LTF, en relation avec l'art. 73 al. 1 PCF (RS 273),\nqu'il se justifie en appliquant l'art. 66 al. 2 LTF de statuer sans frais judiciaires,\npar ces motifs, le Juge unique ordonne :\n1.\nLa cause est rayée du rôle par suite de retrait du recours.\n2.\nIl n'est pas perçu de frais judiciaires.\n3.\nLa présente ordonnance est communiquée aux parties, au Tribunal cantonal du canton de Vaud, Cour des assurances sociales, et au Secrétariat d'État à l'économie (SECO).\nLucerne, le 23 décembre 2025\nAu nom de la IVe Cour de droit public\ndu Tribunal fédéral suisse\nLe Juge unique : Métral\nLa Greffière : Castella",
+  "operator_metadata": {
+    "date": "2025-12-23",
+    "reference": [
+      "8C_634/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-634-2025_2025-12-23.html",
+      "source": "446973/45/2851",
+      "content_length": 1787
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+      "it": "Confederazione Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale)",
+      "fr": "Conféderation Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social)"
+    },
+    "scrapedate": "2026-06-18",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_008"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2851",
+    "id": "CH_BGer_008_8C-634-2025_2025-12-23",
+    "title": {
+      "de": "Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung) 23.12.2025 8C_634/2025",
+      "it": "Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale) 23.12.2025 8C_634/2025",
+      "fr": "Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social) 23.12.2025 8C_634/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:00:18+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-634-2025_2025-12-23.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "6cb1e95567fc8c7674ee60033a1b84cebf11d716e0b1a1335798502a629c70ee"
+  }
+}

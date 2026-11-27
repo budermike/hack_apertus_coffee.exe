@@ -1,0 +1,56 @@
+{
+  "id": "4A_243_2026",
+  "case_id": "4A_243/2026",
+  "case_ids": [
+    "4A_243/2026"
+  ],
+  "decision_date": "2026-06-09",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "riduzione della pigione",
+  "language": "it",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://09-06-2026-4A_243-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4A_243/2026\nSentenza del 9 giugno 2026\nI Corte di diritto civile\nComposizione\nGiudice federale Hurni, Presidente,\nCancelliere G. Piatti.\nPartecipanti al procedimento\nA.________,\nricorrente,\ncontro\nB.________,\nopponente.\nOggetto\nriduzione della pigione,\nricorso contro la sentenza emanata il 13 aprile 2026\ndalla II Camera civile del Tribunale d'appello del\nCantone Ticino (12.2025.156).\nRitenuto in fatto e considerando in diritto:\n1.\n1.1. Il 25 settembre 2016A.________ ha concluso, quale conduttore, un contratto di locazione con B.________ per un appartamento di 2,5 locali sito a Minusio.\n1.2. Con pronunzia 6 dicembre 2021 il Pretore di Locarno-Città ha respinto la petizione con cui A.________ aveva convenuto in giudizio B.________ per ottenere \"la riduzione della pigione e la rifusione dei guadagni realizzati illecitamente\". Sia l'appello contro tale decisione sia il successivo ricorso al Tribunale federale sono stati dichiarati inammissibili con sentenze del 25 aprile 2022 e del 13 giugno 2022 (causa 4A_238/2022). Altrettanto infruttuosa si è rivelata la procedura iniziata con un'istanza di interpretazione e rettifica inoltrata alla Pretura e conclusasi con la sentenza del Tribunale federale del 30 maggio 2023 (causa 4A_225/2023).\n1.3. Con giudizio 17 novembre 2025 il Pretore ha dichiarato irricevibile la nuova petizione 12 novembre 2025 inoltrata da A.________ nei confronti di B.________.\n2.\nCon sentenza 13 aprile 2026 la II Camera civile del Tribunale di appello del Cantone Ticino ha dichiarato irricevibile l'appello del 30 dicembre 2025 di A.________ siccome non sufficientemente motivato, mancando segnatamente un confronto chiaro con la sentenza pretorile. A titolo abbondanziale ha pure rilevato che la nuova petizione concerneva in parte la pretesa e i fatti già posti a fondamento della procedura giudiziaria iniziata nel 2021.\n3.\nA.________è insorto al Tribunale federale con ricorso 12 maggio 2026.\nNon è stato ordinato uno scambio di scritti.\n4.\nGiusta l'art. 42 cpv. 2 LTF nei motivi del ricorso occorre spiegare, in modo conciso e confrontandosi con i considerandi della sentenza impugnata (DTF 150 V 340 consid. 2; 148 IV 205 consid. 2.6; 140 III 86 consid. 2), perché questa viola il diritto.\nNella fattispecie il ricorso palesemente non soddisfa le predette esigenze di motivazione. Il ricorrente si dilunga sui motivi per cui ritiene la pigione eccessiva, ma omette di spiegare perché la motivazione principale della sentenza impugnata, basata sul diritto processuale e che ha portato la Corte cantonale a dichiarare l'appello irricevibile, violerebbe il diritto federale.\n5.\nIn queste circostanze il ricorso, manifestamente non motivato in modo sufficiente, va deciso dal Presidente della Corte adita nella procedura semplificata (art. 108 cpv. 1 lett. b LTF). Le spese giudiziarie seguono la soccombenza (art. 66 cpv. 1 LTF).\nper questi motivi, il Presidente pronuncia:\n1.\nIl ricorso è inammissibile.\n2.\nLe spese giudiziarie di fr. 800.-- sono poste a carico del ricorrente.\n3.\nComunicazione alle parti e alla II Camera civile del Tribunale d'appello del Cantone Ticino.\nLosanna, 9 giugno 2026\nIn nome della I Corte di diritto civile\ndel Tribunale federale svizzero\nIl Presidente: Hurni\nIl Cancelliere: G. Piatti",
+  "operator_metadata": {
+    "date": "2026-06-09",
+    "reference": [
+      "4A_243/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "it",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-243-2026_2026-06-09.html",
+      "source": "446973/45/2829",
+      "content_length": 3732
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "it",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_004_4A-243-2026_2026-06-09",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 09.06.2026 4A_243/2026",
+      "it": "Tribunale federale I Corte di diritto civile 09.06.2026 4A_243/2026",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 09.06.2026 4A_243/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:19:25+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-243-2026_2026-06-09.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "4b456bd4b82a89547ff084546b94a429f4e8dff72377df896423a5e203496de4"
+  }
+}

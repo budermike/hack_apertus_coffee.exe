@@ -1,0 +1,56 @@
+{
+  "id": "2C_57_2026",
+  "case_id": "2C_57/2026",
+  "case_ids": [
+    "2C_57/2026"
+  ],
+  "decision_date": "2026-02-16",
+  "publication_date": null,
+  "department": "II. Offentlich-rechtliche Abteilung",
+  "division": "II. Offentlich-rechtliche Abteilung",
+  "subject": "Frais perçus par la police; prestations fournies par un tiers",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://16-02-2026-2C_57-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n2C_57/2026\nOrdonnance du 16 février 2026\nIIe Cour de droit public\nComposition\nMme la Juge fédérale\nAubry Girardin, Présidente.\nGreffier : M. Dubey.\nParticipants à la procédure\nA.________,\nrecourant,\ncontre\nDirection de la sécurité, de la justice et du sport de l'État de Fribourg,\nGrand-Rue 27, case postale, 1701 Fribourg,\nintimée.\nObjet\nFrais perçus par la police; prestations fournies par un tiers,\nrecours contre l'arrêt du Tribunal cantonal de l'État de Fribourg, Ie Cour administrative, du 15 janvier 2026 (601 2024 50, 601 2024 53).\nVu :\nl'arrêt rendu le 15 janvier 2026 par le Tribunal cantonal du canton de Fribourg confirmant que la Police cantonale pouvait mettre solidairement à charge de A.________et de son épouse la facture du serrurier auquel l'épouse avait fait appel pour ouvrir la porte du domicile conjugal,\nle courrier du Tribunal cantonal adressant au Tribunal fédéral comme objet de sa compétence un éventuel recours de A.________ daté du 23 janvier 2026 contre l'arrêt rendu le 15 janvier 2026,\nle courrier du 2 février 2026 du Tribunal fédéral impartissant un délai à A.________ jusqu'au 23 février 2026 pour préciser s'il entend maintenir son recours, et, le cas échéant, compléter la motivation de celui-ci,\nle courrier du 6 février 2026 de A.________, précisant qu'il n'entend pas déposer de recours auprès du Tribunal fédéral.\nConsidérant :\nqu'il convient de prendre acte du retrait du recours et de rayer la cause du rôle en application de l'art. 32 al. 2 LTF,\nque, s'agissant des frais et dépens (cf. art. 72 PCF par renvoi de l'art. 71 LTF et art. 66 al. 2, ainsi que 68 al. 1 et 3 LTF), il convient de renoncer à en percevoir, compte tenu de l'avancement de la procédure, respectivement à en allouer.\nPar ces motifs, la Présidente ordonne :\n1.\nIl est pris acte du retrait du recours et la cause est rayée du rôle.\n2.\nIl n'est pas perçu de frais de justice, ni alloué de dépens.\n3.\nLa présente ordonnance est communiquée aux parties et au Tribunal cantonal de l'État de Fribourg, Ie Cour administrative.\nLausanne, le 16 février 2026\nAu nom de la IIe Cour de droit public\ndu Tribunal fédéral suisse\nLa Présidente : F. Aubry Girardin\nLe Greffier : C.-E. Dubey",
+  "operator_metadata": {
+    "date": "2026-02-16",
+    "reference": [
+      "2C_57/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_002_2C-57-2026_2026-02-16.html",
+      "source": "446973/45/2829",
+      "content_length": 2563
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Offentlich-rechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto pubblico",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit public"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_002"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_002_2C-57-2026_2026-02-16",
+    "title": {
+      "de": "Bundesgericht II. Offentlich-rechtliche Abteilung 16.02.2026 2C_57/2026",
+      "it": "Tribunale federale II Corte di diritto pubblico 16.02.2026 2C_57/2026",
+      "fr": "Tribunal fédéral IIe Cour de droit public 16.02.2026 2C_57/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:13:35+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_002_2C-57-2026_2026-02-16.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "d7c547f3a4aa1affacf6d5174cfc18acb77b8500252ce5a618907e42c42682f7"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "id": "9C_642_2025",
+  "case_id": "9C_642/2025",
+  "case_ids": [
+    "9C_642/2025"
+  ],
+  "decision_date": "2025-12-03",
+  "publication_date": null,
+  "department": "IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung)",
+  "division": "IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung)",
+  "subject": "Alters- und Hinterlassenenversicherung",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://03-12-2025-9C_642-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n9C_642/2025\nUrteil vom 3. Dezember 2025\nIII. öffentlich-rechtliche Abteilung\nBesetzung\nBundesrichterin Moser-Szeless, Präsidentin,\nGerichtsschreiberin Keel Baumann.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nAusgleichskasse Luzern,\nWürzenbachstrasse 8, 6006 Luzern,\nBeschwerdegegnerin.\nGegenstand\nAlters- und Hinterlassenenversicherung,\nBeschwerde gegen das Urteil des Kantonsgerichts Luzern vom 1. Oktober 2025 (5V 25 201).\nNach Einsicht\nin die Beschwerde vom 10. November 2025 (Poststempel) gegen das Nichteintretensurteil des Kantonsgerichts Luzern vom 1. Oktober 2025,\nin Erwägung,\ndass ein Rechtsmittel gemäss Art. 42 Abs. 1 und 2 BGG unter anderem die Begehren und deren Begründung zu enthalten hat, wobei in der Begründung in gedrängter Form darzulegen ist, inwiefern der angefochtene Akt Recht verletzt,\ndass nach der Rechtsprechung eine Beschwerdeschrift, welche sich bei Nichteintretensentscheiden lediglich mit der materiellen Seite des Falles auseinandersetzt, keine sachbezogene Begründung aufweist und damit keine rechtsgenügliche Beschwerde darstellt (vgl. BGE 123 V 335; 118 Ib 134; ARV 2002 Nr. 7 S. 61 E. 2),\ndass der Beschwerdeführer nicht darlegt, weshalb die Vorinstanz auf seine Beschwerde hätte eintreten sollen, und sich stattdessen (soweit überhaupt einschlägig) materiell äussert, womit seine Eingabe den Begründungsanforderungen nicht genügt,\ndass deshalb im vereinfachten Verfahren nach Art. 108 Abs. 1 lit. b BGG auf die Beschwerde nicht einzutreten ist und in Anwendung von Art. 66 Abs. 1 Satz 2 BGG auf die Erhebung von Gerichtskosten umständehalber verzichtet wird,\nerkennt die Präsidentin:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nEs werden keine Gerichtskosten erhoben.\n3.\nDieses Urteil wird den Parteien, dem Kantonsgericht Luzern und dem Bundesamt für Sozialversicherungen schriftlich mitgeteilt.\nLuzern, 3. Dezember 2025\nIm Namen der III. öffentlich-rechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Präsidentin: Moser-Szeless\nDie Gerichtsschreiberin: Keel Baumann",
+  "operator_metadata": {
+    "date": "2025-12-03",
+    "reference": [
+      "9C_642/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_009_9C-642-2025_2025-12-03.html",
+      "source": "446973/45/2851",
+      "content_length": 2404
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung)",
+      "it": "Confederazione Tribunale federale IV Corte di diritto pubblico (II Corte di diritto sociale)",
+      "fr": "Conféderation Tribunal fédéral IVe Cour de droit public (IIe Cour de droit social)"
+    },
+    "scrapedate": "2026-06-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_009"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2851",
+    "id": "CH_BGer_009_9C-642-2025_2025-12-03",
+    "title": {
+      "de": "Bundesgericht IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung) 03.12.2025 9C_642/2025",
+      "it": "Tribunale federale IV Corte di diritto pubblico (II Corte di diritto sociale) 03.12.2025 9C_642/2025",
+      "fr": "Tribunal fédéral IVe Cour de droit public (IIe Cour de droit social) 03.12.2025 9C_642/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:41:00+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_009_9C-642-2025_2025-12-03.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "5db2adf6af3bc518a3c5060b6025dd73372f614b5914c0084ab4c7c50a066359"
+  }
+}

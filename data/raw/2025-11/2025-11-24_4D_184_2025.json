@@ -1,0 +1,56 @@
+{
+  "id": "4D_184_2025",
+  "case_id": "4D_184/2025",
+  "case_ids": [
+    "4D_184/2025"
+  ],
+  "decision_date": "2025-11-24",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "mainlevée provisoire; retrait du recours",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://24-11-2025-4D_184-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4D_184/2025\nOrdonnance du 24 novembre 2025\nIre Cour de droit civil\nComposition\nM. le Juge fédéral Hurni, Président.\nGreffier : M. Douzals.\nParticipantes à la procédure\nA.________ SA,\nrecourante,\ncontre\nB.________ SA,\nintimée.\nObjet\nmainlevée provisoire; retrait du recours,\nrecours contre l'arrêt rendu le 29 août 2025 par la Chambre civile de la Cour de justice du canton de Genève (C/13627/2025, ACJC/1153/2025).\nConsidérant en fait et en droit :\n1.\nLe 23 septembre 2025, A.________ SA (ci-après: la recourante) a formé recours contre l'arrêt rendu le 29 août 2025 par la Chambre civile de la Cour de justice du canton de Genève dans la cause l'opposant à B.________ SA (ci-après: l'intimée).\nPar ordonnance présidentielle du 10 octobre 2025, la recourante a été invitée à verser une avance de frais de 800 fr. d'ici au 27 octobre 2025.\nLa recourante n'ayant pas versé l'avance de frais dans le délai fixé, la Cour de céans lui a imparti, par ordonnance présidentielle du 30 octobre 2025, un délai supplémentaire non prolongeable échéant le 14 novembre 2025 pour verser dite avance.\nLe 17 novembre 2025, la recourante a retiré son recours.\n2.\nLe juge instructeur statue comme juge unique sur la radiation du rôle des procédures devenues sans objet ou achevées par un retrait ou une transaction judiciaire (art. 32 al. 2 LTF).\nEn l'espèce, il y a lieu de prendre acte du retrait du recours et de rayer la cause du rôle.\n3.\nLorsque la cause est rayée du rôle en raison du retrait du recours, la partie recourante est réputée avoir succombé au sens de l'art. 66 al. 1, 1re phr., LTF (GRÉGORY BOVEY, in Commentaire de la LTF, 3e éd. 2022, no 38 ad art. 66 LTF). Si l'affaire est liquidée en raison du retrait du recours, les frais judiciaires peuvent être réduits ou remis (art. 66 al. 2 LTF).\nAu vu des circonstances, des frais judiciaires réduits seront mis à la charge de la recourante. Dès lors que l'intimée n'a pas été invitée à se déterminer sur le recours, il ne lui sera pas alloué de dépens.\npar ces motifs, le Président ordonne :\n1.\nIl est pris acte du retrait du recours.\n2.\nLa cause 4D_184/2025 est rayée du rôle.\n3.\nLes frais judiciaires, arrêtés à 300 fr., sont mis à la charge de la recourante.\n4.\nIl n'est pas alloué de dépens.\n5.\nLa présente ordonnance est communiquée aux parties et à la Chambre civile de la Cour de justice du canton de Genève.\nLausanne, le 24 novembre 2025\nAu nom de la Ire Cour de droit civil\ndu Tribunal fédéral suisse\nLe Président : Hurni\nLe Greffier : Douzals",
+  "operator_metadata": {
+    "date": "2025-11-24",
+    "reference": [
+      "4D_184/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-184-2025_2025-11-24.html",
+      "source": "446973/45/2869",
+      "content_length": 2932
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-06-18",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2869",
+    "id": "CH_BGer_004_4D-184-2025_2025-11-24",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 24.11.2025 4D_184/2025",
+      "it": "Tribunale federale I Corte di diritto civile 24.11.2025 4D_184/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 24.11.2025 4D_184/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:37:53+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-184-2025_2025-11-24.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "b4fb2647af3048a74e0543a147954acf97929cb92b09897662cb28ce0cee2b22"
+  }
+}

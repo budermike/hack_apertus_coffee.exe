@@ -1,0 +1,56 @@
+{
+  "id": "4D_157_2025",
+  "case_id": "4D_157/2025",
+  "case_ids": [
+    "4D_157/2025"
+  ],
+  "decision_date": "2025-10-31",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "mainlevée définitive",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://31-10-2025-4D_157-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4D_157/2025\nArrêt du 31 octobre 2025\nIre Cour de droit civil\nComposition\nM. le Juge fédéral Hurni, Président.\nGreffier : M. Douzals.\nParticipants à la procédure\nA.________,\nrecourant,\ncontre\nB.________,\nintimée.\nObjet\nmainlevée définitive,\nrecours contre l'arrêt rendu le 4 août 2025 par la Chambre civile du Tribunal cantonal du canton du Valais\n(C3 25 81).\nConsidérant en fait et en droit :\n1.\nPar décision du 2 mai 2025, le Juge suppléant du district de Monthey a prononcé, à hauteur de 112 fr., la mainlevée définitive de l'opposition qu'avait formée A.________ (ci-après: le poursuivi ou le recourant) au commandement de payer que lui avait fait notifier B.________ (ci-après: l'intimée) dans la poursuite n o xxx de l'Office des poursuites des districts de Monthey et St-Maurice.\nPar arrêt du 4 août 2025, la Chambre civile du Tribunal cantonal du canton du Valais a rejeté, dans la mesure de sa recevabilité, le recours déposé par le poursuivi à l'encontre de ladite décision.\n2.\nContre cet arrêt, le poursuivi a formé recours auprès du Tribunal fédéral le 28 août 2025.\n3.\nAux termes de l'art. 62 al. 1, 1 re phr., LTF, la partie qui saisit le Tribunal fédéral doit fournir une avance de frais d'un montant correspondant aux frais judiciaires présumés.\nL'art. 62 al. 3 LTF dispose que le juge instructeur fixe un délai approprié pour fournir l'avance de frais. Si le versement n'est pas fait dans ce délai, il fixe un délai supplémentaire. Si l'avance n'est pas versée dans ce second délai, le recours est irrecevable.\n4.\nPar ordonnance présidentielle du 2 septembre 2025, la Cour de céans a invité le recourant à verser une avance de frais de 800 fr. d'ici au 17 septembre 2025.\nLe recourant n'ayant pas versé l'avance de frais dans le délai fixé, la Cour de céans lui a imparti, par ordonnance présidentielle du 25 septembre 2025, un délai supplémentaire échéant le 10 octobre 2025 pour verser ladite avance de frais. Ladite ordonnance a été notifiée au recourant le 27 septembre 2025.\nLe 21 octobre 2025, la Caisse du Tribunal fédéral a attesté que le recourant n'avait pas versé l'avance de frais.\nDès lors que le recourant n'a pas versé l'avance de frais dans le délai supplémentaire échu le 10 octobre 2025, son recours est irrecevable (art. 62 al. 3, 3e phr., LTF), ce qu'il y a lieu de constater par voie de procédure simplifiée (art. 108 al. 1 let. a LTF).\n5.\nAu vu des circonstances, il ne sera pas perçu de frais judiciaires. Dès lors que l'intimée n'a pas été invitée à se déterminer sur le recours, il ne lui sera pas octroyé de dépens.\npar ces motifs, le Président prononce :\n1.\nLe recours est irrecevable.\n2.\nIl n'est pas perçu de frais judiciaires.\n3.\nIl n'est pas alloué de dépens.\n4.\nLe présent arrêt est communiqué aux parties et à la Chambre civile du Tribunal cantonal du canton du Valais.\nLausanne, le 31 octobre 2025\nAu nom de la Ire Cour de droit civil\ndu Tribunal fédéral suisse\nLe Président : Hurni\nLe Greffier : Douzals",
+  "operator_metadata": {
+    "date": "2025-10-31",
+    "reference": [
+      "4D_157/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-157-2025_2025-10-31.html",
+      "source": "446973/45/2869",
+      "content_length": 3428
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-06-18",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2869",
+    "id": "CH_BGer_004_4D-157-2025_2025-10-31",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 31.10.2025 4D_157/2025",
+      "it": "Tribunale federale I Corte di diritto civile 31.10.2025 4D_157/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 31.10.2025 4D_157/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:31:30+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-157-2025_2025-10-31.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "91bd854afc09f22936c35eaa11f4869da092c14047ba24c9a1cecb8237f7d87d"
+  }
+}

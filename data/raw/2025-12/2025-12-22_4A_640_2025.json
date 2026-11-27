@@ -1,0 +1,56 @@
+{
+  "id": "4A_640_2025",
+  "case_id": "4A_640/2025",
+  "case_ids": [
+    "4A_640/2025"
+  ],
+  "decision_date": "2025-12-22",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "Forderung",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://22-12-2025-4A_640-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4A_640/2025\nUrteil vom 22. Dezember 2025\nI. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Hurni, Präsident,\nGerichtsschreiber Tanner.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nB.________ AG,\nvertreten durch Rechtsanwalt Dr. Thomas Ender,\nBeschwerdegegnerin.\nGegenstand\nForderung,\nBeschwerde gegen das Urteil des Obergerichts des Kantons Aargau, Zivilgericht, 2. Kammer, vom 5. November 2025 (ZOR.2025.3 [OZ.2019.1]).\nErwägungen:\n1.\nMit Klage vom 4. Februar 2019 beantragte der Beschwerdeführer beim Bezirksgericht Baden, die Beschwerdegegnerin sei zu verpflichten, ihm Fr. 222'391.-- zuzüglich verschiedener Zinsbetreffnisse zu bezahlen. Das Bezirksgericht Baden wies die Klage mit Entscheid vom 18. September 2024 vollumfänglich ab.\nDas Obergericht des Kantons Aargau trat mit Urteil vom 5. November 2025 auf eine vom Beschwerdeführer dagegen erhobene Berufung nicht ein.\nGegen dieses Urteil erhob der Beschwerdeführer am 10. Dezember 2025 Beschwerde an das Bundesgericht.\n2.\nDiese Eingabe erfüllt die Begründungsanforderungen, die an eine Beschwerde an das Bundesgericht gestellt werden (Art. 42 Abs. 2 und Art. 106 Abs. 2 BGG; BGE 142 III 364 E. 2.4; 140 III 86 E. 2, 115 E. 2), offensichtlich nicht. Auf die Beschwerde ist somit mangels hinreichender Begründung im vereinfachten Verfahren durch den Abteilungspräsidenten nicht einzutreten (Art. 108 Abs. 1 lit. b BGG). Die Begründung dieses Entscheids beschränkt sich auf eine kurze Angabe des Unzulässigkeitsgrundes (Art. 108 Abs. 3 BGG).\n3.\nDas Gesuch des Beschwerdeführers um unentgeltliche Rechtspflege und Verbeiständung für das bundesgerichtliche Verfahren ist wegen Aussichtslosigkeit abzuweisen (Art. 64 Abs. 1 BGG).\nDer Beschwerdeführer wird bei diesem Verfahrensausgang kostenpflichtig (Art. 66 Abs. 1 BGG). Die Beschwerdegegnerin hat keinen Anspruch auf eine Parteientschädigung, da ihr mangels Einholung einer Vernehmlassung aus dem bundesgerichtlichen Verfahren kein entschädigungspflichtiger Aufwand erwachsen ist (Art. 68 Abs. 2 BGG).\nDemnach erkennt das Bundesgericht:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDas Gesuch des Beschwerdeführers um unentgeltliche Rechtspflege und Verbeiständung für das bundesgerichtliche Verfahren wird abgewiesen.\n3.\nDie Gerichtskosten von Fr. 500.-- werden dem Beschwerdeführer auferlegt.\n4.\nDieses Urteil wird den Parteien und dem Obergericht des Kantons Aargau, Zivilgericht, 2. Kammer, schriftlich mitgeteilt.\nLausanne, 22. Dezember 2025\nIm Namen der I. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Hurni\nDer Gerichtsschreiber: Tanner",
+  "operator_metadata": {
+    "date": "2025-12-22",
+    "reference": [
+      "4A_640/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-640-2025_2025-12-22.html",
+      "source": "446973/45/2869",
+      "content_length": 3029
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-06-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2869",
+    "id": "CH_BGer_004_4A-640-2025_2025-12-22",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 22.12.2025 4A_640/2025",
+      "it": "Tribunale federale I Corte di diritto civile 22.12.2025 4A_640/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 22.12.2025 4A_640/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:59:46+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-640-2025_2025-12-22.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "a2761e8a3850524e45692670db8a0ab05d2a0d560f9730c7ad44474398150f49"
+  }
+}

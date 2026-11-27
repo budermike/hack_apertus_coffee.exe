@@ -15,12 +15,10 @@ requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
-packages = [
-    "hack_apertus_coffee_exe",
-    "hack_apertus_coffee_exe.crawl",
-    "hack_apertus_coffee_exe.summary",
-]
-package-dir = { "" = "src" }
+# The project name "hack_apertus_coffee.exe" is not a valid Python identifier,
+# so the source folder and import name are "hack_apertus_coffee_exe".
+packages = ["hack_apertus_coffee_exe", "hack_apertus_coffee_exe.triage", "hack_apertus_coffee_exe.crawl", "hack_apertus_coffee_exe.summary"]
+package-dir = { "hack_apertus_coffee_exe" = "src/hack_apertus_coffee_exe" }
 
 [tool.setuptools.dynamic]
 dependencies = { file = ["requirements.txt"] }

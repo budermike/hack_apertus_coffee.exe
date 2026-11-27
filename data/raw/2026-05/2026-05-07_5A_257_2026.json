@@ -1,0 +1,56 @@
+{
+  "id": "5A_257_2026",
+  "case_id": "5A_257/2026",
+  "case_ids": [
+    "5A_257/2026"
+  ],
+  "decision_date": "2026-05-07",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "Konkurseröffnung",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://07-05-2026-5A_257-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5A_257/2026\nUrteil vom 7. Mai 2026\nII. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Bovey, Präsident,\nGerichtsschreiber Zingg.\nVerfahrensbeteiligte\nA.________ GmbH in Liquidation,\nBeschwerdeführerin,\ngegen\nSchweizerische Eidgenossenschaft,\nhandelnd durch die Eidgenössische Steuerverwaltung (ESTV), Hauptabteilung Ressourcen, Schwarztorstrasse 50, 3003 Bern,\nBeschwerdegegnerin.\nGegenstand\nKonkurseröffnung,\nBeschwerde gegen das Urteil des Obergerichts des Kantons Zürich, II. Zivilkammer, vom 16. März 2026 (PS260090-O/U).\nErwägungen:\n1.\nMit Urteil vom 25. Februar 2026 eröffnete das Bezirksgericht Winterthur den Konkurs über die Beschwerdeführerin.\nDagegen erhob die Beschwerdeführerin am 5. März 2026 Beschwerde beim Obergericht des Kantons Zürich. Am 9. März 2026 ergänzte sie die Beschwerde und am 12. März 2026 reichte sie weitere Unterlagen ein. Mit Urteil vom 16. März 2026 wies das Obergericht die Beschwerde ab.\nDagegen hat die Beschwerdeführerin am 19. März 2026 (Postaufgabe) Beschwerde in Zivilsachen an das Bundesgericht erhoben. Mit Verfügung vom 20. März 2026 hat das Bundesgericht das Gesuch um aufschiebende Wirkung abgewiesen. Mit Verfügung vom gleichen Tag hat es die Beschwerdeführerin zur Zahlung eines Kostenvorschusses von Fr. 5'000.-- aufgefordert. Diese Verfügung ist der Beschwerdeführerin am 24. März 2026 zugestellt worden. Mit Verfügung vom 13. April 2026 hat das Bundesgericht der Beschwerdeführerin eine Nachfrist zur Bezahlung des Kostenvorschusses bis zum 24. April 2026 angesetzt (unter Androhung des Nichteintretens auf das Rechtsmittel bei nicht rechtzeitiger Bezahlung; Art. 62 Abs. 3 BGG). Die Verfügung ist der Beschwerdeführerin am 16. April 2026 zugestellt worden. Die Beschwerdeführerin hat den Kostenvorschuss nicht bezahlt.\n2.\nAndrohungsgemäss ist demnach auf die Beschwerde nicht einzutreten. Der Abteilungspräsident entscheidet darüber im vereinfachten Verfahren (Art. 62 Abs. 3 i.V.m. Art. 108 Abs. 1 lit. a BGG).\n3.\nBei diesem Ausgang des Verfahrens trägt die Beschwerdeführerin die Gerichtskosten, die angesichts des geringen entstandenen Aufwands reduziert werden (Art. 66 Abs. 1 BGG).\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 1'500.-- werden der Beschwerdeführerin auferlegt.\n3.\nDieses Urteil wird den Parteien, dem Konkursamt Oberwinterthur-Winterthur, dem Betreibungsamt Oberwinterthur, dem Handelsregisteramt des Kantons Zürich und dem Obergericht des Kantons Zürich, II. Zivilkammer, mitgeteilt.\nLausanne, 7. Mai 2026\nIm Namen der II. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Bovey\nDer Gerichtsschreiber: Zingg",
+  "operator_metadata": {
+    "date": "2026-05-07",
+    "reference": [
+      "5A_257/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-257-2026_2026-05-07.html",
+      "source": "446973/45/2830",
+      "content_length": 3084
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2830",
+    "id": "CH_BGer_005_5A-257-2026_2026-05-07",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 07.05.2026 5A_257/2026",
+      "it": "Tribunale federale II Corte di diritto civile 07.05.2026 5A_257/2026",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 07.05.2026 5A_257/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:37:35+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-257-2026_2026-05-07.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "be42418729dddaf73013ae89c74ebf932b36747bf564ca9f104c1a58cf9019ea"
+  }
+}

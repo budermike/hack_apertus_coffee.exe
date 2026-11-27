@@ -1,0 +1,56 @@
+{
+  "id": "4A_158_2026",
+  "case_id": "4A_158/2026",
+  "case_ids": [
+    "4A_158/2026"
+  ],
+  "decision_date": "2026-05-13",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "Mietvertrag",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://13-05-2026-4A_158-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4A_158/2026\nUrteil vom 13. Mai 2026\nI. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Hurni, Präsident,\nGerichtsschreiber Leemann.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nStadt B.________,\nBeschwerdegegnerin.\nGegenstand\nMietvertrag,\nBeschwerde gegen den Beschluss des Obergerichts des Kantons Zürich, II. Zivilkammer, vom 18. März 2026 (LU260001).\nErwägungen:\n1.\nMit Beschluss vom 19. Januar 2026 schrieb das Bezirksgericht Winterthur ein vom Beschwerdeführer eingeleitetes Verfahren zufolge Gegenstandslosigkeit als erledigt ab.\nMit Beschluss vom 18. März 2026 trat das Obergericht des Kantons Zürich auf eine vom Beschwerdeführer gegen den bezirksgerichtlichen Entscheid vom 19. Januar 2026 erhobene Berufung nicht ein.\nMit Schreiben vom 7. April 2026 leitete das Obergericht dem Bundesgericht die Eingaben des Beschwerdeführers vom 31. März und 2. April 2026 weiter, mit denen er erklärte, den Entscheid des Obergerichts vom 18. März 2026 beim Bundesgericht mit Beschwerde anfechten zu wollen.\nMit Verfügung vom 10. April 2026 wurde das Gesuch des Beschwerdeführers um Gewährung der aufschiebenden Wirkung abgewiesen.\nEs wurden keine Vernehmlassungen eingeholt.\n2.\nDie Eingaben des Beschwerdeführers erfüllen die Begründungsanforderungen, die an eine Beschwerde an das Bundesgericht gestellt werden, offensichtlich nicht (Art. 42 Abs. 2 und Art. 106 Abs. 2 BGG; BGE 142 III 364 E. 2.4; 140 III 86 E. 2, 115 E. 2).\nAuf die Beschwerde ist somit mangels hinreichender Begründung im vereinfachten Verfahren nicht einzutreten (Art. 108 Abs. 1 lit. b BGG).\n3.\nDas Gesuch des Beschwerdeführers um Gewährung der unentgeltlichen Rechtspflege für das bundesgerichtliche Verfahren ist abzuweisen, weil die Beschwerde als von vornherein aussichtslos erschien (Art. 64 Abs. 1 BGG).\nDer Beschwerdeführer wird bei diesem Verfahrensausgang kostenpflichtig (Art. 66 Abs. 1 BGG). Der Beschwerdegegnerin ist keine Parteientschädigung zuzusprechen, da ihr aus dem bundesgerichtlichen Verfahren kein Aufwand erwachsen ist (Art. 68 Abs. 2 BGG).\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDas Gesuch des Beschwerdeführers um unentgeltliche Rechtspflege für das bundesgerichtliche Verfahren wird abgewiesen.\n3.\nDie Gerichtskosten von Fr. 500.-- werden dem Beschwerdeführer auferlegt.\n4.\nEs wird keine Parteientschädigung zugesprochen.\n5.\nDieses Urteil wird den Parteien und dem Obergericht des Kantons Zürich, II. Zivilkammer, schriftlich mitgeteilt.\nLausanne, 13. Mai 2026\nIm Namen der I. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Hurni\nDer Gerichtsschreiber: Leemann",
+  "operator_metadata": {
+    "date": "2026-05-13",
+    "reference": [
+      "4A_158/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-158-2026_2026-05-13.html",
+      "source": "446973/45/2829",
+      "content_length": 3091
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_004_4A-158-2026_2026-05-13",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 13.05.2026 4A_158/2026",
+      "it": "Tribunale federale I Corte di diritto civile 13.05.2026 4A_158/2026",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 13.05.2026 4A_158/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:18:53+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-158-2026_2026-05-13.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "ed6b5be25113854dd02ee1a4400ef8cb45baecd5ed9661c750b63e14718fb9de"
+  }
+}

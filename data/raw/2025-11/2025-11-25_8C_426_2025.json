@@ -1,0 +1,56 @@
+{
+  "id": "8C_426_2025",
+  "case_id": "8C_426/2025",
+  "case_ids": [
+    "8C_426/2025"
+  ],
+  "decision_date": "2025-11-25",
+  "publication_date": null,
+  "department": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "division": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "subject": "Arbeitslosenversicherung (Prozessvoraussetzung)",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://25-11-2025-8C_426-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n8C_426/2025\nUrteil vom 25. November 2025\nIV. öffentlich-rechtliche Abteilung\nBesetzung\nBundesrichterin Viscione, Präsidentin,\nGerichtsschreiber Grünvogel.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nAmt für Arbeitslosenversicherung des Kantons Bern, Rechtsdienst, Lagerhausweg 10, 3018 Bern,\nBeschwerdegegner.\nGegenstand\nArbeitslosenversicherung (Prozessvoraussetzung),\nBeschwerde gegen das Urteil des\nVerwaltungsgerichts des Kantons Bern\nvom 18. Juni 2025 (ALV 200 2025 185).\nNach Einsicht\nin die Beschwerde vom 25. Juli 2025 gegen das Urteil des Verwaltungsgerichts des Kantons Bern vom 18. Juni 2025,\nin die Verfügung vom 23. September 2025, mit welcher in Ablehnung des mit der Beschwerdeerhebung gestellten Gesuchs um unentgeltliche Rechtspflege A.________ zur Bezahlung eines Kostenvorschusses innert gesetzter Frist verpflichtet wurde,\nin die Verfügung vom 30. Oktober 2025, mit welcher A.________ zur Bezahlung eines Kostenvorschusses innert einer Nachfrist bis zum 10. November 2025 verpflichtet wurde, ansonsten auf das Rechtsmittel nicht eingetreten werde,\nin Erwägung,\ndass der Beschwerdeführer den Vorschuss auch innerhalb der Nachfrist nicht geleistet hat,\ndass deshalb gestützt auf Art. 62 Abs. 3 BGG im vereinfachten Verfahren nach Art. 108 Abs. 1 lit. a BGG auf die Beschwerde nicht einzutreten ist,\ndass in Anwendung von Art. 66 Abs. 1 Satz 2 BGG ausnahmsweise auf die Erhebung von Gerichtskosten verzichtet wird; indessen inskünftig mit dieser Rechtswohltat nicht mehr gerechnet werden darf,\nerkennt die Präsidentin:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nEs werden keine Gerichtskosten erhoben.\n3.\nDieses Urteil wird den Parteien, dem Verwaltungsgericht des Kantons Bern und dem Staatssekretariat für Wirtschaft (SECO) schriftlich mitgeteilt.\nLuzern, 25. November 2025\nIm Namen der IV. öffentlich-rechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Präsidentin: Viscione\nDer Gerichtsschreiber: Grünvogel",
+  "operator_metadata": {
+    "date": "2025-11-25",
+    "reference": [
+      "8C_426/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-426-2025_2025-11-25.html",
+      "source": "446973/45/2851",
+      "content_length": 2353
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+      "it": "Confederazione Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale)",
+      "fr": "Conféderation Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social)"
+    },
+    "scrapedate": "2026-06-18",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_008"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2851",
+    "id": "CH_BGer_008_8C-426-2025_2025-11-25",
+    "title": {
+      "de": "Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung) 25.11.2025 8C_426/2025",
+      "it": "Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale) 25.11.2025 8C_426/2025",
+      "fr": "Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social) 25.11.2025 8C_426/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:38:31+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-426-2025_2025-11-25.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "db2e0e37a8baa3037d886f8092a8ab97212e0411057843b486970c6665aa6f67"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "id": "6B_100_2026",
+  "case_id": "6B_100/2026",
+  "case_ids": [
+    "6B_100/2026"
+  ],
+  "decision_date": "2026-02-11",
+  "publication_date": null,
+  "department": "I. Strafrechtliche Abteilung",
+  "division": "I. Strafrechtliche Abteilung",
+  "subject": "Nichteintreten auf Revisionsgesuch; Nichteintreten",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://11-02-2026-6B_100-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n6B_100/2026\nUrteil vom 11. Februar 2026\nI. strafrechtliche Abteilung\nBesetzung\nBundesrichter von Felten, als präsidierendes Mitglied,\nGerichtsschreiberin Arquint Hill.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführerin,\ngegen\nOberstaatsanwaltschaft des Kantons Schwyz, Postfach 1201, 6431 Schwyz,\nBeschwerdegegnerin.\nGegenstand\nNichteintreten auf Revisionsgesuch; Nichteintreten,\nBeschwerde gegen die Verfügung des Kantonsgerichts Schwyz, Beschwerdekammer, vom 30. Dezember 2025 (BEK 2025 183).\nDas präsidierende Mitglied zieht in Erwägung:\n1.\nDie Vorinstanz trat am 30. Dezember 2025 mit einer Doppelbegründung auf das Revisionsgesuch der Beschwerdeführerin nicht ein. Zum einen genüge das Revisionsgesuch den gesetzlichen Begründungsanforderungen nicht; zum andern fehle es der Beschwerdeführerin an der Prozessvoraussetzung der Prozessfähigkeit. Die Beschwerdeführerin wendet sich an das Bundesgericht.\n2.\nDie Beschwerde in Strafsachen wurde fristgerecht eingereicht. Inwiefern die Beschwerdeführerin durch die angeblich nicht ordnungsgemässe Zustellung der Verfügung vom 30. Dezember 2025 beschwert sein soll, ist nicht ersichtlich.\n3.\nGemäss Art. 42 Abs. 2 BGG ist in der Beschwerdebegründung in gedrängter Form unter Bezugnahme auf den angefochtenen Entscheid darzulegen, inwiefern dieser Recht verletzt.\n4.\nDie Vorinstanz ist auf das Revisionsgesuch mangels hinreichender Begründung nicht eingetreten. Das Gesuch sei bewusst mangelhaft abgefasst. Damit sowie mit den Anforderungen an die Begründung (Art. 385 Abs. 1 StPO i.V.m. Art. 411 Abs. 1 StPO) und den Voraussetzungen, unter denen einer Partei eine kurze Nachfrist zur Verbesserung einzuräumen ist (Art. 385 Abs. 2 StPO i.V.m. Art. 411 Abs. 1 StPO), setzt sich die Beschwerdeführerin vor Bundesgericht nicht in einer den Formerfordernissen genügenden Weise auseinander. Die Beschwerde in Strafsachen genügt den Anforderungen von Art. 42 Abs. 2 BGG mithin nicht.\nEnthält ein Entscheid mehrere Begründungen, die je für sich den Ausgang der Sache besiegeln, müssen für die Gutheissung einer Beschwerde alle Begründungen das Recht verletzen (BGE 139 III 536 E. 2.2; 133 IV 119 E. 6). Nachdem sich die vorliegende Beschwerde in Bezug auf die erste Begründung der Vorinstanz als unzureichend erweist und es damit gestützt auf diese Begründung bei der angefochtenen Verfügung bleibt, muss sich das Bundesgericht mit der zweiten Begründung der Vorinstanz (Nichteintreten mangels Prozessfähigkeit) nicht befassen.\n5.\nAuf eine Kostenauflage kann ausnahmsweise verzichtet werden\n(Art. 66 Abs. 1 BGG), womit das sinngemässe Gesuch um unentgeltliche Rechtspflege gegenstandslos wird.\nDemnach erkennt das präsidierende Mitglied:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nEs werden keine Kosten erhoben.\n3.\nDieses Urteil wird den Parteien und dem Kantonsgericht Schwyz, Beschwerdekammer, schriftlich mitgeteilt.\nLausanne, 11. Februar 2026\nIm Namen der I. strafrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDas präsidierende Mitglied: von Felten\nDie Gerichtsschreiberin: Arquint Hill",
+  "operator_metadata": {
+    "date": "2026-02-11",
+    "reference": [
+      "6B_100/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_006_6B-100-2026_2026-02-11.html",
+      "source": "446973/45/2830",
+      "content_length": 3491
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit pénal"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_006"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2830",
+    "id": "CH_BGer_006_6B-100-2026_2026-02-11",
+    "title": {
+      "de": "Bundesgericht I. Strafrechtliche Abteilung 11.02.2026 6B_100/2026",
+      "it": "Tribunale federale I Corte di diritto penale 11.02.2026 6B_100/2026",
+      "fr": "Tribunal fédéral Ire Cour de droit pénal 11.02.2026 6B_100/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:12:23+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_006_6B-100-2026_2026-02-11.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "b02be3413b30ddc0b52042bc51b2a741b5b7c924329c288ab670680c8a370a5e"
+  }
+}

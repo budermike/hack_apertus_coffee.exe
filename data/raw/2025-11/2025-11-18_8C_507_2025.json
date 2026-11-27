@@ -1,0 +1,56 @@
+{
+  "id": "8C_507_2025",
+  "case_id": "8C_507/2025",
+  "case_ids": [
+    "8C_507/2025"
+  ],
+  "decision_date": "2025-11-18",
+  "publication_date": null,
+  "department": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "division": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "subject": "Sozialhilfe (Rückzug)",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://18-11-2025-8C_507-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n8C_507/2025\nVerfügung vom 18. November 2025\nIV. öffentlich-rechtliche Abteilung\nBesetzung\nBundesrichter Maillard, als Einzelrichter,\nGerichtsschreiber Hochuli.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführerin,\ngegen\nStadt Illnau-Effretikon, vertreten durch die Sozialbehörde,\nMärtplatz 29, 8307 Effretikon,\nBeschwerdegegnerin.\nGegenstand\nSozialhilfe (Rückzug),\nBeschwerde gegen das Urteil des Verwaltungsgerichts des Kantons Zürich vom 29. August 2025 (VB.2024.00714).\nNach Einsicht\nin das Schreiben vom 14. November 2025, worin A.________ die Beschwerde vom 10. September 2025 gegen das Urteil des Verwaltungsgerichts des Kantons Zürich vom 29. August 2025 zurückzieht,\nin Erwägung,\ndass die Beschwerde gemäss Art. 71 BGG in Verbindung mit Art. 73 Abs. 1 BZP im Verfahren nach Art. 32 Abs. 2 BGG abzuschreiben ist,\ndass in Anwendung von Art. 66 Abs. 2 BGG auf die Erhebung von Gerichtskosten verzichtet wird,\nverfügt der Einzelrichter:\n1.\nDas Verfahren wird infolge Rückzugs der Beschwerde abgeschrieben.\n2.\nEs werden keine Gerichtskosten erhoben.\n3.\nDiese Verfügung wird den Parteien, dem Verwaltungsgericht des Kantons Zürich und dem Bezirksrat Pfäffikon schriftlich mitgeteilt.\nLuzern, 18. November 2025\nIm Namen der IV. öffentlich-rechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Einzelrichter: Maillard\nDer Gerichtsschreiber: Hochuli",
+  "operator_metadata": {
+    "date": "2025-11-18",
+    "reference": [
+      "8C_507/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-507-2025_2025-11-18.html",
+      "source": "446973/45/2851",
+      "content_length": 1744
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+      "it": "Confederazione Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale)",
+      "fr": "Conféderation Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social)"
+    },
+    "scrapedate": "2026-06-18",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_008"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2851",
+    "id": "CH_BGer_008_8C-507-2025_2025-11-18",
+    "title": {
+      "de": "Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung) 18.11.2025 8C_507/2025",
+      "it": "Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale) 18.11.2025 8C_507/2025",
+      "fr": "Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social) 18.11.2025 8C_507/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:36:28+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-507-2025_2025-11-18.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "17f2136cb4bdb0af0727f3166eb3f11e980d5f24874123a4f0053d8ff59688a3"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "id": "8C_349_2026",
+  "case_id": "8C_349/2026",
+  "case_ids": [
+    "8C_349/2026"
+  ],
+  "decision_date": "2026-05-27",
+  "publication_date": null,
+  "department": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "division": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "subject": "Sozialhilfe (Prozessvoraussetzung)",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://27-05-2026-8C_349-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n8C_349/2026\nUrteil vom 27. Mai 2026\nIV. öffentlich-rechtliche Abteilung\nBesetzung\nBundesrichterin Viscione, Präsidentin,\nGerichtsschreiber Grünvogel.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nGemeinderat der Stadt Rheinfelden,\nMarktgasse 16, 4310 Rheinfelden,\nBeschwerdegegner.\nGegenstand\nSozialhilfe (Prozessvoraussetzung),\nBeschwerde gegen das Urteil des Verwaltungsgerichts des Kantons Aargau vom 15. April 2026 (WBE.2026.79).\nNach Einsicht\nin die Beschwerde vom 21. Mai 2026 (Aufgabedatum PrivaSphere) gegen das gemäss postamtlicher Bescheinigung am 20. April 2026 an A.________ ausgehändigte Urteil des Verwaltungsgerichts des Kantons Aargau vom 15. April 2026,\nin Erwägung,\ndass die Beschwerde nicht innert der nach Art. 100 Abs. 1 BGG 30-tägigen, gemäss Art. 44 - 48 BGG am 20. Mai 2026 abgelaufenen Rechtsmittelfrist eingereicht worden ist,\ndass deshalb im vereinfachten Verfahren nach Art. 108 Abs. 1 lit. a BGG auf die überdies den minimalen Begründungsanforderungen gemäss Art. 42 Abs. 1 und 2 BGG ohnehin nicht genügende, querulatorisch erscheinende Beschwerde nicht einzutreten ist (lediglich pauschal vorgetragene Verfassungsrügen reichen nicht aus),\ndass das mit der Beschwerde gestellte Gesuch um unentgeltliche Rechtspflege wegen aussichtsloser Rechtsmittelerhebung abzuweisen ist (Art. 64 Abs. 1 BGG),\ndass der Beschwerdeführer nach Art. 66 Abs. 1 und 3 BGG kostenpflichtig wird (dazu auch Urteil 8C_240/2026 vom 18. Mai 2026 E. 6),\nerkennt die Präsidentin:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 200.- werden dem Beschwerdeführer auferlegt.\n3.\nDieses Urteil wird den Parteien, dem Verwaltungsgericht des Kantons Aargau und dem Departement Gesundheit und Soziales des Kantons Aargau schriftlich mitgeteilt.\nLuzern, 27. Mai 2026\nIm Namen der IV. öffentlich-rechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Präsidentin: Viscione\nDer Gerichtsschreiber: Grünvogel",
+  "operator_metadata": {
+    "date": "2026-05-27",
+    "reference": [
+      "8C_349/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-349-2026_2026-05-27.html",
+      "source": "446973/45/2834",
+      "content_length": 2335
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+      "it": "Confederazione Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale)",
+      "fr": "Conféderation Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social)"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_008"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_008_8C-349-2026_2026-05-27",
+    "title": {
+      "de": "Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung) 27.05.2026 8C_349/2026",
+      "it": "Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale) 27.05.2026 8C_349/2026",
+      "fr": "Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social) 27.05.2026 8C_349/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:41:57+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-349-2026_2026-05-27.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "c1576cd6ee2c2adaa53b55ec5b15f877f3ec9ecdb7c2229f159a1b586efdb36c"
+  }
+}

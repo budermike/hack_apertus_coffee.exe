@@ -1,0 +1,56 @@
+{
+  "id": "4A_670_2025",
+  "case_id": "4A_670/2025",
+  "case_ids": [
+    "4A_670/2025"
+  ],
+  "decision_date": "2026-02-26",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "contrat d'entreprise; assistance judiciaire",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://26-02-2026-4A_670-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4A_670/2025\nArrêt du 26 février 2026\nIre Cour de droit civil\nComposition\nM. le Juge fédéral Hurni, Président.\nGreffier : M. Widmer.\nParticipants à la procédure\nA.________,\nrecourante,\ncontre\nPrésident de la Ie Cour d'appel civil du Tribunal cantonal du canton de Fribourg,\nrue des Augustins 3, 1700 Fribourg,\nintimé,\nB.________,\n(partie intéressée).\nObjet\ncontrat d'entreprise; assistance judiciaire,\nrecours contre l'arrêt rendu le 28 novembre 2025 par le Président de la Ie Cour d'appel civil du Tribunal cantonal du canton de Fribourg (101 2025 404).\nLe Président :\nVu le recours formé le 29 décembre 2025 par A.________ (ci-après: la recourante) contre l'arrêt rendu le 28 novembre 2025 par le Président de la Ie Cour d'appel civil du Tribunal cantonal du canton de Fribourg;\nVu l'ordonnance présidentielle du 5 janvier 2026 invitant la recourante à verser, jusqu'au 20 janvier 2026 au plus tard, une avance de frais de 500 fr.;\nVu l'ordonnance du 26 janvier 2026 par laquelle un délai supplémentaire venant à échéance le 10 février 2026 a été imparti à la recourante conformément à l'art. 62 al. 3 LTF;\nAttendu que l'avance de frais requise n'a pas été effectuée dans le délai imparti par cette ordonnance;\nConsidérant, dès lors, que le recours est irrecevable en vertu de l'art. 62 al. 3 LTF,\nqu'il y a lieu, partant, de faire application de la procédure simplifiée prévue par l'art. 108 al. 1 LTF,\nque les frais judiciaires seront mis à la charge de la recourante (art. 66 al. 1 et 3 LTF),\nqu'il n'y a pas lieu à l'allocation de dépens.\nPar ces motifs, le Président prononce :\n1.\nLe recours est irrecevable.\n2.\nLa recourante acquittera un émolument judiciaire de 200 fr.\n3.\nLe présent arrêt est communiqué à la recourante, au Président de la Ie Cour d'appel civil du Tribunal cantonal du canton de Fribourg et à B.________.\nLausanne, le 26 février 2026\nAu nom de la Ire Cour de droit civil\ndu Tribunal fédéral suisse\nLe Président : Hurni\nLe Greffier : Widmer",
+  "operator_metadata": {
+    "date": "2026-02-26",
+    "reference": [
+      "4A_670/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-670-2025_2026-02-26.html",
+      "source": "446973/45/2829",
+      "content_length": 2343
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_004_4A-670-2025_2026-02-26",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 26.02.2026 4A_670/2025",
+      "it": "Tribunale federale I Corte di diritto civile 26.02.2026 4A_670/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 26.02.2026 4A_670/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:16:54+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-670-2025_2026-02-26.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "4234f69cf49c6f3663ba109605726a63a0c02faa9c5fc36452688e851237f5e1"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "id": "5A_443_2026",
+  "case_id": "5A_443/2026",
+  "case_ids": [
+    "5A_443/2026"
+  ],
+  "decision_date": "2026-05-22",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "Rechtsverzögerung (Persönlichkeitsverletzung).",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://22-05-2026-5A_443-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5A_443/2026\nUrteil vom 22. Mai 2026\nII. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Bovey, Präsident,\nGerichtsschreiber Möckli.\nVerfahrensbeteiligte\nA.________ GmbH,\nBeschwerdeführerin,\ngegen\nKantonsgericht Obwalden,\nPoststrasse 6, Postfach, 6060 Sarnen,\nBeschwerdegegner.\nGegenstand\nRechtsverzögerung (Persönlichkeitsverletzung).\nSachverhalt:\nMit Rechtsverzögerungsbeschwerde vom 18. Mai 2026 an das Bundesgericht bringt die Beschwerdeführerin vor, sie habe am 12. September 2025 vor dem Kantonsgericht Obwalden ein Verfahren wegen Persönlichkeitsverletzung eingereicht und seither sei abgesehen von der Zustellung der Klage und der Unterbreitung von Handlungsoptionen nichts gegangen, insbesondere keine Hauptverhandlung angesetzt und auch keine effektiven prozessleitenden Handlung vorgenommen worden. Es sei deshalb festzustellen, dass das Kantonsgericht in Verletzung von Art. 29 Abs. 1 BV das Verfahren verzögert habe, und dieses sei anzuweisen, unverzüglich die notwendigen prozessleitenden Schritte vorzunehmen, insbesondere eine Hauptverhandlung anzusetzen.\nErwägungen:\n1.\nBei Rechtsverzögerung und Rechtsverweigerung im Bereich des Zivilrechts durch eine letzte kantonale Instanz, mithin durch ein oberes Gericht, kann beim Bundesgericht jederzeit eine entsprechende Beschwerde eingereicht werden (Art. 72 Abs. 1, Art. 75 Abs. 1 und 2, Art. 94 und Art. 100 Abs. 7 BGG).\n2.\nDie letzte bzw. obere kantonale Instanz wäre das Obergericht des Kantons Obwalden. Vorliegend ist aber nach eigenen Angaben der Beschwerdeführerin das Verfahren nicht vor dem Obergericht, sondern vor dem Kantonsgericht, mithin vor der ersten kantonalen Instanz hängig, und die Beschwerdeführer bringt auch nicht vor, dass sie im Kontext mit ihrem Anliegen der Rechtsverzögerung in Ausschöpfung des Instanzenzuges zuerst an das Obergericht gelangt wäre. Vielmehr will sie direkt vor Bundesgericht eine Rechtsverzögerung durch ein erstinstanzliches Gericht monieren. Dies ist nicht möglich, weil es hierfür an der funktionellen Zuständigkeit des Bundesgerichtes mangelt.\n3.\nNach dem Gesagten erweist sich die Beschwerde als offensichtlich unzulässig, weshalb auf sie nicht eingetreten werden kann und der Präsident im vereinfachten Verfahren entscheidet (Art. 108 Abs. 1 lit. a BGG).\n4.\nDie Gerichtskosten sind der Beschwerdeführerin aufzuerlegen (Art. 66 Abs. 1 BGG).\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 1'000.-- werden der Beschwerdeführerin auferlegt.\n3.\nDieses Urteil wird den Parteien mitgeteilt.\nLausanne, 22. Mai 2026\nIm Namen der II. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Bovey\nDer Gerichtsschreiber: Möckli",
+  "operator_metadata": {
+    "date": "2026-05-22",
+    "reference": [
+      "5A_443/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-443-2026_2026-05-22.html",
+      "source": "446973/45/2830",
+      "content_length": 3160
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2830",
+    "id": "CH_BGer_005_5A-443-2026_2026-05-22",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 22.05.2026 5A_443/2026",
+      "it": "Tribunale federale II Corte di diritto civile 22.05.2026 5A_443/2026",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 22.05.2026 5A_443/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:41:00+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-443-2026_2026-05-22.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "7f0db2ad8729d8f37220d6365fa5d554361e12392fa0e46bd2bb73cb6b5a4cf6"
+  }
+}

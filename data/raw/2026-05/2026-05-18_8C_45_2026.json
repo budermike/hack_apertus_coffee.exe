@@ -1,0 +1,56 @@
+{
+  "id": "8C_45_2026",
+  "case_id": "8C_45/2026",
+  "case_ids": [
+    "8C_45/2026"
+  ],
+  "decision_date": "2026-05-18",
+  "publication_date": null,
+  "department": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "division": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "subject": "Ergänzungsleistung zur AHV/IV (Prozessvoraussetzung)",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://18-05-2026-8C_45-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n8C_45/2026\nUrteil vom 18. Mai 2026\nIV. öffentlich-rechtliche Abteilung\nBesetzung\nBundesrichterin Viscione, Präsidentin,\nGerichtsschreiber Grünvogel.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführerin,\ngegen\nSozialversicherungsanstalt\ndes Kantons Aargau, Ergänzungsleistungen, Kyburgerstrasse 15, 5001 Aarau,\nBeschwerdegegnerin.\nGegenstand\nErgänzungsleistung zur AHV/IV (Prozessvoraussetzung),\nBeschwerde gegen das Urteil des Versicherungsgerichts des Kantons Aargau vom 12. November 2025 (VBE.2024.601).\nNach Einsicht\nin die Beschwerde vom 19. Januar 2026 gegen das Urteil des Versicherungsgerichts des Kantons Aargau vom 12. November 2025,\nin die Verfügung vom 12. März 2026, mit welcher die Beschwerdeführerin in Ablehnung des in der Beschwerdeschrift gestellten Gesuchs um unentgeltliche Rechtspflege zur Bezahlung des Kostenvorschusses in der Höhe von Fr. 1'000.- aufgefordert wurde,\nin die Eingabe vom 1. April 2026 (Poststempel),\nin die Verfügung vom 24. April 2026, mit welcher in Beantwortung der Eingabe vom 1. April 2026 an der Leistung des Kostenvorschusses festgehalten und A.________ hierfür eine Nachfrist bis zum 5. Mai 2026 gesetzt wurde, ansonsten auf das Rechtsmittel nicht eingetreten werde,\nin Erwägung,\ndass die Beschwerdeführerin den Vorschuss auch innerhalb der Nachfrist nicht geleistet hat,\ndass deshalb gestützt auf Art. 62 Abs. 3 BGG im vereinfachten Verfahren nach Art. 108 Abs. 1 lit. a BGG auf die Beschwerde nicht einzutreten ist,\ndass die Beschwerdeführerin nach Art. 66 Abs. 1 und 3 BGG kostenpflichtig wird,\nerkennt die Präsidentin:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 500.- werden der Beschwerdeführerin auferlegt.\n3.\nDieses Urteil wird den Parteien, dem Versicherungsgericht des Kantons Aargau und dem Bundesamt für Sozialversicherungen schriftlich mitgeteilt.\nLuzern, 18. Mai 2026\nIm Namen der IV. öffentlich-rechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Präsidentin: Viscione\nDer Gerichtsschreiber: Grünvogel",
+  "operator_metadata": {
+    "date": "2026-05-18",
+    "reference": [
+      "8C_45/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-45-2026_2026-05-18.html",
+      "source": "446973/45/2834",
+      "content_length": 2400
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+      "it": "Confederazione Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale)",
+      "fr": "Conféderation Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social)"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_008"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_008_8C-45-2026_2026-05-18",
+    "title": {
+      "de": "Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung) 18.05.2026 8C_45/2026",
+      "it": "Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale) 18.05.2026 8C_45/2026",
+      "fr": "Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social) 18.05.2026 8C_45/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:39:40+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-45-2026_2026-05-18.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "1636c74d0c28e4b6077b9e7412f51e94716cf3cb134950d93972156514901d26"
+  }
+}

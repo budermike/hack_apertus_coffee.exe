@@ -1,0 +1,56 @@
+{
+  "id": "7B_152_2026",
+  "case_id": "7B_152/2026",
+  "case_ids": [
+    "7B_152/2026"
+  ],
+  "decision_date": "2026-03-20",
+  "publication_date": null,
+  "department": "II. Strafrechtliche Abteilung",
+  "division": "II. Strafrechtliche Abteilung",
+  "subject": "Entsiegelung; Rückzug",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://20-03-2026-7B_152-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n7B_152/2026\nVerfügung vom 20. März 2026\nII. strafrechtliche Abteilung\nBesetzung\nBundesrichterin van de Graaf, als präsidierendes Mitglied,\nGerichtsschreiber Hahn.\nVerfahrensbeteiligte\nA.________,\nvertreten durch Rechtsanwalt Dr. Diego R. Gfeller,\nBeschwerdeführer,\ngegen\nStaatsanwaltschaft Winterthur/Unterland,\nHermann-Götz-Strasse 24, 8400 Winterthur.\nGegenstand\nEntsiegelung; Rückzug,\nBeschwerde gegen die Verfügung des Bezirksgerichts Dielsdorf, Zwangsmassnahmengericht, vom 12. Januar 2026 (GT250039-D/U/B-4/me).\nErwägungen:\n1.\nDie Beschwerde in Strafsachen vom 6. Februar 2026 gegen die Verfügung des Zwangsmassnahmengerichts des Bezirks Dielsdorf vom 12. Januar 2026 in der rubrizierten Angelegenheit wurde mit Eingabe vom 16. März 2026 zurückgezogen. Mit dem Rückzug der Beschwerde wird das Verfahren gegenstandslos und ist im Verfahren nach Art. 32 Abs. 1 BGG abzuschreiben.\n2.\nDer Beschwerdeführer, der seine Beschwerde zurückgezogen und damit das Dahinfallen des Verfahrens verursacht hat, hat für die bisher entstandenen bundesgerichtlichen Kosten aufzukommen (Art. 66 Abs. 3 BGG). Die Gerichtskosten sind auf Fr. 300.-- festzusetzen.\nDemnach verfügt das präsidierende Mitglied:\n1.\nDas Verfahren wird infolge Rückzugs der Beschwerde abgeschrieben.\n2.\nDie Gerichtskosten von Fr. 300.-- werden dem Beschwerdeführer auferlegt.\n3.\nDiese Verfügung wird dem Beschwerdeführer, der Staatsanwaltschaft Winterthur/Unterland und dem Bezirksgericht Dielsdorf, Zwangsmassnahmengericht, schriftlich mitgeteilt.\nLausanne, 20. März 2026\nIm Namen der II. strafrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDas präsidierende Mitglied:\nDer Gerichtsschreiber:",
+  "operator_metadata": {
+    "date": "2026-03-20",
+    "reference": [
+      "7B_152/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-152-2026_2026-03-20.html",
+      "source": "446973/45/2834",
+      "content_length": 2045
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit pénal"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_007"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_007_7B-152-2026_2026-03-20",
+    "title": {
+      "de": "Bundesgericht II. Strafrechtliche Abteilung 20.03.2026 7B_152/2026",
+      "it": "Tribunale federale II Corte di diritto penale 20.03.2026 7B_152/2026",
+      "fr": "Tribunal fédéral IIe Cour de droit pénal 20.03.2026 7B_152/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:23:48+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-152-2026_2026-03-20.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "607aa1f0b372f760699558efa3c8d23a2b2ac16ff83b9309a0dde8d954fb74a1"
+  }
+}

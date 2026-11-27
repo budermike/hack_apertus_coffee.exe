@@ -1,0 +1,56 @@
+{
+  "id": "7B_494_2026",
+  "case_id": "7B_494/2026",
+  "case_ids": [
+    "7B_494/2026"
+  ],
+  "decision_date": "2026-05-18",
+  "publication_date": null,
+  "department": "II. Strafrechtliche Abteilung",
+  "division": "II. Strafrechtliche Abteilung",
+  "subject": "Ordonnance de non-entrée en matière (retrait de recours)",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://18-05-2026-7B_494-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n7B_494/2026\nOrdonnance du 18 mai 2026\nIIe Cour de droit pénal\nComposition\nM. le Juge fédéral Abrecht, Président.\nGreffier : M. Fragnière.\nParticipants à la procédure\nA.________ Sàrl,\nreprésentée par Me Romain Jordan, avocat,\nrecourante,\ncontre\nMinistère public de la République et canton de Genève,\nroute de Chancy 6B, 1213 Petit-Lancy,\nintimé.\nObjet\nOrdonnance de non-entrée en matière\n(retrait de recours),\nrecours contre l'arrêt de la Chambre pénale de recours de la Cour de justice de la République et canton de Genève du 18 mars 2026\n(ACPR/285/2026 - P/9107/2025).\nConsidérant en fait et en droit :\n1.\nPar acte du 12 mai 2026, A.________ Sàrl déclare retirer le recours interjeté dans la cause 7B_494/2026.\nIl y a lieu d'en prendre acte et de rayer la cause du rôle (art. 32 al. 2 LTF).\n2.\nLa recourante, considérée comme la partie succombante, supportera les frais judiciaires, lesquels seront fixés en tenant compte des actes d'instruction effectués jusque-là (art. 5 al. 2 PCF, par renvoi de l'art. 71 LTF; art. 66 al. 1 et 2 LTF).\nPar ces motifs, le Président ordonne :\n1.\nIl est pris acte du retrait du recours et l'affaire 7B_494/2026 est rayée du rôle.\n2.\nLes frais judiciaires, arrêtés à 300 fr., sont mis à la charge de la recourante.\n3.\nLa présente ordonnance est communiquée aux parties et à la Chambre pénale de recours de la Cour de justice de la République et canton de Genève.\nLausanne, le 18 mai 2026\nAu nom de la IIe Cour de droit pénal\ndu Tribunal fédéral suisse\nLe Président : Abrecht\nLe Greffier : Fragnière",
+  "operator_metadata": {
+    "date": "2026-05-18",
+    "reference": [
+      "7B_494/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-494-2026_2026-05-18.html",
+      "source": "446973/45/2834",
+      "content_length": 1918
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit pénal"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_007"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_007_7B-494-2026_2026-05-18",
+    "title": {
+      "de": "Bundesgericht II. Strafrechtliche Abteilung 18.05.2026 7B_494/2026",
+      "it": "Tribunale federale II Corte di diritto penale 18.05.2026 7B_494/2026",
+      "fr": "Tribunal fédéral IIe Cour de droit pénal 18.05.2026 7B_494/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:39:34+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-494-2026_2026-05-18.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "185a977bc3e00dc42d2ee0d0c9736f72b4c842d5008b99f3055d4f6ce779cfb5"
+  }
+}

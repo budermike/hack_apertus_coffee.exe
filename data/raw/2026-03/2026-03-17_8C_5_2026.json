@@ -1,0 +1,56 @@
+{
+  "id": "8C_5_2026",
+  "case_id": "8C_5/2026",
+  "case_ids": [
+    "8C_5/2026"
+  ],
+  "decision_date": "2026-03-17",
+  "publication_date": null,
+  "department": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "division": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "subject": "Assurance-chômage (retrait de recours)",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://17-03-2026-8C_5-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n8C_5/2026\nOrdonnance du 17 mars 2026\nIVe Cour de droit public\nComposition\nM. le Juge fédéral Métral, en qualité de juge unique.\nGreffière : Mme Fretz Perrin.\nParticipants à la procédure\nA.________,\nrecourant,\ncontre\nOffice cantonal de l'emploi du canton de Genève, Service juridique, rue des Gares 16, 1201 Genève,\nintimé.\nObjet\nAssurance-chômage (retrait de recours),\nrecours contre l'arrêt de la Cour de justice de la République et canton de Genève du 20 novembre 2025 (A/2821/2025 - ATAS/899/2025).\nVu :\nla lettre du 16 mars 2026 (timbre postal) par laquelle A.________ a déclaré retirer le recours interjeté le 3 janvier 2026 (timbre postal) contre l'arrêt de la Cour de justice de la République et canton de Genève, Chambre des assurances sociales, du 20 novembre 2025,\nconsidérant :\nque la cause doit être rayée du rôle en application des art. 32 al. 2 et 71 LTF, en relation avec l'art. 73 al. 1 PCF,\nqu'il se justifie en appliquant l'art. 66 al. 2 LTF de statuer sans frais judiciaires,\npar ces motifs, le Juge unique ordonne :\n1.\nLa cause est rayée du rôle par suite de retrait du recours.\n2.\nIl n'est pas perçu de frais judiciaires.\n3.\nLa présente ordonnance est communiquée aux parties, à la Cour de justice de la République et canton de Genève, Chambre des assurances sociales, et au Secrétariat d'État à l'économie (SECO).\nLucerne, le 17 mars 2026\nAu nom de la IVe Cour de droit public\ndu Tribunal fédéral suisse\nLe Juge unique : Métral\nLa Greffière : Fretz Perrin",
+  "operator_metadata": {
+    "date": "2026-03-17",
+    "reference": [
+      "8C_5/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-5-2026_2026-03-17.html",
+      "source": "446973/45/2834",
+      "content_length": 1850
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+      "it": "Confederazione Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale)",
+      "fr": "Conféderation Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social)"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_008"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_008_8C-5-2026_2026-03-17",
+    "title": {
+      "de": "Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung) 17.03.2026 8C_5/2026",
+      "it": "Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale) 17.03.2026 8C_5/2026",
+      "fr": "Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social) 17.03.2026 8C_5/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:22:29+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-5-2026_2026-03-17.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "fe26c736fe7a20f07463afe28670832b1a57ea1e1f39bc75632570cd6cd388af"
+  }
+}

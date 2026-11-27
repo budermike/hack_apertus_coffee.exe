@@ -80,6 +80,7 @@ Zentrale, durchsuchbare Wissensbasis für alle erzeugten und bearbeiteten Urteil
 - Engine: SQLite (`sqlite3`, Python-Standardbibliothek)
 - Pfad: konfigurierbar über `SUMMARY_DB_PATH` (Default unter `data/processed/`, nicht im Git)
 - Code: `src/hack_apertus_coffee_exe/summary/store.py` (Import: `hack_apertus_coffee_exe.summary.store`)
+- Schreibende Stellen: Batch und On-demand (`summary/run.py`) sowie die UI-API (`summary/api.py`), alle über `store.get_or_generate_languages`, `save_edit` und `approve`
 - Fremdschlüssel sind nur aktiv mit `PRAGMA foreign_keys = ON` (setzt `store.py` bei jeder Verbindung).
 
 ### Tabellen im Überblick
@@ -97,18 +98,20 @@ Verweist auf die Originalquelle, damit das Urteil jederzeit nachgelesen werden k
 ```sql
 CREATE TABLE IF NOT EXISTS cases (
     case_id          TEXT PRIMARY KEY,
-    decision_date    TEXT NOT NULL,
+    decision_date    TEXT,
     publication_date TEXT,
-    url              TEXT NOT NULL
+    url              TEXT
 );
 ```
 
 | Spalte | Bedeutung | Quelle im Crawl-JSON |
 |---|---|---|
 | `case_id` | Haupt-Geschäftsnummer in Originalschreibweise, z. B. `1D_1/2025` | `case_id` |
-| `decision_date` | Urteilsdatum, `YYYY-MM-DD` | `decision_date` |
+| `decision_date` | Urteilsdatum, `YYYY-MM-DD`; `NULL` nur falls im Crawl-Datensatz nicht lesbar | `decision_date` |
 | `publication_date` | Publikationsdatum, `YYYY-MM-DD`; aktuell meist `NULL` (siehe Datumsfilter) | `publication_date` |
-| `url` | Link auf das Originalurteil bei `search.bger.ch` | `url` |
+| `url` | Link auf das Originalurteil bei `search.bger.ch`; `NULL` nur falls im Crawl-Datensatz fehlend | `url` |
+
+Ein erneutes Speichern desselben Urteils überschreibt bekannte Werte nicht mit `NULL`.
 
 ### Tabelle `summaries`
 
@@ -120,12 +123,16 @@ CREATE TABLE IF NOT EXISTS summaries (
     case_id        TEXT    NOT NULL REFERENCES cases (case_id),
     language       TEXT    NOT NULL CHECK (language IN ('de', 'fr')),
     version        INTEGER NOT NULL,
+    title          TEXT,
     text           TEXT    NOT NULL,
     model          TEXT    NOT NULL,
     prompt_version TEXT,
     created_at     TEXT    NOT NULL,
     status         TEXT    NOT NULL CHECK (status IN ('generated', 'edited', 'approved')),
     coherence_ok   INTEGER CHECK (coherence_ok IN (0, 1)),
+    issues         TEXT,
+    facts          TEXT,
+    examples       TEXT,
     UNIQUE (case_id, language, version),
     -- Modell-Text vs. menschlich bearbeiteter Text
     CHECK (
@@ -141,12 +148,16 @@ CREATE TABLE IF NOT EXISTS summaries (
 | `case_id` | Haupt-Geschäftsnummer des Urteils, z. B. `8C_129/2025` (verweist auf `cases`) |
 | `language` | Sprache der **Summary** (`de` / `fr`), nicht die Sprache des Urteils |
 | `version` | Laufende Nummer pro `(case_id, language)`, beginnend bei 1 |
+| `title` | Titel in der Sprache der Summary, z. B. `BGer-Urteil 8C_901/2026 vom 14. Oktober 2026`; bei Bearbeitungen übernommen |
 | `text` | Text der Summary |
 | `model` | Herkunft des Texts: Apertus-Modell-ID (z. B. `apertus-v1-5-70b`) bei `generated`; immer `human` bei `edited` und `approved` (wird vom Code automatisch gesetzt) |
 | `prompt_version` | Prompt-Fassung, mit der generiert wurde (z. B. `v2`); für die Evaluation. `NULL` bei bearbeiteten Texten |
 | `created_at` | Zeitpunkt der Erstellung (ISO-8601, UTC) |
 | `status` | `generated` (vom Modell, gilt ohne weiteren Schritt als freigegeben), `edited` (von Jurist:in geändert, wartet auf Freigabe), `approved` (bearbeitete Fassung freigegeben) |
 | `coherence_ok` | Ergebnis des Coherence-Checks: `1` = bestanden, `0` = Problem gefunden, `NULL` = nicht geprüft (siehe Regeln) |
+| `issues` | JSON-Liste der Befunde des Coherence-Checks für diese Sprache (z. B. erfundene Erwägung), damit die UI zeigen kann, was nicht passt; `NULL` bei Bearbeitungen |
+| `facts` | JSON-Objekt der extrahierten Fakten (Zwischenschritt der Pipeline); `NULL` bei Bearbeitungen |
+| `examples` | JSON-Liste der Suva-Beispiele (Geschäftsnummern), die im Prompt verwendet wurden; `NULL` bei Bearbeitungen |
 
 ### Tabelle `case_numbers`
 
@@ -217,6 +228,5 @@ ORDER BY s.language, s.version;
 
 ## Offene Punkte
 
-- **Coherence-Begründung:** Mögliche Erweiterung `coherence_notes TEXT`, damit die UI anzeigen kann, was beim Check nicht gepasst hat.
-- **Volltextsuche:** optional per SQLite FTS5 über `text` und `case_id`.
+- **Volltextsuche:** Aktuell einfache Teilstring-Suche (`store.search`, alle Begriffe müssen vorkommen, Akzente zählen). Bei Bedarf SQLite FTS5.
 - **Triage-Feedback / Ampel:** zurückgestellt, Entwurf in `src/hack_apertus_coffee_exe/summary/VORGEHEN_DB.md`.

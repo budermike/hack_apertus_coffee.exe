@@ -1,0 +1,56 @@
+{
+  "id": "5A_797_2024",
+  "case_id": "5A_797/2024",
+  "case_ids": [
+    "5A_797/2024"
+  ],
+  "decision_date": "2026-01-12",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "Scheidung (Güterrecht)",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://12-01-2026-5A_797-2024",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5A_797/2024\nVerfügung vom 12. Januar 2026\nII. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Bovey, Präsident,\nBundesrichter Hartmann, Josi,\nGerichtsschreiberin Gutzwiller.\nVerfahrensbeteiligte\nA.________,\nvertreten durch Rechtsanwalt Thomas Häne,\nBeschwerdeführer,\ngegen\nB.________,\nvertreten durch Rechtsanwalt Christoph Suter,\nBeschwerdegegnerin.\nGegenstand\nScheidung (Güterrecht),\nBeschwerde gegen das Urteil des Kantonsgerichts Schwyz, 1. Zivilkammer, vom 15. Oktober 2024 (ZK1 2023 4 und 5).\nNach Einsicht\nin das Urteil des Kantonsgerichts Schwyz vom 15. Oktober 2024,\nin die hiergegen am 20. November 2024 erhobene Beschwerde in Zivilsachen,\nin die Rückzugserklärung des Beschwerdeführers vom 7. Januar 2026,\nin Erwägung,\ndass der Beschwerdeführer in seiner Eingabe vom 7. Januar 2026 erklärt, die Parteien hätten sich aussergerichtlich umfassend geeinigt, weshalb er die Beschwerde in Zivilsachen zurückziehe und beantrage, es seien allfällige Gerichtskosten ihm aufzuerlegen und die Parteikosten wettzuschlagen,\ndass demnach das Verfahren infolge Rückzugs der Beschwerde abzuschreiben ist (Art. 71 BGG i.V.m. Art. 73 BZP [SR 273]),\ndass sich angesichts des entstandenen Aufwandes keine Reduktion der Gerichtskosten rechtfertigt, zumal keine Verfahrenssistierung beantragt worden war und sich das Verfahren im Zeitpunkt der Rückzugserklärung bereits in einem fortgeschrittenem Bearbeitungsstadium befand (vgl. Art. 66 Abs. 2 und 3 BGG),\ndass die vollen Gerichtskosten antragsgemäss dem Beschwerdeführer aufzuerlegen sind,\ndass keine Parteientschädigungen zu sprechen sind, zumal der Beschwerdeführer seinerseits darauf verzichtet und der Beschwerdegegnerin kein entschädigungspflichtiger Aufwand entstanden ist, da sie mit ihrer Stellungnahme zum Gesuch des Beschwerdeführers um aufschiebende Wirkung der Beschwerde unterlegen ist und in der Sache keine Vernehmlassung eingeholt wurde (Art. 68 Abs. 1 und 2 BGG),\nverfügt das Bundesgericht:\n1.\nDas Verfahren wird infolge Rückzugs der Beschwerde als erledigt abgeschrieben.\n2.\nDie Gerichtskosten von Fr. 6'000.-- werden dem Beschwerdeführer auferlegt.\n3.\nEs werden keine Parteientschädigungen zugesprochen.\n4.\nDiese Verfügung wird den Parteien und dem Kantonsgericht Schwyz, 1. Zivilkammer, mitgeteilt.\nLausanne, 12. Januar 2026\nIm Namen der II. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Bovey\nDie Gerichtsschreiberin: Gutzwiller",
+  "operator_metadata": {
+    "date": "2026-01-12",
+    "reference": [
+      "5A_797/2024"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-797-2024_2026-01-12.html",
+      "source": "446973/45/2830",
+      "content_length": 2835
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2830",
+    "id": "CH_BGer_005_5A-797-2024_2026-01-12",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 12.01.2026 5A_797/2024",
+      "it": "Tribunale federale II Corte di diritto civile 12.01.2026 5A_797/2024",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 12.01.2026 5A_797/2024"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:02:59+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-797-2024_2026-01-12.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "329bb1226dace8bf8c76315b2d571fdca1e77e7f84f9c4da51e607ed312e3130"
+  }
+}

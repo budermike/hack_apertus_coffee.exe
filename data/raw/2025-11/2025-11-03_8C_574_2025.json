@@ -1,0 +1,56 @@
+{
+  "id": "8C_574_2025",
+  "case_id": "8C_574/2025",
+  "case_ids": [
+    "8C_574/2025"
+  ],
+  "decision_date": "2025-11-03",
+  "publication_date": null,
+  "department": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "division": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "subject": "Arbeitslosenversicherung (Prozessvoraussetzung)",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://03-11-2025-8C_574-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n8C_574/2025\nVerfügung vom 3. November 2025\nIV. öffentlich-rechtliche Abteilung\nBesetzung\nBundesrichterin Viscione, Präsidentin,\nGerichtsschreiber Grünvogel.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nAmt für Industrie, Gewerbe und Arbeit (KIGA) Baselland, Bahnhofstrasse 32, 4133 Pratteln,\nBeschwerdegegner.\nGegenstand\nArbeitslosenversicherung (Prozessvoraussetzung),\nBeschwerde gegen das Urteil des Kantonsgerichts\nBasel-Landschaft vom 22. September 2025 (715 25 137).\nNach Einsicht\nin das Schreiben vom 10. Oktober 2025, worin A.________ die Beschwerde vom 2. Oktober 2025 gegen das Urteil des Kantonsgerichts Basel-Landschaft vom 22. September 2025 zurückzieht,\nin Erwägung,\ndass die Beschwerde gemäss Art. 71 BGG in Verbindung mit Art. 73 Abs. 1 BZP im Verfahren nach Art. 32 Abs. 2 BGG abzuschreiben ist,\ndass in Anwendung von Art. 66 Abs. 2 BGG auf die Erhebung von Gerichtskosten verzichtet wird,\nverfügt die Präsidentin:\n1.\nDas Verfahren wird infolge Rückzugs der Beschwerde abgeschrieben.\n2.\nEs werden keine Gerichtskosten erhoben.\n3.\nDiese Verfügung wird den Parteien, dem Kantonsgericht Basel-Landschaft, Abteilung Sozialversicherungsrecht, und dem Staatssekretariat für Wirtschaft (SECO) schriftlich mitgeteilt.\nLuzern, 3. November 2025\nIm Namen der IV. öffentlich-rechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Präsidentin: Viscione\nDer Gerichtsschreiber: Grünvogel",
+  "operator_metadata": {
+    "date": "2025-11-03",
+    "reference": [
+      "8C_574/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-574-2025_2025-11-03.html",
+      "source": "446973/45/2851",
+      "content_length": 1796
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+      "it": "Confederazione Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale)",
+      "fr": "Conféderation Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social)"
+    },
+    "scrapedate": "2026-06-18",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_008"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2851",
+    "id": "CH_BGer_008_8C-574-2025_2025-11-03",
+    "title": {
+      "de": "Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung) 03.11.2025 8C_574/2025",
+      "it": "Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale) 03.11.2025 8C_574/2025",
+      "fr": "Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social) 03.11.2025 8C_574/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:31:59+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-574-2025_2025-11-03.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "8cbb12d01d40e4e52143b0d65f2dc79783dafda4eb6c64883b986599d0531ccd"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "id": "7B_1403_2025",
+  "case_id": "7B_1403/2025",
+  "case_ids": [
+    "7B_1403/2025"
+  ],
+  "decision_date": "2026-02-10",
+  "publication_date": null,
+  "department": "II. Strafrechtliche Abteilung",
+  "division": "II. Strafrechtliche Abteilung",
+  "subject": "Ausstand; Nichteintreten",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://10-02-2026-7B_1403-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n7B_1403/2025\nUrteil vom 10. Februar 2026\nII. strafrechtliche Abteilung\nBesetzung\nBundesrichterin Koch, als Einzelrichterin,\nGerichtsschreiber Hahn.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nBezirksgericht Laufenburg, Gerichtsgasse 85, 5080 Laufenburg,\nBeschwerdegegner.\nGegenstand\nAusstand; Nichteintreten,\nBeschwerde gegen den Entscheid des Obergerichts des Kantons Aargau, Beschwerdekammer in Strafsachen, vom 16. Dezember 2025 (SBK.2025.325).\nErwägungen:\n1.\nA.________ führt mit Eingabe vom 22. Dezember 2025 Beschwerde in Strafsachen gegen den Entscheid des Obergerichts des Kantons Aargau vom 16. Dezember 2025 betreffend Ausstand.\n2.\nDer Beschwerdeführer wurde vom Bundesgericht mit Verfügung vom 24. Dezember 2025 aufgefordert, bis zum 16. Januar 2026 einen Kostenvorschuss von Fr. 800.-- einzuzahlen. Da er dieser Aufforderung nicht nachgekommen ist, wurde ihm mit Verfügung vom 21. Januar 2026 eine nicht erstreckbare Nachfrist zur Vorschussleistung bis zum 3. Februar 2026 angesetzt. Unter Hinweis auf Art. 62 Abs. 3 BGG wurde der Beschwerdeführer zudem darauf hingewiesen, dass das Bundesgericht bei Säumnis auf das Rechtsmittel nicht eintreten werde.\n3.\nDer Beschwerdeführer hat sich nach Erhalt der vorgenannten Verfügungen betreffend die Bezahlung eines Kostenvorschusses mit Eingaben vom 30. Dezember 2025 und 23. Januar 2026 nochmals zur Sache geäussert. Bis zum Ablauf der nicht erstreckbaren Nachfrist indessen den Kostenvorschuss nicht geleistet. Androhungsgemäss ist daher gestützt auf Art. 62 Abs. 3 BGG im vereinfachten Verfahren nach Art. 108 BGG auf die Beschwerde nicht einzutreten. Bei diesem Ausgang des Verfahrens wird der Beschwerdeführer kostenpflichtig (Art. 66 Abs. 1 und 3 BGG).\nDemnach erkennt die Einzelrichterin:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 500.-- werden dem Beschwerdeführer auferlegt.\n3.\nDieses Urteil wird den Parteien, dem Obergericht des Kantons Aargau, Beschwerdekammer in Strafsachen, und der Staatsanwaltschaft Muri-Bremgarten schriftlich mitgeteilt.\nLausanne, 10. Februar 2026\nIm Namen der II. strafrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Einzelrichterin: Koch\nDer Gerichtsschreiber: Hahn",
+  "operator_metadata": {
+    "date": "2026-02-10",
+    "reference": [
+      "7B_1403/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-1403-2025_2026-02-10.html",
+      "source": "446973/45/2834",
+      "content_length": 2622
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit pénal"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_007"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_007_7B-1403-2025_2026-02-10",
+    "title": {
+      "de": "Bundesgericht II. Strafrechtliche Abteilung 10.02.2026 7B_1403/2025",
+      "it": "Tribunale federale II Corte di diritto penale 10.02.2026 7B_1403/2025",
+      "fr": "Tribunal fédéral IIe Cour de droit pénal 10.02.2026 7B_1403/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:11:59+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-1403-2025_2026-02-10.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "12ce145460662ff193d101bad1f5a762b2983cf8717f3d71771c2bdfd7ffb04d"
+  }
+}

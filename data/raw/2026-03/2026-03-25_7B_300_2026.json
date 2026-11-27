@@ -1,0 +1,56 @@
+{
+  "id": "7B_300_2026",
+  "case_id": "7B_300/2026",
+  "case_ids": [
+    "7B_300/2026"
+  ],
+  "decision_date": "2026-03-25",
+  "publication_date": null,
+  "department": "II. Strafrechtliche Abteilung",
+  "division": "II. Strafrechtliche Abteilung",
+  "subject": "Indemnisation du défenseur d'office",
+  "language": "it",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://25-03-2026-7B_300-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n7B_300/2026\nOrdonnance du 25 mars 2026\nIIe Cour de droit pénal\nComposition\nMme la Juge fédérale van de Graaf, Juge présidant.\nGreffier : M. Fragnière.\nParticipants à la procédure\nA.________, avocat,\nrecourant,\ncontre\nMinistère public STRADA du canton de Vaud, p.a. Ministère public central du canton de Vaud, avenue de Longemalle 1, 1020 Renens.\nObjet\nIndemnisation du défenseur d'office,\nrecours contre l'arrêt de la Chambre des recours pénale du Tribunal cantonal du canton de Vaud du 4 février 2026 (n° 86 - PE22.004475).\nConsidérant en fait et en droit :\nPar acte du 9 mars 2026, l'avocat A.________ déclare retirer le recours interjeté dans la cause 7B_300/2026.\nIl y a lieu d'en prendre acte et de rayer la cause du rôle (art. 32 al. 2 LTF), sans frais (cf. art. 66 al. 1 in fine LTF) et sans allocation de dépens (cf. art. 68 al. 3 LTF).\nPar ces motifs, la Juge présidant ordonne :\n1.\nIl est pris acte du retrait du recours et l'affaire 7B_300/2026 est rayée du rôle.\n2.\nIl n'est pas perçu de frais judiciaires.\n3.\nLa présente ordonnance est communiquée au recourant, au Ministère public STRADA du canton de Vaud, à la Chambre des recours pénale du Tribunal cantonal du canton de Vaud et à B.________.\nLausanne, le 25 mars 2026\nAu nom de la IIe Cour de droit pénal\ndu Tribunal fédéral suisse\nLa Juge présidant :\nLe Greffier :",
+  "operator_metadata": {
+    "date": "2026-03-25",
+    "reference": [
+      "7B_300/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-300-2026_2026-03-25.html",
+      "source": "446973/45/2834",
+      "content_length": 1671
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit pénal"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_007"
+    ],
+    "canton": "CH",
+    "language": "it",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_007_7B-300-2026_2026-03-25",
+    "title": {
+      "de": "Bundesgericht II. Strafrechtliche Abteilung 25.03.2026 7B_300/2026",
+      "it": "Tribunale federale II Corte di diritto penale 25.03.2026 7B_300/2026",
+      "fr": "Tribunal fédéral IIe Cour de droit pénal 25.03.2026 7B_300/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:25:04+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-300-2026_2026-03-25.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "27f4b6907baff114b5eee8657e2b39318a73295827335dacfd0cbb19c33a6177"
+  }
+}

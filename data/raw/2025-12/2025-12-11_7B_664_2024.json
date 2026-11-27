@@ -1,0 +1,56 @@
+{
+  "id": "7B_664_2024",
+  "case_id": "7B_664/2024",
+  "case_ids": [
+    "7B_664/2024"
+  ],
+  "decision_date": "2025-12-11",
+  "publication_date": null,
+  "department": "II. Strafrechtliche Abteilung",
+  "division": "II. Strafrechtliche Abteilung",
+  "subject": "Einstellung; Rückzug",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://11-12-2025-7B_664-2024",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n7B_664/2024\nVerfügung vom 11. Dezember 2025\nII. strafrechtliche Abteilung\nBesetzung\nBundesrichterin van de Graaf, als Einzelrichterin,\nGerichtsschreiber Eschle.\nVerfahrensbeteiligte\nA.________ AG,\nvertreten durch Rechtsanwalt Dr. Alex Ertl,\nBeschwerdeführerin,\ngegen\n1. Staatsanwaltschaft des Kantons Appenzell I.Rh., Unteres Ziel 20, 9050 Appenzell,\n2. B.________,\nvertreten durch Rechtsanwältin Viviane Bodmer,\nBeschwerdegegner.\nGegenstand\nEinstellung; Rückzug,\nBeschwerde gegen den Entscheid des Kantonsgerichts Appenzell Innerrhoden, Kommission für Entscheide in Strafsachen, vom 18. April 2024 (KSE 17-2023).\nErwägungen:\n1.\nDie Beschwerde in Strafsachen vom 17. Juni 2024 gegen den Entscheid des Kantonsgerichts Appenzell Innerrhoden vom 18. April 2024 in der rubrizierten Angelegenheit wurde am 17. November 2025 zurückgezogen. Mit dem Rückzug der Beschwerde wird das Verfahren gegenstandslos und ist von der Instruktionsrichterin als Einzelrichterin im Verfahren nach Art. 32 Abs. 2 BGG abzuschreiben.\n2.\nDie Beschwerdeführerin, die ihre Beschwerde zurückgezogen und damit das Dahinfallen des Verfahrens verursacht hat, hat für die bisher entstandenen bundesgerichtlichen Kosten aufzukommen (Art. 66 BGG). Die Gerichtskosten sind auf Fr. 300.-- festzusetzen.\nDemnach verfügt die Instruktionsrichterin:\n1.\nDas Verfahren wird infolge Rückzugs der Beschwerde abgeschrieben.\n2.\nDie Gerichtskosten von Fr. 300.-- werden der Beschwerdeführerin auferlegt.\n3.\nDiese Verfügung wird den Parteien und dem Kantonsgericht Appenzell Innerrhoden, Kommission für Entscheide in Strafsachen, schriftlich mitgeteilt.\nLausanne, 11. Dezember 2025\nIm Namen der II. strafrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Einzelrichterin:\nDer Gerichtsschreiber:",
+  "operator_metadata": {
+    "date": "2025-12-11",
+    "reference": [
+      "7B_664/2024"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-664-2024_2025-12-11.html",
+      "source": "446973/45/2851",
+      "content_length": 2142
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit pénal"
+    },
+    "scrapedate": "2026-06-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_007"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2851",
+    "id": "CH_BGer_007_7B-664-2024_2025-12-11",
+    "title": {
+      "de": "Bundesgericht II. Strafrechtliche Abteilung 11.12.2025 7B_664/2024",
+      "it": "Tribunale federale II Corte di diritto penale 11.12.2025 7B_664/2024",
+      "fr": "Tribunal fédéral IIe Cour de droit pénal 11.12.2025 7B_664/2024"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:53:04+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-664-2024_2025-12-11.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "a31cfa3dedd085bee3dd22f749a7e7203a1abe2652806180df5c368a441d7764"
+  }
+}

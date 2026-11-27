@@ -1,0 +1,56 @@
+{
+  "id": "4D_21_2026",
+  "case_id": "4D_21/2026",
+  "case_ids": [
+    "4D_21/2026"
+  ],
+  "decision_date": "2026-04-14",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "Darlehen",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://14-04-2026-4D_21-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4D_21/2026\nUrteil vom 14. April 2026\nI. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Hurni, Präsident,\nGerichtsschreiber Widmer.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nB.________,\nBeschwerdegegnerin.\nGegenstand\nDarlehen,\nBeschwerde gegen den Beschluss des Obergerichts des Kantons Zürich, II. Zivilkammer, vom 15. Januar 2026 (RU250106-O/U).\nIn Erwägung,\ndass der Beschwerdeführer beim Bundesgericht mit Eingabe vom 8. Februar 2026 (Postaufgabe am 15. Februar 2026) Beschwerde gegen den Beschluss des Obergerichts des Kantons Zürich vom 15. Januar 2026 erhob;\ndass der Beschwerdeführer mit Präsidialverfügung vom 16. Februar 2026 aufgefordert wurde, spätestens am 3. März 2026 einen Kostenvorschuss von Fr. 500.-- einzuzahlen;\ndass dem Beschwerdeführer, da der Kostenvorschuss innerhalb dieser Frist nicht eingegangen war, mit Verfügung vom 5. März 2026 eine nicht erstreckbare Nachfrist zur Vorschussleistung bis zum 20. März 2026 angesetzt wurde, unter Hinweis darauf, dass das Bundesgericht bei Säumnis auf das Rechtsmittel nicht eintreten werde (Art. 62 Abs. 3 BGG);\ndass der Beschwerdeführer den ihm auferlegten Kostenvorschuss auch innerhalb der angesetzten Nachfrist nicht geleistet hat, weshalb gestützt auf Art. 62 Abs. 3 BGG auf die Beschwerde nicht einzutreten ist (Art. 108 Abs. 1 lit. a BGG);\ndass die Gerichtskosten dem Verfahrensausgang entsprechend dem Beschwerdeführer aufzuerlegen sind (Art. 66 Abs. 1 BGG);\ndass der Beschwerdegegnerin keine Parteientschädigung zuzusprechen ist, da ihr im Zusammenhang mit dem bundesgerichtlichen Verfahren kein Aufwand erwachsen ist (Art. 68 Abs. 1 BGG);\nerkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 300.-- werden dem Beschwerdeführer auferlegt.\n3.\nDieses Urteil wird den Parteien und dem Obergericht des Kantons Zürich, II. Zivilkammer, schriftlich mitgeteilt.\nLausanne, 14. April 2026\nIm Namen der I. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Hurni\nDer Gerichtsschreiber: Widmer",
+  "operator_metadata": {
+    "date": "2026-04-14",
+    "reference": [
+      "4D_21/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-21-2026_2026-04-14.html",
+      "source": "446973/45/2829",
+      "content_length": 2410
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_004_4D-21-2026_2026-04-14",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 14.04.2026 4D_21/2026",
+      "it": "Tribunale federale I Corte di diritto civile 14.04.2026 4D_21/2026",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 14.04.2026 4D_21/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:28:59+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-21-2026_2026-04-14.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "6aa3a5fd29fd266bb3b0b78c9710d8b4c166760375887f4478b345db7b413d3a"
+  }
+}

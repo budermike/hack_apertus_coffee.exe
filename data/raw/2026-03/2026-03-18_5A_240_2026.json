@@ -1,0 +1,56 @@
+{
+  "id": "5A_240_2026",
+  "case_id": "5A_240/2026",
+  "case_ids": [
+    "5A_240/2026"
+  ],
+  "decision_date": "2026-03-18",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "mesures provisionnelles (protection de la personnalité)",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://18-03-2026-5A_240-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5A_240/2026\nOrdonnance du 18 mars 2026\nIIe Cour de droit civil\nComposition\nM. le Juge fédéral Bovey, Président.\nGreffière : Mme Mairot.\nParticipants à la procédure\nA.________,\nreprésenté par Me Laurent Fischer, avocat,\nrequérant,\ncontre\n1. B.________ SA,\n2. C.________,\n3. D.________,\ntous trois représentés par Me Mathias Burnand, avocat,\nintimés.\nObjet\nmesures provisionnelles (protection de la personnalité),\nrequête d'effet suspensif concernant l'arrêt du Juge unique\nde la Cour d'appel civile du Tribunal cantonal du canton\nde Vaud du 9 mars 2026 (JP24.050301-250649 n° 180).\nVu :\nl'ordonnance de mesures provisionnelles rendue le 26 mai 2025 par le Président du Tribunal civil de l'arrondissement de La Côte, laquelle, entre autres points, rejette la requête de A.________ tendant à faire interdire aux intimés de publier toute information imputant à l'intéressé, désigné nommément ou de manière qu'il puisse être identifié, des comportements déplacés à l'égard de femmes;\nl'arrêt du 9 mars 2026, notifié le 11 suivant, du Juge unique de la Cour d'appel civile du Tribunal cantonal du canton de Vaud confirmant cette décision;\nla requête d'effet suspensif déposée le 13 mars 2026 par l'intéressé;\nl'art. 103 al. 3 LTF;\nConsidérant :\nque, de pratique constante, le prononcé de l'effet suspensif ou d'autres mesures provisionnelles suppose qu'un recours ait été effectivement et dûment déposé, de sorte qu'il est exclu de requérir de telles mesures dans l'optique d'un futur recours, sauf si la requête comporte des griefs exposés succinctement, que la partie requérante se réserve de compléter jusqu'à l'expiration du délai de recours (parmi d'autres: ordonnances 5A_39/2026 du 15 janvier 2026; 5A_34/2026 du 14 janvier 2026; 5A_613/2025 du 26 août 2025; 5A_331/2023 du 8 juin 2023);\nque, en l'espèce, l'écriture du requérant est expressément intitulée requête \" d'effet suspensif \" et conclut à la suspension du caractère exécutoire de l'arrêt cantonal précité, ainsi qu'à ce qu'ordre soit donné aux intimés de retirer immédiatement du site internet du journal E.________ un article publié le concernant;\nque, sous réserve de la précision que le recours à déposer tendra à la réforme de l'arrêt cantonal susvisé, en ce sens que sa requête de mesures provisionnelles est admise, l'argumentation et les conclusions de l'intéressé se rapportent exclusivement à dite requête, de sorte qu'on ne saurait assimiler son acte à un recours sommairement motivé;\nque, partant, la requête d'effet suspensif est irrecevable;\nque le recourant, qui succombe, supportera les frais de la présente ordonnance;\nPar ces motifs, le Président ordonne :\n1.\nLa requête d'effet suspensif est irrecevable.\n2.\nLes frais judiciaires, arrêtés à 500 fr., sont mis à la charge du recourant.\n3.\nLa présente ordonnance est communiquée aux parties et au Juge unique de la Cour d'appel civile du Tribunal cantonal du canton de Vaud.\nLausanne, le 18 mars 2026\nAu nom de la IIe Cour de droit civil\ndu Tribunal fédéral suisse\nLe Président : Bovey\nLa Greffière : Mairot",
+  "operator_metadata": {
+    "date": "2026-03-18",
+    "reference": [
+      "5A_240/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-240-2026_2026-03-18.html",
+      "source": "446973/45/2830",
+      "content_length": 3429
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2830",
+    "id": "CH_BGer_005_5A-240-2026_2026-03-18",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 18.03.2026 5A_240/2026",
+      "it": "Tribunale federale II Corte di diritto civile 18.03.2026 5A_240/2026",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 18.03.2026 5A_240/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:22:42+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-240-2026_2026-03-18.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "1f5402d88e08c74f99239a13fc41e959220f876743d4d00ef56d92adc04fc69c"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "id": "4A_259_2026",
+  "case_id": "4A_259/2026",
+  "case_ids": [
+    "4A_259/2026"
+  ],
+  "decision_date": "2026-06-18",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "unentgeltliche Rechtspflege",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://18-06-2026-4A_259-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4A_259/2026\nUrteil vom 18. Juni 2026\nI. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Hurni, Präsident,\nGerichtsschreiber Tanner.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nObergericht des Kantons Bern, 2. Zivilkammer, Hochschulstrasse 17, 3012 Bern,\nBeschwerdegegner\nB.________ AG,\nweitere Verfahrensbeteiligte.\nGegenstand\nunentgeltliche Rechtspflege,\nBeschwerde gegen den Entscheid des Obergerichts des Kantons Bern, 2. Zivilkammer, vom 9. April 2026 (ZK 26 48).\nErwägungen:\n1.\nMit Klage vom 30. Juli 2025 beantragte der Beschwerdeführer dem Regionalgericht Bern-Mittelland, die weitere Verfahrensbeteiligte sei zu verpflichten, ihm insgesamt Fr. 155'571.25 zu bezahlen. Zugleich ersuchte er das Regionalgericht um Bewilligung der unentgeltlichen Rechtspflege.\nAm 13. Januar 2026 wies der Gerichtspräsident des Regionalgerichts das Gesuch um unentgeltliche Rechtspflege wegen Aussichtslosigkeit ab.\nDas Obergericht des Kantons Bern wies mit Entscheid vom 9. April 2026 eine vom Beschwerdeführer dagegen erhobene Beschwerde ab.\n2.\nDagegen erhob der Beschwerdeführer am 15. Mai 2026 Beschwerde an das Bundesgericht.\nEs wurden keine Vernehmlassungen eingeholt.\n3.\nDie Eingabe des Beschwerdeführers erfüllt die Begründungsanforderungen, die an eine Beschwerde an das Bundesgericht gestellt werden (Art. 42 Abs. 2 und Art. 106 Abs. 2 BGG; BGE 142 III 364 E. 2.4; 140 III 86 E. 2, 115 E. 2), offensichtlich nicht. Auf die Beschwerde ist somit mangels hinreichender Begründung im vereinfachten Verfahren durch den Abteilungspräsidenten nicht einzutreten (Art. 108 Abs. 1 lit. b BGG). Die Begründung dieses Entscheids beschränkt sich auf eine kurze Angabe des Unzulässigkeitsgrundes (Art. 108 Abs. 3 BGG).\n4.\nDer Beschwerdeführer wird bei diesem Verfahrensausgang kostenpflichtig (Art. 66 Abs. 1 BGG).\nDer Beschwerdegegner hat keinen Anspruch auf eine Parteientschädigung (Art. 68 Abs. 3 BGG). Der weiteren Verfahrensbeteiligten ist ebenfalls keine Parteientschädigung zuzusprechen, da ihr aus dem bundesgerichtlichen Verfahren kein entschädigungspflichtiger Aufwand erwachsen ist (Art. 68 Abs. 2 BGG).\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 500.-- werden dem Beschwerdeführer auferlegt.\n3.\nEs werden keine Parteientschädigungen zugesprochen.\n4.\nDieses Urteil wird dem Beschwerdeführer, dem Obergericht des Kantons Bern, 2. Zivilkammer, und der B.________ AG schriftlich mitgeteilt.\nLausanne, 18. Juni 2026\nIm Namen der I. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Hurni\nDer Gerichtsschreiber: Tanner",
+  "operator_metadata": {
+    "date": "2026-06-18",
+    "reference": [
+      "4A_259/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-259-2026_2026-06-18.html",
+      "source": "446973/45/2829",
+      "content_length": 3068
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_004_4A-259-2026_2026-06-18",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 18.06.2026 4A_259/2026",
+      "it": "Tribunale federale I Corte di diritto civile 18.06.2026 4A_259/2026",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 18.06.2026 4A_259/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:19:32+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-259-2026_2026-06-18.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "2a3acf14056bc16ac71f0186042190fe8af7218284d6b577170b674f24769b8a"
+  }
+}

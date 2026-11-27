@@ -1,0 +1,56 @@
+{
+  "id": "4A_527_2025",
+  "case_id": "4A_527/2025",
+  "case_ids": [
+    "4A_527/2025"
+  ],
+  "decision_date": "2025-11-11",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "mandat; retrait du recours",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://11-11-2025-4A_527-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4A_527/2025\nOrdonnance du 11 novembre 2025\nIre Cour de droit civil\nComposition\nM. la Juge fédérale Kiss, juge présidant.\nGreffier : M. Widmer.\nParticipants à la procédure\nA.________,\nreprésenté par Me Giorgio Campá, avocat,\nrecourant,\ncontre\nB.________ AG,\nreprésentée par Me Clara Poglia, avocate,\nintimée.\nObjet\nmandat; retrait du recours,\nrecours contre l'arrêt rendu le 16 septembre 2025 par la Chambre civile de la Cour de justice du canton de Genève (C/12640/2022 ACJC/1295/2025).\nLa Juge présidant :\nVu le recours en matière civile déposé le 22 octobre 2025 par A.________ (ci-après: le recourant) contre l'arrêt rendu le 16 septembre 2025 par la Chambre civile de la Cour de justice du canton de Genève dans la cause divisant le recourant d'avec B.________ AG, intimée au recours;\nVu la lettre du 7 novembre 2025 par laquelle le conseil du recourant informe le Tribunal fédéral que son mandant retire son recours;\nConsidérant qu'il y a lieu de prendre acte de ce retrait et de rayer la cause 4A_527/2025 du rôle (art. 32 al. 2 LTF),\nque les frais judiciaires, réduits, sont mis à la charge du recourant (art. 66 al. 1 et 2 LTF);\nqu'il n'y a pas lieu à l'allocation de dépens.\nVu l'art. 32 al. 2 LTF.\nOrdonne :\n1.\nIl est pris acte du retrait du recours.\n2.\nLa cause 4A_527/2025 est rayée du rôle.\n3.\nUn émolument judiciaire de 500 fr. est mis à la charge du recourant.\n4.\nIl n'est pas alloué de dépens.\n5.\nLa présente ordonnance est communiquée aux parties et à la Chambre civile de la Cour de justice du canton de Genève.\nLausanne, le 11 novembre 2025\nAu nom de la Ire Cour de droit civil\ndu Tribunal fédéral suisse\nLa Juge présidant : Kiss\nLe Greffier : Widmer",
+  "operator_metadata": {
+    "date": "2025-11-11",
+    "reference": [
+      "4A_527/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-527-2025_2025-11-11.html",
+      "source": "446973/45/2869",
+      "content_length": 2057
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-06-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2869",
+    "id": "CH_BGer_004_4A-527-2025_2025-11-11",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 11.11.2025 4A_527/2025",
+      "it": "Tribunale federale I Corte di diritto civile 11.11.2025 4A_527/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 11.11.2025 4A_527/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:34:10+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-527-2025_2025-11-11.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "34efb4a5194ec95c075b91b4543598dede5936d990dfe3f10424f6fdec799d3c"
+  }
+}

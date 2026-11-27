@@ -1,0 +1,56 @@
+{
+  "id": "1C_673_2025",
+  "case_id": "1C_673/2025",
+  "case_ids": [
+    "1C_673/2025"
+  ],
+  "decision_date": "2025-11-24",
+  "publication_date": null,
+  "department": "I. Öffentlich-rechtliche Abteilung",
+  "division": "I. Öffentlich-rechtliche Abteilung",
+  "subject": "Kantonale Volksabstimmung vom 30. November 2025 betreffend Teilrevision des Spitalgesetzes.",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://24-11-2025-1C_673-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n1C_673/2025\nVerfügung vom 24. November 2025\nI. öffentlich-rechtliche Abteilung\nBesetzung\nBundesrichter Haag, Präsident,\nGerichtsschreiber Baur.\nVerfahrensbeteiligte\nJennifer Iseli,\nBeschwerdeführerin,\ngegen\nKantonsrat Schaffhausen,\nBeckenstube 7, 8200 Schaffhausen,\nRegierungsrat des Kantons Schaffhausen, Beckenstube 7, 8200 Schaffhausen.\nGegenstand\nKantonale Volksabstimmung vom 30. November 2025 betreffend Teilrevision des Spitalgesetzes.\nErwägungen:\n1.\nMit Eingabe vom 7. November 2025 erhob Jennifer Iseli beim Regierungsrat des Kantons Schaffhausen Stimmrechtsbeschwerde bezüglich der kantonalen Volksabstimmung vom 30. November 2025 betreffend Teilrevision des Spitalgesetzes vom 22. November 2004 des Kantons Schaffhausen (SHR 813.100). Sie ersuchte dabei, die Durchführung der Volksabstimmung vorsorglich zu suspendieren bzw. die Veröffentlichung des Abstimmungsergebnisses aufzuschieben, bis über die Beschwerde rechtskräftig entschieden sei. Die Staatskanzlei des Kantons Schaffhausen leitete die Beschwerde mit Schreiben vom 12. November 2025 zuständigkeitshalber an das Bundesgericht weiter. Mit Verfügung vom 13. November 2025 wies der Präsident der I. öffentlich-rechtlichen Abteilung das erwähnte Gesuch der Beschwerdeführerin ab. Jeweils mit Verfügung vom 14. November 2025 wurde dieser Frist zur Leistung eines Kostenvorschusses und den weiteren Verfahrensbeteiligten Frist zur Einreichung einer allfälligen Vernehmlassung angesetzt.\n2.\nMit Eingabe vom 20. November 2025 hat die Beschwerdeführerin ihre Beschwerde zurückgezogen. Damit ist das vorliegende Beschwerdeverfahren als durch Beschwerderückzug erledigt im Verfahren nach Art. 32 Abs. 2 BGG abzuschreiben. Auf eine Kostenerhebung kann umständehalber verzichtet werden (Art. 66 Abs. 1 und 2 BGG). Parteientschädigungen sind keine zuzusprechen (Art. 68 BGG).\nDemnach verfügt der Präsident:\n1.\nDas Verfahren 1C_673/2025 wird infolge Rückzugs der Beschwerde abgeschrieben.\n2.\nEs werden keine Kosten erhoben.\n3.\nDiese Verfügung wird der Beschwerdeführerin, dem Kantonsrat Schaffhausen und dem Regierungsrat des Kantons Schaffhausen schriftlich mitgeteilt.\nLausanne, 24. November 2025\nIm Namen der I. öffentlich-rechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Haag\nDer Gerichtsschreiber: Baur",
+  "operator_metadata": {
+    "date": "2025-11-24",
+    "reference": [
+      "1C_673/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_001_1C-673-2025_2025-11-24.html",
+      "source": "446973/45/2870",
+      "content_length": 2677
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Öffentlich-rechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto pubblico",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit public"
+    },
+    "scrapedate": "2026-06-18",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_001"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2870",
+    "id": "CH_BGer_001_1C-673-2025_2025-11-24",
+    "title": {
+      "de": "Bundesgericht I. Öffentlich-rechtliche Abteilung 24.11.2025 1C_673/2025",
+      "it": "Tribunale federale I Corte di diritto pubblico 24.11.2025 1C_673/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit public 24.11.2025 1C_673/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:37:48+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_001_1C-673-2025_2025-11-24.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "cb480e80402b3d15b21c704ee03477164c019434da88523f63c1e4a6b4de0526"
+  }
+}

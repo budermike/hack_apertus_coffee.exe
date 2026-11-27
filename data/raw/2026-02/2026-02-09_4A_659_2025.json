@@ -1,0 +1,56 @@
+{
+  "id": "4A_659_2025",
+  "case_id": "4A_659/2025",
+  "case_ids": [
+    "4A_659/2025"
+  ],
+  "decision_date": "2026-02-09",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "Organisationsmangel",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://09-02-2026-4A_659-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4A_659/2025\nUrteil vom 9. Februar 2026\nI. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Hurni, Präsident,\nGerichtsschreiber Leemann.\nVerfahrensbeteiligte\nA.________ AG,\nBeschwerdeführerin,\ngegen\nB.________,\nvertreten durch Rechtsanwältin\nDr. Christa-Maria Harder Schuler,\nBeschwerdegegner,\nC.________,\nVerfahrensbeteiligter.\nGegenstand\nOrganisationsmangel,\nBeschwerde gegen das Teilurteil des Handelsgerichts des Kantons Zürich vom 24. November 2025 (HE250101-O).\nErwägungen:\n1.\nMit Teilurteil vom 24. November 2025 verpflichtete das Handelsgericht des Kantons Zürich den Verfahrensbeteiligten, beim Gericht ein schriftliches Angebot für die Übernahme von 125 Namenaktien der Beschwerdeführerin einzureichen.\nMit Eingabe vom 23. Dezember 2025 erklärte die Beschwerdeführerin dem Bundesgericht, das Teilurteil des Handelsgerichts vom 24. November 2025 mit Beschwerde anfechten zu wollen.\nEs wurden keine Vernehmlassungen eingeholt.\n2.\nDie Eingabe der Beschwerdeführerin vom 23. Dezember 2025 erfüllt die Begründungsanforderungen, die an eine Beschwerde an das Bundesgericht gestellt werden, offensichtlich nicht (Art. 42 Abs. 2 und Art. 106 Abs. 2 BGG; BGE 142 III 364 E. 2.4; 140 III 86 E. 2, 115 E. 2).\nAuf die Beschwerde ist somit mangels hinreichender Begründung im vereinfachten Verfahren nicht einzutreten (Art. 108 Abs. 1 lit. b BGG).\n3.\nDie Beschwerdeführerin wird bei diesem Verfahrensausgang kostenpflichtig (Art. 66 Abs. 1 BGG). Dem Beschwerdegegner und dem Verfahrensbeteiligten stehen keine Parteientschädigungen zu (Art. 68 Abs. 2 BGG).\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 800.-- werden der Beschwerdeführerin auferlegt.\n3.\nEs werden keine Parteientschädigungen zugesprochen.\n4.\nDieses Urteil wird den Parteien, dem Verfahrensbeteiligten und dem Handelsgericht des Kantons Zürich schriftlich mitgeteilt.\nLausanne, 9. Februar 2026\nIm Namen der I. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Hurni\nDer Gerichtsschreiber: Leemann",
+  "operator_metadata": {
+    "date": "2026-02-09",
+    "reference": [
+      "4A_659/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-659-2025_2026-02-09.html",
+      "source": "446973/45/2829",
+      "content_length": 2487
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_004_4A-659-2025_2026-02-09",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 09.02.2026 4A_659/2025",
+      "it": "Tribunale federale I Corte di diritto civile 09.02.2026 4A_659/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 09.02.2026 4A_659/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:11:11+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-659-2025_2026-02-09.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "36308227df4850893ee1747c6fdfff23b99a9d9a6e6094dc85af9c950a0d9dcd"
+  }
+}

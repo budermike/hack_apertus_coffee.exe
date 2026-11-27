@@ -1,0 +1,56 @@
+{
+  "id": "5A_1005_2025",
+  "case_id": "5A_1005/2025",
+  "case_ids": [
+    "5A_1005/2025"
+  ],
+  "decision_date": "2026-02-10",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "saisie de salaire",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://10-02-2026-5A_1005-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5A_1005/2025\nArrêt du 10 février 2026\nIIe Cour de droit civil\nComposition\nM. le Juge fédéral Bovey, Président.\nGreffier : M. Braconi.\nParticipants à la procédure\nA.________,\nrecourante,\ncontre\nOffice cantonal des poursuites de Genève, rue du Stand 46, 1204 Genève.\nObjet\nsaisie de salaire,\nrecours contre la décision de la Chambre de surveillance des Offices des poursuites et faillites de la Cour de justice du canton de Genève du 6 novembre 2025 (A/3372/2025-CS DCSO/610/25).\nVu :\nle recours en matière civile formé le 17 novembre 2025 par A.________ contre la décision rendue le 6 novembre 2025 par la Chambre de surveillance des Offices des poursuites et faillites de la Cour de justice du canton de Genève;\nl'ordonnance du 19 novembre 2025 déboutant la recourante des fins de sa requête de mesures provisionnelles (art. 104 LTF);\nl'ordonnance du 1er décembre 2025 invitant la recourante à verser une avance de frais de 1'000 fr. jusqu'au 16 décembre 2025;\nl'ordonnance du 22 décembre 2025 lui fixant un délai supplémentaire au 12 janvier 2026 pour s'acquitter de la somme réclamée, sous peine d'irrecevabilité du recours;\nl'ordonnance du 16 janvier 2026 - non réclamée - rejetant la requête d'assistance judiciaire de la recourante et l'invitant à verser l'avance de frais requise jusqu'au 2 février 2026, sous peine d'irrecevabilité de son recours;\nConsidérant :\nque la recourante n'a pas fourni l'avance de frais requise dans le délai supplémentaire qui lui a été imparti à cet effet;\nque, partant, le présent recours doit être déclaré irrecevable par voie de procédure simplifiée (art. 108 al. 1 let. a LTF, en relation avec l'art. 62 al. 3 LTF);\nque les frais judiciaires incombent à la recourante (art. 66 al. 1 LTF);\nPar ces motifs, le Président prononce :\n1.\nLe recours est irrecevable.\n2.\nLes frais judiciaires, arrêtés à 500 fr., sont mis à la charge de la recourante.\n3.\nLe présent arrêt est communiqué à la recourante, à l'Office cantonal des poursuites de Genève et à la Chambre de surveillance des Offices des poursuites et faillites de la Cour de justice du canton de Genève.\nLausanne, le 10 février 2026\nAu nom de la IIe Cour de droit civil\ndu Tribunal fédéral suisse\nLe Président : Bovey\nLe Greffier : Braconi",
+  "operator_metadata": {
+    "date": "2026-02-10",
+    "reference": [
+      "5A_1005/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-1005-2025_2026-02-10.html",
+      "source": "446973/45/2829",
+      "content_length": 2623
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_005_5A-1005-2025_2026-02-10",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 10.02.2026 5A_1005/2025",
+      "it": "Tribunale federale II Corte di diritto civile 10.02.2026 5A_1005/2025",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 10.02.2026 5A_1005/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:11:51+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-1005-2025_2026-02-10.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "98677064f8d15f40a29c0d36bfb584f3791b7a2e0a852f8b8875a64033945d01"
+  }
+}

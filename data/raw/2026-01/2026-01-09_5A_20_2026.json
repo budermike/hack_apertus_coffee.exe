@@ -1,0 +1,56 @@
+{
+  "id": "5A_20_2026",
+  "case_id": "5A_20/2026",
+  "case_ids": [
+    "5A_20/2026"
+  ],
+  "decision_date": "2026-01-09",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "Konkursandrohung",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://09-01-2026-5A_20-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5A_20/2026\nUrteil vom 9. Januar 2026\nII. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Bovey, Präsident,\nGerichtsschreiber Zingg.\nVerfahrensbeteiligte\nA.________ AG,\nBeschwerdeführerin,\ngegen\nBetreibungsamt Bezirk Weinfelden,\nBahnhofstrasse 22, Postfach 140, 8570 Weinfelden.\nGegenstand\nKonkursandrohung,\nBeschwerde gegen den Entscheid des Obergerichts des Kantons Thurgau als kantonale Aufsichtsbehörde über Schuldbetreibung und Konkurs vom 22. Oktober 2025 (BS.2025.14).\nErwägungen:\n1.\nDas Betreibungsamt Bezirk Weinfelden erliess am 7. August 2025 in der Betreibung Nr. xxx (zuvor Betreibung Nr. yyy des Betreibungsamtes Bezirk Arbon) die Konkursandrohung gegen die Beschwerdeführerin.\nDagegen erhob die Beschwerdeführerin mit Eingabe vom 14. August 2025 Beschwerde. Mit Entscheid vom 18. September 2025 wies das Bezirksgericht Weinfelden die Beschwerde ab.\nDagegen erhob die Beschwerdeführerin am 25. September 2025 Beschwerde beim Obergericht des Kantons Thurgau. Mit Entscheid vom 22. Oktober 2025 (Versand am 27. November 2025) wies das Obergericht die Beschwerde ab.\nDagegen hat die Beschwerdeführerin mit einer auf den 6. Januar 2026 datierten und am 7. Januar 2026 der Post übergebenen Eingabe Be-schwerde in Zivilsachen, eventuell subsidiäre Verfassungsbeschwerde an das Bundesgericht erhoben.\n2.\nGemäss Track & Trace-Auszug der Schweizerischen Post ist der angefochtene Entscheid der Beschwerdeführerin am 28. November 2025 zugestellt worden. Die zehntägige Beschwerdefrist endete demnach am 8. Dezember 2025 (Art. 100 Abs. 2 lit. a BGG). Die erst am 7. Januar 2026 der Post übergebene Beschwerde ist verspätet.\nDie Beschwerde ist offensichtlich unzulässig. Der Abteilungspräsident tritt auf sie im vereinfachten Verfahren nicht ein (Art. 108 Abs. 1 lit. a BGG). Das Gesuch um aufschiebende Wirkung wird damit gegenstandslos.\n3.\nBei diesem Ausgang des Verfahrens trägt die Beschwerdeführerin die Gerichtskosten (Art. 66 Abs. 1 BGG). Sie ersucht darum, von der Erhebung eines Kostenvorschusses abzusehen bzw. einen Kostenvorschuss bis zum Entscheid über die Beschwerde zu sistieren. Mit dem vorliegenden Entscheid wird auch dieses Gesuch gegenstandslos. Es besteht kein Grund, um im vorliegenden Endentscheid auf die Kostenerhebung zu verzichten.\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 1'500.-- werden der Beschwerdeführerin auferlegt.\n3.\nDieses Urteil wird den Verfahrensbeteiligten und dem Obergericht des Kantons Thurgau als kantonale Aufsichtsbehörde über Schuldbetreibung und Konkurs mitgeteilt.\nLausanne, 9. Januar 2026\nIm Namen der II. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Bovey\nDer Gerichtsschreiber: Zingg",
+  "operator_metadata": {
+    "date": "2026-01-09",
+    "reference": [
+      "5A_20/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-20-2026_2026-01-09.html",
+      "source": "446973/45/2830",
+      "content_length": 3155
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2830",
+    "id": "CH_BGer_005_5A-20-2026_2026-01-09",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 09.01.2026 5A_20/2026",
+      "it": "Tribunale federale II Corte di diritto civile 09.01.2026 5A_20/2026",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 09.01.2026 5A_20/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:02:29+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-20-2026_2026-01-09.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "e600217a583f75ec4c5f2d546a4d113ee932e3729eba2bf5a23bbfec9ee3ee68"
+  }
+}

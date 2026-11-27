@@ -1,0 +1,56 @@
+{
+  "id": "5A_34_2026",
+  "case_id": "5A_34/2026",
+  "case_ids": [
+    "5A_34/2026"
+  ],
+  "decision_date": "2026-03-16",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "irrecevabilité du recours (faillite, défaut de paiement de l'avance de frais)",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://16-03-2026-5A_34-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5A_34/2026\nArrêt du 16 mars 2026\nIIe Cour de droit civil\nComposition\nM. le Juge fédéral Bovey, Président.\nGreffière : Mme Mairot.\nParticipants à la procédure\nA.________ SA,\nrecourant,\ncontre\nÉtat de Genève, Administration fiscale cantonale, rue du Stand 26, 1204 Genève.\nObjet\nirrecevabilité du recours (faillite, défaut de paiement de l'avance de frais)\nrecours contre l'arrêt de la Chambre civile de la\nCour de justice du canton de Genève du 8 janvier 2026 (C/21207/2025 ACJC/28/2026).\nVu :\nle jugement du 6 novembre 2025 du Tribunal de première instance de Genève déclarant la société B.________ SA en état de faillite, avec effet dès ce jour à 8h30;\nl'arrêt du 8 janvier 2026 de la Chambre civile de la Cour de justice du canton de Genève déclarant irrecevable, faute de paiement de l'avance de frais requise (art. 59 al. 2 let. f et 101 al. 3 CPC), le recours déposé par la société en faillite contre le jugement précité;\nla requête \" d'effet suspensif \" déposée le 13 janvier 2026 par la société A.________ SA, nouvelle raison sociale de la requérante (publiée dans la FOSC le 12 janvier 2026);\nl'ordonnance du 14 janvier 2026, déclarant cette requête irrecevable;\nle recours en matière civile déposé le 20 janvier 2026 par A.________ SA, assorti d'une requête d'effet suspensif, respectivement de mesures provisionnelles (art. 103 al. 3 et 104 LTF);\nl'ordonnance du 22 janvier 2026, invitant la recourante à verser une avance de frais de 5'000 fr. jusqu'au 6 février 2026 au plus tard;\nl'ordonnance du 16 février 2026 lui fixant un délai supplémentaire au 27 février 2026 pour s'acquitter de la somme réclamée, sous peine d'irrecevabilité du recours;\nConsidérant :\nque la recourante n'a pas fourni l'avance de frais requise dans le délai supplémentaire qui lui a été imparti à cette effet;\nque, partant, le présent recours doit être déclaré irrecevable par voie de procédure simplifiée (art. 108 al. 1 let. a LTF, en relation avec l'art. 62 al. 3 LTF);\nque la requête d'effet suspensif, respectivement de mesures provisionnelles est ainsi sans objet;\nque les frais judiciaires incombent à la recourante (art. 66 al. 1 LTF);\nPar ces motifs, le Président prononce :\n1.\nLe recours est irrecevable.\n2.\nLa requête d'effet suspensif, respectivement de mesures provisionnelles est sans objet.\n3.\nLes frais judiciaires, arrêtés à 500 fr., sont mis à la charge de la recourante.\n4.\nLe présent arrêt est communiqué aux parties, à l'Office des faillites du canton de Genève, à l'Office des poursuites de Genève, au Registre du commerce du canton de Genève, au Registre foncier du canton de Genève et à la Chambre civile de la Cour de justice du canton de Genève.\nLausanne, le 16 mars 2026\nAu nom de la IIe Cour de droit civil\ndu Tribunal fédéral suisse\nLe Président : Bovey\nLa Greffière : Mairot",
+  "operator_metadata": {
+    "date": "2026-03-16",
+    "reference": [
+      "5A_34/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-34-2026_2026-03-16.html",
+      "source": "446973/45/2830",
+      "content_length": 3211
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2830",
+    "id": "CH_BGer_005_5A-34-2026_2026-03-16",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 16.03.2026 5A_34/2026",
+      "it": "Tribunale federale II Corte di diritto civile 16.03.2026 5A_34/2026",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 16.03.2026 5A_34/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:21:44+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-34-2026_2026-03-16.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "f1e95dd59f0b4ce226b966bbb3f4c91c9b84a8bc7d65b88ba8ebacba779c6914"
+  }
+}

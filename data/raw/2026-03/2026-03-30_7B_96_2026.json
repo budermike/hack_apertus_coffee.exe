@@ -1,0 +1,56 @@
+{
+  "id": "7B_96_2026",
+  "case_id": "7B_96/2026",
+  "case_ids": [
+    "7B_96/2026"
+  ],
+  "decision_date": "2026-03-30",
+  "publication_date": null,
+  "department": "II. Strafrechtliche Abteilung",
+  "division": "II. Strafrechtliche Abteilung",
+  "subject": "Decreto di non luogo a procedere (anticipo delle spese)",
+  "language": "it",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://30-03-2026-7B_96-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n7B_96/2026\nSentenza del 30 marzo 2026\nII Corte di diritto penale\nComposizione\nGiudice federale van de Graaf, Giudice presidente,\nCancelliere Valentino.\nPartecipanti al procedimento\nA.________,\nricorrente,\ncontro\nMinistero pubblico del Cantone Ticino, palazzo di giustizia, via Pretorio 16, 6901 Lugano,\nopponente.\nOggetto\nDecreto di non luogo a procedere (anticipo delle spese),\nricorso contro la sentenza emanata il 17 dicembre 2025 dalla Corte dei reclami penali del Tribunale d'appello\ndel Cantone Ticino (60.2025.273).\nRitenuto in fatto e considerando in diritto:\n1.\nCon decisione dell'8 agosto 2025, il Procuratore pubblico del Cantone Ticino ha decretato il non luogo a procedere in ordine alla denuncia presentata da A.________ in data 6/7 agosto 2025.\nCon sentenza del 17 dicembre 2025, la Corte dei reclami penali del Tribunale d'appello del Cantone Ticino ha respinto il reclamo presentato da A.________ contro il menzionato decreto di non luogo a procedere.\n2.\nAvverso questa sentenza A.________ insorge al Tribunale federale con uno scritto datato 21 gennaio 2026.\nCon decreto del 4 febbraio 2026, il ricorrente è stato invitato a fornire, entro il 19 febbraio 2026, un anticipo di fr. 800.-- a titolo di garanzia delle spese giudiziarie presunte (art. 62 cpv. 1 LTF).\nScaduto infruttuosamente questo termine, con decreto del 24 febbraio 2026 al ricorrente è stato fissato un termine suppletorio non prorogabile, scadente il 9 marzo 2026, per provvedere a versare l'anticipo richiesto, con l'avvertenza che in caso di mancato pagamento il ricorso sarebbe stato dichiarato inammissibile sulla scorta dell'art. 62 cpv. 3 LTF. Veniva altresì precisato che il mancato pagamento dell'anticipo delle spese non vale quale ritiro del rimedio giuridico, il ritiro dovendo essere effettuato per iscritto.\n3.\nLa parte che adisce il Tribunale federale deve versare un anticipo equivalente alle spese giudiziarie presunte (art. 62 cpv. 1 prima frase LTF). A tal fine, il giudice dell'istruzione, rispettivamente il presidente della corte (art. 32 cpv. 1 LTF), stabilisce un congruo termine. Se il termine scade infruttuoso, impartisce un termine suppletorio. Se l'anticipo non è versato nemmeno nel termine suppletorio, il Tribunale federale non entra nel merito dell'istanza (art. 62 cpv. 3 LTF).\n4.\nIn concreto, a causa del mancato pagamento dell'anticipo delle spese giudiziarie entro il termine suppletorio impartito, non è possibile entrare nel merito del ricorso che dev'essere dichiarato inammissibile conformemente a quanto previsto dall'art. 62 cpv. 3 LTF. La decisione di inammissibilità può essere emanata nella procedura semplificata dell'art. 108 LTF.\nLe spese giudiziarie seguono la soccombenza e vanno pertanto poste a carico del ricorrente (art. 66 cpv. 1 LTF).\nPer questi motivi, la Giudice presidente pronuncia:\n1.\nIl ricorso è inammissibile.\n2.\nLe spese giudiziarie di fr. 500.-- sono poste a carico del ricorrente.\n3.\nComunicazione alle parti e alla Corte dei reclami penali del Tribunale d'appello del Cantone Ticino.\nLosanna, 30 marzo 2026\nIn nome della II Corte di diritto penale\ndel Tribunale federale svizzero\nLa Giudice presidente:\nIl Cancelliere:",
+  "operator_metadata": {
+    "date": "2026-03-30",
+    "reference": [
+      "7B_96/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "it",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-96-2026_2026-03-30.html",
+      "source": "446973/45/2834",
+      "content_length": 3585
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit pénal"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_007"
+    ],
+    "canton": "CH",
+    "language": "it",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_007_7B-96-2026_2026-03-30",
+    "title": {
+      "de": "Bundesgericht II. Strafrechtliche Abteilung 30.03.2026 7B_96/2026",
+      "it": "Tribunale federale II Corte di diritto penale 30.03.2026 7B_96/2026",
+      "fr": "Tribunal fédéral IIe Cour de droit pénal 30.03.2026 7B_96/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:26:23+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-96-2026_2026-03-30.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "36bba1f6fa1a965dfe6bde5251a65af379cdd58bf0ed1fc14f5fa8f01bfb81f3"
+  }
+}

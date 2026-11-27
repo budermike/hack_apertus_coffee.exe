@@ -1,0 +1,56 @@
+{
+  "id": "1C_410_2025",
+  "case_id": "1C_410/2025",
+  "case_ids": [
+    "1C_410/2025"
+  ],
+  "decision_date": "2025-12-23",
+  "publication_date": null,
+  "department": "I. Öffentlich-rechtliche Abteilung",
+  "division": "I. Öffentlich-rechtliche Abteilung",
+  "subject": "Volksinitiative \"Mehr bezahlbare Wohnungen im Kanton Zürich\"",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://23-12-2025-1C_410-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n1C_410/2025\nVerfügung vom 23. Dezember 2025\nI. öffentlich-rechtliche Abteilung\nBesetzung\nBundesrichter Merz, präsidierendes Mitglied,\nGerichtsschreiber Bisaz.\nVerfahrensbeteiligte\n1. Initiativkomitee \"Mehr bezahlbare Wohnungen\nim Kanton Zürich\",\n2. Jacqueline Badran,\n3. Ulrich Keller,\nBeschwerdeführende,\nalle drei vertreten durch Silvan Keller und/oder Laura Gantenbein,\ngegen\nKantonsrat Zürich,\nHirschengraben 40, 8001 Zürich.\nGegenstand\nVolksinitiative \"Mehr bezahlbare Wohnungen im\nKanton Zürich\",\nBeschwerde gegen den Beschluss des Kantonsrates Zürich vom 30. Juni 2025.\nIn Erwägung,\ndass das Initiativkomitee \"Mehr bezahlbare Wohnungen im Kanton Zürich\", Jacqueline Badran und Ulrich Keller mit Eingabe vom 30. Juli 2025 Beschwerde in öffentlich-rechtlichen Angelegenheiten gegen den Beschluss des Kantonsrates des Kantons Zürich über die kantonale Volksinitiative \"Mehr bezahlbare Wohnungen im Kanton Zürich\" vom 30. Juni 2025 erhoben hat;\ndass das Initiativkomitee \"Mehr bezahlbare Wohnungen im Kanton Zürich\", Jacqueline Badran und Ulrich Keller mit Schreiben vom 18. Dezember 2025 ihre Beschwerde zurückgezogen haben;\ndass das Beschwerdeverfahren somit im Verfahren nach Art. 32 Abs. 2 BGG als durch Beschwerderückzug erledigt abzuschreiben ist;\ndass unter den gegebenen Umständen auf eine Kostenauflage verzichtet werden kann (vgl. Art. 66 Abs. 1 BGG);\nverfügt das präsidierende Mitglied:\n1.\nDas Verfahren 1C_410/2025 wird infolge Rückzugs der Beschwerde abgeschrieben.\n2.\nEs werden keine Kosten erhoben.\n3.\nDiese Verfügung wird den Beschwerdeführenden, dem Kantonsrat Zürich und der Volkswirtschaftsdirektion des Kantons Zürich schriftlich mitgeteilt.\nLausanne, 23. Dezember 2025\nIm Namen der I. öffentlich-rechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDas präsidierende Mitglied: Merz\nDer Gerichtsschreiber: Bisaz",
+  "operator_metadata": {
+    "date": "2025-12-23",
+    "reference": [
+      "1C_410/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_001_1C-410-2025_2025-12-23.html",
+      "source": "446973/45/2871",
+      "content_length": 2216
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Öffentlich-rechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto pubblico",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit public"
+    },
+    "scrapedate": "2026-06-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_001"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2871",
+    "id": "CH_BGer_001_1C-410-2025_2025-12-23",
+    "title": {
+      "de": "Bundesgericht I. Öffentlich-rechtliche Abteilung 23.12.2025 1C_410/2025",
+      "it": "Tribunale federale I Corte di diritto pubblico 23.12.2025 1C_410/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit public 23.12.2025 1C_410/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:00:09+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_001_1C-410-2025_2025-12-23.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "7523b1524f1fb2c22533dcfbfc409013a31d776d06ae1432ecc2429252aa6e62"
+  }
+}

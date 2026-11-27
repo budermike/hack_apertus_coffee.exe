@@ -1,0 +1,56 @@
+{
+  "id": "4A_260_2026",
+  "case_id": "4A_260/2026",
+  "case_ids": [
+    "4A_260/2026"
+  ],
+  "decision_date": "2026-06-09",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "contrat de bail à loyer; retrait du recours",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://09-06-2026-4A_260-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4A_260/2026\nOrdonnance du 9 juin 2026\nIre Cour de droit civil\nComposition\nM. le Juge fédéral Hurni, Président.\nGreffier : M. Widmer.\n1. A.________,\nParticipants à la procédure\n2. B.________,\nrecourants,\ncontre\nC.________,\nreprésenté par Me Marc Vuilleumier, avocat,\nintimé.\nObjet\ncontrat de bail à loyer; retrait du recours,\nrecours contre la décision rendue le 15 avril 2026 par la Cour d'appel civile du Tribunal cantonal du canton de Vaud (XC24.052690-260407 275).\nLe Président :\nVu le recours en matière civile formé le 18 mai 2026 (date du timbre postal) par A.________ et B.________ (ci-après: les recourants) contre la décision rendue le 15 avril 2026 par la Cour d'appel civile du Tribunal cantonal du canton de Vaud dans la cause divisant les recourants d'avec C.________, intimé;\nVu la lettre du 1er juin 2026 (date du timbre postal: 4 juin 2026) par laquelle les recourants informent le Tribunal fédéral qu'ils retirent leur recours;\nConsidérant qu'il y a lieu de prendre acte de ce retrait et de rayer la cause 4A_260/2026 du rôle (art. 32 al. 2 LTF),\nque les frais judiciaires, réduits, sont mis à la charge des recourants, solidairement entre eux (art. 66 al. 1, 2 et 5 LTF);\nConsidérant que l'intimé, qui n'a pas été invité à déposer de réponse, n'a pas droit à des dépens;\nVu l'art. 32 al. 2 LTF.\nOrdonne :\n1.\nIl est pris acte du retrait du recours.\n2.\nLa cause 4A_260/2026 est rayée du rôle.\n3.\nUn émolument judiciaire de 300 fr. est mis à la charge des recourants, solidairement entre eux.\n4.\nIl n'est pas alloué de dépens.\n5.\nLa présente ordonnance est communiquée aux parties et à la Cour d'appel civile du Tribunal cantonal du canton de Vaud.\nLausanne, le 9 juin 2026\nAu nom de la Ire Cour de droit civil\ndu Tribunal fédéral suisse\nLe Président : Hurni\nLe Greffier : Widmer",
+  "operator_metadata": {
+    "date": "2026-06-09",
+    "reference": [
+      "4A_260/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-260-2026_2026-06-09.html",
+      "source": "446973/45/2829",
+      "content_length": 2182
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_004_4A-260-2026_2026-06-09",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 09.06.2026 4A_260/2026",
+      "it": "Tribunale federale I Corte di diritto civile 09.06.2026 4A_260/2026",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 09.06.2026 4A_260/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:19:33+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-260-2026_2026-06-09.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "61ac5c0b338ff48be79114dfaf6d8d50f9e8970481a967ee23a9bdec0ee435d4"
+  }
+}
