@@ -51,6 +51,7 @@ Available model IDs on the gateway:
 - Outputs go to `results/figures/`, `results/tables/` or `results/reports/`.
 - Every module in `src` gets a matching `tests/test_<module>.py`.
 - Documentation: `docs/ARCHITECTURE.md`, `docs/DECISIONS.md`, `docs/MODELS.md`, `docs/LEITFADEN.md`.
+- Each element of the workflow (Crawl, Triage, Summary and Present) get it's own folder.
 
 > Package name note: `hack_apertus_coffee.exe` is not a valid Python identifier. Use a valid name such as `hack_apertus_coffee_exe` for the package directory and imports.
 
