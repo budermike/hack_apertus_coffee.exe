@@ -1,17 +1,20 @@
-/* script.js — UI state and rendering. Depends on i18n.js, datepicker.js and api.js (loaded before). */
+/* script.js — UI state and rendering.
+ * Depends on i18n.js, datepicker.js, mock.js and api.js (loaded before). */
 
 /** From this relevance on a judgement counts as relevant and is summarized automatically.
- *  Defaults; replaced by the backend's values from configs/triage.json (GET /api/config). */
-let SUMMARY_THRESHOLD = 70;
+ *  Defaults as in configs/triage.json; replaced by the backend's values (GET /api/config)
+ *  before the first search. */
+let SUMMARY_THRESHOLD = 60;
 let MEDIUM_THRESHOLD = 40;
-/** At most this many relevant judgements are summarized automatically per search (best first);
- *  the others via the "summarise" button. Each summary takes several Apertus calls. */
-const AUTO_SUMMARY_LIMIT = 10;
+/** Summaries are requested one after the other (this many at a time), best relevance first:
+ *  each one takes several Apertus calls on a shared gateway. */
+const SUMMARY_CONCURRENCY = 2;
 
 /** Relevance levels, highest first. */
 const LEVELS = ["high", "medium", "low"];
-/** Score a judgement is moved to when the user puts it into a level its base score is not in. */
-const LEVEL_TARGET_SCORE = { high: 85, medium: 55, low: 20 };
+const LEVEL_LABEL = { high: "levelHigh", medium: "levelMedium", low: "levelLow" };
+/** Area filter value for judgements whose area the backend could not name. */
+const AREA_OTHER = "__other__";
 
 const QUOTE_STATUS = {
     exakt: { key: "quoteExact", tag: "ok" },
@@ -20,36 +23,33 @@ const QUOTE_STATUS = {
 };
 
 const COLUMNS = [
-    { key: "caseNumber", label: "colCase" },
-    { key: "date", label: "colDate" },
-    { key: "area", label: "colArea" },
-    { key: "score", label: "colRelevance" },
-    { key: null, label: "colStatus" },
+    { key: "caseNumber", label: "colCase", cls: "col-case" },
+    { key: "date", label: "colDate", cls: "col-date" },
+    { key: "area", label: "colArea", cls: "col-area" },
+    { key: "score", label: "colRelevance", cls: "col-score" },
+    { key: null, label: "colStatus", cls: "col-status" },
 ];
 
 const state = {
-    items: [],                 // judgements from the last search (incl. backend `adjustment`)
+    items: [],                 // judgements from the last search
     hasSearched: false,
     searching: false,
     error: null,               // i18n key of a list-level error
     selectedId: null,          // judgement shown in the detail panel
+    checked: new Set(),        // ids ticked for "summarize selected"
     sort: { key: "score", dir: -1 },
-    filter: { text: "", min: 0, max: 100 },
+    filter: { text: "", min: 0, max: 100, level: "all", area: "" },
     criteriaOpen: false,       // "Kriterien und Belege" expanded? (kept while switching cases)
 
-    summaries: {},             // id -> { de, fr } as stored in the database
-    summaryLoading: new Set(), // ids currently being summarized
+    summaries: {},             // id -> summary entry as stored in the database (see normalizeEntry)
+    summaryQueue: [],          // ids waiting to be summarized, next one first
+    summaryLoading: new Set(), // ids being summarized right now
     summaryError: new Set(),   // ids whose summary failed
     drafts: {},                // id -> { de, fr } while the user edits a summary
-    saveStatus: {},            // id -> "saving" | "saved" | "error"
-
-    /* "Anpassen" per summary language; keys are `${id}:${lang}` */
-    adjustOpen: new Set(),
-    adjustText: {},            // key -> instruction typed so far
-    adjustBusy: new Set(),
-    adjustError: new Set(),
+    saveStatus: {},            // id -> "saving" | "saved" | "approving" | "approved" | "error"
 
     kbEntries: [],
+    kbError: false,            // the database could not be read
     kbQuery: "",
     activeTab: localStorage.getItem("tab") === "kb" ? "kb" : "search",
 };
@@ -73,13 +73,23 @@ function el(tag, props = {}, ...children) {
     return node;
 }
 
+function icon(svgMarkup) {
+    const tpl = document.createElement("template");
+    tpl.innerHTML = svgMarkup;
+    return tpl.content.firstChild;
+}
+
+const closeIcon = () => icon('<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9"/></svg>');
+
 function findItem(id) {
     return state.items.find((i) => i.id === id);
 }
 
-/** Displayed score: base score + net manual adjustment, clamped to 0..100. */
+/** Displayed score: base score + net manual adjustment, 0..100, one decimal at most.
+ *  This is the ONE number that is shown, filtered, sorted and compared with the thresholds. */
 function effectiveScore(item) {
-    return Math.max(0, Math.min(100, item.score + (item.adjustment || 0)));
+    const score = item.score + (item.adjustment || 0);
+    return Math.round(Math.max(0, Math.min(100, score)) * 10) / 10;
 }
 
 function scoreLevel(score) {
@@ -90,9 +100,34 @@ function scoreLevel(score) {
 
 const itemLevel = (item) => scoreLevel(effectiveScore(item));
 
-/** "Unfallversicherung – Kausalzusammenhang bei Schleudertrauma" */
-function caseTitle(entry) {
-    return [areaName(entry.area), loc(entry.subject)].filter(Boolean).join(" – ");
+/** Score a judgement is moved to when the user puts it into a level its own score is not in.
+ *  Follows the thresholds, so the judgement really lands in that level. */
+function levelTarget(level) {
+    return level === "high" ? Math.max(85, SUMMARY_THRESHOLD) : Math.min(20, Math.max(0, MEDIUM_THRESHOLD - 1));
+}
+
+/** Level the user decided by hand ("high" | "low"), or null if the judgement is as triage scored it. */
+function decidedLevel(item) {
+    return item.userLevel || (item.adjustment ? itemLevel(item) : null);
+}
+/** Relevant = at or above the threshold = summarized automatically. */
+const isRelevant = (item) => itemLevel(item) === "high";
+
+const ALL_AREA_NAMES = new Set(
+    Object.values(AREA_NAMES).flatMap((names) => Object.values(names)).map((name) => name.toLowerCase()),
+);
+
+/** Area as shown in the list: its name, or the part of the subject before the bracket. */
+function areaLabel(entry) {
+    return areaName(entry.area) || loc(entry.subject).split("(")[0].trim();
+}
+
+/** "Unfallversicherung (Invalidenrente, Revision)" -> "Invalidenrente, Revision" */
+function subjectDetail(entry) {
+    const subject = loc(entry.subject).trim();
+    const bracket = subject.match(/^[^(]*\(([^()]*)\)\s*$/);
+    if (bracket) return bracket[1];
+    return ALL_AREA_NAMES.has(subject.toLowerCase()) || subject === areaLabel(entry) ? "" : subject;
 }
 
 /** "E3.1, E5.4" -> "E. 3.1, E. 5.4" (FR: "consid. 3.1, consid. 5.4") */
@@ -108,12 +143,12 @@ function spinner() {
 
 let toastTimer;
 
-function toast(message) {
+function toast(message, ms = 4000) {
     const node = $("#toast");
     node.textContent = message;
     node.style.display = "block";
     clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => { node.style.display = "none"; }, 4000);
+    toastTimer = setTimeout(() => { node.style.display = "none"; }, ms);
 }
 
 /** Re-renders `container` and puts the caret back into the field the user was typing in. */
@@ -137,6 +172,21 @@ function toggleTheme() {
     document.documentElement.dataset.theme = theme;
     localStorage.setItem("theme", theme);
 }
+
+/* ---------- thresholds ---------- */
+
+/** Takes the thresholds from the backend; keeps the defaults if it does not answer. */
+async function loadThresholds() {
+    const config = await fetchConfig();
+    const high = toNumber(config?.thresholds?.high, NaN);
+    const medium = toNumber(config?.thresholds?.medium, NaN);
+    if (Number.isFinite(high) && Number.isFinite(medium) && medium <= high) {
+        SUMMARY_THRESHOLD = high;
+        MEDIUM_THRESHOLD = medium;
+    }
+}
+
+let thresholdsReady = Promise.resolve();
 
 /* ---------- date inputs (typing + calendar) ---------- */
 
@@ -216,9 +266,13 @@ async function onSearch(event) {
     button.classList.add("loading");
     state.searching = true;
     state.selectedId = null;
+    state.checked.clear();
+    state.summaryQueue = [];        // summaries still waiting belong to the previous search
+    state.summaryError.clear();
     renderResults();
 
     try {
+        await thresholdsReady;      // levels must be judged with the backend's thresholds
         state.items = await searchJudgements(range.from, range.to, currentLang);
         state.error = null;
     } catch (err) {
@@ -232,37 +286,26 @@ async function onSearch(event) {
     button.classList.remove("loading");
     renderResults();
 
-    autoSummarizeRelevant();
-}
-
-/** Sufficiently relevant judgements are summarized right away, in the background.
- *  All others get a "Zusammenfassen" button in the detail panel. */
-async function autoSummarizeRelevant() {
-    const ids = state.items
-        .filter((i) => itemLevel(i) === "high")
-        .sort((a, b) => effectiveScore(b) - effectiveScore(a))
-        .slice(0, AUTO_SUMMARY_LIMIT)
-        .map((i) => i.id);
-    if (ids.length === 0) return;
-    await Promise.all(ids.map(loadSummary));
-    refreshKb();
+    queueRelevantSummaries();
 }
 
 /* ---------- filters + sorting ---------- */
 
 function isFilterActive() {
     const f = state.filter;
-    return f.text !== "" || f.min > 0 || f.max < 100;
+    return f.text !== "" || f.min > 0 || f.max < 100 || f.level !== "all" || f.area !== "";
 }
 
-/** Text filter: every word must appear in case number, subject, question or explanation (DE or FR). */
+/** Text filter: every word must appear in case number, area, subject, question or explanation. */
 function matchesFilter(item) {
     const score = effectiveScore(item);
-    const { text, min, max } = state.filter;
+    const { text, min, max, level, area } = state.filter;
     if (score < min || score > max) return false;
+    if (level !== "all" && itemLevel(item) !== level) return false;
+    if (area && (area === AREA_OTHER ? Boolean(item.area) : item.area !== area)) return false;
     if (!text) return true;
     const haystack = [
-        item.caseNumber, areaName(item.area),
+        item.caseNumber, item.caseNumber.replace("_", " "), item.id, areaName(item.area),
         item.subject?.de, item.subject?.fr, item.question?.de, item.question?.fr,
         item.explanation?.de, item.explanation?.fr,
     ].join(" ").toLowerCase();
@@ -287,23 +330,35 @@ function visibleItems() {
 /** Plain text field for whole numbers 0..100: strip everything that is not a digit. */
 function readScoreInput(input, fallback) {
     const digits = input.value.replace(/\D/g, "");
-    if (digits !== input.value) input.value = digits;
-    return digits === "" ? fallback : Math.min(100, parseInt(digits, 10));
+    const value = digits === "" ? fallback : Math.min(100, parseInt(digits, 10));
+    const shown = digits === "" ? "" : String(value);
+    if (shown !== input.value) input.value = shown;
+    return value;
 }
 
 function onFilterChange() {
     state.filter = {
+        ...state.filter,
         text: $("#filter-text").value.trim(),
+        area: $("#filter-area").value,
         min: readScoreInput($("#filter-min"), 0),
         max: readScoreInput($("#filter-max"), 100),
     };
     renderList();
 }
 
+function setLevelFilter(level) {
+    state.filter.level = level;
+    renderList();
+    document.querySelector(`#filter-level button[data-level="${level}"]`)?.focus();
+}
+
 function resetFilters() {
     $("#filter-text").value = "";
+    $("#filter-area").value = "";
     $("#filter-min").value = "0";
     $("#filter-max").value = "100";
+    state.filter.level = "all";
     onFilterChange();
 }
 
@@ -325,9 +380,12 @@ function selectCase(id) {
         $("#detail-pane").scrollTop = 0;
         if (window.innerWidth <= 1000) window.scrollTo(0, 0);
     }
-    // already in the database from an earlier session: fetch the stored summary
+    // the open case goes first: its automatic summary, or the one stored in an earlier session
     const item = findItem(id);
-    if (item?.summarized && !state.summaries[id]) loadSummary(id);
+    const status = item && summaryStatus(item);
+    if (status === "queued" || status === "missing" || (status === "manual" && item.summarized)) {
+        requestSummary(id, { first: true });
+    }
 }
 
 function closeDetail() {
@@ -338,44 +396,97 @@ function closeDetail() {
     document.querySelector(`#results-rows tr[data-id="${CSS.escape(id)}"]`)?.focus();
 }
 
+/* ---------- ticking several cases ("summarize selected") ---------- */
+
+function toggleChecked(id, checked) {
+    if (checked) state.checked.add(id);
+    else state.checked.delete(id);
+    renderSelectionControls();
+}
+
+function toggleCheckAll(checked) {
+    state.checked = new Set(checked ? visibleItems().map((i) => i.id) : []);
+    renderList();
+}
+
+function summarizeChecked() {
+    const ids = [...state.checked];
+    state.checked.clear();
+    renderList();
+    ids.forEach((id) => requestSummary(id));
+}
+
 /* ---------- relevance correction ---------- */
 
-/** "Für Suva relevant" / "Nicht relevant": moves the judgement into the level `high` / `low`.
- *  Clicking the active choice again takes a manual correction back. */
+/** "Für Suva relevant" / "Nicht relevant": the user's own decision for this judgement.
+ *  It moves the judgement into the level `high` / `low` (or confirms the level it has);
+ *  clicking the active decision again takes it back. Every click is sent as feedback. */
 async function setRelevance(id, level) {
     const item = findItem(id);
     if (!item) return;
     const before = itemLevel(item);
-    if (level === before && !item.adjustment) return;   // already there by its own score
-
-    if (level === before || scoreLevel(item.score) === level) item.adjustment = 0;
-    else item.adjustment = LEVEL_TARGET_SCORE[level] - item.score;
+    if (decidedLevel(item) === level) {
+        item.userLevel = null;
+        item.adjustment = 0;
+    } else {
+        item.userLevel = level;
+        item.adjustment = scoreLevel(item.score) === level
+            ? 0 : Math.round((levelTarget(level) - item.score) * 10) / 10;
+    }
 
     const after = itemLevel(item);
-    const direction = LEVELS.indexOf(after) < LEVELS.indexOf(before) ? +1 : -1;
+    const direction = Math.sign(LEVELS.indexOf(before) - LEVELS.indexOf(after));   // +1 raised, -1 lowered, 0 same level
+    // relevant now: summarize automatically; no longer relevant: stop waiting for a summary
+    if (isRelevant(item)) requestSummary(id, { first: true });
+    else state.summaryQueue = state.summaryQueue.filter((queued) => queued !== id);
     renderList();
     renderDetail();
-    if (after === "high" && !state.summaries[id]) loadSummary(id).then(refreshKb);
 
-    try {
-        await sendFeedback(id, item.adjustment, direction, after);   // backend persists it for future lookups
-        toast(t("feedbackSaved"));
-    } catch (err) {
-        console.error(err);
-        toast(t("errorFeedback"));
+    const { stored } = await sendFeedback(id, item.adjustment, direction, after, item.userLevel);
+    item.feedbackLocalOnly = !stored && Boolean(item.userLevel);
+    refreshRow(id);
+    if (id === state.selectedId) renderDetail();
+    toast(t(stored ? "feedbackSaved" : "feedbackLocalOnly"), stored ? 4000 : 7000);
+}
+
+/* ---------- summaries: one queue for automatic and manual requests ---------- */
+
+/** Where the summary of a judgement stands. List tags, detail panel and messages all ask
+ *  here, so they cannot contradict each other:
+ *    ready    stored summary is loaded          loading  being fetched / generated
+ *    queued   waiting for its turn              error    the request failed
+ *    missing  relevant, but nothing requested   manual   below the threshold: only on request */
+function summaryStatus(item) {
+    const id = item.id;
+    if (state.summaries[id]) return "ready";
+    if (state.summaryLoading.has(id)) return "loading";
+    if (state.summaryQueue.includes(id)) return "queued";
+    if (state.summaryError.has(id)) return "error";
+    return isRelevant(item) ? "missing" : "manual";
+}
+
+/** Puts a judgement into the summary queue (`first`: ahead of everything waiting). */
+function requestSummary(id, { first = false } = {}) {
+    if (state.summaries[id] || state.summaryLoading.has(id)) return;
+    state.summaryError.delete(id);
+    state.summaryQueue = state.summaryQueue.filter((queued) => queued !== id);
+    if (first) state.summaryQueue.unshift(id);
+    else state.summaryQueue.push(id);
+    onSummaryChange(id);
+    pumpSummaryQueue();
+}
+
+function pumpSummaryQueue() {
+    while (state.summaryLoading.size < SUMMARY_CONCURRENCY && state.summaryQueue.length > 0) {
+        loadSummary(state.summaryQueue.shift());
     }
 }
 
-/* ---------- summaries ---------- */
-
 async function loadSummary(id) {
-    if (state.summaries[id] || state.summaryLoading.has(id)) return;
     state.summaryLoading.add(id);
-    state.summaryError.delete(id);
     onSummaryChange(id);
     try {
-        const entry = await summarizeJudgement(id);   // generates DE + FR, stores in the database
-        state.summaries[id] = { de: entry.de, fr: entry.fr };
+        state.summaries[id] = await summarizeJudgement(id);   // stored entry; generated first if missing
         const item = findItem(id);
         if (item) item.summarized = true;
     } catch (err) {
@@ -384,17 +495,31 @@ async function loadSummary(id) {
     } finally {
         state.summaryLoading.delete(id);
         onSummaryChange(id);
+        pumpSummaryQueue();
+        scheduleKbRefresh();
     }
 }
 
+/** Every judgement at or above the threshold gets its summary automatically, best first.
+ *  Everything below gets a "Zusammenfassen" button in the detail panel. */
+function queueRelevantSummaries() {
+    state.items
+        .filter(isRelevant)
+        .sort((a, b) => effectiveScore(b) - effectiveScore(a))
+        .forEach((item) => requestSummary(item.id));
+}
+
 function onSummaryChange(id) {
-    renderList();
+    refreshRow(id);
+    renderSumLine();
     if (id === state.selectedId) renderDetail();
 }
 
-async function summarizeManually(id) {
-    await loadSummary(id);
-    refreshKb();
+/* ---------- editing, saving and approving summaries ---------- */
+
+/** Text currently in the editor: the draft if there is one, otherwise the stored summary. */
+function currentTexts(id) {
+    return state.drafts[id] || state.summaries[id];
 }
 
 function isDirty(id) {
@@ -403,13 +528,9 @@ function isDirty(id) {
     return Boolean(draft && stored && (draft.de !== stored.de || draft.fr !== stored.fr));
 }
 
-/** Text currently in the editor: the draft if there is one, otherwise the stored summary. */
-function currentTexts(id) {
-    return state.drafts[id] || state.summaries[id];
-}
-
 function onDraftInput(id, lang, value, editor) {
-    state.drafts[id] = { ...currentTexts(id), [lang]: value };
+    const texts = currentTexts(id);
+    state.drafts[id] = { de: texts.de, fr: texts.fr, [lang]: value };
     delete state.saveStatus[id];
     updateEditorFooter(editor, id);   // no full re-render while typing
 }
@@ -421,7 +542,7 @@ async function onSave(id) {
     renderEditors();
     try {
         const entry = await saveSummary(id, texts);
-        state.summaries[id] = { de: entry.de, fr: entry.fr };
+        state.summaries[id] = entry;
         // keep the draft if the user typed on while saving
         const draft = state.drafts[id];
         if (draft && draft.de === entry.de && draft.fr === entry.fr) delete state.drafts[id];
@@ -434,41 +555,50 @@ async function onSave(id) {
     refreshKb();
 }
 
-function toggleAdjust(key) {
-    if (state.adjustOpen.has(key)) state.adjustOpen.delete(key);
-    else state.adjustOpen.add(key);
-    state.adjustError.delete(key);
-    renderEditors();
-    if (state.adjustOpen.has(key)) {
-        // the editor may be rendered in both tabs: focus the visible one
-        [...document.querySelectorAll(`[data-adjust-input="${CSS.escape(key)}"]`)]
-            .find((input) => input.offsetParent)?.focus();
-    }
-}
-
-/** Lets Apertus rewrite the summary in one language. The other language is not touched;
- *  the result lands in the editor as an unsaved change. */
-async function onAdjust(id, lang) {
-    const key = `${id}:${lang}`;
-    const instruction = (state.adjustText[key] || "").trim();
-    if (!instruction || state.adjustBusy.has(key)) return;
-
-    state.adjustBusy.add(key);
-    state.adjustError.delete(key);
+/** The backend stores an edit as a version that waits for approval; approving makes it
+ *  the shown version (and the one the database search finds). */
+async function onApprove(id) {
+    if (isDirty(id) || state.saveStatus[id] === "approving") return;
+    state.saveStatus[id] = "approving";
     renderEditors();
     try {
-        const result = await adjustSummary(id, lang, currentTexts(id)[lang], instruction);
-        state.drafts[id] = { ...currentTexts(id), [lang]: result.text };
-        delete state.saveStatus[id];
-        state.adjustOpen.delete(key);
-        delete state.adjustText[key];
+        state.summaries[id] = await approveSummary(id);
+        state.saveStatus[id] = "approved";
     } catch (err) {
         console.error(err);
-        state.adjustError.add(key);
-    } finally {
-        state.adjustBusy.delete(key);
-        renderEditors();
+        state.saveStatus[id] = "error";
     }
+    renderEditors();
+    refreshKb();
+}
+
+/** "Anpassen" (refine one language with Apertus) is not connected: the backend has no
+ *  route for it yet. The button is shown but deliberately does nothing. To connect it,
+ *  add the call here; the result belongs into state.drafts[id][lang] (unsaved edit). */
+function onAdjust(_id, _lang) {}
+
+function escapeHtml(text) {
+    return String(text).replace(/[&<>"]/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[ch]));
+}
+
+/** Opens the summary as a page in the layout of Suva's own exports (judgements/Export_*.html):
+ *  title, "Text DE", "Text FR", "Link zum Urteil". Built in the browser from the editor's texts. */
+function openSuvaExport(id) {
+    const entry = state.summaries[id];
+    const texts = currentTexts(id);
+    const item = findItem(id);
+    const title = entry.title?.[item?.lang] || entry.title?.de || `${I18N.de.exportTitle} ${entry.caseNumber}`;
+    const url = entry.url && entry.url !== "#" ? entry.url : "";
+    const paragraphs = (text) => (text || "").split(/\n\s*\n/).filter((p) => p.trim())
+        .map((p) => `<p>${escapeHtml(p.trim()).replace(/\n/g, "<br>")}</p>`).join("");
+    const html = `<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8"><title>${escapeHtml(title)}</title></head>`
+        + `<body><hr><h1>${escapeHtml(title)}</h1>`
+        + `<h2>Text DE</h2>${paragraphs(texts.de)}<h2>Text FR</h2>${paragraphs(texts.fr)}`
+        + (url ? `<h2>Link zum Urteil</h2><p><a href="${escapeHtml(url)}">${escapeHtml(url)}</a></p>` : "")
+        + "<hr></body></html>";
+    const blobUrl = URL.createObjectURL(new Blob([html], { type: "text/html;charset=utf-8" }));
+    window.open(blobUrl, "_blank", "noopener");
+    setTimeout(() => URL.revokeObjectURL(blobUrl), 60000);
 }
 
 /* ---------- database ---------- */
@@ -481,15 +611,26 @@ async function refreshKb() {
         const entries = await searchKnowledgeBase(state.kbQuery, currentLang);
         if (requestId !== kbRequest) return;   // a newer query is in flight
         state.kbEntries = entries;
-        for (const e of entries) state.summaries[e.id] = { de: e.de, fr: e.fr };
+        state.kbError = false;
+        for (const entry of entries) state.summaries[entry.id] = entry;
     } catch (err) {
         console.error(err);
+        if (requestId !== kbRequest) return;
         state.kbEntries = [];
+        state.kbError = true;
     }
     renderKb();
 }
 
-/** TEMPORARY (development): wipes the stored summaries and the relevance feedback. */
+let kbRefreshTimer;
+
+/** Several summaries may finish shortly after each other: refresh the database view once. */
+function scheduleKbRefresh() {
+    clearTimeout(kbRefreshTimer);
+    kbRefreshTimer = setTimeout(refreshKb, 400);
+}
+
+/** Mock only (development): wipes the stored summaries and the relevance feedback. */
 async function onClearDb() {
     if (!confirm(t("clearDbConfirm"))) return;
     try {
@@ -500,13 +641,13 @@ async function onClearDb() {
         return;
     }
     state.summaries = {};
+    state.summaryQueue = [];
     state.drafts = {};
     state.saveStatus = {};
-    state.adjustOpen.clear();
-    state.adjustText = {};
     for (const item of state.items) {
         item.summarized = false;
         item.adjustment = 0;
+        item.userLevel = null;
     }
     renderResults();
     refreshKb();
@@ -520,14 +661,24 @@ function relevanceScale(item) {
         el("div", { class: `scale ${scoreLevel(score)}`, title: t("scaleTitle", score, SUMMARY_THRESHOLD) },
             el("i", { style: `left:${SUMMARY_THRESHOLD}%` }),
             el("b", { style: `left:${score}%` })),
-        el("span", { class: "pnum", text: String(score) }));
+        el("span", { class: "pnum", text: String(score) }),
+        // manual correction: show by how much the score was moved
+        Boolean(item.adjustment) && el("span", {
+            class: "sub delta", text: (item.adjustment > 0 ? "+" : "−") + Math.abs(item.adjustment),
+        }));
 }
 
 function statusTags(item) {
+    const status = summaryStatus(item);
     return [
-        state.summaryLoading.has(item.id) && el("span", { class: "tag blue", text: t("tagSummarizing") }),
+        status === "loading" && el("span", { class: "tag blue", text: t("tagSummarizing") }),
+        status === "queued" && el("span", { class: "tag", text: t("tagQueued") }),
+        status === "error" && el("span", { class: "tag bad", text: t("tagFailed") }),
         item.summarized && el("span", { class: "tag ok", text: t("tagInDb") }),
-        Boolean(item.adjustment) && el("span", { class: "tag", text: t("tagCorrected") }),
+        Boolean(decidedLevel(item)) && el("span", {
+            class: "tag",
+            text: t(item.adjustment ? "tagCorrected" : "tagConfirmed") + (item.feedbackLocalOnly ? t("localSuffix") : ""),
+        }),
     ];
 }
 
@@ -537,36 +688,112 @@ function renderRow(item) {
         "data-id": item.id,
         "aria-selected": String(item.id === state.selectedId),
         onclick: () => selectCase(item.id),
-        onkeydown: (e) => { if (e.key === "Enter") selectCase(item.id); },
+        onkeydown: (e) => { if (e.key === "Enter" && e.target === e.currentTarget) selectCase(item.id); },
     },
-        el("td", { class: "nr" }, item.caseNumber, el("div", { class: "sub", text: (item.lang || "").toUpperCase() })),
-        el("td", { class: "pnum", text: formatDate(item.date) }),
-        el("td", {}, areaName(item.area), el("div", { class: "sub", text: loc(item.subject) || outcomeName(item.outcome) })),
-        el("td", {}, relevanceScale(item)),
-        el("td", {}, el("div", { class: "row" }, statusTags(item))));
+        el("td", { class: "col-select", onclick: (e) => e.stopPropagation() },
+            el("input", {
+                type: "checkbox", checked: state.checked.has(item.id),
+                "aria-label": `${t("selectItem")} ${item.caseNumber}`,
+                onchange: (e) => toggleChecked(item.id, e.target.checked),
+            })),
+        el("td", { class: "col-case nr" }, item.caseNumber, el("div", { class: "sub", text: (item.lang || "").toUpperCase() })),
+        el("td", { class: "col-date pnum", text: item.date ? formatDate(item.date) : "" }),
+        el("td", { class: "col-area" }, areaLabel(item),
+            el("div", { class: "sub", text: subjectDetail(item) || outcomeName(item.outcome) }),
+            el("div", { class: "row inline-tags" }, statusTags(item))),   // shown when the status column is hidden
+        el("td", { class: "col-score" }, relevanceScale(item)),
+        el("td", { class: "col-status" }, el("div", { class: "row" }, statusTags(item))));
 }
 
-function renderHead() {
+/** Re-renders one row (e.g. when its summary arrives) without rebuilding the whole list. */
+function refreshRow(id) {
+    const row = document.querySelector(`#results-rows tr[data-id="${CSS.escape(id)}"]`);
+    const item = findItem(id);
+    if (!row || !item) return;
+    const hadFocus = document.activeElement === row;
+    const fresh = renderRow(item);
+    row.replaceWith(fresh);
+    if (hadFocus) fresh.focus({ preventScroll: true });
+}
+
+function renderHead(visible) {
     const { key, dir } = state.sort;
-    $("#results-head").replaceChildren(...COLUMNS.map((col) => {
-        if (!col.key) return el("th", { text: t(col.label) });
-        const sorted = col.key === key;
-        return el("th", { "aria-sort": sorted && (dir > 0 ? "ascending" : "descending") },
-            el("button", {
-                type: "button", "data-key": col.key,
-                text: t(col.label) + (sorted ? (dir > 0 ? " ▲" : " ▼") : ""),
-                onclick: () => sortBy(col.key),
-            }));
-    }));
+    const n = visible.filter((i) => state.checked.has(i.id)).length;
+    const checkAll = el("input", {
+        type: "checkbox", checked: n > 0 && n === visible.length,
+        "aria-label": t("selectAll"), title: t("selectAll"),
+        onchange: (e) => toggleCheckAll(e.target.checked),
+    });
+    checkAll.indeterminate = n > 0 && n < visible.length;
+    $("#results-head").replaceChildren(
+        el("th", { class: "col-select" }, checkAll),
+        ...COLUMNS.map((col) => {
+            if (!col.key) return el("th", { class: col.cls, text: t(col.label) });
+            const sorted = col.key === key;
+            return el("th", { class: col.cls, "aria-sort": sorted && (dir > 0 ? "ascending" : "descending") },
+                el("button", {
+                    type: "button", "data-key": col.key,
+                    text: t(col.label) + (sorted ? (dir > 0 ? " ▲" : " ▼") : ""),
+                    onclick: () => sortBy(col.key),
+                }));
+        }));
+}
+
+/** "Ausgewählte zusammenfassen (n)" and the tick in the table head. */
+function renderSelectionControls(visible = visibleItems()) {
+    // selections that a filter has hidden are dropped, so the button never acts on unseen rows
+    const visibleIds = new Set(visible.map((i) => i.id));
+    state.checked = new Set([...state.checked].filter((id) => visibleIds.has(id)));
+    renderHead(visible);
+    const button = $("#summarize-checked");
+    button.hidden = state.checked.size === 0;
+    button.textContent = t("summarizeSelected", state.checked.size);
+}
+
+/** Level buttons with counts, and the areas that occur in this result. */
+function renderFilterControls() {
+    const counts = { high: 0, medium: 0, low: 0 };
+    for (const item of state.items) counts[itemLevel(item)] += 1;
+    const levels = [...LEVELS.map((level) => [level, t(LEVEL_LABEL[level]), counts[level]]),
+        ["all", t("levelAll"), state.items.length]];
+    $("#filter-level").replaceChildren(...levels.map(([level, label, count]) => el("button", {
+        type: "button", "data-level": level, "aria-pressed": String(state.filter.level === level),
+        text: `${label} (${count})`, onclick: () => setLevelFilter(level),
+    })));
+
+    const codes = [...new Set(state.items.map((i) => i.area).filter(Boolean))]
+        .sort((a, b) => areaName(a).localeCompare(areaName(b)));
+    const hasOther = state.items.some((i) => !i.area);
+    const select = $("#filter-area");
+    const options = [["", t("allAreas")], ...codes.map((code) => [code, areaName(code)])];
+    if (hasOther && codes.length) options.push([AREA_OTHER, t("otherAreas")]);
+    if (!options.some(([value]) => value === state.filter.area)) state.filter.area = "";
+    select.replaceChildren(...options.map(([value, label]) => el("option", { value, text: label })));
+    select.value = state.filter.area;
+    select.hidden = options.length <= 1;
+}
+
+/** Line in the app bar: what the search found and how far the automatic summaries are. */
+function renderSumLine() {
+    const line = $("#sum-line");
+    if (!state.hasSearched || state.error || state.items.length === 0) {
+        line.textContent = t("appSubtitle");
+        return;
+    }
+    const relevant = state.items.filter(isRelevant);
+    const medium = state.items.filter((i) => itemLevel(i) === "medium").length;
+    const done = relevant.filter((i) => summaryStatus(i) === "ready" || i.summarized).length;
+    line.textContent = t("sumLine", state.items.length, relevant.length, medium, done, SUMMARY_THRESHOLD);
 }
 
 function renderList() {
+    renderFilterControls();
     const visible = visibleItems();
     const total = state.items.length;
     const searching = state.searching;
 
-    renderHead();
     $("#results-rows").replaceChildren(...visible.map(renderRow));
+    renderSelectionControls(visible);
     $("#results-table").hidden = searching || visible.length === 0;
     $("#filter-bar").hidden = searching || total === 0;
     $("#results-count").textContent = isFilterActive()
@@ -582,83 +809,85 @@ function renderList() {
     const status = $("#results-status");
     status.hidden = !statusKey;
     status.textContent = statusKey ? t(statusKey) : "";
+    renderSumLine();
 }
 
 /* ---------- rendering: summary editor (detail panel and database) ---------- */
 
 function saveStatusText(id) {
     const status = state.saveStatus[id];
+    const pending = state.summaries[id].pendingLangs.length > 0;
     if (status === "saving") return t("saving");
+    if (status === "approving") return t("approving");
     if (status === "error") return t("errorSave");
     if (isDirty(id)) return t("unsaved");
+    if (status === "approved") return `✓ ${t("approved")}`;
+    if (pending) return (status === "saved" ? `✓ ${t("saved")} · ` : "") + t("pendingApproval");
     if (status === "saved") return `✓ ${t("saved")}`;
     return "";
 }
 
 function updateEditorFooter(editor, id) {
-    editor.querySelector(".save-btn").disabled = !isDirty(id) || state.saveStatus[id] === "saving";
+    const busy = state.saveStatus[id] === "saving" || state.saveStatus[id] === "approving";
+    const dirty = isDirty(id);
+    editor.querySelector(".save-btn").disabled = !dirty || busy;
+    const approve = editor.querySelector(".approve-btn");
+    approve.hidden = state.summaries[id].pendingLangs.length === 0;
+    approve.disabled = dirty || busy;
     const status = editor.querySelector(".save-status");
     status.textContent = saveStatusText(id);
     status.classList.toggle("error", state.saveStatus[id] === "error");
 }
 
-/** Instruction field shown below one summary box after clicking "Anpassen". */
-function adjustForm(scope, id, lang) {
-    const key = `${id}:${lang}`;
-    const busy = state.adjustBusy.has(key);
-    const input = el("input", {
-        type: "text", autocomplete: "off", disabled: busy,
-        placeholder: t("adjustPlaceholder"), "aria-label": t("adjustPlaceholder"),
-        "data-focus-key": `${scope}:adjust:${key}`, "data-adjust-input": key,
-        oninput: (e) => { state.adjustText[key] = e.target.value; },
-    });
-    input.value = state.adjustText[key] || "";
-    return el("form", {
-        class: "adjust-form",
-        onsubmit: (e) => { e.preventDefault(); onAdjust(id, lang); },
-    },
-        input,
-        el("button", { type: "submit", class: "btn small", disabled: busy },
-            busy && spinner(), t(busy ? "adjusting" : "adjustApply")),
-        state.adjustError.has(key) && el("p", { class: "form-error", text: t("errorAdjust") }));
+/** Result of the backend's own check of the generated text, if it ran one. */
+function checkNote(entry) {
+    if (!entry.checked && entry.issues.length === 0) return null;
+    const ok = entry.issues.length === 0;
+    return el("div", { class: "check" },
+        el("p", { class: "note" },
+            el("span", { class: `tag ${ok ? "ok" : "warn"}`, text: t(ok ? "checkOk" : "checkReview") }), " ",
+            t(ok ? "checkOkNote" : "checkReviewNote")),
+        !ok && el("ul", { class: "find" }, entry.issues.map((issue) => el("li", {},
+            el("span", { class: `tag ${issue.severity === "error" ? "bad" : ""}`, text: (issue.language || "").toUpperCase() }),
+            " ", issue.detail || issue.kind || ""))));
 }
 
 /** German and French summary next to each other, each editable and with its own "Anpassen";
  *  one save button for both. `scope` tells the detail panel ("res") from the database ("kb")
  *  so the caret can be restored after a re-render. */
 function summaryEditor(scope, id) {
+    const entry = state.summaries[id];
     const texts = currentTexts(id);
     const editor = el("div", { class: "summary-editor" });
 
-    const columns = ["de", "fr"].map((lang) => {
-        const key = `${id}:${lang}`;
-        const busy = state.adjustBusy.has(key);
-        const open = state.adjustOpen.has(key);
+    const columns = SUMMARY_LANGS.map((lang) => {
         const name = t(lang === "de" ? "langDe" : "langFr");
         const textarea = el("textarea", {
-            class: "summary-textarea", lang, spellcheck: "true", disabled: busy,
+            class: "summary-textarea", lang, spellcheck: "true",
             "aria-label": `${t("summary")} ${name}`,
-            "data-focus-key": `${scope}:${key}`,
+            "data-focus-key": `${scope}:${id}:${lang}`,
             oninput: (e) => onDraftInput(id, lang, e.target.value, editor),
         });
         textarea.value = texts[lang] || "";   // content must be set as a property
         return el("div", { class: "duo-col" },
             el("div", { class: "duo-head" },
                 el("h4", { text: name }),
-                el("button", {
-                    type: "button", class: "btn small", text: t("adjust"),
-                    "aria-expanded": String(open), "aria-pressed": String(open), disabled: busy,
-                    onclick: () => toggleAdjust(key),
-                })),
-            textarea,
-            open && adjustForm(scope, id, lang));
+                el("button", { type: "button", class: "btn small", text: t("adjust"), onclick: () => onAdjust(id, lang) })),
+            textarea);
     });
 
     editor.append(
         el("div", { class: "duo" }, columns),
         el("div", { class: "row editor-footer" },
             el("button", { type: "button", class: "btn pri save-btn", text: t("save"), onclick: () => onSave(id) }),
-            el("span", { class: "note save-status", "aria-live": "polite" })));
+            el("button", {
+                type: "button", class: "btn approve-btn", text: t("approve"), title: t("approveHint"),
+                onclick: () => onApprove(id),
+            }),
+            el("span", { class: "note save-status", "aria-live": "polite" }),
+            el("button", { type: "button", class: "btn export-btn", text: t("openSuvaFormat"), onclick: () => openSuvaExport(id) })));
+    const note = checkNote(entry);
+    if (note) editor.append(note);
     updateEditorFooter(editor, id);
     return editor;
 }
@@ -671,74 +900,104 @@ function renderEditors() {
 
 /* ---------- rendering: case detail ---------- */
 
+/** "Kriterien und Belege aus dem Urteil": always there, folded by clicking its title.
+ *  Shows the criteria with their quotes; while the backend delivers none, the signals
+ *  triage found, and says that the quotes are missing. */
 function criteriaSection(item) {
-    if (!item.criteria?.length) return null;
-    const list = el("ul", { class: "crit", hidden: !state.criteriaOpen }, item.criteria.map((c) => {
-        const status = QUOTE_STATUS[c.status];
-        return el("li", {},
-            el("strong", { text: `${c.id} ` }), criterionName(c.id), " ",
-            status && el("span", { class: `tag ${status.tag}`, text: t(status.key) }),
-            el("blockquote", { lang: item.lang }, `«${c.quote}»`, el("div", { class: "sub", text: formatRef(c.at) })));
-    }));
+    const count = item.criteria.length;
+    const signals = [...item.signals, ...item.topics];
+    const body = el("div", { class: "crit-body", hidden: !state.criteriaOpen },
+        count > 0 && el("ul", { class: "crit" }, item.criteria.map((c) => {
+            const status = QUOTE_STATUS[c.status];
+            return el("li", {},
+                el("strong", { text: `${c.id} ` }), criterionName(c.id), " ",
+                status && el("span", { class: `tag ${status.tag}`, text: t(status.key) }),
+                el("blockquote", { lang: item.lang }, `«${c.quote}»`, el("div", { class: "sub", text: formatRef(c.at) })));
+        })),
+        count === 0 && signals.length > 0 && el("p", { class: "signals" },
+            el("span", { class: "sub", text: `${t("signals")}: ` }),
+            signals.map((s) => [el("span", { class: "tag", text: s }), " "])),
+        count === 0 && el("p", { class: "note", text: t("criteriaMissing") }));
     const toggle = el("button", {
         type: "button", class: "toggle", "aria-expanded": String(state.criteriaOpen),
         onclick: () => {
             state.criteriaOpen = !state.criteriaOpen;
-            list.hidden = !state.criteriaOpen;
+            body.hidden = !state.criteriaOpen;
             toggle.setAttribute("aria-expanded", String(state.criteriaOpen));
         },
-    }, t("criteria"), el("span", { class: "sub", text: `(${item.criteria.length})` }));
-    return [el("h3", {}, toggle), list];
+    }, t("criteria"), count > 0 && el("span", { class: "sub", text: `(${count})` }));
+    return [el("h3", {}, toggle), body];
+}
+
+function summarizeButton(id, labelKey) {
+    return el("div", { class: "row editor-footer" },
+        el("button", { type: "button", class: "btn pri", text: t(labelKey), onclick: () => requestSummary(id, { first: true }) }));
 }
 
 function summarySection(item) {
     const id = item.id;
     const heading = el("h3", { text: t("summary") });
-    if (state.summaryLoading.has(id)) {
-        return [heading, el("p", { class: "note loading-line" }, spinner(), t("summarizing"))];
+    const busy = (key) => el("p", { class: "note loading-line" }, spinner(), t(key));
+    switch (summaryStatus(item)) {
+        case "ready": return [heading, summaryEditor("res", id)];
+        case "loading": return [heading, busy("summarizing")];
+        case "queued": return [heading, busy("summaryQueued")];
+        case "error": return [heading, el("p", { class: "form-error", text: t("errorSummary") }), summarizeButton(id, "retry")];
+        case "missing": return [heading, el("p", { class: "note", text: t("noSummaryYet") }), summarizeButton(id, "summarize")];
+        default:   // "manual": below the threshold, summarized only when asked
+            return [
+                heading,
+                el("p", { class: "note", text: t("notAutoSummarized", SUMMARY_THRESHOLD, effectiveScore(item)) }),
+                summarizeButton(id, "summarize"),
+            ];
     }
-    if (state.summaries[id]) return [heading, summaryEditor("res", id)];
-    // not relevant enough for an automatic summary (or it failed): offer it by hand
-    return [
-        heading,
-        state.summaryError.has(id)
-            ? el("p", { class: "form-error", text: t("errorSummary") })
-            : el("p", { class: "note", text: t("notAutoSummarized", SUMMARY_THRESHOLD) }),
-        el("div", { class: "row editor-footer" },
-            el("button", { type: "button", class: "btn pri", text: t("summarize"), onclick: () => summarizeManually(id) })),
-    ];
+}
+
+/** Case number of a similar case; a link if that case is in the current result list. */
+function similarCaseLink(caseNumber) {
+    const target = state.items.find((i) => i.caseNumber === caseNumber);
+    if (!target) return caseNumber;
+    return el("a", { href: "#", text: caseNumber, onclick: (e) => { e.preventDefault(); selectCase(target.id); } });
 }
 
 function similarSection(item) {
-    if (!item.similarCases?.length) return null;
+    if (!item.similarCases.length) return null;
     return [
         el("h3", { text: t("similarCases") }),
         el("table", { class: "similar" }, el("tbody", {}, item.similarCases.map((c) => el("tr", {},
-            el("td", { class: "nr", text: c.caseNumber }),
+            el("td", { class: "nr" }, similarCaseLink(c.caseNumber)),
             el("td", { text: c.subject || "" }),
             el("td", { class: "pnum", text: t("similarity", c.similarity.toFixed(2)) }))))),
     ];
 }
 
 function correctionSection(item) {
-    const level = itemLevel(item);
+    const decided = decidedLevel(item);
     const button = (target, label, extraClass) => el("button", {
         type: "button", class: `btn ${extraClass}`, text: t(label),
-        "aria-pressed": String(level === target),
+        "aria-pressed": String(decided === target),
         onclick: () => setRelevance(item.id, target),
     });
     return [
         el("h3", { text: t("correction") }),
         el("p", { class: "note", text: t("correctionNote") }),
+        item.feedbackLocalOnly && el("p", { class: "note warn-note", text: t("feedbackLocalOnly") }),
         el("div", { class: "row editor-footer" },
             button("high", "markRelevant", "relevant"),
             button("low", "markNotRelevant", "")),
     ];
 }
 
-function textSection(titleKey, field, lang) {
-    if (!loc(field)) return null;
-    return [el("h3", { text: t(titleKey) }), el("p", { class: "read", lang, text: loc(field) })];
+/** Section with a text from the backend; in the French UI it says so if only German exists. */
+function textSection(titleKey, field) {
+    const text = loc(field);
+    if (!text) return null;
+    const germanOnly = currentLang === "fr" && (!field.fr || field.fr === field.de);
+    return [
+        el("h3", { text: t(titleKey) }),
+        germanOnly && el("p", { class: "note", text: t("germanOnly") }),
+        el("p", { class: "read", lang: germanOnly ? "de" : currentLang, text }),
+    ];
 }
 
 function renderDetail() {
@@ -751,19 +1010,22 @@ function renderDetail() {
         return;
     }
 
-    const meta = [formatDate(item.date), loc(item.court), areaName(item.area), loc(item.subject), outcomeName(item.outcome)];
-    const relevant = itemLevel(item) === "high";
+    const meta = [
+        item.date && formatDate(item.date), loc(item.court), areaLabel(item), subjectDetail(item), outcomeName(item.outcome),
+    ];
+    const url = item.url && (currentLang === "fr" ? item.url.replace("lang=de", "lang=fr") : item.url);
     preservingFocus(detail, () => detail.replaceChildren(...[
         el("button", {
-            type: "button", class: "btn detail-close", text: "×",
-            "aria-label": t("close"), title: t("close"), onclick: closeDetail,
-        }),
-        el("h2", { text: `${t("judgement")} ${item.caseNumber}` }),
+            type: "button", class: "detail-close", "aria-label": t("close"), title: t("close"), onclick: closeDetail,
+        }, closeIcon()),
+        // as in the demo: the title of the summary once there is one
+        el("h2", { text: loc(state.summaries[item.id]?.title) || `${t("judgement")} ${item.caseNumber}` }),
         el("p", { class: "meta" }, meta.filter(Boolean).join(", "), ". ",
-            item.url && el("a", { href: item.url, target: "_blank", rel: "noopener", text: t("openOriginal") })),
-        textSection("question", item.question, currentLang),
-        textSection(relevant ? "whyRelevant" : "whyNotRelevant", item.explanation, currentLang),
-        textSection("rule", item.rule, currentLang),
+            url && el("a", { href: url, target: "_blank", rel: "noopener", text: t("openOriginal") })),
+        textSection("question", item.question),
+        // the explanation is triage's reasoning, so the heading follows triage's own score
+        textSection(scoreLevel(item.score) === "high" ? "whyRelevant" : "whyNotRelevant", item.explanation),
+        textSection("rule", item.rule),
         criteriaSection(item),
         summarySection(item),
         similarSection(item),
@@ -773,13 +1035,22 @@ function renderDetail() {
 
 /* ---------- rendering: database ---------- */
 
+/** Title of a database entry: area and subject if known (from the entry or the current
+ *  search), otherwise the title the summary was stored with. */
+function kbTitle(entry) {
+    const source = entry.subject ? entry : findItem(entry.id);
+    if (source?.subject) return [areaLabel(source), subjectDetail(source)].filter(Boolean).join(" – ");
+    return loc(entry.title);
+}
+
 function renderKbEntry(entry) {
     return el("li", { class: "kb-entry", "data-id": entry.id },
         el("details", {},
             el("summary", {},
                 el("span", { class: "nr", text: entry.caseNumber }),
-                el("span", { class: "kb-entry-title", text: caseTitle(entry) }),
-                el("span", { class: "sub", text: `${t("storedAt")} ${formatDate(entry.storedAt.slice(0, 10))}` })),
+                el("span", { class: "kb-entry-title", text: kbTitle(entry) }),
+                entry.pendingLangs.length > 0 && el("span", { class: "tag warn", text: t("tagPending") }),
+                el("span", { class: "sub", text: entry.storedAt ? `${t("storedAt")} ${formatDate(entry.storedAt.slice(0, 10))}` : "" })),
             el("div", { class: "kb-entry-body" }, summaryEditor("kb", entry.id))));
 }
 
@@ -792,7 +1063,7 @@ function renderKb() {
     );
 
     preservingFocus(list, () => list.replaceChildren(...state.kbEntries.map((entry) => {
-        const node = renderKbEntry(entry);
+        const node = renderKbEntry(state.summaries[entry.id] || entry);
         if (openIds.has(entry.id)) node.querySelector("details").open = true;
         return node;
     })));
@@ -803,7 +1074,7 @@ function renderKb() {
     tabCount.textContent = n ? String(n) : "";
 
     $("#kb-count").textContent = n ? t("kbCount", n) : "";
-    const statusKey = n ? null : (state.kbQuery ? "kbNoMatch" : "kbEmpty");
+    const statusKey = state.kbError ? "errorKb" : n ? null : (state.kbQuery ? "kbNoMatch" : "kbEmpty");
     const status = $("#kb-status");
     status.hidden = !statusKey;
     status.textContent = statusKey ? t(statusKey) : "";
@@ -858,6 +1129,7 @@ function init() {
         });
     });
     $("#theme-toggle").addEventListener("click", toggleTheme);
+    $("#mock-badge").hidden = !USE_MOCK;
 
     const tabs = [...document.querySelectorAll(".tabs [role=tab]")];
     tabs.forEach((tab, index) => {
@@ -887,9 +1159,11 @@ function init() {
     for (const id of ["#filter-text", "#filter-min", "#filter-max"]) {
         $(id).addEventListener("input", onFilterChange);
     }
+    $("#filter-area").addEventListener("change", onFilterChange);
     $("#filter-reset").addEventListener("click", resetFilters);
+    $("#summarize-checked").addEventListener("click", summarizeChecked);
     $("#kb-clear").addEventListener("click", onClearDb);
-    $("#kb-clear").hidden = !USE_MOCK;   // the real knowledge base keeps every version (append-only)
+    $("#kb-clear").hidden = !USE_MOCK;   // the real database keeps every version (append-only)
 
     let kbTimer;
     $("#kb-search").addEventListener("input", (e) => {
@@ -903,24 +1177,13 @@ function init() {
     // Escape closes the detail panel (unless the user is typing or a calendar is open)
     document.addEventListener("keydown", (e) => {
         if (e.key !== "Escape" || !state.selectedId || openPickers.size) return;
-        if (e.target.closest("input, textarea")) return;
+        if (e.target.closest("input, textarea, select")) return;
         closeDetail();
     });
 
+    thresholdsReady = loadThresholds();
     renderLanguage();
     refreshKb();
-    loadThresholds();
-}
-
-/** Takes the traffic-light thresholds from the backend; keeps the defaults if that fails. */
-async function loadThresholds() {
-    const config = await fetchConfig();
-    const high = config?.thresholds?.high;
-    const medium = config?.thresholds?.medium;
-    if (typeof high === "number" && typeof medium === "number" && medium <= high) {
-        SUMMARY_THRESHOLD = high;
-        MEDIUM_THRESHOLD = medium;
-    }
 }
 
 init();

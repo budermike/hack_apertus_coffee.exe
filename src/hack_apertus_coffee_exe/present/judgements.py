@@ -8,12 +8,16 @@ the caller (the summaries DB belongs to ``summary.store``).
 UI item (``GET /api/judgements``)::
 
     {id, caseNumber, date, url, lang, area, subject: {de, fr}, explanation: {de, fr},
-     score, adjustment, summarized, outcome, similarCases, ampel, rank}
+     score, adjustment, summarized, outcome, court: {de, fr}, signals, topics,
+     similarCases, ampel, rank}
 
 ``adjustment`` is always 0 until lawyer feedback (#40) exists. ``outcome`` is only
-set when the crawl folder is given. ``question``, ``rule`` and ``criteria`` need
-Apertus output that triage does not produce yet, so they are left out (the UI hides
-those sections). ``ampel`` and ``rank`` are extra fields the UI may ignore.
+set when the crawl folder is given. ``court`` is the chamber from the crawl metadata
+(left out if unknown). ``signals`` (triage ``keyword_hits``) and ``topics`` (Apertus
+``key_topics``) are what the UI shows under "Kriterien und Belege" for now:
+``question``, ``rule`` and ``criteria`` (with quotes) need Apertus output that triage
+does not produce yet, so they are left out. ``ampel`` and ``rank`` are extra fields
+the UI may ignore.
 """
 
 from __future__ import annotations
@@ -90,6 +94,10 @@ def _score(row: dict[str, Any]) -> float:
     return 0.0
 
 
+def _strings(value: Any) -> list[str]:
+    return [v for v in value if isinstance(v, str)] if isinstance(value, list) else []
+
+
 def to_ui_item(row: dict[str, Any], summarized: bool = False, outcome: str | None = None) -> dict[str, Any]:
     """One triage result -> one UI list item.
 
@@ -113,6 +121,8 @@ def to_ui_item(row: dict[str, Any], summarized: bool = False, outcome: str | Non
         "score": _score(row),
         "adjustment": 0,
         "summarized": summarized,
+        "signals": _strings(row.get("keyword_hits")),
+        "topics": _strings(row.get("key_topics")),
         "similarCases": [
             {"caseNumber": ui_case_number(c["case_id"]), "subject": c.get("title") or c["case_id"],
              "similarity": float(c.get("similarity") or 0.0)}
@@ -123,6 +133,9 @@ def to_ui_item(row: dict[str, Any], summarized: bool = False, outcome: str | Non
     }
     if outcome is not None:
         item["outcome"] = outcome
+    court = meta.get("department") or meta.get("division")
+    if court:  # one language only, like the subject
+        item["court"] = {"de": court, "fr": court}
     return item
 
 

@@ -13,8 +13,8 @@ Implements the summary part of the contract in ``src/presentation/api.js``:
 The judgement list (``GET /api/judgements``), ``GET /api/config`` and the feedback
 placeholder are only routed here; their logic is in ``present/judgements.py``.
 
-Run:
-    python -m hack_apertus_coffee_exe.summary.api --input data/raw --static src/presentation
+Run (``--triage`` is needed for the judgement list; without it every search answers 503):
+    python -m hack_apertus_coffee_exe.summary.api --input data/raw --static src/presentation         --triage <triage results from "triage.cli score --output">
 """
 
 from __future__ import annotations

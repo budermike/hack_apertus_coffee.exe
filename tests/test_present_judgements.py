@@ -59,6 +59,8 @@ def test_to_ui_item_matches_the_ui_contract():
         "score": 55.0,
         "adjustment": 0,
         "summarized": True,
+        "signals": [],
+        "topics": [],
         "similarCases": [{"caseNumber": "8C 720/2024", "subject": "Arrêt du TF 8C_720/2024", "similarity": 0.4457}],
         "ampel": "gelb",
         "rank": 2,
@@ -67,6 +69,17 @@ def test_to_ui_item_matches_the_ui_contract():
     bare = to_ui_item(ROWS[2])
     assert bare["subject"] == {"de": "5A_1/2026", "fr": "5A_1/2026"} and bare["area"] is None
     assert "outcome" not in bare and bare["similarCases"] == []
+    assert "court" not in bare
+
+
+def test_court_signals_and_topics_are_passed_on():
+    row = {
+        "case_id": "8C_7/2025", "rank_score": 91.0, "keyword_hits": ["Suva", "Chamber:8C"], "key_topics": ["Rückfall"],
+        "metadata": {"subject": "Unfallversicherung", "department": "IV. öffentlich-rechtliche Abteilung"},
+    }
+    item = to_ui_item(row)
+    assert item["signals"] == ["Suva", "Chamber:8C"] and item["topics"] == ["Rückfall"]
+    assert item["court"] == {"de": "IV. öffentlich-rechtliche Abteilung", "fr": "IV. öffentlich-rechtliche Abteilung"}
 
 
 def test_area_code_takes_the_first_area_named():

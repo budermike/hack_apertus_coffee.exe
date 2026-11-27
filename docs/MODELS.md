@@ -38,6 +38,7 @@ Hier stehen auch **Coding-Assistenten** und alle Modelle, mit denen Texte, Code,
 | D3 | Antigravity (Coding-Assistent) | Gemini | Google DeepMind | Code-Review-Fixes, Schema-Dokumentation (`docs/SCHEMA.md`), Embeddings (`embed.py`) und lokale Vector-DB (`crawl/vectordb.py`, Tests) | Entwicklung | nein | abirahm, 27.11.2026 |
 | D4 | <Video- oder Sprachtool, z.B. ElevenLabs, Edit with Ava, falls genutzt> | | | Demo-Video / Pitch (nicht in der Lösung) | Entwicklung | nein | |
 | D5 | Claude Code (Coding-Assistent) | Claude Opus 5.5 (`claude-opus-5-5`) | Anthropic | Summary-Modul (`src/hack_apertus_coffee_exe/summary/`), Stilprofile und Glossar (`prompts/`), Tests; Paket-Layout-Fix | Entwicklung | nein | Mike, 27.11.2026 |
+| D6 | Claude Code (Coding-Assistent) | Claude Fable 5.2 (`claude-fable-5-2`), Claude Opus 5.5 (`claude-opus-5-5`) | Anthropic | Web-Oberfläche (`src/presentation/`), Urteilsliste für die UI (`present/judgements.py`), Audit und Issue-Entwürfe (`docs/FRONTEND_OPEN_ISSUES.md`) | Entwicklung | nein | lim_n_to_infty, 27.11.2026 |
 
 Hinweis: Diese Tools dürfen beim Entwickeln benutzt werden (Regel 2), aber **nicht zur Laufzeit** der Lösung (Regel 3).
 
