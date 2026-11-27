@@ -218,6 +218,7 @@ class VectorDB:
         db_dir: str | Path = DEFAULT_DB_DIR,
         embedder: Embedder | None = None,
         judgements_dir: str | Path = DEFAULT_JUDGEMENTS_DIR,
+        raw_dir: str | Path | None = None,
         max_words: int = 350,
         overlap_words: int = 50,
     ) -> None:
@@ -227,6 +228,7 @@ class VectorDB:
         self.fts_path = self.db_dir / "fts.sqlite3"
         self.embedder_meta_path = self.db_dir / "embedder_meta.json"
         self.search_index_path = self.db_dir / "search_index.npz"
+        self.raw_dir: Path | None = Path(raw_dir) if raw_dir is not None else None
         self.max_words = max_words
         self.overlap_words = overlap_words
 
@@ -240,6 +242,7 @@ class VectorDB:
 
         self.fingerprint = embedder_fingerprint(self.embedder, max_words, overlap_words)
         self._search_cache: dict[str, Any] | None = None
+        self._fts_auto_rebuilt = False
         self._init_sqlite()
 
     def _persist_embedder_meta(self, emb: Embedder) -> None:
@@ -414,8 +417,13 @@ class VectorDB:
         records: Sequence[dict[str, Any]],
         reference_ids: set[str] | None = None,
         chunk_batch_size: int = 512,
+        rebuild_index: bool = True,
     ) -> dict[str, int]:
-        """Embed and upsert judgements in fast batches; unchanged SHA-256 entries are cached."""
+        """Embed and upsert judgements in fast batches; unchanged SHA-256 entries are cached.
+
+        ``rebuild_index=False`` is for callers that ingest in many small batches (ensure_period):
+        the search index is only dropped, and rebuilt once by the caller or on the next search.
+        """
         stats = {"embedded": 0, "cached": 0, "total": len(records)}
 
         with self._connect() as conn:
@@ -505,7 +513,7 @@ class VectorDB:
                 )
 
         if not to_embed:
-            if not self.search_index_path.exists():
+            if rebuild_index and not self.search_index_path.exists():
                 self.rebuild_search_index()
             return stats
 
@@ -607,7 +615,11 @@ class VectorDB:
                     fts_rows,
                 )
 
-        self.rebuild_search_index()
+        if rebuild_index:
+            self.rebuild_search_index()
+        else:  # a stale index would hide the new judgements; a missing one is rebuilt on demand
+            self.search_index_path.unlink(missing_ok=True)
+            self._search_cache = None
         return stats
 
     def ingest_directory(
@@ -912,8 +924,13 @@ class VectorDB:
         self._init_fts_sqlite()
         with self._connect_fts() as fts_conn:
             fts_count = int(fts_conn.execute("SELECT COUNT(*) FROM judgements_fts").fetchone()[0])
-        if fts_count == 0 and self.count() > 0 and Path(DEFAULT_RAW_DIR).exists():
-            self.rebuild_fts_index(DEFAULT_RAW_DIR)
+        if fts_count == 0 and not self._fts_auto_rebuilt and self.count() > 0:
+            fts_raw_dir = self.raw_dir
+            if fts_raw_dir is None and self.db_dir.resolve() == Path(DEFAULT_DB_DIR).resolve():
+                fts_raw_dir = Path(DEFAULT_RAW_DIR)
+            if fts_raw_dir is not None and fts_raw_dir.exists():
+                self._fts_auto_rebuilt = True
+                self.rebuild_fts_index(fts_raw_dir)
 
         with self._connect_fts() as fts_conn:
             fts_rows = fts_conn.execute(
@@ -1234,13 +1251,12 @@ class VectorDB:
                 neg_mat = np.vstack(neg_parts)
 
         fts_domain_keys: set[str] = set()
-        if hybrid and self.fts_path.exists():
-            with self._connect_fts() as fts_conn:
-                fts_has_rows = int(fts_conn.execute("SELECT COUNT(*) FROM judgements_fts").fetchone()[0]) > 0
-            if fts_has_rows:
-                for kw in ("UVG", "LAA", "LAINF", "Suva"):
-                    for hit in self.fulltext_search(kw, top_k=5000, date_from=date_from, date_to=date_to):
-                        fts_domain_keys.add(hit["doc_key"])
+        if hybrid:
+            # fts.sqlite3 is not in Git. fulltext_search rebuilds it when it is missing or empty,
+            # so a fresh clone gets the same scores as a machine that already has the index.
+            for kw in ("UVG", "LAA", "LAINF", "Suva"):
+                for hit in self.fulltext_search(kw, top_k=5000, date_from=date_from, date_to=date_to):
+                    fts_domain_keys.add(hit["doc_key"])
 
         subject_keywords = ("unfall", "accident", "infortun", "uvg", "laa", "lainf")
         scored: list[dict[str, Any]] = []
