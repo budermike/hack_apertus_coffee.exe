@@ -11,7 +11,7 @@ UI item (``GET /api/judgements``)::
      score, adjustment, summarized, outcome, court: {de, fr}, signals, topics,
      similarCases, ampel, rank}
 
-``adjustment`` is always 0 until lawyer feedback (#40) exists. ``outcome`` is only
+``adjustment`` is always 0 until lawyer feedback (#64) exists. ``outcome`` is only
 set when the crawl folder is given. ``court`` is the chamber from the crawl metadata
 (left out if unknown). ``signals`` (triage ``keyword_hits``) and ``topics`` (Apertus
 ``key_topics``) are what the UI shows under "Kriterien und Belege" for now:
@@ -200,9 +200,9 @@ class JudgementList:
 
 
 def record_feedback(case_number: str, body: dict[str, Any]) -> dict[str, Any]:
-    """Placeholder for lawyer feedback (#40): accepted and logged, not stored or used yet."""
-    logger.info("Feedback for %s (not stored yet, see #40): %s", case_number, body)
-    return {"stored": False, "note": "feedback is not stored yet (#40)"}
+    """Placeholder for lawyer feedback (#64): accepted and logged, not stored or used yet."""
+    logger.info("Feedback for %s (not stored yet, see #64): %s", case_number, body)
+    return {"stored": False, "note": "feedback is not stored yet (#64)"}
 
 
 def list_response(judgements: JudgementList | None, query: dict[str, list[str]]) -> tuple[int, Any]:
