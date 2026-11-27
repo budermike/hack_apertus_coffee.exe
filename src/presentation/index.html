@@ -36,6 +36,19 @@
     </header>
 
     <main>
+        <nav class="folder-tabs" role="tablist">
+            <button id="tab-search" type="button" class="folder-tab" role="tab" data-tab="search" aria-controls="panel-search">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7.5A2.5 2.5 0 0 1 5.5 5H9l2 2.2h7.5A2.5 2.5 0 0 1 21 9.7v7.8a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 17.5z"/></svg>
+                <span data-i18n="tabSearch">Suche</span>
+            </button>
+            <button id="tab-kb" type="button" class="folder-tab" role="tab" data-tab="kb" aria-controls="panel-kb">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7.5A2.5 2.5 0 0 1 5.5 5H9l2 2.2h7.5A2.5 2.5 0 0 1 21 9.7v7.8a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 17.5z"/></svg>
+                <span data-i18n="tabKb">Wissensdatenbank</span>
+                <span id="kb-tab-count" class="tab-count" hidden></span>
+            </button>
+        </nav>
+
+        <div id="panel-search" class="folder" role="tabpanel" aria-labelledby="tab-search">
         <section class="card search-card">
             <h2 data-i18n="searchTitle">Zeitraum</h2>
             <form id="search-form" novalidate>
@@ -97,7 +110,9 @@
             <p id="results-status" class="status muted" data-i18n="emptyInitial"></p>
             <ol id="results-list" class="results-list"></ol>
         </section>
+        </div>
 
+        <div id="panel-kb" class="folder" role="tabpanel" aria-labelledby="tab-kb" hidden>
         <section class="card kb-card">
             <div class="results-header">
                 <div class="results-title">
@@ -105,11 +120,16 @@
                     <span id="kb-count" class="muted"></span>
                 </div>
             </div>
-            <input id="kb-search" type="search" class="text-input" autocomplete="off"
-                   data-i18n-attr="placeholder:kbSearchPlaceholder;aria-label:kbSearchPlaceholder">
+            <div class="kb-toolbar">
+                <input id="kb-search" type="search" class="text-input" autocomplete="off"
+                       data-i18n-attr="placeholder:kbSearchPlaceholder;aria-label:kbSearchPlaceholder">
+                <!-- TEMPORARY (development): remove together with clearDatabase() in api.js -->
+                <button id="kb-clear" type="button" class="secondary-btn" data-i18n="clearDb">Datenbank leeren (temporär)</button>
+            </div>
             <p id="kb-status" class="muted kb-status"></p>
             <ul id="kb-list" class="kb-list"></ul>
         </section>
+        </div>
     </main>
 
     <footer class="muted" data-i18n="footer"></footer>

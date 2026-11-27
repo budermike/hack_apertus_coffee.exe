@@ -17,8 +17,15 @@
  *        not a translation), stores both in the knowledge base and returns the entry.
  *        If the judgement is already in the knowledge base, return the stored entry.
  *
- *   POST {API_BASE}/judgements/{id}/feedback   body: { adjustment, direction }
- *        adjustment = new net manual adjustment (multiple of VOTE_STEP), direction = +1 | -1.
+ *   PUT  {API_BASE}/judgements/{id}/summary   body: { de, fr }
+ *        -> { id, caseNumber, date, title: {de, fr}, de, fr, storedAt, editedAt }
+ *        Saves a summary the user edited by hand (overwrites the generated text in the KB).
+ *
+ *   POST {API_BASE}/judgements/{id}/feedback   body: { adjustment, direction, level }
+ *        The user moved the judgement to another relevance level (traffic light).
+ *        level = "high" | "medium" | "low" (the level chosen by the user),
+ *        adjustment = new net manual adjustment so that score + adjustment lies in that level,
+ *        direction = +1 (raised) | -1 (lowered).
  *        The backend must persist this and use it in future lookups:
  *          1. return it as `adjustment` for this judgement in every later search, and
  *          2. use the voted judgements as relevance signal, e.g. as positive/negative
@@ -28,6 +35,9 @@
  *   GET  {API_BASE}/knowledge-base?q=<query>&lang=de|fr
  *        -> [{ id, caseNumber, date, title: {de, fr}, de, fr, storedAt }]
  *        Full-text (later: semantic) search over all stored summaries, newest first.
+ *
+ *   DELETE {API_BASE}/knowledge-base      (TEMPORARY, development only — remove before go-live)
+ *        Deletes all stored summaries and all relevance feedback.
  */
 
 const USE_MOCK = true;
@@ -167,8 +177,24 @@ async function summarizeJudgement(id) {
     return jsonFetch(`${API_BASE}/judgements/${encodeURIComponent(id)}/summary`, { method: "POST" });
 }
 
-/** Persists a relevance vote; the backend uses it in future lookups. Best-effort. */
-async function sendFeedback(id, adjustment, direction) {
+/** Saves a manually edited summary ({ de, fr }) to the knowledge base. */
+async function saveSummary(id, texts) {
+    if (USE_MOCK) {
+        await delay(300);
+        const db = mockDb.load();
+        if (!db.kb[id]) throw new Error("not in knowledge base");
+        db.kb[id] = { ...db.kb[id], de: texts.de, fr: texts.fr, editedAt: new Date().toISOString() };
+        mockDb.save(db);
+        return db.kb[id];
+    }
+    return jsonFetch(`${API_BASE}/judgements/${encodeURIComponent(id)}/summary`, {
+        method: "PUT",
+        body: JSON.stringify({ de: texts.de, fr: texts.fr }),
+    });
+}
+
+/** Persists a relevance correction; the backend uses it in future lookups. Best-effort. */
+async function sendFeedback(id, adjustment, direction, level) {
     if (USE_MOCK) {
         const db = mockDb.load();
         db.feedback[id] = adjustment;
@@ -177,8 +203,19 @@ async function sendFeedback(id, adjustment, direction) {
     }
     await jsonFetch(`${API_BASE}/judgements/${encodeURIComponent(id)}/feedback`, {
         method: "POST",
-        body: JSON.stringify({ adjustment, direction }),
+        body: JSON.stringify({ adjustment, direction, level }),
     }).catch((err) => console.warn("feedback not saved", err));
+}
+
+/** TEMPORARY (development only): deletes all summaries and feedback. */
+async function clearDatabase() {
+    if (USE_MOCK) {
+        await delay(150);
+        mockDb.save({ feedback: {}, kb: {} });
+        return;
+    }
+    const res = await fetch(`${API_BASE}/knowledge-base`, { method: "DELETE" });
+    if (!res.ok) throw new Error(`DELETE knowledge-base failed: ${res.status}`);
 }
 
 async function searchKnowledgeBase(query, lang) {
