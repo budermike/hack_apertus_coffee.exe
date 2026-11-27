@@ -4,7 +4,9 @@
 2. Writing: facts + Suva examples + style profile + glossary -> DE text and,
    separately, FR text (one call each; FR is written, not translated).
 3. Check: rule-based check; a language with errors is regenerated once with the
-   errors as feedback. Remaining issues are stored and shown in the UI.
+   errors as feedback. Remaining issues are returned with the result (for the UI).
+
+Storing results is not part of this module; see ``SummaryResult.to_dict()``.
 """
 
 from __future__ import annotations
@@ -55,6 +57,27 @@ class SummaryResult:
 
     def text(self, language: str) -> str:
         return self.summary_de if language == "de" else self.summary_fr
+
+    def to_dict(self) -> dict[str, Any]:
+        """Everything a store or the UI needs, JSON-serialisable.
+
+        ``coherence_notes`` holds the remaining check findings (empty when ok).
+        """
+        return {
+            "case_id": self.case_id,
+            "title_de": self.title_de,
+            "title_fr": self.title_fr,
+            "summary_de": self.summary_de,
+            "summary_fr": self.summary_fr,
+            "model": self.model,
+            "prompt_version": self.prompt_version,
+            "coherence_ok": self.coherence_ok,
+            "coherence_notes": self.check.to_dicts(),
+            "outcome": self.outcome,
+            "facts": self.facts,
+            "examples": self.examples,
+            "attempts": self.attempts,
+        }
 
 
 class Summarizer:
