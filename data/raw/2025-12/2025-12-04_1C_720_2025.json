@@ -1,0 +1,56 @@
+{
+  "id": "1C_720_2025",
+  "case_id": "1C_720/2025",
+  "case_ids": [
+    "1C_720/2025"
+  ],
+  "decision_date": "2025-12-04",
+  "publication_date": null,
+  "department": "I. Öffentlich-rechtliche Abteilung",
+  "division": "I. Öffentlich-rechtliche Abteilung",
+  "subject": "Permis de construire",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://04-12-2025-1C_720-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n1C_720/2025\nOrdonnance du 4 décembre 2025\nIre Cour de droit public\nComposition\nM. le Juge fédéral Haag, Président.\nGreffier : M. Kurz.\nParticipants à la procédure\nA.A.________et B.A.________,\ntous les deux représentés par\nMe Carole Revelo, avocate,\nrecourants,\ncontre\n1. C.________,\n2. D.________ SA,\nreprésentée par Me Marc Oederlin, avocat,\nintimés,\nDépartement du territoire de la République et canton de Genève, Office des autorisations de construire, Service des affaires juridiques, case postale 22, 1211 Genève 8.\nObjet\nPermis de construire,\nrecours contre l'arrêt de la Cour de justice de la République et canton de Genève, Chambre administrative, du 28 octobre 2025 (A/1284/2024-LCI ATA/1200/2025).\nVu :\nLe recours en matière de droit public formé le 1er décembre 2025 par A.A.________ et B.A.________ contre l'arrêt du 28 octobre 2025 de la Chambre administrative de la Cour de justice genevoise, assorti d'une demande d'effet suspensif,\nLa lettre de la mandataire des recourants du 4 décembre 2025 déclarant retirer le recours,\nconsidérant :\nqu'il sied de prendre acte du retrait du recours et de rayer la cause du rôle (art. 73 PCF par renvoi de l'art. 71 LTF; art. 32 al. 2 LTF),\nque celui qui retire un recours doit en principe être considéré comme une partie succombante, en principe astreinte au paiement des frais de procédure encourus jusque-là, en application de la règle générale de l'art. 66 al. 1 LTF,\nqu'il n'y a aucun motif de déroger à cette règle,\nque le retrait du recours étant intervenu immédiatement après son dépôt, les frais judiciaires peuvent être fixés à 500 fr., à la charge solidaire des recourants,\nqu'il n'y a pas lieu d'allouer de dépens, les intimés n'ayant pas été invités à procéder.\nPar ces motifs, le Président ordonne :\n1.\nLa cause 1C_720/2025 est rayée du rôle par suite de retrait du recours.\n2.\nLes frais judiciaires, arrêtés à 500 francs, sont mis à la charge solidaire des recourants.\n3.\nIl n'est pas alloué de dépens.\n4.\nLa présente ordonnance est communiquée aux parties, au Département du territoire de la République et canton de Genève et à la Cour de justice de la République et canton de Genève, Chambre administrative.\nLausanne, le 4 décembre 2025\nAu nom de la Ire Cour de droit public\ndu Tribunal fédéral suisse\nLe Président : Haag\nLe Greffier : Kurz",
+  "operator_metadata": {
+    "date": "2025-12-04",
+    "reference": [
+      "1C_720/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_001_1C-720-2025_2025-12-04.html",
+      "source": "446973/45/2870",
+      "content_length": 2708
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Öffentlich-rechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto pubblico",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit public"
+    },
+    "scrapedate": "2026-06-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_001"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2870",
+    "id": "CH_BGer_001_1C-720-2025_2025-12-04",
+    "title": {
+      "de": "Bundesgericht I. Öffentlich-rechtliche Abteilung 04.12.2025 1C_720/2025",
+      "it": "Tribunale federale I Corte di diritto pubblico 04.12.2025 1C_720/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit public 04.12.2025 1C_720/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:41:05+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_001_1C-720-2025_2025-12-04.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "d4d81822c47a7f352620c961d104e83c39a2e0845fc1439f596bea25c993c9b4"
+  }
+}

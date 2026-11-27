@@ -1,0 +1,56 @@
+{
+  "id": "4D_91_2026",
+  "case_id": "4D_91/2026",
+  "case_ids": [
+    "4D_91/2026"
+  ],
+  "decision_date": "2026-06-09",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "mainlevée; retrait du recours",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://09-06-2026-4D_91-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4D_91/2026\nOrdonnance du 9 juin 2026\nIre Cour de droit civil\nComposition\nM. le Juge fédéral Hurni, Président.\nGreffier : M. Botteron.\nParticipants à la procédure\nA.________ SA,\nrecourante,\ncontre\nB.________ Sàrl,\nreprésentée par Me Pierre Mauron, avocat,\nintimée.\nObjet\nmainlevée; retrait du recours,\nrecours contre l'arrêt rendu le 20 avril 2026 par la IIe Cour d'appel civil du Tribunal cantonal de\nl'État de Fribourg (102 2026 78).\nConsidérant en fait et en droit :\nVu l'arrêt de la II e Cour d'appel civil du Tribunal cantonal de l'État de Fribourg du 20 avril 2026 rejetant le recours de A.________ SA et confirmant la décision rendue le 5 mars 2026 par le Président du Tribunal civil de la Gruyère rejetant la requête de mainlevée de l'opposition formée par B.________ Sàrl;\nVu le recours interjeté par A.________ SA (ci-après: la recourante) au Tribunal fédéral le 19 mai 2026 à l'encontre de cet arrêt;\nVu l'ordonnance du 22 mai 2026 invitant la recourante à verser jusqu'au 8 juin 2026 au plus tard, une avance de frais de 800 fr.;\nVu l'écrit du 4 juin 2026 par lequel la recourante déclare retirer son recours;\nConsidérant que le juge instructeur statue en qualité de juge unique sur la radiation du rôle des procédures devenues sans objet ou achevées par un retrait ou une transaction judiciaire (art. 32 al. 2 LTF),\nqu'il y a lieu de prendre acte du retrait du recours et de rayer la cause du rôle;\nVu l'art. 66 al. 2 LTF concernant les frais,\nqu'il n'y a pas lieu à l'allocation de dépens,\npar ces motifs, le Président ordonne :\n1.\nIl est pris acte du retrait du recours.\n2.\nLa cause 4D_91/2026 est rayée du rôle.\n3.\nIl n'est pas perçu de frais judiciaires.\n4.\nLa présente ordonnance est communiquée aux parties et à la IIe Cour d'appel civil du Tribunal cantonal de l'État de Fribourg.\nLausanne, le 9 juin 2026\nAu nom de la Ire Cour de droit civil\ndu Tribunal fédéral suisse\nLe Président : Hurni\nLe Greffier : Botteron",
+  "operator_metadata": {
+    "date": "2026-06-09",
+    "reference": [
+      "4D_91/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-91-2026_2026-06-09.html",
+      "source": "446973/45/2829",
+      "content_length": 2311
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_004_4D-91-2026_2026-06-09",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 09.06.2026 4D_91/2026",
+      "it": "Tribunale federale I Corte di diritto civile 09.06.2026 4D_91/2026",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 09.06.2026 4D_91/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:45:00+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-91-2026_2026-06-09.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "4013f8d229a628032eaa2250ac0969e67ececca125a7e0d519b9cf3cc5469477"
+  }
+}

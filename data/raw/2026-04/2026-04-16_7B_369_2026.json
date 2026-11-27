@@ -1,0 +1,56 @@
+{
+  "id": "7B_369_2026",
+  "case_id": "7B_369/2026",
+  "case_ids": [
+    "7B_369/2026"
+  ],
+  "decision_date": "2026-04-16",
+  "publication_date": null,
+  "department": "II. Strafrechtliche Abteilung",
+  "division": "II. Strafrechtliche Abteilung",
+  "subject": "Verlängerung der Untersuchungshaft; Nichteintreten",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://16-04-2026-7B_369-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n7B_369/2026\nUrteil vom 16. April 2026\nII. strafrechtliche Abteilung\nBesetzung\nBundesrichterin van de Graaf, als Einzelrichterin,\nGerichtsschreiber Hahn.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nStaatsanwaltschaft des Kantons Luzern, Abteilung 2 Emmen,\nRüeggisingerstrasse 29, 6020 Emmenbrücke.\nGegenstand\nVerlängerung der Untersuchungshaft; Nichteintreten,\nBeschwerde gegen die Verfügung des Kantonsgerichts Luzern, 1. Abteilung, vom 11. März 2026 (2N 26 33).\nErwägungen:\n1.\nMit Eingabe vom 17. März 2026, ergänzt am 22. März 2026, führt A.________ Beschwerde in Strafsachen gegen die Verfügung des Kantonsgerichts des Kantons Luzern vom 11. März 2026 betreffend Verlängerung der Untersuchungshaft.\nEs wurden keine Vernehmlassungen eingeholt.\n2.\nIn der angefochtenen Verfügung legt die Vorinstanz in Auseinandersetzung mit der massgebenden bundesgerichtlichen Rechtsprechung detailliert dar, weshalb die kantonale Beschwerde selbst bei einem für Laienbeschwerden grosszügigen Beurteilungsmassstab den gesetzlichen Rüge- und Begründungs-pflichten nach Art. 385 Abs. 1 i.V.m. Art. 396 Abs. 1 StPO nicht genügt und folglich auf das Rechtsmittel nicht einzutreten ist. Mit der entsprechenden Argumentation der Vorinstanz setzt sich der Beschwerdeführer vor Bundesgericht nicht auseinander. Stattdessen macht er pauschal geltend, er sei in Bezug auf die ihm im Hauptverfahren vorgeworfenen Straftaten unschuldig. In teilweise nur schwer nachvollziehbaren Ausführungen schildert er zudem Umstände, die seines Erachtens die Existenz eines Geldwäscherei- und Drogenrings im Kanton Luzern belegen sollen, der von den kantonalen Behörden gedeckt werde. Derart appellatorische Kritik genügt den gesetzlichen Begründungsanforderungen an eine Beschwerde an das Bundesgericht offensichtlich nicht (vgl. Art. 42 Abs. 2 und Art. 106 Abs. 2 BGG; BGE 148 IV 356 E. 2.1, 39 E. 2.3.5; 147 IV 73 E. 4.1.2; 146 IV 297 E. 1.2). Auf die Beschwerde ist somit mangels hinreichender Begründung im vereinfachten Verfahren nicht einzutreten (Art. 108 Abs. 1 lit. b BGG).\n3.\nBei diesem Ausgang des Verfahrens wird der Beschwerdeführer kostenpflichtig (Art. 66 Abs. 1 BGG).\nDemnach erkennt die Einzelrichterin:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 800.-- werden dem Beschwerdeführer auferlegt.\n3.\nDieses Urteil wird dem Beschwerdeführer, der Staatsanwaltschaft des Kantons Luzern, Abteilung 2 Emmen, dem Kantonsgericht Luzern, 1. Abteilung, dem Zwangsmassnahmengericht des Kantons Luzern und Rechtsanwalt Jiri Mischa Mensik, Meggen, schriftlich mitgeteilt.\nLausanne, 16. April 2026\nIm Namen der II. strafrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Einzelrichterin:\nDer Gerichtsschreiber:",
+  "operator_metadata": {
+    "date": "2026-04-16",
+    "reference": [
+      "7B_369/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-369-2026_2026-04-16.html",
+      "source": "446973/45/2834",
+      "content_length": 3128
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit pénal"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_007"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_007_7B-369-2026_2026-04-16",
+    "title": {
+      "de": "Bundesgericht II. Strafrechtliche Abteilung 16.04.2026 7B_369/2026",
+      "it": "Tribunale federale II Corte di diritto penale 16.04.2026 7B_369/2026",
+      "fr": "Tribunal fédéral IIe Cour de droit pénal 16.04.2026 7B_369/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:30:56+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-369-2026_2026-04-16.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "1cc415672fc249284139282a05d42b32eb3ff051093cdba20cfab89ca2b0a381"
+  }
+}

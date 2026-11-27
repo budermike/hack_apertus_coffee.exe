@@ -1,0 +1,56 @@
+{
+  "id": "6B_219_2026",
+  "case_id": "6B_219/2026",
+  "case_ids": [
+    "6B_219/2026"
+  ],
+  "decision_date": "2026-03-23",
+  "publication_date": null,
+  "department": "I. Strafrechtliche Abteilung",
+  "division": "I. Strafrechtliche Abteilung",
+  "subject": "Begünstigung, Widerhandlung gegen das Waffengesetz etc.; Nichteintreten",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://23-03-2026-6B_219-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n6B_219/2026\nUrteil vom 23. März 2026\nI. strafrechtliche Abteilung\nBesetzung\nBundesrichter Muschietti, Präsident,\nGerichtsschreiberin Arquint Hill.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführerin,\ngegen\nOberstaatsanwaltschaft des Kantons Luzern, Postfach 3439, 6002 Luzern,\nBeschwerdegegnerin.\nGegenstand\nBegünstigung, Widerhandlung gegen das Waffengesetz etc.; Nichteintreten,\nBeschwerde gegen das Urteil des Kantonsgerichts Luzern, 2. Abteilung, (4M 25 24).\nDer Präsident zieht in Erwägung:\n1.\nDie Beschwerdeführerin erhebt mit Eingabe vom 19. März 2026 \"Beschwerde zum Fall 4M 25 24\" und ersucht um unentgeltliche Rechtspflege. Ein Urteil des Kantonsgerichts Luzern liegt diesbezüglich (noch) nicht vor. Nach Art. 100 Abs. 1 BGG ist eine Beschwerde gegen einen Entscheid innert 30 Tagen nach der Eröffnung der vollständigen Ausfertigung beim Bundesgericht einzureichen. Die vorliegend eingereichte Beschwerde erweist sich damit als verfrüht, weshalb darauf im Verfahren nach Art. 108 BGG nicht eingetreten werden kann.\n2.\nAuf eine Kostenauflage ist ausnahmsweise zu verzichten. Das Gesuch um unentgeltliche Rechtspflege wird damit gegenstandslos.\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nEs werden keine Kosten erhoben.\n3.\nDieses Urteil wird den Parteien und dem Kantonsgericht Luzern, 2. Abteilung, schriftlich mitgeteilt.\nLausanne, 23. März 2026\nIm Namen der I. strafrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Muschietti\nDie Gerichtsschreiberin: Arquint Hill",
+  "operator_metadata": {
+    "date": "2026-03-23",
+    "reference": [
+      "6B_219/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_006_6B-219-2026_2026-03-23.html",
+      "source": "446973/45/2830",
+      "content_length": 1921
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit pénal"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_006"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2830",
+    "id": "CH_BGer_006_6B-219-2026_2026-03-23",
+    "title": {
+      "de": "Bundesgericht I. Strafrechtliche Abteilung 23.03.2026 6B_219/2026",
+      "it": "Tribunale federale I Corte di diritto penale 23.03.2026 6B_219/2026",
+      "fr": "Tribunal fédéral Ire Cour de droit pénal 23.03.2026 6B_219/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:24:12+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_006_6B-219-2026_2026-03-23.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "9db5ebddf817e5d72e4eb6eeaefdf3b2e754c0d8829a0d2c68daa659cb62e6fd"
+  }
+}

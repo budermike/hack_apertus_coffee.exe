@@ -1,0 +1,56 @@
+{
+  "id": "5A_585_2026",
+  "case_id": "5A_585/2026",
+  "case_ids": [
+    "5A_585/2026"
+  ],
+  "decision_date": "2026-06-23",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "Eheschutz",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://23-06-2026-5A_585-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5A_585/2026\nUrteil vom 23. Juni 2026\nII. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Bovey, Präsident,\nGerichtsschreiber Zingg.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nB.________,\nvertreten durch Rechtsanwältin Stephanie Selig,\nBeschwerdegegnerin.\nGegenstand\nEheschutz,\nBeschwerde gegen das Urteil des Obergerichts des Kantons Solothurn, Zivilkammer, vom 18. Mai 2026 (ZKBER.2026.17).\nErwägungen:\n1.\nAm 20. Februar 2026 fällte das Richteramt Thal-Gäu im zwischen den Parteien hängigen Eheschutzverfahren sein Urteil, wobei es die von den Parteien gleichentags abgeschlossene Trennungsvereinbarung genehmigte.\nDagegen erhob der Beschwerdeführer am 27. März 2026 Berufung beim Obergericht des Kantons Solothurn. Mit Urteil vom 18. Mai 2026 wies das Obergericht die Berufung ab, soweit es darauf eintrat.\nDagegen hat der Beschwerdeführer am 20. Juni 2026 Beschwerde an das Bundesgericht erhoben.\n2.\nDer Eheschutzentscheid ist eine vorsorgliche Massnahme im Sinne von Art. 98 BGG, womit nur die Verletzung verfassungsmässiger Rechte gerügt werden kann. Soweit der Beschwerdeführer die Verletzung einfachen Gesetzesrechts (Art. 271 und 279 ZPO, Art. 163 ZGB) rügt, ist darauf nicht einzutreten. Verfassungsrügen müssen gemäss dem strengen Rügeprinzip von Art. 106 Abs. 2 BGG in der Beschwerde präzise vorgebracht und begründet werden. Dies bedeutet, dass anhand der Erwägungen des angefochtenen Entscheids klar und detailliert darzulegen ist, inwiefern verfassungsmässige Rechte verletzt worden sein sollen (BGE 133 II 396 E. 3.1; 142 III 364 E. 2.4). Der Beschwerdeführer rügt Verletzungen des Willkürverbots (Art. 9 BV) und des rechtlichen Gehörs (Art. 29 Abs. 2 BV). Dabei macht er geltend, seine Einkommenssituation habe sich wesentlich verschlechtert, was er an der Eheschutzverhandlung erklärt und belegt habe. Dennoch habe das Gericht auf andere Unterlagen abgestellt und die aktuellen Einkommensunterlagen übergangen. Diese Rügen richten sich in erster Linie gegen das Urteil des Richteramts und nicht gegen das Urteil des Obergerichts. Vor Bundesgericht ist jedoch nur das Urteil des Obergerichts anfechtbar (Art. 75 BGG). Mit den Erwägungen des Obergerichts zu den von ihm geltend gemachten Einkommensverhältnissen (E. 8) setzt er sich nicht auseinander.\nDie Beschwerde enthält offensichtlich keine hinreichende Begründung. Der Abteilungspräsident tritt auf sie im vereinfachten Verfahren nicht ein (Art. 108 Abs. 1 lit. b BGG).\n3.\nBei diesem Ausgang des Verfahrens trägt der Beschwerdeführer die Gerichtskosten (Art. 66 Abs. 1 BGG).\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 1'500.-- werden dem Beschwerdeführer auferlegt.\n3.\nDieses Urteil wird den Parteien und dem Obergericht des Kantons Solothurn, Zivilkammer, mitgeteilt.\nLausanne, 23. Juni 2026\nIm Namen der II. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Bovey\nDer Gerichtsschreiber: Zingg",
+  "operator_metadata": {
+    "date": "2026-06-23",
+    "reference": [
+      "5A_585/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-585-2026_2026-06-23.html",
+      "source": "446973/45/2830",
+      "content_length": 3384
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2830",
+    "id": "CH_BGer_005_5A-585-2026_2026-06-23",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 23.06.2026 5A_585/2026",
+      "it": "Tribunale federale II Corte di diritto civile 23.06.2026 5A_585/2026",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 23.06.2026 5A_585/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:48:56+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-585-2026_2026-06-23.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "ad0c2bbc64a2216147b06509686479d9fe3d4e8ee7630c022d8c86108e090e3a"
+  }
+}

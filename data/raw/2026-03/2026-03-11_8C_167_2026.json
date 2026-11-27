@@ -1,0 +1,56 @@
+{
+  "id": "8C_167_2026",
+  "case_id": "8C_167/2026",
+  "case_ids": [
+    "8C_167/2026"
+  ],
+  "decision_date": "2026-03-11",
+  "publication_date": null,
+  "department": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "division": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "subject": "Sozialhilfe (Prozessvoraussetzung)",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://11-03-2026-8C_167-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n8C_167/2026\nUrteil vom 11. März 2026\nIV. öffentlich-rechtliche Abteilung\nBesetzung\nBundesrichterin Viscione, Präsidentin,\nGerichtsschreiber Grünvogel.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführerin,\ngegen\nSozialregion Olten, Dornacherstrasse 1, 4603 Olten,\nBeschwerdegegner.\nGegenstand\nSozialhilfe (Prozessvoraussetzung),\nBeschwerde gegen das Urteil des Verwaltungsgerichts des Kantons Solothurn vom 2. Februar 2026 (VWBES.2025.422).\nErwägungen:\n1.\nDas Verwaltungsgericht des Kantons Solothurn schrieb am 20. November 2025 das von A.________eingeleitete Beschwerdeverfahren VWBES.2025.442 am 2. Februar 2026 wegen nachträglichen Wegfalls eines schutzwürdigen Interesses als gegenstandslos geworden ab. Streitgegenstand bildete die Rechtmässigkeit der von der Beschwerdegegnerin mit Verfügung vom 31. Oktober 2025 erlassenen Auflagen mit Androhung einer Kürzung oder Einstellung künftiger Sozialhilfeleistungen.\n2.\nWie bereits von der Vorinstanz in der angefochtenen Verfügung unter Verweis auf die Rechtsprechung (BGE 146 I 62) ausgeführt, sind Auflagen und Weisungen von Sozialhilfebehörden, mit welchen - wie vorliegend - keine unmittelbar erfolgte Kürzung oder Verweigerung der Sozialhilfeunterstützung einhergeht, vor Bundesgericht nicht selbstständig anfechtbar (vgl. dazu statt vieler Urteil 8C_703/2024 vom 10. Dezember 2024).\n3.\nDer Beschwerdeführerin wird der Rechtsmittelweg an das Bundesgericht gegen die zwischenzeitig ergangene Leistungskürzungsverfügung der Beschwerdegegnerin vom 22. Dezember 2025 nach durchschrittenem innerkantonalem Beschwerdeweg offenstehen. Dabei wird sie die Bundesrechtmässigkeit der Auflagen ebenfalls zum Beschwerdethema erheben können.\n4.\nErweist sich die Beschwerde als offensichtlich unzulässig, ist sie im vereinfachten Verfahren nach Art. 108 Abs. 1 lit. a BGG zu erledigen.\n5.\nAuf die Erhebung von Gerichtskosten wird ausnahmsweise verzichtet (Art. 66 Abs. 1 Satz 2 BGG).\nDemnach erkennt die Präsidentin:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nEs werden keine Gerichtskosten erhoben.\n3.\nDieses Urteil wird den Parteien und dem Verwaltungsgericht des Kantons Solothurn schriftlich mitgeteilt.\nLuzern, 11. März 2026\nIm Namen der IV. öffentlich-rechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Präsidentin: Viscione\nDer Gerichtsschreiber: Grünvogel",
+  "operator_metadata": {
+    "date": "2026-03-11",
+    "reference": [
+      "8C_167/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-167-2026_2026-03-11.html",
+      "source": "446973/45/2834",
+      "content_length": 2758
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+      "it": "Confederazione Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale)",
+      "fr": "Conféderation Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social)"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_008"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_008_8C-167-2026_2026-03-11",
+    "title": {
+      "de": "Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung) 11.03.2026 8C_167/2026",
+      "it": "Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale) 11.03.2026 8C_167/2026",
+      "fr": "Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social) 11.03.2026 8C_167/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:20:46+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-167-2026_2026-03-11.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "5c07bd358c8ff451be2e268e0c8746cf8f1ccb551d70b660758027765d90eb43"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "id": "5A_303_2026",
+  "case_id": "5A_303/2026",
+  "case_ids": [
+    "5A_303/2026"
+  ],
+  "decision_date": "2026-04-09",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "Rechtsverzögerung.",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://09-04-2026-5A_303-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5A_303/2026\nUrteil vom 9. April 2026\nII. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Herrmann, präsidierendes Mitglied,\nGerichtsschreiber Möckli.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführerin,\ngegen\nObergericht des Kantons Zürich, II. Zivilkammer,\nHirschengraben 13/15, 8001 Zürich,\nBeschwerdegegner.\nGegenstand\nRechtsverzögerung.\nSachverhalt:\nDie rubrizierte Beschwerdeführerin ist die Tochter des am 7. Mai 2025 verstorbenen B.________.\nMit Urteil vom 10. November 2025 ermittelte das Bezirksgericht Uster die gesetzlichen Erben (Tochter und Sohn), eröffnete den Inhalt des Testamentes vom 13. Februar 2025 und hielt fest, dass den gesetzlichen Erben sowie der eingesetzten Erbin nach Ablauf eines Monats seit Mitteilung des Urteils eine Erbenbescheinigung ausgestellt werde, sofern die Berechtigung nicht bestritten worden sei.\nDagegen reichte die Beschwerdeführerin am 9. Dezember 2025 beim Obergericht des Kantons Zürich eine Berufung ein. Sodann reichte sie am 13. März 2026 beim Obergericht eine Rechtsverzögerungsbeschwerde ein. Mit Beschluss vom 31. März 2026 wies das Obergericht das Gesuch um Wiederherstellung der Berufungsfrist ab und trat auf die Berufung nicht ein. Sodann leitete es mit Verfügung vom 1. April 2026 die Rechtsverzögerungsbeschwerde zuständigkeitshalber an das Bundesgericht weiter.\nErwägungen:\n1.\nBei Rechtsverzögerung und Rechtsverweigerung durch kantonal letztinstanzliche Instanzen im Bereich des Zivilrechts kann beim Bundesgericht jederzeit eine entsprechende Beschwerde eingereicht werden (Art. 72 Abs. 1, Art. 94 und Art. 100 Abs. 7 BGG).\n2.\nVorliegend ist jedoch zwischenzeitlich bzw. bereits vor Weiterleitung der Rechtsverzögerungsbeschwerde der obergerichtliche Endentscheid ergangen, was diese gegenstandslos gemacht hat (statt vieler: Urteil 5A_502/2024 vom 30. August 2024 E. 2).\n3.\nSomit ist das bundesgerichtliche Beschwerdeverfahren zufolge Gegenstandslosigkeit gestützt auf Art. 32 Abs. 2 BGG abzuschreiben.\n4.\nAngesichts der konkreten Umstände sind keine Gerichtskosten zu erheben (Art. 66 Abs. 1 BGG). Eine summarische Begründung zur Sachlage vor Eintritt des Erledigungsgrundes als Grundlage der Kostenverteilung (Art. 71 BGG i.V.m. Art. 72 BZP) ist somit entbehrlich.\nDemnach erkennt das präsidierende Mitglied:\n1.\nDas Beschwerdeverfahren 5A_303/2026 wird zufolge Gegenstandslosigkeit als erledigt abgeschrieben.\n2.\nEs werden keine Gerichtskosten erhoben.\n3.\nDieses Urteil wird den Parteien mitgeteilt.\nLausanne, 9. April 2026\nIm Namen der II. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDas präsidierende Mitglied: Herrmann\nDer Gerichtsschreiber: Möckli",
+  "operator_metadata": {
+    "date": "2026-04-09",
+    "reference": [
+      "5A_303/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-303-2026_2026-04-09.html",
+      "source": "446973/45/2830",
+      "content_length": 3090
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2830",
+    "id": "CH_BGer_005_5A-303-2026_2026-04-09",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 09.04.2026 5A_303/2026",
+      "it": "Tribunale federale II Corte di diritto civile 09.04.2026 5A_303/2026",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 09.04.2026 5A_303/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:28:09+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-303-2026_2026-04-09.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "d1922eb342b8aa7d1771849eaa9b7f504bb4c137c572ddcca1e6c10a32fd07eb"
+  }
+}

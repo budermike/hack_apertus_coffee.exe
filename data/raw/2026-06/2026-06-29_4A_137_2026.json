@@ -1,0 +1,56 @@
+{
+  "id": "4A_137_2026",
+  "case_id": "4A_137/2026",
+  "case_ids": [
+    "4A_137/2026"
+  ],
+  "decision_date": "2026-06-29",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "arbitrage international; défaut de paiement de l'avance de frais",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://29-06-2026-4A_137-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4A_137/2026\nArrêt du 29 juin 2026\nIre Cour de droit civil\nComposition\nM. le Juge fédéral Hurni, Président.\nGreffier : M. Leemann.\nParticipants à la procédure\nA.________,\nrecourant,\ncontre\nB.________,\nreprésenté par Me Arun Chandrasekharan, avocat,\nintimé.\nObjet\narbitrage international; défaut de paiement de l'avance de frais,\nrecours contre la sentence rendue le 19 février 2026 par un Tribunal arbitral avec siège à Genève (ICC 28618/FJT).\nLe Président :\nVu le recours formé le 11 mars 2026 par A.________ (ci-après: le recourant) contre la sentence arbitrale rendue le 19 février 2026 par le Tribunal arbitral avec siège à Genève dans la cause divisant le recourant d'avec B.________ (ci-après: l'intimé);\nVu l'ordonnance présidentielle du 27 mars 2026 invitant le recourant à verser, jusqu'au 28 avril 2026 au plus tard, une avance de frais de 15'000 fr.;\nVu l'ordonnance présidentielle du 8 avril 2026 prolongeant le délai pour verser l'avance de frais jusqu'au 28 mai 2026;\nVu l'ordonnance du 1er juin 2026 par laquelle un délai supplémentaire venant à échéance le 16 juin 2026 a été imparti au recourant conformément à l'art. 62 al. 3 LTF;\nAttendu que l'avance de frais requise n'a pas été effectuée dans le délai imparti par cette ordonnance;\nConsidérant, dès lors, que le recours est irrecevable en vertu de l'art. 62 al. 3 LTF,\nqu'il y a lieu, partant, de faire application de la procédure simplifiée prévue par l'art. 108 al. 1 LTF,\nque les frais judiciaires seront mis à la charge du recourant (art. 66 al. 1 et 3 LTF),\nque l'intimé, qui n'a pas été invité à répondre au recours, n'a pas droit à des dépens.\nPar ces motifs, le Président prononce :\n1.\nLe recours est irrecevable.\n2.\nLe recourant acquittera un émolument judiciaire de 300 fr.\n3.\nLe présent arrêt est communiqué aux parties et au Tribunal arbitral avec siège à Genève.\nLausanne, le 29 juin 2026\nAu nom de la Ire Cour de droit civil\ndu Tribunal fédéral suisse\nLe Président : Hurni\nLe Greffier : Leemann",
+  "operator_metadata": {
+    "date": "2026-06-29",
+    "reference": [
+      "4A_137/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-137-2026_2026-06-29.html",
+      "source": "446973/45/2829",
+      "content_length": 2351
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_004_4A-137-2026_2026-06-29",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 29.06.2026 4A_137/2026",
+      "it": "Tribunale federale I Corte di diritto civile 29.06.2026 4A_137/2026",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 29.06.2026 4A_137/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:18:42+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-137-2026_2026-06-29.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "de7f969023bd2bdb22bc3a997f4e9832d2e1abfd1727d1e8b4189127e7b9d01b"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "id": "4A_266_2026",
+  "case_id": "4A_266/2026",
+  "case_ids": [
+    "4A_266/2026"
+  ],
+  "decision_date": "2026-06-16",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "contrat d'entreprise; retrait du recours",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://16-06-2026-4A_266-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4A_266/2026\nOrdonnance du 16 juin 2026\nIre Cour de droit civil\nComposition\nM. le Juge fédéral Hurni, Président.\nGreffier : M. Widmer.\nParticipants à la procédure\nA.________ SA,\nreprésentée par Me Gilbert Deschamps, avocat,\nrecourante,\ncontre\nB.________ SA,\nreprésentée par Me Aurélia Rappo, avocate,\nintimée.\nObjet\ncontrat d'entreprise; retrait du recours,\nrecours contre l'arrêt rendu le 23 avril 2026 par la Chambre civile de la Cour de justice du canton de Genève (C/6499/2022 ACJC/703/2026).\nLe Président :\nVu le recours déposé le 20 mai 2026 par A.________ SA (ci-après: la recourante) contre l'arrêt rendu le 23 avril 2026 par la Chambre civile de la Cour de justice du canton de Genève, dans la cause divisant la recourante d'avec B.________ SA, intimée au recours;\nVu la lettre du 5 juin 2026 par laquelle le conseil de la recourante informe le Tribunal fédéral que sa mandante retire son recours;\nConsidérant qu'il y a lieu de prendre acte de ce retrait et de rayer la cause 4A_266/2026 du rôle (art. 32 al. 2 LTF),\nque la remise intégrale des frais en application de l'art. 66 al. 2 LTF ne se justifie pas,\nque les frais peuvent en revanche être réduits,\nqu'ils doivent être mis à la charge de la recourante (art. 66 al. 1 et 2 LTF),\nqu'il n'y a pas lieu d'allouer de dépens à l'intimée, celle-ci n'ayant pas été invitée à déposer de réponse;\nVu l'art. 32 al. 2 LTF.\nOrdonne :\n1.\nIl est pris acte du retrait du recours.\n2.\nLa cause 4A_266/2026 est rayée du rôle.\n3.\nUn émolument judiciaire de 500 fr. est mis à la charge de la recourante.\n4.\nIl n'est pas alloué de dépens.\n5.\nLa présente ordonnance est communiquée aux parties et à la Chambre civile de la Cour de justice du canton de Genève.\nLausanne, le 16 juin 2026\nAu nom de la Ire Cour de droit civil\ndu Tribunal fédéral suisse\nLe Président : Hurni\nLe Greffier : Widmer",
+  "operator_metadata": {
+    "date": "2026-06-16",
+    "reference": [
+      "4A_266/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-266-2026_2026-06-16.html",
+      "source": "446973/45/2829",
+      "content_length": 2226
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_004_4A-266-2026_2026-06-16",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 16.06.2026 4A_266/2026",
+      "it": "Tribunale federale I Corte di diritto civile 16.06.2026 4A_266/2026",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 16.06.2026 4A_266/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:19:35+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-266-2026_2026-06-16.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "1e06aaf3ac788665e7f3d58ffed4a5c1ce89ab807fcbff100a52c0122fa6c6d1"
+  }
+}

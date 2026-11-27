@@ -1,0 +1,56 @@
+{
+  "id": "8C_221_2026",
+  "case_id": "8C_221/2026",
+  "case_ids": [
+    "8C_221/2026"
+  ],
+  "decision_date": "2026-05-04",
+  "publication_date": null,
+  "department": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "division": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "subject": "Militärversicherung (Prozessvoraussetzung)",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://04-05-2026-8C_221-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n8C_221/2026\nUrteil vom 4. Mai 2026\nIV. öffentlich-rechtliche Abteilung\nBesetzung\nBundesrichterin Viscione, Präsidentin,\nGerichtsschreiber Grünvogel.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nSuva, Abteilung Militärversicherung,\nService Center, 6009 Luzern,\nBeschwerdegegnerin.\nGegenstand\nMilitärversicherung (Prozessvoraussetzung),\nBeschwerde gegen das Urteil des Versicherungsgerichts des Kantons Aargau vom 25. Februar 2026 (VBE.2025.565).\nErwägungen:\n1.\nGemäss Art. 42 Abs. 1 und 2 BGG hat die Beschwerde unter anderem die Begehren und deren Begründung zu enthalten, wobei in gedrängter Form darzulegen ist, inwiefern der angefochtene Akt Recht verletzt. Dies bedingt bei angefochtenen Nichteintretensurteilen praxisgemäss eine spezifische Auseinandersetzung mit den Nichteintretensgründen (BGE 123 V 335).\n2.\nDas kantonale Gericht trat mit Urteil vom 25. Februar 2026 auf die vom Beschwerdeführer erhobene Beschwerde gegen einen Entscheid vom 13. November 2025 wegen Nichteinreichens des angefochtenen Entscheids innert gesetzter Nachfrist nicht ein.\n3.\nDarauf geht der Beschwerdeführer mit keinem Wort ein. Vielmehr beschränkt er sich darauf, pauschal Leistungen aus der Militärversicherung zu verlangen.\n4.\nEnthält die Beschwerde offensichtlich keine hinreichende Begründung, führt dies zu einem Nichteintreten im vereinfachten Verfahren nach Art. 108 Abs. 1 lit. b BGG.\n5.\nIn Anwendung von Art. 66 Abs. 1 Satz 2 BGG wird ausnahmsweise auf die Erhebung von Gerichtskosten verzichtet.\nDemnach erkennt die Präsidentin:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nEs werden keine Gerichtskosten erhoben.\n3.\nDieses Urteil wird den Parteien, dem Versicherungsgericht des Kantons Aargau und dem Bundesamt für Gesundheit schriftlich mitgeteilt.\nLuzern, 4. Mai 2026\nIm Namen der IV. öffentlich-rechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Präsidentin: Viscione\nDer Gerichtsschreiber: Grünvogel",
+  "operator_metadata": {
+    "date": "2026-05-04",
+    "reference": [
+      "8C_221/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-221-2026_2026-05-04.html",
+      "source": "446973/45/2834",
+      "content_length": 2367
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+      "it": "Confederazione Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale)",
+      "fr": "Conféderation Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social)"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_008"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_008_8C-221-2026_2026-05-04",
+    "title": {
+      "de": "Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung) 04.05.2026 8C_221/2026",
+      "it": "Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale) 04.05.2026 8C_221/2026",
+      "fr": "Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social) 04.05.2026 8C_221/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:36:53+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-221-2026_2026-05-04.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "8b724a95590eb0261c5b824b54ebb4f78474d01aeb588b7c71a0858389b636fd"
+  }
+}

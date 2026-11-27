@@ -1,0 +1,56 @@
+{
+  "id": "6B_156_2026",
+  "case_id": "6B_156/2026",
+  "case_ids": [
+    "6B_156/2026"
+  ],
+  "decision_date": "2026-03-03",
+  "publication_date": null,
+  "department": "I. Strafrechtliche Abteilung",
+  "division": "I. Strafrechtliche Abteilung",
+  "subject": "Irrecevabilité formelle du recours en matière pénale; recours tardif (violation de l'obligation de tenir une comptabilité; contrainte; viol; fixation de la peine)",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://03-03-2026-6B_156-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n6B_156/2026\nArrêt du 3 mars 2026\nIre Cour de droit pénal\nComposition\nM. le Juge fédéral\nvon Felten, Juge présidant.\nGreffière : Mme Thalmann.\nParticipants à la procédure\nA.________,\nrecourant,\ncontre\nMinistère public central du canton de Vaud, avenue de Longemalle 1, 1020 Renens VD,\nintimé.\nObjet\nIrrecevabilité formelle du recours en matière pénale; recours tardif (violation de l'obligation de tenir une comptabilité; contrainte; viol; fixation de la peine),\nrecours contre le jugement de la Cour d'appel pénale\ndu Tribunal cantonal du canton de Vaud du 23 septembre 2025 (n° 327 PE22.009826-DTE).\nConsidérant en fait et en droit :\n1.\nPar jugement du 23 septembre 2025, la Cour d'appel pénale du Tribunal cantonal vaudois a rejeté l'appel formé par A.________ contre le jugement du 17 avril 2025 par lequel le Tribunal correctionnel de l'arrondissement de la Broye et du Nord vaudois a condamné A.________ pour violation de l'obligation de tenir une comptabilité, contrainte et viol à une peine privative de liberté de 36 mois, dont 30 mois avec sursis, et lui a imparti un délai d'épreuve de 4 ans.\n2.\nPar acte daté du 25 février 2026, reçu au Tribunal fédéral le 26 février 2026, A.________ forme un recours en matière pénale contre le jugement du 23 septembre 2025. Il sollicite en outre l'assistance judiciaire.\n3.\nLe recours contre une décision doit être déposé devant le Tribunal fédéral dans les trente jours qui suivent sa notification (art. 100 al. 1 LTF). Les délais dont le début dépend d'une communication ou de la survenance d'un événement courent dès le lendemain de celles-ci (art. 44 al. 1 LTF).\nEn l'espèce, il ressort du dossier que le pli contenant le jugement querellé a été notifié au recourant en date du 8 décembre 2025. À teneur des dispositions précitées, le délai de recours est arrivé à échéance le 23 janvier 2026, compte tenu des féries (cf. art. 46 al. 1 let. c LTF). Déposé le 25 février 2026, le recours s'avère tardif. Il est, par conséquent, irrecevable.\n4.\nL'irrecevabilité du recours est dès lors manifeste et doit être constatée dans la procédure prévue par l'art. 108 al. 1 let. a LTF. Il convient de statuer exceptionnellement sans frais (art. 65 al. 2 et 66 al. 1 LTF). La demande d'assistance judiciaire est sans objet (art. 64 al. 1 LTF).\nPar ces motifs, le Juge présidant prononce :\n1.\nLe recours est irrecevable.\n2.\nIl n'est pas perçu de frais judiciaires.\n3.\nLe présent arrêt est communiqué aux parties et à la Cour d'appel pénale du Tribunal cantonal du canton de Vaud.\nLausanne, le 3 mars 2026\nAu nom de la Ire Cour de droit pénal\ndu Tribunal fédéral suisse\nLe Juge présidant : von Felten\nLa Greffière : Thalmann",
+  "operator_metadata": {
+    "date": "2026-03-03",
+    "reference": [
+      "6B_156/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_006_6B-156-2026_2026-03-03.html",
+      "source": "446973/45/2830",
+      "content_length": 3089
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit pénal"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_006"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2830",
+    "id": "CH_BGer_006_6B-156-2026_2026-03-03",
+    "title": {
+      "de": "Bundesgericht I. Strafrechtliche Abteilung 03.03.2026 6B_156/2026",
+      "it": "Tribunale federale I Corte di diritto penale 03.03.2026 6B_156/2026",
+      "fr": "Tribunal fédéral Ire Cour de droit pénal 03.03.2026 6B_156/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:18:18+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_006_6B-156-2026_2026-03-03.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "d180739c46022e68f1933d5c01dc49b16b6e974b246b48a5a29ed5bb0d3b9e73"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "id": "7B_468_2026",
+  "case_id": "7B_468/2026",
+  "case_ids": [
+    "7B_468/2026"
+  ],
+  "decision_date": "2026-05-06",
+  "publication_date": null,
+  "department": "II. Strafrechtliche Abteilung",
+  "division": "II. Strafrechtliche Abteilung",
+  "subject": "Amtliche Verteidigung; Nichteintreten",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://06-05-2026-7B_468-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n7B_468/2026\nUrteil vom 6. Mai 2026\nII. strafrechtliche Abteilung\nBesetzung\nBundesrichterin Koch, als Einzelrichterin,\nGerichtsschreiber Hahn.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nStaatsanwaltschaft Lenzburg-Aarau,\nSeetalplatz, Bahnhofstrasse 4, 5600 Lenzburg 1.\nGegenstand\nAmtliche Verteidigung; Nichteintreten,\nBeschwerde gegen den Entscheid des Obergerichts des Kantons Aargau, Beschwerdekammer in Strafsachen, vom 20. März 2026 (SBK.2026.27).\nErwägungen:\n1.\nMit Eingabe vom 13. April 2026 (Postaufgabe), ergänzt am 21. April 2026 (Postaufgabe), führt A.________ Beschwerde in Strafsachen gegen den Entscheid des Obergerichts des Kantons Aargau vom 20. März 2026 betreffend Abweisung des Antrags auf Einsetzung einer amtlichen Verteidigung.\nEs wurden keine Vernehmlassungen eingeholt.\n2.\nDie Vorinstanz legt im angefochtenen Entscheid in Auseinandersetzung mit der bundesgerichtlichen Rechtsprechung detailliert dar, weshalb im Fall des Beschwerdeführers die gesetzlichen Voraussetzungen für die Beiordnung einer amtlichen Verteidigung nach Art. 130 und Art. 132 Abs. 1 - 3 StPO nicht erfüllt sind. Mit dieser Begründung setzt sich der Beschwerdeführer nicht ansatzweise auseinander. Stattdessen macht er Ausführungen, weshalb die gegen ihn in der Sache erhobenen Strafvorwürfe unzutreffend seien. Derart appellatorische Kritik genügt den gesetzlichen Begründungsanforderungen an eine Beschwerde an das Bundesgericht offensichtlich nicht (vgl. Art. 42 Abs. 2 und Art. 106 Abs. 2 BGG; BGE 148 IV 356 E. 2.1, 39 E. 2.3.5; 147 IV 73 E. 4.1.2; 146 IV 297 E. 1.2). Auf die Beschwerde ist somit mangels hinreichender Begründung im vereinfachten Verfahren nicht einzutreten (Art. 108 Abs. 1 lit. b BGG).\n3.\nBei diesem Verfahrensausgang ist das Gesuch um unentgeltliche Rechtspflege wegen Aussichtslosigkeit abzuweisen (Art. 64 Abs. 1 BGG). Damit wird der Beschwerdeführer kostenpflichtig (Art. 66 Abs. 1 BGG). Seiner finanziellen Situation ist mit reduzierten Gerichtskosten Rechnung zu tragen (Art. 65 Abs. 2 BGG).\nDemnach erkennt die Einzelrichterin:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDas Gesuch um unentgeltliche Rechtspflege wird abgewiesen.\n3.\nDie Gerichtskosten von Fr. 500.-- werden dem Beschwerdeführer auferlegt.\n4.\nDieses Urteil wird dem Beschwerdeführer, der Staatsanwaltschaft Lenzburg-Aarau und dem Obergericht des Kantons Aargau, Beschwerdekammer in Strafsachen, schriftlich mitgeteilt.\nLausanne, 6. Mai 2026\nIm Namen der II. strafrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Einzelrichterin: Koch\nDer Gerichtsschreiber: Hahn",
+  "operator_metadata": {
+    "date": "2026-05-06",
+    "reference": [
+      "7B_468/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-468-2026_2026-05-06.html",
+      "source": "446973/45/2834",
+      "content_length": 3009
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit pénal"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_007"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_007_7B-468-2026_2026-05-06",
+    "title": {
+      "de": "Bundesgericht II. Strafrechtliche Abteilung 06.05.2026 7B_468/2026",
+      "it": "Tribunale federale II Corte di diritto penale 06.05.2026 7B_468/2026",
+      "fr": "Tribunal fédéral IIe Cour de droit pénal 06.05.2026 7B_468/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:37:28+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-468-2026_2026-05-06.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "309390c8ee4c40307f20b7c1adf5606cb89f7cdc024c61cb69057dd1f0a137cb"
+  }
+}

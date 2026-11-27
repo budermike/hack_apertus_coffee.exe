@@ -1,0 +1,56 @@
+{
+  "id": "5A_1014_2025",
+  "case_id": "5A_1014/2025",
+  "case_ids": [
+    "5A_1014/2025"
+  ],
+  "decision_date": "2025-11-25",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "ratification d'un contrat de vente",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://25-11-2025-5A_1014-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5A_1014/2025\nArrêt du 25 novembre 2025\nIIe Cour de droit civil\nComposition\nM. le Juge fédéral Bovey, Président.\nGreffière : Mme Hildbrand.\nParticipants à la procédure\nA.________,\nrecourante,\ncontre\nJustice de paix de l'arrondissement de la Glâne, rue des Moines 58, 1680 Romont FR.\nObjet\nratification d'un contrat de vente,\nrecours contre l'arrêt de la Cour de protection de l'enfant et de l'adulte du Tribunal cantonal de l'Etat de Fribourg du 27 août 2025 (106 2025 64).\nVu :\nle recours interjeté le 20 novembre 2025 par A.________ contre l'arrêt du 27 août 2025 de la Cour de protection de l'enfant et de l'adulte du Tribunal cantonal de l'État de Fribourg déclarant irrecevable son recours contre la décision du 17 juillet 2025 de la Justice de paix de l'arrondissement de la Glâne ratifiant le contrat de vente d'un immeuble dont elle était propriétaire;\nConsidérant :\nque le Tribunal fédéral examine d'office la recevabilité du recours dont il est saisi (ATF 151 IV 98 consid. 1 et les arrêts cités);\nque la recourante est au bénéfice d'une curatelle de représentation avec gestion du patrimoine et a été en outre privée de l'exercice de ses droits civils en matière de gestion financière, pour la conclusion de contrats et en matière de lieu de vie et de logement;\nque, en vertu de l'art. 100 al. 1 LTF, le recours contre une décision doit être déposé dans les 30 jours qui suivent la notification de l'expédition complète;\nque, selon le suivi des envois recommandés de La Poste Suisse, le pli contenant l'arrêt attaqué a été distribué au guichet le 3 septembre 2025;\nque le délai de recours a débuté le 4 septembre 2025 (art. 44 al. 1 LTF) pour parvenir à expiration le (samedi) 4 octobre 2025, échéance reportée au 6 octobre 2025 (art. 45 al. 1 LTF);\nque, expédié le 20 novembre 2025, le recours est ainsi largement tardif;\nque, vu ce qui précède, le présent recours doit être déclaré irrecevable par voie de procédure simplifiée (art. 108 al. 1 let. a LTF), sans qu'il soit besoin d'interpeller le curateur de représentation de la recourante;\nqu'étant donné les circonstances, le Tribunal fédéral renoncera, à titre exceptionnel, à la perception des frais judiciaires (art. 66 al. 1 in fine LTF).\nPar ces motifs, le Président prononce :\n1.\nLe recours est irrecevable.\n2.\nIl n'est pas perçu de frais judiciaires.\n3.\nLe présent arrêt est communiqué à la recourante, à B.________, Service des curatelles de la Glâne, à la Justice de paix de l'arrondissement de la Glâne et à la Cour de protection de l'enfant et de l'adulte du Tribunal cantonal de l'Etat de Fribourg.\nLausanne, le 25 novembre 2025\nAu nom de la IIe Cour de droit civil\ndu Tribunal fédéral suisse\nLe Président : Bovey\nLa Greffière : Hildbrand",
+  "operator_metadata": {
+    "date": "2025-11-25",
+    "reference": [
+      "5A_1014/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-1014-2025_2025-11-25.html",
+      "source": "446973/45/2869",
+      "content_length": 3112
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-06-18",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2869",
+    "id": "CH_BGer_005_5A-1014-2025_2025-11-25",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 25.11.2025 5A_1014/2025",
+      "it": "Tribunale federale II Corte di diritto civile 25.11.2025 5A_1014/2025",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 25.11.2025 5A_1014/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:38:22+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-1014-2025_2025-11-25.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "3b3d9e008510f1a7239100ead24b783c7c75e697d3528584ebf97acbe81ea3f2"
+  }
+}

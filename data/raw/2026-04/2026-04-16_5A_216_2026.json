@@ -1,0 +1,56 @@
+{
+  "id": "5A_216_2026",
+  "case_id": "5A_216/2026",
+  "case_ids": [
+    "5A_216/2026"
+  ],
+  "decision_date": "2026-04-16",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "refus de l'effet suspensif (avis de saisie)",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://16-04-2026-5A_216-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5A_216/2026\nOrdonnance du 16 avril 2026\nIIe Cour de droit civil\nComposition\nM. le Juge fédéral Bovey, Président.\nGreffière : Mme Mairot.\nParticipants à la procédure\nA.________,\nrecourant,\ncontre\nOffice des poursuites du district de\nla Riviera - Pays-d'Enhaut,\nrue de la Madeleine 39, 1800 Vevey.\nObjet\nrefus de l'effet suspensif (avis de saisie),\nrecours contre la décision de la Présidente de la\nCour des poursuites et faillites du Tribunal cantonal du canton de Vaud du 20 février 2026 (FA25.051229).\nVu :\nla décision rendue le 4 février 2026 par la Présidente du Tribunal d'arrondissement de l'Est vaudois, en sa qualité d'autorité inférieure de surveillance, rejetant la plainte déposée le 24 octobre 2025 par A.________ contre un avis de saisie provisoire de l'Office des poursuites du district de la Riviera - Pays-d'Enhaut;\nle recours formé par le prénommé contre ce prononcé, avec requête d'effet suspensif;\nla décision du 20 février 2026 de la Présidente de la Cour des poursuites et faillites du Tribunal cantonal du canton de Vaud rejetant la demande d'effet suspensif;\nle recours au Tribunal fédéral interjeté le 9 mars 2026 par le poursuivi contre ce prononcé et la requête d'effet suspensif qu'il contient;\nles déterminations sur la requête d'effet suspensif de l'Office des poursuites, qui conclut à son rejet, et celles de l'autorité cantonale, qui s'en remet à justice;\nConsidérant :\nque, par arrêt du 20 mars 2026, la Cour des poursuites et faillites du Tribunal cantonal vaudois, statuant sur le fond, a déclaré irrecevable le recours formé par le poursuivi contre la décision du 4 février 2026;\nque l'issue de cette procédure rend sans objet le présent recours, qui était dirigé contre la décision (incidente) refusant d'assortir le recours cantonal de l'effet suspensif (ordonnances 5A_914/2025 du 5 décembre 2025; 5A_446/2025 du 16 juillet 2025);\nque la cause doit ainsi être rayée du rôle;\nque le Président de la Cour de céans est compétent à cet effet (art. 32 al. 1 et 2 LTF);\nque, vu les circonstances, il sera renoncé à percevoir des frais judiciaires (art. 66 al. 1, 2e phrase LTF);\nqu'il n'y a pas lieu d'allouer des dépens (art. 68 al. 3 LTF);\nque la décision immédiate sur le recours en matière civile rend sans objet la demande d'effet suspensif;\nPar ces motifs, le Tribunal fédéral prononce :\n1.\nLe recours est sans objet et la cause est rayée du rôle.\n2.\nIl n'est pas perçu de frais judiciaires.\n3.\nLa présente ordonnance est communiquée au recourant, à l'Office des poursuites du district de la Riviera - Pays-d'Enhaut et à la Présidente de la Cour des poursuites et faillites du Tribunal cantonal du canton de Vaud.\nLausanne, le 16 avril 2026\nAu nom de la IIe Cour de droit civil\ndu Tribunal fédéral suisse\nLe Président : Bovey\nLa Greffière : Mairot",
+  "operator_metadata": {
+    "date": "2026-04-16",
+    "reference": [
+      "5A_216/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-216-2026_2026-04-16.html",
+      "source": "446973/45/2830",
+      "content_length": 3177
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2830",
+    "id": "CH_BGer_005_5A-216-2026_2026-04-16",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 16.04.2026 5A_216/2026",
+      "it": "Tribunale federale II Corte di diritto civile 16.04.2026 5A_216/2026",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 16.04.2026 5A_216/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:29:56+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-216-2026_2026-04-16.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "7527dd08e34da69132198ed9c94f93a854b4bb8adcb024d46e6f496271a7797f"
+  }
+}

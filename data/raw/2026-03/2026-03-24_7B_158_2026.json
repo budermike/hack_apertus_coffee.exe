@@ -1,0 +1,56 @@
+{
+  "id": "7B_158_2026",
+  "case_id": "7B_158/2026",
+  "case_ids": [
+    "7B_158/2026"
+  ],
+  "decision_date": "2026-03-24",
+  "publication_date": null,
+  "department": "II. Strafrechtliche Abteilung",
+  "division": "II. Strafrechtliche Abteilung",
+  "subject": "psychiatrische Begutachtung; Nichteintreten",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://24-03-2026-7B_158-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n7B_158/2026\nUrteil vom 24. März 2026\nII. strafrechtliche Abteilung\nBesetzung\nBundesrichterin Koch, als Einzelrichterin,\nGerichtsschreiber Hahn.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nStaatsanwaltschaft des Kantons Basel-Stadt, Binningerstrasse 21, 4051 Basel,\nBeschwerdegegnerin.\nGegenstand\npsychiatrische Begutachtung; Nichteintreten,\nBeschwerde gegen den Entscheid des Appellationsgerichts des Kantons Basel-Stadt, Einzelgericht, vom 12. Januar 2026 (BES.2025.98).\nErwägungen:\n1.\nA.________ führt mit einer undatierten Eingabe, welche beim Bundesgericht am 9. Februar 2026 eingegangen ist, Beschwerde in Strafsachen gegen den Entscheid des Appellationsgerichts des Kantons Basel-Stadt vom 12. Januar 2026 betreffend psychiatrische Begutachtung.\n2.\nNachdem dem Beschwerdeführer eine erste Verfügung vom 11. Februar 2026 nicht zugestellt werden konnte, wurde er vom Bundesgericht mit neuer Verfügung vom 17. Februar 2026 aufgefordert, bis zum 4. März 2026 einen Kostenvorschuss von Fr. 800.-- einzuzahlen. Da er dieser Aufforderung nicht nachgekommen ist, wurde ihm mit Verfügung vom 6. März 2026 eine nicht erstreckbare Nachfrist zur Vorschussleistung bis zum 17. März 2026 angesetzt. Unter Hinweis auf Art. 62 Abs. 3 BGG wurde der Beschwerdeführer zudem darauf hingewiesen, dass das Bundesgericht bei Säumnis auf das Rechtsmittel nicht eintreten werde.\nBis zum Ablauf der nicht erstreckbaren Nachfrist hat der Beschwerdeführer den Kostenvorschuss nicht geleistet. Androhungsgemäss ist daher gestützt auf Art. 62 Abs. 3 BGG im vereinfachten Verfahren nach Art. 108 BGG auf die Beschwerde nicht einzutreten. Bei diesem Ausgang des Verfahrens wird der Beschwerdeführer kostenpflichtig (Art. 66 Abs. 1 und 3 BGG).\nDemnach erkennt die Einzelrichterin:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 500.-- werden dem Beschwerdeführer auferlegt.\n3.\nDieses Urteil wird den Parteien und dem Appellationsgericht des Kantons Basel-Stadt, Einzelgericht, schriftlich mitgeteilt.\nLausanne, 24. März 2026\nIm Namen der II. strafrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Einzelrichterin: Koch\nDer Gerichtsschreiber: Hahn",
+  "operator_metadata": {
+    "date": "2026-03-24",
+    "reference": [
+      "7B_158/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-158-2026_2026-03-24.html",
+      "source": "446973/45/2834",
+      "content_length": 2562
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit pénal"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_007"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_007_7B-158-2026_2026-03-24",
+    "title": {
+      "de": "Bundesgericht II. Strafrechtliche Abteilung 24.03.2026 7B_158/2026",
+      "it": "Tribunale federale II Corte di diritto penale 24.03.2026 7B_158/2026",
+      "fr": "Tribunal fédéral IIe Cour de droit pénal 24.03.2026 7B_158/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:24:37+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-158-2026_2026-03-24.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "a341124f79989ef2db0ad70f87beca2b7485cdf695b6ca0389f7587b5fffe587"
+  }
+}

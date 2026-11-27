@@ -1,0 +1,56 @@
+{
+  "id": "5A_903_2025",
+  "case_id": "5A_903/2025",
+  "case_ids": [
+    "5A_903/2025"
+  ],
+  "decision_date": "2025-10-28",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "avance de frais (curatelle, changement de curateur)",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://28-10-2025-5A_903-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5A_903/2025\nOrdonnance du 28 octobre 2025\nIIe Cour de droit civil\nComposition\nM. le Juge fédéral Bovey, Président.\nGreffier : M. Braconi.\nParticipants à la procédure\n1. A.________,\n2. B.________,\nrecourantes,\ncontre\nCour de justice du canton de Genève, Chambre de surveillance,\nplace du Bourg-de-Four 1, 1204 Genève,\nintimée.\nObjet\navance de frais (curatelle, changement de curateur),\nrecours contre la décision de la Chambre de\nsurveillance de la Cour de justice du canton de\nGenève du 10 octobre 2025 (C/13071/2011 AS PAE DCJC/913/2025).\nVu :\nla décision de la Chambre de surveillance de la Cour de justice du canton de Genève du 10 octobre 2025 invitant A.________ et B.________ à effectuer jusqu'au 28 octobre 2025 une avance de frais de 400 fr.;\nle recours en matière civile au Tribunal fédéral formé le 21 octobre 2025 par les prénommées, assorti d'une requête d'effet suspensif;\nl'avis de la Greffière de la cour cantonale du 24 octobre 2025 informant la Cour de céans que A.________ s'est acquittée de l'avance de frais requise le 22 octobre 2025;\nl'art. 72 LTF, par renvoi de l'art. 71 PCF;\nconsidérant :\nque le versement de l'avance de frais litigieuse a rendu sans objet le présent recours;\nque le Président de la Cour de céans est compétent pour en prendre acte (art. 32 al. 2 LTF);\nque les recourantes conservent la faculté de contester, le cas échéant, l'avance de frais réclamée à l'appui d'un recours dirigé à l'encontre de la décision finale de la cour cantonale (art. 93 al. 3 LTF);\nque, vu les circonstances de l'espèce, il y a lieu de renoncer à percevoir des frais judiciaires (art. 66 al. 1, 2ème phrase, LTF);\nque la requête d'effet suspensif est sans objet;\npar ces motifs, le Président ordonne :\n1.\nLe recours est sans objet et la cause est rayée du rôle.\n2.\nIl n'est pas perçu de frais judiciaires.\n3.\nLa présente ordonnance est communiquée aux parties.\nLausanne, le 28 octobre 2025\nAu nom de la IIe Cour de droit civil\ndu Tribunal fédéral suisse\nLe Président : Bovey\nLe Greffier : Braconi",
+  "operator_metadata": {
+    "date": "2025-10-28",
+    "reference": [
+      "5A_903/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-903-2025_2025-10-28.html",
+      "source": "446973/45/2869",
+      "content_length": 2411
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-06-18",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2869",
+    "id": "CH_BGer_005_5A-903-2025_2025-10-28",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 28.10.2025 5A_903/2025",
+      "it": "Tribunale federale II Corte di diritto civile 28.10.2025 5A_903/2025",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 28.10.2025 5A_903/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:30:01+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-903-2025_2025-10-28.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "222073be0151f8e42142e50285c4eafbbf70b7d8a4940afc1585021f98d5d152"
+  }
+}

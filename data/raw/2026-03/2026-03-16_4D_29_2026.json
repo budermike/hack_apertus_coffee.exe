@@ -1,0 +1,56 @@
+{
+  "id": "4D_29_2026",
+  "case_id": "4D_29/2026",
+  "case_ids": [
+    "4D_29/2026"
+  ],
+  "decision_date": "2026-03-16",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "Mieterausweisung",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://16-03-2026-4D_29-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4D_29/2026\nUrteil vom 16. März 2026\nI. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Hurni, Präsident,\nGerichtsschreiber Leemann.\nVerfahrensbeteiligte\n1. A.________,\n2. B.________,\nBeschwerdeführer,\ngegen\nC.________ AG,\nBeschwerdegegnerin.\nGegenstand\nMieterausweisung,\nBeschwerde gegen den Entscheid des Obergerichts des Kantons Aargau, Zivilgericht, 4. Kammer, vom 5. Februar 2026 (ZSU.2025.353).\nErwägungen:\n1.\nMit Entscheid vom 26. November 2025 verpflichtete das Bezirksgericht Kulm die Beschwerdeführer, die 6-Zimmer-Wohnung 1. OG an der (...) innert 10 Tagen nach Rechtskraft des Entscheids zu verlassen, zu räumen und sämtliche Schlüssel zu übergeben. Für den Unterlassungsfall drohte es die polizeiliche Zwangsvollstreckung an.\nMit Entscheid vom 5. Februar 2026 wies das Obergericht des Kantons Aargau die von den Beschwerdeführern gegen den bezirksgerichtlichen Entscheid vom 26. November 2025 erhobene Berufung ab.\nMit Eingabe vom 27. Februar 2026 erklärten die Beschwerdeführer dem Bundesgericht, den Entscheid des Obergerichts des Kantons Aargau vom 5. Februar 2026 mit Beschwerde anfechten zu wollen.\nEs wurden keine Vernehmlassungen eingeholt.\n2.\nDie Eingabe der Beschwerdeführer vom 27. Februar 2026 erfüllt die Begründungsanforderungen, die an eine Beschwerde an das Bundesgericht gestellt werden, offensichtlich nicht (Art. 42 Abs. 2 und Art. 106 Abs. 2 BGG; BGE 142 III 364 E. 2.4; 140 III 86 E. 2, 115 E. 2).\nAuf die Beschwerde ist somit mangels hinreichender Begründung im vereinfachten Verfahren nicht einzutreten (Art. 108 Abs. 1 lit. b BGG).\n3.\nDie Beschwerdeführer werden bei diesem Verfahrensausgang unter solidarischer Haftbarkeit kostenpflichtig (Art. 66 Abs. 1 und 5 BGG). Der Beschwerdegegnerin steht keine Parteientschädigung zu, da ihr aus dem bundesgerichtlichen Verfahren kein Aufwand erwachsen ist (Art. 68 Abs. 2 BGG).\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 800.-- werden den Beschwerdeführern unter solidarischer Haftbarkeit auferlegt.\n3.\nEs wird keine Parteientschädigung zugesprochen.\n4.\nDieses Urteil wird den Parteien und dem Obergericht des Kantons Aargau, Zivilgericht, 4. Kammer, schriftlich mitgeteilt.\nLausanne, 16. März 2026\nIm Namen der I. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Hurni\nDer Gerichtsschreiber: Leemann",
+  "operator_metadata": {
+    "date": "2026-03-16",
+    "reference": [
+      "4D_29/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-29-2026_2026-03-16.html",
+      "source": "446973/45/2829",
+      "content_length": 2805
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_004_4D-29-2026_2026-03-16",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 16.03.2026 4D_29/2026",
+      "it": "Tribunale federale I Corte di diritto civile 16.03.2026 4D_29/2026",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 16.03.2026 4D_29/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:21:43+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-29-2026_2026-03-16.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "83c6b1975e3344dfce05f6125d9f133828af8c7bb09b37438e4f498aa2d5c2c0"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "id": "6B_158_2026",
+  "case_id": "6B_158/2026",
+  "case_ids": [
+    "6B_158/2026"
+  ],
+  "decision_date": "2026-06-30",
+  "publication_date": null,
+  "department": "I. Strafrechtliche Abteilung",
+  "division": "I. Strafrechtliche Abteilung",
+  "subject": "Retrait du recours (compétence de l'exécution; art. 90 al. 1 DPA)",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://30-06-2026-6B_158-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n6B_158/2026\nOrdonnance du 30 juin 2026\nIre Cour de droit pénal\nComposition\nM. le Juge fédéral\nMuschietti, Président.\nGreffier : M. Vallat.\nParticipants à la procédure\nDépartement fédéral A.________,\nrecourant,\ncontre\n1. Ministère public de la Confédération,\nGuisanplatz 1, 3003 Berne,\n2. B.________,\nreprésenté par Maîtres Andrew Garbarski et Adam Zaki, avocats,\nintimés.\nObjet\nRetrait du recours (compétence de l'exécution; art. 90 al. 1 DPA),\nrecours contre l'arrêt du Tribunal pénal fédéral,\nCour d'appel, du 14 décembre 2025 (CA.2024.1).\nConsidérant en fait et en droit :\nPar lettre du 19 juin 2026, le Département fédéral A.________ déclare retirer le recours interjeté le 26 février 2026 contre l'arrêt cité sous rubrique. Il sied d'en prendre acte et de rayer la cause du rôle (cf. art. 32 al. 2 LTF), sans frais (cf. art. 66 al. 2 LTF).\nPar ces motifs, le Président ordonne :\n1.\nIl est pris acte du retrait du recours et l'affaire 6B_158/2026 est rayée du rôle.\n2.\nIl n'est pas perçu de frais judiciaires.\n3.\nLa présente ordonnance est communiquée aux parties et au Tribunal pénal fédéral, Cour d'appel.\nLausanne, le 30 juin 2026\nAu nom de la Ire Cour de droit pénal\ndu Tribunal fédéral suisse\nLe Président : Muschietti\nLe Greffier : Vallat",
+  "operator_metadata": {
+    "date": "2026-06-30",
+    "reference": [
+      "6B_158/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_006_6B-158-2026_2026-06-30.html",
+      "source": "446973/45/2830",
+      "content_length": 1612
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit pénal"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_006"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2830",
+    "id": "CH_BGer_006_6B-158-2026_2026-06-30",
+    "title": {
+      "de": "Bundesgericht I. Strafrechtliche Abteilung 30.06.2026 6B_158/2026",
+      "it": "Tribunale federale I Corte di diritto penale 30.06.2026 6B_158/2026",
+      "fr": "Tribunal fédéral Ire Cour de droit pénal 30.06.2026 6B_158/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:50:15+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_006_6B-158-2026_2026-06-30.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "c5b67985ef4f6a1f2780f523311931172afbda6133bfbc62021bc87071b975c4"
+  }
+}

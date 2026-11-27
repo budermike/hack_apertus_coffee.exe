@@ -1,0 +1,56 @@
+{
+  "id": "5A_858_2025",
+  "case_id": "5A_858/2025",
+  "case_ids": [
+    "5A_858/2025"
+  ],
+  "decision_date": "2025-10-21",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "curatelle d'assistance éducative d'un enfant mineur, thérapie familiale; expertise psychiatrique familiale",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://21-10-2025-5A_858-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5A_858/2025\nOrdonnance du 21 octobre 2025\nIIe Cour de droit civil\nComposition\nM. le Juge fédéral Herrmann, Juge présidant.\nGreffière : Mme Mairot.\nParticipants à la procédure\nA.________,\nrecourante,\ncontre\nB.________,\nreprésenté par Me Noudemali Romuald Zannou, avocat,\nintimé,\nTribunal de protection de l'adulte et de l'enfant du canton de Genève,\nrue des Glacis-de-Rive 6 1207 Genève,\nService de protection des mineurs,\nBvd de Saint-Georges 16, 1205 Genève,\nObjet\ncuratelle d'assistance éducative d'un enfant mineur, thérapie familiale; expertise psychiatrique familiale,\nrecours contre la décision de la Chambre de surveillance de la Cour de justice du canton de Genève du 2 septembre 2025 (C/16139/2021-CS DAS/159/2025).\nVu :\nle recours formé le 6 octobre 2025 par A.________ contre la décision rendue par la Chambre de surveillance de la Cour de justice du canton de Genève le 2 septembre 2025 dans la cause qui oppose la recourante à B.________ à propos de leur fils mineur;\nla déclaration de retrait du recours du 15 octobre 2025;\nConsidérant :\nqu'il convient de prendre acte du retrait du recours et de rayer la cause du rôle (art. 73 PCF par renvoi de l'art. 71 LTF);\nque le Président de la Cour de céans est compétent à cet effet (art. 32 al. 1 et 2 LTF);\nque les frais judiciaires (réduits) incombent à la recourante (art. 66 al. 1 et 2 LTF);\nqu'il n'y a pas lieu d'allouer des dépens à l'intimé (art. 68 al. 1 LTF).\nPar ces motifs, le Juge présidant ordonne :\n1.\nLa cause 5A_858/2025 est rayée du rôle par suite de retrait du recours.\n2.\nLes frais judiciaires, arrêtés à 300 fr., sont mis à la charge de la recourante.\n3.\nLa présente ordonnance est communiquée aux parties, au Service de protection des mineurs du canton de Genève, au Tribunal de protection de l'adulte et de l'enfant du canton de Genève et à la Chambre de surveillance de la Cour de justice du canton de Genève.\nLausanne, le 21 octobre 2025\nAu nom de la IIe Cour de droit civil\ndu Tribunal fédéral suisse\nLe Juge présidant : Herrmann\nLa Greffière : Mairot",
+  "operator_metadata": {
+    "date": "2025-10-21",
+    "reference": [
+      "5A_858/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-858-2025_2025-10-21.html",
+      "source": "446973/45/2869",
+      "content_length": 2427
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-06-18",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2869",
+    "id": "CH_BGer_005_5A-858-2025_2025-10-21",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 21.10.2025 5A_858/2025",
+      "it": "Tribunale federale II Corte di diritto civile 21.10.2025 5A_858/2025",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 21.10.2025 5A_858/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:28:14+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-858-2025_2025-10-21.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "bbd74e8def3f49405f591531411d564934418b54f763828b61aff68b1f17d74e"
+  }
+}

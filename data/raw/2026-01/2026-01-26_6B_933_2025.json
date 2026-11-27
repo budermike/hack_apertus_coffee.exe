@@ -1,0 +1,56 @@
+{
+  "id": "6B_933_2025",
+  "case_id": "6B_933/2025",
+  "case_ids": [
+    "6B_933/2025"
+  ],
+  "decision_date": "2026-01-26",
+  "publication_date": null,
+  "department": "I. Strafrechtliche Abteilung",
+  "division": "I. Strafrechtliche Abteilung",
+  "subject": "Irrecevabilité formelle du recours, défaut d'avance de frais (infraction à la LStup; expulsion; arbitraire; présomption d'innocence)",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://26-01-2026-6B_933-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n6B_933/2025\nArrêt du 26 janvier 2026\nIre Cour de droit pénal\nComposition\nM. le Juge fédéral\nMuschietti, Président.\nGreffier : M. Vallat.\nParticipants à la procédure\nA.________,\nrecourant,\ncontre\nMinistère public de l'État de Fribourg,\ncase postale 1638, 1701 Fribourg,\nintimé.\nObjet\nIrrecevabilité formelle du recours, défaut d'avance de frais (infraction à la LStup; expulsion; arbitraire; présomption d'innocence),\nrecours contre l'arrêt du Tribunal cantonal\nde l'État de Fribourg, Cour d'appel pénal,\ndu 13 octobre 2025 (501 2025 52).\nConsidérant en fait et en droit :\n1.\nLa partie qui saisit le Tribunal fédéral doit avancer les frais présumés de la procédure (art. 62 al. 1 LTF). Si elle ne verse pas l'avance requise dans le délai supplémentaire qui lui est fixé après un premier non-paiement, son recours est irrecevable (art. 62 al. 3 LTF).\n2.\nEn l'espèce, le recourant a été invité par ordonnance du 25 novembre 2025 à avancer les frais de la procédure, par 3000 fr., jusqu'au 10 décembre 2025. Cet acte judiciaire envoyé sous pli recommandé avec accusé de réception a été retourné avec la mention \"non réclamé\". Il a été réexpédié à l'intéressé en courrier A le 5 décembre 2025.\n3.\nPar ordonnance du 18 décembre 2025 un délai supplémentaire échéant le 12 janvier 2026 a été imparti au recourant, avec l'indication des conséquences prévues par l'art. 62 al. 3 LTF en cas de non-paiement en temps utile. Ce pli ayant, lui aussi, été retourné avec la mention \"non retiré\", il lui a été réexpédié en courrier A le 5 janvier 2026. Le recourant n'a pas versé non plus l'avance de frais requise dans le délai supplémentaire ainsi imparti si bien que son recours doit être déclaré irrecevable pour ce motif.\n4.\nFaute de paiement de l'avance de frais, le recours est manifestement irrecevable, ce qu'il y a lieu de constater dans la procédure prévue par l'art. 108 al. 1 let. a LTF. Le recourant succombe. Il supporte les frais de la procédure (art. 65 al. 2 et 66 al. 1 LTF).\nPar ces motifs, le Président prononce :\n1.\nLe recours est irrecevable.\n2.\nLes frais judiciaires, arrêtés à 500 fr., sont mis à la charge du recourant.\n3.\nLe présent arrêt est communiqué aux parties et au Tribunal cantonal de l'État de Fribourg, Cour d'appel pénal.\nLausanne, le 26 janvier 2026\nAu nom de la Ire Cour de droit pénal\ndu Tribunal fédéral suisse\nLe Président : Muschietti\nLe Greffier : Vallat",
+  "operator_metadata": {
+    "date": "2026-01-26",
+    "reference": [
+      "6B_933/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_006_6B-933-2025_2026-01-26.html",
+      "source": "446973/45/2834",
+      "content_length": 2811
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit pénal"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_006"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_006_6B-933-2025_2026-01-26",
+    "title": {
+      "de": "Bundesgericht I. Strafrechtliche Abteilung 26.01.2026 6B_933/2025",
+      "it": "Tribunale federale I Corte di diritto penale 26.01.2026 6B_933/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit pénal 26.01.2026 6B_933/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:06:58+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_006_6B-933-2025_2026-01-26.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "347fc96b11a781cbdbd1c6b849bff435feda51542d13617efadc340cb6626a01"
+  }
+}

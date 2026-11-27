@@ -1,0 +1,56 @@
+{
+  "id": "2C_625_2025",
+  "case_id": "2C_625/2025",
+  "case_ids": [
+    "2C_625/2025"
+  ],
+  "decision_date": "2025-11-24",
+  "publication_date": null,
+  "department": "II. Offentlich-rechtliche Abteilung",
+  "division": "II. Offentlich-rechtliche Abteilung",
+  "subject": "Détention en vue de renvoi",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://24-11-2025-2C_625-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n2C_625/2025\nArrêt du 24 novembre 2025\nIIe Cour de droit public\nComposition\nMme la Juge fédérale\nAubry Girardin, Présidente.\nGreffier : M. Dubey.\nParticipants à la procédure\nA.________,\nrecourant,\ncontre\nService de la population et des migrations du canton du Valais,\navenue de la Gare 39, 1951 Sion,\nintimé.\nObjet\nDétention en vue de renvoi,\nrecours contre l'arrêt du Tribunal cantonal du canton du Valais, Cour de droit public, du 16 octobre 2025 (A2 25 56).\nConsidérant en fait et en droit :\n1.\nPar courrier du 27 octobre 2025, A.________, ressortissant tunisien, a écrit au Tribunal fédéral depuis le Centre de détention administrative de Sion qu'il voulait faire recours contre son renvoi dans son pays. Il expose que, s'il était remis en liberté, il pourrait, avec le peu d'argent qu'il possède et l'aide que l'assistance sociale pourrait lui donner, quitter le pays pour l'Italie où il a vécu 17 ans. Il affirme en outre qu'il s'opposera à tout nouveau renvoi, même forcé.\nPar ordonnance du 29 octobre 2025, la Chancellerie de la IIe Cour de droit public a signalé à l'intéressé le défaut de production de la décision attaquée. Elle lui a imparti un délai au 13 novembre 2025 pour produire celle-ci et l'a averti qu'à défaut, le mémoire ne serait pas pris en considération.\nA.________ n'a pas donné suite à cette invitation.\nIl n'a pas été ordonné d'échange des écritures.\n2.\nEn vertu de l'art. 42 al. 1 LTF, les mémoires doivent être rédigés dans une langue officielle, indiquer les conclusions, les motifs et les moyens de preuve, et être signés. Les pièces invoquées comme moyens de preuve doivent être jointes au mémoire, pour autant qu'elles soient en mains de la partie; il en va de même de la décision attaquée si le mémoire est dirigé contre une décision (art. 42 al. 3 LTF). Si les annexes prescrites font défaut, le Tribunal fédéral impartit un délai approprié à la partie pour remédier à l'irrégularité et l'avertit qu'à défaut le mémoire ne sera pas pris en considération (art. 42 al. 5 LTF).\nEn l'espèce, le recourant n'a pas produit la décision attaquée dans le délai imparti au 13 novembre 2025. Son mémoire ne peut donc pas être pris en considération.\n3.\n3.1. Le recours est ainsi manifestement irrecevable (art. 108 al. 1 let. a LTF) et doit être traité selon la procédure simplifiée de l'art. 108 LTF.\n3.2. Au vu de la situation du recourant, il n'est pas perçu de frais de procédure (art. 66 al. 1 LTF). Il n'est pas non plus alloué de dépens (art. 68 al. 1 et 3 LTF).\nPar ces motifs, la Présidente prononce :\n1.\nLe recours est irrecevable.\n2.\nIl n'est pas perçu de frais de justice.\n3.\nLe présent arrêt est communiqué aux parties, au Tribunal cantonal du canton du Valais, Cour de droit public, et au Secrétariat d'État aux migrations.\nLausanne, le 24 novembre 2025\nAu nom de la IIe Cour de droit public\ndu Tribunal fédéral suisse\nLa Présidente : F. Aubry Girardin\nLe Greffier : C.-E. Dubey",
+  "operator_metadata": {
+    "date": "2025-11-24",
+    "reference": [
+      "2C_625/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_002_2C-625-2025_2025-11-24.html",
+      "source": "446973/45/2870",
+      "content_length": 3358
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Offentlich-rechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto pubblico",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit public"
+    },
+    "scrapedate": "2026-06-18",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_002"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2870",
+    "id": "CH_BGer_002_2C-625-2025_2025-11-24",
+    "title": {
+      "de": "Bundesgericht II. Offentlich-rechtliche Abteilung 24.11.2025 2C_625/2025",
+      "it": "Tribunale federale II Corte di diritto pubblico 24.11.2025 2C_625/2025",
+      "fr": "Tribunal fédéral IIe Cour de droit public 24.11.2025 2C_625/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:37:50+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_002_2C-625-2025_2025-11-24.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "ff07328bd789e37c1aca5f8b68601daec929fb9c2c3c230389fbe1915e089d50"
+  }
+}

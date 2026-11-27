@@ -1,0 +1,56 @@
+{
+  "id": "5A_729_2025",
+  "case_id": "5A_729/2025",
+  "case_ids": [
+    "5A_729/2025"
+  ],
+  "decision_date": "2025-11-03",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "faillite",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://03-11-2025-5A_729-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5A_729/2025\nArrêt du 3 novembre 2025\nIIe Cour de droit civil\nComposition\nM. le Juge fédéral Bovey, Président.\nGreffier : M. Braconi.\nParticipants à la procédure\nA.________ SA en liquidation,\nrecourant,\ncontre\nCommune de B.________,\nintimée.\nObjet\nfaillite,\nrecours contre l'arrêt de l'Autorité de recours en matière de poursuite et de faillite du Tribunal cantonal du canton du Valais du 30 juillet 2025 (LP 25 20).\nVu :\nla décision de la Juge suppléante du district de Monthey du (...) 2025 déclarant, sur requête de la Commune municipale de B.________, la faillite de A.________ SA, avec effet dès ce jour à (...) h (...);\nl'arrêt de l'Autorité de recours en matière de poursuite et de faillite du Tribunal cantonal valaisan du 30 juillet 2025 rejetant le recours déposé par la société en faillite;\nle recours (en matière civile) interjeté le 5 septembre 2025 par celle-ci à l'encontre de l'arrêt cantonal;\nl'ordonnance du 9 septembre 2025 invitant la recourante à verser une avance de frais de 5'000 fr. jusqu'au 24 septembre 2025;\nl'ordonnance du 6 octobre 2025 lui fixant un délai supplémentaire au 17 octobre 2025 pour s'en acquitter;\nl'attestation de la Caisse du Tribunal fédéral du 30 octobre 2025;\nconsidérant :\nque la recourante n'a pas versé l'avance de frais requise dans le délai supplémentaire qui lui a été imparti à cette fin;\nque, partant, le présent recours doit être déclaré irrecevable par voie de procédure simplifiée (art. 108 al. 1 let. a LTF, en relation avec l'art. 62 al. 3 LTF);\nque les frais incombent à la recourante (art. 66 al. 1 LTF);\npar ces motifs, le Président prononce :\n1.\nLe recours est irrecevable.\n2.\nLes frais judiciaires, arrêtés à 500 fr., sont mis à la charge de la recourante.\n3.\nLe présent arrêt est communiqué aux parties, à l'Office des poursuites des districts de Monthey et St-Maurice, à l'Office des faillites du Bas-Valais, à l'Office du registre du commerce du IIIe arrondissement, à l'Office du registre foncier du VIe arrondissement et à l'Autorité de recours en matière de poursuite et de faillite du Tribunal cantonal du canton du Valais.\nLausanne, le 3 novembre 2025\nAu nom de la IIe Cour de droit civil\ndu Tribunal fédéral suisse\nLe Président : Bovey\nLe Greffier : Braconi",
+  "operator_metadata": {
+    "date": "2025-11-03",
+    "reference": [
+      "5A_729/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-729-2025_2025-11-03.html",
+      "source": "446973/45/2869",
+      "content_length": 2623
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-06-18",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2869",
+    "id": "CH_BGer_005_5A-729-2025_2025-11-03",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 03.11.2025 5A_729/2025",
+      "it": "Tribunale federale II Corte di diritto civile 03.11.2025 5A_729/2025",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 03.11.2025 5A_729/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:31:50+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-729-2025_2025-11-03.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "472d1d693a4da32eac935b28e308df87b92fa7df6956ffbc09cceb2df486c0ca"
+  }
+}

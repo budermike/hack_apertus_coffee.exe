@@ -1,0 +1,56 @@
+{
+  "id": "9C_430_2025",
+  "case_id": "9C_430/2025",
+  "case_ids": [
+    "9C_430/2025"
+  ],
+  "decision_date": "2025-10-17",
+  "publication_date": null,
+  "department": "IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung)",
+  "division": "IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung)",
+  "subject": "Krankenversicherung",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://17-10-2025-9C_430-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n9C_430/2025\nVerfügung vom 17. Oktober 2025\nIII. öffentlich-rechtliche Abteilung\nBesetzung\nBundesrichter Beusch, als Einzelrichter,\nGerichtsschreiber Williner.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nVerwaltungsgericht des Kantons Zug, Verwaltungsrechtliche Kammer,\nAn der Aa 6, 6300 Zug,\nBeschwerdegegner.\nGegenstand\nKrankenversicherung,\nBeschwerde gegen die Verfügung des Verwaltungsgerichts des Kantons Zug, vom 9. Juli 2025 (V 2025 67).\nNach Einsicht\nin die Verfügung des Verwaltungsgerichts des Kantons Zug vom 9. Juli 2025, worin A.________ aufgefordert wurde, dem Gericht bis zum 11. August 2025 einen Kostenvorschuss in der Höhe von Fr. 2'000.- zu bezahlen, ansonsten das Verfahren vom Geschäftsverzeichnis abgeschrieben werde,\nin die als \"Beschwerde in öffentlich-rechtlichen Angelegenheiten\" bezeichnete Eingabe von A.________ vom 7. August 2025 (Poststempel),\nin das Schreiben des Verwaltungsgerichts des Kantons Zug vom 11. August 2025, worin A.________ darauf hingewiesen wurde, dass sich mit Einreichung des Gesuchs um unentgeltliche Rechtspflege die mit Verfügung vom 9. Juli 2025 gesetzte Frist zur Bezahlung des Kostenvorschusses erübrige und das Gericht im Falle einer Ablehnung des Gesuchs eine neue Frist zur Bezahlung des Kostenvorschusses setzen würde,\nin Erwägung,\ndass mit der (sinngemäss) erfolgten Aufhebung der Verfügung des Verwaltungsgerichts des Kantons Zug vom 9. Juli 2025 der Beschwerde vom 7. August 2025 das Anfechtungsobjekt entzogen ist,\ndass sie folglich im Verfahren nach Art. 32 Abs. 1 und 2 BGG wegen eingetretener Gegenstandslosigkeit abzuschreiben ist,\ndass in Anwendung von Art. 66 Abs. 1 Satz 2 BGG auf die Erhebung von Gerichtskosten verzichtet wird, womit sich das vom Beschwerdeführer \"evtl.\" gestellte Gesuch um unentgeltliche Rechtspflege im Verfahren vor Bundesgericht für hinfällig erweist,\nverfügt der Einzelrichter:\n1.\nDas Verfahren wird als gegenstandslos abgeschrieben.\n2.\nEs werden keine Gerichtskosten erhoben.\n3.\nDiese Verfügung wird den Parteien und dem Amt für Gesundheit des Kantons Zug schriftlich mitgeteilt.\nLuzern, 17. Oktober 2025\nIm Namen der III. öffentlich-rechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Einzelrichter: Beusch\nDer Gerichtsschreiber: Williner",
+  "operator_metadata": {
+    "date": "2025-10-17",
+    "reference": [
+      "9C_430/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_009_9C-430-2025_2025-10-17.html",
+      "source": "446973/45/2851",
+      "content_length": 2653
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung)",
+      "it": "Confederazione Tribunale federale IV Corte di diritto pubblico (II Corte di diritto sociale)",
+      "fr": "Conféderation Tribunal fédéral IVe Cour de droit public (IIe Cour de droit social)"
+    },
+    "scrapedate": "2026-06-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_009"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2851",
+    "id": "CH_BGer_009_9C-430-2025_2025-10-17",
+    "title": {
+      "de": "Bundesgericht IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung) 17.10.2025 9C_430/2025",
+      "it": "Tribunale federale IV Corte di diritto pubblico (II Corte di diritto sociale) 17.10.2025 9C_430/2025",
+      "fr": "Tribunal fédéral IVe Cour de droit public (IIe Cour de droit social) 17.10.2025 9C_430/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:27:32+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_009_9C-430-2025_2025-10-17.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "79d965f22195eaa024f8f562b7161696406eb14a69ea661a43a3783f2ff95023"
+  }
+}

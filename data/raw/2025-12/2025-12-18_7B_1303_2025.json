@@ -1,0 +1,56 @@
+{
+  "id": "7B_1303_2025",
+  "case_id": "7B_1303/2025",
+  "case_ids": [
+    "7B_1303/2025"
+  ],
+  "decision_date": "2025-12-18",
+  "publication_date": null,
+  "department": "II. Strafrechtliche Abteilung",
+  "division": "II. Strafrechtliche Abteilung",
+  "subject": "Nichtanhandnahme; Nichteintreten",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://18-12-2025-7B_1303-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n7B_1303/2025\nUrteil vom 18. Dezember 2025\nII. strafrechtliche Abteilung\nBesetzung\nBundesrichterin Koch, als Einzelrichterin,\nGerichtsschreiber Clément.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nStaatsanwaltschaft des Kantons Zug, Leitende Oberstaatsanwältin,\nAn der Aa 4, 6300 Zug.\nGegenstand\nNichtanhandnahme; Nichteintreten,\nBeschwerde gegen die Präsidialverfügung des Obergerichts des Kantons Zug, I. Beschwerdeabteilung, Präsidentin, vom 5. September 2025 (BS 2025 65).\nErwägungen:\n1.\nMit Verfügung vom 5. September 2025 trat das Obergericht des Kantons Zug nicht auf die Beschwerde des Beschwerdeführers gegen die Nichtanhandnahmeverfügung der Staatsanwaltschaft Zug vom 16. Mai 2025 ein. Dagegen wendet sich der Beschwerdeführer mit Beschwerde in Strafsachen an das Bundesgericht.\n2.\nDie als Gerichtsurkunde versandte Verfügung des Obergerichts wurde dem Beschwerdeführer am 28. Oktober 2025 zugestellt. Die Beschwerdefrist gemäss Art. 100 Abs. 1 BGG begann folglich am 29. Oktober 2025 zu laufen und endete am 27. November 2025. Die Beschwerde hätte daher, um rechtzeitig zu sein, spätestens an diesem Tag beim Bundesgericht eingereicht oder zu dessen Händen der Schweizerischen Post oder einer schweizerischen diplomatischen oder konsularischen Vertretung übergeben werden müssen (vgl. Art. 48 Abs.1 BGG). Die Beschwerde wurde indes erst am 28. November 2025 der Schweizerischen Post übergeben, nachdem sie am 24. November 2025 im Ausland aufgegeben worden war, mithin nach Ablauf der Beschwerdefrist. Sie ist folglich verspätet.\n3.\nIm Übrigen wäre auch deshalb nicht auf die Beschwerde einzutreten, da sie offensichtlich nicht den Anforderungen an die Begründung einer Beschwerde an das Bundesgericht genügt, weil sie namentlich nicht über unzulässige appellatorische Kritik hinausgeht (Art. 42 Abs. 2 und Art. 106 Abs. 2 BGG; BGE 148 IV 356 E. 2.1, 39 E. 2.3.5; 142 III 364 E. 2.4).\n4.\nAuf die Beschwerde ist im Verfahren nach Art. 108 BGG nicht einzutreten. Die Gerichtskosten sind dem Beschwerdeführer aufzuerlegen (Art. 66 Abs. 1 BGG).\nDemnach erkennt die Einzelrichterin:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 500.-- werden dem Beschwerdeführer auferlegt.\n3.\nDieses Urteil wird dem Beschwerdeführer, der Staatsanwaltschaft des Kantons Zug und dem Obergericht des Kantons Zug schriftlich mitgeteilt. Eine Ausfertigung dieses Urteils wird dem Beschwerdeführer beim Bundesgericht zur Verfügung gehalten.\nLausanne, 18. Dezember 2025\nIm Namen der II. strafrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Einzelrichterin: Koch\nDer Gerichtsschreiber: Clément",
+  "operator_metadata": {
+    "date": "2025-12-18",
+    "reference": [
+      "7B_1303/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-1303-2025_2025-12-18.html",
+      "source": "446973/45/2851",
+      "content_length": 3067
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit pénal"
+    },
+    "scrapedate": "2026-06-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_007"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2851",
+    "id": "CH_BGer_007_7B-1303-2025_2025-12-18",
+    "title": {
+      "de": "Bundesgericht II. Strafrechtliche Abteilung 18.12.2025 7B_1303/2025",
+      "it": "Tribunale federale II Corte di diritto penale 18.12.2025 7B_1303/2025",
+      "fr": "Tribunal fédéral IIe Cour de droit pénal 18.12.2025 7B_1303/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:59:11+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-1303-2025_2025-12-18.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "5520d6b3060f08caaf6e8c22a3f2180f5ca2561c46275c3615a9e59e2abcaadc"
+  }
+}

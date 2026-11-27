@@ -1,0 +1,56 @@
+{
+  "id": "4D_67_2026",
+  "case_id": "4D_67/2026",
+  "case_ids": [
+    "4D_67/2026"
+  ],
+  "decision_date": "2026-05-06",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "Ausweisung des Pächters",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://06-05-2026-4D_67-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4D_67/2026\nUrteil vom 6. Mai 2026\nI. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Hurni, Präsident,\nGerichtsschreiber Leemann.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nB.________,\nvertreten durch Rechtsanwalt Josef Rütter,\nBeschwerdegegner.\nGegenstand\nAusweisung des Pächters,\nBeschwerde gegen das Urteil des Kantonsgerichts Schwyz, 1. Zivilkammer, vom 10. März 2026 (ZK1 2025 20).\nErwägungen:\n1.\nMit Urteil vom 11. März 2025 wies die Einzelrichterin am Bezirksgericht Schwyz die vom Beschwerdeführer gegen den Beschwerdegegner eingereichte Klage ab.\nMit Urteil vom 10. März 2026 wies das Kantonsgericht Schwyz eine vom Beschwerdeführer gegen den bezirksgerichtlichen Entscheid vom 11. März 2025 erhobene Berufung ab, soweit es darauf eintrat.\nMit Eingabe vom 11. April 2026 erklärte der Beschwerdeführer dem Bundesgericht, das Urteil des Kantonsgerichts Schwyz vom 10. März 2026 mit Beschwerde anfechten zu wollen.\nEs wurden keine Vernehmlassungen eingeholt.\n2.\nDer Streitwert erreicht die Streitwertgrenze für eine Beschwerde in Zivilsachen gemäss Art. 74 Abs. 1 lit. b BGG nicht. Unter den gegebenen Umständen ist die Beschwerde in Zivilsachen nicht zulässig, sondern es steht die subsidiäre Verfassungsbeschwerde im Sinne der Art. 113-119 BGG offen. Mit der subsidiären Verfassungsbeschwerde kann ausschliesslich die Verletzung von verfassungsmässigen Rechten gerügt werden (Art. 116 BGG).\nDie Eingabe der Beschwerdeführerin vom 11. April 2026 erfüllt die Begründungsanforderungen, die an eine Beschwerde an das Bundesgericht gestellt werden, offensichtlich nicht (Art. 42 Abs. 2 und Art. 106 Abs. 2 BGG; BGE 142 III 364 E. 2.4; 140 III 86 E. 2, 115 E. 2). Der Beschwerdeführer erhebt keine hinreichend begründete Verfassungsrüge.\nAuf die Beschwerde ist somit mangels hinreichender Begründung im vereinfachten Verfahren nicht einzutreten (Art. 108 Abs. 1 lit. b BGG).\n3.\nDer Beschwerdeführer wird bei diesem Verfahrensausgang kostenpflichtig (Art. 66 Abs. 1 BGG). Dem Beschwerdegegner steht keine Parteientschädigung zu, da ihm aus dem bundesgerichtlichen Verfahren kein Aufwand erwachsen ist (Art. 68 Abs. 2 BGG).\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 800.-- werden dem Beschwerdeführer auferlegt.\n3.\nEs wird keine Parteientschädigung zugesprochen.\n4.\nDieses Urteil wird den Parteien und dem Kantonsgericht Schwyz, 1. Zivilkammer, schriftlich mitgeteilt.\nLausanne, 6. Mai 2026\nIm Namen der I. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Hurni\nDer Gerichtsschreiber: Leemann",
+  "operator_metadata": {
+    "date": "2026-05-06",
+    "reference": [
+      "4D_67/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-67-2026_2026-05-06.html",
+      "source": "446973/45/2829",
+      "content_length": 3036
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_004_4D-67-2026_2026-05-06",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 06.05.2026 4D_67/2026",
+      "it": "Tribunale federale I Corte di diritto civile 06.05.2026 4D_67/2026",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 06.05.2026 4D_67/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:37:18+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-67-2026_2026-05-06.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "c162960798087ded9cead9acda300f459b0637a8facf005e6a7633ee80ac1757"
+  }
+}

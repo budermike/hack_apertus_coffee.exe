@@ -1,0 +1,56 @@
+{
+  "id": "8C_625_2025",
+  "case_id": "8C_625/2025",
+  "case_ids": [
+    "8C_625/2025"
+  ],
+  "decision_date": "2025-10-28",
+  "publication_date": null,
+  "department": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "division": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "subject": "Arbeitslosenversicherung (Prozessvoraussetzung)",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://28-10-2025-8C_625-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n8C_625/2025\nUrteil vom 28. Oktober 2025\nIV. öffentlich-rechtliche Abteilung\nBesetzung\nBundesrichterin Viscione, Präsidentin,\nGerichtsschreiber Grünvogel.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nArbeitslosenkasse des Kantons Thurgau, Multiplex 1, Langfeldstrasse 53A, 8510 Frauenfeld,\nBeschwerdegegnerin.\nGegenstand\nArbeitslosenversicherung (Prozessvoraussetzung),\nBeschwerde gegen den Entscheid des Verwaltungsgerichts des Kantons Thurgau vom 23. Juli 2025 (VV205.67/E).\nNach Einsicht\nin die Beschwerde vom 28. August 2025 gegen den Entscheid des Verwaltungsgerichts des Kantons Thurgau vom 23. Juli 2025,\nin Erwägung,\ndass der Beschwerdeführer den ihm vom Gericht gemäss Art. 42 Abs. 5 BGG angezeigten Formmangel der fehlenden Beilagen nicht innerhalb der mit Verfügung vom 29. August 2025 angesetzten, am 25. September 2025 abgelaufenen (Art. 44 - 48 BGG) Nachfrist behoben hat,\ndass deshalb im vereinfachten Verfahren nach Art. 108 Abs. 1 lit. a BGG auf die Beschwerde nicht einzutreten ist und in Anwendung von Art. 66 Abs. 1 Satz 2 BGG auf die Erhebung von Gerichtskosten verzichtet wird,\nerkennt die Präsidentin:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nEs werden keine Gerichtskosten erhoben.\n3.\nDieses Urteil wird den Parteien, dem Verwaltungsgericht des Kantons Thurgau und dem Staatssekretariat für Wirtschaft (SECO) schriftlich mitgeteilt.\nLuzern, 28. Oktober 2025\nIm Namen der IV. öffentlich-rechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Präsidentin: Viscione\nDer Gerichtsschreiber: Grünvogel",
+  "operator_metadata": {
+    "date": "2025-10-28",
+    "reference": [
+      "8C_625/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-625-2025_2025-10-28.html",
+      "source": "446973/45/2851",
+      "content_length": 1932
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+      "it": "Confederazione Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale)",
+      "fr": "Conféderation Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social)"
+    },
+    "scrapedate": "2026-06-18",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_008"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2851",
+    "id": "CH_BGer_008_8C-625-2025_2025-10-28",
+    "title": {
+      "de": "Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung) 28.10.2025 8C_625/2025",
+      "it": "Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale) 28.10.2025 8C_625/2025",
+      "fr": "Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social) 28.10.2025 8C_625/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:30:13+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-625-2025_2025-10-28.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "f47f679b54e66a3267c4aece42642dec15d4a48e30fce8870d46df0a6264f877"
+  }
+}

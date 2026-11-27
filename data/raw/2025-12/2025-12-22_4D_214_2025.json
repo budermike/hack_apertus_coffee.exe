@@ -1,0 +1,56 @@
+{
+  "id": "4D_214_2025",
+  "case_id": "4D_214/2025",
+  "case_ids": [
+    "4D_214/2025"
+  ],
+  "decision_date": "2025-12-22",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "Forderung; Nichtleistung des Kostenvorschusses",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://22-12-2025-4D_214-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4D_214/2025\nUrteil vom 22. Dezember 2025\nI. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Hurni, Präsident,\nGerichtsschreiber Widmer.\nVerfahrensbeteiligte\nA.________ GmbH,\nBeschwerdeführerin,\ngegen\nB.________ AG,\nvertreten durch Fürsprecher Peter Krebs,\nBeschwerdegegnerin.\nGegenstand\nForderung; Nichtleistung des Kostenvorschusses,\nBeschwerde gegen die Verfügung des Bezirksgerichts Baden, Gerichtspräsidium, vom 23. Oktober 2025 (VZ.2024.106).\nIn Erwägung,\ndass die Beschwerdeführerin mit Eingabe vom 27. Oktober 2025 beim Bundesgericht gegen die Verfügung des Gerichtspräsidiums des Bezirksgerichts Baden vom 23. Oktober 2025 Beschwerde erhob;\ndass die Beschwerdeführerin mit Präsidialverfügung vom 31. Oktober 2025 aufgefordert wurde, spätestens am 17. November 2025 einen Kostenvorschuss von Fr. 800.-- einzuzahlen;\ndass der Beschwerdeführerin, da der Kostenvorschuss innerhalb der angesetzten Frist nicht eingegangen war, mit Verfügung vom 24. November 2025 eine nicht erstreckbare Nachfrist zur Vorschussleistung bis zum 9. Dezember 2025 angesetzt wurde, unter Hinweis darauf, dass das Bundesgericht bei Säumnis auf das Rechtsmittel nicht eintreten werde (Art. 62 Abs. 3 BGG);\ndass diese Verfügung als Gerichtsurkunde an die in der Beschwerde angegebene Adresse der Beschwerdeführerin in (...) gesandt und dass sie mit dem Vermerk \"Nicht abgeholt\" auf der Sendungsverfolgung der Post an das Bundesgericht zurückgesandt wurde;\ndass diese Verfügung nach Art. 44 Abs. 2 BGG als zugestellt gilt, da die Beschwerdeführerin mit der Zustellung einer Verfügung an die von ihr angegebene Adresse rechnen musste, nachdem sie ein Beschwerdeverfahren eingeleitet und an dieser Adresse bereits die Kostenvorschussverfügung erhalten hatte;\ndass die Beschwerdeführerin den ihr auferlegten Kostenvorschuss auch innerhalb der angesetzten Nachfrist nicht geleistet hat, weshalb gestützt auf Art. 62 Abs. 3 BGG auf die Beschwerde nicht einzutreten ist (Art. 108 Abs. 1 lit. a BGG);\ndass die Gerichtskosten dem Verfahrensausgang entsprechend der Beschwerdeführerin aufzuerlegen sind (Art. 66 Abs. 1 BGG);\ndass der Beschwerdegegnerin keine Parteientschädigung zuzusprechen ist, da ihr im Zusammenhang mit dem bundesgerichtlichen Verfahren kein Aufwand erwachsen ist (Art. 68 Abs. 1 BGG);\nerkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 500.-- werden der Beschwerdeführerin auferlegt.\n3.\nDieses Urteil wird den Parteien und dem Bezirksgericht Baden, Gerichtspräsidium, schriftlich mitgeteilt.\nLausanne, 22. Dezember 2025\nIm Namen der I. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Hurni\nDer Gerichtsschreiber: Widmer",
+  "operator_metadata": {
+    "date": "2025-12-22",
+    "reference": [
+      "4D_214/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-214-2025_2025-12-22.html",
+      "source": "446973/45/2869",
+      "content_length": 3060
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-06-18",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2869",
+    "id": "CH_BGer_004_4D-214-2025_2025-12-22",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 22.12.2025 4D_214/2025",
+      "it": "Tribunale federale I Corte di diritto civile 22.12.2025 4D_214/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 22.12.2025 4D_214/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:59:47+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-214-2025_2025-12-22.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "999c530e7888bbdbc1c8169c731e01ed3d7cfc3b031145c079b8acd381dfd827"
+  }
+}

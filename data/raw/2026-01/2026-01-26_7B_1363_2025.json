@@ -1,0 +1,56 @@
+{
+  "id": "7B_1363_2025",
+  "case_id": "7B_1363/2025",
+  "case_ids": [
+    "7B_1363/2025"
+  ],
+  "decision_date": "2026-01-26",
+  "publication_date": null,
+  "department": "II. Strafrechtliche Abteilung",
+  "division": "II. Strafrechtliche Abteilung",
+  "subject": "Protokollberichtigung; Nichteintreten",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://26-01-2026-7B_1363-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n7B_1363/2025\nUrteil vom 26. Januar 2026\nII. strafrechtliche Abteilung\nBesetzung\nBundesrichterin Koch, als Einzelrichterin,\nGerichtsschreiberin Sauthier.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführerin,\ngegen\nStaatsanwaltschaft I des Kantons Zürich, Schwere Gewaltkriminalität, Güterstrasse 33, Postfach, 8010 Zürich.\nGegenstand\nProtokollberichtigung; Nichteintreten,\nBeschwerde gegen die Verfügung und den Beschluss des Obergerichts des Kantons Zürich, III. Strafkammer, vom 4. Dezember 2025 (UH250274-O/U/BEE).\nErwägungen:\n1.\nMit Eingabe vom 14. Dezember 2025 führt A.________ Beschwerde in Strafsachen an das Bundesgericht gegen die Verfügung und den Beschluss des Obergerichts des Kantons Zürich, III. Strafkammer, vom 4. Dezember 2025 betreffend Protokollberichtigung.\n2.\nDie Beschwerdeführerin setzt sich nicht substanziiert mit der Argumentation der Vorinstanz auseinander, mit der diese ihren Entscheid begründet. Stattdessen macht sie eine angebliche \"Verletzung der verfassungsrechtlichen Verfahrensordnung\" geltend und behauptet, wesentliche verfahrensleitende Eingriffe des Vorsitzenden, etwa die \"autoritative Beendigung von Wortmeldungen oder die Zurückweisung von Einwendungen\" seien im Protokolle entweder gar nicht oder nur in stark verkürzter Form abgebildet. Aus ihren Ausführungen geht indessen nicht ansatzweise hervor, inwiefern die Vorinstanz Bundesrecht verletzt haben soll, indem sie die Beschwerde der Beschwerdeführerin abgewiesen hat, soweit sie darauf eingetreten ist. Die Beschwerde genügt damit den gesetzlichen Begründungsanforderungen an eine Beschwerde an das Bundesgericht offensichtlich nicht (vgl. Art. 42 Abs. 2 und Art. 106 Abs. 2 BGG; BGE 148 IV 356 E. 2.1, 39 E. 2.3.5; 147 IV 73 E. 4.1.2; 146 IV 297 E. 1.2). Auf die Beschwerde ist somit mangels hinreichender Begründung im vereinfachten Verfahren nicht einzutreten (Art. 108 Abs. 1 lit. b BGG). Die Begründung des Entscheids beschränkt sich auf eine kurze Angabe des Unzulässigkeitsgrundes (Art. 108 Abs. 3 BGG).\n3.\nBei diesem Ausgang des Verfahrens wird die Beschwerdeführerin kostenpflichtig (Art. 66 Abs. 1 BGG).\nDemnach erkennt die Einzelrichterin:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 500.-- werden der Beschwerdeführerin auferlegt.\n3.\nDieses Urteil wird der Beschwerdeführerin, der Staatsanwaltschaft I des Kantons Zürich und dem Obergericht des Kantons Zürich, III. Strafkammer, schriftlich mitgeteilt.\nLausanne, 26. Januar 2026\nIm Namen der II. strafrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Einzelrichterin: Koch\nDie Gerichtsschreiberin: Sauthier",
+  "operator_metadata": {
+    "date": "2026-01-26",
+    "reference": [
+      "7B_1363/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-1363-2025_2026-01-26.html",
+      "source": "446973/45/2834",
+      "content_length": 3011
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit pénal"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_007"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_007_7B-1363-2025_2026-01-26",
+    "title": {
+      "de": "Bundesgericht II. Strafrechtliche Abteilung 26.01.2026 7B_1363/2025",
+      "it": "Tribunale federale II Corte di diritto penale 26.01.2026 7B_1363/2025",
+      "fr": "Tribunal fédéral IIe Cour de droit pénal 26.01.2026 7B_1363/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:07:03+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-1363-2025_2026-01-26.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "06a169fdf23df64226542bfd2e92d356bfe89393d9ae6522ed9ef1ed9d3bc6a1"
+  }
+}

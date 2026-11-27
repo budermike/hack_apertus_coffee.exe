@@ -1,0 +1,56 @@
+{
+  "id": "4A_472_2025",
+  "case_id": "4A_472/2025",
+  "case_ids": [
+    "4A_472/2025"
+  ],
+  "decision_date": "2025-10-21",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "Haftpflichtrecht",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://21-10-2025-4A_472-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4A_472/2025\nUrteil vom 21. Oktober 2025\nI. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Hurni, Präsident,\nGerichtsschreiber Widmer.\nVerfahrensbeteiligte\n1. A.________,\n2. B.________,\nBeschwerdeführer,\ngegen\nC.________ AG,\nvertreten durch Advokatin Dr. Eliane Haas,\nBeschwerdegegnerin.\nGegenstand\nHaftpflichtrecht,\nBeschwerde gegen den Entscheid des Appellationsgerichts des Kantons Basel-Stadt\nvom 13. August 2025 (BEZ.2025.35).\nErwägungen:\n1.\nDie Beschwerdeführer erhoben beim Bundesgericht mit vom 19. September 2025 datierter, der Post indessen erst am 22. September 2025 übergebener Eingabe Beschwerde gegen den Entscheid des Appellationsgerichts des Kantons Basel-Stadt vom 13. August 2025.\nAuf die Einholung von Vernehmlassungen zur Beschwerde wurde verzichtet.\n2.\nEine Beschwerde an das Bundesgericht muss innerhalb von 30 Tagen nach der Eröffnung der vollständigen Ausfertigung des angefochtenen Entscheids beim Bundesgericht erhoben werden (Art. 100 Abs. 1 BGG).\nNach Art. 44 Abs. 1 BGG beginnen Fristen, die durch eine Mitteilung oder den Eintritt eines Ereignisses ausgelöst werden, am folgenden Tag zu laufen. Die Frist ist u.a. eingehalten, wenn die Eingabe am letzten Tag der Frist der Schweizerischen Post übergeben wird (Art. 48 Abs. 1 BGG).\nDer angefochtene Entscheid des Appelationsgerichts vom 13. August 2025 wurde den Beschwerdeführern gemäss der Sendungsverfolgung der Post je am 20. August 2025 zugestellt. Die Beschwerdefrist lief demnach am 19. September 2025 ab.\nDie vorliegende Beschwerde wurde der Schweizerischen Post gemäss Poststempel am 22. September 2025 übergeben. Damit ist die Beschwerdefrist offensichtlich nicht eingehalten.\nAuf die Beschwerde kann demnach nicht eingetreten werden (Art. 108 Abs. 1 lit. a BGG).\n3.\nDem Ausgang des Verfahrens entsprechend sind die Gerichtskosten den Beschwerdeführern unter solidarischer Haftbarkeit aufzuerlegen (Art. 66 Abs. 1 und 5 BGG). Die Beschwerdegegnerin hat keinen Anspruch auf eine Parteientschädigung, da ihr aus dem bundesgerichtlichen Verfahren kein Aufwand erwachsen ist (Art. 68 Abs. 2 BGG).\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 800.-- werden den Beschwerdeführern unter solidarischer Haftung auferlegt.\n3.\nDieses Urteil wird den Parteien und dem Appellationsgericht des Kantons Basel-Stadt schriftlich mitgeteilt.\nLausanne, 21. Oktober 2025\nIm Namen der I. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Hurni\nDer Gerichtsschreiber: Widmer",
+  "operator_metadata": {
+    "date": "2025-10-21",
+    "reference": [
+      "4A_472/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-472-2025_2025-10-21.html",
+      "source": "446973/45/2869",
+      "content_length": 2952
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-06-18",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2869",
+    "id": "CH_BGer_004_4A-472-2025_2025-10-21",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 21.10.2025 4A_472/2025",
+      "it": "Tribunale federale I Corte di diritto civile 21.10.2025 4A_472/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 21.10.2025 4A_472/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:28:11+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-472-2025_2025-10-21.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "90a9f2c47f540ec1e2b661cb6c4fccd10ac5b6fcfce980a84dfc635bc4e08f5d"
+  }
+}

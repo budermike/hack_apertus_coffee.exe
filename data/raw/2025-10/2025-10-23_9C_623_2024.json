@@ -1,0 +1,56 @@
+{
+  "id": "9C_623_2024",
+  "case_id": "9C_623/2024",
+  "case_ids": [
+    "9C_623/2024"
+  ],
+  "decision_date": "2025-10-23",
+  "publication_date": null,
+  "department": "IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung)",
+  "division": "IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung)",
+  "subject": "Wehrpflichtersatz, Ersatzjahr 2019",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://23-10-2025-9C_623-2024",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n9C_623/2024\nVerfügung vom 23. Oktober 2025\nIII. öffentlich-rechtliche Abteilung\nBesetzung\nBundesrichterin Bollinger, als Einzelrichterin,\nGerichtsschreiberin Stanger.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nKanton Zürich, vertreten durch die Wehrpflichtersatzverwaltung des Kantons Zürich, Uetlibergstrasse 113, 8045 Zürich,\nBeschwerdegegner.\nGegenstand\nWehrpflichtersatz, Ersatzjahr 2019,\nBeschwerde gegen das Urteil des Verwaltungsgerichts des Kantons Zürich vom 11. September 2024 (VB.2024.00349).\nNach Einsicht\nin das Schreiben vom 20. Oktober 2025, worin A.________ die Beschwerde vom 31. Oktober 2024 (Poststempel) gegen das Urteil des Verwaltungsgerichts des Kantons Zürich vom 11. September 2024 zurückzieht,\nin Erwägung,\ndass die Beschwerde gemäss Art. 71 BGG in Verbindung mit Art. 73 Abs. 1 BZP im Verfahren nach Art. 32 Abs. 2 BGG abzuschreiben ist,\ndass in Anwendung von Art. 66 Abs. 2 BGG auf die Erhebung von Gerichtskosten verzichtet wird,\nverfügt die Einzelrichterin:\n1.\nDas Verfahren wird infolge Rückzugs der Beschwerde abgeschrieben.\n2.\nEs werden keine Gerichtskosten erhoben.\n3.\nDiese Verfügung wird den Parteien, dem Verwaltungsgericht des Kantons Zürich, 2. Abteilung, Einzelrichter, und der Eidgenössischen Steuerverwaltung schriftlich mitgeteilt.\nLuzern, 23. Oktober 2025\nIm Namen der III. öffentlich-rechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Einzelrichterin: Bollinger\nDie Gerichtsschreiberin: Stanger",
+  "operator_metadata": {
+    "date": "2025-10-23",
+    "reference": [
+      "9C_623/2024"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_009_9C-623-2024_2025-10-23.html",
+      "source": "446973/45/2851",
+      "content_length": 1851
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung)",
+      "it": "Confederazione Tribunale federale IV Corte di diritto pubblico (II Corte di diritto sociale)",
+      "fr": "Conféderation Tribunal fédéral IVe Cour de droit public (IIe Cour de droit social)"
+    },
+    "scrapedate": "2026-06-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_009"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2851",
+    "id": "CH_BGer_009_9C-623-2024_2025-10-23",
+    "title": {
+      "de": "Bundesgericht IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung) 23.10.2025 9C_623/2024",
+      "it": "Tribunale federale IV Corte di diritto pubblico (II Corte di diritto sociale) 23.10.2025 9C_623/2024",
+      "fr": "Tribunal fédéral IVe Cour de droit public (IIe Cour de droit social) 23.10.2025 9C_623/2024"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:29:24+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_009_9C-623-2024_2025-10-23.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "7dc5212b01c3db59ea7cc8c5b555a1312abcdee1529ed00652b68fdb79a0b2c4"
+  }
+}

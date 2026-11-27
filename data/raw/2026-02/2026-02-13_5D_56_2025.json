@@ -1,0 +1,56 @@
+{
+  "id": "5D_56_2025",
+  "case_id": "5D_56/2025",
+  "case_ids": [
+    "5D_56/2025"
+  ],
+  "decision_date": "2026-02-13",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "Negative Feststellungsklage (Art. 85a SchkG)",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://13-02-2026-5D_56-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5D_56/2025\nUrteil vom 13. Februar 2026\nII. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Bovey, Präsident,\nGerichtsschreiber Zingg.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\n1. B.________ AG,\n2. C.________ AG,\n3. D.________ AG,\n4. E.________ AG,\nBeschwerdegegnerinnen.\nGegenstand\nNegative Feststellungsklage (Art. 85a SchkG),\nBeschwerde gegen den Entscheid des Kantonsgerichts Luzern, 1. Abteilung, vom 14. November 2025\n(1C 25 33 / 1U 25 15).\nErwägungen:\n1.\nMit Entscheid vom 16. Mai 2025 trat das Bezirksgericht Willisau auf eine Klage des Beschwerdeführers nach Art. 85a SchKG nicht ein.\nDagegen erhob der Beschwerdeführer am 2. Juli 2025 Beschwerde beim Kantonsgericht Luzern. Mit Entscheid vom 14. November 2025 wies das Kantonsgericht die Beschwerde und die mit ihr gestellten Anträge ab, soweit es darauf eintrat. Das Gesuch um unentgeltliche Rechtspflege wies es ab und es auferlegte dem Beschwerdeführer die Gerichtskosten.\nGegen diesen Entscheid hat der Beschwerdeführer am 22. Dezember 2025 (Postaufgabe) Beschwerde an das Bundesgericht erhoben. Er hat kein Gesuch um unentgeltliche Rechtspflege für das bundesgerichtliche Verfahren gestellt. Mit Verfügung vom 24. Dezember 2025 hat das Bundesgericht den Beschwerdeführer zur Leistung eines Kostenvorschusses von Fr. 1'000.-- aufgefordert. Mit Verfügung vom 21. Januar 2026 hat das Bundesgericht dem Beschwerdeführer zur Bezahlung des Kostenvorschusses eine Nachfrist bis zum 2. Februar 2026 angesetzt (unter Androhung des Nichteintretens auf das Rechtsmittel bei nicht rechtzeitiger Bezahlung; Art. 62 Abs. 3 BGG). Der Beschwerdeführer hat den Kostenvorschuss nicht bezahlt.\n2.\nAndrohungsgemäss ist auf die Beschwerde nicht einzutreten. Der Abteilungspräsident entscheidet darüber im vereinfachten Verfahren (Art. 117 i.V.m. Art. 108 Abs. 1 lit. a BGG).\n3.\nBei diesem Ausgang des Verfahrens trägt der Beschwerdeführer die Gerichtskosten, die angesichts des geringen entstandenen Aufwands reduziert werden (Art. 66 Abs. 1 BGG).\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 500.-- werden dem Beschwerdeführer auferlegt.\n3.\nDieses Urteil wird den Parteien und dem Kantonsgericht Luzern, 1. Abteilung, mitgeteilt.\nLausanne, 13. Februar 2026\nIm Namen der II. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Bovey\nDer Gerichtsschreiber: Zingg",
+  "operator_metadata": {
+    "date": "2026-02-13",
+    "reference": [
+      "5D_56/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5D-56-2025_2026-02-13.html",
+      "source": "446973/45/2830",
+      "content_length": 2828
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2830",
+    "id": "CH_BGer_005_5D-56-2025_2026-02-13",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 13.02.2026 5D_56/2025",
+      "it": "Tribunale federale II Corte di diritto civile 13.02.2026 5D_56/2025",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 13.02.2026 5D_56/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:13:21+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5D-56-2025_2026-02-13.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "98a09abaab60d181302abfde08ec63b334d1ca96714464070e30834753a3b39f"
+  }
+}

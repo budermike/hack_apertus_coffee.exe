@@ -1,0 +1,56 @@
+{
+  "id": "5A_145_2026",
+  "case_id": "5A_145/2026",
+  "case_ids": [
+    "5A_145/2026"
+  ],
+  "decision_date": "2026-02-18",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "Ehescheidung (Kindesunterhalt)",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://18-02-2026-5A_145-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5A_145/2026\nUrteil vom 18. Februar 2026\nII. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Bovey, Präsident,\nGerichtsschreiber Zingg.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nB.________,\nvertreten durch Rechtsanwältin Elke Fuchs,\nBeschwerdegegnerin.\nGegenstand\nEhescheidung (Kindesunterhalt),\nBeschwerde gegen das Urteil des Obergerichts des Kantons Zürich, II. Zivilkammer, vom 12. Januar 2026 (LC250016-O/U).\nErwägungen:\n1.\nMit Urteil vom 11. Dezember 2023 schied das Bezirksgericht Bülach die Ehe der Parteien und regelte die Nebenfolgen der Scheidung. Das Urteil wurde den Parteien im Mai 2025 in einer berichtigten und begründeten Fassung zugestellt.\nMit Eingabe vom 11. Juni 2025 erhob der Beschwerdeführer, damals vertreten durch Rechtsanwalt C.________, Berufung. Die Beschwerdegegnerin erhob Anschlussberufung. Mit Urteil vom 12. Januar 2026 hiess das Obergericht die Berufung und die Anschlussberufung teilweise gut und regelte den Kindesunterhalt neu. Im Übrigen wies es die Berufung und Anschlussberufung ab.\nIn Bezug auf dieses Urteil ist der Beschwerdeführer am 13. Februar 2026 persönlich an das Bundesgericht gelangt.\n2.\nNach Art. 42 Abs. 2 BGG ist in der Beschwerdebegründung in gedrängter Form darzulegen, inwiefern der angefochtene Akt Recht verletzt. Die beschwerdeführende Partei hat in gezielter Auseinandersetzung mit den für das Ergebnis des angefochtenen Entscheides massgeblichen Erwägungen aufzuzeigen, welche Rechte bzw. Rechtsnormen die Vorinstanz verletzt haben soll (BGE 140 III 86 E. 2; 140 III 115 E. 2).\n3.\nDer Beschwerdeführer setzt sich mit dem obergerichtlichen Urteil nicht auseinander. Stattdessen kreisen seine Ausführungen um das Thema des Kindsmissbrauchs und der Pädophilie sowie um einen KI-Holocaust. Dabei macht er insbesondere geltend, es finde eine Verschwörung gegen ihn und seine Kinder statt, seine Frau verkaufe die Kinder an machtgierige Menschen, und alle Juristen, insbesondere sein ehemaliger Anwalt, seien pädophil. Schliesslich verlangt er die Umsetzung eines von ihm selber verfassten \"Urteils\" vom 18. Dezember 2019.\nDie Beschwerde enthält offensichtlich keine hinreichende Begründung. Der Abteilungspräsident tritt auf sie im vereinfachten Verfahren nicht ein (Art. 108 Abs. 1 lit. BGG).\n4.\nBei diesem Ausgang des Verfahrens trägt der Beschwerdeführer die Gerichtskosten (Art. 66 Abs. 1 BGG).\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 2'000.-- werden dem Beschwerdeführer auferlegt.\n3.\nDieses Urteil wird den Parteien und dem Obergericht des Kantons Zürich, II. Zivilkammer, mitgeteilt.\nLausanne, 18. Februar 2026\nIm Namen der II. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Bovey\nDer Gerichtsschreiber: Zingg",
+  "operator_metadata": {
+    "date": "2026-02-18",
+    "reference": [
+      "5A_145/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-145-2026_2026-02-18.html",
+      "source": "446973/45/2829",
+      "content_length": 3216
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_005_5A-145-2026_2026-02-18",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 18.02.2026 5A_145/2026",
+      "it": "Tribunale federale II Corte di diritto civile 18.02.2026 5A_145/2026",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 18.02.2026 5A_145/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:14:38+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-145-2026_2026-02-18.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "73b784382f31f9f4630d61127b2d7746100b066dfd3ca80519c05e4bdabed6f0"
+  }
+}

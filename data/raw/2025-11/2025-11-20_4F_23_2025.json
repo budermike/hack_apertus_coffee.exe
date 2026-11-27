@@ -1,0 +1,56 @@
+{
+  "id": "4F_23_2025",
+  "case_id": "4F_23/2025",
+  "case_ids": [
+    "4F_23/2025"
+  ],
+  "decision_date": "2025-11-20",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "espulsione",
+  "language": "it",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://20-11-2025-4F_23-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4F_23/2025\nDecreto del 20 novembre 2025\nI Corte di diritto civile\nComposizione\nGiudice federale Hurni, Presidente,\nCancelliere Piatti.\nPartecipanti al procedimento\nA.________ SA,\nistante,\ncontro\nB.________ SA,\ncontroparte,\nII Camera civile del Tribunale d'appello del Cantone Ticino, via Pretorio 16, 6900 Lugano.\nOggetto\nespulsione,\ndomanda di sospendere la sentenza 4D_99/2025 emanata il 12 giugno 2025 dal Tribunale federale svizzero.\nConsiderando:\nche, con sentenza 12 giugno 2025 emanata nella procedura semplificata dell'art. 108 LTF, il Tribunale federale ha dichiarato inammissibile il ricorso presentato dalla A.________ SA contro il giudizio 8 aprile 2025 con cui la II Camera civile del Tribunale di appello del Cantone Ticino ha respinto, nella misura in cui era ammissibile, l'appello presentato dalla A.________ SA contro la decisione dell'11 novembre 2024 con cui il Pretore del distretto di Lugano aveva accolto la domanda di espulsione presentata da B.________ SA;\nche con atto del 28 giugno 2025 la A.________ SA ha comunicato al Tribunale federale la sua intenzione di presentare una domanda di revisione e chiesto \"di sospendere la sentenza del 12 giugno 2025\" e di prolungare i termini per la presentazione della domanda di revisione siccome il suo amministratore unico è ricoverato in ospedale e inabile al lavoro;\nche è pertanto stato aperto l'incarto della causa 4F_23/2025;\nche con decreto del 9 luglio 2025 il Presidente della I Corte di diritto civile ha dichiarato inammissibile sia la domanda di conferimento dell'effetto sospensivo sia quella di proroga del termine per inoltrare un'istanza di revisione;\nche come indicato nel predetto decreto il termine per proporre una domanda di revisione è un termine fissato dalla legge e come tale è improrogabile;\nche il termine più lungo previsto dall'art. 124 cpv. 1 LTF per il deposito di una domanda di revisione è di 90 giorni;\nche fino in data odierna l'annunciata istanza di revisione non è pervenuta al Tribunale federale e che non è più possibile introdurla tempestivamente, ragione per cui la causa 4F_23/2025 va ritenuta evasa e stralciata dai ruoli (art. 32 cpv. 2 LTF);\nche le spese giudiziarie seguono la soccombenza (art. 66 cpv. 1 LTF);\nper questi motivi, il Presidente decreta:\n1.\nLa causa 4F_23/2025 è stralciata dai ruoli a seguito della sua evasione.\n2.\nLe spese giudiziarie di fr. 500.-- sono poste a carico dell'istante.\n3.\nComunicazione alle parti e alla II Camera civile del Tribunale d'appello del Cantone Ticino.\nLosanna, 20 novembre 2025\nIn nome della I Corte di diritto civile\ndel Tribunale federale svizzero\nIl Presidente: Hurni\nIl Cancelliere: Piatti",
+  "operator_metadata": {
+    "date": "2025-11-20",
+    "reference": [
+      "4F_23/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "it",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4F-23-2025_2025-11-20.html",
+      "source": "446973/45/2869",
+      "content_length": 2999
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-06-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "it",
+    "source": "446973/45/2869",
+    "id": "CH_BGer_004_4F-23-2025_2025-11-20",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 20.11.2025 4F_23/2025",
+      "it": "Tribunale federale I Corte di diritto civile 20.11.2025 4F_23/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 20.11.2025 4F_23/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:37:07+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4F-23-2025_2025-11-20.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "a340c8517145fb98c5e9ee6984a41c5260f690a68fac014b50991f6153ea5ddf"
+  }
+}

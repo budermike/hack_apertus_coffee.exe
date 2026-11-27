@@ -1,0 +1,56 @@
+{
+  "id": "9C_701_2025",
+  "case_id": "9C_701/2025",
+  "case_ids": [
+    "9C_701/2025"
+  ],
+  "decision_date": "2026-04-09",
+  "publication_date": null,
+  "department": "IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung)",
+  "division": "IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung)",
+  "subject": "Assurance-invalidité (retrait du recours)",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://09-04-2026-9C_701-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n9C_701/2025\nOrdonnance du 9 avril 2026\nIIIe Cour de droit public\nComposition\nMme la Juge fédérale Moser-Szeless, Présidente.\nGreffier : M. Bürgisser.\nParticipants à la procédure\nA.________,\nreprésenté par Me Jean-Michel Duc, avocat,\nrecourant,\ncontre\nTribunal cantonal du canton de Fribourg, Cour des assurances sociales,\nrue des Augustins 3, 1700 Fribourg,\nintimé.\nObjet\nAssurance-invalidité (retrait du recours),\ndéni de justice du Tribunal cantonal du canton de Fribourg.\nVu :\nla lettre du 30 mars 2026 par laquelle A.________ a déclaré retirer le recours interjeté le 16 décembre 2025 (timbre postal) auprès du Tribunal fédéral pour déni de justice,\nconsidérant :\nque la cause doit être rayée du rôle en application des art. 32 al. 2 et 71 LTF, en relation avec l'art. 73 al. 1 PCF,\nqu'il se justifie en appliquant l'art. 66 al. 2 LTF de statuer sans frais judiciaires,\npar ces motifs, la Présidente ordonne :\n1.\nLa cause est rayée du rôle par suite de retrait du recours.\n2.\nIl n'est pas perçu de frais judiciaires.\n3.\nLa présente ordonnance est communiquée au recourant, au Tribunal cantonal du canton de Fribourg, Cour des assurances sociales, à l'Office de l'assurance-invalidité du canton de Fribourg et à l'Office fédéral des assurances sociales.\nLucerne, le 9 avril 2026\nAu nom de la IIIe Cour de droit public\ndu Tribunal fédéral suisse\nLa Présidente : Moser-Szeless\nLe Greffier : Bürgisser",
+  "operator_metadata": {
+    "date": "2026-04-09",
+    "reference": [
+      "9C_701/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_009_9C-701-2025_2026-04-09.html",
+      "source": "446973/45/2834",
+      "content_length": 1778
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung)",
+      "it": "Confederazione Tribunale federale IV Corte di diritto pubblico (II Corte di diritto sociale)",
+      "fr": "Conféderation Tribunal fédéral IVe Cour de droit public (IIe Cour de droit social)"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_009"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_009_9C-701-2025_2026-04-09",
+    "title": {
+      "de": "Bundesgericht IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung) 09.04.2026 9C_701/2025",
+      "it": "Tribunale federale IV Corte di diritto pubblico (II Corte di diritto sociale) 09.04.2026 9C_701/2025",
+      "fr": "Tribunal fédéral IVe Cour de droit public (IIe Cour de droit social) 09.04.2026 9C_701/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:28:26+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_009_9C-701-2025_2026-04-09.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "9a8f3fe95758f42ec6957860b9e6a005463537ee244b0c89a2a151af7685c8f8"
+  }
+}

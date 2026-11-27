@@ -1,0 +1,56 @@
+{
+  "id": "4A_518_2025",
+  "case_id": "4A_518/2025",
+  "case_ids": [
+    "4A_518/2025"
+  ],
+  "decision_date": "2025-11-06",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "expulsion; révision; retrait du recours",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://06-11-2025-4A_518-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4A_518/2025\nOrdonnance du 6 novembre 2025\nIre Cour de droit civil\nComposition\nM. le Juge fédéral Hurni, Président.\nGreffier : M. Widmer.\nParticipants à la procédure\n1. A.________,\n2. B.________,\ntous les deux représentés par Me Benjamin Grumbach, avocat,\nrecourants,\ncontre\nC.________ SA,\nreprésentée par Me Richard-Xavier Posse, avocat,\nintimée.\nObjet\nexpulsion; révision; retrait du recours,\nrecours contre l'arrêt rendu le 11 septembre 2025 par la Chambre civile du Tribunal cantonal du Valais (C3 25 122).\nLe Président :\nVu le recours en matière civile formé le 15 octobre 2025 par A.________ et B.________ (ci-après: les recourants) contre l'arrêt rendu le 11 septembre 2025 par la Chambre civile du Tribunal cantonal du Valais dans la cause divisant les recourants d'avec C.________ SA, intimée;\nVu la lettre du 3 novembre 2025 par laquelle le conseil des recourants déclare qu'il retire le recours au nom et pour le compte de ses mandants;\nConsidérant qu'il y a lieu de prendre acte de ce retrait et de rayer la cause 4A_518/2025 du rôle (art. 32 al. 2 LTF),\nque les frais judiciaires, réduits, sont mis à la charge des recourants, solidairement entre eux (art. 66 al. 1, 2 et 5 LTF);\nConsidérant que l'intimée, qui n'a pas été invitée à déposer de réponse, n'a pas droit à des dépens;\nVu l'art. 32 al. 2 LTF.\nOrdonne :\n1.\nIl est pris acte du retrait du recours.\n2.\nLa cause 4A_518/2025 est rayée du rôle.\n3.\nUn émolument judiciaire de 300 fr. est mis à la charge des recourants, solidairement entre eux.\n4.\nIl n'est pas alloué de dépens.\n5.\nLa présente ordonnance est communiquée aux parties et à la Chambre civile du Tribunal cantonal du Valais.\nLausanne, le 6 novembre 2025\nAu nom de la Ire Cour de droit civil\ndu Tribunal fédéral suisse\nLe Président : Hurni\nLe Greffier : Widmer",
+  "operator_metadata": {
+    "date": "2025-11-06",
+    "reference": [
+      "4A_518/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-518-2025_2025-11-06.html",
+      "source": "446973/45/2869",
+      "content_length": 2179
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-06-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2869",
+    "id": "CH_BGer_004_4A-518-2025_2025-11-06",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 06.11.2025 4A_518/2025",
+      "it": "Tribunale federale I Corte di diritto civile 06.11.2025 4A_518/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 06.11.2025 4A_518/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:33:08+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-518-2025_2025-11-06.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "fee03ca460249a42f608a2b773b445a842c1ee5dcca656ce8b18884925de2030"
+  }
+}

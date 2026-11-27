@@ -1,0 +1,56 @@
+{
+  "id": "7B_451_2026",
+  "case_id": "7B_451/2026",
+  "case_ids": [
+    "7B_451/2026"
+  ],
+  "decision_date": "2026-05-06",
+  "publication_date": null,
+  "department": "II. Strafrechtliche Abteilung",
+  "division": "II. Strafrechtliche Abteilung",
+  "subject": "Zulassung Privatklägerschaft; Nichteintreten",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://06-05-2026-7B_451-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n7B_451/2026\nUrteil vom 6. Mai 2026\nII. strafrechtliche Abteilung\nBesetzung\nBundesrichterin Koch, als Einzelrichterin,\nGerichtsschreiber Hahn.\nVerfahrensbeteiligte\nA.A.________,\nBeschwerdeführer,\ngegen\nGeneralstaatsanwaltschaft des Kantons Bern, Nordring 8, Postfach, 3001 Bern,\nBeschwerdegegnerin.\nGegenstand\nZulassung Privatklägerschaft; Nichteintreten,\nBeschwerde gegen den Beschluss des Obergerichts des Kantons Bern, Beschwerdekammer in Strafsachen, vom 11. März 2026 (BK 25 546).\nErwägungen:\n1.\nMit Eingabe vom 9. April 2026 (Postaufgabe) führt A.A.________ Beschwerde in Strafsachen gegen den Beschluss des Obergerichts des Kantons Bern vom 11. März 2026 betreffend Zulassung Privatklägerschaft.\nEs wurden keine Vernehmlassungen eingeholt.\n2.\nEine Beschwerde an das Bundesgericht ist nur im Rahmen des Streitgegenstands zulässig. Dieser wird durch das Anfechtungsobjekt, d.h. den angefochtenen Entscheid, und die Parteibegehren bestimmt, wobei der angefochtene Entscheid den möglichen Streitgegenstand thematisch begrenzt (BGE 142 I 155 E. 4.4.2 mit Hinweisen).\nGegenstand des vorinstanzlichen Verfahrens war, ob die Regionale Staatsanwaltschaft Berner Jura-Seeland in ihrer Verfügung vom 11. November 2025 die B.A.________ GmbH als juristische Person zu Recht nicht als Privatklägerin im Strafverfahren xxx zugelassen hat. Der Beschwerdeführer war als Privatperson im vorinstanzlichen Verfahren demgegenüber nicht Partei. Dass er zu Unrecht keine Möglichkeit zur Teilnahme erhalten hätte, macht er vor Bundesgericht nicht geltend. Dies ist auch nicht ersichtlich. Entgegen der beiläufigen Rüge ergibt sich aus der eingereichten Strafanzeige vom 9. Januar 2024 insbesondere, dass nicht der Beschwerdeführer als Privatperson, sondern ausdrücklich die B.A.________ GmbH die Strafanzeige zusammen mit zwei weiteren juristischen Personen eingereicht hat. Nach Art. 81 Abs. 1 lit. a BGG ist der Beschwerdeführer folglich offenkundig nicht zur Beschwerde in Strafsachen legitimiert.\n3.\nDie Beschwerde erweist sich als offensichtlich unzulässig, weshalb auf sie im vereinfachten Verfahren nach Art. 108 Abs. 1 lit. a BGG nicht einzutreten ist. Bei diesem Ausgang des Verfahrens wird der Beschwerdeführer kostenpflichtig (Art. 66 Abs. 1 BGG).\nDemnach erkennt die Einzelrichterin:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 800.-- werden dem Beschwerdeführer auferlegt.\n3.\nDieses Urteil wird den Parteien, dem Obergericht des Kantons Bern, Beschwerdekammer in Strafsachen, und der B.A.________ GmbH schriftlich mitgeteilt.\nLausanne, 6. Mai 2026\nIm Namen der II. strafrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Einzelrichterin: Koch\nDer Gerichtsschreiber: Hahn",
+  "operator_metadata": {
+    "date": "2026-05-06",
+    "reference": [
+      "7B_451/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-451-2026_2026-05-06.html",
+      "source": "446973/45/2834",
+      "content_length": 3116
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit pénal"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_007"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_007_7B-451-2026_2026-05-06",
+    "title": {
+      "de": "Bundesgericht II. Strafrechtliche Abteilung 06.05.2026 7B_451/2026",
+      "it": "Tribunale federale II Corte di diritto penale 06.05.2026 7B_451/2026",
+      "fr": "Tribunal fédéral IIe Cour de droit pénal 06.05.2026 7B_451/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:37:28+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-451-2026_2026-05-06.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "595b4e016cb646293658b4191aef403bd11169514d97cce100c8494c6f84250f"
+  }
+}

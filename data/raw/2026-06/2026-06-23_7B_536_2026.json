@@ -1,0 +1,56 @@
+{
+  "id": "7B_536_2026",
+  "case_id": "7B_536/2026",
+  "case_ids": [
+    "7B_536/2026"
+  ],
+  "decision_date": "2026-06-23",
+  "publication_date": null,
+  "department": "II. Strafrechtliche Abteilung",
+  "division": "II. Strafrechtliche Abteilung",
+  "subject": "Nichtanhandnahme; Nichteintreten",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://23-06-2026-7B_536-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n7B_536/2026\nUrteil vom 23. Juni 2026\nII. strafrechtliche Abteilung\nBesetzung\nBundesrichterin Koch, als Einzelrichterin,\nGerichtsschreiber Stadler.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nOberstaatsanwaltschaft des Kantons Aargau,\nFrey-Herosé-Strasse 20, 5001 Aarau,\nBeschwerdegegnerin.\nGegenstand\nNichtanhandnahme; Nichteintreten,\nBeschwerde gegen den Entscheid des Obergerichts des Kantons Aargau, Beschwerdekammer in Strafsachen, vom 13. April 2026 (SBE.2026.15).\nErwägungen:\n1.\nDer Beschwerdeführer gelangte mit gegen den Entscheid des Obergerichts des Kantons Aargau vom 13. April 2026 gerichteter Eingabe vom 22. April 2026 ans Bundesgericht.\n2.\nDie Partei, die das Bundesgericht anruft, hat einen Kostenvorschuss zu bezahlen (Art. 62 Abs. 1 BGG).\n3.\nDem Beschwerdeführer wurde mit Verfügung vom 18. Mai 2026 eine Frist bis zum 2. Juni 2026 angesetzt, um dem Bundesgericht einen Kostenvorschuss von Fr. 800.-- einzuzahlen. Da der Kostenvorschuss nicht einging, wurde dem Beschwerdeführer mit Verfügung vom 4. Juni 2026 die gesetzlich vorgeschriebene und nicht mehr erstreckbare Nachfrist zur Leistung des Kostenvorschusses bis zum 15. Juni 2026 angesetzt, da ansonsten auf das Rechtsmittel nicht eingetreten werde. Der Kostenvorschuss ging auch innert der angesetzten Nachfrist nicht ein, weshalb auf die Beschwerde androhungsgemäss gestützt auf Art. 62 Abs. 3 BGG im Verfahren nach Art. 108 BGG nicht einzutreten ist.\n4.\nDer Beschwerdeführer ist kostenpflichtig (Art. 66 Abs. 1 BGG).\nDemnach erkennt die Einzelrichterin:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 500.-- werden dem Beschwerdeführer auferlegt.\n3.\nDieses Urteil wird den Parteien und dem Obergericht des Kantons Aargau, Beschwerdekammer in Strafsachen, schriftlich mitgeteilt.\nLausanne, 23. Juni 2026\nIm Namen der II. strafrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Einzelrichterin: Koch\nDer Gerichtsschreiber: Stadler",
+  "operator_metadata": {
+    "date": "2026-06-23",
+    "reference": [
+      "7B_536/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-536-2026_2026-06-23.html",
+      "source": "446973/45/2834",
+      "content_length": 2381
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit pénal"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_007"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_007_7B-536-2026_2026-06-23",
+    "title": {
+      "de": "Bundesgericht II. Strafrechtliche Abteilung 23.06.2026 7B_536/2026",
+      "it": "Tribunale federale II Corte di diritto penale 23.06.2026 7B_536/2026",
+      "fr": "Tribunal fédéral IIe Cour de droit pénal 23.06.2026 7B_536/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:49:01+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-536-2026_2026-06-23.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "ef1389843300f3a47dbc665604e93ffaaecfd3278f107dd4f774dc5330319712"
+  }
+}

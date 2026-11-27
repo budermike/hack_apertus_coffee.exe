@@ -1,0 +1,56 @@
+{
+  "id": "4A_155_2026",
+  "case_id": "4A_155/2026",
+  "case_ids": [
+    "4A_155/2026"
+  ],
+  "decision_date": "2026-05-12",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "Mietvertrag",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://12-05-2026-4A_155-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4A_155/2026\nUrteil vom 12. Mai 2026\nI. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Hurni, Präsident,\nGerichtsschreiber Leemann.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nB.________,\nvertreten durch Rechtsanwalt Anton Frank,\nBeschwerdegegner,\nC.________,\nVerfahrensbeteiligte.\nGegenstand\nMietvertrag,\nBeschwerde gegen das Urteil des Kantonsgerichts Luzern, 1. Abteilung, vom 13. März 2026 (1B 25 51).\nErwägungen:\n1.\nMit Urteil vom 18. Juni 2025 verpflichtete das Bezirksgericht Luzern den Beschwerdeführer und die Verfahrensbeteiligte, innert 10 Tagen seit Rechtskraft des Urteils die 2.5-Zimmer-Wohnung im 3. Obergeschoss der Liegenschaft U.________ sowie die Parkplätze in der Einstellhalle der Liegenschaft zu räumen, zu reinigen und zu verlassen und dem Beschwerdegegner sämtliche Schlüssel der Mietobjekte zu übergeben.\nMit Urteil vom 13. März 2026 wies das Kantonsgericht Luzern eine vom Beschwerdeführer und der Verfahrensbeteiligten gegen das bezirksgerichtliche Urteil vom 18. Juni 2025 erhobene Berufung ab, soweit es darauf eintrat.\nMit Eingabe vom 30. März 2026 erklärte der Beschwerdeführer dem Bundesgericht, den Entscheid des Kantonsgerichts Luzern vom 13. März 2026 mit Beschwerde anfechten zu wollen.\nAm 23. April 2026 reichte der Beschwerdeführer dem Bundesgericht eine weitere Eingabe ein.\nEs wurden keine Vernehmlassungen eingeholt.\n2.\nDie Eingaben des Beschwerdeführers erfüllen die Begründungsanforderungen, die an eine Beschwerde an das Bundesgericht gestellt werden, offensichtlich nicht (Art. 42 Abs. 2 und Art. 106 Abs. 2 BGG; BGE 142 III 364 E. 2.4; 140 III 86 E. 2, 115 E. 2).\nAuf die Beschwerde ist somit mangels hinreichender Begründung im vereinfachten Verfahren nicht einzutreten (Art. 108 Abs. 1 lit. b BGG).\n3.\nDer Beschwerdeführer wird bei diesem Verfahrensausgang kostenpflichtig (Art. 66 Abs. 1 BGG). Dem Beschwerdegegner und der Verfahrensbeteiligten sind keine Parteientschädigungen zuzusprechen (Art. 68 Abs. 2 BGG).\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 800.-- werden dem Beschwerdeführer auferlegt.\n3.\nEs werden keine Parteientschädigungen zugesprochen.\n4.\nDieses Urteil wird den Parteien, der Verfahrensbeteiligten und dem Kantonsgericht Luzern, 1. Abteilung, schriftlich mitgeteilt.\nLausanne, 12. Mai 2026\nIm Namen der I. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Hurni\nDer Gerichtsschreiber: Leemann",
+  "operator_metadata": {
+    "date": "2026-05-12",
+    "reference": [
+      "4A_155/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-155-2026_2026-05-12.html",
+      "source": "446973/45/2829",
+      "content_length": 2911
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_004_4A-155-2026_2026-05-12",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 12.05.2026 4A_155/2026",
+      "it": "Tribunale federale I Corte di diritto civile 12.05.2026 4A_155/2026",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 12.05.2026 4A_155/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:18:50+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-155-2026_2026-05-12.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "d5261eb4915926dc5b68860b8d9303f7d7050a9889cf4ad61874af2bbc7b4c64"
+  }
+}

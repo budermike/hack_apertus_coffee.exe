@@ -1,0 +1,56 @@
+{
+  "id": "5A_1095_2025",
+  "case_id": "5A_1095/2025",
+  "case_ids": [
+    "5A_1095/2025"
+  ],
+  "decision_date": "2026-01-05",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "garde et droit de visite d'une enfant née hors mariage",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://05-01-2026-5A_1095-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5A_1095/2025\nArrêt du 5 janvier 2026\nIIe Cour de droit civil\nComposition\nM. le Juge fédéral Bovey, Président.\nGreffier : M. Braconi.\nParticipants à la procédure\nA.________,\nrecourante,\ncontre\nTribunal de protection de l'adulte et de l'enfant du canton de Genève,\nrue des Glacis-de-Rive 6, 1207 Genève,\n1. B.________,\n2. C.________,\nObjet\ngarde et droit de visite d'une enfant née hors mariage,\nVu :\nle \"recours en matière de droit public\", assorti d'une requête de mesures provisoires urgentes, formé par A.________;\nl'ordonnance du 9 décembre 2025 (non réclamée) invitant l'intéressée à produire la décision attaquée jusqu'au 15 décembre 2025;\nconsidérant :\nque la recourante n'a pas donné suite à l'ordonnance précitée dans le délai imparti à cet effet;\nque, partant, le présent recours doit être déclaré irrecevable par voie de procédure simplifiée (art. 108 al. 1 let. a LTF, en lien avec l'art. 42 al. 5 LTF);\nque, au demeurant, le moyen pris d'un \" déni de justice \" concernant la réglementation de la garde et du droit de visite est (au mieux) téméraire vu les nombreux procédés que l'intéressée a introduits à ce sujet, tant devant les juridictions cantonales que la Cour de céans;\nque, vu les circonstances de l'espèce, il convient de statuer sans frais judiciaires (art. 66 al. 1, 2ème phrase, LTF);\nque le présent arrêt rend sans objet la requête de mesures provisoires formée par la recourante;\nque la Cour de céans se réserve expressément la faculté de classer à l'avenir d'ultérieurs procédés du même style;\npar ces motifs, le Président prononce :\n1.\nLe recours est irrecevable.\n2.\nIl n'est pas perçu de frais judiciaires.\n3.\nLe présent arrêt est communiqué à la recourante, aux autres participants à la procédure et à la Chambre de surveillance de la Cour de justice du canton de Genève.\nLausanne, le 5 janvier 2026\nAu nom de la IIe Cour de droit civil\ndu Tribunal fédéral suisse\nLe Président : Bovey\nLe Greffier : Braconi",
+  "operator_metadata": {
+    "date": "2026-01-05",
+    "reference": [
+      "5A_1095/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-1095-2025_2026-01-05.html",
+      "source": "446973/45/2829",
+      "content_length": 2333
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_005_5A-1095-2025_2026-01-05",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 05.01.2026 5A_1095/2025",
+      "it": "Tribunale federale II Corte di diritto civile 05.01.2026 5A_1095/2025",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 05.01.2026 5A_1095/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:01:09+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-1095-2025_2026-01-05.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "071ee12c3d4f9c1abf9942e24f416e5005a90ed26421fb03d0534095ce354026"
+  }
+}

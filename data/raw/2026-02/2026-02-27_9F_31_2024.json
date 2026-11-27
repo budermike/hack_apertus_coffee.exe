@@ -1,0 +1,56 @@
+{
+  "id": "9F_31_2024",
+  "case_id": "9F_31/2024",
+  "case_ids": [
+    "9F_31/2024"
+  ],
+  "decision_date": "2026-02-27",
+  "publication_date": null,
+  "department": "IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung)",
+  "division": "IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung)",
+  "subject": "Impôts cantonaux et communaux du canton de Genève et impôt fédéral direct, périodes fiscales 2009 à 2015",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://27-02-2026-9F_31-2024",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n9F_31/2024\nOrdonnance du 27 février 2026\nIIIe Cour de droit public\nComposition\nMme la Juge fédérale Moser-Szeless, Présidente.\nGreffier : M. Bürgisser.\nParticipants à la procédure\nA.________,\nreprésenté par Me Yacine Rezki, avocat,\nrequérant,\ncontre\nAdministration fiscale cantonale de la République et canton de Genève, rue du Stand 26, 1204 Genève,\nintimée.\nObjet\nImpôts cantonaux et communaux du canton de Genève et impôt fédéral direct, périodes fiscales 2009 à 2015,\ndemande de révision de l'arrêt du Tribunal fédéral suisse du 20 août 2024 (9C_122/2024 [arrêt A/953/2022-ICCIFD ATA/24/2024]).\nVu :\nles lettres des 6 février et 19 février 2026 par lesquelles A.________ a déclaré retirer sa demande de révision du 24 décembre 2024 (timbre postal) de l'arrêt du Tribunal fédéral suisse du 20 août 2024 (cause 9C_122/2024),\nconsidérant :\nque le juge instructeur statue comme juge unique sur la radiation du rôle des procédures achevées par un retrait (art. 32 al. 1 et 2 LTF),\nque le requérant a expressément signifié le retrait de sa demande de révision au Tribunal fédéral, après la reprise de la procédure suspendue pendant près d'une année,\nqu'il convient d'en prendre acte et de rayer la cause du rôle (art. 73 al. 1 PCF par renvoi de l'art. 71 LTF),\nqu'en principe, la partie qui retire son acte doit supporter les frais de l'instance fédérale (parmi plusieurs, ordonnance 5F_1/2022 du 10 mars 2022),\nqu'il n'y a pas lieu de déroger à cette règle,\nqu'il convient en conséquence de mettre des frais réduits à la charge du requérant (art. 66 al. 2 LTF),\npar ces motifs, la Présidente ordonne :\n1.\nLa cause est rayée du rôle par suite de retrait de la demande de révision.\n2.\nLes frais judiciaires de 500 fr. sont mis à la charge du requérant.\n3.\nLa présente ordonnance est communiquée aux parties, à la Cour de justice de la République et canton de Genève, Chambre administrative, 4ème section, et à l'Administration fédérale des contributions.\nLucerne, le 27 février 2026\nAu nom de la IIIe Cour de droit public\ndu Tribunal fédéral suisse\nLa Présidente : Moser-Szeless\nLe Greffier : Bürgisser",
+  "operator_metadata": {
+    "date": "2026-02-27",
+    "reference": [
+      "9F_31/2024"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_009_9F-31-2024_2026-02-27.html",
+      "source": "446973/45/2834",
+      "content_length": 2484
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung)",
+      "it": "Confederazione Tribunale federale IV Corte di diritto pubblico (II Corte di diritto sociale)",
+      "fr": "Conféderation Tribunal fédéral IVe Cour de droit public (IIe Cour de droit social)"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_009"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_009_9F-31-2024_2026-02-27",
+    "title": {
+      "de": "Bundesgericht IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung) 27.02.2026 9F_31/2024",
+      "it": "Tribunale federale IV Corte di diritto pubblico (II Corte di diritto sociale) 27.02.2026 9F_31/2024",
+      "fr": "Tribunal fédéral IVe Cour de droit public (IIe Cour de droit social) 27.02.2026 9F_31/2024"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:17:31+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_009_9F-31-2024_2026-02-27.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "2c20c7ada406fd7ec24caf705a24bbe7e8b99acd45e80e0a1d509723b188f7bd"
+  }
+}

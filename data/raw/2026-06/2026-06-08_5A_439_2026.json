@@ -1,0 +1,56 @@
+{
+  "id": "5A_439_2026",
+  "case_id": "5A_439/2026",
+  "case_ids": [
+    "5A_439/2026"
+  ],
+  "decision_date": "2026-06-08",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "Beschwerdeverfahren",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://08-06-2026-5A_439-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5A_439/2026\nUrteil vom 8. Juni 2026\nII. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Bovey, Präsident,\nGerichtsschreiber Zingg.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nBetreibungsamt Dorneck-Thierstein,\nAmthausstrasse 15, 4143 Dornach.\nGegenstand\nBeschwerdeverfahren,\nBeschwerde gegen den Beschluss der Aufsichtsbehörde für Schuldbetreibung und Konkurs des Kantons Solothurn vom 5. Mai 2026 (SCBES.2026.58).\nErwägungen:\n1.\nMit einer per E-Mail eingereichten und mit \"Rechtsvorschlag - Beschwerde - Einsprache\" überschriebenen Eingabe vom 30. April 2026 gelangte der Beschwerdeführer an das Betreibungsamt Dorneck-Thierstein. Das Betreibungsamt leitete die Eingabe der Aufsichtsbehörde für Schuldbetreibung und Konkurs des Kantons Solothurn weiter. Mit Beschluss vom 5. Mai 2026 erachtete die Aufsichtsbehörde die Eingabe unter Hinweis auf Art. 132 Abs. 1 ZPO als nicht erfolgt und sie auferlegte dem Beschwerdeführer wegen offensichtlicher Mutwilligkeit die Verfahrenskosten von Fr. 400.--.\nAm 15. Mai 2026 hat der Beschwerdeführer gegen diesen Beschluss bei der Aufsichtsbehörde eine als \"Einsprache, Rechtsvorschlag und Beschwerde\" bezeichnete Eingabe eingereicht. Die Aufsichtsbehörde hat die Eingabe dem Bundesgericht übermittelt (Art. 48 Abs. 3 BGG). Die in der Eingabe angekündigte Kopie an das Bundesgericht ist nicht eingegangen.\n2.\nNach Art. 42 Abs. 2 BGG ist in der Beschwerdebegründung in gedrängter Form darzulegen, inwiefern der angefochtene Akt Recht verletzt. Die beschwerdeführende Partei hat in gezielter Auseinandersetzung mit den für das Ergebnis des angefochtenen Entscheides massgeblichen Erwägungen aufzuzeigen, welche Rechte bzw. Rechtsnormen die Vorinstanz verletzt haben soll (BGE 140 III 86 E. 2; 140 III 115 E. 2).\n3.\nDer Beschwerdeführer setzt sich nicht mit den Erwägungen der Aufsichtsbehörde auseinander. Stattdessen äussert er sich unter anderem zu nicht pfändbaren Einkünften und Doppelfunktionen von Richtern.\nDie Beschwerde enthält offensichtlich keine hinreichende Begründung. Der Abteilungspräsident tritt auf sie im vereinfachten Verfahren nicht ein (Art. 108 Abs. 1 lit. b BGG).\n4.\nBei diesem Ausgang des Verfahrens trägt der Beschwerdeführer die Gerichtskosten (Art. 66 Abs. 1 BGG).\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 800.-- werden dem Beschwerdeführer auferlegt.\n3.\nDieses Urteil wird den Verfahrensbeteiligten und der Aufsichtsbehörde für Schuldbetreibung und Konkurs des Kantons Solothurn mitgeteilt.\nLausanne, 8. Juni 2026\nIm Namen der II. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Bovey\nDer Gerichtsschreiber: Zingg",
+  "operator_metadata": {
+    "date": "2026-06-08",
+    "reference": [
+      "5A_439/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-439-2026_2026-06-08.html",
+      "source": "446973/45/2830",
+      "content_length": 3114
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2830",
+    "id": "CH_BGer_005_5A-439-2026_2026-06-08",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 08.06.2026 5A_439/2026",
+      "it": "Tribunale federale II Corte di diritto civile 08.06.2026 5A_439/2026",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 08.06.2026 5A_439/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:44:36+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-439-2026_2026-06-08.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "50adb089616984cafe45e83d163a4fb9f028b80efc5a9eaf748880e530695511"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "id": "4D_207_2025",
+  "case_id": "4D_207/2025",
+  "case_ids": [
+    "4D_207/2025"
+  ],
+  "decision_date": "2026-01-13",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "Mietvertrag",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://13-01-2026-4D_207-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4D_207/2025\nUrteil vom 13. Januar 2026\nI. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Hurni, Präsident,\nGerichtsschreiber Leemann.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nB.________ AG,\nvertreten durch Rechtsanwältin Angeles Romero,\nBeschwerdegegnerin.\nGegenstand\nMietvertrag,\nBeschwerde gegen den Beschluss des Obergerichts des Kantons Zürich, II. Zivilkammer, vom 27. Oktober 2025 (NG250015-O/U).\nErwägungen:\n1.\nMit Urteil vom 3. Juli 2025 wies das Bezirksgericht Meilen eine vom Beschwerdeführer gegen die Beschwerdegegnerin erhobene Klage ab und stellte die Gültigkeit der von der Beschwerdegegnerin erklärten Kündigungen fest.\nMit Beschluss vom 27. Oktober 2025 trat das Obergericht des Kantons Zürich auf eine vom Beschwerdeführer gegen das bezirksgerichtliche Urteil vom 3. Juli 2025 erhobene Beschwerde infolge verspäteter Rechtsmitteleingabe nicht ein.\nMit Eingabe vom 28. November 2025 erklärte der Beschwerdeführer dem Bundesgericht, den Beschluss des Obergerichts des Kantons Zürich vom 27. Oktober 2025 mit Beschwerde anfechten zu wollen.\nEs wurden keine Vernehmlassungen eingeholt.\n2.\nDie Eingabe des Beschwerdeführers vom 28. November 2025 erfüllt die Begründungsanforderungen, die an eine Beschwerde an das Bundesgericht gestellt werden, offensichtlich nicht (Art. 42 Abs. 2 und Art. 106 Abs. 2 BGG; BGE 142 III 364 E. 2.4; 140 III 86 E. 2, 115 E. 2).\nAuf die Beschwerde ist somit mangels hinreichender Begründung im Verfahren nach Art. 108 Abs. 1 lit. b nicht einzutreten.\n3.\nDer Beschwerdeführer wird bei diesem Verfahrensausgang kostenpflichtig (Art. 66 Abs. 1 BGG). Der Beschwerdegegnerin steht keine Parteientschädigung zu, da ihr aus dem bundesgerichtlichen Verfahren kein entschädigungspflichtiger Aufwand erwachsen ist (Art. 68 Abs. 2 BGG).\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 800.-- werden dem Beschwerdeführer auferlegt.\n3.\nEs wird keine Parteientschädigung zugesprochen.\n4.\nDieses Urteil wird den Parteien und dem Obergericht des Kantons Zürich, II. Zivilkammer, schriftlich mitgeteilt.\nLausanne, 13. Januar 2026\nIm Namen der I. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Hurni\nDer Gerichtsschreiber: Leemann",
+  "operator_metadata": {
+    "date": "2026-01-13",
+    "reference": [
+      "4D_207/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-207-2025_2026-01-13.html",
+      "source": "446973/45/2829",
+      "content_length": 2694
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_004_4D-207-2025_2026-01-13",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 13.01.2026 4D_207/2025",
+      "it": "Tribunale federale I Corte di diritto civile 13.01.2026 4D_207/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 13.01.2026 4D_207/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:03:26+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-207-2025_2026-01-13.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "02dbd6fe3d3d2076c763a685afaeb0912435ef9ca123182b4a708618c5edb587"
+  }
+}

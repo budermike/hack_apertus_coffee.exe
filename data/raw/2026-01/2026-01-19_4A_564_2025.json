@@ -1,0 +1,56 @@
+{
+  "id": "4A_564_2025",
+  "case_id": "4A_564/2025",
+  "case_ids": [
+    "4A_564/2025"
+  ],
+  "decision_date": "2026-01-19",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "contrat de bail à loyer",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://19-01-2026-4A_564-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4A_564/2025\nArrêt du 19 janvier 2026\nIre Cour de droit civil\nComposition\nM. le Juge fédéral Hurni, Président.\nGreffier : M. Widmer.\nParticipants à la procédure\nA.________,\nreprésenté par Me Sébastien Lorentz, avocat,\nrecourant,\ncontre\n1. B.________,\n2. C.________ Sàrl,\n3. D.________ SA,\nreprésentée par Me Yama Sangin, avocat,\nintimés.\nObjet\ncontrat de bail à loyer,\nrecours contre l'arrêt rendu le 25 septembre 2025 par la Chambre des baux et loyers de la Cour de justice du canton de Genève (C/21648/2024, ACJC/1304/2025).\nLe Président :\nVu le recours formé le 5 novembre 2025 par A.________ (ci-après: le recourant) contre l'arrêt rendu le 13 août 2025 par la Cour d'appel civile du Tribunal cantonal du canton de Vaud dans la cause divisant le recourant d'avec B.________, C.________ Sàrl et D.________ SA (ci-après: les intimés);\nVu l'ordonnance présidentielle du 10 novembre 2025 invitant le recourant à verser, jusqu'au 25 novembre 2025 au plus tard, une avance de frais de 4'000 fr.;\nVu l'ordonnance du 3 décembre 2025 par laquelle un délai supplémentaire venant à échéance le 5 janvier 2026 a été imparti au recourant conformément à l'art. 62 al. 3 LTF;\nVu l'ordonnance présidentielle du 18 décembre 2025 rejetant une requête tendant à ce que le Tribunal fédéral dispense le recourant de payer une avance de frais;\nAttendu que l'avance de frais requise n'a pas été effectuée dans le délai imparti par l'ordonnance du 3 décembre 2025 susmentionnée;\nConsidérant, dès lors, que le recours est irrecevable en vertu de l'art. 62 al. 3 LTF,\nqu'il y a lieu, partant, de faire application de la procédure simplifiée prévue par l'art. 108 al. 1 LTF,\nque les frais judiciaires seront mis à la charge du recourant (art. 66 al. 1 et 3 LTF),\nque les intimés n'ont pas droit à des dépens (art. 68 LTF).\npar ces motifs, le Président prononce :\n1.\nLe recours est irrecevable.\n2.\nLe recourant acquittera un émolument judiciaire de 500 fr.\n3.\nLe présent arrêt est communiqué aux parties et à la Chambre des baux et loyers de la Cour de justice du canton de Genève.\nLausanne, le 19 janvier 2026\nAu nom de la Ire Cour de droit civil\ndu Tribunal fédéral suisse\nLe Président : Hurni\nLe Greffier : Widmer",
+  "operator_metadata": {
+    "date": "2026-01-19",
+    "reference": [
+      "4A_564/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-564-2025_2026-01-19.html",
+      "source": "446973/45/2829",
+      "content_length": 2570
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_004_4A-564-2025_2026-01-19",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 19.01.2026 4A_564/2025",
+      "it": "Tribunale federale I Corte di diritto civile 19.01.2026 4A_564/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 19.01.2026 4A_564/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:04:50+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-564-2025_2026-01-19.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "0f1b1890be38261c1b2a184c2aee30fb6d73528ffb11c18842ca2efcfb144f3f"
+  }
+}

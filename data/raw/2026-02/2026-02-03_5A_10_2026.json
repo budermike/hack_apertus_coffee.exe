@@ -1,0 +1,56 @@
+{
+  "id": "5A_10_2026",
+  "case_id": "5A_10/2026",
+  "case_ids": [
+    "5A_10/2026"
+  ],
+  "decision_date": "2026-02-03",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "anticipo spese (curatela)",
+  "language": "it",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://03-02-2026-5A_10-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5A_10/2026\nSentenza del 3 febbraio 2026\nII Corte di diritto civile\nComposizione\nGiudice federale Bovey, Presidente,\nCancelliera Antonini.\nPartecipanti al procedimento\nA.________,\nricorrente,\ncontro\nPresidente della Camera di protezione\ndel Tribunale d'appello del Cantone Ticino, via Bossi 2a, 6900 Lugano.\nOggetto\nanticipo spese (curatela),\nricorso contro il decreto emanato il 23 dicembre 2025\ndal Presidente della Camera di protezione del\nTribunale d'appello del Cantone Ticino (9.2025.243).\nRitenuto in fatto e considerando in diritto:\n1.\nNel quadro di una procedura di reclamo introdotta da A.________ avverso una decisione 2/10 dicembre 2025 dell'Autorità regionale di protezione 3 di Lugano, con decreto 23 dicembre 2025 il Presidente della Camera di protezione del Tribunale d'appello del Cantone Ticino ha invitato la reclamante a depositare entro l'8 gennaio 2026 un anticipo in garanzia delle spese processuali presumibili di fr. 300.--.\n2.\nMediante ricorso datato 30 dicembre 2025 A.________ ha impugnato il decreto cantonale dinanzi al Tribunale federale, chiedendo di essere esonerata dal pagamento dell'anticipo spese.\nNon sono state chieste determinazioni.\n3.\nIl ricorso all'esame, diretto contro una decisione incidentale emanata in una procedura principale in materia di protezione degli adulti (art. 72 cpv. 2 lett. b n. 6 LTF), può essere trattato quale ricorso in materia civile (DTF 137 III 261 consid. 1.4).\nLa decisione con cui viene chiesto un anticipo a copertura delle spese processuali presumibili costituisce una decisione incidentale che può essere immediatamente impugnata dinanzi al Tribunale federale soltanto se può causare un pregiudizio irreparabile di natura giuridica ai sensi dell'art. 93 cpv. 1 lett. a LTF (DTF 142 III 798 consid. 2.1 e 2.2), ossia un pregiudizio che non può essere eliminato (completamente) con una successiva decisione finale favorevole alla parte ricorrente (DTF 148 IV 155 consid. 1.1). In materia di anticipo spese un tale pregiudizio di natura giuridica sussiste unicamente se la parte non dispone della somma che deve versare e non adempie le condizioni per ottenere l'assistenza giudiziaria; spetta alla parte ricorrente dimostrare la sua incapacità finanziaria (DTF 142 III 798 consid. 2.3.4).\nNel concreto caso la ricorrente si limita a genericamente affermare di non avere i mezzi finanziari per pagare l'anticipo spese \" visto che arriviamo giusti a fine mese\", ma non dimostra in alcun modo le sue allegazioni. Il requisito previsto dall'art. 93 cpv. 1 lett. a LTF per un ricorso immediato al Tribunale federale non risulta quindi adempiuto.\n4.\nDa quanto precede discende che il ricorso, manifestamente inammissibile, può essere deciso nella procedura semplificata dell'art. 108 cpv. 1 lett. a LTF.\nConsiderate le circostanze del caso concreto, si può rinunciare al prelievo di spese giudiziarie (art. 66 cpv. 1 seconda frase LTF). Non si giustifica assegnare spese ripetibili.\nPer questi motivi, il Presidente pronuncia:\n1.\nIl ricorso è inammissibile.\n2.\nNon si prelevano spese giudiziarie.\n3.\nComunicazione alla ricorrente e al Presidente della Camera di protezione del Tribunale d'appello del Cantone Ticino.\nLosanna, 3 febbraio 2026\nIn nome della II Corte di diritto civile\ndel Tribunale federale svizzero\nIl Presidente: Bovey\nLa Cancelliera: Antonini",
+  "operator_metadata": {
+    "date": "2026-02-03",
+    "reference": [
+      "5A_10/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "it",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-10-2026_2026-02-03.html",
+      "source": "446973/45/2829",
+      "content_length": 3750
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "it",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_005_5A-10-2026_2026-02-03",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 03.02.2026 5A_10/2026",
+      "it": "Tribunale federale II Corte di diritto civile 03.02.2026 5A_10/2026",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 03.02.2026 5A_10/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:09:22+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-10-2026_2026-02-03.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "00da2f20ad44867fa94a3b12dfaa2bd225b0ac499cad67ffe7580a0606e7d504"
+  }
+}

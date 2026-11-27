@@ -1,0 +1,56 @@
+{
+  "id": "9C_607_2025",
+  "case_id": "9C_607/2025",
+  "case_ids": [
+    "9C_607/2025"
+  ],
+  "decision_date": "2025-11-18",
+  "publication_date": null,
+  "department": "IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung)",
+  "division": "IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung)",
+  "subject": "Impôts cantonaux et communaux du canton de Vaud et impôt fédéral direct, période fiscale 2023",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://18-11-2025-9C_607-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n9C_607/2025\nArrêt du 18 novembre 2025\nIIIe Cour de droit public\nComposition\nM. le Juge fédéral Beusch, en qualité de juge unique.\nGreffier : M. Berthoud.\nParticipants à la procédure\nA.A.________ et B.A.________,\nrecourants,\ncontre\nAdministration cantonale\ndes impôts du canton de Vaud,\nroute de Berne 46, 1014 Lausanne,\nintimée.\nObjet\nImpôts cantonaux et communaux du canton de Vaud et impôt fédéral direct, période fiscale 2023,\nrecours contre l'arrêt du Tribunal cantonal du canton de Vaud, Cour de droit administratif et public, du 2 octobre 2025 (FI.2025.0123).\nVu :\nl'arrêt du 2 octobre 2025, par lequel le Tribunal cantonal du canton de Vaud, Cour de droit administratif et public, a déclaré irrecevable le recours formé par A.A.________ et B.A.________ contre une décision rendue le 17 juillet 2025 par l'Administration cantonale des impôts du canton de Vaud, car l'avance de frais requise par le tribunal n'avait pas été versée,\nle recours interjeté par A.A.________ et B.A.________ contre cet arrêt,\nconsidérant :\nque selon l'art. 42 al. 1 et 2 LTF, le recours doit indiquer, entre autres exigences, les conclusions, les motifs et les moyens de preuve, en exposant succinctement en quoi l'acte attaqué est contraire au droit,\nqu'à défaut, le recours est irrecevable,\nque selon la jurisprudence, un recours ne comportant que des arguments sur le fond alors qu'il porte sur un jugement d'irrecevabilité ne contient pas une motivation topique et ne constitue pas, dès lors, un recours valable (cf. ATF 151 I 294 consid. 4.1; 123 V 335),\nque les recourants se réfèrent à diverses procédures judiciaires auxquelles ils ont participé et soulèvent pêle-mêle divers griefs à l'encontre de l'administration de la justice,\nqu'à l'instar de l'affaire 9C_252/2025 qui concernait les mêmes parties, les recourants n'indiquent pas non plus les motifs pour lesquels, à leur avis, la juridiction cantonale aurait dû entrer en matière sur le recours dirigé contre la décision du 17 juillet 2025, seul objet pouvant être soumis à l'examen du Tribunal fédéral,\nqu'à défaut de motivation topique, le recours doit être déclaré irrecevable selon la procédure simplifiée de l'art. 108 al. 1 let. b et al. 2 LTF,\nqu'en vertu de l'art. 66 al. 1 et 3 LTF, il convient de mettre les frais judiciaires à la charge des recourants,\npar ces motifs, le Juge unique prononce :\n1.\nLe recours est irrecevable.\n2.\nLes frais judiciaires de 1'000 fr. sont mis à la charge des recourants.\n3.\nLe présent arrêt est communiqué aux parties, au Tribunal cantonal du canton de Vaud, Cour de droit administratif et public, et à l'Administration fédérale des contributions.\nLucerne, le 18 novembre 2025\nAu nom de la IIIe Cour de droit public\ndu Tribunal fédéral suisse\nLe Juge unique : Beusch\nLe Greffier : Berthoud",
+  "operator_metadata": {
+    "date": "2025-11-18",
+    "reference": [
+      "9C_607/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_009_9C-607-2025_2025-11-18.html",
+      "source": "446973/45/2851",
+      "content_length": 3181
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung)",
+      "it": "Confederazione Tribunale federale IV Corte di diritto pubblico (II Corte di diritto sociale)",
+      "fr": "Conféderation Tribunal fédéral IVe Cour de droit public (IIe Cour de droit social)"
+    },
+    "scrapedate": "2026-06-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_009"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2851",
+    "id": "CH_BGer_009_9C-607-2025_2025-11-18",
+    "title": {
+      "de": "Bundesgericht IV. Öffentlich-rechtliche Abteilung (II. Sozialrechtliche Abteilung) 18.11.2025 9C_607/2025",
+      "it": "Tribunale federale IV Corte di diritto pubblico (II Corte di diritto sociale) 18.11.2025 9C_607/2025",
+      "fr": "Tribunal fédéral IVe Cour de droit public (IIe Cour de droit social) 18.11.2025 9C_607/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:36:32+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_009_9C-607-2025_2025-11-18.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "f8fa2b98a4f554d4be0b5c586e5e42d59f1bf7740328864a1643c787eec599e2"
+  }
+}

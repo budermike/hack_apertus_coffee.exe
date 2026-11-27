@@ -1,0 +1,56 @@
+{
+  "id": "4D_153_2025",
+  "case_id": "4D_153/2025",
+  "case_ids": [
+    "4D_153/2025"
+  ],
+  "decision_date": "2025-10-29",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "Rechtsöffnung, Nichtleistung des Kostenvorschusses",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://29-10-2025-4D_153-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4D_153/2025\nUrteil vom 29. Oktober 2025\nI. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Hurni, Präsident,\nGerichtsschreiber Brugger D.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nStaat Zürich und Politische Gemeinde B.________, vertreten durch Steueramt B.________,\nBeschwerdegegner.\nGegenstand\nRechtsöffnung, Nichtleistung des Kostenvorschusses,\nBeschwerde gegen die Verfügung des Obergerichts\ndes Kantons Zürich, I. Zivilkammer, vom 2. Juli 2025 (RT250127-O/Z01).\nErwägungen:\n1.\nDas Obergericht des Kantons Zürich setzte dem Beschwerdeführer mit Verfügung vom 2. Juli 2025 in einer Rechtsöffnungsangelegenheit Frist an, den Gerichtskostenvorschuss von Fr. 300.-- zu leisten. Dagegen erhebt der Beschwerdeführer mit Eingabe vom 8. August 2025 Beschwerde an das Bundesgericht.\n2.\nMit Verfügung vom 14. August 2025 wurde der Beschwerdeführer aufgefordert, den angefochtenen Entscheid als vollständiges Exemplar samt Rubrum einzureichen. Nachdem der Beschwerdeführer dieser Aufforderung nach kam, wurde mit Verfügung vom 28. August 2025 das sinngemässe Gesuch des Beschwerdeführers um Gewährung der aufschiebenden Wirkung abgewiesen. Gleichzeitig forderte das Bundesgericht den Beschwerdeführer auf, spätestens am 12. September 2025 einen Kostenvorschuss von Fr. 800.-- einzuzahlen. Da der Kostenvorschuss innerhalb dieser Frist nicht eingegangen war, wurde dem Beschwerdeführer mit Verfügung vom 17. September 2025 eine nicht erstreckbare Nachfrist zur Vorschussleistung bis zum 2. Oktober 2025 angesetzt, unter Hinweis darauf, dass das Bundesgericht bei Säumnis auf das Rechtsmittel nicht eintreten werde (Art. 62 Abs. 3 BGG). Der Beschwerdeführer hat den ihm auferlegten Kostenvorschuss auch innerhalb der angesetzten Nachfrist nicht geleistet.\nNachdem der Kostenvorschuss auch innert Nachfrist nicht bezahlt wurde, ist auf die Beschwerde im vereinfachten Verfahren nach Art. 108 Abs. 1 lit. a BGG (androhungsgemäss) gestützt auf Art. 62 Abs. 3 BGG nicht einzutreten.\n3.\nIm Übrigen wäre auf die Beschwerde auch deshalb nicht einzutreten, weil sie den Begründungsanforderungen von Art. 42 Abs. 2 BGG offensichtlich nicht genügt.\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nDie Gerichtskosten von Fr. 800.-- werden dem Beschwerdeführer auferlegt.\n3.\nDieses Urteil wird den Parteien und dem Obergericht des Kantons Zürich, I. Zivilkammer, schriftlich mitgeteilt.\nLausanne, 29. Oktober 2025\nIm Namen der I. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Hurni\nDer Gerichtsschreiber: Brugger D.",
+  "operator_metadata": {
+    "date": "2025-10-29",
+    "reference": [
+      "4D_153/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-153-2025_2025-10-29.html",
+      "source": "446973/45/2869",
+      "content_length": 2983
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-06-18",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2869",
+    "id": "CH_BGer_004_4D-153-2025_2025-10-29",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 29.10.2025 4D_153/2025",
+      "it": "Tribunale federale I Corte di diritto civile 29.10.2025 4D_153/2025",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 29.10.2025 4D_153/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:30:27+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4D-153-2025_2025-10-29.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "2bea4b43c18be0237a67e29e415e96f201af54c289d6c5b2cb919cd0420e11bc"
+  }
+}

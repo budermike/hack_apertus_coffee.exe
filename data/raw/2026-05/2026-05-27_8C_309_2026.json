@@ -1,0 +1,56 @@
+{
+  "id": "8C_309_2026",
+  "case_id": "8C_309/2026",
+  "case_ids": [
+    "8C_309/2026"
+  ],
+  "decision_date": "2026-05-27",
+  "publication_date": null,
+  "department": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "division": "III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+  "subject": "Unfallversicherung (Prozessvoraussetzung)",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://27-05-2026-8C_309-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n8C_309/2026\nVerfügung vom 27. Mai 2026\nIV. öffentlich-rechtliche Abteilung\nBesetzung\nBundesrichterin Viscione, Präsidentin,\nGerichtsschreiber Grünvogel.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführerin,\ngegen\nSchweizerische Unfallversicherungsanstalt (Suva), Rechtsabteilung, Fluhmattstrasse 1, 6002 Luzern,\nBeschwerdegegnerin.\nGegenstand\nUnfallversicherung (Prozessvoraussetzung),\nBeschwerde gegen den Entscheid des Verwaltungsgerichts des Kantons Schwyz\nvom 9. März 2026 (I 2025 82).\nNach Einsicht\nin das Schreiben vom 21. Mai 2026, worin A.________ die Beschwerde vom 9. Mai 2026 (Poststempel) gegen den Entscheid des Verwaltungsgerichts des Kantons Schwyz vom 9. März 2026 zurückzieht,\nin Erwägung,\ndass die Beschwerde gemäss Art. 71 BGG in Verbindung mit Art. 73 Abs. 1 BZP im Verfahren nach Art. 32 Abs. 2 BGG abzuschreiben ist,\ndass in Anwendung von Art. 66 Abs. 2 BGG auf die Erhebung von Gerichtskosten verzichtet wird,\nverfügt die Präsidentin:\n1.\nDas Verfahren wird infolge Rückzugs der Beschwerde abgeschrieben.\n2.\nEs werden keine Gerichtskosten erhoben.\n3.\nDiese Verfügung wird den Parteien, dem Verwaltungsgericht des Kantons Schwyz und dem Bundesamt für Gesundheit schriftlich mitgeteilt.\nLuzern, 27. Mai 2026\nIm Namen der IV. öffentlich-rechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDie Präsidentin: Viscione\nDer Gerichtsschreiber: Grünvogel",
+  "operator_metadata": {
+    "date": "2026-05-27",
+    "reference": [
+      "8C_309/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-309-2026_2026-05-27.html",
+      "source": "446973/45/2834",
+      "content_length": 1760
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung)",
+      "it": "Confederazione Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale)",
+      "fr": "Conféderation Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social)"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_008"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2834",
+    "id": "CH_BGer_008_8C-309-2026_2026-05-27",
+    "title": {
+      "de": "Bundesgericht III. Öffentlich-rechtliche Abteilung (I. Sozialrechtliche Abteilung) 27.05.2026 8C_309/2026",
+      "it": "Tribunale federale III Corte di diritto pubblico (I Corte di diritto sociale) 27.05.2026 8C_309/2026",
+      "fr": "Tribunal fédéral IIIe Cour de droit public (Ire Cour de droit social) 27.05.2026 8C_309/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:41:56+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_008_8C-309-2026_2026-05-27.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "3bc96832c40d317633f597a7d69b8c84eff01d82715ae3350edf20856f7007d5"
+  }
+}

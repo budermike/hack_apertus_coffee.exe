@@ -1,0 +1,56 @@
+{
+  "id": "5A_1064_2025",
+  "case_id": "5A_1064/2025",
+  "case_ids": [
+    "5A_1064/2025"
+  ],
+  "decision_date": "2025-12-09",
+  "publication_date": null,
+  "department": "II. Zivilrechtliche Abteilung",
+  "division": "II. Zivilrechtliche Abteilung",
+  "subject": "Behandlung ohne Zustimmung",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://09-12-2025-5A_1064-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n5A_1064/2025\nUrteil vom 9. Dezember 2025\nII. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Bovey, Präsident,\nGerichtsschreiber Möckli.\nVerfahrensbeteiligte\nA.________,\nBeschwerdeführer,\ngegen\nB.________.\nGegenstand\nBehandlung ohne Zustimmung,\nBeschwerde gegen die Verfügung des Obergerichts des Kantons Bern, Kindes- und Erwachsenenschutzgericht, vom 17. November 2025 (KES 25 972).\nSachverhalt:\nDer Beschwerdeführer erhob am 10. November 2025 gegen eine am 5. November 2025 gestützt auf Art. 434 ZGB erfolgte Anordnung einer Behandlung ohne Zustimmung beim Obergericht des Kantons Bern eine Beschwerde.\nNachdem er am 13. November 2025 von den Universitären Psychiatrischen Diensten zurück ins Regionalgefängnis U.________ verlegt worden war, schrieb das Obergericht das Beschwerdeverfahren mit Verfügung vom 17. November 2025 als gegenstandslos geworden ab.\nMit Eingabe vom 8. Dezember 2025 wendet sich der Beschwerdeführer an das Bundesgericht mit der Bitte um eine Entschädigung von Fr. 5'000.-- und um Ernennung eines Anwaltes.\nErwägungen:\n1.\nVorweg sei der Beschwerdeführer darauf hingewiesen, dass das Bundesgericht keine Anwälte vermittelt. Es wäre an ihm, einen Anwalt mit der Wahrung seiner Interessen zu beauftragen.\n2.\nDie Entschädigungsfrage steht ausserhalb des möglichen Anfechtungsgegenstandes, welcher auf die Frage der Gegenstandslosigkeit des kantonalen Beschwerdeverfahrens beschränkt ist. Darauf kann von vornherein nicht eingetreten werden.\n3.\nDie Beschwerde hat eine Begründung zu enthalten, in welcher in gedrängter Form dargelegt wird, inwiefern der angefochtene Entscheid Recht verletzt (Art. 42 Abs. 2 BGG), was eine sachbezogene Auseinandersetzung mit dessen Erwägungen erfordert (BGE 140 III 115 E. 2; 142 III 364 E. 2.4).\nIn Bezug auf die Verfahrensabschreibung hält der Beschwerdeführer einzig fest, die Beschwerde sei \"sachlich völligst falsch entschieden\" worden. Damit ist keine Rechtsverletzung im Zusammenhang mit der Abschreibung des Beschwerdeverfahrens dargetan und eine solche ist auch nicht ersichtlich.\n4.\nNach dem Gesagten erweist sich die Beschwerde teils als offensichtlich unzulässig und im Übrigen als offensichtlich nicht hinreichend begründet, weshalb auf sie nicht eingetreten werden kann und der Präsident im vereinfachten Verfahren entscheidet (Art. 108 Abs. 1 lit. b BGG).\n5.\nAngesichts der konkreten Umstände ist auf die Erhebung von Gerichtskosten zu verzichten (Art. 66 Abs. 1 BGG).\nDemnach erkennt der Präsident:\n1.\nAuf die Beschwerde wird nicht eingetreten.\n2.\nEs werden keine Gerichtskosten erhoben.\n3.\nDieses Urteil wird dem Beschwerdeführer, dem anordnenden Arzt und dem Obergericht des Kantons Bern, Kindes- und Erwachsenenschutzgericht, mitgeteilt.\nLausanne, 9. Dezember 2025\nIm Namen der II. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Bovey\nDer Gerichtsschreiber: Möckli",
+  "operator_metadata": {
+    "date": "2025-12-09",
+    "reference": [
+      "5A_1064/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-1064-2025_2025-12-09.html",
+      "source": "446973/45/2869",
+      "content_length": 3335
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit civil"
+    },
+    "scrapedate": "2026-06-18",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_005"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2869",
+    "id": "CH_BGer_005_5A-1064-2025_2025-12-09",
+    "title": {
+      "de": "Bundesgericht II. Zivilrechtliche Abteilung 09.12.2025 5A_1064/2025",
+      "it": "Tribunale federale II Corte di diritto civile 09.12.2025 5A_1064/2025",
+      "fr": "Tribunal fédéral IIe Cour de droit civil 09.12.2025 5A_1064/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:42:23+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_005_5A-1064-2025_2025-12-09.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "3587f8089bc9a50cb64f603a5150fb4be67224ce3918a3886958f6dead809108"
+  }
+}

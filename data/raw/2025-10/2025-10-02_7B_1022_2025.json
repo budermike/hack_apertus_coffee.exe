@@ -1,0 +1,56 @@
+{
+  "id": "7B_1022_2025",
+  "case_id": "7B_1022/2025",
+  "case_ids": [
+    "7B_1022/2025"
+  ],
+  "decision_date": "2025-10-02",
+  "publication_date": null,
+  "department": "II. Strafrechtliche Abteilung",
+  "division": "II. Strafrechtliche Abteilung",
+  "subject": "Restitution du délai d'opposition à une ordonnance pénale; irrecevabilité du recours en matière pénale (motivation insuffisante)",
+  "language": "fr",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://02-10-2025-7B_1022-2025",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n7B_1022/2025\nArrêt du 2 octobre 2025\nIIe Cour de droit pénal\nComposition\nM. le Juge fédéral Abrecht, Président.\nGreffier : M. Fragnière.\nParticipants à la procédure\nA.________,\nrecourant,\ncontre\nMinistère public central du canton de Vaud, avenue de Longemalle 1, 1020 Renens,\nintimé.\nObjet\nRestitution du délai d'opposition à une ordonnance pénale; irrecevabilité du recours en matière pénale (motivation insuffisante),\nrecours contre l'arrêt de la Chambre des recours pénale du Tribunal cantonal du canton de Vaud du 28 juillet 2025 (n° 570 - PM23.009493-ERE).\nFaits :\nA.\nPar arrêt du 28 juillet 2025, la Chambre des recours pénale du Tribunal cantonal vaudois a déclaré irrecevable le recours formé par A.________ et a transmis le dossier de la cause au Président du Tribunal des mineurs du canton de Vaud.\nB.\nPar acte du 26 septembre 2025, A.________ interjette un recours en matière pénale au Tribunal fédéral contre l'arrêt précité.\nConsidérant en droit :\n1.\n1.1. Selon l'art. 42 al. 1 LTF, les mémoires de recours au Tribunal fédéral doivent indiquer les conclusions, les motifs et les moyens de preuve, et être signés. En particulier, la partie recourante doit motiver son recours en exposant succinctement en quoi la décision attaquée viole le droit (cf. art. 42 al. 2 LTF). Pour satisfaire à cette exigence, il lui appartient de discuter au moins brièvement les considérants de la décision litigieuse (ATF 140 III 86 consid. 2 et 115 consid. 2); en particulier, la motivation doit être topique, c'est-à-dire se rapporter à la question juridique tranchée par l'autorité cantonale (ATF 123 V 335).\n1.2. Face aux motifs de l'arrêt attaqué (cf. arrêt attaqué, consid. 2 p. 5), le recourant n'articule aucune critique, conforme aux exigences en la matière, susceptible de démontrer que l'autorité précédente aurait violé le droit fédéral en n'entrant pas en matière sur son acte de recours et en renvoyant la cause au Président du Tribunal des mineurs. Il se borne en effet à évoquer des \"lacunes en droit (et en fait) \" qui auraient entaché la procédure en question, sans exposer plus avant en quoi son acte de recours cantonal aurait été recevable.\n1.3. Ne répondant ainsi manifestement pas aux exigences de motivation d'un recours en matière pénale au Tribunal fédéral, le recours doit être déclaré irrecevable selon la procédure simplifiée prévue par l'art. 108 al. 1 let. b LTF.\n2.\nLe présent arrêt sera exceptionnellement rendu sans frais (art. 66 al. 1 2e phrase LTF).\nPar ces motifs, le Président prononce :\n1.\nLe recours est irrecevable.\n2.\nIl n'est pas perçu de frais judiciaires.\n3.\nLe présent arrêt est communiqué aux parties, à la Chambre des recours pénale du Tribunal cantonal du canton de Vaud et au Président du Tribunal des mineurs du canton de Vaud.\nLausanne, le 2 octobre 2025\nAu nom de la IIe Cour de droit pénal\ndu Tribunal fédéral suisse\nLe Président : Abrecht\nLe Greffier : Fragnière",
+  "operator_metadata": {
+    "date": "2025-10-02",
+    "reference": [
+      "7B_1022/2025"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "fr",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-1022-2025_2025-10-02.html",
+      "source": "446973/45/2851",
+      "content_length": 3401
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht II. Strafrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale II Corte di diritto penale",
+      "fr": "Conféderation Tribunal fédéral IIe Cour de droit pénal"
+    },
+    "scrapedate": "2026-06-18",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_007"
+    ],
+    "canton": "CH",
+    "language": "fr",
+    "source": "446973/45/2851",
+    "id": "CH_BGer_007_7B-1022-2025_2025-10-02",
+    "title": {
+      "de": "Bundesgericht II. Strafrechtliche Abteilung 02.10.2025 7B_1022/2025",
+      "it": "Tribunale federale II Corte di diritto penale 02.10.2025 7B_1022/2025",
+      "fr": "Tribunal fédéral IIe Cour de droit pénal 02.10.2025 7B_1022/2025"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T14:23:21+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_007_7B-1022-2025_2025-10-02.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "8d54e3cc5afc708c3f112fce4e4c4a34d401dccc17f4f9ad5c7a5aa9a09e40b3"
+  }
+}

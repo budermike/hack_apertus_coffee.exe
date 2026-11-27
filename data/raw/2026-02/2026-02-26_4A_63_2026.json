@@ -1,0 +1,56 @@
+{
+  "id": "4A_63_2026",
+  "case_id": "4A_63/2026",
+  "case_ids": [
+    "4A_63/2026"
+  ],
+  "decision_date": "2026-02-26",
+  "publication_date": null,
+  "department": "I. Zivilrechtliche Abteilung",
+  "division": "I. Zivilrechtliche Abteilung",
+  "subject": "Gesellschaftsrecht; Rückzug",
+  "language": "de",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://26-02-2026-4A_63-2026",
+  "text": "Bundesgericht\nTribunal fédéral\nTribunale federale\nTribunal federal\n4A_63/2026\nVerfügung vom 26. Februar 2026\nI. zivilrechtliche Abteilung\nBesetzung\nBundesrichter Hurni, Präsident,\nGerichtsschreiber Widmer.\nVerfahrensbeteiligte\nA.________ Inc.,\nvertreten durch Rechtsanwalt Patrik Odermatt,\nBeschwerdeführerin,\ngegen\n1. B.________,\nvertreten durch Rechtsanwalt Sandro Obrist,\n2. C.________ AG,\nvertreten durch Rechtsanwalt Dr. Daniel Bill,\n3. D.________ AG,\nBeschwerdegegnerinnen.\nGegenstand\nGesellschaftsrecht; Rückzug,\nBeschwerde gegen den Entscheid des Kantonsgerichts Luzern, 1. Abteilung, vom 19. Dezember 2025\n(1C 25 48).\nIn Erwägung,\ndass die Beschwerdeführerin ihre Beschwerde vom 4. Februar 2026 gegen den Entscheid des Kantonsgerichts Luzern vom 19. Dezember 2025 mit Schreiben vom 25. Februar 2026 zurückgezogen hat;\ndass das Verfahren als durch Rückzug der Beschwerde erledigt abzuschreiben ist (Art. 32 Abs. 2 BGG);\ndass die Beschwerdeführerin kostenpflichtig ist (Art. 66 Abs. 1 und 2 BGG);\ndass den Beschwerdegegnerinnen keine Parteientschädigung zuzusprechen ist, da ihnen im Zusammenhang mit dem bundesgerichtlichen Verfahren kein entschädigungspflichtiger Aufwand entstanden ist (Art. 68 BGG);\nverfügt der Präsident:\n1.\nDas Verfahren wird infolge Rückzugs der Beschwerde abgeschrieben.\n2.\nDie Gerichtskosten von Fr. 500.-- werden der Beschwerdeführerin auferlegt.\n3.\nDiese Verfügung wird den Parteien und dem Kantonsgericht Luzern, 1. Abteilung, schriftlich mitgeteilt.\nLausanne, 26. Februar 2026\nIm Namen der I. zivilrechtlichen Abteilung\ndes Schweizerischen Bundesgerichts\nDer Präsident: Hurni\nDer Gerichtsschreiber: Widmer",
+  "operator_metadata": {
+    "date": "2026-02-26",
+    "reference": [
+      "4A_63/2026"
+    ],
+    "attachment": {
+      "content_type": "text/html; charset=UTF-8",
+      "language": "de",
+      "content_url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-63-2026_2026-02-26.html",
+      "source": "446973/45/2829",
+      "content_length": 1949
+    },
+    "meta": {
+      "de": "Eidgenossenschaft Bundesgericht I. Zivilrechtliche Abteilung",
+      "it": "Confederazione Tribunale federale I Corte di diritto civile",
+      "fr": "Conféderation Tribunal fédéral Ire Cour de droit civil"
+    },
+    "scrapedate": "2026-10-19",
+    "hierarchy": [
+      "CH",
+      "CH_BGer",
+      "CH_BGer_004"
+    ],
+    "canton": "CH",
+    "language": "de",
+    "source": "446973/45/2829",
+    "id": "CH_BGer_004_4A-63-2026_2026-02-26",
+    "title": {
+      "de": "Bundesgericht I. Zivilrechtliche Abteilung 26.02.2026 4A_63/2026",
+      "it": "Tribunale federale I Corte di diritto civile 26.02.2026 4A_63/2026",
+      "fr": "Tribunal fédéral Ire Cour de droit civil 26.02.2026 4A_63/2026"
+    }
+  },
+  "fetch": {
+    "fetched_at": "2026-11-27T15:16:53+00:00",
+    "fetched_by": "hack-apertus-crawler/0.1 (research prototype)",
+    "source": "entscheidsuche",
+    "url": "https://entscheidsuche.ch/docs/CH_BGer/CH_BGer_004_4A-63-2026_2026-02-26.html",
+    "hash_algorithm": "sha256",
+    "text_sha256": "93e561774a81aaafa74c5ea7bd03795d04339a002196096503cc7b008e339790"
+  }
+}
