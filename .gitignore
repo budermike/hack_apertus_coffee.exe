@@ -26,3 +26,6 @@ build/
 .DS_Store
 .idea/
 .vscode/
+
+# Derived triage data: embedding/Apertus cache and local lawyer feedback
+data/processed/triage/

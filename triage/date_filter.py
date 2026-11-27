@@ -1,10 +1,14 @@
-"""Hard time-range filter ensuring only in-range judgements are embedded."""
+"""Hard time-range filter ensuring only in-range judgements are embedded.
+
+The period is always explicit (``--period 2026-Q2`` or ``--since/--until``);
+there is no rolling "last N months" default, so runs are reproducible.
+"""
 
 from __future__ import annotations
 
 import calendar
 from dataclasses import dataclass
-from datetime import date, datetime, timedelta
+from datetime import date, datetime
 import re
 from typing import Any, Sequence
 
@@ -35,6 +39,7 @@ _MONTHS: dict[str, int] = {
     "aout": 8,
     "septembre": 9,
     "octobre": 10,
+    "novembre": 11,  # French and Italian
     "décembre": 12,
     "decembre": 12,
     # Italian
@@ -51,10 +56,12 @@ _MONTHS: dict[str, int] = {
     "dicembre": 12,
 }
 
+# decision_date first: the shared schema (issue #3) filters on it until Suva
+# says which date applies; publication_date is usually null.
 _DATE_METADATA_KEYS = (
+    "decision_date",
     "date",
     "datum",
-    "decision_date",
     "publication_date",
     "entscheiddatum",
     "date_decision",
@@ -75,20 +82,18 @@ class OutOfDateRangeError(ValueError):
     """Raised when a judgement has no valid date or falls outside the allowed window."""
 
 
-def subtract_months(ref_date: date, months: int) -> date:
-    """Subtract calendar months from ``ref_date``, clamping day to month end."""
-    if months < 0:
-        raise ValueError("months must be non-negative")
-    total_months = (ref_date.year * 12 + (ref_date.month - 1)) - months
-    year, zero_month = divmod(total_months, 12)
-    month = zero_month + 1
-    last_day = calendar.monthrange(year, month)[1]
-    return date(year, month, min(ref_date.day, last_day))
+_QUARTER_RE = re.compile(r"(\d{4})-?Q([1-4])")
+_MONTH_PERIOD_RE = re.compile(r"(\d{4})-(\d{2})")
+_YEAR_PERIOD_RE = re.compile(r"(\d{4})")
+
+
+def _month_end(year: int, month: int) -> date:
+    return date(year, month, calendar.monthrange(year, month)[1])
 
 
 @dataclass(frozen=True)
 class DateRange:
-    """Inclusive publication date window ``[since, until]``."""
+    """Inclusive decision-date window ``[since, until]``."""
 
     since: date
     until: date
@@ -98,16 +103,29 @@ class DateRange:
             raise ValueError(f"Invalid date range: {self.since} > {self.until}")
 
     @classmethod
-    def last_n_months(cls, months: int = 3, until: date | None = None) -> "DateRange":
-        end = until or date.today()
-        return cls(since=subtract_months(end, months), until=end)
+    def from_period(cls, period: str) -> "DateRange":
+        """Parse ``2026-Q2``, ``2026-06`` or ``2026`` into an inclusive range."""
+        raw = period.strip().upper()
+        if match := _QUARTER_RE.fullmatch(raw):
+            year, quarter = int(match.group(1)), int(match.group(2))
+            return cls(since=date(year, 3 * quarter - 2, 1), until=_month_end(year, 3 * quarter))
+        if match := _MONTH_PERIOD_RE.fullmatch(raw):
+            year, month = int(match.group(1)), int(match.group(2))
+            if not 1 <= month <= 12:
+                raise ValueError(f"Invalid month in period {period!r}")
+            return cls(since=date(year, month, 1), until=_month_end(year, month))
+        if match := _YEAR_PERIOD_RE.fullmatch(raw):
+            year = int(match.group(1))
+            return cls(since=date(year, 1, 1), until=date(year, 12, 31))
+        raise ValueError(f"Unrecognised period {period!r}; use e.g. 2026-Q2, 2026-06 or 2026")
 
-    @classmethod
-    def last_n_days(cls, days: int = 90, until: date | None = None) -> "DateRange":
-        if days < 0:
-            raise ValueError("days must be non-negative")
-        end = until or date.today()
-        return cls(since=end - timedelta(days=days), until=end)
+    def label(self) -> str:
+        """File-name label: ``q2_2026`` for a full quarter, else ``<since>_<until>``."""
+        year = self.since.year
+        for quarter in range(1, 5):
+            if DateRange.from_period(f"{year}-Q{quarter}") == self:
+                return f"q{quarter}_{year}"
+        return f"{self.since.isoformat()}_{self.until.isoformat()}"
 
     def contains(self, value: date) -> bool:
         return self.since <= value <= self.until

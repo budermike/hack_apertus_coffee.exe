@@ -3,9 +3,12 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from datetime import date
 from html.parser import HTMLParser
 from pathlib import Path
 import re
+
+from triage.date_filter import parse_date_string
 
 
 @dataclass(frozen=True)
@@ -20,6 +23,9 @@ class ReferenceCase:
     bger_url: str
     author: str
     source_file: str
+    # Decision date parsed from the title ("... du 11 décembre 2025"); used to
+    # keep summaries from the scored period out of the reference set (no leakage).
+    decision_date: date | None = None
 
     def text_for_language(self, language: str | None = None) -> str:
         """Return language-matched summary text, or DE+FR combined if unknown."""
@@ -122,6 +128,7 @@ def parse_summary_html(path: Path) -> ReferenceCase:
         bger_url=bger_url,
         author=author,
         source_file=str(path),
+        decision_date=parse_date_string(title),
     )
 
 
