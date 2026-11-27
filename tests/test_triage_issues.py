@@ -16,7 +16,6 @@ from hack_apertus_coffee_exe.triage.config import TriageConfig, load_config
 from hack_apertus_coffee_exe.triage.date_filter import DateRange, parse_date_string
 from hack_apertus_coffee_exe.triage.embeddings import TfidfEmbedder
 from hack_apertus_coffee_exe.triage.export import RANKING_COLUMNS, export_period, format_recall_list
-from hack_apertus_coffee_exe.triage.feedback import FeedbackStore
 from hack_apertus_coffee_exe.triage.llm import ApertusTriageClient, GatewayConfig
 from hack_apertus_coffee_exe.triage.pipeline import CrawlItem, TriagePipeline, _normalize_crawl_dict
 from hack_apertus_coffee_exe.triage.reference_corpus import ReferenceCase, load_reference_corpus
@@ -173,9 +172,9 @@ class ScoreRankAmpelTests(unittest.TestCase):
         self.assertEqual(load_config("configs/triage.json"), TriageConfig())
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "c.json"
-            path.write_text(json.dumps({"green_threshold": 70, "feedback": {"positive_weight": 0.5}}))
+            path.write_text(json.dumps({"green_threshold": 70}))
             cfg = load_config(path)
-            self.assertEqual((cfg.green_threshold, cfg.feedback.positive_weight), (70, 0.5))
+            self.assertEqual(cfg.green_threshold, 70)
             path.write_text(json.dumps({"green_treshold": 70}))
             with self.assertRaises(ValueError):
                 load_config(path)
@@ -246,41 +245,6 @@ class CacheTests(unittest.TestCase):
         q1 = TriagePipeline(reference_cases=REFS, embedder=TfidfEmbedder(), date_range=DateRange.from_period("2026-Q1"))
         q2 = TriagePipeline(reference_cases=REFS, embedder=TfidfEmbedder(), date_range=DateRange.from_period("2026-Q2"))
         self.assertEqual(q1.fingerprint, q2.fingerprint)
-
-
-class FeedbackTests(unittest.TestCase):
-    def _run(self, tmp: str, ratings: dict[str, str]):
-        store = FeedbackStore(Path(tmp) / "fb.json")
-        for case_id, rating in ratings.items():
-            store.set(case_id, rating, comment="c")
-        items = [
-            _item("8C_10/2026", "2026-05-20", ACCIDENT_TEXT),
-            _item("8C_11/2026", "2026-05-21", ACCIDENT_TEXT_2),
-            _item("5A_1/2026", "2026-04-02", DIVORCE_TEXT),
-        ]
-        results = TriagePipeline(reference_cases=REFS, feedback=store).score_items(items)
-        return {r.case_id: r for r in results}
-
-    def test_feedback_on_a_changes_similar_b(self) -> None:
-        with tempfile.TemporaryDirectory() as tmp:
-            base = self._run(tmp + "/base", {})
-            neg = self._run(tmp + "/neg", {"8C_10/2026": "--"})
-            pos = self._run(tmp + "/pos", {"5A_1/2026": "++"})
-        self.assertEqual(neg["8C_10/2026"].ampel, "rot")  # direct: -- forces red
-        self.assertEqual(neg["8C_10/2026"].feedback["comment"], "c")
-        self.assertLess(neg["8C_11/2026"].rank_score, base["8C_11/2026"].rank_score)  # indirect
-        self.assertEqual(neg["8C_11/2026"].feedback["negative_source"], "8C_10/2026")
-        self.assertEqual(pos["5A_1/2026"].ampel, "gruen")  # direct: ++ forces green
-        self.assertIsNone(base["8C_11/2026"].feedback)
-
-    def test_store_roundtrip_and_validation(self) -> None:
-        with tempfile.TemporaryDirectory() as tmp:
-            path = Path(tmp) / "fb.json"
-            FeedbackStore(path).set("8C_1/2026", "+", "ok")
-            self.assertEqual(FeedbackStore(path).get("8C_1/2026").rating, "+")
-            self.assertTrue(FeedbackStore(path).clear("8C_1/2026"))
-            with self.assertRaises(ValueError):
-                FeedbackStore(path).set("8C_1/2026", "+++")
 
 
 class ExportTests(unittest.TestCase):

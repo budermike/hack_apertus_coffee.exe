@@ -157,20 +157,6 @@ class TriageCache:
             "updated_at": _now(),
         }
 
-    def vectors_for_case(self, case_id: str, fingerprint: str) -> np.ndarray | None:
-        """Latest cached vectors for a case regardless of date (used for feedback references)."""
-        for entry in self.items.values():
-            if entry.get("case_id") != case_id:
-                continue
-            emb = entry.get("embedding") or {}
-            if emb.get("fingerprint") != fingerprint:
-                continue
-            try:
-                return np.load(self.root / emb["file"], allow_pickle=False)
-            except (OSError, ValueError, KeyError):
-                return None
-        return None
-
     # -------------------------------------------------------------- decisions
 
     def get_decision(

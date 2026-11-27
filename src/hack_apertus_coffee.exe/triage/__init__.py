@@ -20,14 +20,12 @@ from .embeddings import (
     score_against_corpus,
 )
 from .export import export_period, format_recall_list, write_ranking_csv, write_recall_list
-from .feedback import FeedbackStore
 from .pipeline import TriagePipeline, TriageResult, load_crawl_items
 from .reference_corpus import ReferenceCase, load_reference_corpus
 
 __all__ = [
     "DateRange",
     "Embedder",
-    "FeedbackStore",
     "GatewayEmbedder",
     "OutOfDateRangeError",
     "ReferenceCase",

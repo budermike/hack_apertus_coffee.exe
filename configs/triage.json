@@ -1,5 +1,5 @@
 {
-  "_comment": "Triage settings (issues #11, #12, #28, #33). Thresholds are placeholders until the eval sweep (#21) gives the F2-best value.",
+  "_comment": "Triage settings (issues #11, #12, #33). Thresholds are placeholders until the eval sweep (#21) gives the F2-best value.",
   "rank_by": "final_score",
   "llm_weight": 0.75,
   "top_k": 3,
@@ -7,14 +7,5 @@
   "yellow_threshold": 40.0,
   "recall_top_n": 30,
   "export_dir": "results",
-  "cache_dir": "data/processed/triage",
-  "feedback": {
-    "_comment": "Direct offsets apply to the rated judgement; weights scale the effect on similar judgements.",
-    "direct_offsets": {"--": -20.0, "-": -10.0, "0": 0.0, "+": 10.0, "++": 20.0},
-    "strong_ratings_force_ampel": true,
-    "positive_weight": 0.3,
-    "negative_weight": 0.3,
-    "rating_strength": {"--": -1.0, "-": -0.5, "0": 0.0, "+": 0.5, "++": 1.0},
-    "store_path": "data/processed/triage/feedback.json"
-  }
+  "cache_dir": "data/processed/triage"
 }

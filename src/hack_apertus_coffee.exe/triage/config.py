@@ -1,4 +1,4 @@
-"""Triage configuration: score weights, traffic-light thresholds, exports, feedback.
+"""Triage configuration: score weights, traffic-light thresholds, exports.
 
 Values are read from ``configs/triage.json`` when it exists; anything missing
 falls back to the defaults below. Nothing in the pipeline hard-codes these
@@ -7,7 +7,7 @@ numbers (issues #12 and #28).
 
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass, field, fields
+from dataclasses import asdict, dataclass, fields
 import json
 from pathlib import Path
 from typing import Any
@@ -17,29 +17,6 @@ DEFAULT_CONFIG_PATH = Path("configs/triage.json")
 AMPEL_GREEN = "gruen"
 AMPEL_YELLOW = "gelb"
 AMPEL_RED = "rot"
-
-RATINGS = ("--", "-", "0", "+", "++")
-
-
-@dataclass(frozen=True)
-class FeedbackConfig:
-    """How lawyer feedback (issue #28) changes scores."""
-
-    # Direct effect on the rated judgement itself (points on the 0-100 scale).
-    direct_offsets: dict[str, float] = field(
-        default_factory=lambda: {"--": -20.0, "-": -10.0, "0": 0.0, "+": 10.0, "++": 20.0}
-    )
-    # "++" always ends up at least green, "--" always ends up red.
-    strong_ratings_force_ampel: bool = True
-    # Indirect effect on other judgements: points = weight * strength * similarity * 100.
-    positive_weight: float = 0.3
-    negative_weight: float = 0.3
-    # Strength of each rating as a positive (+) or negative (-) reference.
-    rating_strength: dict[str, float] = field(
-        default_factory=lambda: {"--": -1.0, "-": -0.5, "0": 0.0, "+": 0.5, "++": 1.0}
-    )
-    store_path: str = "data/processed/triage/feedback.json"
-
 
 @dataclass(frozen=True)
 class TriageConfig:
@@ -58,7 +35,6 @@ class TriageConfig:
     recall_top_n: int = 30
     export_dir: str = "results"
     cache_dir: str = "data/processed/triage"
-    feedback: FeedbackConfig = field(default_factory=FeedbackConfig)
 
     def __post_init__(self) -> None:
         if self.rank_by not in ("final_score", "cosine_score"):
@@ -96,7 +72,4 @@ def load_config(path: str | Path | None = None) -> TriageConfig:
         return TriageConfig()
     data = json.loads(cfg_path.read_text(encoding="utf-8"))
     data.pop("_comment", None)
-    feedback_data = data.pop("feedback", {}) or {}
-    feedback_data.pop("_comment", None)
-    feedback = FeedbackConfig(**_known(FeedbackConfig, feedback_data))
-    return TriageConfig(**_known(TriageConfig, data), feedback=feedback)
+    return TriageConfig(**_known(TriageConfig, data))

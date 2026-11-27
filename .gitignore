@@ -27,5 +27,5 @@ build/
 .idea/
 .vscode/
 
-# Derived triage data: embedding/Apertus cache and local lawyer feedback
+# Derived triage data: embedding/Apertus cache
 data/processed/triage/

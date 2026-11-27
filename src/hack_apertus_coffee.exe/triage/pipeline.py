@@ -30,7 +30,6 @@ from .embeddings import (
     embedder_fingerprint,
     score_chunk_vectors,
 )
-from .feedback import FeedbackStore, adjust_score
 from .llm import ApertusTriageClient, TriageDecision
 from .reference_corpus import ReferenceCase, load_reference_corpus
 
@@ -88,8 +87,7 @@ class TriageResult:
     judgement_date: str | None = None
     rank: int | None = None  # 1 = highest score within the scored period
     ampel: str | None = None  # gruen / gelb / rot
-    rank_score: float | None = None  # score that decided rank and ampel (after feedback)
-    feedback: dict[str, Any] | None = None
+    rank_score: float | None = None  # score that decided rank and ampel (config.rank_by)
 
     @property
     def relevance_score(self) -> float:
@@ -257,7 +255,6 @@ class TriagePipeline:
         config: TriageConfig | None = None,
         date_range: DateRange | None = None,
         cache: TriageCache | None = None,
-        feedback: FeedbackStore | None = None,
         top_k: int | None = None,
         llm_weight: float | None = None,
     ) -> None:
@@ -274,7 +271,6 @@ class TriagePipeline:
         # Explicit period only (no rolling default); None disables the date filter.
         self.date_range = date_range
         self.cache = cache
-        self.feedback = feedback
         self.last_skipped: list[SkippedItem] = []
         self.last_excluded_references: list[str] = []
 
@@ -420,31 +416,12 @@ class TriagePipeline:
         )
         return result, chunk_vecs
 
-    def _finalize(self, results: list[TriageResult], vectors: dict[str, np.ndarray]) -> list[TriageResult]:
-        """Apply feedback, then sort, rank and colour by the configured score."""
-        ratings = self.feedback.all() if self.feedback is not None else {}
-        ref_vectors: dict[str, np.ndarray] = {}
-        for case_id in ratings:
-            vecs = vectors.get(case_id)
-            if vecs is None and self.cache is not None:
-                vecs = self.cache.vectors_for_case(case_id, self.fingerprint)
-            if vecs is None:
-                logger.warning("No vectors for feedback case %s; its indirect effect is skipped", case_id)
-                continue
-            ref_vectors[case_id] = vecs
-
-        adjusted: list[TriageResult] = []
-        for res in results:
-            base = res.final_score if self.config.rank_by == "final_score" else res.cosine_score
-            if ratings:
-                adj = adjust_score(res.case_id, base, vectors.get(res.case_id), ratings, ref_vectors, self.config)
-                fb = adj.to_dict() if (adj.own_rating or abs(adj.delta) > 1e-9) else None
-                if fb is not None and res.case_id in ratings:
-                    fb["comment"] = ratings[res.case_id].comment
-                adjusted.append(replace(res, rank_score=adj.score, feedback=fb))
-            else:
-                adjusted.append(replace(res, rank_score=base))
-
+    def _finalize(self, results: list[TriageResult]) -> list[TriageResult]:
+        """Sort, rank and colour by the configured score."""
+        adjusted = [
+            replace(res, rank_score=res.final_score if self.config.rank_by == "final_score" else res.cosine_score)
+            for res in results
+        ]
         adjusted.sort(key=lambda r: (r.rank_score, r.cosine_max_similarity, r.case_id), reverse=True)
         final: list[TriageResult] = []
         for rank, res in enumerate(adjusted, start=1):
@@ -459,15 +436,15 @@ class TriagePipeline:
         else:
             resolved_date = extract_judgement_date(item.text, item.metadata)
         ref_idx = self.active_reference_indices({item.case_id})
-        result, vecs = self._score_one(item, resolved_date, ref_idx)
+        result, _ = self._score_one(item, resolved_date, ref_idx)
         try:
-            return self._finalize([result], {item.case_id: vecs})[0]
+            return self._finalize([result])[0]
         finally:
             if self.cache is not None:
                 self.cache.save()
 
     def score_items(self, items: Sequence[CrawlItem]) -> list[TriageResult]:
-        """Hard-filter by date, score, apply feedback, then rank (1 = best)."""
+        """Hard-filter by date, score, then rank (1 = best)."""
         if self.date_range is not None:
             accepted, skipped = filter_items_in_date_range(items, self.date_range)
             self.last_skipped = skipped
@@ -484,14 +461,12 @@ class TriagePipeline:
 
         ref_idx = self.active_reference_indices({item.case_id for item in accepted})
         results: list[TriageResult] = []
-        vectors: dict[str, np.ndarray] = {}
         try:
             for item in accepted:
                 resolved = extract_judgement_date(item.text, item.metadata)
-                result, vecs = self._score_one(item, resolved, ref_idx)
+                result, _ = self._score_one(item, resolved, ref_idx)
                 results.append(result)
-                vectors[item.case_id] = vecs
         finally:
             if self.cache is not None:
                 self.cache.save()
-        return self._finalize(results, vectors)
+        return self._finalize(results)

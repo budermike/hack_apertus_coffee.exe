@@ -28,9 +28,8 @@ from .llm import (
     probe_gateway_embeddings,
 )
 from .cache import TriageCache
-from .config import RATINGS, load_config
+from .config import load_config
 from .export import export_period
-from .feedback import FeedbackStore
 from .pipeline import TriagePipeline, load_crawl_items
 from .reference_corpus import load_reference_corpus
 
@@ -105,7 +104,6 @@ def _cmd_score(args: argparse.Namespace) -> int:
     llm_client = None if args.no_llm else ApertusTriageClient(config=cfg)
     date_range = _resolve_date_range(args)
     cache = None if args.no_cache else TriageCache(args.cache_dir or config.cache_dir)
-    feedback = None if args.no_feedback else FeedbackStore(args.feedback_file or config.feedback.store_path)
 
     pipeline = TriagePipeline(
         judgements_dir=args.judgements_dir,
@@ -114,7 +112,6 @@ def _cmd_score(args: argparse.Namespace) -> int:
         config=config,
         date_range=date_range,
         cache=cache,
-        feedback=feedback,
     )
     items = load_crawl_items(args.input)
     results = pipeline.score_items(items)
@@ -148,25 +145,6 @@ def _cmd_score(args: argparse.Namespace) -> int:
             config.recall_top_n,
         )
         print(f"Wrote {ranking} and {recall} (top {config.recall_top_n})", file=sys.stderr)
-    return 0
-
-
-def _cmd_feedback(args: argparse.Namespace) -> int:
-    config = load_config(args.config)
-    store = FeedbackStore(args.feedback_file or config.feedback.store_path)
-    if args.action == "set":
-        fb = store.set(args.case_id, args.rating, args.comment or "")
-        print(f"{fb.case_id}: {fb.rating} saved to {store.path}. Re-run `score` to re-evaluate.")
-    elif args.action == "clear":
-        removed = store.clear(args.case_id)
-        print(f"{args.case_id}: {'removed' if removed else 'had no feedback'}")
-    else:
-        ratings = store.all()
-        if not ratings:
-            print("No feedback recorded.")
-        for fb in ratings.values():
-            comment = f" - {fb.comment}" if fb.comment else ""
-            print(f"{fb.case_id}\t{fb.rating}\t{fb.updated_at}{comment}")
     return 0
 
 
@@ -224,25 +202,10 @@ def build_parser() -> argparse.ArgumentParser:
     p_score.add_argument("--config", default=None, help="Triage config JSON (default: configs/triage.json)")
     p_score.add_argument("--cache-dir", default=None, help="Override cache_dir from the config")
     p_score.add_argument("--no-cache", action="store_true", help="Recompute embeddings and Apertus calls")
-    p_score.add_argument("--feedback-file", default=None, help="Override feedback store path")
-    p_score.add_argument("--no-feedback", action="store_true", help="Ignore lawyer feedback")
     p_score.add_argument("--export-dir", default=None, help="Override export_dir from the config")
     p_score.add_argument("--no-export", action="store_true", help="Do not write ranking CSV / recall list")
     p_score.add_argument("-v", "--verbose", action="store_true", help="List judgements skipped by the date filter")
     p_score.set_defaults(func=_cmd_score)
-
-    p_fb = sub.add_parser("feedback", help="Record lawyer feedback (-- - 0 + ++) for a judgement")
-    p_fb.add_argument("--config", default=None, help="Triage config JSON (default: configs/triage.json)")
-    p_fb.add_argument("--feedback-file", default=None, help="Override feedback store path")
-    fb_sub = p_fb.add_subparsers(dest="action", required=True)
-    p_fb_set = fb_sub.add_parser("set", help="Set a rating; write negative ones as --rating=-- or --rating=-")
-    p_fb_set.add_argument("case_id", help="Geschaeftsnummer, e.g. 8C_123/2026")
-    p_fb_set.add_argument("--rating", required=True, choices=RATINGS)
-    p_fb_set.add_argument("--comment", default=None)
-    p_fb_clear = fb_sub.add_parser("clear", help="Remove the rating of a judgement")
-    p_fb_clear.add_argument("case_id")
-    fb_sub.add_parser("list", help="List all ratings")
-    p_fb.set_defaults(func=_cmd_feedback)
 
     p_eval = sub.add_parser("eval-corpus", help="Evaluate leave-one-out cosine similarity on reference corpus")
     p_eval.add_argument("--judgements-dir", default="judgements", help="Directory with Export_*.html summaries")
