@@ -1,0 +1,22 @@
+# Install: python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
+# Pin exact versions. Ask the team before adding a dependency.
+
+# Apertus gateway client + .env loading
+openai==3.60.0
+python-dotenv==1.2.4
+
+# Analysis
+numpy==2.5.5
+pandas==3.1.1
+matplotlib==3.11.2
+
+# Notebooks
+jupyterlab==4.6.6
+ipykernel==7.4.0
+
+# Tests
+pytest==9.2.0
+
+# Docs
+sphinx==9.2.0
+myst-parser==5.2.0
