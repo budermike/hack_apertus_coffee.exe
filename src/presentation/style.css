@@ -239,6 +239,31 @@ main {
     margin-bottom: .5rem;
 }
 .dp-title { font-weight: 600; font-size: .92rem; text-transform: capitalize; }
+.dp-title-btn {
+    padding: .3rem .7rem;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    transition: background .1s;
+}
+.dp-title-btn::after { content: " ▾"; font-size: .7rem; color: var(--muted); }
+.dp-title-btn:hover { background: var(--surface-2); }
+
+/* month and year grids */
+.dp-grid.dp-grid-wide { grid-template-columns: repeat(3, 1fr); gap: 4px; }
+.dp-cell {
+    padding: .7rem 0;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    font-size: .88rem;
+    text-transform: capitalize;
+    font-variant-numeric: tabular-nums;
+    transition: background .1s;
+}
+.dp-cell:hover:not(:disabled) { background: var(--surface-2); }
+.dp-cell.selected, .dp-cell.selected:hover { background: var(--accent); color: #fff; }
+.dp-cell:disabled { opacity: .3; cursor: not-allowed; }
 .dp-nav { width: 30px; height: 30px; font-size: 1.15rem; }
 
 .dp-grid {
