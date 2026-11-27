@@ -4,7 +4,7 @@
 
 ### Identification of relevant Federal Court judgements and preparation of a legal summary
 
-`Coffee.exe`
+Coffee.exe
 <br>
 <br>
 

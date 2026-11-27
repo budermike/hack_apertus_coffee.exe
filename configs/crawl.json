@@ -1,0 +1,17 @@
+{
+  "source": "entscheidsuche",
+  "from_date": "2026-04-01",
+  "to_date": "2026-06-30",
+  "out_dir": "data/raw",
+  "report_path": "results/tables/crawl_report.csv",
+  "sources": {
+    "bger": {
+      "base_url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php",
+      "delay_seconds": 2.0
+    },
+    "entscheidsuche": {
+      "base_url": "https://entscheidsuche.ch/_searchV2.php",
+      "delay_seconds": 0.5
+    }
+  }
+}

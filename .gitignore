@@ -26,3 +26,9 @@ build/
 .DS_Store
 .idea/
 .vscode/
+
+#data
+.data/
+# Crawled court judgements stay local (keep only the empty folder in git)
+data/raw/*
+!data/raw/.gitkeep
