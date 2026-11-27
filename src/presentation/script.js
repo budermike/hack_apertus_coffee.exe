@@ -1,30 +1,52 @@
-/* script.js — UI state and rendering. Depends on i18n.js and api.js (loaded before). */
+/* script.js — UI state and rendering. Depends on i18n.js, datepicker.js and api.js (loaded before). */
 
-const threshold_high_relevance = 70;
-const threshold_medium_relevance = 40;
+/** From this relevance on a judgement counts as relevant and is summarized automatically. */
+const SUMMARY_THRESHOLD = 70;
+const MEDIUM_THRESHOLD = 40;
 
-/** Relevance levels, top to bottom as shown in the traffic light. */
+/** Relevance levels, highest first. */
 const LEVELS = ["high", "medium", "low"];
-const LEVEL_LABEL_KEY = { high: "levelHigh", medium: "levelMedium", low: "levelLow" };
-/** Score a judgement is moved to when the user picks a level its base score is not in. */
+/** Score a judgement is moved to when the user puts it into a level its base score is not in. */
 const LEVEL_TARGET_SCORE = { high: 85, medium: 55, low: 20 };
+
+const QUOTE_STATUS = {
+    exakt: { key: "quoteExact", tag: "ok" },
+    "ungefähr": { key: "quoteApprox", tag: "warn" },
+    fehlt: { key: "quoteMissing", tag: "bad" },
+};
+
+const COLUMNS = [
+    { key: "caseNumber", label: "colCase" },
+    { key: "date", label: "colDate" },
+    { key: "area", label: "colArea" },
+    { key: "score", label: "colRelevance" },
+    { key: null, label: "colStatus" },
+];
 
 const state = {
     items: [],                 // judgements from the last search (incl. backend `adjustment`)
     hasSearched: false,
+    searching: false,
     error: null,               // i18n key of a list-level error
-    summaries: {},             // id -> { de, fr }
+    selectedId: null,          // judgement shown in the detail panel
+    sort: { key: "score", dir: -1 },
+    filter: { text: "", min: 0, max: 100 },
+    criteriaOpen: false,       // "Kriterien und Belege" expanded? (kept while switching cases)
+
+    summaries: {},             // id -> { de, fr } as stored in the database
     summaryLoading: new Set(), // ids currently being summarized
     summaryError: new Set(),   // ids whose summary failed
-    openPanels: {},            // id -> languages shown in the open panel, e.g. ["de"] or ["de", "fr"]
-    openExplanations: new Set(),
-    selected: new Set(),       // ids selected for bulk summarize
-    filter: { text: "", min: 0, max: 100 },
     drafts: {},                // id -> { de, fr } while the user edits a summary
     saveStatus: {},            // id -> "saving" | "saved" | "error"
+
+    /* "Anpassen" per summary language; keys are `${id}:${lang}` */
+    adjustOpen: new Set(),
+    adjustText: {},            // key -> instruction typed so far
+    adjustBusy: new Set(),
+    adjustError: new Set(),
+
     kbEntries: [],
     kbQuery: "",
-    kbLang: {},                // kb entry id -> languages shown
     activeTab: localStorage.getItem("tab") === "kb" ? "kb" : "search",
 };
 
@@ -32,92 +54,91 @@ const state = {
 
 const $ = (sel) => document.querySelector(sel);
 
-function el(tag, props = {}, children = []) {
+/** el("p", { class: "note", text: "…", onclick: fn }, child, [more, children]) */
+function el(tag, props = {}, ...children) {
     const node = document.createElement(tag);
     for (const [key, value] of Object.entries(props)) {
+        if (value === null || value === undefined || value === false) continue;
         if (key === "class") node.className = value;
         else if (key === "text") node.textContent = value;
         else if (key.startsWith("on")) node.addEventListener(key.slice(2), value);
-        else if (typeof value === "boolean") node[key] = value;
+        else if (value === true) node[key] = true;
         else node.setAttribute(key, value);
     }
-    node.append(...[].concat(children).filter(Boolean));
+    node.append(...children.flat(Infinity).filter((c) => c !== null && c !== undefined && c !== false));
     return node;
 }
 
-/** Displayed score: base score + net manual adjustment (from the traffic light), clamped to 0..100. */
+function findItem(id) {
+    return state.items.find((i) => i.id === id);
+}
+
+/** Displayed score: base score + net manual adjustment, clamped to 0..100. */
 function effectiveScore(item) {
     return Math.max(0, Math.min(100, item.score + (item.adjustment || 0)));
 }
 
-/* ---------- filters ---------- */
-
-function isFilterActive() {
-    const f = state.filter;
-    return f.text !== "" || f.min > 0 || f.max < 100;
-}
-
-/** Text filter: every word must appear in case number, title or explanation (DE or FR). */
-function matchesFilter(item) {
-    const score = effectiveScore(item);
-    const { text, min, max } = state.filter;
-    if (score < min || score > max) return false;
-    if (!text) return true;
-    const haystack = [
-        item.caseNumber, item.title.de, item.title.fr, item.explanation.de, item.explanation.fr,
-    ].join(" ").toLowerCase();
-    return text.toLowerCase().split(/\s+/).every((term) => haystack.includes(term));
-}
-
-/** Items currently shown: filtered and sorted by score (highest first). */
-function visibleItems() {
-    return state.items
-        .filter(matchesFilter)
-        .sort((a, b) => effectiveScore(b) - effectiveScore(a));
-}
-
-function readScoreInput(input, fallback) {
-    const value = parseInt(input.value, 10);
-    return Number.isNaN(value) ? fallback : Math.max(0, Math.min(100, value));
-}
-
-function onFilterChange() {
-    state.filter = {
-        text: $("#filter-text").value.trim(),
-        min: readScoreInput($("#filter-min"), 0),
-        max: readScoreInput($("#filter-max"), 100),
-    };
-    // keep only selections that are still visible
-    const visible = new Set(visibleItems().map((i) => i.id));
-    state.selected = new Set([...state.selected].filter((id) => visible.has(id)));
-    renderList();
-}
-
-function resetFilters() {
-    $("#filter-text").value = "";
-    $("#filter-min").value = 0;
-    $("#filter-max").value = 100;
-    onFilterChange();
-}
-
 function scoreLevel(score) {
-    if (score >= threshold_high_relevance) return "high";
-    if (score >= threshold_medium_relevance) return "medium";
+    if (score >= SUMMARY_THRESHOLD) return "high";
+    if (score >= MEDIUM_THRESHOLD) return "medium";
     return "low";
+}
+
+const itemLevel = (item) => scoreLevel(effectiveScore(item));
+
+/** "Unfallversicherung – Kausalzusammenhang bei Schleudertrauma" */
+function caseTitle(entry) {
+    return [areaName(entry.area), loc(entry.subject)].filter(Boolean).join(" – ");
+}
+
+/** "E3.1, E5.4" -> "E. 3.1, E. 5.4" (FR: "consid. 3.1, consid. 5.4") */
+function formatRef(at) {
+    return (at || "").split(/,\s*/).filter(Boolean)
+        .map((part) => (/^E\d/.test(part) ? t("refPrefix") + part.slice(1) : part))
+        .join(", ");
+}
+
+function spinner() {
+    return el("span", { class: "spinner dark", "aria-hidden": "true" });
+}
+
+let toastTimer;
+
+function toast(message) {
+    const node = $("#toast");
+    node.textContent = message;
+    node.style.display = "block";
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => { node.style.display = "none"; }, 4000);
+}
+
+/** Re-renders `container` and puts the caret back into the field the user was typing in. */
+function preservingFocus(container, render) {
+    const active = document.activeElement;
+    const key = active && container.contains(active) ? active.dataset.focusKey : null;
+    const caret = key ? [active.selectionStart, active.selectionEnd, active.scrollTop] : null;
+    render();
+    if (!key) return;
+    const node = container.querySelector(`[data-focus-key="${CSS.escape(key)}"]`);
+    if (!node || node.disabled) return;
+    node.focus({ preventScroll: true });
+    node.setSelectionRange(caret[0], caret[1]);
+    node.scrollTop = caret[2];
 }
 
 /* ---------- theme ---------- */
 
-function setTheme(theme) {
+function toggleTheme() {
+    const theme = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
     document.documentElement.dataset.theme = theme;
     localStorage.setItem("theme", theme);
 }
 
-function toggleTheme() {
-    setTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark");
-}
-
 /* ---------- date inputs (typing + calendar) ---------- */
+
+function setDateInput(textInput, iso) {
+    textInput.value = formatDate(iso);
+}
 
 function setupDateInput(textInput) {
     const button = document.querySelector(`.calendar-btn[data-target="${textInput.id}"]`);
@@ -132,10 +153,6 @@ function setupDateInput(textInput) {
         const iso = parseDate(textInput.value);
         if (iso) setDateInput(textInput, iso);
     });
-}
-
-function setDateInput(textInput, iso) {
-    textInput.value = formatDate(iso);
 }
 
 /** Re-format the date fields after a language change. */
@@ -187,16 +204,15 @@ function showFormError(key) {
 async function onSearch(event) {
     event.preventDefault();
     const range = validateRange();
-    if (range.error) {
-        showFormError(range.error);
-        return;
-    }
-    showFormError(null);
+    showFormError(range.error || null);
+    if (range.error || state.searching) return;
 
     const button = $("#search-btn");
     button.disabled = true;
     button.classList.add("loading");
-    setStatus("searching");
+    state.searching = true;
+    state.selectedId = null;
+    renderResults();
 
     try {
         state.items = await searchJudgements(range.from, range.to, currentLang);
@@ -205,117 +221,196 @@ async function onSearch(event) {
         console.error(err);
         state.items = [];
         state.error = "errorSearch";
-    } finally {
-        state.hasSearched = true;
-        state.selected.clear();
-        button.disabled = false;
-        button.classList.remove("loading");
-        renderList();
     }
+    state.hasSearched = true;
+    state.searching = false;
+    button.disabled = false;
+    button.classList.remove("loading");
+    renderResults();
 
-    autoSummarizeHighRelevance();
+    autoSummarizeRelevant();
 }
 
-/** Highly relevant judgements are summarized right away (in the background, panels stay closed). */
-async function autoSummarizeHighRelevance() {
-    const ids = state.items
-        .filter((i) => scoreLevel(effectiveScore(i)) === "high")
-        .map((i) => i.id);
+/** Sufficiently relevant judgements are summarized right away, in the background.
+ *  All others get a "Zusammenfassen" button in the detail panel. */
+async function autoSummarizeRelevant() {
+    const ids = state.items.filter((i) => itemLevel(i) === "high").map((i) => i.id);
     if (ids.length === 0) return;
     await Promise.all(ids.map(loadSummary));
     refreshKb();
 }
 
-/* ---------- relevance correction (traffic light) ---------- */
+/* ---------- filters + sorting ---------- */
 
-/** Moves a judgement to another relevance level. If its base score already lies in that
- *  level, the manual adjustment is removed; otherwise it is set to the level's target score. */
-function setLevel(id, level) {
-    const item = state.items.find((i) => i.id === id);
-    if (!item) return;
-    const current = scoreLevel(effectiveScore(item));
-    if (level === current) return;
+function isFilterActive() {
+    const f = state.filter;
+    return f.text !== "" || f.min > 0 || f.max < 100;
+}
 
-    item.adjustment = scoreLevel(item.score) === level ? 0 : LEVEL_TARGET_SCORE[level] - item.score;
-    const direction = LEVELS.indexOf(level) < LEVELS.indexOf(current) ? +1 : -1;
-    sendFeedback(id, item.adjustment, direction, level);   // backend persists it for future lookups
+/** Text filter: every word must appear in case number, subject, question or explanation (DE or FR). */
+function matchesFilter(item) {
+    const score = effectiveScore(item);
+    const { text, min, max } = state.filter;
+    if (score < min || score > max) return false;
+    if (!text) return true;
+    const haystack = [
+        item.caseNumber, areaName(item.area),
+        item.subject?.de, item.subject?.fr, item.question?.de, item.question?.fr,
+        item.explanation?.de, item.explanation?.fr,
+    ].join(" ").toLowerCase();
+    return text.toLowerCase().split(/\s+/).every((term) => haystack.includes(term));
+}
+
+function sortValue(item, key) {
+    return key === "score" ? effectiveScore(item) : item[key] ?? "";
+}
+
+/** Items currently shown: filtered, then sorted by the chosen column. */
+function visibleItems() {
+    const { key, dir } = state.sort;
+    return state.items.filter(matchesFilter).sort((a, b) => {
+        const x = sortValue(a, key);
+        const y = sortValue(b, key);
+        if (x !== y) return (x < y ? -1 : 1) * dir;
+        return a.caseNumber < b.caseNumber ? -1 : 1;
+    });
+}
+
+/** Plain text field for whole numbers 0..100: strip everything that is not a digit. */
+function readScoreInput(input, fallback) {
+    const digits = input.value.replace(/\D/g, "");
+    if (digits !== input.value) input.value = digits;
+    return digits === "" ? fallback : Math.min(100, parseInt(digits, 10));
+}
+
+function onFilterChange() {
+    state.filter = {
+        text: $("#filter-text").value.trim(),
+        min: readScoreInput($("#filter-min"), 0),
+        max: readScoreInput($("#filter-max"), 100),
+    };
     renderList();
 }
 
-/* ---------- summaries + knowledge base ---------- */
+function resetFilters() {
+    $("#filter-text").value = "";
+    $("#filter-min").value = "0";
+    $("#filter-max").value = "100";
+    onFilterChange();
+}
+
+function sortBy(key) {
+    const sameKey = state.sort.key === key;
+    state.sort = { key, dir: sameKey ? -state.sort.dir : (key === "score" ? -1 : 1) };
+    renderList();
+    document.querySelector(`#results-head button[data-key="${key}"]`)?.focus();
+}
+
+/* ---------- selecting a case ---------- */
+
+function selectCase(id) {
+    const changed = state.selectedId !== id;
+    state.selectedId = id;
+    renderList();
+    renderDetail();
+    if (changed) {
+        $("#detail-pane").scrollTop = 0;
+        if (window.innerWidth <= 1000) window.scrollTo(0, 0);
+    }
+    // already in the database from an earlier session: fetch the stored summary
+    const item = findItem(id);
+    if (item?.summarized && !state.summaries[id]) loadSummary(id);
+}
+
+function closeDetail() {
+    const id = state.selectedId;
+    state.selectedId = null;
+    renderList();
+    renderDetail();
+    document.querySelector(`#results-rows tr[data-id="${CSS.escape(id)}"]`)?.focus();
+}
+
+/* ---------- relevance correction ---------- */
+
+/** "Für Suva relevant" / "Nicht relevant": moves the judgement into the level `high` / `low`.
+ *  Clicking the active choice again takes a manual correction back. */
+async function setRelevance(id, level) {
+    const item = findItem(id);
+    if (!item) return;
+    const before = itemLevel(item);
+    if (level === before && !item.adjustment) return;   // already there by its own score
+
+    if (level === before || scoreLevel(item.score) === level) item.adjustment = 0;
+    else item.adjustment = LEVEL_TARGET_SCORE[level] - item.score;
+
+    const after = itemLevel(item);
+    const direction = LEVELS.indexOf(after) < LEVELS.indexOf(before) ? +1 : -1;
+    renderList();
+    renderDetail();
+    if (after === "high" && !state.summaries[id]) loadSummary(id).then(refreshKb);
+
+    try {
+        await sendFeedback(id, item.adjustment, direction, after);   // backend persists it for future lookups
+        toast(t("feedbackSaved"));
+    } catch (err) {
+        console.error(err);
+        toast(t("errorFeedback"));
+    }
+}
+
+/* ---------- summaries ---------- */
 
 async function loadSummary(id) {
     if (state.summaries[id] || state.summaryLoading.has(id)) return;
     state.summaryLoading.add(id);
     state.summaryError.delete(id);
-    renderList();
+    onSummaryChange(id);
     try {
-        const entry = await summarizeJudgement(id);   // generates DE + FR, stores in KB
+        const entry = await summarizeJudgement(id);   // generates DE + FR, stores in the database
         state.summaries[id] = { de: entry.de, fr: entry.fr };
-        const item = state.items.find((i) => i.id === id);
+        const item = findItem(id);
         if (item) item.summarized = true;
     } catch (err) {
         console.error(err);
         state.summaryError.add(id);
     } finally {
         state.summaryLoading.delete(id);
-        renderList();
+        onSummaryChange(id);
     }
 }
 
-async function summarize(ids) {
-    for (const id of ids) {
-        if (!state.openPanels[id]) state.openPanels[id] = [currentLang];
-    }
+function onSummaryChange(id) {
     renderList();
-    await Promise.all(ids.map(loadSummary));
+    if (id === state.selectedId) renderDetail();
+}
+
+async function summarizeManually(id) {
+    await loadSummary(id);
     refreshKb();
 }
 
-function toggleSummary(id) {
-    if (state.openPanels[id]) {
-        delete state.openPanels[id];
-        renderList();
-        return;
-    }
-    summarize([id]);
-}
-
-function summarizeSelected() {
-    const ids = [...state.selected];
-    state.selected.clear();
-    summarize(ids);
-}
-
-function toggleSelected(id, checked) {
-    if (checked) state.selected.add(id);
-    else state.selected.delete(id);
-    renderSelectionToolbar();
-}
-
-function toggleSelectAll(checked) {
-    state.selected = new Set(checked ? visibleItems().map((i) => i.id) : []);
-    renderList();
-}
-
-/* ---------- editing summaries ---------- */
-
-function isDirty(id, stored) {
+function isDirty(id) {
     const draft = state.drafts[id];
+    const stored = state.summaries[id];
     return Boolean(draft && stored && (draft.de !== stored.de || draft.fr !== stored.fr));
 }
 
-function onDraftInput(id, lang, value, stored, editor) {
-    state.drafts[id] = { ...(state.drafts[id] || stored), [lang]: value };
-    delete state.saveStatus[id];
-    updateEditorFooter(editor, id, stored);   // no full re-render while typing
+/** Text currently in the editor: the draft if there is one, otherwise the stored summary. */
+function currentTexts(id) {
+    return state.drafts[id] || state.summaries[id];
 }
 
-async function onSave(id, stored) {
-    if (!isDirty(id, stored) || state.saveStatus[id] === "saving") return;
+function onDraftInput(id, lang, value, editor) {
+    state.drafts[id] = { ...currentTexts(id), [lang]: value };
+    delete state.saveStatus[id];
+    updateEditorFooter(editor, id);   // no full re-render while typing
+}
+
+async function onSave(id) {
+    if (!isDirty(id) || state.saveStatus[id] === "saving") return;
     const texts = state.drafts[id];
     state.saveStatus[id] = "saving";
-    renderAll();
+    renderEditors();
     try {
         const entry = await saveSummary(id, texts);
         state.summaries[id] = { de: entry.de, fr: entry.fr };
@@ -327,11 +422,66 @@ async function onSave(id, stored) {
         console.error(err);
         state.saveStatus[id] = "error";
     }
-    renderList();
+    renderEditors();
     refreshKb();
 }
 
-/** TEMPORARY (development): wipes the knowledge base and the relevance feedback. */
+function toggleAdjust(key) {
+    if (state.adjustOpen.has(key)) state.adjustOpen.delete(key);
+    else state.adjustOpen.add(key);
+    state.adjustError.delete(key);
+    renderEditors();
+    if (state.adjustOpen.has(key)) {
+        // the editor may be rendered in both tabs: focus the visible one
+        [...document.querySelectorAll(`[data-adjust-input="${CSS.escape(key)}"]`)]
+            .find((input) => input.offsetParent)?.focus();
+    }
+}
+
+/** Lets Apertus rewrite the summary in one language. The other language is not touched;
+ *  the result lands in the editor as an unsaved change. */
+async function onAdjust(id, lang) {
+    const key = `${id}:${lang}`;
+    const instruction = (state.adjustText[key] || "").trim();
+    if (!instruction || state.adjustBusy.has(key)) return;
+
+    state.adjustBusy.add(key);
+    state.adjustError.delete(key);
+    renderEditors();
+    try {
+        const result = await adjustSummary(id, lang, currentTexts(id)[lang], instruction);
+        state.drafts[id] = { ...currentTexts(id), [lang]: result.text };
+        delete state.saveStatus[id];
+        state.adjustOpen.delete(key);
+        delete state.adjustText[key];
+    } catch (err) {
+        console.error(err);
+        state.adjustError.add(key);
+    } finally {
+        state.adjustBusy.delete(key);
+        renderEditors();
+    }
+}
+
+/* ---------- database ---------- */
+
+let kbRequest = 0;
+
+async function refreshKb() {
+    const requestId = ++kbRequest;
+    try {
+        const entries = await searchKnowledgeBase(state.kbQuery, currentLang);
+        if (requestId !== kbRequest) return;   // a newer query is in flight
+        state.kbEntries = entries;
+        for (const e of entries) state.summaries[e.id] = { de: e.de, fr: e.fr };
+    } catch (err) {
+        console.error(err);
+        state.kbEntries = [];
+    }
+    renderKb();
+}
+
+/** TEMPORARY (development): wipes the stored summaries and the relevance feedback. */
 async function onClearDb() {
     if (!confirm(t("clearDbConfirm"))) return;
     try {
@@ -344,336 +494,285 @@ async function onClearDb() {
     state.summaries = {};
     state.drafts = {};
     state.saveStatus = {};
-    state.openPanels = {};
-    state.kbLang = {};
+    state.adjustOpen.clear();
+    state.adjustText = {};
     for (const item of state.items) {
         item.summarized = false;
         item.adjustment = 0;
     }
-    renderList();
+    renderResults();
     refreshKb();
 }
 
-let kbRequest = 0;
+/* ---------- rendering: result list ---------- */
 
-async function refreshKb() {
-    const requestId = ++kbRequest;
-    try {
-        const entries = await searchKnowledgeBase(state.kbQuery, currentLang);
-        if (requestId !== kbRequest) return;   // a newer query is in flight
-        state.kbEntries = entries;
-    } catch (err) {
-        console.error(err);
-        state.kbEntries = [];
-    }
-    renderKb();
+function relevanceScale(item) {
+    const score = effectiveScore(item);
+    return el("div", { class: "scale-cell" },
+        el("div", { class: `scale ${scoreLevel(score)}`, title: t("scaleTitle", score, SUMMARY_THRESHOLD) },
+            el("i", { style: `left:${SUMMARY_THRESHOLD}%` }),
+            el("b", { style: `left:${score}%` })),
+        el("span", { class: "pnum", text: String(score) }));
 }
 
-/* ---------- rendering: results ---------- */
+function statusTags(item) {
+    return [
+        state.summaryLoading.has(item.id) && el("span", { class: "tag blue", text: t("tagSummarizing") }),
+        item.summarized && el("span", { class: "tag ok", text: t("tagInDb") }),
+        Boolean(item.adjustment) && el("span", { class: "tag", text: t("tagCorrected") }),
+    ];
+}
 
-let statusKey = "emptyInitial";
+function renderRow(item) {
+    return el("tr", {
+        tabindex: "0",
+        "data-id": item.id,
+        "aria-selected": String(item.id === state.selectedId),
+        onclick: () => selectCase(item.id),
+        onkeydown: (e) => { if (e.key === "Enter") selectCase(item.id); },
+    },
+        el("td", { class: "nr" }, item.caseNumber, el("div", { class: "sub", text: (item.lang || "").toUpperCase() })),
+        el("td", { class: "pnum", text: formatDate(item.date) }),
+        el("td", {}, areaName(item.area), el("div", { class: "sub", text: loc(item.subject) || outcomeName(item.outcome) })),
+        el("td", {}, relevanceScale(item)),
+        el("td", {}, el("div", { class: "row" }, statusTags(item))));
+}
 
-function setStatus(key) {
-    statusKey = key;
+function renderHead() {
+    const { key, dir } = state.sort;
+    $("#results-head").replaceChildren(...COLUMNS.map((col) => {
+        if (!col.key) return el("th", { text: t(col.label) });
+        const sorted = col.key === key;
+        return el("th", { "aria-sort": sorted && (dir > 0 ? "ascending" : "descending") },
+            el("button", {
+                type: "button", "data-key": col.key,
+                text: t(col.label) + (sorted ? (dir > 0 ? " ▲" : " ▼") : ""),
+                onclick: () => sortBy(col.key),
+            }));
+    }));
+}
+
+function renderList() {
+    const visible = visibleItems();
+    const total = state.items.length;
+    const searching = state.searching;
+
+    renderHead();
+    $("#results-rows").replaceChildren(...visible.map(renderRow));
+    $("#results-table").hidden = searching || visible.length === 0;
+    $("#filter-bar").hidden = searching || total === 0;
+    $("#results-count").textContent = isFilterActive()
+        ? t("resultsCountFiltered", visible.length, total)
+        : t("resultsCount", total);
+
+    let statusKey = null;
+    if (searching) statusKey = "searching";
+    else if (state.error) statusKey = state.error;
+    else if (!state.hasSearched) statusKey = "emptyInitial";
+    else if (total === 0) statusKey = "emptyNoResults";
+    else if (visible.length === 0) statusKey = "emptyFiltered";
     const status = $("#results-status");
-    status.hidden = !key;
-    status.textContent = key ? t(key) : "";
+    status.hidden = !statusKey;
+    status.textContent = statusKey ? t(statusKey) : "";
 }
 
-/** DE / FR toggle; both can be active at once (then shown side by side), never neither. */
-function langToggle(activeLangs, onChange) {
-    return el("div", { class: "seg small", role: "group", "aria-label": t("summaryLang") },
-        ["de", "fr"].map((l) => {
-            const active = activeLangs.includes(l);
-            return el("button", {
-                type: "button",
-                class: active ? "active" : "",
-                "aria-pressed": String(active),
-                text: l.toUpperCase(),
-                onclick: () => {
-                    if (active && activeLangs.length === 1) return;   // keep at least one
-                    onChange(active ? activeLangs.filter((x) => x !== l) : ["de", "fr"].filter((x) => x === l || activeLangs.includes(x)));
-                },
-            });
-        }));
-}
+/* ---------- rendering: summary editor (detail panel and database) ---------- */
 
-function saveStatusText(id, stored) {
+function saveStatusText(id) {
     const status = state.saveStatus[id];
     if (status === "saving") return t("saving");
     if (status === "error") return t("errorSave");
-    if (isDirty(id, stored)) return t("unsaved");
+    if (isDirty(id)) return t("unsaved");
     if (status === "saved") return `✓ ${t("saved")}`;
     return "";
 }
 
-function updateEditorFooter(editor, id, stored) {
-    editor.querySelector(".save-btn").disabled = !isDirty(id, stored) || state.saveStatus[id] === "saving";
+function updateEditorFooter(editor, id) {
+    editor.querySelector(".save-btn").disabled = !isDirty(id) || state.saveStatus[id] === "saving";
     const status = editor.querySelector(".save-status");
-    status.textContent = saveStatusText(id, stored);
+    status.textContent = saveStatusText(id);
     status.classList.toggle("error", state.saveStatus[id] === "error");
 }
 
-/** Editable summary in one or two languages with a save button (lower left).
- *  `scope` distinguishes the results list from the knowledge base for focus restoring;
- *  `footerExtra` is appended to the footer row (e.g. the relevance signal). */
-function summaryEditor(scope, id, stored, langs, footerExtra = null) {
-    const texts = state.drafts[id] || stored;
+/** Instruction field shown below one summary box after clicking "Anpassen". */
+function adjustForm(scope, id, lang) {
+    const key = `${id}:${lang}`;
+    const busy = state.adjustBusy.has(key);
+    const input = el("input", {
+        type: "text", autocomplete: "off", disabled: busy,
+        placeholder: t("adjustPlaceholder"), "aria-label": t("adjustPlaceholder"),
+        "data-focus-key": `${scope}:adjust:${key}`, "data-adjust-input": key,
+        oninput: (e) => { state.adjustText[key] = e.target.value; },
+    });
+    input.value = state.adjustText[key] || "";
+    return el("form", {
+        class: "adjust-form",
+        onsubmit: (e) => { e.preventDefault(); onAdjust(id, lang); },
+    },
+        input,
+        el("button", { type: "submit", class: "btn small", disabled: busy },
+            busy && spinner(), t(busy ? "adjusting" : "adjustApply")),
+        state.adjustError.has(key) && el("p", { class: "form-error", text: t("errorAdjust") }));
+}
+
+/** German and French summary next to each other, each editable and with its own "Anpassen";
+ *  one save button for both. `scope` tells the detail panel ("res") from the database ("kb")
+ *  so the caret can be restored after a re-render. */
+function summaryEditor(scope, id) {
+    const texts = currentTexts(id);
     const editor = el("div", { class: "summary-editor" });
 
-    const columns = el("div", { class: `summary-columns cols-${langs.length}` }, langs.map((lang) =>
-        el("label", { class: "summary-column" }, [
-            el("span", { class: "summary-lang", text: t(lang === "de" ? "langDe" : "langFr") }),
-            el("textarea", {
-                class: "summary-textarea",
-                lang,
-                rows: "10",
-                spellcheck: "true",
-                "data-focus-key": `${scope}:${id}:${lang}`,
-                oninput: (e) => onDraftInput(id, lang, e.target.value, stored, editor),
-            }),
-        ])));
-    // textarea content must be set as a property, not via the text helper
-    columns.querySelectorAll("textarea").forEach((ta) => { ta.value = texts[ta.lang] || ""; });
+    const columns = ["de", "fr"].map((lang) => {
+        const key = `${id}:${lang}`;
+        const busy = state.adjustBusy.has(key);
+        const open = state.adjustOpen.has(key);
+        const name = t(lang === "de" ? "langDe" : "langFr");
+        const textarea = el("textarea", {
+            class: "summary-textarea", lang, spellcheck: "true", disabled: busy,
+            "aria-label": `${t("summary")} ${name}`,
+            "data-focus-key": `${scope}:${key}`,
+            oninput: (e) => onDraftInput(id, lang, e.target.value, editor),
+        });
+        textarea.value = texts[lang] || "";   // content must be set as a property
+        return el("div", { class: "duo-col" },
+            el("div", { class: "duo-head" },
+                el("h4", { text: name }),
+                el("button", {
+                    type: "button", class: "btn small", text: t("adjust"),
+                    "aria-expanded": String(open), "aria-pressed": String(open), disabled: busy,
+                    onclick: () => toggleAdjust(key),
+                })),
+            textarea,
+            open && adjustForm(scope, id, lang));
+    });
 
-    const footer = el("div", { class: "editor-footer" }, [
-        el("button", {
-            type: "button", class: "primary-btn small save-btn", text: t("save"),
-            onclick: () => onSave(id, stored),
-        }),
-        el("span", { class: "save-status muted", "aria-live": "polite" }),
-        footerExtra,
-    ]);
-
-    editor.append(columns, footer);
-    updateEditorFooter(editor, id, stored);
+    editor.append(
+        el("div", { class: "duo" }, columns),
+        el("div", { class: "row editor-footer" },
+            el("button", { type: "button", class: "btn pri save-btn", text: t("save"), onclick: () => onSave(id) }),
+            el("span", { class: "note save-status", "aria-live": "polite" })));
+    updateEditorFooter(editor, id);
     return editor;
 }
 
-/** Relevance signal (bottom right of the panel): green / yellow / red = high / medium / low,
- *  the current level is ringed; clicking another light moves the judgement there. */
-function relevanceSignal(item) {
-    const current = scoreLevel(effectiveScore(item));
-    return el("div", { class: "signal" }, [
-        el("span", { class: "signal-caption" }, [
-            `${t("adjustRelevance")}: `,
-            el("strong", { text: t(LEVEL_LABEL_KEY[current]) }),
-        ]),
-        el("div", { class: "signal-housing", role: "radiogroup", "aria-label": t("adjustRelevance") },
-            LEVELS.map((level) => {
-                const label = t(LEVEL_LABEL_KEY[level]);
-                const on = level === current;
-                return el("button", {
-                    type: "button",
-                    role: "radio",
-                    class: `signal-light ${level}${on ? " on" : ""}`,
-                    "aria-checked": String(on),
-                    "aria-label": label,
-                    title: on ? label : t("setLevel", label),
-                    onclick: () => setLevel(item.id, level),
-                });
-            })),
-    ]);
+/** Re-renders every place a summary editor is shown. */
+function renderEditors() {
+    renderDetail();
+    renderKb();
 }
 
-function renderSummaryPanel(item) {
-    const langs = state.openPanels[item.id];
-    const stored = state.summaries[item.id];
-    const signal = relevanceSignal(item);
+/* ---------- rendering: case detail ---------- */
 
-    let body;
-    if (state.summaryLoading.has(item.id)) {
-        body = [
-            el("p", { class: "muted loading-line" }, [
-                el("span", { class: "spinner dark", "aria-hidden": "true" }),
-                t("summarizing"),
-            ]),
-            el("div", { class: "editor-footer" }, [signal]),
-        ];
-    } else if (state.summaryError.has(item.id) || !stored) {
-        body = [
-            el("p", { class: "form-error", text: t("errorSummary") }),
-            el("div", { class: "editor-footer" }, [signal]),
-        ];
-    } else {
-        body = summaryEditor("res", item.id, stored, langs, signal);
+function criteriaSection(item) {
+    if (!item.criteria?.length) return null;
+    const list = el("ul", { class: "crit", hidden: !state.criteriaOpen }, item.criteria.map((c) => {
+        const status = QUOTE_STATUS[c.status];
+        return el("li", {},
+            el("strong", { text: `${c.id} ` }), criterionName(c.id), " ",
+            status && el("span", { class: `tag ${status.tag}`, text: t(status.key) }),
+            el("blockquote", { lang: item.lang }, `«${c.quote}»`, el("div", { class: "sub", text: formatRef(c.at) })));
+    }));
+    const toggle = el("button", {
+        type: "button", class: "toggle", "aria-expanded": String(state.criteriaOpen),
+        onclick: () => {
+            state.criteriaOpen = !state.criteriaOpen;
+            list.hidden = !state.criteriaOpen;
+            toggle.setAttribute("aria-expanded", String(state.criteriaOpen));
+        },
+    }, t("criteria"), el("span", { class: "sub", text: `(${item.criteria.length})` }));
+    return [el("h3", {}, toggle), list];
+}
+
+function summarySection(item) {
+    const id = item.id;
+    const heading = el("h3", { text: t("summary") });
+    if (state.summaryLoading.has(id)) {
+        return [heading, el("p", { class: "note loading-line" }, spinner(), t("summarizing"))];
+    }
+    if (state.summaries[id]) return [heading, summaryEditor("res", id)];
+    // not relevant enough for an automatic summary (or it failed): offer it by hand
+    return [
+        heading,
+        state.summaryError.has(id)
+            ? el("p", { class: "form-error", text: t("errorSummary") })
+            : el("p", { class: "note", text: t("notAutoSummarized", SUMMARY_THRESHOLD) }),
+        el("div", { class: "row editor-footer" },
+            el("button", { type: "button", class: "btn pri", text: t("summarize"), onclick: () => summarizeManually(id) })),
+    ];
+}
+
+function similarSection(item) {
+    if (!item.similarCases?.length) return null;
+    return [
+        el("h3", { text: t("similarCases") }),
+        el("table", { class: "similar" }, el("tbody", {}, item.similarCases.map((c) => el("tr", {},
+            el("td", { class: "nr", text: c.caseNumber }),
+            el("td", { text: c.subject || "" }),
+            el("td", { class: "pnum", text: t("similarity", c.similarity.toFixed(2)) }))))),
+    ];
+}
+
+function correctionSection(item) {
+    const level = itemLevel(item);
+    const button = (target, label, extraClass) => el("button", {
+        type: "button", class: `btn ${extraClass}`, text: t(label),
+        "aria-pressed": String(level === target),
+        onclick: () => setRelevance(item.id, target),
+    });
+    return [
+        el("h3", { text: t("correction") }),
+        el("p", { class: "note", text: t("correctionNote") }),
+        el("div", { class: "row editor-footer" },
+            button("high", "markRelevant", "relevant"),
+            button("low", "markNotRelevant", "")),
+    ];
+}
+
+function textSection(titleKey, field, lang) {
+    if (!loc(field)) return null;
+    return [el("h3", { text: t(titleKey) }), el("p", { class: "read", lang, text: loc(field) })];
+}
+
+function renderDetail() {
+    const item = findItem(state.selectedId);
+    $("#split").classList.toggle("has-detail", Boolean(item));
+    $("#detail-pane").hidden = !item;
+    const detail = $("#detail");
+    if (!item) {
+        detail.replaceChildren();
+        return;
     }
 
-    const toggle = langToggle(langs, (next) => {
-        state.openPanels[item.id] = next;
-        renderList();
-    });
-    return el("div", { class: "summary-panel" }, [toggle, body]);
-}
-
-function renderItem(item) {
-    const score = effectiveScore(item);
-    const shownAdjustment = score - item.score;
-    const isOpen = Boolean(state.openPanels[item.id]);
-
-    const details = el("details", { class: "explanation" }, [
-        el("summary", { text: t("whyRelevant") }),
-        el("p", { text: item.explanation[currentLang] }),
-    ]);
-    if (state.openExplanations.has(item.id)) details.open = true;
-    details.addEventListener("toggle", () => {
-        if (details.open) state.openExplanations.add(item.id);
-        else state.openExplanations.delete(item.id);
-    });
-
-    const checkbox = el("input", {
-        type: "checkbox",
-        class: "select-box",
-        "aria-label": `${t("selectItem")} ${item.caseNumber}`,
-        checked: state.selected.has(item.id),
-        onchange: (e) => toggleSelected(item.id, e.target.checked),
-    });
-
-    const scoreBadge = el("div", {
-        class: `score ${scoreLevel(score)}`,
-        title: `${t("relevance")}: ${score}`,
-        "aria-label": `${t("relevance")}: ${score}`,
-    }, [
-        el("span", { class: "score-value", text: String(score) }),
-        shownAdjustment ? el("span", {
-            class: "score-adj",
-            text: shownAdjustment > 0 ? `+${shownAdjustment}` : String(shownAdjustment),
-        }) : null,
-    ]);
-
-    const main = el("div", { class: "item-main" }, [
-        el("div", { class: "item-meta" }, [
-            el("span", { class: "case-number", text: item.caseNumber }),
-            el("span", { class: "dot", "aria-hidden": "true", text: "·" }),
-            el("time", { datetime: item.date, text: formatDate(item.date) }),
-            item.summarized ? el("span", { class: "kb-badge", text: t("inKb") }) : null,
-            item.url ? el("a", {
-                class: "original-link", href: item.url, target: "_blank", rel: "noopener",
-                text: t("original") + " ↗",
-            }) : null,
-        ]),
-        el("h3", { class: "item-title", text: item.title[currentLang] }),
-        details,
-    ]);
-
-    const isLoading = state.summaryLoading.has(item.id);
-    const hasSummary = Boolean(state.summaries[item.id]) || item.summarized;
-    const actions = el("div", { class: "item-actions" }, [
+    const meta = [formatDate(item.date), loc(item.court), areaName(item.area), loc(item.subject), outcomeName(item.outcome)];
+    const relevant = itemLevel(item) === "high";
+    preservingFocus(detail, () => detail.replaceChildren(...[
         el("button", {
-            type: "button", class: `secondary-btn${isOpen ? " active" : ""}`,
-            "aria-expanded": String(isOpen),
-            "aria-busy": String(isLoading),
-            text: isOpen ? t("hideSummary") : (hasSummary || isLoading ? t("open") : t("summarize")),
-            onclick: () => toggleSummary(item.id),
-        }, isLoading && !isOpen ? [el("span", { class: "spinner dark", "aria-hidden": "true" })] : []),
-    ]);
-
-    return el("li", { class: "card result-item", "data-id": item.id }, [
-        el("div", { class: "item-row" }, [checkbox, scoreBadge, main, actions]),
-        isOpen ? renderSummaryPanel(item) : null,
-    ]);
+            type: "button", class: "btn detail-close", text: "×",
+            "aria-label": t("close"), title: t("close"), onclick: closeDetail,
+        }),
+        el("h2", { text: `${t("judgement")} ${item.caseNumber}` }),
+        el("p", { class: "meta" }, meta.filter(Boolean).join(", "), ". ",
+            item.url && el("a", { href: item.url, target: "_blank", rel: "noopener", text: t("openOriginal") })),
+        textSection("question", item.question, currentLang),
+        textSection(relevant ? "whyRelevant" : "whyNotRelevant", item.explanation, currentLang),
+        textSection("rule", item.rule, currentLang),
+        criteriaSection(item),
+        summarySection(item),
+        similarSection(item),
+        correctionSection(item),
+    ].flat(Infinity).filter(Boolean)));
 }
 
-function renderSelectionToolbar() {
-    const visibleCount = visibleItems().length;
-    $("#selection-toolbar").hidden = visibleCount === 0;
-
-    const selectAll = $("#select-all");
-    const n = state.selected.size;
-    selectAll.checked = n > 0 && n === visibleCount;
-    selectAll.indeterminate = n > 0 && n < visibleCount;
-
-    const button = $("#summarize-selected");
-    button.textContent = t("summarizeSelected", n);
-    button.disabled = n === 0;
-}
-
-function renderList() {
-    const list = $("#results-list");
-
-    // FLIP: remember old positions so re-sorting animates smoothly
-    const before = new Map();
-    list.querySelectorAll(".result-item").forEach((node) => {
-        before.set(node.dataset.id, node.getBoundingClientRect().top);
-    });
-
-    const visible = visibleItems();
-    preservingFocus(list, () => list.replaceChildren(...visible.map(renderItem)));
-
-    list.querySelectorAll(".result-item").forEach((node) => {
-        const oldTop = before.get(node.dataset.id);
-        if (oldTop === undefined) return;
-        const delta = oldTop - node.getBoundingClientRect().top;
-        if (delta) {
-            node.animate(
-                [{ transform: `translateY(${delta}px)` }, { transform: "translateY(0)" }],
-                { duration: 250, easing: "ease-out" },
-            );
-        }
-    });
-
-    const total = state.items.length;
-    let count = "";
-    if (state.hasSearched && !state.error) {
-        count = isFilterActive() ? t("resultsCountFiltered", visible.length, total) : t("resultsCount", total);
-    }
-    $("#results-count").textContent = count;
-    $("#filter-bar").hidden = total === 0;
-
-    if (state.error) setStatus(state.error);
-    else if (!state.hasSearched) setStatus("emptyInitial");
-    else if (total === 0) setStatus("emptyNoResults");
-    else if (visible.length === 0) setStatus("emptyFiltered");
-    else setStatus(null);
-
-    renderSelectionToolbar();
-}
-
-/* ---------- rendering: knowledge base ---------- */
-
-/** Re-renders `container` and puts the caret back into the textarea the user was typing in. */
-function preservingFocus(container, render) {
-    const active = document.activeElement;
-    const key = active && container.contains(active) ? active.dataset.focusKey : null;
-    const saved = key ? { start: active.selectionStart, end: active.selectionEnd, scroll: active.scrollTop } : null;
-    render();
-    if (!key) return;
-    const node = container.querySelector(`[data-focus-key="${CSS.escape(key)}"]`);
-    if (!node) return;
-    node.focus({ preventScroll: true });
-    node.setSelectionRange(saved.start, saved.end);
-    node.scrollTop = saved.scroll;
-}
-
-function fileIcon() {
-    const tpl = document.createElement("template");
-    tpl.innerHTML = '<svg class="file-icon" viewBox="0 0 24 24" aria-hidden="true">'
-        + '<path d="M7 3h7l5 5v11a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/>'
-        + '<path d="M14 3v5h5M9 13h6M9 17h6"/></svg>';
-    return tpl.content.firstChild;
-}
+/* ---------- rendering: database ---------- */
 
 function renderKbEntry(entry) {
-    const langs = state.kbLang[entry.id] || [currentLang];
-    const stored = formatDate(entry.storedAt.slice(0, 10));
-
-    return el("li", { class: "kb-entry" }, [
-        el("details", {}, [
-            el("summary", {}, [
-                fileIcon(),
-                el("span", { class: "case-number", text: entry.caseNumber }),
-                el("span", { class: "kb-entry-title", text: entry.title[currentLang] }),
-                el("span", { class: "muted kb-entry-date", text: `${t("storedAt")} ${stored}` }),
-            ]),
-            el("div", { class: "kb-entry-body" }, [
-                langToggle(langs, (next) => {
-                    state.kbLang[entry.id] = next;
-                    renderKb();
-                }),
-                summaryEditor("kb", entry.id, { de: entry.de, fr: entry.fr }, langs),
-            ]),
-        ]),
-    ]);
+    return el("li", { class: "kb-entry", "data-id": entry.id },
+        el("details", {},
+            el("summary", {},
+                el("span", { class: "nr", text: entry.caseNumber }),
+                el("span", { class: "kb-entry-title", text: caseTitle(entry) }),
+                el("span", { class: "sub", text: `${t("storedAt")} ${formatDate(entry.storedAt.slice(0, 10))}` })),
+            el("div", { class: "kb-entry-body" }, summaryEditor("kb", entry.id))));
 }
 
 function renderKb() {
@@ -686,7 +785,6 @@ function renderKb() {
 
     preservingFocus(list, () => list.replaceChildren(...state.kbEntries.map((entry) => {
         const node = renderKbEntry(entry);
-        node.dataset.id = entry.id;
         if (openIds.has(entry.id)) node.querySelector("details").open = true;
         return node;
     })));
@@ -697,18 +795,22 @@ function renderKb() {
     tabCount.textContent = n ? String(n) : "";
 
     $("#kb-count").textContent = n ? t("kbCount", n) : "";
+    const statusKey = n ? null : (state.kbQuery ? "kbNoMatch" : "kbEmpty");
     const status = $("#kb-status");
-    const key = state.kbEntries.length ? null : (state.kbQuery ? "kbNoMatch" : "kbEmpty");
-    status.hidden = !key;
-    status.textContent = key ? t(key) : "";
+    status.hidden = !statusKey;
+    status.textContent = statusKey ? t(statusKey) : "";
 }
 
-/* ---------- folder tabs ---------- */
+/* ---------- tabs, language ---------- */
+
+function renderResults() {
+    renderList();
+    renderDetail();
+}
 
 function renderTabs() {
-    document.querySelectorAll(".folder-tab").forEach((tab) => {
+    document.querySelectorAll(".tabs [role=tab]").forEach((tab) => {
         const active = tab.dataset.tab === state.activeTab;
-        tab.classList.toggle("active", active);
         tab.setAttribute("aria-selected", String(active));
         tab.tabIndex = active ? 0 : -1;
     });
@@ -721,14 +823,8 @@ function selectTab(tab) {
     state.activeTab = tab;
     localStorage.setItem("tab", tab);
     renderTabs();
+    renderEditors();   // drafts may have changed in the other tab
 }
-
-function renderAll() {
-    renderList();
-    renderKb();
-}
-
-/* ---------- language ---------- */
 
 function renderLanguage() {
     closeAllDatePickers();
@@ -740,8 +836,7 @@ function renderLanguage() {
     });
     refreshDateInputs();
     showFormError(formErrorKey);
-    setStatus(statusKey);
-    renderList();
+    renderResults();
     renderKb();
 }
 
@@ -756,7 +851,7 @@ function init() {
     });
     $("#theme-toggle").addEventListener("click", toggleTheme);
 
-    const tabs = [...document.querySelectorAll(".folder-tab")];
+    const tabs = [...document.querySelectorAll(".tabs [role=tab]")];
     tabs.forEach((tab, index) => {
         tab.addEventListener("click", () => selectTab(tab.dataset.tab));
         tab.addEventListener("keydown", (e) => {   // arrow keys move between tabs
@@ -781,9 +876,6 @@ function init() {
     setDateInput(toInput, toIso(today));
 
     $("#search-form").addEventListener("submit", onSearch);
-    $("#select-all").addEventListener("change", (e) => toggleSelectAll(e.target.checked));
-    $("#summarize-selected").addEventListener("click", summarizeSelected);
-
     for (const id of ["#filter-text", "#filter-min", "#filter-max"]) {
         $(id).addEventListener("input", onFilterChange);
     }
@@ -797,6 +889,13 @@ function init() {
             state.kbQuery = e.target.value.trim();
             refreshKb();
         }, 200);
+    });
+
+    // Escape closes the detail panel (unless the user is typing or a calendar is open)
+    document.addEventListener("keydown", (e) => {
+        if (e.key !== "Escape" || !state.selectedId || openPickers.size) return;
+        if (e.target.closest("input, textarea")) return;
+        closeDetail();
     });
 
     renderLanguage();
