@@ -1,12 +1,33 @@
 /* api.js — the only place the UI talks to the backend.
  *
- * While there is no backend, USE_MOCK = true returns synthetic data.
- * To connect the real backend, set USE_MOCK = false and implement the endpoints:
+ * While there is no backend, USE_MOCK = true simulates it in the browser
+ * (state persisted in localStorage under "mockDb"). To connect the real backend,
+ * set USE_MOCK = false and implement these endpoints:
+ *
  *   GET  {API_BASE}/judgements?from=YYYY-MM-DD&to=YYYY-MM-DD&lang=de|fr
- *        -> [{ id, caseNumber, date, title: {de, fr}, explanation: {de, fr}, score, url }]
- *   POST {API_BASE}/judgements/{id}/summary   body: { lang }
- *        -> { lang, text }
- *   POST {API_BASE}/judgements/{id}/feedback  body: { adjustment }   (optional)
+ *        -> [{ id, caseNumber, date, url,
+ *              title: {de, fr}, explanation: {de, fr},
+ *              score,        // relevance 0..100 computed by the backend
+ *              adjustment,   // persisted net manual adjustment from feedback (see below)
+ *              summarized }] // true if the judgement is already in the knowledge base
+ *
+ *   POST {API_BASE}/judgements/{id}/summary
+ *        -> { id, caseNumber, date, title: {de, fr}, de, fr, storedAt }
+ *        Generates the German AND the French summary (two separate Apertus calls,
+ *        not a translation), stores both in the knowledge base and returns the entry.
+ *        If the judgement is already in the knowledge base, return the stored entry.
+ *
+ *   POST {API_BASE}/judgements/{id}/feedback   body: { adjustment, direction }
+ *        adjustment = new net manual adjustment (multiple of VOTE_STEP), direction = +1 | -1.
+ *        The backend must persist this and use it in future lookups:
+ *          1. return it as `adjustment` for this judgement in every later search, and
+ *          2. use the voted judgements as relevance signal, e.g. as positive/negative
+ *             few-shot examples in the Apertus relevance prompt, so similar new
+ *             judgements are scored higher/lower.
+ *
+ *   GET  {API_BASE}/knowledge-base?q=<query>&lang=de|fr
+ *        -> [{ id, caseNumber, date, title: {de, fr}, de, fr, storedAt }]
+ *        Full-text (later: semantic) search over all stored summaries, newest first.
  */
 
 const USE_MOCK = true;
@@ -82,42 +103,95 @@ function delay(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+/* Simulated backend storage: feedback (id -> adjustment) and knowledge base (id -> entry). */
+const mockDb = {
+    load() {
+        try {
+            const db = JSON.parse(localStorage.getItem("mockDb"));
+            return { feedback: db?.feedback || {}, kb: db?.kb || {} };
+        } catch {
+            return { feedback: {}, kb: {} };
+        }
+    },
+    save(db) {
+        localStorage.setItem("mockDb", JSON.stringify(db));
+    },
+};
+
+async function jsonFetch(url, options = {}) {
+    const res = await fetch(url, {
+        headers: { "Content-Type": "application/json" },
+        ...options,
+    });
+    if (!res.ok) throw new Error(`${options.method || "GET"} ${url} failed: ${res.status}`);
+    return res.json();
+}
+
 /* ---------- public API ---------- */
 
 async function searchJudgements(from, to, lang) {
     if (USE_MOCK) {
         await delay(700);
+        const db = mockDb.load();
         return MOCK_JUDGEMENTS
             .filter((j) => j.date >= from && j.date <= to)
-            .map((j) => ({ ...j, url: "#" }));
+            .map((j) => ({
+                ...j,
+                url: "#",
+                adjustment: db.feedback[j.id] || 0,
+                summarized: Boolean(db.kb[j.id]),
+            }));
     }
     const params = new URLSearchParams({ from, to, lang });
-    const res = await fetch(`${API_BASE}/judgements?${params}`);
-    if (!res.ok) throw new Error(`search failed: ${res.status}`);
-    return res.json();
+    return jsonFetch(`${API_BASE}/judgements?${params}`);
 }
 
-async function summarizeJudgement(id, lang) {
+/** Generates DE + FR summaries and stores them in the knowledge base. */
+async function summarizeJudgement(id) {
     if (USE_MOCK) {
-        await delay(900);
+        const db = mockDb.load();
+        if (db.kb[id]) return db.kb[id];
+        await delay(1200);
         const j = MOCK_JUDGEMENTS.find((m) => m.id === id);
         if (!j) throw new Error("unknown judgement");
-        return { lang, text: MOCK_SUMMARY[lang](j) };
+        const entry = {
+            id: j.id, caseNumber: j.caseNumber, date: j.date, title: j.title,
+            de: MOCK_SUMMARY.de(j), fr: MOCK_SUMMARY.fr(j),
+            storedAt: new Date().toISOString(),
+        };
+        const fresh = mockDb.load();   // re-read: parallel calls may have written meanwhile
+        fresh.kb[id] = entry;
+        mockDb.save(fresh);
+        return entry;
     }
-    const res = await fetch(`${API_BASE}/judgements/${encodeURIComponent(id)}/summary`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ lang }),
-    });
-    if (!res.ok) throw new Error(`summary failed: ${res.status}`);
-    return res.json();
+    return jsonFetch(`${API_BASE}/judgements/${encodeURIComponent(id)}/summary`, { method: "POST" });
 }
 
-async function sendFeedback(id, adjustment) {
-    if (USE_MOCK) return;
-    await fetch(`${API_BASE}/judgements/${encodeURIComponent(id)}/feedback`, {
+/** Persists a relevance vote; the backend uses it in future lookups. Best-effort. */
+async function sendFeedback(id, adjustment, direction) {
+    if (USE_MOCK) {
+        const db = mockDb.load();
+        db.feedback[id] = adjustment;
+        mockDb.save(db);
+        return;
+    }
+    await jsonFetch(`${API_BASE}/judgements/${encodeURIComponent(id)}/feedback`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ adjustment }),
-    }).catch(() => { /* feedback is best-effort */ });
+        body: JSON.stringify({ adjustment, direction }),
+    }).catch((err) => console.warn("feedback not saved", err));
+}
+
+async function searchKnowledgeBase(query, lang) {
+    if (USE_MOCK) {
+        await delay(150);
+        const terms = query.toLowerCase().split(/\s+/).filter(Boolean);
+        return Object.values(mockDb.load().kb)
+            .filter((e) => {
+                const haystack = [e.caseNumber, e.title.de, e.title.fr, e.de, e.fr].join(" ").toLowerCase();
+                return terms.every((term) => haystack.includes(term));
+            })
+            .sort((a, b) => b.storedAt.localeCompare(a.storedAt));
+    }
+    const params = new URLSearchParams({ q: query, lang });
+    return jsonFetch(`${API_BASE}/knowledge-base?${params}`);
 }

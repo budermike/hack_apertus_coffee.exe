@@ -3,15 +3,18 @@
 const VOTE_STEP = 5;
 
 const state = {
-    items: [],                 // judgements from the last search
+    items: [],                 // judgements from the last search (incl. backend `adjustment`)
     hasSearched: false,
     error: null,               // i18n key of a list-level error
-    votes: JSON.parse(localStorage.getItem("votes") || "{}"),   // id -> score adjustment
-    summaries: {},             // id -> { de?: text, fr?: text }
-    summaryLoading: new Set(), // "id:lang"
-    summaryError: new Set(),   // "id:lang"
+    summaries: {},             // id -> { de, fr }
+    summaryLoading: new Set(), // ids currently being summarized
+    summaryError: new Set(),   // ids whose summary failed
     openPanels: {},            // id -> language shown in the open summary panel
     openExplanations: new Set(),
+    selected: new Set(),       // ids selected for bulk summarize
+    kbEntries: [],
+    kbQuery: "",
+    kbLang: {},                // kb entry id -> language shown
 };
 
 /* ---------- helpers ---------- */
@@ -24,6 +27,7 @@ function el(tag, props = {}, children = []) {
         if (key === "class") node.className = value;
         else if (key === "text") node.textContent = value;
         else if (key.startsWith("on")) node.addEventListener(key.slice(2), value);
+        else if (typeof value === "boolean") node[key] = value;
         else node.setAttribute(key, value);
     }
     node.append(...[].concat(children).filter(Boolean));
@@ -50,15 +54,27 @@ function parseDate(text) {
     return toIso(date);
 }
 
+/** Displayed score: base score + net adjustment, clamped to 0..100.
+ *  The raw adjustment is kept unclamped, so 97 → (+5) 100 → (−5) 97 round-trips. */
 function effectiveScore(item) {
-    const adjusted = item.score + (state.votes[item.id] || 0);
-    return Math.max(0, Math.min(100, adjusted));
+    return Math.max(0, Math.min(100, item.score + (item.adjustment || 0)));
 }
 
 function scoreLevel(score) {
     if (score >= 70) return "high";
     if (score >= 40) return "medium";
     return "low";
+}
+
+/* ---------- theme ---------- */
+
+function setTheme(theme) {
+    document.documentElement.dataset.theme = theme;
+    localStorage.setItem("theme", theme);
+}
+
+function toggleTheme() {
+    setTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark");
 }
 
 /* ---------- date inputs (typing + calendar) ---------- */
@@ -75,23 +91,18 @@ function setupDateInput(textInput) {
     });
     picker.addEventListener("change", () => {
         if (picker.value) {
-            textInput.value = formatDate(picker.value);
-            textInput.dataset.iso = picker.value;
+            setDateInput(textInput, picker.value);
             textInput.classList.remove("invalid");
         }
     });
     textInput.addEventListener("blur", () => {
         const iso = parseDate(textInput.value);
-        if (iso) {
-            textInput.value = formatDate(iso);
-            textInput.dataset.iso = iso;
-        }
+        if (iso) setDateInput(textInput, iso);
     });
 }
 
 function setDateInput(textInput, iso) {
     textInput.value = formatDate(iso);
-    textInput.dataset.iso = iso;
 }
 
 /** Re-format the date fields after a language change. */
@@ -163,6 +174,7 @@ async function onSearch(event) {
         state.error = "errorSearch";
     } finally {
         state.hasSearched = true;
+        state.selected.clear();
         button.disabled = false;
         button.classList.remove("loading");
         renderList();
@@ -171,37 +183,47 @@ async function onSearch(event) {
 
 /* ---------- voting ---------- */
 
+function canVote(item, direction) {
+    const score = effectiveScore(item);
+    return direction > 0 ? score < 100 : score > 0;
+}
+
 function vote(id, direction) {
     const item = state.items.find((i) => i.id === id);
-    if (!item) return;
-    const current = state.votes[id] || 0;
-    // clamp so the effective score stays within 0..100
-    const next = Math.max(-item.score, Math.min(100 - item.score, current + direction * VOTE_STEP));
-    if (next === current) return;
-    state.votes[id] = next;
-    localStorage.setItem("votes", JSON.stringify(state.votes));
-    sendFeedback(id, next);
+    if (!item || !canVote(item, direction)) return;
+    item.adjustment = (item.adjustment || 0) + direction * VOTE_STEP;
+    sendFeedback(id, item.adjustment, direction);   // backend persists it for future lookups
     renderList();
 }
 
-/* ---------- summaries ---------- */
+/* ---------- summaries + knowledge base ---------- */
 
-async function loadSummary(id, lang) {
-    const key = `${id}:${lang}`;
-    if (state.summaries[id]?.[lang] || state.summaryLoading.has(key)) return;
-    state.summaryLoading.add(key);
-    state.summaryError.delete(key);
+async function loadSummary(id) {
+    if (state.summaries[id] || state.summaryLoading.has(id)) return;
+    state.summaryLoading.add(id);
+    state.summaryError.delete(id);
     renderList();
     try {
-        const result = await summarizeJudgement(id, lang);
-        state.summaries[id] = { ...state.summaries[id], [lang]: result.text };
+        const entry = await summarizeJudgement(id);   // generates DE + FR, stores in KB
+        state.summaries[id] = { de: entry.de, fr: entry.fr };
+        const item = state.items.find((i) => i.id === id);
+        if (item) item.summarized = true;
     } catch (err) {
         console.error(err);
-        state.summaryError.add(key);
+        state.summaryError.add(id);
     } finally {
-        state.summaryLoading.delete(key);
+        state.summaryLoading.delete(id);
         renderList();
     }
+}
+
+async function summarize(ids) {
+    for (const id of ids) {
+        if (!state.openPanels[id]) state.openPanels[id] = currentLang;
+    }
+    renderList();
+    await Promise.all(ids.map(loadSummary));
+    refreshKb();
 }
 
 function toggleSummary(id) {
@@ -210,18 +232,42 @@ function toggleSummary(id) {
         renderList();
         return;
     }
-    state.openPanels[id] = currentLang;
-    loadSummary(id, currentLang);
+    summarize([id]);
+}
+
+function summarizeSelected() {
+    const ids = [...state.selected];
+    state.selected.clear();
+    summarize(ids);
+}
+
+function toggleSelected(id, checked) {
+    if (checked) state.selected.add(id);
+    else state.selected.delete(id);
+    renderSelectionToolbar();
+}
+
+function toggleSelectAll(checked) {
+    state.selected = new Set(checked ? state.items.map((i) => i.id) : []);
     renderList();
 }
 
-function switchSummaryLang(id, lang) {
-    state.openPanels[id] = lang;
-    loadSummary(id, lang);
-    renderList();
+let kbRequest = 0;
+
+async function refreshKb() {
+    const requestId = ++kbRequest;
+    try {
+        const entries = await searchKnowledgeBase(state.kbQuery, currentLang);
+        if (requestId !== kbRequest) return;   // a newer query is in flight
+        state.kbEntries = entries;
+    } catch (err) {
+        console.error(err);
+        state.kbEntries = [];
+    }
+    renderKb();
 }
 
-/* ---------- rendering ---------- */
+/* ---------- rendering: results ---------- */
 
 let statusKey = "emptyInitial";
 
@@ -232,39 +278,45 @@ function setStatus(key) {
     status.textContent = key ? t(key) : "";
 }
 
+function langTabs(activeLang, onSelect) {
+    return el("div", { class: "seg small", role: "group", "aria-label": t("summaryLang") },
+        ["de", "fr"].map((l) => el("button", {
+            type: "button",
+            class: l === activeLang ? "active" : "",
+            "aria-pressed": String(l === activeLang),
+            text: l.toUpperCase(),
+            onclick: () => onSelect(l),
+        })));
+}
+
 function renderSummaryPanel(item) {
     const lang = state.openPanels[item.id];
-    const key = `${item.id}:${lang}`;
     const text = state.summaries[item.id]?.[lang];
 
     let body;
-    if (state.summaryLoading.has(key)) {
+    if (state.summaryLoading.has(item.id)) {
         body = el("p", { class: "muted loading-line" }, [
             el("span", { class: "spinner dark", "aria-hidden": "true" }),
             t("summarizing"),
         ]);
-    } else if (state.summaryError.has(key)) {
+    } else if (state.summaryError.has(item.id)) {
         body = el("p", { class: "form-error", text: t("errorSummary") });
     } else {
         body = el("div", { class: "summary-text", text: text || "" });
     }
 
-    const tabs = el("div", { class: "seg small", role: "group", "aria-label": t("summaryLang") },
-        ["de", "fr"].map((l) => el("button", {
-            type: "button",
-            class: l === lang ? "active" : "",
-            "aria-pressed": String(l === lang),
-            text: l.toUpperCase(),
-            onclick: () => switchSummaryLang(item.id, l),
-        })));
-
+    const tabs = langTabs(lang, (l) => {
+        state.openPanels[item.id] = l;
+        renderList();
+    });
     return el("div", { class: "summary-panel" }, [tabs, body]);
 }
 
 function renderItem(item) {
     const score = effectiveScore(item);
-    const adjustment = state.votes[item.id] || 0;
+    const shownAdjustment = score - item.score;
     const isOpen = Boolean(state.openPanels[item.id]);
+    const isLoading = state.summaryLoading.has(item.id);
 
     const details = el("details", { class: "explanation" }, [
         el("summary", { text: t("whyRelevant") }),
@@ -276,15 +328,23 @@ function renderItem(item) {
         else state.openExplanations.delete(item.id);
     });
 
+    const checkbox = el("input", {
+        type: "checkbox",
+        class: "select-box",
+        "aria-label": `${t("selectItem")} ${item.caseNumber}`,
+        checked: state.selected.has(item.id),
+        onchange: (e) => toggleSelected(item.id, e.target.checked),
+    });
+
     const scoreBadge = el("div", {
         class: `score ${scoreLevel(score)}`,
         title: `${t("relevance")}: ${score}`,
         "aria-label": `${t("relevance")}: ${score}`,
     }, [
         el("span", { class: "score-value", text: String(score) }),
-        adjustment ? el("span", {
+        shownAdjustment ? el("span", {
             class: "score-adj",
-            text: adjustment > 0 ? `+${adjustment}` : String(adjustment),
+            text: shownAdjustment > 0 ? `+${shownAdjustment}` : String(shownAdjustment),
         }) : null,
     ]);
 
@@ -293,6 +353,7 @@ function renderItem(item) {
             el("span", { class: "case-number", text: item.caseNumber }),
             el("span", { class: "dot", "aria-hidden": "true", text: "·" }),
             el("time", { datetime: item.date, text: formatDate(item.date) }),
+            item.summarized ? el("span", { class: "kb-badge", text: t("inKb") }) : null,
             item.url ? el("a", {
                 class: "original-link", href: item.url, target: "_blank", rel: "noopener",
                 text: t("original") + " ↗",
@@ -305,28 +366,45 @@ function renderItem(item) {
     const actions = el("div", { class: "item-actions" }, [
         el("div", { class: "votes" }, [
             el("button", {
-                type: "button", class: `icon-btn vote up${adjustment > 0 ? " active" : ""}`,
+                type: "button", class: `icon-btn vote up${shownAdjustment > 0 ? " active" : ""}`,
                 "aria-label": t("upvote"), title: t("upvote"), text: "▲",
+                disabled: !canVote(item, +1),
                 onclick: () => vote(item.id, +1),
             }),
             el("button", {
-                type: "button", class: `icon-btn vote down${adjustment < 0 ? " active" : ""}`,
+                type: "button", class: `icon-btn vote down${shownAdjustment < 0 ? " active" : ""}`,
                 "aria-label": t("downvote"), title: t("downvote"), text: "▼",
+                disabled: !canVote(item, -1),
                 onclick: () => vote(item.id, -1),
             }),
         ]),
         el("button", {
             type: "button", class: `secondary-btn${isOpen ? " active" : ""}`,
             "aria-expanded": String(isOpen),
+            disabled: isLoading,
             text: isOpen ? t("hideSummary") : t("summarize"),
             onclick: () => toggleSummary(item.id),
         }),
     ]);
 
     return el("li", { class: "card result-item", "data-id": item.id }, [
-        el("div", { class: "item-row" }, [scoreBadge, main, actions]),
+        el("div", { class: "item-row" }, [checkbox, scoreBadge, main, actions]),
         isOpen ? renderSummaryPanel(item) : null,
     ]);
+}
+
+function renderSelectionToolbar() {
+    const toolbar = $("#selection-toolbar");
+    toolbar.hidden = state.items.length === 0;
+
+    const selectAll = $("#select-all");
+    const n = state.selected.size;
+    selectAll.checked = n > 0 && n === state.items.length;
+    selectAll.indeterminate = n > 0 && n < state.items.length;
+
+    const button = $("#summarize-selected");
+    button.textContent = t("summarizeSelected", n);
+    button.disabled = n === 0;
 }
 
 function renderList() {
@@ -358,6 +436,54 @@ function renderList() {
     else if (!state.hasSearched) setStatus("emptyInitial");
     else if (sorted.length === 0) setStatus("emptyNoResults");
     else setStatus(null);
+
+    renderSelectionToolbar();
+}
+
+/* ---------- rendering: knowledge base ---------- */
+
+function renderKbEntry(entry) {
+    const lang = state.kbLang[entry.id] || currentLang;
+    const stored = formatDate(entry.storedAt.slice(0, 10));
+
+    return el("li", { class: "kb-entry" }, [
+        el("details", {}, [
+            el("summary", {}, [
+                el("span", { class: "case-number", text: entry.caseNumber }),
+                el("span", { class: "kb-entry-title", text: entry.title[currentLang] }),
+                el("span", { class: "muted kb-entry-date", text: `${t("storedAt")} ${stored}` }),
+            ]),
+            el("div", { class: "kb-entry-body" }, [
+                langTabs(lang, (l) => {
+                    state.kbLang[entry.id] = l;
+                    renderKb();
+                }),
+                el("div", { class: "summary-text", text: entry[lang] }),
+            ]),
+        ]),
+    ]);
+}
+
+function renderKb() {
+    const list = $("#kb-list");
+    const openIds = new Set(
+        [...list.querySelectorAll(".kb-entry")]
+            .filter((li) => li.querySelector("details").open)
+            .map((li) => li.dataset.id),
+    );
+
+    list.replaceChildren(...state.kbEntries.map((entry) => {
+        const node = renderKbEntry(entry);
+        node.dataset.id = entry.id;
+        if (openIds.has(entry.id)) node.querySelector("details").open = true;
+        return node;
+    }));
+
+    $("#kb-count").textContent = state.kbEntries.length ? t("kbCount", state.kbEntries.length) : "";
+    const status = $("#kb-status");
+    const key = state.kbEntries.length ? null : (state.kbQuery ? "kbNoMatch" : "kbEmpty");
+    status.hidden = !key;
+    status.textContent = key ? t(key) : "";
 }
 
 /* ---------- language ---------- */
@@ -373,6 +499,7 @@ function renderLanguage() {
     showFormError(formErrorKey);
     setStatus(statusKey);
     renderList();
+    renderKb();
 }
 
 /* ---------- init ---------- */
@@ -384,6 +511,7 @@ function init() {
             renderLanguage();
         });
     });
+    $("#theme-toggle").addEventListener("click", toggleTheme);
 
     const fromInput = $("#date-from");
     const toInput = $("#date-to");
@@ -398,7 +526,20 @@ function init() {
     setDateInput(toInput, toIso(today));
 
     $("#search-form").addEventListener("submit", onSearch);
+    $("#select-all").addEventListener("change", (e) => toggleSelectAll(e.target.checked));
+    $("#summarize-selected").addEventListener("click", summarizeSelected);
+
+    let kbTimer;
+    $("#kb-search").addEventListener("input", (e) => {
+        clearTimeout(kbTimer);
+        kbTimer = setTimeout(() => {
+            state.kbQuery = e.target.value.trim();
+            refreshKb();
+        }, 200);
+    });
+
     renderLanguage();
+    refreshKb();
 }
 
 init();
