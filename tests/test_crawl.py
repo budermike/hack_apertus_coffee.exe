@@ -21,8 +21,10 @@ JUDGEMENT = """<html><body>
   <div class="para"> </div>
   <div class="para"><b>8C_123/2026</b></div>
   <div class="para">Urteil   vom 15. Mai 2026 – Unfallversicherung</div>
+  <div class="para">Gegenstand</div>
+  <div class="para">Unfallversicherung,</div>
 </div></div></body></html>"""
-TEXT = "8C_123/2026\nUrteil vom 15. Mai 2026 – Unfallversicherung"
+TEXT = "8C_123/2026\nUrteil vom 15. Mai 2026 – Unfallversicherung\nGegenstand\nUnfallversicherung,"
 
 
 def bger_list_page(total, titles):
@@ -100,7 +102,7 @@ def config(request, tmp_path):
 
 
 def saved_file(config):
-    return Path(config["out_dir"]) / "2026-05" / "2026-05-15_8C_123-2026.json"
+    return Path(config["out_dir"]) / "2026-05" / "2026-05-15_8C_123_2026.json"
 
 
 def index(config):
@@ -141,13 +143,15 @@ def test_shipped_config_is_valid():
 
 
 def test_bger_parse_list_reads_count_and_tags():
-    total, entries = crawl.bger_parse_list(bger_list_page(12, ["15.05.2026 8C 123/2026"]))
+    total, entries = crawl.bger_parse_list(
+        bger_list_page(12, ["15.05.2026 8C 123/2026 *", "01.04.2026 1D 1/2025 1D 2/2025"])
+    )
     assert total == 12
     assert entries[0]["case_id"] == "8C_123/2026"
     assert entries[0]["decision_date"] == "2026-05-15"
     assert entries[0]["department"] == "IV. öffentlich-rechtliche Abteilung"
     assert entries[0]["subject"] == "Unfallversicherung"
-    assert entries[0]["object"] == "Unfallversicherung (Kausalzusammenhang)"
+    assert entries[1]["case_id"] == "1D_1/2025"
 
 
 def test_bger_parse_list_empty_and_unknown_layout():
@@ -162,17 +166,43 @@ def test_bger_url_points_to_the_original(tmp_path):
 
 
 def test_parse_judgement_takes_only_the_judgement_block():
-    content_html, text = crawl.parse_judgement(JUDGEMENT)
+    text = crawl.parse_judgement(JUDGEMENT)
     assert text == TEXT
-    assert "navigation" not in content_html
+    assert "navigation" not in text
     with pytest.raises(ValueError):
         crawl.parse_judgement("<html>Fehler</html>")
 
 
+def test_parse_case_ids_collects_multiple_from_header_only():
+    text = "Bundesgericht\n1D_1/2025, 1D_2/2025\nUrteil 1. April 2026\nErwägungen: 1D_99/2020"
+    assert crawl.parse_case_ids(text, "1D_1/2025") == ["1D_1/2025", "1D_2/2025"]
+    assert crawl.parse_case_ids("Verwaltungskommission\n12T_2/2025\nerwägt:", "12T_2/2025") == ["12T_2/2025"]
+
+
+@pytest.mark.parametrize("text, expected", [
+    ("1D_1/2025\nGegenstand\nErmächtigung zur Strafverfolgung,\nVerfassungsbeschwerden gegen den Entscheid.\nSachverhalt:",
+     "Ermächtigung zur Strafverfolgung"),
+    ("2C_187/2025\nGegenstand\nWiderruf bzw. Nichtverlängerung der\nAufenthaltsbewilligung,\nBeschwerde gegen das Urteil.",
+     "Widerruf bzw. Nichtverlängerung der Aufenthaltsbewilligung"),
+    ("6B_115/2025\nGegenstand\n6B_115/2025\nEntführung; Willkür,\n6B_144/2025\nEntführung; Willkür,\nSachverhalt:",
+     "Entführung; Willkür"),
+    ("1C_74/2025\nObjet\nRésiliation des rapports de service,\nrecours contre l'arrêt du 17 décembre 2024.\nFaits :",
+     "Résiliation des rapports de service"),
+    ("6B_9/2026\nOggetto\nFurto,\nricorso contro la sentenza.\nFatti:", "Furto"),
+    ("8C_1/2026\nUrteil vom 2. Mai 2026", None),
+])
+def test_parse_subject(text, expected):
+    assert crawl.parse_subject(text) == expected
+
+
 @pytest.mark.parametrize("text, language", [
     ("8C_1/2026\nUrteil vom 2. Mai 2026", "de"),
+    ("6B_569/2025\nUrteil 9. Oktober 2025", "de"),
+    ("12T_2/2025\nbetreffend\nRechtsverzögerung\nerwägt:", "de"),
     ("1C_3/2026\nArrêt du 18 juin 2026\nvu l'Urteil vom 1. Mai", "fr"),  # first marker wins
+    ("7B_958/2025\nArrêt 3 octobre 2025", "fr"),
     ("6B_9/2026\nSentenza del 3 aprile 2026", "it"),
+    ("7B_425/2024\nSentenza 7 novembre 2025", "it"),
     ("no heading", None),
 ])
 def test_guess_language(text, language):
@@ -181,7 +211,7 @@ def test_guess_language(text, language):
 
 def test_record_path_sorts_by_month():
     entry = {"case_id": "8C_123/2026", "decision_date": "2026-05-15"}
-    assert crawl.record_path("data/raw", entry) == Path("data/raw/2026-05/2026-05-15_8C_123-2026.json")
+    assert crawl.record_path("data/raw", entry) == Path("data/raw/2026-05/2026-05-15_8C_123_2026.json")
 
 
 def test_is_valid(tmp_path):
@@ -189,10 +219,10 @@ def test_is_valid(tmp_path):
     assert not crawl.is_valid(path)  # missing
     path.write_text("{not json")
     assert not crawl.is_valid(path)  # broken JSON
-    record = {"content_html": "<div>x</div>", "fetch": {"content_sha256": crawl.sha256("<div>x</div>")}}
+    record = {"text": "Urteil", "fetch": {"text_sha256": crawl.sha256("Urteil")}}
     path.write_text(json.dumps(record))
     assert crawl.is_valid(path)
-    record["content_html"] = "<div>changed</div>"
+    record["text"] = "changed"
     path.write_text(json.dumps(record))
     assert not crawl.is_valid(path)  # hash no longer matches
 
@@ -215,17 +245,24 @@ def test_bot_protection_raises_blocked(monkeypatch):
 def test_record_follows_the_shared_schema(site, config):
     crawl.crawl(config)
     record = json.loads(saved_file(config).read_text(encoding="utf-8"))
-    for field in ("case_id", "decision_date", "publication_date", "department", "subject",
-                  "language", "url", "text"):  # issue #3
+    for field in ("id", "case_id", "case_ids", "decision_date", "publication_date",
+                  "department", "division", "subject", "language", "url", "text"):  # issue #3 / #37
         assert field in record
+    assert "object" not in record
+    assert "content_html" not in record
+    assert record["id"] == "8C_123_2026"
     assert record["case_id"] == "8C_123/2026"
+    assert record["case_ids"] == ["8C_123/2026"]
     assert record["department"].startswith("IV. ")
+    assert record["division"] == record["department"]
+    assert record["subject"] == "Unfallversicherung"
     assert record["language"] == "de"
     assert record["url"].startswith(BGER) and "8C_123-2026" in record["url"]
     assert record["text"] == TEXT
     assert record["operator_metadata"]
     assert record["fetch"]["source"] == config["source"]
-    assert record["fetch"]["content_sha256"] == crawl.sha256(record["content_html"])
+    assert record["fetch"]["text_sha256"] == crawl.sha256(record["text"])
+    assert "content_sha256" not in record["fetch"]
 
 
 def test_second_run_makes_no_requests(site, config):
@@ -302,9 +339,9 @@ def test_report_counts_per_month_and_language(site, tmp_path):
     site["es_hits"]["2026-04-30"][0]["_source"]["language"] = "fr"
     crawl.crawl(config)
     rows = crawl.report(config["out_dir"], tmp_path / "report.csv")
-    assert rows == [{"month": "2026-04", "de": 0, "fr": 1, "total": 1},
-                    {"month": "2026-05", "de": 1, "fr": 0, "total": 1}]
-    assert (tmp_path / "report.csv").read_text().splitlines()[0] == "month,de,fr,total"
+    assert rows == [{"month": "2026-04", "source": "entscheidsuche", "de": 0, "fr": 1, "total": 1},
+                    {"month": "2026-05", "source": "entscheidsuche", "de": 1, "fr": 0, "total": 1}]
+    assert (tmp_path / "report.csv").read_text().splitlines()[0] == "month,source,de,fr,total"
 
 
 def test_command_line(site, tmp_path, capsys):

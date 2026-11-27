@@ -8,8 +8,8 @@ Defaults (source, URL, pause, folder, time span) come from configs/crawl.json:
     "source": "bger"            official site search.bger.ch (final target)
     "source": "entscheidsuche"  open mirror entscheidsuche.ch (for testing)
 
-Storage, sorted by month (schema: issue #3):
-    data/raw/2026-05/2026-05-15_8C_123-2026.json   one file per judgement
+Storage, sorted by month (schema: docs/SCHEMA.md, issue #3):
+    data/raw/2026-05/2026-05-15_8C_123_2026.json   one file per judgement
     data/raw/_index.json                            days that are completely crawled
 
 Nothing is fetched twice:
@@ -109,14 +109,16 @@ def bger_parse_list(html):
         raise ValueError("result page has no hit count; did the page layout change?")
     entries = []
     for item in soup.select("div.ranklist_content li"):
-        title = item.select_one("span.rank_title a").get_text(strip=True)  # "15.05.2026 8C 123/2026"
-        day_str, register, number = title.split()
+        title = item.select_one("span.rank_title a").get_text(strip=True)  # e.g. "15.05.2026 8C 123/2026 *"
+        title_match = BGER_TITLE_RE.search(title)
+        if title_match is None:
+            raise ValueError(f"cannot parse case title: {title!r}")
+        day_str, register, number = title_match.groups()
         entries.append({
             "case_id": f"{register}_{number}",  # official form 8C_123/2026
             "decision_date": datetime.strptime(day_str, "%d.%m.%Y").date().isoformat(),
             "department": clean(item.select_one("div.court")),
             "subject": clean(item.select_one("div.subject")),
-            "object": clean(item.select_one("div.object")),
             "language": None,  # not in the list; guessed from the text later
             "metadata": {"court": clean(item.select_one("div.court")),
                          "subject": clean(item.select_one("div.subject")),
@@ -178,8 +180,7 @@ def entscheidsuche_list_day(config, day):
                 "case_id": (source.get("reference") or [source["id"]])[0],
                 "decision_date": source["date"],
                 "department": department.removeprefix("Eidgenossenschaft Bundesgericht ").strip() or None,
-                "subject": None,  # entscheidsuche.ch has no Rechtsgebiet
-                "object": None,
+                "subject": None,  # entscheidsuche.ch has no Rechtsgebiet; parsed from text later
                 "language": source.get("language"),
                 "metadata": source,  # everything entscheidsuche.ch offers, unchanged
             })
@@ -201,39 +202,108 @@ SOURCES = {"bger": (bger_list_day, bger_fetch),
 # ---------------------------------------------------------------- judgement
 
 
+BGER_TITLE_RE = re.compile(r"(\d{2}\.\d{2}\.\d{4})\s+(\d{1,2}[A-Z])[\s_]+(\d+/\d{4})")
+DATE_LINE_RE = {
+    "de": re.compile(r"^(?:Urteil|Verfügung|Beschluss)\b", re.MULTILINE),
+    "fr": re.compile(r"^(?:Arrêt|Ordonnance)\b", re.MULTILINE),
+    "it": re.compile(r"^(?:Sentenza|Decreto|Ordinanza)\b", re.MULTILINE),
+}
+FALLBACK_LANG_RE = {
+    "de": re.compile(r"\b(?:Besetzung|Verfahrensbeteiligte|Gegenstand|betreffend|Sachverhalt|Erwägungen|erwägt)\b"),
+    "fr": re.compile(r"\b(?:Composition|Participants à la procédure|Objet|Faits|Considérant)\b"),
+    "it": re.compile(r"\b(?:Composizione|Partecipanti al procedimento|Oggetto|Fatti|Considerando)\b"),
+}
+CASE_ID_RE = re.compile(r"\b\d{1,2}[A-Z]_\d+/\d{4}\b")
+SUBJECT_HEADING_RE = re.compile(r"^(?:Gegenstand|Objet|Oggetto|betreffend):?$")
+BODY_START_RE = re.compile(
+    r"^(?:Sachverhalt|Faits|Fatti|Erwägungen|Considérant|Considerando|hat sich ergeben|erwägt)\b",
+    re.IGNORECASE,
+)
+APPEAL_ORIGIN_RE = re.compile(
+    r"^(?:(?:Subsidiäre\s+)?(?:Verfassungs|Verwaltungsgerichts|Staatsrechtliche\s+)?[Bb]eschwerde[n]?\s+gegen\b"
+    r"|[Rr]evisionsgesuch(?:e)?\s+gegen\b"
+    r"|[Rr]ecours\b.*?\bcontre\b"
+    r"|[Dd]emande[s]?\s+de\s+révision\b"
+    r"|[Rr]icorso\b.*?\bcontro\b"
+    r"|[Dd]omanda\s+di\s+revisione\b"
+    r"|\(Aufsichtsanzeige\b)"
+)
+
+
 def parse_judgement(html):
-    """Judgement body as HTML and plain text. Both sources use <div class="content">
+    """Judgement body as plain text. Both sources use <div class="content">
     with one <div class="para"> per paragraph; the text keeps one line per paragraph."""
     soup = BeautifulSoup(html, "html.parser")
     content = soup.select_one("div.content:has(div.para)")
     if content is None:
         raise ValueError("page has no judgement text; did the page layout change?")
     lines = [clean(p) for p in content.select("div.para")]
-    return str(content), "\n".join(line for line in lines if line)
+    return "\n".join(line for line in lines if line)
 
 
 def guess_language(text):
-    """de / fr / it from the heading of the judgement ("Urteil vom", "Arrêt du", ...)."""
-    head = text[:1500]
-    markers = {"de": ("Urteil vom", "Verfügung vom", "Beschluss vom"),
-               "fr": ("Arrêt du", "Ordonnance du"),
-               "it": ("Sentenza del", "Decreto del", "Ordinanza del")}
-    found = {lang: min((head.find(m) for m in words if m in head), default=None)
-             for lang, words in markers.items()}
-    found = {lang: pos for lang, pos in found.items() if pos is not None}
+    """de / fr / it from the heading of the judgement ("Urteil ...", "Arrêt ...", ...)."""
+    head = text[:2000]
+    found = {lang: m.start() for lang, pattern in DATE_LINE_RE.items() if (m := pattern.search(head))}
+    if not found:
+        found = {lang: m.start() for lang, pattern in FALLBACK_LANG_RE.items() if (m := pattern.search(head))}
     return min(found, key=found.get) if found else None
 
 
+def parse_case_ids(text, primary_case_id):
+    """All case numbers from the judgement header (before the date/body line), primary first."""
+    head = text[:1000]
+    positions = [m.start() for pattern in (*DATE_LINE_RE.values(), *FALLBACK_LANG_RE.values())
+                 if (m := pattern.search(head))]
+    if positions:
+        head = head[:min(positions)]
+    found = CASE_ID_RE.findall(head)
+    ids = [primary_case_id] if primary_case_id else []
+    for case_id in found:
+        if case_id not in ids:
+            ids.append(case_id)
+    return ids
+
+
+def parse_subject(text):
+    """Extract the subject block after 'Gegenstand' / 'Objet' / 'Oggetto' in the header."""
+    lines = text.splitlines()[:300]
+    for i, line in enumerate(lines):
+        s = line.strip()
+        if BODY_START_RE.match(s):
+            break
+        if SUBJECT_HEADING_RE.match(s):
+            parts = []
+            for idx, raw in enumerate(lines[i + 1 : i + 15]):
+                item = raw.strip()
+                if not item:
+                    continue
+                if BODY_START_RE.match(item) or (parts and APPEAL_ORIGIN_RE.match(item)):
+                    break
+                if CASE_ID_RE.fullmatch(item) or item in ("und", "et", "e"):
+                    continue
+                cleaned = item.rstrip(", ")
+                if cleaned and cleaned not in parts:
+                    parts.append(cleaned)
+                next_line = lines[i + 2 + idx].strip() if i + 2 + idx < len(lines) else ""
+                if item.endswith((",", ".")) and not CASE_ID_RE.fullmatch(next_line):
+                    break
+            return "; ".join(parts) if len(parts) > 1 and item.endswith(",") and CASE_ID_RE.fullmatch(lines[i + 1].strip()) else (" ".join(parts).rstrip(", ") or None)
+    return None
+
+
 def build_record(config, entry, html, url):
-    """One judgement in the shared schema (issue #3) plus fetch info and raw HTML."""
-    content_html, text = parse_judgement(html)
+    """One judgement in the shared schema (docs/SCHEMA.md) plus fetch metadata."""
+    text = parse_judgement(html)
     return {
+        "id": safe_case_id(entry["case_id"]),
         "case_id": entry["case_id"],
+        "case_ids": parse_case_ids(text, entry["case_id"]),
         "decision_date": entry["decision_date"],
         "publication_date": None,  # neither source gives it in the result list
         "department": entry["department"],
-        "subject": entry["subject"],
-        "object": entry["object"],
+        "division": entry["department"],  # alias used in vector-DB metadata (#37)
+        "subject": entry["subject"] or parse_subject(text),
         "language": entry["language"] or guess_language(text),
         "url": bger_url(config, entry["case_id"], entry["decision_date"]),
         "text": text,
@@ -244,27 +314,30 @@ def build_record(config, entry, html, url):
             "source": config["source"],
             "url": url,
             "hash_algorithm": "sha256",
-            "content_sha256": sha256(content_html),
             "text_sha256": sha256(text),
         },
-        "content_html": content_html,
     }
 
 
 # ---------------------------------------------------------------- storage
 
 
+def safe_case_id(case_id):
+    """Replace '/' with '_' for filenames, vector DB IDs, and UI URLs."""
+    return case_id.replace("/", "_")
+
+
 def record_path(out_dir, entry):
-    """data/raw/2026-05/2026-05-15_8C_123-2026.json"""
-    name = f"{entry['decision_date']}_{entry['case_id'].replace('/', '-')}.json"
+    """data/raw/2026-05/2026-05-15_8C_123_2026.json"""
+    name = f"{entry['decision_date']}_{safe_case_id(entry['case_id'])}.json"
     return Path(out_dir) / entry["decision_date"][:7] / name
 
 
 def is_valid(path):
-    """True if the saved file can be read and its SHA-256 matches the stored content."""
+    """True if the saved file can be read and its SHA-256 matches the stored text."""
     try:
         record = json.loads(path.read_text(encoding="utf-8"))
-        return record["fetch"]["content_sha256"] == sha256(record["content_html"])
+        return record["fetch"]["text_sha256"] == sha256(record["text"])
     except (OSError, ValueError, KeyError, TypeError):
         return False
 
@@ -345,19 +418,26 @@ def crawl(config, refresh=False):
 
 
 def report(out_dir, csv_path):
-    """Judgements per month and language, from the saved files; written as CSV."""
+    """Judgements per month, source, and language, from the saved files; written as CSV."""
     counts = Counter()
+    sources_by_month = {}
     for path in sorted(Path(out_dir).glob("*/*.json")):
         record = json.loads(path.read_text(encoding="utf-8"))
-        counts[(record["decision_date"][:7], record.get("language") or "unknown")] += 1
+        month = record["decision_date"][:7]
+        counts[(month, record.get("language") or "unknown")] += 1
+        source = (record.get("fetch") or {}).get("source")
+        if source:
+            sources_by_month.setdefault(month, set()).add(source)
 
     languages = sorted({lang for _, lang in counts})
-    rows = [{"month": month, **{lang: counts[(month, lang)] for lang in languages},
+    rows = [{"month": month,
+             "source": "+".join(sorted(sources_by_month.get(month, ()))) or "unknown",
+             **{lang: counts[(month, lang)] for lang in languages},
              "total": sum(counts[(month, lang)] for lang in languages)}
             for month in sorted({month for month, _ in counts})]
     Path(csv_path).parent.mkdir(parents=True, exist_ok=True)
     with open(csv_path, "w", newline="", encoding="utf-8") as file:
-        writer = csv.DictWriter(file, fieldnames=["month", *languages, "total"])
+        writer = csv.DictWriter(file, fieldnames=["month", "source", *languages, "total"])
         writer.writeheader()
         writer.writerows(rows)
     return rows
