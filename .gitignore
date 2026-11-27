@@ -44,4 +44,5 @@ data/processed/vectordb/fts.sqlite3*
 data/processed/vectordb/search_index.npz
 data/processed/vectordb/*.sqlite3-wal
 data/processed/vectordb/*.sqlite3-shm
+data/processed/vectordb/*.lock
 data/processed/vectordb/**/*.tmp*

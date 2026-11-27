@@ -385,11 +385,43 @@ def now_utc():
 # ---------------------------------------------------------------- main loop
 
 
+def crawl_day(config, day, out_dir=None):
+    """Crawl missing or corrupt judgements for one day without touching _index.json."""
+    list_day, fetch = SOURCES[config["source"]]
+    target_dir = Path(out_dir or config["out_dir"])
+    day_stats = {"day_ok": True, "judgements": 0, "downloaded": 0, "skipped": 0, "failed": 0, "paths": []}
+    try:
+        entries = list_day(config, day)
+    except (httpx.HTTPError, ValueError, KeyError) as error:
+        log.error("%s: listing failed: %s", day, error)
+        day_stats["day_ok"] = False
+        return day_stats
+
+    day_stats["judgements"] = len(entries)
+    for entry in entries:
+        path = record_path(target_dir, entry)
+        if is_valid(path):
+            day_stats["skipped"] += 1
+            day_stats["paths"].append(path)
+            continue
+        if path.exists():  # damaged file: keep it for inspection, then download again
+            path.rename(path.with_suffix(f".corrupt-{int(time.time())}"))
+        try:
+            html, url = fetch(config, entry)
+            write_json(path, build_record(config, entry, html, url))
+            day_stats["downloaded"] += 1
+            day_stats["paths"].append(path)
+        except (httpx.HTTPError, ValueError, KeyError) as error:
+            log.error("%s: %s", entry["case_id"], error)
+            day_stats["failed"] += 1
+            day_stats["day_ok"] = False
+    return day_stats
+
+
 def crawl(config, refresh=False):
     """Crawl every day of the span that is not yet in the index. Returns counts."""
     if config["to_date"] >= date.today():
         raise ValueError("to_date must be in the past; today's judgements are not complete yet")
-    list_day, fetch = SOURCES[config["source"]]
     out_dir = Path(config["out_dir"])
     index = load_index(out_dir)
 
@@ -402,31 +434,13 @@ def crawl(config, refresh=False):
             day += timedelta(days=1)
             continue
 
-        day_ok = True
-        try:
-            entries = list_day(config, day)
-        except (httpx.HTTPError, ValueError, KeyError) as error:
-            log.error("%s: listing failed: %s", day, error)
-            entries, day_ok = [], False
+        day_res = crawl_day(config, day, out_dir)
+        stats["downloaded"] += day_res["downloaded"]
+        stats["skipped"] += day_res["skipped"]
+        stats["failed"] += day_res["failed"]
 
-        for entry in entries:
-            path = record_path(out_dir, entry)
-            if is_valid(path):
-                stats["skipped"] += 1
-                continue
-            if path.exists():  # damaged file: keep it for inspection, then download again
-                path.rename(path.with_suffix(f".corrupt-{int(time.time())}"))
-            try:
-                html, url = fetch(config, entry)
-                write_json(path, build_record(config, entry, html, url))
-                stats["downloaded"] += 1
-            except (httpx.HTTPError, ValueError, KeyError) as error:
-                log.error("%s: %s", entry["case_id"], error)
-                stats["failed"] += 1
-                day_ok = False
-
-        if day_ok:  # only a completely saved day counts as covered
-            index["days"][day.isoformat()] = {"source": config["source"], "judgements": len(entries),
+        if day_res["day_ok"]:  # only a completely saved day counts as covered
+            index["days"][day.isoformat()] = {"source": config["source"], "judgements": day_res["judgements"],
                                               "crawled_at": now_utc()}
             write_json(out_dir / "_index.json", index)
             stats["days_crawled"] += 1
