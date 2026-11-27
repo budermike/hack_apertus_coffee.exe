@@ -10,7 +10,7 @@ Owner: Mike (DB mit Abi)
 - `sqlite3` ist Standardbibliothek → **keine neue Dependency**.
 - Pfad zur DB per Env-Variable konfigurierbar (z. B. `SUMMARY_DB_PATH`), Default unter `data/processed/`, nicht ins Git (öffentliches Repo).
 - Alle DB-Zugriffe in **einem** Modul (z. B. `summary/store.py`), Tests in `tests/test_store.py` – ohne Netzwerk, LLM gemockt.
-- Importname: `pyproject.toml` bildet `src/hack_apertus_coffee.exe` bereits auf `hack_apertus_coffee_exe` ab (`pip install -e .`). Wie in `feat/crawl`: `summary/__init__.py` anlegen und `"hack_apertus_coffee_exe.summary"` in `packages` eintragen → Import `from hack_apertus_coffee_exe.summary import store`. **Kein Umbenennen des Ordners** (würde mit `feat/crawl` kollidieren).
+- Ort: DB-Code liegt in `src/hack_apertus_coffee_exe/summary/` (`store.py`). `summary/__init__.py` anlegen und `"hack_apertus_coffee_exe.summary"` in `packages` (`pyproject.toml`) eintragen → Import `from hack_apertus_coffee_exe.summary import store`.
 
 ## Schema-Entwurf (Diskussionsgrundlage)
 
