@@ -5,7 +5,7 @@ Short entries, newest on top. Format: date/time · decision · why · who.
 ## Challenge choice
 - Options: ti&m Trust Room / Suva legal summaries / Digitec Galaxus image classification
 - Criteria: fit with Apertus, feasibility in ~24 h, team skills, demo impact, sponsor clarity
-- Decision: <TBD>
+- Decision: Suva legal summaries (`challenge_description.md`)
 
 ## Decisions
 - 2026-11-27 · The Suva list comes from a two-pass Apertus scoring with calibration (`triage/relevance.py`, `triage/calibration.py`, command `triage.cli relevance`), not from the single Apertus score blended 75/25 with cosine similarity. · Hold-out on Q4/2025 and Q1/2026 (59 Suva judgements): the pipeline as built finds 44 (recall 74.6 %, F2 0.679) because its prompt scores every invalidity-insurance judgement near 0; the new scoring finds 49 at the F2 threshold (83.1 %, F2 0.736; paired difference recall +8.5 points, 95 % interval +1.8 to +15.9). Mixing both scores brings nothing beyond a longer list. Reasons, data and limits: `docs/ISSUE_RECALL.md`, numbers: `results/relevance_eval.md`. · abirahm + Claude Code

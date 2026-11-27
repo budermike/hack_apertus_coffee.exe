@@ -256,7 +256,7 @@ Diese Notizen beruhen nur auf den Kurzbeschrieben. Sie werden nach den Pitches u
 
 ---
 
-## 10. Kontakt
+## 9. Kontakt
 
 - Discord: https://discord.gg/hack-apertus
 - E-Mail: hello@hackapertus.ch

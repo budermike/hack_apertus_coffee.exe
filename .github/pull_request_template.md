@@ -1,10 +1,10 @@
 ## What changed
-<1–2 sentences>
+<!-- 1–2 sentences -->
 
-Closes #<issue-nr>
+Closes #
 
 ## How to test
-<command or click path>
+<!-- command or click path -->
 
 ## Checklist
 - [ ] Runs locally
