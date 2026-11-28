@@ -7,7 +7,8 @@
 3. one rewrite on faults (length, one paragraph, wrong outcome/remand/article, invented considerations).
 
 ``SummarizerV1`` (older, prompts in ``prompts/v1/``): facts JSON -> DE -> FR -> check and retry.
-Both offer ``align_language`` (#65) to adapt one language to an edited other language or an instruction.
+Both offer ``align_edit`` (#65, ``align.py``): carry a lawyer's edit of one language over to the other
+(content only, no translation), and the older ``align_language`` (rewrite one language on an instruction).
 Comparison and choice: ``notebooks/summary/02_modelle_prompts.ipynb``.
 """
 
@@ -20,6 +21,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Sequence
 
+from .align import Alignment, align_edit
 from .check import CheckReport, check_summaries
 from .examples import ExampleSelector, StyleExamples
 from .judgement import (
@@ -97,7 +99,7 @@ class SummaryResult:
 
 
 class _AlignLanguage:
-    """``align_language`` (#65) for both pipelines; needs ``self.llm`` and ``self.prompts_dir``."""
+    """``align_edit`` and ``align_language`` (#65) for both pipelines; needs ``self.llm`` and ``self.prompts_dir``."""
 
     def align_language(
         self,
@@ -121,6 +123,11 @@ class _AlignLanguage:
             facts=facts,
         )
         return self.llm.chat(prompts.align_system(target_lang, self.prompts_dir), user).strip()
+
+    def align_edit(self, **kwargs: Any) -> Alignment:
+        """Carry a lawyer's edit of one language over to the other one: content only, no
+        translation, the judgement as reference, notes from a closing check (``align.align_edit``)."""
+        return align_edit(self.llm, prompts_dir=self.prompts_dir, **kwargs)
 
 
 class SummarizerV1(_AlignLanguage):
