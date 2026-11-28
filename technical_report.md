@@ -84,7 +84,9 @@ legal area and per criterion is learned from all decisions (logistic regression 
 calibrated value as offset and a normal prior). Judgements that share area or criteria
 with a decided one move with it. The list is protected: learning can add judgements and
 reorder the list, only the lawyer's own decision takes a judgement off it (section 5 says
-why).
+why). For the decided judgement itself the decision is final: «relevant» puts its score at
+least on the list threshold, «nicht relevant» below yellow; inside that band it keeps the
+order Apertus gave (a fixed 100 / 0 would pile the list up at both ends over time).
 
 **What the UI offers beyond the task:** reasons also for judgements that are *not*
 selected; quotes checked against the judgement text (exact / approximate / missing);

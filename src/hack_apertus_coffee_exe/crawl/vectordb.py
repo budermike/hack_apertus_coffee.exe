@@ -64,6 +64,14 @@ _FALLBACK_TFIDF_SEEDS = (
 )
 
 
+def _is_sqlite_corruption(exc: sqlite3.DatabaseError) -> bool:
+    """True only for genuine SQLite corruption/non-DB errors (never transient lock/busy)."""
+    if isinstance(exc, sqlite3.OperationalError):
+        msg = str(exc).lower()
+        return any(tok in msg for tok in ("malformed", "not a database", "corrupt", "disk image"))
+    return True
+
+
 def _atomic_tmp_path(target: Path, extra_suffix: str = "") -> Path:
     return target.with_name(f".{target.name}.{os.getpid()}.{time.time_ns()}.tmp{extra_suffix}")
 
@@ -317,26 +325,28 @@ class VectorDB:
 
     @classmethod
     def _ensure_sqlite_healthy(cls, db_file: Path) -> None:
-        """Verify SQLite B-tree header & root pages; discard stale WAL sidecars or quarantine corrupt DBs."""
+        """Verify SQLite B-tree header & root pages; discard WAL sidecars or quarantine ONLY on real corruption."""
         if not db_file.exists() or db_file.stat().st_size == 0:
             cls._discard_wal_sidecars(db_file)
             if db_file.exists():
                 db_file.unlink(missing_ok=True)
             return
 
-        def _quick_ok() -> bool:
+        def _check_state() -> str:
             try:
                 with closing(sqlite3.connect(db_file, timeout=10.0)) as conn:
                     res = conn.execute("PRAGMA quick_check(1);").fetchone()
-                    return bool(res and res[0] == "ok")
-            except sqlite3.DatabaseError:
-                return False
+                    return "ok" if (res and res[0] == "ok") else "corrupt"
+            except sqlite3.DatabaseError as exc:
+                return "corrupt" if _is_sqlite_corruption(exc) else "busy"
 
-        if _quick_ok():
+        state = _check_state()
+        if state in ("ok", "busy"):
             return
-        # First attempt: stale -wal/-shm left behind across a git checkout / interrupted process
+        # First attempt on genuine corruption: stale -wal/-shm left behind across git checkout / crashed run
         cls._discard_wal_sidecars(db_file)
-        if _quick_ok():
+        state = _check_state()
+        if state in ("ok", "busy"):
             logger.warning("Discarded stale WAL/SHM sidecars for %s", db_file)
             return
         cls._quarantine_corrupt_sqlite(db_file)
@@ -450,7 +460,7 @@ class VectorDB:
 
     def load_vectors(self, doc_key: str) -> np.ndarray:
         """Load a judgement's chunk vectors as a dense (n_chunks, D) float32 matrix."""
-        with self._connect() as conn:
+        with closing(self._connect()) as conn, conn:
             row = conn.execute(
                 "SELECT vector_file FROM judgements WHERE doc_key = ?", (doc_key,)
             ).fetchone()
@@ -477,7 +487,7 @@ class VectorDB:
         """
         stats = {"embedded": 0, "cached": 0, "total": len(records)}
 
-        with self._connect() as conn:
+        with closing(self._connect()) as conn, conn:
             existing = {
                 row["doc_key"]: row
                 for row in conn.execute(
@@ -588,7 +598,7 @@ class VectorDB:
 
             chunk_cursor = 0
             fts_rows: list[tuple[str, str, str, str]] = []
-            with self._connect() as conn:
+            with closing(self._connect()) as conn, conn:
                 for (
                     record,
                     doc_key,
@@ -706,7 +716,7 @@ class VectorDB:
 
     def rebuild_search_index(self) -> None:
         """Build consolidated chunk-to-judgement index for rows matching current fingerprint."""
-        with self._connect() as conn:
+        with closing(self._connect()) as conn, conn:
             rows = conn.execute(
                 """
                 SELECT doc_key, vector_file, n_chunks
@@ -796,7 +806,7 @@ class VectorDB:
             doc_key = self.doc_key_for(rec)
             case_ids = rec.get("case_ids") or [rec["case_id"]]
             fts_rows.append((doc_key, " ".join(case_ids), rec.get("subject") or "", rec.get("text") or ""))
-        with self._connect_fts() as fts_conn:
+        with closing(self._connect_fts()) as fts_conn, fts_conn:
             fts_conn.execute("DELETE FROM judgements_fts")
             fts_conn.executemany(
                 "INSERT INTO judgements_fts (doc_key, case_id, subject, text) VALUES (?, ?, ?, ?)",
@@ -823,12 +833,12 @@ class VectorDB:
         }
 
     def count(self) -> int:
-        with self._connect() as conn:
+        with closing(self._connect()) as conn, conn:
             return int(conn.execute("SELECT COUNT(*) FROM judgements").fetchone()[0])
 
     def resolve_doc_keys(self, identifier: str) -> list[str]:
         """Resolve a case_id / safe id / doc_key to all matching doc_keys (newest first)."""
-        with self._connect() as conn:
+        with closing(self._connect()) as conn, conn:
             rows = conn.execute(
                 "SELECT doc_key FROM case_lookup WHERE alias = ? ORDER BY decision_date DESC, doc_key DESC",
                 (identifier,),
@@ -843,7 +853,7 @@ class VectorDB:
 
     def get(self, identifier: str, *, include_vectors: bool = False) -> dict[str, Any]:
         """Fetch metadata (and optionally chunk vectors) for a judgement by case_id / id / doc_key."""
-        with self._connect() as conn:
+        with closing(self._connect()) as conn, conn:
             row = conn.execute(
                 """
                 SELECT j.*
@@ -876,7 +886,7 @@ class VectorDB:
     ) -> dict[str, Any]:
         """Update positive/negative reference status from lawyer Ampel feedback (#28, #40)."""
         doc_keys = self.resolve_doc_keys(identifier)
-        with self._connect() as conn:
+        with closing(self._connect()) as conn, conn:
             latest_row = conn.execute("SELECT * FROM judgements WHERE doc_key = ?", (doc_keys[0],)).fetchone()
             pos = int(is_reference) if is_reference is not None else int(latest_row["is_reference"])
             neg = (
@@ -956,7 +966,7 @@ class VectorDB:
         )
         where = f"WHERE {' AND '.join(clauses)}" if clauses else ""
         sql = f"SELECT * FROM judgements {where} ORDER BY decision_date, doc_key"
-        with self._connect() as conn:
+        with closing(self._connect()) as conn, conn:
             rows = conn.execute(sql, params).fetchall()
 
         results = [self._row_to_dict(r) for r in rows]
@@ -982,7 +992,7 @@ class VectorDB:
             return []
 
         self._init_fts_sqlite()
-        with self._connect_fts() as fts_conn:
+        with closing(self._connect_fts()) as fts_conn, fts_conn:
             fts_count = int(fts_conn.execute("SELECT COUNT(*) FROM judgements_fts").fetchone()[0])
         # fts.sqlite3 is not in Git. On a fresh clone the first ingest of a new day creates it
         # with only that day's judgements, so "fewer rows than judgements" means incomplete,
@@ -995,7 +1005,7 @@ class VectorDB:
                 self._fts_auto_rebuilt = True
                 self.rebuild_fts_index(fts_raw_dir)
 
-        with self._connect_fts() as fts_conn:
+        with closing(self._connect_fts()) as fts_conn, fts_conn:
             fts_rows = fts_conn.execute(
                 """
                 SELECT doc_key,
@@ -1020,7 +1030,7 @@ class VectorDB:
                 division=division,
                 is_reference=is_reference,
             )
-            with self._connect() as conn:
+            with closing(self._connect()) as conn, conn:
                 allowed = {
                     r["doc_key"]: self._row_to_dict(r)
                     for r in conn.execute(
@@ -1040,7 +1050,7 @@ class VectorDB:
 
         picked = fts_rows[:top_k]
         placeholders = ",".join("?" for _ in picked)
-        with self._connect() as conn:
+        with closing(self._connect()) as conn, conn:
             by_key = {
                 r["doc_key"]: self._row_to_dict(r)
                 for r in conn.execute(
@@ -1153,7 +1163,7 @@ class VectorDB:
             return []
 
         placeholders = ",".join("?" for _ in chosen)
-        with self._connect() as conn:
+        with closing(self._connect()) as conn, conn:
             by_key = {
                 r["doc_key"]: self._row_to_dict(r)
                 for r in conn.execute(
@@ -1227,7 +1237,7 @@ class VectorDB:
         """Find the top-k most similar judgements to an ingested case (#11, #15, #37)."""
         doc_keys = self.resolve_doc_keys(identifier)
         doc_key = doc_keys[0]
-        with self._connect() as conn:
+        with closing(self._connect()) as conn, conn:
             row = conn.execute(
                 "SELECT vector_file FROM judgements WHERE doc_key = ?", (doc_key,)
             ).fetchone()

@@ -1364,6 +1364,150 @@
       "source": "entscheidsuche",
       "judgements": 45,
       "crawled_at": "2026-11-27T15:50:39+00:00"
+    },
+    "2026-08-22": {
+      "source": "entscheidsuche",
+      "judgements": 2,
+      "crawled_at": "2026-11-28T07:26:16+00:00",
+      "ingested_at": "2026-11-28T07:26:16+00:00"
+    },
+    "2026-08-23": {
+      "source": "entscheidsuche",
+      "judgements": 0,
+      "crawled_at": "2026-11-28T07:26:18+00:00",
+      "ingested_at": "2026-11-28T07:26:18+00:00"
+    },
+    "2026-08-24": {
+      "source": "entscheidsuche",
+      "judgements": 30,
+      "crawled_at": "2026-11-28T07:27:52+00:00",
+      "ingested_at": "2026-11-28T07:27:52+00:00"
+    },
+    "2026-08-25": {
+      "source": "entscheidsuche",
+      "judgements": 29,
+      "crawled_at": "2026-11-28T07:29:33+00:00",
+      "ingested_at": "2026-11-28T07:29:33+00:00"
+    },
+    "2026-08-26": {
+      "source": "entscheidsuche",
+      "judgements": 23,
+      "crawled_at": "2026-11-28T07:30:44+00:00",
+      "ingested_at": "2026-11-28T07:30:44+00:00"
+    },
+    "2026-08-27": {
+      "source": "entscheidsuche",
+      "judgements": 44,
+      "crawled_at": "2026-11-28T07:33:17+00:00",
+      "ingested_at": "2026-11-28T07:33:17+00:00"
+    },
+    "2026-08-28": {
+      "source": "entscheidsuche",
+      "judgements": 25,
+      "crawled_at": "2026-11-28T07:34:28+00:00",
+      "ingested_at": "2026-11-28T07:34:28+00:00"
+    },
+    "2026-08-29": {
+      "source": "entscheidsuche",
+      "judgements": 0,
+      "crawled_at": "2026-11-28T07:34:29+00:00",
+      "ingested_at": "2026-11-28T07:34:29+00:00"
+    },
+    "2026-08-30": {
+      "source": "entscheidsuche",
+      "judgements": 0,
+      "crawled_at": "2026-11-28T07:34:31+00:00",
+      "ingested_at": "2026-11-28T07:34:31+00:00"
+    },
+    "2026-08-31": {
+      "source": "entscheidsuche",
+      "judgements": 27,
+      "crawled_at": "2026-11-28T07:35:25+00:00",
+      "ingested_at": "2026-11-28T07:35:25+00:00"
+    },
+    "2026-09-01": {
+      "source": "entscheidsuche",
+      "judgements": 21,
+      "crawled_at": "2026-11-28T07:36:16+00:00",
+      "ingested_at": "2026-11-28T07:36:16+00:00"
+    },
+    "2026-09-02": {
+      "source": "entscheidsuche",
+      "judgements": 50,
+      "crawled_at": "2026-11-28T07:39:00+00:00",
+      "ingested_at": "2026-11-28T07:39:00+00:00"
+    },
+    "2026-09-03": {
+      "source": "entscheidsuche",
+      "judgements": 32,
+      "crawled_at": "2026-11-28T07:40:22+00:00",
+      "ingested_at": "2026-11-28T07:40:22+00:00"
+    },
+    "2026-09-04": {
+      "source": "entscheidsuche",
+      "judgements": 18,
+      "crawled_at": "2026-11-28T07:40:57+00:00",
+      "ingested_at": "2026-11-28T07:40:57+00:00"
+    },
+    "2026-09-05": {
+      "source": "entscheidsuche",
+      "judgements": 0,
+      "crawled_at": "2026-11-28T07:40:58+00:00",
+      "ingested_at": "2026-11-28T07:40:58+00:00"
+    },
+    "2026-09-06": {
+      "source": "entscheidsuche",
+      "judgements": 0,
+      "crawled_at": "2026-11-28T07:40:59+00:00",
+      "ingested_at": "2026-11-28T07:40:59+00:00"
+    },
+    "2026-09-07": {
+      "source": "entscheidsuche",
+      "judgements": 35,
+      "crawled_at": "2026-11-28T07:53:30+00:00",
+      "ingested_at": "2026-11-28T07:53:30+00:00"
+    },
+    "2026-09-08": {
+      "source": "entscheidsuche",
+      "judgements": 37,
+      "crawled_at": "2026-11-28T07:54:52+00:00",
+      "ingested_at": "2026-11-28T07:54:52+00:00"
+    },
+    "2026-09-09": {
+      "source": "entscheidsuche",
+      "judgements": 38,
+      "crawled_at": "2026-11-28T07:56:19+00:00",
+      "ingested_at": "2026-11-28T07:56:19+00:00"
+    },
+    "2026-09-10": {
+      "source": "entscheidsuche",
+      "judgements": 36,
+      "crawled_at": "2026-11-28T07:57:52+00:00",
+      "ingested_at": "2026-11-28T07:57:52+00:00"
+    },
+    "2026-09-11": {
+      "source": "entscheidsuche",
+      "judgements": 18,
+      "crawled_at": "2026-11-28T07:58:36+00:00",
+      "ingested_at": "2026-11-28T07:58:36+00:00"
+    },
+    "2026-09-12": {
+      "source": "entscheidsuche",
+      "judgements": 0,
+      "crawled_at": "2026-11-28T07:58:38+00:00",
+      "ingested_at": "2026-11-28T07:58:38+00:00"
+    },
+    "2026-09-13": {
+      "source": "entscheidsuche",
+      "judgements": 0,
+      "crawled_at": "2026-11-28T07:58:39+00:00",
+      "ingested_at": "2026-11-28T07:58:39+00:00"
+    },
+    "2026-09-14": {
+      "source": "entscheidsuche",
+      "judgements": 33,
+      "crawled_at": "2026-11-28T08:00:21+00:00",
+      "ingested_at": "2026-11-28T08:00:21+00:00"
     }
   }
 }

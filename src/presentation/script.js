@@ -25,8 +25,9 @@ const QUOTE_STATUS = {
 const COLUMNS = [
     { key: "caseNumber", label: "colCase", cls: "col-case" },
     { key: "date", label: "colDate", cls: "col-date" },
-    { key: "area", label: "colArea", cls: "col-area" },
+    // relevance before the wide subject column: stays in view next to an open case
     { key: "score", label: "colRelevance", cls: "col-score" },
+    { key: "area", label: "colArea", cls: "col-area" },
     { key: null, label: "colStatus", cls: "col-status" },
 ];
 
@@ -96,13 +97,22 @@ function findItem(id) {
  *  says something about; `baseScore` is the value without the decisions.
  *  This is the ONE number that is shown, filtered, sorted and compared with the thresholds. */
 function effectiveScore(item) {
-    return Math.round(Math.max(0, Math.min(100, item.score)) * 10) / 10;
+    let score = Math.max(0, Math.min(100, item.score));
+    // the lawyer's own decision is final for this judgement (same rule as the backend,
+    // feedback_learning.apply_decision): relevant = at least green, not relevant = red
+    if (item.userLevel === "high") score = Math.max(score, SUMMARY_THRESHOLD);
+    else if (item.userLevel === "low") score = Math.min(score, Math.round((MEDIUM_THRESHOLD - 0.1) * 10) / 10);
+    return Math.round(score * 10) / 10;
+}
+
+/** Score before any decision: the stored relevance. */
+function baseScoreOf(item) {
+    return Number.isFinite(item.baseScore) ? item.baseScore : item.score;
 }
 
 /** By how much the lawyers' decisions moved this judgement's score (0 = not at all). */
 function learnedDelta(item) {
-    const base = Number.isFinite(item.baseScore) ? item.baseScore : item.score;
-    return Math.round((item.score - base) * 10) / 10;
+    return Math.round((effectiveScore(item) - baseScoreOf(item)) * 10) / 10;
 }
 
 function scoreLevel(score) {
@@ -183,7 +193,7 @@ function toggleTheme() {
 
 /* ---------- thresholds ---------- */
 
-/** Takes the thresholds from the backend; keeps the defaults if it does not answer. */
+/** Takes the thresholds (and default cached date span) from the backend; keeps defaults if it does not answer. */
 async function loadThresholds() {
     const config = await fetchConfig();
     const high = toNumber(config?.thresholds?.high, NaN);
@@ -191,6 +201,14 @@ async function loadThresholds() {
     if (Number.isFinite(high) && Number.isFinite(medium) && medium <= high) {
         SUMMARY_THRESHOLD = high;
         MEDIUM_THRESHOLD = medium;
+    }
+    if (config?.availableRange?.from && config?.availableRange?.to && !state.hasSearched && !state.searching) {
+        const fromInput = $("#date-from");
+        const toInput = $("#date-to");
+        if (fromInput && toInput) {
+            setDateInput(fromInput, config.availableRange.from);
+            setDateInput(toInput, config.availableRange.to);
+        }
     }
     if (config?.thresholdBasis && typeof config.thresholdBasis === "object") THRESHOLD_BASIS = config.thresholdBasis;
 }
@@ -256,9 +274,14 @@ function validateRange() {
         fromInput.classList.add("invalid");
         return { error: "errOrder" };
     }
-    if (to > toIso(new Date())) {
+    const todayIso = toIso(new Date());
+    if (to > todayIso) {
         toInput.classList.add("invalid");
         return { error: "errFuture" };
+    }
+    if (from >= todayIso) {
+        fromInput.classList.add("invalid");
+        return { error: "errToday" };
     }
     return { from, to };
 }
@@ -276,15 +299,13 @@ async function onSearch(event) {
     event.preventDefault();
     const range = validateRange();
     showFormError(range.error || null);
-    if (range.error || state.searching) return;
+    if (range.error) return;
 
     const searchGen = ++periodSearchGeneration;
     const button = $("#search-btn");
-    button.disabled = true;
     button.classList.add("loading");
     state.searching = true;
     state.searchProgress = null;
-    state.searchErrorMsg = null;
     state.selectedId = null;
     state.summaryQueue = [];        // summaries still waiting belong to the previous search
     state.summaryError.clear();
@@ -303,7 +324,7 @@ async function onSearch(event) {
                 if (searchGen !== periodSearchGeneration) return;
                 state.searchProgress = period;
                 renderList();
-                await new Promise((resolve) => setTimeout(resolve, 1200));
+                await new Promise((resolve) => setTimeout(resolve, 1000));
                 if (searchGen !== periodSearchGeneration) return;
                 try {
                     period = await periodStatus(range.from, range.to);
@@ -317,7 +338,7 @@ async function onSearch(event) {
             if (period && period.status === "error") {
                 state.items = [];
                 state.error = "periodError";
-                state.searchErrorArg = period.error || period.message || "";
+                state.searchErrorArg = period;   // worded in the UI language (i18n periodError)
             } else {
                 state.items = await searchJudgements(range.from, range.to, currentLang);
                 state.error = null;
@@ -329,6 +350,7 @@ async function onSearch(event) {
             state.searchErrorArg = null;
         }
     } catch (err) {
+        if (searchGen !== periodSearchGeneration) return;
         console.error(err);
         state.items = [];
         state.error = "errorSearch";
@@ -340,11 +362,12 @@ async function onSearch(event) {
     state.searching = false;
     state.searchProgress = null;
     frReasonAttempted.clear();
-    button.disabled = false;
     button.classList.remove("loading");
     renderResults();
 
-    queueRelevantSummaries();
+    if (USE_MOCK) {
+        queueRelevantSummaries();
+    }
     localizeListSubjects();
 }
 
@@ -438,8 +461,13 @@ function selectCase(id) {
     }
     // the open case goes first: its automatic summary, or the one stored in an earlier session
     const item = findItem(id);
-    const status = item && summaryStatus(item);
-    if (status === "queued" || status === "missing" || (status === "manual" && item.summarized)) {
+    if (!item || state.summaries[id]) return;
+    if (item.summarized) {
+        fetchStoredIntoState(id);
+        return;
+    }
+    const status = summaryStatus(item);
+    if (status === "queued" || status === "missing") {
         requestSummary(id, { first: true });
     }
 }
@@ -735,17 +763,43 @@ function onDraftInput(id, lang, value, editor) {
  *  database keeps one edited version per language next to the generated one.
  *  If only one language was changed, the backend lets Apertus bring the other one in line
  *  (never a text a lawyer typed); `entry.alignment` says what came of it. */
+/** Popup on "Speichern": regenerate the other language? Resolves to "apply", "keep" or
+ *  "cancel" (Escape and "Abbrechen"). The dialog closes at once; the save runs afterwards,
+ *  shown in the editor's status line. */
+function askAlign(source, target) {
+    const dialog = $("#align-dialog");
+    $("#align-title").textContent = t("alignPromptTitle", target);
+    $("#align-desc").textContent = t("alignPromptBody", source, target);
+    dialog.returnValue = "";
+    dialog.showModal();
+    $("#align-apply").focus();
+    return new Promise((resolve) => {
+        dialog.addEventListener("close", () => resolve(dialog.returnValue || "cancel"), { once: true });
+    });
+}
+
+/** "Speichern". If exactly one language was changed and Apertus may rewrite the other one
+ *  (generated or "angeglichen", not typed by hand), the popup asks first: "neu erstellen"
+ *  saves and lets Apertus regenerate the other language, "nur speichern" saves the edit
+ *  alone (align: false), "Abbrechen" saves nothing. A language typed by hand is never
+ *  rewritten by Apertus (backend rule), so then there is nothing to ask. */
 async function onSave(id) {
-    if (!isDirty(id) || isSaveBusy(id)) return;
+    if (!isDirty(id) || isSaveBusy(id) || $("#align-dialog").open) return;
     const stored = state.summaries[id];
     const texts = currentTexts(id);
     const sent = { de: texts.de, fr: texts.fr };
     const changed = SUMMARY_LANGS.filter((lang) => sent[lang] !== stored[lang] || stored.pendingLangs.includes(lang));
     const other = changed.length === 1 ? SUMMARY_LANGS.find((lang) => lang !== changed[0]) : null;
-    state.saveStatus[id] = other && stored.origin[other] !== "edited" ? "aligning" : "saving";
+    let align = true;
+    if (other && ["generated", "aligned"].includes(stored.origin[other])) {
+        const answer = await askAlign(changed[0], other);
+        if (answer === "cancel") return;
+        align = answer === "apply";
+    }
+    state.saveStatus[id] = align && other && stored.origin[other] !== "edited" ? "aligning" : "saving";
     renderEditors();
     try {
-        const entry = await saveSummary(id, sent);
+        const entry = await saveSummary(id, sent, { align });
         state.summaries[id] = entry;
         // Keep only what the user typed on while saving; everything else follows the saved
         // entry (Apertus may have rewritten the other language).
@@ -881,7 +935,7 @@ function relevanceScale(item) {
         el("span", { class: "pnum", text: String(score) }),
         // learned from the lawyers' decisions: show by how much that moved the score
         Boolean(learnedDelta(item)) && el("span", {
-            class: "sub delta", title: t("learnedDeltaHint", item.baseScore),
+            class: "sub delta", title: t(decidedLevel(item) ? "decidedDeltaHint" : "learnedDeltaHint", baseScoreOf(item)),
             text: (learnedDelta(item) > 0 ? "+" : "−") + Math.abs(learnedDelta(item)),
         }));
 }
@@ -896,7 +950,7 @@ function statusTags(item) {
         Boolean(decidedLevel(item)) && el("span", {
             class: "tag",
             // "korrigiert": the decision differs from what the score says; "bestätigt": it agrees
-            text: t(scoreLevel(effectiveScore(item)) === item.userLevel ? "tagConfirmed" : "tagCorrected")
+            text: t(scoreLevel(baseScoreOf(item)) === item.userLevel ? "tagConfirmed" : "tagCorrected")
                 + (item.feedbackLocalOnly ? t("localSuffix") : ""),
         }),
     ];
@@ -912,10 +966,10 @@ function renderRow(item) {
     },
         el("td", { class: "col-case nr" }, item.caseNumber, el("div", { class: "sub", text: (item.lang || "").toUpperCase() })),
         el("td", { class: "col-date pnum", text: item.date ? formatDate(item.date) : "" }),
+        el("td", { class: "col-score" }, relevanceScale(item)),
         el("td", { class: "col-area" }, areaLabel(item),
             el("div", { class: "sub", text: subjectDetail(item) || outcomeName(item.outcome) }),
             el("div", { class: "row inline-tags" }, statusTags(item))),   // shown when the status column is hidden
-        el("td", { class: "col-score" }, relevanceScale(item)),
         el("td", { class: "col-status" }, el("div", { class: "row" }, statusTags(item))));
 }
 
@@ -978,7 +1032,7 @@ function renderList() {
         status.hidden = false;
         status.replaceChildren(
             el("div", { class: "period-progress" },
-                el("p", { class: "loading-line" }, spinner(), t("periodLoading", p.message)),
+                el("p", { class: "loading-line" }, spinner(), t("periodLoading", p)),
                 el("progress", { max: String(Math.max(1, p.total || 1)), value: String(p.completed || 0) }),
                 p.total > 0 && el("span", { class: "sub", text: `${p.completed || 0} / ${p.total} (${pct} %)` })));
         return;
@@ -1502,7 +1556,7 @@ function init() {
 
     // Escape closes the detail panel (unless a calendar is open or the user is typing)
     document.addEventListener("keydown", (e) => {
-        if (e.key !== "Escape" || !state.selectedId || openPickers.size) return;
+        if (e.key !== "Escape" || !state.selectedId || openPickers.size || $("#align-dialog").open) return;
         if (e.target.closest("input, textarea, select")) return;
         closeDetail();
     });

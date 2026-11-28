@@ -38,6 +38,13 @@ loses judgements Suva selected, while the order of the list does not get measura
 better. The project prefers a longer list to a missed judgement (``list_factor``), so
 decisions must not cost recall.
 
+The decided judgement itself (``apply_decision``): the lawyer's decision is final for
+that one judgement. "Relevant" puts its score at least on the list threshold (green),
+"nicht relevant" at most just below yellow (red). Inside that band it keeps its order, so
+Apertus still ranks the decided judgements among themselves. The learned corrections
+above only move the *other* judgements; a fixed 100 / 0 was not used because after some
+weeks of decisions the list would pile up at both ends.
+
 What it cannot learn: anything Apertus did not put into the area or the criteria, and
 nothing about judgements Apertus did not score (they have no ``p0``).
 """
@@ -146,6 +153,20 @@ def row_yellow(row: Mapping[str, Any]) -> float | None:
     """Lower bound of yellow stored with a triage result (#75); ``None`` for older files (half the list threshold)."""
     value = ((row.get("metadata") or {}).get("relevance") or {}).get("yellow_threshold")
     return float(value) if isinstance(value, (int, float)) and not isinstance(value, bool) and value > 0 else None
+
+
+def apply_decision(score: float, decision: bool | None, green: float = 60.0, yellow: float = 40.0) -> float:
+    """Score of a judgement the lawyer decided on: relevant = at least ``green``, not relevant = below ``yellow``.
+
+    ``decision`` is ``True`` ("Für Suva relevant"), ``False`` ("Nicht relevant") or ``None``
+    (no decision: the score is returned unchanged). The cap for "not relevant" is one tenth
+    below ``yellow`` because the UI shows one decimal.
+    """
+    if decision is True:
+        return max(float(score), green)
+    if decision is False:
+        return min(float(score), round(yellow - 0.1, 1))
+    return float(score)
 
 
 @dataclass(frozen=True)

@@ -19,8 +19,23 @@ const I18N = {
         openCalendar: "Kalender öffnen",
         search: "Suchen",
         searching: "Suche läuft …",
-        periodLoading: (msg) => msg || "Zeitraum wird geladen und mit Apertus bewertet …",
-        periodError: (msg) => `Zeitraum konnte nicht geladen werden: ${msg}`,
+        // p: the period job from /api/periods/status (stage, from, to, completed, total)
+        periodLoading: (p) => {
+            const range = p?.from && p?.to ? `${formatDate(p.from)} – ${formatDate(p.to)}` : "";
+            if (p?.stage === "checking") return `Zeitraum ${range} wird geprüft …`;
+            if (p?.stage === "crawling") return `Urteile werden geladen (${range}) …`;
+            if (p?.stage === "ingesting") return "Urteile werden für die Suche aufbereitet …";
+            if (p?.stage === "triaging") return `Apertus bewertet die Relevanz (${p.completed || 0} von ${p.total || 0}) …`;
+            return "Zeitraum wird geladen und mit Apertus bewertet …";
+        },
+        periodError: (p) => {
+            if (p?.errorCode === "crawl_failed") {
+                return `Zeitraum konnte nicht geladen werden: Die Urteile vom ${(p.failedDays || []).map(formatDate).join(", ")} `
+                    + "konnten nicht abgerufen werden.";
+            }
+            if (p?.errorCode === "triage_failed") return "Zeitraum konnte nicht geladen werden: Apertus konnte die Relevanz nicht bewerten.";
+            return "Zeitraum konnte nicht geladen werden. Bitte erneut versuchen.";
+        },
         emptyInitial: "Wähle einen Zeitraum und starte die Suche.",
         emptyNoResults: "Keine Urteile in diesem Zeitraum gefunden.",
         emptyFiltered: "Kein Urteil passt zu diesem Filter.",
@@ -29,6 +44,7 @@ const I18N = {
         errInvalid: "Ungültiges Datum. Format: TT.MM.JJJJ",
         errOrder: "Das Startdatum muss vor dem Enddatum liegen.",
         errFuture: "Das Enddatum darf nicht in der Zukunft liegen.",
+        errToday: "Für heute liegen noch nicht alle Urteile vor – bitte ein früheres Startdatum wählen.",
 
         /* calendar */
         today: "Heute",
@@ -124,6 +140,13 @@ const I18N = {
         resetDone: "Zurückgesetzt auf den generierten Text",
         errorReset: "Zurücksetzen fehlgeschlagen.",
         pendingLegacy: "Frühere Bearbeitung, noch nicht übernommen: «Speichern» übernimmt sie, «Zurücksetzen» verwirft sie.",
+        alignPromptTitle: (target) => `${target === "de" ? "Deutsche" : "Französische"} Fassung neu erstellen?`,
+        alignPromptBody: (source, target) =>
+            `Sie haben die ${source === "de" ? "deutsche" : "französische"} Fassung geändert. Soll Apertus die `
+            + `${target === "de" ? "deutsche" : "französische"} Fassung entsprechend neu erstellen?`,
+        alignApply: "Mit Apertus neu erstellen",
+        alignKeep: "Nein, nur speichern",
+        cancel: "Abbrechen",
         alignedToast: (lang) => `Gespeichert. Apertus hat die ${lang === "de" ? "deutsche" : "französische"} Fassung an Ihre Änderung angeglichen. Bitte prüfen.`,
         alignSkippedToast: (lang) => `Gespeichert. Die ${lang === "de" ? "deutsche" : "französische"} Fassung ist von Hand bearbeitet und wurde deshalb nicht automatisch angeglichen.`,
         alignFailedToast: (lang) => `Gespeichert. Die ${lang === "de" ? "deutsche" : "französische"} Fassung konnte nicht angeglichen werden (Apertus nicht erreichbar) und ist unverändert.`,
@@ -140,6 +163,7 @@ const I18N = {
         correctionNoteUnscored: "Dieses Urteil hat Apertus nicht bewertet (Rechtsgebiet ausserhalb von Unfall-, Invaliden- und Militärversicherung), darum steht die Relevanz auf 0. Ihre Entscheidung bestimmt die Einstufung dieses Urteils; für andere Urteile kann das System daraus nichts lernen. Ein zweiter Klick nimmt sie zurück.",
         feedbackLearned: (n) => `Entscheidung gespeichert. Daraus gelernt: ${n} ${n === 1 ? "weiteres Urteil" : "weitere Urteile"} neu bewertet.`,
         learnedDeltaHint: (base) => `Aus den Entscheidungen der Juristinnen und Juristen gelernt. Ohne sie: ${base}`,
+        decidedDeltaHint: (base) => `Durch die eigene Entscheidung zu diesem Urteil festgelegt. Ohne sie: ${base}`,
         feedbackLocalOnly: "Korrektur konnte nicht am Server gespeichert werden.",
 
         /* extra case & summary basis (#72) */
@@ -180,8 +204,22 @@ const I18N = {
         openCalendar: "Ouvrir le calendrier",
         search: "Rechercher",
         searching: "Recherche en cours …",
-        periodLoading: (msg) => msg || "Chargement et évaluation de la période par Apertus …",
-        periodError: (msg) => `Impossible de charger la période : ${msg}`,
+        periodLoading: (p) => {
+            const range = p?.from && p?.to ? `${formatDate(p.from)} – ${formatDate(p.to)}` : "";
+            if (p?.stage === "checking") return `Vérification de la période ${range} …`;
+            if (p?.stage === "crawling") return `Chargement des arrêts (${range}) …`;
+            if (p?.stage === "ingesting") return "Préparation des arrêts pour la recherche …";
+            if (p?.stage === "triaging") return `Apertus évalue la pertinence (${p.completed || 0} sur ${p.total || 0}) …`;
+            return "Chargement et évaluation de la période par Apertus …";
+        },
+        periodError: (p) => {
+            if (p?.errorCode === "crawl_failed") {
+                return `Impossible de charger la période : les arrêts du ${(p.failedDays || []).map(formatDate).join(", ")} `
+                    + "n'ont pas pu être récupérés.";
+            }
+            if (p?.errorCode === "triage_failed") return "Impossible de charger la période : Apertus n'a pas pu évaluer la pertinence.";
+            return "Impossible de charger la période. Veuillez réessayer.";
+        },
         emptyInitial: "Choisissez une période et lancez la recherche.",
         emptyNoResults: "Aucun arrêt trouvé pour cette période.",
         emptyFiltered: "Aucun arrêt ne correspond à ce filtre.",
@@ -190,6 +228,7 @@ const I18N = {
         errInvalid: "Date invalide. Format : JJ.MM.AAAA",
         errOrder: "La date de début doit précéder la date de fin.",
         errFuture: "La date de fin ne peut pas être dans le futur.",
+        errToday: "Les arrêts d'aujourd'hui ne sont pas encore complets – veuillez choisir une date de début antérieure.",
 
         today: "Aujourd'hui",
         prevMonth: "Mois précédent",
@@ -281,6 +320,13 @@ const I18N = {
         resetDone: "Texte généré rétabli",
         errorReset: "La réinitialisation a échoué.",
         pendingLegacy: "Modification antérieure pas encore reprise : « Enregistrer » la reprend, « Réinitialiser » la supprime.",
+        alignPromptTitle: (target) => `Régénérer la version ${target === "de" ? "allemande" : "française"} ?`,
+        alignPromptBody: (source, target) =>
+            `Vous avez modifié la version ${source === "de" ? "allemande" : "française"}. Apertus doit-il régénérer `
+            + `la version ${target === "de" ? "allemande" : "française"} en conséquence ?`,
+        alignApply: "Régénérer avec Apertus",
+        alignKeep: "Non, enregistrer seulement",
+        cancel: "Annuler",
         alignedToast: (lang) => `Enregistré. Apertus a aligné la version ${lang === "de" ? "allemande" : "française"} sur votre modification. Veuillez la relire.`,
         alignSkippedToast: (lang) => `Enregistré. La version ${lang === "de" ? "allemande" : "française"} a été modifiée à la main et n'a donc pas été alignée automatiquement.`,
         alignFailedToast: (lang) => `Enregistré. La version ${lang === "de" ? "allemande" : "française"} n'a pas pu être alignée (Apertus injoignable) et reste inchangée.`,
@@ -296,6 +342,7 @@ const I18N = {
         correctionNoteUnscored: "Apertus n'a pas évalué cet arrêt (domaine autre que l'assurance-accidents, l'assurance-invalidité ou l'assurance militaire), d'où la pertinence de 0. Votre décision détermine le classement de cet arrêt ; le système ne peut rien en apprendre pour les autres arrêts. Un second clic l'annule.",
         feedbackLearned: (n) => `Décision enregistrée. Le système en a tiré des enseignements : ${n} ${n === 1 ? "autre arrêt réévalué" : "autres arrêts réévalués"}.`,
         learnedDeltaHint: (base) => `Appris des décisions des juristes. Sans elles : ${base}`,
+        decidedDeltaHint: (base) => `Fixé par la décision prise sur cet arrêt. Sans elle : ${base}`,
         feedbackLocalOnly: "La correction n'a pas pu être enregistrée sur le serveur.",
 
         tagSingleJudge: "Juge unique",
