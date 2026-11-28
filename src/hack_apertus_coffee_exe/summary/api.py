@@ -206,7 +206,8 @@ class Backend:
             return {**failed, "error": "Apertus returned no text"}
         changed = aligned.strip() != target_text.strip()
         if changed:
-            model = getattr(getattr(summarizer, "llm", None), "model", None) or "apertus"
+            used = getattr(summarizer, "align_llm", None) or getattr(summarizer, "llm", None)
+            model = getattr(used, "model", None) or "apertus"
             store.replace_edit(conn, case_number, target, aligned, aligned_by=model)
         return {"lang": target, "ok": True, "changed": changed,
                 "notes": list(result.notes), "reference": bool(result.has_reference)}

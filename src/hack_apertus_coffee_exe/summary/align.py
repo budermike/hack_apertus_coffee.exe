@@ -100,10 +100,11 @@ def source_changes(before: str, after: str) -> list[dict[str, str]]:
 
     Per change ``before`` and ``after`` (one sentence each; ``before`` is empty for a new
     sentence, ``after`` for a removed one) and, word by word, what was ``removed`` and ``added``.
+    ``number`` is the place of ``before`` among the sentences of the text before the edit (from 1; 0 for a new sentence).
     """
     old = [" ".join(s.split()) for s, _ in split_sentences(before)]
     new = [" ".join(s.split()) for s, _ in split_sentences(after)]
-    pairs: list[tuple[str, str]] = []
+    pairs: list[tuple[str, str, int]] = []  # sentence before, after, number of the sentence before (0: new)
     for tag, i1, i2, j1, j2 in difflib.SequenceMatcher(a=old, b=new, autojunk=False).get_opcodes():
         if tag == "equal":
             continue
@@ -111,16 +112,16 @@ def source_changes(before: str, after: str) -> list[dict[str, str]]:
         # counterpart that is at least half the same), removed or new. The other language
         # often says the same in another place or order, so each one is placed separately.
         j = j1
-        for was in old[i1:i2]:
-            match = next((k for k in range(j, j2) if _similar(was, new[k]) >= 0.5), None)
+        for i in range(i1, i2):
+            match = next((k for k in range(j, j2) if _similar(old[i], new[k]) >= 0.5), None)
             if match is None:
-                pairs.append((was, ""))
+                pairs.append((old[i], "", i + 1))
                 continue
-            pairs += [("", now) for now in new[j:match]] + [(was, new[match])]
+            pairs += [("", now, 0) for now in new[j:match]] + [(old[i], new[match], i + 1)]
             j = match + 1
-        pairs += [("", now) for now in new[j:j2]]
+        pairs += [("", now, 0) for now in new[j:j2]]
     changes = []
-    for was, now in pairs:
+    for was, now, number in pairs:
         words_was, words_now = was.split(), now.split()
         removed, added = [], []
         for word_tag, a1, a2, b1, b2 in difflib.SequenceMatcher(a=words_was, b=words_now, autojunk=False).get_opcodes():
@@ -128,7 +129,8 @@ def source_changes(before: str, after: str) -> list[dict[str, str]]:
                 removed.append(" ".join(words_was[a1:a2]))
             if word_tag in ("replace", "insert"):
                 added.append(" ".join(words_now[b1:b2]))
-        changes.append({"before": was, "after": now, "removed": " […] ".join(removed), "added": " […] ".join(added)})
+        changes.append({"before": was, "after": now, "removed": " […] ".join(removed), "added": " […] ".join(added),
+                        "number": number})
     return changes
 
 
@@ -213,6 +215,46 @@ Réponds en JSON :
 """,
 }
 
+# A sentence that was removed as a whole: Apertus only quotes the sentence of the other language
+# that says the same. One field, no judgement text in the prompt: with the full answer of
+# CHANGE_SCHEMA, Apertus 70B took 38 s for 500 tokens and ran on after the empty «neu» (28.11.2026).
+DROP_SCHEMA = {
+    "type": "object",
+    "properties": {"alt": {"type": "string"}},
+    "required": ["alt"],
+    "additionalProperties": False,
+}
+DROP_SYSTEM = {
+    "de": """\
+Du vergleichst die französische und die deutsche Zusammenfassung desselben Bundesgerichtsurteils. Ein Satz der französischen Zusammenfassung wurde gestrichen. Kopiere in «alt» wörtlich den einen Satz der deutschen Zusammenfassung, der dieselbe Aussage enthält: genau ein Satz, unverändert aus der deutschen Zusammenfassung übernommen. Enthält kein deutscher Satz diese Aussage, ist «alt» leer (""). Antworte ausschliesslich mit JSON.
+""",
+    "fr": """\
+Tu compares le résumé allemand et le résumé français du même arrêt du Tribunal fédéral. Une phrase du résumé allemand a été supprimée. Copie dans «alt», mot pour mot, la seule phrase du résumé français qui contient la même affirmation : exactement une phrase, reprise telle quelle du résumé français. Si aucune phrase française ne contient cette affirmation, «alt» est vide (""). Réponds uniquement en JSON.
+""",
+}
+DROP_LABELS = {"de": ("Deutsche Zusammenfassung", "Gestrichener französischer Satz"),
+               "fr": ("Résumé français", "Phrase allemande supprimée")}
+
+BACK_SCHEMA = {
+    "type": "object",
+    "properties": {"satz": {"type": "integer"}},
+    "required": ["satz"],
+    "additionalProperties": False,
+}
+
+# Cross-check before a sentence is changed or removed: asked the other way round, does Apertus
+# name the edited sentence for the sentence it wants to touch? (Prompt in the language of that sentence.)
+BACK_SYSTEM = {
+    "de": """\
+Du vergleichst zwei Zusammenfassungen desselben Bundesgerichtsurteils. Du erhältst einen deutschen Satz und eine nummerierte Liste französischer Sätze. Gib in «satz» die Nummer des französischen Satzes an, der dieselbe Aussage enthält wie der deutsche Satz. Entspricht ihm keiner, gib 0 an. Antworte ausschliesslich mit JSON.
+""",
+    "fr": """\
+Tu compares deux résumés du même arrêt du Tribunal fédéral. Tu reçois une phrase en français et une liste numérotée de phrases en allemand. Indique dans «satz» le numéro de la phrase allemande qui contient la même affirmation que la phrase française. Si aucune ne lui correspond, indique 0. Réponds uniquement en JSON.
+""",
+}
+BACK_LABELS = {"de": ("Deutscher Satz", "Französische Sätze"), "fr": ("Phrase française", "Phrases allemandes")}
+BACK_CHECK = True  # default of ``align_edit(back_check=...)``
+
 CHECK_SYSTEM = {
     "de": """\
 Du bist Juristin / Jurist im Rechtsdienst der Suva und vergleichst die deutsche und die französische Zusammenfassung desselben Bundesgerichtsurteils. Beide sollen dieselben rechtlichen Aussagen, Voraussetzungen, Einschränkungen und Rechtsfolgen enthalten; im Wortlaut dürfen sie sich unterscheiden.
@@ -238,7 +280,6 @@ _LABELS = {
         "tasks": {
             "replace": "Aufgabe: «{removed}» wurde durch «{added}» ersetzt. Kopiere in «alt» die Sätze der {target}n Fassung, die die Aussage «{removed}» enthalten, und gib sie in «neu» mit der neuen Aussage wieder.",
             "delete": "Aufgabe: «{removed}» wurde gestrichen. Kopiere in «alt» die Sätze der {target}n Fassung, die genau diese gestrichene Aussage enthalten (nicht den Rest des Satzes unter «vorher»), und gib sie in «neu» ohne diese Aussage wieder; enthält ein Satz nur diese Aussage, ist «neu» leer.",
-            "drop": "Aufgabe: Der Satz unter «vorher» wurde ganz gestrichen. Kopiere in «alt» wörtlich den einen Satz der {target}n Fassung, der dasselbe aussagt; «neu» bleibt leer (\"\"). Sagt kein Satz der {target}n Fassung dasselbe, bleibt auch «alt» leer.",
             "extend": "Aufgabe: «{added}» wurde ergänzt. Kopiere in «alt» den Satz der {target}n Fassung, der dem Satz unter «vorher» entspricht, und gib ihn in «neu» mit dieser zusätzlichen Aussage wieder.",
             "insert": "Aufgabe: Die Stelle unter «nachher» ist neu. Kopiere in «alt» den Satz der {target}n Fassung, nach dem sie stehen soll, und gib ihn in «neu» unverändert wieder, gefolgt von einem neuen Satz, der nur diese Aussage enthält.",
         },
@@ -261,7 +302,6 @@ _LABELS = {
         "tasks": {
             "replace": "Tâche : «{removed}» a été remplacé par «{added}». Copie dans «alt» les phrases de la version {target} qui contiennent l'affirmation «{removed}» et rends-les dans «neu» avec la nouvelle affirmation.",
             "delete": "Tâche : «{removed}» a été supprimé. Copie dans «alt» les phrases de la version {target} qui contiennent précisément cette affirmation supprimée (et non le reste de la phrase sous «avant») et rends-les dans «neu» sans cette affirmation ; si une phrase ne contient que cette affirmation, «neu» est vide.",
-            "drop": "Tâche : la phrase sous «avant» a été entièrement supprimée. Copie dans «alt», mot pour mot, la seule phrase de la version {target} qui dit la même chose ; «neu» reste vide (\"\"). Si aucune phrase de la version {target} ne dit la même chose, «alt» reste vide aussi.",
             "extend": "Tâche : «{added}» a été ajouté. Copie dans «alt» la phrase de la version {target} qui correspond à la phrase sous «avant» et rends-la dans «neu» avec cette affirmation supplémentaire.",
             "insert": "Tâche : le passage sous «après» est nouveau. Copie dans «alt» la phrase de la version {target} après laquelle il doit figurer et rends-la telle quelle dans «neu», suivie d'une nouvelle phrase qui ne contient que cette affirmation.",
         },
@@ -296,10 +336,8 @@ def change_user(target_lang: str, source_lang: str, change: dict[str, str], targ
 
 
 def _task(change: dict[str, str]) -> str:
-    """Kind of a change: words replaced, removed (``delete``) or added (``extend``) within a
-    sentence, a whole sentence removed (``drop``) or a new one (``insert``)."""
-    if not change["after"]:
-        return "drop"
+    """Kind of a change within a sentence (words replaced, removed: ``delete``, added: ``extend``)
+    or a new sentence (``insert``). A sentence removed as a whole has its own question (``DROP_SYSTEM``)."""
     return ("replace" if change["removed"] and change["added"] else "delete" if change["removed"]
             else "extend" if change["before"] else "insert")
 
@@ -448,17 +486,35 @@ def replace_sentences(sentences: Sequence[tuple[str, str]], numbers: Sequence[in
     return "".join(text + gap for text, gap in out).strip()
 
 
-def _json(llm: Any, system: str, user: str, name: str, schema: dict[str, Any]) -> dict[str, Any]:
-    """Apertus' JSON answer; an answer that is no JSON gets one retry with a little temperature."""
+def _json(llm: Any, system: str, user: str, name: str, schema: dict[str, Any], max_tokens: int = 600) -> dict[str, Any]:
+    """Apertus' JSON answer; an answer that is no JSON gets one retry with a little temperature.
+
+    ``max_tokens`` is small on purpose: an answer is a few sentences, and a decoding that runs
+    away (seen with an empty «neu») must end before the time limit.
+    """
     fmt = {"type": "json_schema", "json_schema": {"name": name, "strict": True, "schema": schema}}
     for temperature in (None, 0.3):
         try:
-            data = json.loads(llm.chat(system, user, response_format=fmt, temperature=temperature, timeout=CALL_TIMEOUT))
+            data = json.loads(llm.chat(system, user, max_tokens=max_tokens, response_format=fmt,
+                                       temperature=temperature, timeout=CALL_TIMEOUT))
         except json.JSONDecodeError:
             continue
         if isinstance(data, dict):
             return data
     raise ValueError("Apertus did not answer with JSON")
+
+
+def confirmed(llm: Any, target_lang: str, target_sentence: str, source_sentences: Sequence[str], number: int) -> bool:
+    """True when Apertus, asked the other way round, names sentence ``number`` of the edited
+    language (before the edit) as the one that says the same as ``target_sentence``."""
+    one, many = BACK_LABELS[target_lang]
+    listed = "\n".join(f"[{n}] {sentence}" for n, sentence in enumerate(source_sentences, start=1))
+    try:
+        answer = _json(llm, BACK_SYSTEM[target_lang], f"{one}:\n{target_sentence}\n\n{many}:\n{listed}",
+                       "gegenprobe", BACK_SCHEMA, max_tokens=20)
+    except ValueError:
+        return False
+    return answer.get("satz") == number
 
 
 def align_edit(
@@ -473,13 +529,16 @@ def align_edit(
     considerations: Sequence[str] = (),
     prompts_dir: Path = prompts.PROMPTS_DIR,
     final_check: bool = False,
+    back_check: bool | None = None,
 ) -> Alignment:
     """Carry the edit ``source_before`` -> ``source_text`` over to ``target_text`` (see module text).
 
     ``llm`` is a ``summary.llm.SummaryLLM``. One Apertus call per changed sentence, and one more
     for the closing comparison when ``final_check`` is set (off by default: the lawyer asked
     for the change to be carried over, not for a list of differences). The notes are written
-    in ``source_lang``, the language the lawyer worked in. A change Apertus gives no usable answer for is
+    in ``source_lang``, the language the lawyer worked in. With ``back_check`` (default
+    ``BACK_CHECK``) every sentence that would be changed or removed is confirmed by a second,
+    reverse question first (``confirmed``); without that confirmation it is left alone and noted. A change Apertus gives no usable answer for is
     not applied and noted. A gateway error is raised when nothing was carried over yet;
     after that, the changes that are left are noted, as is an error in the closing comparison.
     """
@@ -494,13 +553,27 @@ def align_edit(
         return Alignment(text=text, has_reference=bool(reference))
     system = change_system(target_lang, prompts_dir)
     lab = _LABELS[source_lang]  # notes are for the lawyer, in the language of the text they edited
+    check_back = BACK_CHECK if back_check is None else back_check
+    before_sentences = [" ".join(sentence.split()) for sentence, _ in split_sentences(source_before)]
+
+    def safe(numbers: Sequence[int], change: dict[str, Any]) -> bool:
+        """The sentences Apertus wants to touch really belong to the edited sentence."""
+        if not check_back or not change["number"]:
+            return True
+        return all(confirmed(llm, target_lang, sentences[n - 1][0], before_sentences, change["number"]) for n in numbers)
+
     notes: list[str] = []  # one per change that needs the lawyer: never cut short
     for position, change in enumerate(changes[:MAX_CHANGES]):
         sentences = split_sentences(text)
         shown = change["after"] or change["before"]
         try:
-            answer = _json(llm, system, change_user(target_lang, source_lang, change, text, reference),
-                           "angleichung", CHANGE_SCHEMA)
+            if not change["after"]:  # a whole sentence was removed: only the sentence that says the same is asked for
+                whole, removed_label = DROP_LABELS[target_lang]
+                answer = _json(llm, DROP_SYSTEM[target_lang], f"{whole}:\n{text}\n\n{removed_label}:\n{change['before']}",
+                               "streichung", DROP_SCHEMA, max_tokens=300)
+            else:
+                answer = _json(llm, system, change_user(target_lang, source_lang, change, text, reference),
+                               "angleichung", CHANGE_SCHEMA)
         except ValueError:  # no JSON, twice
             notes.append(lab["not_applied"].format(change=shown))
             continue
@@ -512,26 +585,25 @@ def align_edit(
                 raise
             notes += [lab["not_applied"].format(change=c["after"] or c["before"]) for c in changes[position:MAX_CHANGES]]
             break
+        quote, fresh = str(answer.get("alt") or ""), str(answer.get("neu") or "")
+        if not change["after"]:
+            if not quote.strip():
+                continue  # the other language does not have it: nothing to do
+            numbers = sorted({_locate(sentences, quoted) for quoted, _ in split_sentences(quote)})
+            if len(numbers) == 1 and numbers[0] and safe(numbers, change):
+                text = replace_sentences(sentences, numbers, "")  # removing is done here, not by Apertus
+            else:
+                notes.append(lab["not_applied"].format(change=shown))
+            continue
         reason = str(answer.get("hinweis") or "").strip()
         if answer.get("unklar"):  # nothing is read into an unclear edit
             notes.append(" ".join(filter(None, [lab["unclear"].format(change=shown), reason])))
             continue
-        quote, fresh = str(answer.get("alt") or ""), str(answer.get("neu") or "")
-        if not change["after"]:  # a whole sentence was removed: never "wording only"
-            if not quote.strip():
-                continue  # the other language does not have it: nothing to do
-            if not fresh.strip() or _similar(quote, fresh) >= 0.9:
-                # Apertus names the sentence that says the same; it often hands it back
-                # unchanged instead of an empty text. Removing it is done here.
-                numbers = sorted({_locate(sentences, quoted) for quoted, _ in split_sentences(quote)})
-                if numbers and 0 not in numbers and len(numbers) <= 2 and numbers[-1] - numbers[0] == len(numbers) - 1:
-                    text = replace_sentences(sentences, numbers, "")
-                else:
-                    notes.append(lab["not_applied"].format(change=shown))
-                continue
-        elif not answer.get("inhaltlich"):
+        if not answer.get("inhaltlich"):
             continue  # wording only
         plan = planned_replacement(sentences, quote, fresh, change)
+        if plan and not safe(plan[0], change):
+            plan = None
         if not plan:  # nothing to apply safely: this change is left to the lawyer
             notes.append(lab["not_applied"].format(change=shown))
             continue

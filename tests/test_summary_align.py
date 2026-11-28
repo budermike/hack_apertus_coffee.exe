@@ -20,6 +20,12 @@ JUDGEMENT = Judgement(
 )
 
 
+@pytest.fixture(autouse=True)
+def no_back_check(monkeypatch):
+    """The reverse question before a sentence is touched has its own tests below."""
+    monkeypatch.setattr(align, "BACK_CHECK", False)
+
+
 class FakeLLM:
     """Answers each ``chat`` call with the next prepared answer (a dict becomes JSON)."""
 
@@ -274,7 +280,10 @@ def test_a_shortened_text_is_shortened_in_the_other_language_without_notes():
     assert result.text == ("Le revenu sans invalidité se détermine selon les salaires de la CCT.\n\n"
                            "Le Tribunal fédéral a rappelé les principes applicables.")
     assert result.notes == [] and len(llm.calls) == 3
-    assert "entièrement supprimée" in llm.calls[0][1] and "Elektromonteurs" in llm.calls[0][1]
+    system, user, kwargs = llm.calls[0]
+    # a small question of its own: the French text and the removed German sentence, no judgement text
+    assert "Phrase allemande supprimée" in user and "Elektromonteurs" in user and "Résumé français" in user
+    assert kwargs["response_format"]["json_schema"]["schema"] is align.DROP_SCHEMA and kwargs["max_tokens"] == 300
     # what Apertus really answers (28.11.): the right sentence, handed back unchanged, once even
     # marked "wording only". The sentence is removed all the same.
     llm = FakeLLM(change(alt=minimum, neu=minimum, inhaltlich=False), change(alt=employer, neu=employer), change(alt=outcome, neu=""))
@@ -313,3 +322,30 @@ def test_a_gateway_error_keeps_what_was_carried_over_and_reports_the_rest():
     with pytest.raises(TimeoutError):  # nothing carried over yet: the API reports that Apertus could not be reached
         run(Failing(fail_from=0), after)
     assert FakeLLM(first).chat("s", "u", timeout=1) and align.CALL_TIMEOUT == 60
+
+
+def test_a_sentence_is_touched_only_when_the_reverse_question_names_the_edited_sentence():
+    old = "La Suva doit apporter la preuve avec une vraisemblance suffisante."
+    edit = change(alt=old, neu=old.replace("suffisante", "prépondérante"))
+    after = DE.replace("hinreichender", "überwiegender")
+    # the edited German sentence is the second of three: Apertus confirms it for the French sentence
+    llm = FakeLLM(edit, {"satz": 2})
+    result = run(llm, after, back_check=True)
+    assert "prépondérante" in result.text and result.notes == []
+    system, user, kwargs = llm.calls[1]
+    assert "Phrase française" in user and old in user and "[2] Die Suva muss den Beweis mit hinreichender" in user
+    assert kwargs["response_format"]["json_schema"]["name"] == "gegenprobe" and kwargs["max_tokens"] == 20
+    # Apertus names another German sentence: the French sentence belongs to something that was not edited
+    for answer in ({"satz": 1}, {"satz": 0}, "no json"):
+        answers = [answer, answer] if isinstance(answer, str) else [answer]
+        result = run(FakeLLM(edit, *answers), after, back_check=True)
+        assert result.text == FR and len(result.notes) == 1 and NOT_CARRIED_OVER in result.notes[0]
+    # the same for a removed sentence: the wrong French sentence is not removed
+    removed = DE.replace("\n\nDas Bundesgericht wies die Beschwerde ab.", "")
+    wrong = run(FakeLLM(change(alt=old, neu=""), {"satz": 2}), removed, back_check=True)
+    assert wrong.text == FR and NOT_CARRIED_OVER in wrong.notes[0]
+    right = run(FakeLLM(change(alt="Le recours est rejeté.", neu=""), {"satz": 3}), removed, back_check=True)
+    assert "rejeté" not in right.text and right.notes == []
+    # a new sentence has no counterpart to ask about
+    llm = FakeLLM(change(alt="Le recours est rejeté.", neu="Le recours est rejeté. Les frais sont à la charge de la Suva."))
+    assert run(llm, DE + " Die Kosten trägt die Suva.", back_check=True).text.endswith("de la Suva.") and len(llm.calls) == 1
