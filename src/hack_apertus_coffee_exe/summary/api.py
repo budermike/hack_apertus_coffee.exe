@@ -38,6 +38,7 @@ from ..config import load_paths
 from ..present.judgements import JudgementList, config_response, list_response, parse_feedback_body
 from . import store
 from .judgement import Judgement, load_judgements, same_case
+from .queue import SummaryQueue
 from .run import summarize_case, summarizer_factory
 
 logger = logging.getLogger(__name__)
@@ -62,6 +63,7 @@ class Backend:
         self.get_summarizer = get_summarizer
         # One generation at a time: avoids two LLM calls for the same case.
         self._generate_lock = threading.Lock()
+        self.queue = SummaryQueue(self)
 
     # --- endpoints ----------------------------------------------------------------
 
@@ -115,6 +117,61 @@ class Backend:
         parsed = parse_feedback_body(body)
         with closing(store.connect(self.db_path)) as conn:
             return HTTPStatus.OK, store.save_feedback(conn, case_number, **parsed)
+
+    def align_summary(self, case_number: str, body: dict[str, Any]) -> Response:
+        """Align/adjust one language draft via Apertus v1.5 without saving (#65)."""
+        target_lang = body.get("targetLang") or body.get("lang")
+        if target_lang not in store.LANGUAGES:
+            raise ValueError(f"target language must be one of {store.LANGUAGES}, got {target_lang!r}")
+        raw_target = body.get("targetText") if "targetText" in body else body.get("text")
+        if raw_target is not None and not isinstance(raw_target, str):
+            raise ValueError("targetText must be a string")
+        source_lang = body.get("sourceLang")
+        if source_lang is not None and source_lang not in store.LANGUAGES:
+            raise ValueError(f"source language must be one of {store.LANGUAGES}, got {source_lang!r}")
+        source_text = body.get("sourceText")
+        if source_text is not None and not isinstance(source_text, str):
+            raise ValueError("sourceText must be a string")
+        instruction = body.get("instruction")
+        if instruction is not None and not isinstance(instruction, str):
+            raise ValueError("instruction must be a string")
+
+        with closing(store.connect(self.db_path)) as conn:
+            entry = summary_entry(conn, case_number)
+        target_text = raw_target if raw_target is not None else (entry.get(target_lang) if entry else None)
+        if not target_text or not target_text.strip():
+            if entry is None:
+                return _error(HTTPStatus.NOT_FOUND, "no summary stored")
+            raise ValueError("targetText must not be empty")
+        if not ((instruction and instruction.strip()) or (source_text and source_text.strip())):
+            raise ValueError("instruction or sourceText is required")
+
+        facts = (entry or {}).get("facts", {}).get(target_lang) if entry else None
+        aligned = self.get_summarizer().align_language(
+            target_lang=target_lang,
+            target_text=target_text,
+            source_lang=source_lang,
+            source_text=source_text,
+            instruction=instruction.strip() if instruction else None,
+            facts=facts or None,
+        )
+        return HTTPStatus.OK, {"lang": target_lang, "text": aligned}
+
+    def enqueue_summaries(self, body: dict[str, Any]) -> Response:
+        case_ids = body.get("caseIds")
+        if not isinstance(case_ids, list) or not case_ids:
+            raise ValueError("caseIds must be a non-empty list")
+        priority = body.get("priority", False)
+        if not isinstance(priority, bool):
+            raise ValueError("priority must be a boolean")
+        return HTTPStatus.ACCEPTED, self.queue.enqueue(case_ids, priority=priority)
+
+    def queue_status(self, raw_ids: str | None) -> Response:
+        ids = [i for i in (raw_ids or "").split(",") if i.strip()] if raw_ids else None
+        return HTTPStatus.OK, self.queue.status(ids)
+
+    def cancel_queued_summary(self, case_number: str) -> Response:
+        return HTTPStatus.OK, {"cancelled": self.queue.cancel(case_number)}
 
     # --- helpers ------------------------------------------------------------------
 
@@ -186,6 +243,9 @@ class Handler(SimpleHTTPRequestHandler):
         if parts == ["knowledge-base"]:
             query = parse_qs(url.query).get("q", [""])[0]
             return self._respond(lambda: self.backend.search(query))
+        if parts == ["summaries", "status"]:
+            ids = parse_qs(url.query).get("ids", [""])[0]
+            return self._respond(lambda: self.backend.queue_status(ids))
         if len(parts) == 3 and parts[0] == "judgements" and parts[2] == "summary":
             return self._respond(lambda: self.backend.get_summary(parts[1]))
         self._respond(lambda: _error(HTTPStatus.NOT_FOUND, "unknown endpoint"))
@@ -193,10 +253,14 @@ class Handler(SimpleHTTPRequestHandler):
     def do_POST(self) -> None:
         parts = _api_parts(urlparse(self.path).path) or []
         body = self._body()
+        if parts == ["summaries", "queue"]:
+            return self._respond(lambda: self.backend.enqueue_summaries(body))
         if len(parts) == 3 and parts[0] == "judgements" and parts[2] == "summary":
             return self._respond(lambda: self.backend.create_summary(parts[1]))
         if len(parts) == 4 and parts[0] == "judgements" and parts[2:] == ["summary", "approve"]:
             return self._respond(lambda: self.backend.approve_summary(parts[1], body))
+        if len(parts) == 4 and parts[0] == "judgements" and parts[2] == "summary" and parts[3] in ("align", "adjust"):
+            return self._respond(lambda: self.backend.align_summary(parts[1], body))
         if len(parts) == 3 and parts[0] == "judgements" and parts[2] == "feedback":
             return self._respond(lambda: self.backend.save_feedback(parts[1], body))
         self._respond(lambda: _error(HTTPStatus.NOT_FOUND, "unknown endpoint"))
@@ -209,6 +273,9 @@ class Handler(SimpleHTTPRequestHandler):
         self._respond(lambda: _error(HTTPStatus.NOT_FOUND, "unknown endpoint"))
 
     def do_DELETE(self) -> None:
+        parts = _api_parts(urlparse(self.path).path) or []
+        if len(parts) == 3 and parts[:2] == ["summaries", "queue"]:
+            return self._respond(lambda: self.backend.cancel_queued_summary(parts[2]))
         self._respond(lambda: _error(HTTPStatus.METHOD_NOT_ALLOWED, "knowledge base is append-only"))
 
     def end_headers(self) -> None:
@@ -301,6 +368,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--judgements-dir", default=load_paths().judgements_dir, help="Suva example summaries")
     parser.add_argument("--examples", type=int, default=2, help="Few-shot examples per language")
     parser.add_argument("--triage", default=None, help="Triage results JSON for GET /api/judgements")
+    parser.add_argument("--auto-summarize", action="store_true", help="Queue relevant triage cases on startup")
     args = parser.parse_args(argv)
     load_dotenv()  # SUMMARY_DB_PATH and gateway settings from .env
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
@@ -316,6 +384,11 @@ def main(argv: list[str] | None = None) -> int:
         )
         if args.triage else None
     )
+    if args.auto_summarize and judgements is not None:
+        green_threshold = judgements.config.green_threshold
+        ids = [i["id"] for i in judgements.items() if i["score"] >= green_threshold and not i["summarized"]]
+        if ids:
+            backend.queue.enqueue(ids)
     server = make_server(backend, args.host, args.port, args.static, judgements)
     logger.info("Serving on http://%s:%s (API under /api)", args.host, args.port)
     try:
@@ -323,6 +396,7 @@ def main(argv: list[str] | None = None) -> int:
     except KeyboardInterrupt:
         pass
     finally:
+        backend.queue.stop()
         server.server_close()
     return 0
 

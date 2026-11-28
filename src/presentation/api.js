@@ -89,6 +89,25 @@ const httpBackend = {
     summarizeJudgement(id) {
         return jsonFetch(summaryUrl(id), { method: "POST" });
     },
+    getSummary(id) {
+        return jsonFetch(summaryUrl(id));
+    },
+    queueSummaries(caseIds, priority = false) {
+        return jsonFetch(`${API_BASE}/summaries/queue`, {
+            method: "POST",
+            body: JSON.stringify({ caseIds, priority }),
+        });
+    },
+    summaryQueueStatus(caseIds) {
+        const query = caseIds?.length ? `?${new URLSearchParams({ ids: caseIds.join(",") })}` : "";
+        return jsonFetch(`${API_BASE}/summaries/status${query}`);
+    },
+    alignSummary(id, payload) {
+        return jsonFetch(`${summaryUrl(id)}/align`, {
+            method: "POST",
+            body: JSON.stringify(payload),
+        });
+    },
     saveSummary(id, texts) {
         return jsonFetch(summaryUrl(id), { method: "PUT", body: JSON.stringify({ de: texts.de, fr: texts.fr }) });
     },
@@ -205,6 +224,22 @@ async function searchJudgements(from, to, lang) {
 /** Returns the stored summary entry; the backend generates DE + FR first if there is none. */
 async function summarizeJudgement(id) {
     return normalizeEntry(await backend.summarizeJudgement(id));
+}
+
+async function fetchStoredSummary(id) {
+    return normalizeEntry(await (USE_MOCK ? mockBackend.summarizeJudgement(id) : httpBackend.getSummary(id)));
+}
+
+async function queueSummaries(caseIds, priority = false) {
+    return backend.queueSummaries ? await backend.queueSummaries(caseIds, priority) : null;
+}
+
+async function summaryQueueStatus(caseIds) {
+    return backend.summaryQueueStatus ? await backend.summaryQueueStatus(caseIds) : null;
+}
+
+async function alignSummary(id, payload) {
+    return await backend.alignSummary(id, payload);
 }
 
 /** Saves edited summary texts ({ de, fr }). */

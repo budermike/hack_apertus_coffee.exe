@@ -84,6 +84,21 @@ def test_examples_exclude_own_case_and_prefer_triage_matches():
     assert preferred[0] == "8C_455/2025"
 
 
+def test_align_language_calls_apertus_with_instruction_or_other_language(summarizer):
+    out = summarizer.align_language(
+        target_lang="fr",
+        target_text="Résumé actuel",
+        source_lang="de",
+        source_text="Geänderte deutsche Fassung",
+        facts=FACTS,
+    )
+    assert out == FR_OK
+    system, user = summarizer.llm._client.chat.completions.calls[-1]
+    assert "en français" in system
+    assert "Geänderte deutsche Fassung" in user
+    assert "Résumé actuel" in user
+
+
 def test_summarize_retries_failing_language_once(summarizer):
     result = summarizer.summarize(J)
     completions = summarizer.llm._client.chat.completions

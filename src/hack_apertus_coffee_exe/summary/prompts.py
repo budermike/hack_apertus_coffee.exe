@@ -119,6 +119,47 @@ def write_system(language: str, prompts_dir: Path = PROMPTS_DIR) -> str:
     return WRITE_SYSTEM[language].format(style=style(language, prompts_dir), glossary=glossary(prompts_dir))
 
 
+def align_system(language: str, prompts_dir: Path = PROMPTS_DIR) -> str:
+    """System prompt for adapting/refining one summary language in Suva style (#65)."""
+    return write_system(language, prompts_dir)
+
+
+def align_user(
+    *,
+    target_language: str,
+    target_text: str,
+    source_language: str | None = None,
+    source_text: str | None = None,
+    instruction: str | None = None,
+    facts: dict[str, Any] | None = None,
+) -> str:
+    """User prompt asking Apertus v1.5 to align or adjust one language (#65)."""
+    if target_language not in _LABELS:
+        raise ValueError(f"language must be 'de' or 'fr', got {target_language!r}")
+    blocks: list[str] = []
+    if target_language == "de":
+        blocks.append("Überarbeite die bestehende deutsche Zusammenfassung nach den folgenden Vorgaben.")
+        if source_text and source_language:
+            blocks.append(f"Geänderte Fassung ({source_language.upper()}), an die angeglichen werden soll:\n{source_text}")
+        if instruction:
+            blocks.append(f"Gewünschte Anpassung:\n{instruction}")
+        if facts:
+            blocks.append(f"Verbindliche Fakten aus dem Urteil (nichts hinzuerfinden):\n{json.dumps(facts, ensure_ascii=False, indent=2)}")
+        blocks.append(f"Bisherige deutsche Fassung:\n{target_text}")
+        blocks.append("Gib ausschliesslich die überarbeitete deutsche Zusammenfassung ohne Titel zurück.")
+    else:
+        blocks.append("Adapte le résumé français existant selon les indications suivantes.")
+        if source_text and source_language:
+            blocks.append(f"Version modifiée ({source_language.upper()}) avec laquelle harmoniser le texte :\n{source_text}")
+        if instruction:
+            blocks.append(f"Ajustement demandé :\n{instruction}")
+        if facts:
+            blocks.append(f"Faits établis dans l'arrêt (ne rien inventer) :\n{json.dumps(facts, ensure_ascii=False, indent=2)}")
+        blocks.append(f"Version française actuelle :\n{target_text}")
+        blocks.append("Retourne uniquement le résumé français révisé, sans titre.")
+    return "\n\n".join(blocks)
+
+
 def write_user(
     language: str,
     title: str,

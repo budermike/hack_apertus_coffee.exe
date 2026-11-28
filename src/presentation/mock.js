@@ -226,6 +226,15 @@ const mockBackend = (() => {
             return db.load().kb[id];
         },
 
+        /** POST /judgements/{id}/summary/align */
+        async alignSummary(_id, { targetLang, targetText, sourceLang, instruction }) {
+            await delay(400);
+            const note = instruction
+                ? `[${instruction}]`
+                : `[${targetLang.toUpperCase()} ← ${(sourceLang || "").toUpperCase()} angeglichen]`;
+            return { lang: targetLang, text: `${targetText}\n\n${note}`.trim() };
+        },
+
         /** POST /judgements/{id}/feedback */
         async sendFeedback(id, adjustment, _direction, _level, decision) {
             const data = db.load();

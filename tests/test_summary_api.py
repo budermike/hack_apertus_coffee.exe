@@ -38,7 +38,10 @@ def fake_result(judgement, similar_case_ids=()):
 
 @pytest.fixture
 def summarizer():
-    return SimpleNamespace(summarize=Mock(side_effect=fake_result))
+    return SimpleNamespace(
+        summarize=Mock(side_effect=fake_result),
+        align_language=Mock(return_value="Angepasste Fassung"),
+    )
 
 
 @pytest.fixture
@@ -161,3 +164,61 @@ def test_cli_parser_builds_with_config_defaults(capsys):
         main(["--help"])
     assert exc.value.code == 0
     assert "--triage" in capsys.readouterr().out
+
+
+def test_queue_and_align_http_routes(backend, summarizer):
+    import time
+
+    server = make_server(backend, "127.0.0.1", 0, CRAWL_DIR)
+    threading.Thread(target=server.serve_forever, daemon=True).start()
+    base = f"http://127.0.0.1:{server.server_address[1]}/api"
+    try:
+        req = urllib.request.Request(
+            f"{base}/summaries/queue",
+            method="POST",
+            data=json.dumps({"caseIds": [SAFE], "priority": True}).encode(),
+            headers={"Content-Type": "application/json"},
+        )
+        with urllib.request.urlopen(req) as res:
+            assert res.status == 202
+
+        deadline = time.monotonic() + 3.0
+        status_payload = {}
+        while time.monotonic() < deadline:
+            with urllib.request.urlopen(f"{base}/summaries/status?ids={SAFE}") as res:
+                status_payload = json.load(res)
+            if SAFE in status_payload["done"]:
+                break
+            time.sleep(0.02)
+        assert SAFE in status_payload["done"]
+
+        align_req = urllib.request.Request(
+            f"{base}/judgements/{SAFE}/summary/align",
+            method="POST",
+            data=json.dumps({
+                "sourceLang": "de",
+                "sourceText": "Vom Juristen geändert",
+                "targetLang": "fr",
+                "targetText": "Résumé FR",
+            }).encode(),
+            headers={"Content-Type": "application/json"},
+        )
+        with urllib.request.urlopen(align_req) as res:
+            aligned = json.load(res)
+        assert res.status == 200 and aligned == {"lang": "fr", "text": "Angepasste Fassung"}
+        assert summarizer.align_language.call_count == 1
+
+        # Validation: bad payload must yield 400 (never 500)
+        bad_req = urllib.request.Request(
+            f"{base}/summaries/queue",
+            method="POST",
+            data=json.dumps({"caseIds": [], "priority": "yes"}).encode(),
+            headers={"Content-Type": "application/json"},
+        )
+        with pytest.raises(urllib.error.HTTPError) as exc:
+            urllib.request.urlopen(bad_req)
+        assert exc.value.code == 400
+    finally:
+        backend.queue.stop()
+        server.shutdown()
+        server.server_close()
