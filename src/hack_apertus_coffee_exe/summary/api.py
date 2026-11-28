@@ -35,7 +35,7 @@ from urllib.parse import parse_qs, unquote, urlparse
 from dotenv import load_dotenv
 
 from ..config import load_paths
-from ..present.judgements import JudgementList, config_response, list_response, record_feedback
+from ..present.judgements import JudgementList, config_response, list_response
 from . import store
 from .judgement import Judgement, load_judgements, same_case
 from .run import summarize_case, summarizer_factory
@@ -111,6 +111,25 @@ class Backend:
         with closing(store.connect(self.db_path)) as conn:
             return HTTPStatus.OK, [summary_entry(conn, cid) for cid in store.search(conn, query)]
 
+    def save_feedback(self, case_number: str, body: dict[str, Any]) -> Response:
+        decision = body.get("decision")
+        level = body.get("level") or ("medium" if decision is None else decision)
+        adjustment = float(body.get("adjustment") or 0.0)
+        direction = int(body.get("direction") or 0)
+        comment = body.get("comment") if isinstance(body.get("comment"), str) else None
+        user = str(body.get("user") or "ui")
+        with closing(store.connect(self.db_path)) as conn:
+            return HTTPStatus.OK, store.save_feedback(
+                conn,
+                case_number,
+                decision=decision,
+                level=level,
+                adjustment=adjustment,
+                direction=direction,
+                comment=comment,
+                user=user,
+            )
+
     # --- helpers ------------------------------------------------------------------
 
     def find_judgement(self, case_number: str) -> Judgement | None:
@@ -138,7 +157,7 @@ def summary_entry(conn, case_number: str) -> dict[str, Any] | None:
 
     return {
         "id": case.case_id.replace("/", "_"),
-        "caseNumber": case.case_id.replace("_", " ", 1),
+        "caseNumber": case.case_id,
         "date": case.decision_date,
         "url": case.url,
         "title": per_lang(lambda s: s.title),
@@ -148,6 +167,8 @@ def summary_entry(conn, case_number: str) -> dict[str, Any] | None:
         "model": per_lang(lambda s: s.model),
         "coherenceOk": per_lang(lambda s: s.coherence_ok),
         "issues": per_lang(lambda s: s.issues),
+        "facts": per_lang(lambda s: s.facts),
+        "examples": per_lang(lambda s: s.examples),
         "pending": {lang: p.text if p else None for lang, p in pending.items()},
         "storedAt": max(s.created_at for s in history),
         "editedAt": max(edits) if edits else None,
@@ -186,8 +207,8 @@ class Handler(SimpleHTTPRequestHandler):
             return self._respond(lambda: self.backend.create_summary(parts[1]))
         if len(parts) == 4 and parts[0] == "judgements" and parts[2:] == ["summary", "approve"]:
             return self._respond(lambda: self.backend.approve_summary(parts[1], body))
-        if len(parts) == 3 and parts[0] == "judgements" and parts[2] == "feedback":  # present/judgements.py
-            return self._respond(lambda: (HTTPStatus.OK, record_feedback(parts[1], body)))
+        if len(parts) == 3 and parts[0] == "judgements" and parts[2] == "feedback":
+            return self._respond(lambda: self.backend.save_feedback(parts[1], body))
         self._respond(lambda: _error(HTTPStatus.NOT_FOUND, "unknown endpoint"))
 
     def do_PUT(self) -> None:
@@ -256,6 +277,25 @@ def _summarized_case_ids(db_path: str | Path | None) -> list[str]:
         return [s.case_id for s in store.list_display(conn)]
 
 
+def _latest_feedback(db_path: str | Path | None) -> dict[str, dict[str, Any]]:
+    """Latest lawyer feedback decisions per UI case id (#64)."""
+    with closing(store.connect(db_path)) as conn:
+        return store.get_latest_feedback(conn)
+
+
+def _load_selected_ids(judgements_dir: str | Path) -> set[str]:
+    """Case numbers previously chosen by Suva, for highlighting similar cases (#72)."""
+    path = Path(judgements_dir)
+    if not path.exists():
+        return set()
+    try:
+        from ..crawl.vectordb import load_reference_case_ids
+
+        return load_reference_case_ids(path)
+    except Exception:
+        return set()
+
+
 def _error(status: int, message: str) -> Response:
     return status, {"error": message}
 
@@ -277,7 +317,13 @@ def main(argv: list[str] | None = None) -> int:
 
     backend = Backend(args.db, args.input, summarizer_factory(args.model, args.judgements_dir, args.examples))
     judgements = (
-        JudgementList(args.triage, summarized_ids=lambda: _summarized_case_ids(args.db), crawl_dir=args.input)
+        JudgementList(
+            args.triage,
+            summarized_ids=lambda: _summarized_case_ids(args.db),
+            crawl_dir=args.input,
+            feedback_map=lambda: _latest_feedback(args.db),
+            selected_ids=_load_selected_ids(args.judgements_dir),
+        )
         if args.triage else None
     )
     server = make_server(backend, args.host, args.port, args.static, judgements)

@@ -64,8 +64,23 @@ CREATE TABLE IF NOT EXISTS case_numbers (
     case_id     TEXT NOT NULL REFERENCES cases (case_id)
 );
 
+CREATE TABLE IF NOT EXISTS feedback (
+    id         INTEGER PRIMARY KEY AUTOINCREMENT,
+    case_id    TEXT    NOT NULL,
+    decision   TEXT    CHECK (decision IN ('high', 'low') OR decision IS NULL),
+    level      TEXT    NOT NULL CHECK (level IN ('high', 'medium', 'low')),
+    adjustment REAL    NOT NULL DEFAULT 0,
+    direction  INTEGER NOT NULL DEFAULT 0,
+    comment    TEXT,
+    user       TEXT    NOT NULL DEFAULT 'ui',
+    created_at TEXT    NOT NULL
+);
+
 CREATE INDEX IF NOT EXISTS idx_summaries_case_lang
     ON summaries (case_id, language, version);
+
+CREATE INDEX IF NOT EXISTS idx_feedback_case
+    ON feedback (case_id, id);
 """
 
 
@@ -431,6 +446,94 @@ def search(conn: sqlite3.Connection, query: str) -> list[str]:
         if all(term in " ".join(parts).lower() for term in terms)
     ]
     return sorted(found, key=newest.__getitem__, reverse=True)
+
+
+# --- Relevance feedback (#64) --------------------------------------------------
+
+
+def _canonical_case_id(conn: sqlite3.Connection, case_number: str) -> str:
+    """Resolve known aliases via ``case_numbers``, else convert ``8C_7_2025`` -> ``8C_7/2025``."""
+    resolved = resolve_case_number(conn, case_number)
+    if resolved is not None:
+        return resolved
+    cleaned = case_number.strip()
+    if "/" not in cleaned and "_" in cleaned:
+        head, _, year = cleaned.rpartition("_")
+        return f"{head}/{year}"
+    return cleaned
+
+
+def save_feedback(
+    conn: sqlite3.Connection,
+    case_number: str,
+    *,
+    decision: str | None,
+    level: str,
+    adjustment: float = 0.0,
+    direction: int = 0,
+    comment: str | None = None,
+    user: str = "ui",
+) -> dict[str, Any]:
+    """Append one lawyer relevance correction (#64) and return the stored summary."""
+    if decision not in (None, "high", "low"):
+        raise ValueError(f"decision must be 'high', 'low', or None, got {decision!r}")
+    if level not in ("high", "medium", "low"):
+        raise ValueError(f"level must be 'high', 'medium', or 'low', got {level!r}")
+    case_id = _canonical_case_id(conn, case_number)
+    effective_adj = 0.0 if decision is None else float(adjustment)
+    created_at = datetime.now(timezone.utc).isoformat(timespec="seconds")
+    with conn:
+        conn.execute(
+            """
+            INSERT INTO feedback (case_id, decision, level, adjustment, direction, comment, user, created_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            """,
+            (case_id, decision, level, effective_adj, int(direction), comment, user, created_at),
+        )
+    return {
+        "stored": True,
+        "caseId": case_id,
+        "decision": decision,
+        "level": level,
+        "adjustment": effective_adj,
+        "direction": int(direction),
+        "createdAt": created_at,
+    }
+
+
+def get_latest_feedback(conn: sqlite3.Connection) -> dict[str, dict[str, Any]]:
+    """Latest lawyer relevance decision per case id, keyed by URL-safe UI id (``8C_7_2025``)."""
+    rows = conn.execute(
+        """
+        SELECT case_id, decision, level, adjustment, direction, created_at
+        FROM feedback
+        WHERE id IN (SELECT MAX(id) FROM feedback GROUP BY case_id)
+        """
+    ).fetchall()
+    out: dict[str, dict[str, Any]] = {}
+    for row in rows:
+        decision = row["decision"]
+        out[row["case_id"].replace("/", "_")] = {
+            "adjustment": 0.0 if decision is None else float(row["adjustment"]),
+            "userLevel": decision,
+            "level": row["level"],
+            "direction": int(row["direction"]),
+            "createdAt": row["created_at"],
+        }
+    return out
+
+
+def feedback_examples(conn: sqlite3.Connection) -> dict[str, bool]:
+    """Latest active lawyer relevance decisions (``{case_id: True/False}``) for triage prompts."""
+    rows = conn.execute(
+        """
+        SELECT case_id, decision
+        FROM feedback
+        WHERE id IN (SELECT MAX(id) FROM feedback GROUP BY case_id)
+          AND decision IN ('high', 'low')
+        """
+    ).fetchall()
+    return {row["case_id"]: row["decision"] == "high" for row in rows}
 
 
 # --- Internal helpers ----------------------------------------------------------

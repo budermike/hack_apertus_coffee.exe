@@ -50,13 +50,8 @@
  *        -> entry. The pending edits become the shown version.
  *
  *   POST {API_BASE}/judgements/{id}/feedback   body: { adjustment, direction, level, decision }
- *        -> { stored }   PLACEHOLDER in the backend: logged, not stored (stored = false).
- *        decision = "high" | "low" | null: what the user clicked ("Für Suva relevant" /
- *        "Nicht relevant" / taken back); level = level the judgement is in afterwards;
- *        adjustment = net correction so that score + adjustment lies in that level;
- *        direction = +1 raised | -1 lowered | 0 level confirmed.
- *        Once stored, the backend should return `adjustment` and `userLevel` (= decision)
- *        with the judgement in every later search.
+ *        -> { stored: true, ... }   Persists the decision in the summaries DB and returns
+ *        `adjustment` and `userLevel` (= decision) with every later GET /api/judgements.
  *
  *   GET  {API_BASE}/knowledge-base?q=<query>&lang=de|fr
  *        -> [entry]   all stored summaries containing every search term, newest first
@@ -115,32 +110,6 @@ const httpBackend = {
 
 const backend = USE_MOCK ? mockBackend : httpBackend;
 
-/* ---------- 3. TEMPORARY local store ---------- */
-
-/** Relevance decisions the backend does not store yet (its feedback route is a placeholder):
- *  id -> { adjustment, level }. They are kept in this browser only, so they survive a new
- *  search or a reload here, but no colleague sees them and triage does not learn from them.
- *  Remove when the backend stores feedback and returns `adjustment` / `userLevel`. */
-const localFeedback = {
-    KEY: "localFeedback",
-    load() {
-        try {
-            return JSON.parse(localStorage.getItem(this.KEY)) || {};
-        } catch {
-            return {};
-        }
-    },
-    set(id, decision) {
-        const all = this.load();
-        if (decision) all[id] = decision;
-        else delete all[id];
-        localStorage.setItem(this.KEY, JSON.stringify(all));
-    },
-    clear() {
-        localStorage.removeItem(this.KEY);
-    },
-};
-
 /* ---------- shapes: one place where backend answers are checked and tidied ---------- */
 
 /** Numbers may arrive as strings ("75"); anything that is no number becomes `fallback`. */
@@ -149,29 +118,20 @@ function toNumber(value, fallback = 0) {
     return Number.isFinite(n) ? n : fallback;
 }
 
-/** Case numbers are shown as on the result list of the demo: "8C_173/2025". */
-function formatCaseNumber(value) {
-    return String(value || "").trim().replace(/\s+/, "_");
-}
-
-function normalizeJudgement(raw, localDecisions) {
-    // what the backend knows wins; otherwise the decision remembered in this browser
-    const fromBackend = toNumber(raw.adjustment) !== 0 || Boolean(raw.userLevel);
-    const local = fromBackend ? null : localDecisions[raw.id];
+function normalizeJudgement(raw) {
     return {
         ...raw,
-        caseNumber: formatCaseNumber(raw.caseNumber || raw.id),
+        caseNumber: raw.caseNumber || raw.id,
         score: toNumber(raw.score),
-        adjustment: toNumber(local ? local.adjustment : raw.adjustment),
-        userLevel: (local ? local.level : raw.userLevel) || null,   // "high" | "low": decided by hand
-        feedbackLocalOnly: Boolean(local),                          // true: only known to this browser
+        adjustment: toNumber(raw.adjustment),
+        userLevel: raw.userLevel || null,   // "high" | "low": decided by hand
+        feedbackLocalOnly: false,
         summarized: Boolean(raw.summarized),
         criteria: Array.isArray(raw.criteria) ? raw.criteria : [],
         signals: Array.isArray(raw.signals) ? raw.signals : [],
         topics: Array.isArray(raw.topics) ? raw.topics : [],
         similarCases: (Array.isArray(raw.similarCases) ? raw.similarCases : []).map((c) => ({
             ...c,
-            caseNumber: formatCaseNumber(c.caseNumber),
             similarity: toNumber(c.similarity),
         })),
     };
@@ -196,7 +156,7 @@ function normalizeEntry(raw) {
     const pending = raw.pending || {};
     const entry = {
         id: raw.id,
-        caseNumber: formatCaseNumber(raw.caseNumber || raw.id),
+        caseNumber: raw.caseNumber || raw.id,
         date: raw.date,
         url: raw.url,
         area: raw.area,
@@ -204,6 +164,8 @@ function normalizeEntry(raw) {
         title: raw.title,
         storedAt: raw.storedAt || "",
         editedAt: raw.editedAt || null,
+        facts: raw.facts?.de || raw.facts?.fr || (raw.facts && !raw.facts.de ? raw.facts : null),
+        examples: raw.examples?.de || raw.examples?.fr || (Array.isArray(raw.examples) ? raw.examples : []),
         pendingLangs: SUMMARY_LANGS.filter((lang) => typeof pending[lang] === "string"),
         origin: Object.fromEntries(SUMMARY_LANGS.map((lang) => [lang, summaryOrigin(raw, lang)])),
         model: Object.fromEntries(SUMMARY_LANGS.map((lang) => [lang, raw.model?.[lang] || null])),
@@ -227,8 +189,7 @@ async function fetchConfig() {
 
 async function searchJudgements(from, to, lang) {
     const rows = await backend.searchJudgements(from, to, lang);
-    const local = USE_MOCK ? {} : localFeedback.load();
-    return rows.map((row) => normalizeJudgement(row, local));
+    return rows.map((row) => normalizeJudgement(row));
 }
 
 /** Returns the stored summary entry; the backend generates DE + FR first if there is none. */
@@ -246,9 +207,7 @@ async function approveSummary(id) {
     return normalizeEntry(await backend.approveSummary(id));
 }
 
-/** Sends a relevance decision (`decision`: "high" | "low" | null = taken back). Resolves to
- *  { stored }: false means the backend did not keep it and it was saved in this browser
- *  only (see localFeedback). */
+/** Sends a relevance decision (`decision`: "high" | "low" | null = taken back). */
 async function sendFeedback(id, adjustment, direction, level, decision) {
     let stored = false;
     try {
@@ -257,7 +216,6 @@ async function sendFeedback(id, adjustment, direction, level, decision) {
     } catch (err) {
         console.warn("feedback not accepted by the backend", err);
     }
-    if (!USE_MOCK) localFeedback.set(id, stored || !decision ? null : { adjustment, level: decision });
     return { stored };
 }
 

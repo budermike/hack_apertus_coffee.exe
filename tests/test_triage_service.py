@@ -29,8 +29,16 @@ def test_contract_signatures():
 def test_open_stubs_say_what_they_wait_for():
     with pytest.raises(NotImplementedError, match="#50"):
         triage.get_cases(None, "2026-04-01", "2026-06-30")
-    with pytest.raises(NotImplementedError, match="#64"):
-        triage.apply_feedback(None, "8C_7/2025", "gruen", user="test")
+
+
+def test_apply_feedback_persists_in_store(tmp_path):
+    from contextlib import closing
+    from hack_apertus_coffee_exe.summary import store
+
+    with closing(store.connect(tmp_path / "fb.db")) as conn:
+        res = triage.apply_feedback(conn, "8C_7/2025", "gruen", comment="Suva", user="lawyer")
+        assert res["stored"] is True and res["decision"] == "high"
+        assert store.feedback_examples(conn) == {"8C_7/2025": True}
 
 
 def test_period_name_only_for_whole_periods():

@@ -53,7 +53,7 @@ def test_to_ui_item_matches_the_ui_contract():
     subject = ROWS[0]["metadata"]["subject"]
     assert item == {
         "id": "8C_221_2025",
-        "caseNumber": "8C 221/2025",
+        "caseNumber": "8C_221/2025",
         "date": "2025-11-10",
         "url": "https://search.bger.ch/x",
         "lang": "fr",
@@ -65,7 +65,7 @@ def test_to_ui_item_matches_the_ui_contract():
         "summarized": True,
         "signals": [],
         "topics": [],
-        "similarCases": [{"caseNumber": "8C 720/2024", "subject": "Arrêt du TF 8C_720/2024", "similarity": 0.4457}],
+        "similarCases": [{"caseNumber": "8C_720/2024", "subject": "Arrêt du TF 8C_720/2024", "similarity": 0.4457}],
         "ampel": "gelb",
         "rank": 2,
         "outcome": "teilweise",
@@ -114,6 +114,7 @@ def test_question_rule_and_criteria_come_from_the_relevance_scoring():
          "quote": "Die Vorinstanz hat den Sachverhalt willkürfrei festgestellt"},
     ]
     assert item["topics"] == ["K1", "N2"] and item["score"] == 89.5
+    assert item["principle"] == 2 and item["uvUse"] == 2
 
 
 def test_rule_is_not_repeated_in_the_explanation():
@@ -295,24 +296,58 @@ def test_responses_without_triage_file_and_thresholds():
 
 
 def test_routes_in_summary_api(tmp_path):
-    judgements = JudgementList(_write(tmp_path), config=TriageConfig(green_threshold=60.0, yellow_threshold=40.0))
-    backend = Backend(tmp_path / "s.sqlite", tmp_path, Mock())
+    from contextlib import closing
+    from hack_apertus_coffee_exe.summary import store
+
+    db_path = tmp_path / "s.sqlite"
+    judgements = JudgementList(
+        _write(tmp_path),
+        config=TriageConfig(green_threshold=60.0, yellow_threshold=40.0),
+        feedback_map=lambda: _latest_feedback(db_path),
+        selected_ids={"8C_720/2024"},
+    )
+    backend = Backend(db_path, tmp_path, Mock())
     server = make_server(backend, "127.0.0.1", 0, tmp_path, judgements)
     threading.Thread(target=server.serve_forever, daemon=True).start()
     base = f"http://127.0.0.1:{server.server_address[1]}/api"
     try:
         with urllib.request.urlopen(f"{base}/judgements?from=2025-01-01&to=2025-12-31&lang=de") as resp:
             items = json.load(resp)
-        assert [i["caseNumber"] for i in items] == ["8C 7/2025", "8C 221/2025"]
+        assert [i["caseNumber"] for i in items] == ["8C_7/2025", "8C_221/2025"]
+        assert items[1]["similarCases"][0]["suvaSelected"] is True
         with urllib.request.urlopen(f"{base}/config") as resp:
             assert json.load(resp) == {"thresholds": {"high": 60.0, "medium": 40.0}}
         request = urllib.request.Request(
             f"{base}/judgements/8C_7_2025/feedback", method="POST",
-            data=json.dumps({"adjustment": -20, "direction": -1, "level": "medium"}).encode(),
+            data=json.dumps({"adjustment": -20, "direction": -1, "level": "low", "decision": "low"}).encode(),
             headers={"Content-Type": "application/json"},
         )
         with urllib.request.urlopen(request) as resp:
-            assert resp.status == 200 and json.load(resp)["stored"] is False
+            payload = json.load(resp)
+            assert resp.status == 200 and payload["stored"] is True
+        with urllib.request.urlopen(f"{base}/judgements?from=2025-01-01&to=2025-12-31&lang=de") as resp:
+            after = json.load(resp)
+        top = next(i for i in after if i["id"] == "8C_7_2025")
+        assert top["adjustment"] == -20.0 and top["userLevel"] == "low"
     finally:
         server.shutdown()
         server.server_close()
+    with closing(store.connect(db_path)) as conn:
+        assert store.feedback_examples(conn) == {"8C_7/2025": False}
+
+
+def _latest_feedback(db_path: Path):
+    from contextlib import closing
+    from hack_apertus_coffee_exe.summary import store
+
+    with closing(store.connect(db_path)) as conn:
+        return store.get_latest_feedback(conn)
+
+
+def test_single_judge_is_detected_from_crawl_text(tmp_path):
+    mock = Path("src/hack_apertus_coffee_exe/triage/mock_crawl")
+    rows = [{"case_id": "8C_901/2026", "final_score": 80.0, "judgement_date": "2026-10-14",
+             "metadata": {"similar_cases": []}}]
+    judgements = JudgementList(_write(tmp_path, rows), config=TriageConfig(), crawl_dir=mock)
+    item = judgements.items()[0]
+    assert isinstance(item["singleJudge"], bool)
