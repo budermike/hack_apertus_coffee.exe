@@ -199,6 +199,13 @@ class Handler(SimpleHTTPRequestHandler):
     def do_DELETE(self) -> None:
         self._respond(lambda: _error(HTTPStatus.METHOD_NOT_ALLOWED, "knowledge base is append-only"))
 
+    def end_headers(self) -> None:
+        # Browsers must revalidate every file (cheap: unchanged files answer 304). Without
+        # this header they cache the UI scripts heuristically from Last-Modified, often for
+        # an hour, and run an outdated script next to updated ones after a change.
+        self.send_header("Cache-Control", "no-cache")
+        super().end_headers()
+
     def _body(self) -> dict[str, Any]:
         length = int(self.headers.get("Content-Length") or 0)
         if not length:

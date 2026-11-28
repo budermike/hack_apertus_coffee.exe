@@ -13,8 +13,6 @@ const SUMMARY_CONCURRENCY = 2;
 /** Relevance levels, highest first. */
 const LEVELS = ["high", "medium", "low"];
 const LEVEL_LABEL = { high: "levelHigh", medium: "levelMedium", low: "levelLow" };
-/** Area filter value for judgements whose area the backend could not name. */
-const AREA_OTHER = "__other__";
 
 const QUOTE_STATUS = {
     exakt: { key: "quoteExact", tag: "ok" },
@@ -38,7 +36,7 @@ const state = {
     selectedId: null,          // judgement shown in the detail panel
     checked: new Set(),        // ids ticked for "summarize selected"
     sort: { key: "score", dir: -1 },
-    filter: { text: "", min: 0, max: 100, level: "all", area: "" },
+    filter: { text: "", min: 0, max: 100, level: "all" },
     criteriaOpen: false,       // "Kriterien und Belege" expanded? (kept while switching cases)
 
     summaries: {},             // id -> summary entry as stored in the database (see normalizeEntry)
@@ -293,16 +291,15 @@ async function onSearch(event) {
 
 function isFilterActive() {
     const f = state.filter;
-    return f.text !== "" || f.min > 0 || f.max < 100 || f.level !== "all" || f.area !== "";
+    return f.text !== "" || f.min > 0 || f.max < 100 || f.level !== "all";
 }
 
 /** Text filter: every word must appear in case number, area, subject, question or explanation. */
 function matchesFilter(item) {
     const score = effectiveScore(item);
-    const { text, min, max, level, area } = state.filter;
+    const { text, min, max, level } = state.filter;
     if (score < min || score > max) return false;
     if (level !== "all" && itemLevel(item) !== level) return false;
-    if (area && (area === AREA_OTHER ? Boolean(item.area) : item.area !== area)) return false;
     if (!text) return true;
     const haystack = [
         item.caseNumber, item.caseNumber.replace("_", " "), item.id, areaName(item.area),
@@ -340,7 +337,6 @@ function onFilterChange() {
     state.filter = {
         ...state.filter,
         text: $("#filter-text").value.trim(),
-        area: $("#filter-area").value,
         min: readScoreInput($("#filter-min"), 0),
         max: readScoreInput($("#filter-max"), 100),
     };
@@ -355,7 +351,6 @@ function setLevelFilter(level) {
 
 function resetFilters() {
     $("#filter-text").value = "";
-    $("#filter-area").value = "";
     $("#filter-min").value = "0";
     $("#filter-max").value = "100";
     state.filter.level = "all";
@@ -511,7 +506,6 @@ function queueRelevantSummaries() {
 
 function onSummaryChange(id) {
     refreshRow(id);
-    renderSumLine();
     if (id === state.selectedId) renderDetail();
 }
 
@@ -750,7 +744,7 @@ function renderSelectionControls(visible = visibleItems()) {
     button.textContent = t("summarizeSelected", state.checked.size);
 }
 
-/** Level buttons with counts, and the areas that occur in this result. */
+/** Level buttons with counts. */
 function renderFilterControls() {
     const counts = { high: 0, medium: 0, low: 0 };
     for (const item of state.items) counts[itemLevel(item)] += 1;
@@ -760,30 +754,6 @@ function renderFilterControls() {
         type: "button", "data-level": level, "aria-pressed": String(state.filter.level === level),
         text: `${label} (${count})`, onclick: () => setLevelFilter(level),
     })));
-
-    const codes = [...new Set(state.items.map((i) => i.area).filter(Boolean))]
-        .sort((a, b) => areaName(a).localeCompare(areaName(b)));
-    const hasOther = state.items.some((i) => !i.area);
-    const select = $("#filter-area");
-    const options = [["", t("allAreas")], ...codes.map((code) => [code, areaName(code)])];
-    if (hasOther && codes.length) options.push([AREA_OTHER, t("otherAreas")]);
-    if (!options.some(([value]) => value === state.filter.area)) state.filter.area = "";
-    select.replaceChildren(...options.map(([value, label]) => el("option", { value, text: label })));
-    select.value = state.filter.area;
-    select.hidden = options.length <= 1;
-}
-
-/** Line in the app bar: what the search found and how far the automatic summaries are. */
-function renderSumLine() {
-    const line = $("#sum-line");
-    if (!state.hasSearched || state.error || state.items.length === 0) {
-        line.textContent = t("appSubtitle");
-        return;
-    }
-    const relevant = state.items.filter(isRelevant);
-    const medium = state.items.filter((i) => itemLevel(i) === "medium").length;
-    const done = relevant.filter((i) => summaryStatus(i) === "ready" || i.summarized).length;
-    line.textContent = t("sumLine", state.items.length, relevant.length, medium, done, SUMMARY_THRESHOLD);
 }
 
 function renderList() {
@@ -809,7 +779,6 @@ function renderList() {
     const status = $("#results-status");
     status.hidden = !statusKey;
     status.textContent = statusKey ? t(statusKey) : "";
-    renderSumLine();
 }
 
 /* ---------- rendering: summary editor (detail panel and database) ---------- */
@@ -839,17 +808,19 @@ function updateEditorFooter(editor, id) {
     status.classList.toggle("error", state.saveStatus[id] === "error");
 }
 
-/** Result of the backend's own check of the generated text, if it ran one. */
-function checkNote(entry) {
-    if (!entry.checked && entry.issues.length === 0) return null;
-    const ok = entry.issues.length === 0;
-    return el("div", { class: "check" },
-        el("p", { class: "note" },
-            el("span", { class: `tag ${ok ? "ok" : "warn"}`, text: t(ok ? "checkOk" : "checkReview") }), " ",
-            t(ok ? "checkOkNote" : "checkReviewNote")),
-        !ok && el("ul", { class: "find" }, entry.issues.map((issue) => el("li", {},
-            el("span", { class: `tag ${issue.severity === "error" ? "bad" : ""}`, text: (issue.language || "").toUpperCase() }),
-            " ", issue.detail || issue.kind || ""))));
+/** Two tags above one summary language: the language, and where its text comes from
+ *  ("generiert" / "bearbeitet"). The origin is the database's (entry.origin, see
+ *  summaryOrigin in api.js): typing does not change it, only a saved edit does. */
+function summaryTags(entry, lang, name) {
+    const origin = entry.origin?.[lang];
+    const pending = entry.pendingLangs.includes(lang);
+    const hint = origin === "generated" ? t("originGeneratedHint", entry.model?.[lang] || "?")
+        : pending ? t("originPendingHint") : t("originEditedHint");
+    return el("h4", { class: "duo-tags" },
+        el("span", { class: "tag lang-tag", lang, text: name }),
+        origin && el("span", {
+            class: `tag origin-tag ${origin}`, title: hint, text: t(`origin_${origin}`),
+        }));
 }
 
 /** German and French summary next to each other, each editable and with its own "Anpassen";
@@ -871,7 +842,7 @@ function summaryEditor(scope, id) {
         textarea.value = texts[lang] || "";   // content must be set as a property
         return el("div", { class: "duo-col" },
             el("div", { class: "duo-head" },
-                el("h4", { text: name }),
+                summaryTags(entry, lang, name),
                 el("button", { type: "button", class: "btn small", text: t("adjust"), onclick: () => onAdjust(id, lang) })),
             textarea);
     });
@@ -886,8 +857,6 @@ function summaryEditor(scope, id) {
             }),
             el("span", { class: "note save-status", "aria-live": "polite" }),
             el("button", { type: "button", class: "btn export-btn", text: t("openSuvaFormat"), onclick: () => openSuvaExport(id) })));
-    const note = checkNote(entry);
-    if (note) editor.append(note);
     updateEditorFooter(editor, id);
     return editor;
 }
@@ -1000,15 +969,21 @@ function textSection(titleKey, field) {
     ];
 }
 
+/** Divider between list and detail (splitter.js); created in init. */
+let detailSplitter = null;
+
 function renderDetail() {
     const item = findItem(state.selectedId);
     $("#split").classList.toggle("has-detail", Boolean(item));
     $("#detail-pane").hidden = !item;
+    $("#split-handle").hidden = !item;
     const detail = $("#detail");
     if (!item) {
         detail.replaceChildren();
+        detailSplitter?.reset();   // the next case opens at the default width again
         return;
     }
+    detailSplitter?.refresh();
 
     const meta = [
         item.date && formatDate(item.date), loc(item.court), areaLabel(item), subjectDetail(item), outcomeName(item.outcome),
@@ -1130,6 +1105,7 @@ function init() {
     });
     $("#theme-toggle").addEventListener("click", toggleTheme);
     $("#mock-badge").hidden = !USE_MOCK;
+    detailSplitter = createSplitter($("#split"), $("#split-handle"), $("#detail-pane"));
 
     const tabs = [...document.querySelectorAll(".tabs [role=tab]")];
     tabs.forEach((tab, index) => {
@@ -1159,7 +1135,6 @@ function init() {
     for (const id of ["#filter-text", "#filter-min", "#filter-max"]) {
         $(id).addEventListener("input", onFilterChange);
     }
-    $("#filter-area").addEventListener("change", onFilterChange);
     $("#filter-reset").addEventListener("click", resetFilters);
     $("#summarize-checked").addEventListener("click", summarizeChecked);
     $("#kb-clear").addEventListener("click", onClearDb);

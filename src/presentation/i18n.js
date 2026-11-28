@@ -5,16 +5,12 @@
 const I18N = {
     de: {
         appTitle: "Urteilsradar",
-        appSubtitle: "Relevante Bundesgerichtsurteile finden und zusammenfassen",
         language: "Sprache",
         toggleTheme: "Helles/dunkles Design wechseln",
         tabSearch: "Urteile",
         tabKb: "Datenbank",
         mockBadge: "Demo-Daten",
         mockBadgeHint: "Simuliertes Backend mit erfundenen Urteilen: nichts wird auf einem Server gespeichert.",
-        sumLine: (n, relevant, medium, done, threshold) =>
-            `${n} Urteil${n === 1 ? "" : "e"} im Zeitraum, ${relevant} relevant (ab ${threshold}), ${medium} knapp darunter. `
-            + `Zusammenfassungen: ${done} von ${relevant}.`,
 
         /* search */
         from: "Von",
@@ -42,6 +38,7 @@ const I18N = {
         nextYears: "Spätere Jahre",
         chooseMonth: "Monat und Jahr wählen",
         chooseYear: "Jahr wählen",
+        calendar: "Kalender",
 
         /* filters + result list */
         filterText: "Suche in Nummer, Gegenstand, Begründung",
@@ -54,9 +51,6 @@ const I18N = {
         levelMedium: "Knapp darunter",
         levelLow: "Nicht relevant",
         levelAll: "Alle",
-        filterArea: "Sachgebiet",
-        allAreas: "Alle Gebiete",
-        otherAreas: "Übrige Gebiete",
         selectAll: "Alle angezeigten auswählen",
         selectItem: "Urteil auswählen",
         summarizeSelected: (n) => `Ausgewählte zusammenfassen (${n})`,
@@ -79,6 +73,8 @@ const I18N = {
 
         /* case detail */
         close: "Schliessen",
+        resizeDetail: "Breite des Detailbereichs (Pfeiltasten; Doppelklick: Standard)",
+        resizeValue: (pct) => `Detailbereich ${pct} % breit`,
         judgement: "Urteil",
         openOriginal: "Urteil auf bger.ch öffnen",
         question: "Rechtsfrage",
@@ -100,6 +96,11 @@ const I18N = {
         summary: "Zusammenfassung",
         langDe: "Deutsch",
         langFr: "Französisch",
+        origin_generated: "generiert",
+        origin_edited: "bearbeitet",
+        originGeneratedHint: (model) => `Automatisch erstellt (${model}), nicht von Hand geändert.`,
+        originEditedHint: "Von Hand bearbeitet und freigegeben.",
+        originPendingHint: "Von Hand bearbeitet und gespeichert, noch nicht freigegeben.",
         summarize: "Zusammenfassen",
         summarizing: "Zusammenfassung wird erstellt …",
         summaryQueued: "In der Warteschlange – wird automatisch zusammengefasst …",
@@ -121,10 +122,6 @@ const I18N = {
         adjust: "Anpassen",
         openSuvaFormat: "Im Suva-Format öffnen",
         exportTitle: "BGer-Urteil",
-        checkOk: "Text geprüft",
-        checkReview: "Text prüfen",
-        checkOkNote: "Das Prüfprogramm hat keine Abweichung zum Urteil gefunden.",
-        checkReviewNote: "Das Prüfprogramm hat Folgendes gefunden:",
 
         /* relevance correction */
         correction: "Korrektur",
@@ -149,16 +146,12 @@ const I18N = {
     },
     fr: {
         appTitle: "Radar des arrêts",
-        appSubtitle: "Trouver et résumer les arrêts pertinents du Tribunal fédéral",
         language: "Langue",
         toggleTheme: "Basculer entre thème clair et sombre",
         tabSearch: "Arrêts",
         tabKb: "Base de données",
         mockBadge: "Données de démo",
         mockBadgeHint: "Backend simulé avec des arrêts fictifs : rien n'est enregistré sur un serveur.",
-        sumLine: (n, relevant, medium, done, threshold) =>
-            `${n} arrêt${n === 1 ? "" : "s"} dans la période, ${relevant} pertinent${relevant === 1 ? "" : "s"} (dès ${threshold}), `
-            + `${medium} juste en dessous. Résumés : ${done} sur ${relevant}.`,
 
         from: "Du",
         to: "Au",
@@ -184,6 +177,7 @@ const I18N = {
         nextYears: "Années suivantes",
         chooseMonth: "Choisir le mois et l'année",
         chooseYear: "Choisir l'année",
+        calendar: "Calendrier",
 
         filterText: "Recherche : numéro, objet, motivation",
         relevance: "Pertinence",
@@ -195,9 +189,6 @@ const I18N = {
         levelMedium: "Juste en dessous",
         levelLow: "Non pertinent",
         levelAll: "Tous",
-        filterArea: "Domaine",
-        allAreas: "Tous les domaines",
-        otherAreas: "Autres domaines",
         selectAll: "Sélectionner tous les arrêts affichés",
         selectItem: "Sélectionner l'arrêt",
         summarizeSelected: (n) => `Résumer la sélection (${n})`,
@@ -219,6 +210,8 @@ const I18N = {
         tagPending: "non validé",
 
         close: "Fermer",
+        resizeDetail: "Largeur du panneau de détail (flèches ; double-clic : par défaut)",
+        resizeValue: (pct) => `Panneau de détail : ${pct} % de la largeur`,
         judgement: "Arrêt",
         openOriginal: "Ouvrir l'arrêt sur bger.ch",
         question: "Question juridique",
@@ -239,6 +232,11 @@ const I18N = {
         summary: "Résumé",
         langDe: "Allemand",
         langFr: "Français",
+        origin_generated: "généré",
+        origin_edited: "modifié",
+        originGeneratedHint: (model) => `Établi automatiquement (${model}), sans modification manuelle.`,
+        originEditedHint: "Modifié à la main et validé.",
+        originPendingHint: "Modifié à la main et enregistré, pas encore validé.",
         summarize: "Résumer",
         summarizing: "Résumé en cours de rédaction …",
         summaryQueued: "Dans la file d'attente – le résumé sera généré automatiquement …",
@@ -260,10 +258,6 @@ const I18N = {
         adjust: "Adapter",
         openSuvaFormat: "Ouvrir au format Suva",
         exportTitle: "Arrêt du TF",
-        checkOk: "Texte vérifié",
-        checkReview: "Texte à vérifier",
-        checkOkNote: "Le contrôle automatique n'a relevé aucun écart par rapport à l'arrêt.",
-        checkReviewNote: "Le contrôle automatique a relevé ce qui suit :",
 
         correction: "Correction",
         correctionNote: "Votre décision détermine le classement de cet arrêt. Un second clic l'annule.",

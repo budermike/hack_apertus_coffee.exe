@@ -26,9 +26,13 @@
  *
  *   POST {API_BASE}/judgements/{id}/summary
  *        -> entry { id, caseNumber, date, url, title: {de, fr}, de, fr,
- *                   status: {de, fr}, coherenceOk: {de, fr}, issues: {de, fr},
+ *                   status: {de, fr}, model: {de, fr}, coherenceOk: {de, fr}, issues: {de, fr},
  *                   pending: {de, fr}, storedAt, editedAt }
  *        Returns the stored summary; generates DE + FR with Apertus first if there is none.
+ *        `status` / `model` are the columns summaries.status / summaries.model of the shown
+ *        version ("generated" + model ID, or "approved" + "human"); `pending` is the text of a
+ *        newer 'edited' version. The UI's origin tag per language is derived from these three
+ *        fields only (see summaryOrigin), never from the text or from what was typed.
  *
  *   PUT  {API_BASE}/judgements/{id}/summary   body: { de, fr }
  *        -> entry. Changed texts are stored as 'edited' versions (`pending`); `de` / `fr`
@@ -165,6 +169,19 @@ function normalizeJudgement(raw, localDecisions) {
     };
 }
 
+/** Origin of the text the editor shows for `lang`, from the database flags:
+ *    "edited"     a saved human edit waits for approval (pending), or the shown version
+ *                 is an approved human edit (status "approved"/"edited", model "human")
+ *    "generated"  the shown version is the model's text (status "generated")
+ *    null         the backend sent no status for this language: no tag is shown */
+function summaryOrigin(raw, lang) {
+    if (typeof raw.pending?.[lang] === "string") return "edited";
+    const status = raw.status?.[lang];
+    if (status === "edited" || status === "approved") return "edited";
+    if (status === "generated") return "generated";
+    return null;
+}
+
 /** Summary entry for the editor. `de` / `fr` hold the newest text: a saved edit that still
  *  waits for approval (`pendingLangs`) wins over the shown version. */
 function normalizeEntry(raw) {
@@ -180,19 +197,10 @@ function normalizeEntry(raw) {
         storedAt: raw.storedAt || "",
         editedAt: raw.editedAt || null,
         pendingLangs: SUMMARY_LANGS.filter((lang) => typeof pending[lang] === "string"),
-        issues: [],        // findings of the backend's check, each { language, severity, kind, detail }
-        checked: false,    // true if the backend checked the generated text
+        origin: Object.fromEntries(SUMMARY_LANGS.map((lang) => [lang, summaryOrigin(raw, lang)])),
+        model: Object.fromEntries(SUMMARY_LANGS.map((lang) => [lang, raw.model?.[lang] || null])),
     };
-    const seen = new Set();
-    for (const lang of SUMMARY_LANGS) {
-        entry[lang] = pending[lang] ?? raw[lang] ?? "";
-        if (typeof raw.coherenceOk?.[lang] === "boolean") entry.checked = true;
-        for (const issue of raw.issues?.[lang] || []) {
-            const key = JSON.stringify(issue);   // a DE/FR finding is stored with both languages
-            if (!seen.has(key)) entry.issues.push(issue);
-            seen.add(key);
-        }
-    }
+    for (const lang of SUMMARY_LANGS) entry[lang] = pending[lang] ?? raw[lang] ?? "";
     return entry;
 }
 

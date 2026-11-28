@@ -83,12 +83,16 @@ def test_edit_then_approve(backend):
     assert status == 200
     assert entry["de"] == "Zusammenfassung DE"  # still shown until approved
     assert entry["pending"] == {"de": "Vom Juristen", "fr": None}  # unchanged FR is no edit
+    assert entry["status"] == {"de": "generated", "fr": "generated"}  # shown versions unchanged
 
     status, entry = backend.approve_summary(SAFE, {})
     assert status == 200
     assert entry["de"] == "Vom Juristen" and entry["status"]["de"] == "approved"
     assert entry["pending"] == {"de": None, "fr": None}
     assert entry["editedAt"] is not None
+    # the UI's origin tags read status/model per language: editing DE leaves FR "generated"
+    assert entry["status"]["fr"] == "generated"
+    assert entry["model"]["de"] == "human" and entry["model"]["fr"] != "human"
 
 
 def test_approve_without_edit_is_conflict(backend):
@@ -133,6 +137,11 @@ def test_http_roundtrip(backend):
         with pytest.raises(urllib.error.HTTPError) as err:
             urllib.request.urlopen(urllib.request.Request(f"{base}/knowledge-base", method="DELETE"))
         assert err.value.code == 405
+
+        # static files must be revalidated, or browsers run outdated UI scripts after a change
+        static = f"http://127.0.0.1:{server.server_address[1]}/{next(CRAWL_DIR.glob('*.json')).name}"
+        with urllib.request.urlopen(static) as res:
+            assert res.headers["Cache-Control"] == "no-cache"
     finally:
         server.shutdown()
         server.server_close()
