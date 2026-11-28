@@ -247,18 +247,29 @@ class Summarizer(_AlignLanguage):
        *other cases, style only* (``examples.StyleExamples``).
     3. One rewrite when the text is far too short, one paragraph only, starts with
        «In diesem Urteil», or the check finds a wrong outcome, remand or article.
+    4. DE/FR cross-check (``crosscheck``): an adversarial Apertus reviewer and a number
+       comparison look for points where DE and FR disagree; the judgement decides which one is
+       right and the other is rewritten once. What still disagrees is an error in the check
+       report. On with ``crosscheck=True`` or ``SUMMARY_CROSSCHECK=1`` (off by default until evaluated).
 
     With Apertus 70B every criterion of the 70B judge was >= 4.2 on 20 development cases;
     the older ``SummarizerV1`` scored 4.0 with 70B and 2.3 with 8B.
     """
     def __init__(self, llm: Any, examples: StyleExamples | None = None, prompts_dir: Path = prompts.PROMPTS_DIR,
-                 max_judgement_chars: int = 40000, analysis_llm: Any | None = None) -> None:
+                 max_judgement_chars: int = 40000, analysis_llm: Any | None = None,
+                 crosscheck: bool | None = None) -> None:
         self.llm = llm  # summary.llm.SummaryLLM (default Apertus 70B, see run.summarizer_factory): writes the texts
         # optional other model for step 1 only (core question), e.g. Apertus 70B; default = same model
         self.analysis_llm = analysis_llm or llm
         self.examples = examples or StyleExamples()
         self.prompts_dir = Path(prompts_dir)
         self.max_chars = max_judgement_chars
+        if crosscheck is None:
+            import os
+
+            # off until eval/crosscheck_eval.py has been run against the gateway (see docs/DECISIONS.md)
+            crosscheck = os.environ.get("SUMMARY_CROSSCHECK", "0").strip().lower() in ("1", "true", "yes", "on")
+        self.crosscheck = crosscheck
 
     # --- step 1: core question -------------------------------------------------------------
 
@@ -365,9 +376,10 @@ class Summarizer(_AlignLanguage):
         """DE + FR summary. ``similar_case_ids`` / ``exclude_ids`` are accepted for the
         ``generate.Summarizer`` interface; examples come from ``StyleExamples``."""
         analysis = self.analyse(judgement)
-        texts, attempts, used = {}, {}, []
+        texts, attempts, used, shots = {}, {}, [], {}
         for language in ("de", "fr"):
             examples = self.examples.select(judgement, language)
+            shots[language] = examples
             used += [e.case_id for e in examples if e.case_id not in used]
             text = self.write(judgement, language, analysis, examples)
             attempts[language] = 1
@@ -376,11 +388,26 @@ class Summarizer(_AlignLanguage):
                 text = self.write(judgement, language, analysis, examples, notes)
                 attempts[language] = 2
             texts[language] = text.strip()
-        return self.result(judgement, texts, analysis, used, attempts)
+        extra: list = []
+        if self.crosscheck:
+            from . import crosscheck
+
+            def rewrite(language: str, notes: list[str]) -> str:
+                attempts[language] = attempts.get(language, 1) + 1
+                return self.write(judgement, language, analysis, shots[language], notes)
+
+            evidence = (consideration_passages(judgement.text, analysis["erwaegungen"], max_chars=6000)
+                        + "\n\nDispositiv / Parteien:\n" + outcome_block(judgement, "de"))
+            texts, extra, trace = crosscheck.crosscheck_and_repair(
+                texts, crosscheck.gateway_json_call(self.analysis_llm), evidence, rewrite)
+            analysis = {**analysis, "crosscheck": trace}
+        return self.result(judgement, texts, analysis, used, attempts, extra)
 
     def result(self, judgement: Judgement, texts: dict[str, str], analysis: dict[str, Any],
-               examples: list[str], attempts: dict[str, int]) -> SummaryResult:
+               examples: list[str], attempts: dict[str, int], extra_issues: Sequence[Any] = ()) -> SummaryResult:
         outcome = operative_outcome(judgement.text)
+        check = check_summaries(texts["de"], texts["fr"], judgement, outcome)
+        check.issues += list(extra_issues)
         return SummaryResult(
             case_id=judgement.case_id,
             title_de=title_de(judgement),
@@ -392,6 +419,6 @@ class Summarizer(_AlignLanguage):
             examples=examples,
             model=self.llm.model,
             prompt_version=prompts.prompt_files_version(self.prompts_dir),
-            check=check_summaries(texts["de"], texts["fr"], judgement, outcome),
+            check=check,
             attempts=attempts,
         )
