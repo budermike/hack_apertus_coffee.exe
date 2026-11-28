@@ -5,9 +5,9 @@
 
 What Suva grades (``challenge_description.md``, evaluation criteria):
 
-1. "your 30 high scored relevant court judgements": ``recall_top30_<label>.txt``, the 30
-   best-ranked judgements in Suva's format (``8C_691/2024, 9C_612/2025, ...``);
-   ``recall_all_<label>.txt`` has every judgement on the list ("you didn't miss anything").
+1. "your 30 high scored relevant court judgements": ``recall_top30_<label>.csv``, the 30
+   best-ranked judgements, one row each (``RECALL_COLUMNS``); ``recall_all_<label>.csv`` has
+   every judgement on the list ("you didn't miss anything").
 2. "your top 10 highly relevant summaries" (against a hold-out set): the ``n`` best-ranked
    judgements of ``month`` with their summary in German and French,
    ``summaries_top<n>_<month>.md`` (to read) and ``.json`` (complete).
@@ -25,6 +25,7 @@ Which summary goes in, per judgement and language:
 from __future__ import annotations
 
 import argparse
+import csv
 import json
 import logging
 import sys
@@ -46,9 +47,29 @@ def ranked_green(rows: Sequence[dict[str, Any]]) -> list[dict[str, Any]]:
     return sorted(green, key=lambda r: (r.get("rank") if isinstance(r.get("rank"), int) else 10**9, -(r.get("final_score") or 0)))
 
 
+RECALL_COLUMNS = ("Rang", "Geschaeftsnummer", "Entscheiddatum", "Score", "Rechtsgebiet", "Begruendung", "Link")
+
+
 def suva_format(rows: Sequence[dict[str, Any]]) -> str:
     """``8C_691/2024, 9C_612/2025, ...``"""
     return ", ".join(r["case_id"] for r in rows)
+
+
+def write_recall_csv(rows: Sequence[dict[str, Any]], path: Path) -> Path:
+    """One row per judgement in rank order (``RECALL_COLUMNS``), UTF-8 with BOM so Excel shows umlauts."""
+    with path.open("w", encoding="utf-8-sig", newline="") as handle:
+        writer = csv.writer(handle)
+        writer.writerow(RECALL_COLUMNS)
+        for r in rows:
+            meta = r.get("metadata") or {}
+            score = r.get("final_score")
+            writer.writerow([
+                r.get("rank"), r["case_id"], r.get("judgement_date") or meta.get("decision_date") or "",
+                f"{score:.1f}" if isinstance(score, (int, float)) else "",
+                (meta.get("relevance") or {}).get("area") or "",
+                (r.get("relevance_reason") or r.get("reason") or "").strip(), meta.get("url") or "",
+            ])
+    return path
 
 
 def top_of_month(rows: Sequence[dict[str, Any]], month: str, n: int) -> list[dict[str, Any]]:
@@ -213,8 +234,8 @@ def main(argv: Sequence[str] | None = None) -> int:
     out.mkdir(parents=True, exist_ok=True)
 
     green = ranked_green(rows)
-    (out / f"recall_top{top_n}_{label}.txt").write_text(suva_format(green[:top_n]) + "\n", encoding="utf-8")
-    (out / f"recall_all_{label}.txt").write_text(suva_format(green) + "\n", encoding="utf-8")
+    write_recall_csv(green[:top_n], out / f"recall_top{top_n}_{label}.csv")
+    write_recall_csv(green, out / f"recall_all_{label}.csv")
     print(f"recall lists: top {min(top_n, len(green))} and all {len(green)} -> {out}", file=sys.stderr)
 
     current = current_pipeline(args.model)

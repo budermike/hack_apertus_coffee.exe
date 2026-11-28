@@ -86,3 +86,14 @@ def test_markdown_marks_outdated_and_lawyer_texts():
                 "fr": {"text": "Texte", "source": "stored", "outdated": True, "issues": [], "model": "8b", "prompt_version": "v1"}}]
     md = sub.render_markdown(entries, "2026-06", "q2_2026", CURRENT)
     assert "von Jurist:in bearbeitet" in md and "VERALTET: 8b, Prompt v1" in md and "## 1. 8C_1/2026 (2026-06-10)" in md
+
+
+def test_recall_csv_has_one_row_per_judgement_in_rank_order(tmp_path):
+    import csv
+
+    path = sub.write_recall_csv(sub.ranked_green(ROWS), tmp_path / "recall.csv")
+    with path.open(encoding="utf-8-sig", newline="") as handle:
+        rows = list(csv.reader(handle))
+    assert tuple(rows[0]) == sub.RECALL_COLUMNS
+    assert [r[1] for r in rows[1:]] == ["8C_1/2026", "8C_2/2026", "8C_3/2026", "8C_4/2026"]
+    assert rows[1][0] == "1" and rows[1][3] == "80.0" and rows[1][4] == "UV" and rows[1][6] == "https://bger/8C_1/2026"
