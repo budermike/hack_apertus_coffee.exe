@@ -96,13 +96,22 @@ function findItem(id) {
  *  says something about; `baseScore` is the value without the decisions.
  *  This is the ONE number that is shown, filtered, sorted and compared with the thresholds. */
 function effectiveScore(item) {
-    return Math.round(Math.max(0, Math.min(100, item.score)) * 10) / 10;
+    let score = Math.max(0, Math.min(100, item.score));
+    // the lawyer's own decision is final for this judgement (same rule as the backend,
+    // feedback_learning.apply_decision): relevant = at least green, not relevant = red
+    if (item.userLevel === "high") score = Math.max(score, SUMMARY_THRESHOLD);
+    else if (item.userLevel === "low") score = Math.min(score, Math.round((MEDIUM_THRESHOLD - 0.1) * 10) / 10);
+    return Math.round(score * 10) / 10;
+}
+
+/** Score before any decision: the stored relevance. */
+function baseScoreOf(item) {
+    return Number.isFinite(item.baseScore) ? item.baseScore : item.score;
 }
 
 /** By how much the lawyers' decisions moved this judgement's score (0 = not at all). */
 function learnedDelta(item) {
-    const base = Number.isFinite(item.baseScore) ? item.baseScore : item.score;
-    return Math.round((item.score - base) * 10) / 10;
+    return Math.round((effectiveScore(item) - baseScoreOf(item)) * 10) / 10;
 }
 
 function scoreLevel(score) {
@@ -881,7 +890,7 @@ function relevanceScale(item) {
         el("span", { class: "pnum", text: String(score) }),
         // learned from the lawyers' decisions: show by how much that moved the score
         Boolean(learnedDelta(item)) && el("span", {
-            class: "sub delta", title: t("learnedDeltaHint", item.baseScore),
+            class: "sub delta", title: t(decidedLevel(item) ? "decidedDeltaHint" : "learnedDeltaHint", baseScoreOf(item)),
             text: (learnedDelta(item) > 0 ? "+" : "−") + Math.abs(learnedDelta(item)),
         }));
 }
@@ -896,7 +905,7 @@ function statusTags(item) {
         Boolean(decidedLevel(item)) && el("span", {
             class: "tag",
             // "korrigiert": the decision differs from what the score says; "bestätigt": it agrees
-            text: t(scoreLevel(effectiveScore(item)) === item.userLevel ? "tagConfirmed" : "tagCorrected")
+            text: t(scoreLevel(baseScoreOf(item)) === item.userLevel ? "tagConfirmed" : "tagCorrected")
                 + (item.feedbackLocalOnly ? t("localSuffix") : ""),
         }),
     ];

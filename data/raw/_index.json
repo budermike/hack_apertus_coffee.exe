@@ -1364,6 +1364,48 @@
       "source": "entscheidsuche",
       "judgements": 45,
       "crawled_at": "2026-11-27T15:50:39+00:00"
+    },
+    "2026-07-04": {
+      "source": "entscheidsuche",
+      "judgements": 0,
+      "crawled_at": "2026-11-28T07:38:00+00:00",
+      "ingested_at": "2026-11-28T07:38:00+00:00"
+    },
+    "2026-07-05": {
+      "source": "entscheidsuche",
+      "judgements": 0,
+      "crawled_at": "2026-11-28T07:38:00+00:00",
+      "ingested_at": "2026-11-28T07:38:00+00:00"
+    },
+    "2026-07-01": {
+      "source": "entscheidsuche",
+      "judgements": 37,
+      "crawled_at": "2026-11-28T07:55:56+00:00",
+      "ingested_at": "2026-11-28T07:55:56+00:00"
+    },
+    "2026-07-02": {
+      "source": "entscheidsuche",
+      "judgements": 31,
+      "crawled_at": "2026-11-28T07:57:11+00:00",
+      "ingested_at": "2026-11-28T07:57:11+00:00"
+    },
+    "2026-07-03": {
+      "source": "entscheidsuche",
+      "judgements": 31,
+      "crawled_at": "2026-11-28T07:58:43+00:00",
+      "ingested_at": "2026-11-28T07:58:43+00:00"
+    },
+    "2026-07-06": {
+      "source": "entscheidsuche",
+      "judgements": 46,
+      "crawled_at": "2026-11-28T08:00:00+00:00",
+      "ingested_at": "2026-11-28T08:00:00+00:00"
+    },
+    "2026-07-07": {
+      "source": "entscheidsuche",
+      "judgements": 33,
+      "crawled_at": "2026-11-28T08:00:43+00:00",
+      "ingested_at": "2026-11-28T08:00:43+00:00"
     }
   }
 }

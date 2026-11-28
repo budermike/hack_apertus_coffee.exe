@@ -17,6 +17,7 @@ from hack_apertus_coffee_exe.triage.feedback_learning import (
     corrected,
     feature_names,
     fit_corrections,
+    apply_decision,
     row_base,
 )
 
@@ -200,3 +201,10 @@ def test_learning_colours_with_the_stored_yellow_bound_not_half_the_list_thresho
     assert p is not None and 0.025 < p <= 0.044  # yellow by the old half rule, red by the stored bound
     assert learned.ampel(base) == calibration.AMPEL_RED
     assert learned.score(base) < TriageConfig().yellow_threshold
+
+
+def test_apply_decision_clamps_to_the_traffic_light_band():
+    assert apply_decision(87.7, False) == 39.9 and apply_decision(12.0, False) == 12.0
+    assert apply_decision(3.3, True) == 60.0 and apply_decision(91.0, True) == 91.0
+    assert apply_decision(55.0, None) == 55.0
+    assert apply_decision(80.0, False, green=70.0, yellow=50.0) == 49.9

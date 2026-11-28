@@ -140,6 +140,7 @@ const I18N = {
         correctionNoteUnscored: "Dieses Urteil hat Apertus nicht bewertet (Rechtsgebiet ausserhalb von Unfall-, Invaliden- und Militärversicherung), darum steht die Relevanz auf 0. Ihre Entscheidung bestimmt die Einstufung dieses Urteils; für andere Urteile kann das System daraus nichts lernen. Ein zweiter Klick nimmt sie zurück.",
         feedbackLearned: (n) => `Entscheidung gespeichert. Daraus gelernt: ${n} ${n === 1 ? "weiteres Urteil" : "weitere Urteile"} neu bewertet.`,
         learnedDeltaHint: (base) => `Aus den Entscheidungen der Juristinnen und Juristen gelernt. Ohne sie: ${base}`,
+        decidedDeltaHint: (base) => `Durch die eigene Entscheidung zu diesem Urteil festgelegt. Ohne sie: ${base}`,
         feedbackLocalOnly: "Korrektur konnte nicht am Server gespeichert werden.",
 
         /* extra case & summary basis (#72) */
@@ -296,6 +297,7 @@ const I18N = {
         correctionNoteUnscored: "Apertus n'a pas évalué cet arrêt (domaine autre que l'assurance-accidents, l'assurance-invalidité ou l'assurance militaire), d'où la pertinence de 0. Votre décision détermine le classement de cet arrêt ; le système ne peut rien en apprendre pour les autres arrêts. Un second clic l'annule.",
         feedbackLearned: (n) => `Décision enregistrée. Le système en a tiré des enseignements : ${n} ${n === 1 ? "autre arrêt réévalué" : "autres arrêts réévalués"}.`,
         learnedDeltaHint: (base) => `Appris des décisions des juristes. Sans elles : ${base}`,
+        decidedDeltaHint: (base) => `Fixé par la décision prise sur cet arrêt. Sans elle : ${base}`,
         feedbackLocalOnly: "La correction n'a pas pu être enregistrée sur le serveur.",
 
         tagSingleJudge: "Juge unique",

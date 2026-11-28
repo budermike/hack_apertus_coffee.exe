@@ -18,6 +18,7 @@ from hack_apertus_coffee_exe.present.judgements import (
     list_response,
     record_feedback,
     to_ui_item,
+    ui_id,
 )
 from hack_apertus_coffee_exe.summary.api import Backend, make_server
 from hack_apertus_coffee_exe.triage.config import TriageConfig
@@ -423,9 +424,10 @@ def test_a_decision_is_learned_from_and_nothing_is_added_to_a_score(tmp_path):
     decided, similar, other = after["8C_10_2026"], after["8C_11_2026"], after["9C_12_2026"]
     assert decided["userLevel"] == "low" and decided["adjustment"] == 0
     assert decided["baseScore"] == before["8C_10_2026"]["score"]
+    assert decided["score"] == 39.9 and decided["ampel"] == "rot"                     # the decision is final for it
     assert similar["score"] < similar["baseScore"] == before["8C_11_2026"]["score"]   # same area and criterion
     assert other["score"] == other["baseScore"]                                       # nothing in common
-    assert all(i["score"] >= 60 for i in after.values())                              # nobody falls off the list
+    assert similar["score"] >= 60 and other["score"] >= 60                            # learning drops nobody else off the list
     learning = config_response(judgements)[1]["learning"]
     assert learning["used"] == 1 and {c["feature"] for c in learning["corrections"]} == {"area:UV", "crit:K1", "crit:K2"}
     assert all(c["value"] < 0 for c in learning["corrections"])
@@ -448,20 +450,23 @@ def test_a_decision_on_a_judgement_apertus_did_not_score_stands_but_teaches_noth
     )
     items = {i["id"]: i for i in judgements.items()}
     assert items["9C_13_2026"]["scored"] is False and items["9C_13_2026"]["userLevel"] == "high"
-    assert items["9C_13_2026"]["score"] == 0.0                       # the system has no estimate of its own
+    assert items["9C_13_2026"]["baseScore"] == 0.0                   # the system has no estimate of its own
+    assert items["9C_13_2026"]["score"] == 60.0 and items["9C_13_2026"]["ampel"] == "gruen"  # the decision stands
     assert items["8C_10_2026"]["scored"] is True
-    assert all(i["score"] == i["baseScore"] for i in items.values())  # nothing to learn from
+    assert all(i["score"] == i["baseScore"] for k, i in items.items() if k != "9C_13_2026")  # nothing to learn from
     learning = config_response(judgements)[1]["learning"]
     assert (learning["used"], learning["ignored"]) == (0, 1)
 
 
-def test_without_a_learner_the_list_behaves_as_before(tmp_path):
+def test_without_a_learner_the_decision_still_decides_its_own_judgement(tmp_path):
     judgements = JudgementList(
         _write(tmp_path, LEARN_ROWS), config=TriageConfig(),
         feedback_map=lambda: {"8C_10_2026": {"adjustment": -55.0, "userLevel": "low"}},
     )
-    item = next(i for i in judgements.items() if i["id"] == "8C_10_2026")
-    assert item["adjustment"] == -55.0 and item["score"] == item["baseScore"]
+    items = {i["id"]: i for i in judgements.items()}
+    item = items["8C_10_2026"]
+    assert item["adjustment"] == -55.0 and item["score"] == 39.9 < item["baseScore"]
+    assert all(i["score"] == i["baseScore"] for k, i in items.items() if k != "8C_10_2026")
     assert "learning" not in config_response(judgements)[1]
 
 
@@ -483,3 +488,23 @@ def test_config_explains_the_thresholds_from_the_calibration_file(tmp_path):
     assert "thresholdBasis" not in config_response(JudgementList(_write(tmp_path), config=TriageConfig()))[1]
     cal_path.write_text(json.dumps({"w": [1, 1, 0, 0], "t": 0.15}), encoding="utf-8")
     assert "thresholdBasis" not in config_response(judgements)[1]
+
+
+def test_a_decision_puts_its_judgement_on_the_right_side_and_keeps_the_order_inside():
+    """"Relevant" = at least green, "nicht relevant" = red; the lawyer has the last word on that judgement."""
+    rows = [
+        _scored("8C_20/2026", "2026-04-02", 0.80, "UV", ("K1",)),   # green, decided not relevant
+        _scored("8C_21/2026", "2026-04-03", 0.60, "UV", ("K2",)),   # green, decided not relevant
+        _scored("9C_22/2026", "2026-04-04", 0.01, "IV", ("K4",)),   # red, decided relevant
+        _scored("9C_23/2026", "2026-04-05", 0.02, "IV", ("K5",)),   # red, decided relevant
+    ]
+    decisions = {"8C_20_2026": "low", "8C_21_2026": "low", "9C_22_2026": "high", "9C_23_2026": "high"}
+    items = {
+        i["id"]: i for i in (
+            to_ui_item(r, feedback={"userLevel": decisions[ui_id(r["case_id"])]}, config=TriageConfig()) for r in rows
+        )
+    }
+    for key, level in decisions.items():
+        assert (items[key]["score"] >= 60) == (level == "high") and (items[key]["score"] < 40) == (level == "low")
+        assert items[key]["ampel"] == ("gruen" if level == "high" else "rot")
+    assert items["9C_23_2026"]["score"] >= items["9C_22_2026"]["score"]   # clamped, not set to one value
