@@ -50,8 +50,8 @@ const state = {
     summaryError: new Set(),   // ids whose summary failed
     drafts: {},                // id -> { de, fr } while the user edits a summary
     saveStatus: {},            // id -> "saving" | "aligning" | "saved" | "resetting" | "reset"
-    alignNotes: {},            // id -> alignment of the last save, while it has something to tell (notes of Apertus)
                                //       | "error" | "resetError"
+    alignNotes: {},            // id -> alignment of the last save, while it has something to tell (notes of Apertus)
 
     kbEntries: [],
     kbError: false,            // the database could not be read
@@ -1126,7 +1126,7 @@ function summaryEditor(scope, id) {
 
     editor.append(
         el("div", { class: "duo" }, columns),
-        alignNotes,
+        alignNotes || "",   // Element.append would print "undefined"
         el("div", { class: "row editor-footer" },
             el("button", { type: "button", class: "btn pri save-btn", text: t("save"), onclick: () => onSave(id) }),
             el("button", {

@@ -139,6 +139,17 @@ def test_editing_one_language_brings_the_other_in_line(backend, summarizer):
     assert len(_versions(backend, "fr")) == 2
 
 
+def test_an_edit_that_was_not_carried_over_is_caught_up_with_the_next_save(backend, summarizer):
+    backend.create_summary(SAFE)
+    summarizer.align_edit.side_effect = RuntimeError("gateway down")
+    _, entry = backend.edit_summary(SAFE, {"de": "Erste Bearbeitung"})
+    assert entry["alignment"]["ok"] is False and entry["fr"] == "Résumé FR"
+    # the gateway is back: the next edit is compared with the text the French version still matches
+    summarizer.align_edit.side_effect = None
+    backend.edit_summary(SAFE, {"de": "Erste Bearbeitung, ergänzt"})
+    assert summarizer.align_edit.call_args.kwargs["source_before"] == "Zusammenfassung DE"
+
+
 def test_an_edit_of_the_wording_alone_leaves_the_other_language_as_generated(backend, summarizer):
     backend.create_summary(SAFE)
     summarizer.align_edit.return_value = Alignment("Résumé FR", ["Seule la version allemande cite l'art. 6 LAA."])

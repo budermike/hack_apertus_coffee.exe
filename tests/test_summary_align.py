@@ -53,6 +53,9 @@ def test_split_sentences_keeps_abbreviations_together_and_loses_nothing():
     assert parts[1][1] == "\n\n"
     assert "".join(sentence + gap for sentence, gap in parts) == DE
     assert len(align.split_sentences("Vgl. Art. 4 ATSG und E. 3.1. Am 12. März 2025 entschied B.________ anders.")) == 2
+    # a year or an amount at the end of a sentence ends it; an abbreviation of a statute too
+    french = "L'accident est survenu le 3 mai 2021. La Suva a nié son obligation de prester. Voir l'art. 29 al. 2 Cst. Le recours est rejeté."
+    assert [sentence[:10] for sentence, _ in align.split_sentences(french)] == ["L'accident", "La Suva a ", "Voir l'art", "Le recours"]
 
 
 def test_source_changes_lists_only_what_was_edited():
@@ -65,6 +68,13 @@ def test_source_changes_lists_only_what_was_edited():
     assert changes[1]["before"] == "Das Bundesgericht wies die Beschwerde ab." and changes[1]["after"] == "Die Kosten trägt die Suva."
     assert align.source_changes(DE, DE) == []
     assert align.source_changes(DE, DE + "\n") == []
+
+
+def test_source_changes_ignore_spaces_and_do_not_pair_unrelated_sentences():
+    assert align.source_changes("Die Suva  haftet. Punkt zwei.", "Die Suva haftet. Punkt zwei.") == []
+    changes = align.source_changes("Erster Satz zur Kausalität. Zweiter Satz zum Taggeld.",
+                                   "Ganz neuer Einstieg ohne Bezug. Erster Satz zur Kausalität, leicht ergänzt.")
+    assert len(changes) == 1 and changes[0]["before"].startswith("Erster Satz") and changes[0]["after"].startswith("Ganz neuer")
 
 
 def test_replace_sentences_leaves_the_rest_word_for_word():
@@ -132,7 +142,12 @@ def test_new_and_removed_statements():
     change(alt="Le recours est rejeté.", neu="Le recours est rejeté, les frais de 800 fr. restant dus."),
     # more new sentences than the edit has
     change(alt="Le recours est rejeté.", neu="Le recours est rejeté. La preuve est prépondérante. Les frais suivent."),
+    # the edit changed one sentence, the answer makes two of it
+    change(alt="Le recours est rejeté.", neu="Le recours est admis. La cause est renvoyée à la Suva."),
+    # says "substance" but names no sentence: the lawyer is told, the change is not dropped silently
+    change(alt="", neu=""),
     change(alt="Le recours est rejeté.", neu="Le recours est admis.", unklar=True, hinweis="Peu clair."),
+    change(alt="Le recours est rejeté.", neu="Le recours est admis.", unklar=True),  # no reason given: a default note
     "no json",
 ])
 def test_an_answer_that_cannot_be_applied_safely_leaves_the_text_and_tells_the_lawyer(answer):
@@ -144,7 +159,8 @@ def test_an_answer_that_cannot_be_applied_safely_leaves_the_text_and_tells_the_l
     if isinstance(answer, str):
         assert llm.calls[1][2]["temperature"] == 0.3  # one retry with a little temperature
     elif answer["unklar"]:
-        assert result.notes[0] == "Peu clair."
+        edited = "Die Suva muss den Beweis mit überwiegender Wahrscheinlichkeit erbringen."
+        assert result.notes[0] == (answer["hinweis"] or align._LABELS["fr"]["unclear"].format(change=edited))
 
 
 def test_closing_check_lists_remaining_differences_and_can_fail_or_be_skipped():
@@ -168,3 +184,60 @@ def test_german_target_and_wrong_languages():
     assert "KEINE ÜBERSETZUNG" in llm.calls[0][0] and "nicht verfügbar" in llm.calls[0][1]
     with pytest.raises(ValueError):
         align.align_edit(llm, target_lang="de", target_text=DE, source_lang="de", source_text="a", source_before="b")
+
+
+def test_a_quote_that_skips_part_of_the_sentence_does_not_cost_that_part():
+    target = "La Suva doit apporter une preuve suffisante, à défaut elle reste tenue de prester. Le recours est rejeté."
+    llm = FakeLLM(change(alt="La Suva doit apporter une preuve suffisante.", neu="La Suva doit apporter une preuve prépondérante."),
+                  NO_DIFFERENCES)
+    result = align.align_edit(llm, target_lang="fr", target_text=target, source_lang="de",
+                              source_text=DE.replace("hinreichender", "überwiegender"), source_before=DE)
+    assert result.text == target and "à reprendre à la main" in result.notes[0]
+
+
+def test_whole_sentences_go_only_when_the_edit_removed_a_whole_passage():
+    # the German edit removed three words inside a sentence; the answer wants to drop a French sentence
+    llm = FakeLLM(change(alt="La Suva doit apporter la preuve avec une vraisemblance suffisante.", neu=""), NO_DIFFERENCES)
+    result = run(llm, DE.replace(" mit hinreichender Wahrscheinlichkeit", ""))
+    assert result.text == FR and "à reprendre à la main" in result.notes[0]
+
+
+def test_every_change_that_was_not_carried_over_is_reported_and_calls_are_limited():
+    before = " ".join(f"Satz {n} betrifft die Leistungspflicht Nummer {n}{n}." for n in range(10, 22))
+    after = before.replace("Leistungspflicht", "Kausalität")
+    llm = FakeLLM(*[change(alt="Cette phrase n'existe pas ici.", neu="Autre.")] * align.MAX_CHANGES,
+                  {"abweichungen": [f"Différence {n}." for n in range(9)]})
+    result = align.align_edit(llm, target_lang="fr", target_text=FR, source_lang="de", source_text=after, source_before=before)
+    assert len(llm.calls) == align.MAX_CHANGES + 1
+    reported = [n for n in result.notes if "à reprendre à la main" in n]
+    assert len(reported) == align.MAX_CHANGES + 1  # eight changes and the note that more were edited
+    assert len([n for n in result.notes if n.startswith("Différence")]) == align.MAX_CHECK_NOTES
+
+
+def test_a_gateway_error_in_the_closing_check_keeps_what_was_carried_over():
+    class Failing(FakeLLM):
+        def chat(self, system, user, **kwargs):
+            if len(self.calls) == 1:
+                raise TimeoutError("gateway")
+            return super().chat(system, user, **kwargs)
+
+    result = run(Failing(change(alt="Le recours est rejeté.", neu="Le recours est admis.")),
+                 DE.replace("wies die Beschwerde ab", "hiess die Beschwerde gut"))
+    assert result.text.endswith("Le recours est admis.") and result.notes == [align._LABELS["fr"]["check_failed"]]
+
+
+def test_reference_is_reported_even_when_nothing_changed_and_an_emptied_text_does_not_break():
+    assert run(FakeLLM(), DE + "  ", judgement=JUDGEMENT).has_reference is True
+    llm = FakeLLM(change(alt="Un.", neu=""), change(alt="Un.", neu="Deux."), NO_DIFFERENCES)
+    result = align.align_edit(llm, target_lang="fr", target_text="Un.", source_lang="de",
+                              source_text="Neu eins hier.", source_before="Alt eins hier. Alt zwei hier.")
+    assert isinstance(result.text, str)
+
+
+def test_a_loose_quote_changes_only_the_words_that_differ():
+    # Apertus quotes the sentence without «de l'assuré»: those words stay
+    target = "La présomption n'a pas été renversée. Le recours de l'assuré est rejeté."
+    llm = FakeLLM(change(alt="Le recours est rejeté.", neu="Le recours est admis."), NO_DIFFERENCES)
+    result = align.align_edit(llm, target_lang="fr", target_text=target, source_lang="de",
+                              source_text=DE.replace("wies die Beschwerde ab", "hiess die Beschwerde gut"), source_before=DE)
+    assert result.text == "La présomption n'a pas été renversée. Le recours de l'assuré est admis."

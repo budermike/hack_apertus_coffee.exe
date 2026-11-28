@@ -10,8 +10,10 @@ Not a translation. The steps:
    other language say the same (quoted word for word), and how do these sentences read now.
 3. The answer is applied here: the quoted sentences are looked up in the text and replaced
    (``planned_replacement``, ``replace_sentences``). Every other sentence stays word for
-   word. A quote that is not in the text, or a replacement that is a new text instead of
-   the old sentence with the change, is not applied; the lawyer is told to do it by hand.
+   word. An answer that fails one of the checks listed in ``planned_replacement`` is not
+   applied; the lawyer is told to carry that change over by hand. The checks limit what a
+   wrong answer can do; they cannot tell whether the new sentence is legally right, so the
+   aligned text stays marked for review.
 4. Apertus marks a change that is unclear or contradicts the judgement, and a last call
    compares both languages for statements one of them lacks (``CHECK_SYSTEM``). These notes
    go to the lawyer; nothing is changed because of them.
@@ -31,13 +33,14 @@ from .check import cited_considerations
 from .judgement import Judgement, consideration_numbers, consideration_passages, excerpt, outcome_block
 
 LANGUAGES = ("de", "fr")
-MAX_NOTES = 6
+MAX_CHECK_NOTES = 5  # findings of the closing comparison that are shown
 
 # A full stop after one of these does not end a sentence («Art. 6», «consid. 4.2», «al. 2»).
 _ABBREVIATIONS = frozenset(
     "art abs al lit let ziff ch nr no e erw consid cons vgl cf bzw resp ca env s ss ff p pp inkl sog evtl ggf "
-    "dr prof st rz n bge atf sr rs fr chf z b u a d h i v m c par cst bv".split()
+    "dr prof st rz n bge atf sr rs chf z b u a d h i v m c par".split()
 )
+
 _SENTENCE_END_RE = re.compile(r"[.!?][»“”\")\]]*(\s+)")
 _PARAGRAPH_RE = re.compile(r"\n\s*\n")
 _LAST_WORD_RE = re.compile(r"(\w+)$")
@@ -82,7 +85,13 @@ def _ends_sentence(before: str, after: str) -> bool:
     if _CONSIDERATION_END_RE.search(stem):
         return True  # «… E. 4.2. Die Suva …»: a consideration number, not an ordinal
     last = _LAST_WORD_RE.search(stem).group(1)
-    return not (last.isdigit() or len(last) == 1 or last.lower() in _ABBREVIATIONS)
+    if last.isdigit():  # «am 12. März», «2. Aufl.» go on; a year or an amount («… le 3 mai 2021. La Suva …») ends a sentence
+        return len(last) >= 3
+    return not (len(last) == 1 or last.lower() in _ABBREVIATIONS)
+
+
+def _similar(a: str, b: str) -> float:
+    return difflib.SequenceMatcher(a=a, b=b, autojunk=False).ratio()
 
 
 def source_changes(before: str, after: str) -> list[dict[str, str]]:
@@ -91,16 +100,26 @@ def source_changes(before: str, after: str) -> list[dict[str, str]]:
     Per change ``before`` and ``after`` (the sentences concerned; ``before`` is empty for a new
     passage, ``after`` for a removed one) and, word by word, what was ``removed`` and ``added``.
     """
-    old = [s for s, _ in split_sentences(before)]
-    new = [s for s, _ in split_sentences(after)]
+    old = [" ".join(s.split()) for s, _ in split_sentences(before)]
+    new = [" ".join(s.split()) for s, _ in split_sentences(after)]
     changes = []
     for tag, i1, i2, j1, j2 in difflib.SequenceMatcher(a=old, b=new, autojunk=False).get_opcodes():
         if tag == "equal":
             continue
-        if i2 - i1 == j2 - j1:  # as many sentences as before: each one is a change of its own
-            pairs = [(old[i], new[j]) for i, j in zip(range(i1, i2), range(j1, j2))]
-        else:
+        if i2 - i1 != j2 - j1:
             pairs = [(" ".join(old[i1:i2]), " ".join(new[j1:j2]))]
+        else:
+            # A sentence that was reworded is a change of its own. Sentences in a row that
+            # were replaced by other ones are one change together, not paired one by one.
+            pairs = []
+            loose: tuple[str, str] | None = None
+            for was, now in zip(old[i1:i2], new[j1:j2]):
+                if _similar(was, now) >= 0.5:
+                    pairs += ([loose] if loose else []) + [(was, now)]
+                    loose = None
+                else:
+                    loose = (f"{loose[0]} {was}", f"{loose[1]} {now}") if loose else (was, now)
+            pairs += [loose] if loose else []
         for was, now in pairs:
             words_was, words_now = was.split(), now.split()
             removed, added = [], []
@@ -226,6 +245,9 @@ _LABELS = {
         "check_failed": "Die Schlussprüfung der beiden Fassungen konnte nicht durchgeführt werden.",
         "version": "Die {name} Fassung",
         "not_applied": "Eine Änderung konnte nicht sicher übertragen werden, bitte von Hand nachführen: «{change}»",
+        "unclear": "Apertus hält diese Änderung für unklar und hat sie nicht übertragen: «{change}»",
+        "contradicts": "Diese Änderung widerspricht nach Apertus dem Urteilstext: «{change}»",
+        "too_many": "Es wurden mehr als {limit} Stellen geändert. Die übrigen hat Apertus nicht übertragen, bitte von Hand nachführen.",
     },
     "fr": {
         "names": {"de": "allemande", "fr": "française"},
@@ -245,6 +267,9 @@ _LABELS = {
         "check_failed": "Le contrôle final des deux versions n'a pas pu être effectué.",
         "version": "La version {name}",
         "not_applied": "Une modification n'a pas pu être reportée de manière sûre, à reprendre à la main : «{change}»",
+        "unclear": "Apertus juge cette modification peu claire et ne l'a pas reportée : «{change}»",
+        "contradicts": "Selon Apertus, cette modification contredit le texte de l'arrêt : «{change}»",
+        "too_many": "Plus de {limit} passages ont été modifiés. Apertus n'a pas reporté les autres, à reprendre à la main.",
     },
 }
 
@@ -282,20 +307,56 @@ def check_user(target_lang: str, texts: dict[str, str]) -> str:
 # --- applying an answer -------------------------------------------------------------------
 
 MIN_QUOTE_MATCH = 0.75  # how closely a sentence Apertus quotes must match a sentence of the text
-MIN_KEPT = 0.5          # how much of the old wording a replacement must keep
+MIN_KEPT = 0.6          # how much of the old wording a replacement must keep
+MAX_CHANGES = 8         # changed passages carried over per save (one Apertus call each); the rest is noted
 
-
-def _similar(a: str, b: str) -> float:
-    return difflib.SequenceMatcher(a=a, b=b, autojunk=False).ratio()
+_CONTENT_WORD_RE = re.compile(r"[^\W\d_]{4,}")
 
 
 def _locate(sentences: Sequence[tuple[str, str]], quoted: str) -> int:
     """Number (from 1) of the sentence that ``quoted`` copies, 0 when none is close enough."""
+    if not sentences:
+        return 0
     score, number = max((_similar(quoted, sentence), n) for n, (sentence, _) in enumerate(sentences, start=1))
     return number if score >= MIN_QUOTE_MATCH else 0
 
 
+def _content_words(text: str) -> set[str]:
+    return {word.lower() for word in _CONTENT_WORD_RE.findall(text)}
+
+
 _FIGURE_RE = re.compile(r"\d+")
+
+
+def _transfer(actual: str, quoted: str, new: str) -> str | None:
+    """Apply the change ``quoted`` -> ``new`` to ``actual``, the sentence that ``quoted`` copies loosely.
+
+    Apertus sometimes quotes a sentence with a word missing («Le recours est rejeté.» for
+    «Le recours de l'assuré est rejeté.»). Replacing the sentence by Apertus' new one would
+    drop what the quote left out, so only the words that differ between quote and new
+    sentence are exchanged in the real sentence. None when those words cannot be placed.
+    """
+    a, q, n = actual.split(), quoted.split(), new.split()
+    place: dict[int, int] = {}  # word of the quote -> the same word in the real sentence
+    for block in difflib.SequenceMatcher(a=q, b=a, autojunk=False).get_matching_blocks():
+        place.update({block.a + k: block.b + k for k in range(block.size)})
+    edits = []
+    for tag, i1, i2, j1, j2 in difflib.SequenceMatcher(a=q, b=n, autojunk=False).get_opcodes():
+        if tag == "equal":
+            continue
+        if tag == "insert":
+            start = place[i1 - 1] + 1 if i1 - 1 in place else place.get(i1)
+            if start is None:
+                return None
+            edits.append((start, start, n[j1:j2]))
+            continue
+        spots = [place.get(k) for k in range(i1, i2)]
+        if None in spots or spots != list(range(spots[0], spots[0] + len(spots))):
+            return None
+        edits.append((spots[0], spots[-1] + 1, n[j1:j2]))
+    for start, end, words in sorted(edits, reverse=True):
+        a[start:end] = words
+    return " ".join(a)
 
 
 def planned_replacement(sentences: Sequence[tuple[str, str]], quote: str, new: str,
@@ -303,11 +364,19 @@ def planned_replacement(sentences: Sequence[tuple[str, str]], quote: str, new: s
     """Which sentences Apertus' answer replaces by which text; None when it cannot be applied safely.
 
     ``quote`` (the answer's «alt») and ``new`` («neu») are compared sentence by sentence; only
-    where they differ something changes. Not safe, hence None: a quoted sentence that is not
-    in the text, sentences that do not follow each other, a replacement that keeps less than
-    half of the old wording (a new text, not the old one with the change), more new sentences
-    than the edit has, a figure that is neither in the old sentence nor in the edit (taken
-    from the judgement or invented), and removing a sentence when the edit removed nothing.
+    where they differ something changes. Not safe, hence None:
+
+    - a quoted sentence that is not in the text, or sentences that do not follow each other
+      or lie in different paragraphs;
+    - a quote that differs from the sentence it stands for, when the words Apertus changed
+      cannot be placed in the real sentence (``_transfer``), or when part of the sentence
+      would be lost;
+    - a replacement that keeps less than 60 % of the old wording (a new text, not the old
+      one with the change);
+    - more new sentences than the edit added;
+    - a figure that is neither in the old sentence nor in the edit (taken from the judgement
+      or invented);
+    - removing whole sentences when the edit did not remove a whole passage.
     """
     old_s = [sentence for sentence, _ in split_sentences(quote)]
     new_s = [sentence for sentence, _ in split_sentences(new)]
@@ -326,17 +395,32 @@ def planned_replacement(sentences: Sequence[tuple[str, str]], quote: str, new: s
         numbers = [_locate(sentences, quoted) for quoted in old_rest]
     if 0 in numbers or len(numbers) > MAX_SENTENCES_PER_CHANGE or numbers != list(range(numbers[0], numbers[0] + len(numbers))):
         return None
+    if any(_PARAGRAPH_RE.search(sentences[n - 1][1]) for n in numbers[:-1]):
+        return None
     kept = " ".join(sentences[n - 1][0] for n in numbers)
     if set(_FIGURE_RE.findall(added)) - set(_FIGURE_RE.findall(kept + " " + change["after"])):
         return None
+    extra_in_edit = max(0, len(split_sentences(change["after"])) - len(split_sentences(change["before"])))
     if not old_rest:
         if len(new_rest) > len(split_sentences(change["after"])):
             return None
         return numbers, f"{kept} {added}" if head else f"{added} {kept}"
-    if not added:
-        return (numbers, "") if _task(change) == "delete" else None
+    if not added:  # whole sentences go only when the edit removed a whole passage
+        return (numbers, "") if not change["after"] else None
+    if len(new_rest) - len(old_rest) > extra_in_edit:
+        return None
+    if len(new_rest) == len(old_rest):  # sentence for sentence: a loose quote must not cost words
+        carried = [
+            fresh if quoted == sentences[n - 1][0] else _transfer(sentences[n - 1][0], quoted, fresh)
+            for n, quoted, fresh in zip(numbers, old_rest, new_rest)
+        ]
+        if None in carried:
+            return None
+        added = " ".join(carried)
     if _similar(kept, added) < MIN_KEPT:
         return None
+    if len(_content_words(kept) - _content_words(" ".join(old_rest)) - _content_words(added)) >= 2:
+        return None  # the quote skipped part of the sentence and the replacement drops it
     return numbers, added
 
 
@@ -389,45 +473,53 @@ def align_edit(
 
     ``llm`` is a ``summary.llm.SummaryLLM``. One Apertus call per changed passage and one for
     the closing comparison (``final_check``). A change Apertus gives no usable answer for is
-    not applied and noted. Gateway errors are raised.
+    not applied and noted. A gateway error while carrying a change over is raised; one in
+    the closing comparison is noted.
     """
     if target_lang not in LANGUAGES or source_lang not in LANGUAGES or target_lang == source_lang:
         raise ValueError(f"languages must be two of {LANGUAGES}, got {source_lang!r} -> {target_lang!r}")
     changes = source_changes(source_before, source_text)
     text = target_text.strip()
-    if not changes:
-        return Alignment(text=text)
     reference = ""
     if judgement is not None:
         reference = reference_text(judgement, target_lang, [target_text, source_text, source_before], considerations)
+    if not changes:
+        return Alignment(text=text, has_reference=bool(reference))
     system = change_system(target_lang, prompts_dir)
-    notes: list[str] = []
     lab = _LABELS[target_lang]
-    for change in changes:
+    notes: list[str] = []  # one per change that needs the lawyer: never cut short
+    for change in changes[:MAX_CHANGES]:
         sentences = split_sentences(text)
+        shown = change["after"] or change["before"]
         try:
             answer = _json(llm, system, change_user(target_lang, source_lang, change, text, reference),
                            "angleichung", CHANGE_SCHEMA)
-        except ValueError:
-            answer = None
-        if answer and (answer.get("unklar") or answer.get("widerspricht_urteil")):
-            notes.append(str(answer.get("hinweis") or "").strip())
-        if answer and (not answer.get("inhaltlich") or not str(answer.get("alt") or "").strip()):
-            continue  # wording only, or the other language already says it
-        plan = None
-        if answer and not answer.get("unklar"):
-            plan = planned_replacement(sentences, str(answer["alt"]), str(answer.get("neu") or ""), change)
+        except ValueError:  # no JSON, twice
+            notes.append(lab["not_applied"].format(change=shown))
+            continue
+        if answer.get("widerspricht_urteil"):
+            notes.append(str(answer.get("hinweis") or "").strip() or lab["contradicts"].format(change=shown))
+        if answer.get("unklar"):  # nothing is read into an unclear edit
+            notes.append(str(answer.get("hinweis") or "").strip() or lab["unclear"].format(change=shown))
+            notes.append(lab["not_applied"].format(change=shown))
+            continue
+        if not answer.get("inhaltlich"):
+            continue  # wording only
+        plan = planned_replacement(sentences, str(answer.get("alt") or ""), str(answer.get("neu") or ""), change)
         if plan:
             text = replace_sentences(sentences, *plan)
-        else:  # no usable answer: this change is left to the lawyer
-            notes.append(lab["not_applied"].format(change=change["after"] or change["before"]))
+        else:  # nothing to apply safely: this change is left to the lawyer
+            notes.append(lab["not_applied"].format(change=shown))
+    if len(changes) > MAX_CHANGES:
+        notes.append(lab["too_many"].format(limit=MAX_CHANGES))
+    notes = list(dict.fromkeys(n for n in notes if n))
     if final_check:
         try:
             check = _json(llm, CHECK_SYSTEM[target_lang],
                           check_user(target_lang, {source_lang: source_text, target_lang: text}),
                           "schlusspruefung", CHECK_SCHEMA)
-            notes += [str(n).strip() for n in check.get("abweichungen") or []]
-        except ValueError:
+            found = [str(n).strip() for n in check.get("abweichungen") or []]
+            notes += [n for n in dict.fromkeys(found) if n and n not in notes][:MAX_CHECK_NOTES]
+        except Exception:  # the comparison is an extra: what was carried over stays
             notes.append(lab["check_failed"])
-    notes = list(dict.fromkeys(n for n in notes if n))[:MAX_NOTES]
     return Alignment(text=text, notes=notes, has_reference=bool(reference))

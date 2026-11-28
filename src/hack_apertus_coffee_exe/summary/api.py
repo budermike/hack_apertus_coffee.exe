@@ -165,6 +165,14 @@ class Backend:
             return {"lang": target, "ok": False, "reason": "edited_by_hand"}
         facts = entry["facts"].get(target)
         written_from = facts.get("erwaegungen") if isinstance(facts, dict) else None
+        # What the edit is compared with: the text of the edited language that the other language
+        # matches. While the other language is still the generated one, that is the generated text
+        # of the edited language, so an earlier edit that was not carried over (gateway down, or
+        # saved with "align": false) is caught up now. Otherwise the text before this edit.
+        source_before = entry.get(source) or ""
+        if entry["status"].get(target) == "generated":
+            generated = next((s for s in store.get_history(conn, case_number, source) if s.status == "generated"), None)
+            source_before = generated.text if generated else source_before
         try:
             summarizer = self.get_summarizer()
             # The lawyer's edit is what counts; the judgement only tells Apertus what an edited
@@ -174,7 +182,7 @@ class Backend:
                 target_text=target_text,
                 source_lang=source,
                 source_text=source_text,
-                source_before=entry.get(source) or "",
+                source_before=source_before,
                 judgement=self.find_judgement(case_number),
                 considerations=[c for c in written_from or [] if isinstance(c, str)],
             )
