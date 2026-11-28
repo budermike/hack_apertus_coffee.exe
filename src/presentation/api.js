@@ -56,8 +56,19 @@
  *   GET  {API_BASE}/knowledge-base?q=<query>&lang=de|fr
  *        -> [entry]   all stored summaries containing every search term, newest first
  *
- * Not available in the backend yet (the UI says so instead of pretending):
- *   - adjusting one summary language with Apertus ("Anpassen")
+ *   POST {API_BASE}/summaries/queue   body: { caseIds: [..], priority?: bool }
+ *        -> { running: [..], queued: [..], done: [..], failed: {id: err}, total }
+ *
+ *   GET  {API_BASE}/summaries/status?ids=<comma-separated>
+ *        -> { running, queued, done, failed, total }
+ *
+ *   DELETE {API_BASE}/summaries/queue/{id}
+ *        -> { cancelled: bool }
+ *
+ *   POST {API_BASE}/judgements/{id}/summary/align (or /adjust)
+ *        body: { targetLang, targetText?, sourceLang?, sourceText?, instruction? }
+ *        -> { lang, text }   Apertus v1.5 draft alignment/adjustment (not saved in DB)
+ *
  *   (criteria with quotes, question and rule are delivered when using `triage.cli relevance` output)
  */
 
@@ -101,6 +112,9 @@ const httpBackend = {
     summaryQueueStatus(caseIds) {
         const query = caseIds?.length ? `?${new URLSearchParams({ ids: caseIds.join(",") })}` : "";
         return jsonFetch(`${API_BASE}/summaries/status${query}`);
+    },
+    cancelQueuedSummary(id) {
+        return jsonFetch(`${API_BASE}/summaries/queue/${encodeURIComponent(id)}`, { method: "DELETE" });
     },
     alignSummary(id, payload) {
         return jsonFetch(`${summaryUrl(id)}/align`, {
@@ -236,6 +250,10 @@ async function queueSummaries(caseIds, priority = false) {
 
 async function summaryQueueStatus(caseIds) {
     return backend.summaryQueueStatus ? await backend.summaryQueueStatus(caseIds) : null;
+}
+
+async function cancelQueuedSummary(id) {
+    return backend.cancelQueuedSummary ? await backend.cancelQueuedSummary(id) : { cancelled: false };
 }
 
 async function alignSummary(id, payload) {

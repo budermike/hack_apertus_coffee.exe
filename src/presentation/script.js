@@ -265,6 +265,8 @@ async function onSearch(event) {
     state.selectedId = null;
     state.summaryQueue = [];        // summaries still waiting belong to the previous search
     state.summaryError.clear();
+    queueGeneration += 1;
+    queuePollErrors = 0;
     trackedQueueIds.clear();
     clearTimeout(queuePollTimer);
     renderResults();
@@ -413,7 +415,11 @@ async function setRelevance(id, level) {
     const direction = Math.sign(LEVELS.indexOf(before) - LEVELS.indexOf(after));   // +1 raised, -1 lowered, 0 same level
     // relevant now: summarize automatically; no longer relevant: stop waiting for a summary
     if (isRelevant(item)) requestSummary(id, { first: true });
-    else state.summaryQueue = state.summaryQueue.filter((queued) => queued !== id);
+    else {
+        state.summaryQueue = state.summaryQueue.filter((queued) => queued !== id);
+        trackedQueueIds.delete(id);
+        if (!USE_MOCK) cancelQueuedSummary(id).catch((err) => console.warn(err));
+    }
     renderList();
     renderDetail();
 
@@ -429,6 +435,8 @@ async function setRelevance(id, level) {
 const trackedQueueIds = new Set();
 const fetchingStored = new Set();
 let queuePollTimer = null;
+let queueGeneration = 0;
+let queuePollErrors = 0;
 
 /** Where the summary of a judgement stands. List tags, detail panel and messages all ask
  *  here, so they cannot contradict each other:
@@ -444,8 +452,8 @@ function summaryStatus(item) {
     return isRelevant(item) ? "missing" : "manual";
 }
 
-function applyServerQueueStatus(status) {
-    if (!status) return;
+function applyServerQueueStatus(status, gen) {
+    if (!status || gen !== queueGeneration) return;
     const prevActive = new Set([...state.summaryLoading, ...state.summaryQueue, ...state.summaryError]);
     state.summaryLoading = new Set(status.running || []);
     state.summaryQueue = [...(status.queued || [])];
@@ -455,22 +463,24 @@ function applyServerQueueStatus(status) {
     for (const id of status.done || []) {
         touched.add(id);
         if (!state.summaries[id] && !fetchingStored.has(id)) {
-            fetchStoredIntoState(id);
+            fetchStoredIntoState(id, gen);
         }
     }
     for (const id of touched) onSummaryChange(id);
 
     clearTimeout(queuePollTimer);
     if (state.summaryLoading.size > 0 || state.summaryQueue.length > 0) {
-        queuePollTimer = setTimeout(pollServerQueue, 1500);
+        queuePollTimer = setTimeout(() => pollServerQueue(gen), 1500);
     }
 }
 
-async function fetchStoredIntoState(id) {
+async function fetchStoredIntoState(id, gen = queueGeneration) {
     if (state.summaries[id] || fetchingStored.has(id)) return;
     fetchingStored.add(id);
     try {
-        state.summaries[id] = await fetchStoredSummary(id);
+        const entry = await fetchStoredSummary(id);
+        if (gen !== queueGeneration) return;
+        state.summaries[id] = entry;
         const item = findItem(id);
         if (item) item.summarized = true;
         scheduleKbRefresh();
@@ -478,27 +488,44 @@ async function fetchStoredIntoState(id) {
         console.error(err);
     } finally {
         fetchingStored.delete(id);
-        onSummaryChange(id);
+        if (gen === queueGeneration) onSummaryChange(id);
     }
 }
 
-async function pollServerQueue() {
-    if (USE_MOCK || trackedQueueIds.size === 0) return;
+async function pollServerQueue(gen = queueGeneration) {
+    if (USE_MOCK || gen !== queueGeneration || trackedQueueIds.size === 0) return;
     try {
-        applyServerQueueStatus(await summaryQueueStatus([...trackedQueueIds]));
+        const status = await summaryQueueStatus([...trackedQueueIds]);
+        if (gen !== queueGeneration) return;
+        queuePollErrors = 0;
+        applyServerQueueStatus(status, gen);
     } catch (err) {
         console.error(err);
+        if (gen !== queueGeneration || trackedQueueIds.size === 0) return;
+        queuePollErrors += 1;
+        if (queuePollErrors < 5) {
+            queuePollTimer = setTimeout(() => pollServerQueue(gen), 3000);
+        }
     }
 }
 
 async function enqueueOnServer(ids, priority = false) {
     const clean = ids.filter((id) => id && !state.summaries[id]);
     if (!clean.length) return;
+    const gen = queueGeneration;
     clean.forEach((id) => trackedQueueIds.add(id));
     try {
-        applyServerQueueStatus(await queueSummaries(clean, priority));
+        const status = await queueSummaries(clean, priority);
+        if (gen !== queueGeneration) return;
+        // Refresh full trackedQueueIds snapshot so prior running/queued items are never dropped.
+        if (trackedQueueIds.size > clean.length) {
+            await pollServerQueue(gen);
+        } else {
+            applyServerQueueStatus(status, gen);
+        }
     } catch (err) {
         console.error(err);
+        if (gen !== queueGeneration) return;
         clean.forEach((id) => state.summaryError.add(id));
         clean.forEach((id) => onSummaryChange(id));
     }
@@ -702,7 +729,7 @@ function openAlignAfterEditDialog(id, sourceLang, targetLang) {
             const baseTarget = currentTexts(id)[targetLang];
             setAlignDialogBusy(dialog, true, t("alignBusy"));
             try {
-                if (!(await performSave(id))) {
+                if (isDirty(id) && !(await performSave(id))) {
                     setAlignDialogBusy(dialog, false, t("errorSave"), true);
                     return;
                 }
@@ -1357,9 +1384,9 @@ function init() {
         }, 200);
     });
 
-    // Escape closes the detail panel (unless the user is typing or a calendar is open)
+    // Escape closes the detail panel (unless a dialog/calendar is open or the user is typing)
     document.addEventListener("keydown", (e) => {
-        if (e.key !== "Escape" || !state.selectedId || openPickers.size) return;
+        if (e.key !== "Escape" || !state.selectedId || openPickers.size || $("#align-dialog")?.open) return;
         if (e.target.closest("input, textarea, select")) return;
         closeDetail();
     });

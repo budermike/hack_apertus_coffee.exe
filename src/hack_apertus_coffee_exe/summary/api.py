@@ -132,6 +132,8 @@ class Backend:
         source_text = body.get("sourceText")
         if source_text is not None and not isinstance(source_text, str):
             raise ValueError("sourceText must be a string")
+        if source_text and source_text.strip() and source_lang is None:
+            raise ValueError("sourceLang is required when sourceText is provided")
         instruction = body.get("instruction")
         if instruction is not None and not isinstance(instruction, str):
             raise ValueError("instruction must be a string")

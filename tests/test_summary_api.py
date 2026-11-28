@@ -209,15 +209,19 @@ def test_queue_and_align_http_routes(backend, summarizer):
         assert summarizer.align_language.call_count == 1
 
         # Validation: bad payload must yield 400 (never 500)
-        bad_req = urllib.request.Request(
-            f"{base}/summaries/queue",
-            method="POST",
-            data=json.dumps({"caseIds": [], "priority": "yes"}).encode(),
-            headers={"Content-Type": "application/json"},
-        )
-        with pytest.raises(urllib.error.HTTPError) as exc:
-            urllib.request.urlopen(bad_req)
-        assert exc.value.code == 400
+        for url, payload in (
+            (f"{base}/summaries/queue", {"caseIds": [], "priority": "yes"}),
+            (f"{base}/judgements/{SAFE}/summary/align", {"targetLang": "fr", "sourceText": "Text without sourceLang"}),
+        ):
+            bad_req = urllib.request.Request(
+                url,
+                method="POST",
+                data=json.dumps(payload).encode(),
+                headers={"Content-Type": "application/json"},
+            )
+            with pytest.raises(urllib.error.HTTPError) as exc:
+                urllib.request.urlopen(bad_req)
+            assert exc.value.code == 400
     finally:
         backend.queue.stop()
         server.shutdown()

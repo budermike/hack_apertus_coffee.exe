@@ -59,6 +59,8 @@ class SummaryQueue:
                 already_done.add(key)
 
         with self._cond:
+            for key in already_done:
+                self._failed.pop(key, None)
             self._done.update(already_done)
             to_add = [k for k in keys if k not in already_done]
             if priority:
@@ -118,11 +120,12 @@ class SummaryQueue:
 
         scope_set = set(scope)
         for key in scope:
-            if key not in done and key not in failed and key not in running and key not in queued:
-                if self._is_stored(key):
-                    done.add(key)
-                    with self._lock:
-                        self._done.add(key)
+            if key not in done and key not in running and key not in queued and self._is_stored(key):
+                done.add(key)
+                failed.pop(key, None)
+                with self._lock:
+                    self._failed.pop(key, None)
+                    self._done.add(key)
         return {
             "running": [k for k in running if k in scope_set],
             "queued": [k for k in queued if k in scope_set],

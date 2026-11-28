@@ -63,3 +63,28 @@ def test_queue_rejects_invalid_case_ids():
     q = SummaryQueue(SimpleNamespace(get_summary=Mock(return_value=(404, {})), create_summary=Mock()))
     with pytest.raises(ValueError, match="non-empty"):
         q.enqueue(["  "])
+
+
+def test_failed_case_transitions_to_done_when_stored_externally():
+    stored = set()
+
+    class FakeBackend:
+        def get_summary(self, key):
+            return (200, {"id": key}) if key in stored else (404, {})
+
+        def create_summary(self, key):
+            return 404, {"error": "temporarily unavailable"}
+
+    q = SummaryQueue(FakeBackend())
+    try:
+        q.enqueue(["8C_5/2026"])
+        deadline = time.monotonic() + 2.0
+        while time.monotonic() < deadline and q.status(["8C_5_2026"])["failed"] == {}:
+            time.sleep(0.01)
+        assert "8C_5_2026" in q.status(["8C_5_2026"])["failed"]
+
+        stored.add("8C_5_2026")
+        snap = q.status(["8C_5_2026"])
+        assert snap["done"] == ["8C_5_2026"] and snap["failed"] == {}
+    finally:
+        q.stop()
