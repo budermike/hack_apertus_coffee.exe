@@ -29,6 +29,7 @@ import time
 from collections import Counter
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
+from typing import Any
 
 import httpx
 from bs4 import BeautifulSoup
@@ -497,6 +498,95 @@ def fetch_reference_cases(config, targets):
                 stats["failed"] += 1
         stats["missing"] += len(pending - matched)
     return stats
+
+
+def normalize_case_id(raw: str) -> str:
+    """Normalize ``8C 123/2026`` or ``8C_123_2026`` -> ``8C_123/2026``; raises ValueError if invalid."""
+    if not isinstance(raw, str):
+        raise ValueError("case number must be a string")
+    cleaned = re.sub(r"\s+", "_", raw.strip()).upper()
+    if "/" not in cleaned and "_" in cleaned:
+        head, _, year = cleaned.rpartition("_")
+        cleaned = f"{head}/{year}"
+    if not re.fullmatch(r"\d{1,2}[A-Z]_\d+/\d{4}", cleaned):
+        raise ValueError(f"invalid BGer case number {raw!r}; expected e.g. '8C_123/2026'")
+    return cleaned
+
+
+def fetch_single_case(case_id: str, out_dir: str | Path, config_path: str | Path = "configs/crawl.json") -> dict[str, Any]:
+    """Return one judgement record from ``out_dir`` or fetch it from entscheidsuche.ch / bger.ch (#70)."""
+    normalized = normalize_case_id(case_id)
+    target_dir = Path(out_dir)
+    safe_id = safe_case_id(normalized)
+    if target_dir.exists():
+        for existing in sorted(target_dir.rglob(f"*{safe_id}.json")):
+            if existing.is_file():
+                try:
+                    rec = json.loads(existing.read_text(encoding="utf-8"))
+                    if rec.get("case_id") == normalized or normalized in (rec.get("case_ids") or ()):
+                        return rec
+                except (OSError, ValueError):
+                    continue
+
+    raw_cfg = json.loads(Path(config_path).read_text(encoding="utf-8"))
+    sources = raw_cfg.get("sources") or {}
+
+    if "entscheidsuche" in sources:
+        es_cfg = {**raw_cfg, **sources["entscheidsuche"], "source": "entscheidsuche"}
+        body = {
+            "size": 5,
+            "query": {"bool": {"filter": [
+                {"term": {"hierarchy": "CH_BGer"}},
+                {"terms": {"reference": [normalized]}},
+            ]}},
+        }
+        try:
+            hits = request("POST", es_cfg["base_url"], es_cfg["delay_seconds"], json=body).json()["hits"]["hits"]
+            for hit in hits:
+                src = hit["_source"]
+                cid = (src.get("reference") or [src.get("id")])[0]
+                if cid == normalized:
+                    dept = ((src.get("meta") or {}).get("de") or "").removeprefix(
+                        "Eidgenossenschaft Bundesgericht "
+                    ).strip() or None
+                    entry = {
+                        "case_id": normalized,
+                        "decision_date": src["date"],
+                        "department": dept,
+                        "subject": None,
+                        "language": src.get("language"),
+                        "metadata": src,
+                    }
+                    html, url = entscheidsuche_fetch(es_cfg, entry)
+                    record = build_record(es_cfg, entry, html, url)
+                    write_json(record_path(target_dir, entry), record)
+                    return record
+        except (httpx.HTTPError, ValueError, KeyError, TypeError) as exc:
+            log.warning("%s: entscheidsuche lookup failed (%s), trying bger.ch", normalized, exc)
+
+    if "bger" in sources:
+        bger_cfg = {**raw_cfg, **sources["bger"], "source": "bger"}
+        params = {
+            "lang": "de",
+            "type": "simple_query",
+            "query_words": normalized,
+            "top_subcollection_aza": "all",
+            "sort": "date_desc",
+            "page": "1",
+        }
+        try:
+            html = request("GET", bger_cfg["base_url"], bger_cfg["delay_seconds"], params=params).text
+            _, entries = bger_parse_list(html)
+            for entry in entries:
+                if entry.get("case_id") == normalized:
+                    doc_html, url = bger_fetch(bger_cfg, entry)
+                    record = build_record(bger_cfg, entry, doc_html, url)
+                    write_json(record_path(target_dir, entry), record)
+                    return record
+        except (httpx.HTTPError, ValueError, KeyError, TypeError) as exc:
+            log.warning("%s: bger lookup failed: %s", normalized, exc)
+
+    raise LookupError(f"Judgement {normalized} not found locally or on bger.ch / entscheidsuche.ch")
 
 
 # ---------------------------------------------------------------- report (issue #9)

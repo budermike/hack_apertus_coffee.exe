@@ -316,7 +316,9 @@ def test_routes_in_summary_api(tmp_path):
         assert [i["caseNumber"] for i in items] == ["8C_7/2025", "8C_221/2025"]
         assert items[1]["similarCases"][0]["suvaSelected"] is True
         with urllib.request.urlopen(f"{base}/config") as resp:
-            assert json.load(resp) == {"thresholds": {"high": 60.0, "medium": 40.0}}
+            cfg = json.load(resp)
+            assert cfg["thresholds"] == {"high": 60.0, "medium": 40.0}
+            assert cfg["availableRange"] == {"from": "2025-09-25", "to": "2026-01-15"}
         request = urllib.request.Request(
             f"{base}/judgements/8C_7_2025/feedback", method="POST",
             data=json.dumps({"adjustment": -20, "direction": -1, "level": "low", "decision": "low"}).encode(),

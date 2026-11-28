@@ -213,13 +213,18 @@ input[type="text"], input[type="search"], select, textarea {
     position: relative;
     z-index: 5;
     display: flex;
-    gap: 8px;
+    gap: 8px 16px;
     flex-wrap: wrap;
     align-items: center;
     padding: 10px 14px;
     background: var(--paper);
     border-bottom: 1px solid var(--line);
 }
+.searchbar-group { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.add-case-form { margin-left: auto; padding-left: 14px; border-left: 1px solid var(--line); }
+.add-case-form input { width: 145px; font-variant-numeric: tabular-nums; }
+.period-progress { max-width: 480px; margin: 14px auto; display: flex; flex-direction: column; gap: 8px; align-items: center; }
+.period-progress progress { width: 100%; height: 8px; }
 .searchbar label { font-weight: 600; font-size: 13px; }
 .searchbar .btn { margin-left: 4px; }
 .date-input { position: relative; display: flex; margin-right: 8px; }
