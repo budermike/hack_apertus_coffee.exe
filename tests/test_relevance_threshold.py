@@ -1,4 +1,4 @@
-"""Recall target for the list threshold (#75, "90 % drin"). Offline, no Apertus call."""
+"""Recall target for the list threshold (#75, 95 % of the known Suva cases). Offline, no Apertus call."""
 
 from __future__ import annotations
 
@@ -57,7 +57,7 @@ def test_display_score_puts_the_yellow_bound_on_yellow():
 
 def test_config_target_and_null(tmp_path):
     config = load_config("configs/triage.json")
-    assert (config.target_recall, config.yellow_recall) == (0.9, 1.0)
+    assert (config.target_recall, config.yellow_recall) == (0.95, 1.0)
     data = json.loads(Path("configs/triage.json").read_text(encoding="utf-8"))
     data.update(target_recall=None, yellow_recall=None)
     path = tmp_path / "triage.json"
@@ -87,3 +87,45 @@ def test_committed_q2_results_are_what_the_config_produces(tmp_path):
     )  # score files are read, not rewritten
     for path in tables.glob("relevance_scores_*.json"):
         assert path.read_bytes() == Path("results/tables", path.name).read_bytes()
+
+
+def test_calibration_records_why_each_threshold_sits_where_it_does():
+    records, selected = _records(ROWS), {c for c, *_, y in ROWS if y}
+    fitted = cal.calibrate(records, selected, target_recall=0.8, yellow_recall=1.0)
+    lst, ylw = fitted["basis"]["list"], fitted["basis"]["yellow"]
+    assert lst["rule"] == ylw["rule"] == "recall_target" and (lst["target"], ylw["target"]) == (0.8, 1.0)
+    assert lst["known"] == ylw["known"] == 5 and lst["candidates"] == len(records)
+    assert lst["known_kept"] >= 4 and ylw["known_kept"] == 5 and ylw["highest_missed"] is None
+    p = {r["case_id"]: cal.relevance(r, fitted) for r in records}
+    # the edge cases are real known Suva cases on the right side of the threshold
+    assert lst["lowest_kept"]["case_id"] in selected and p[lst["lowest_kept"]["case_id"]] > lst["threshold"]
+    assert ylw["lowest_kept"]["case_id"] == min((c for c in selected), key=lambda c: p[c])
+    assert lst["candidates_kept"] == sum(v > lst["threshold"] for v in p.values())
+
+
+def test_describe_names_the_rule_the_counts_and_the_edge_case():
+    records, selected = _records(ROWS), {c for c, *_, y in ROWS if y}
+    fitted = {**cal.calibrate(records, selected, target_recall=0.8, yellow_recall=1.0), "periods": ["2025-Q4", "2026-Q1"]}
+    de, fr = cal.describe(fitted, "de"), cal.describe(fitted, "fr")
+    assert len(de) == len(fr) == 2
+    assert de[0].startswith("Grün ab 60") and "nicht von Hand gesetzt" in de[0] and "80 %" in de[0]
+    assert "2025-Q4 und 2026-Q1" in de[0] and fitted["basis"]["list"]["lowest_kept"]["case_id"] in de[0]
+    assert de[1].startswith("Gelb ab 40") and "5 von 5" in de[1]
+    assert fr[0].startswith("Vert dès 60") and fr[1].startswith("Jaune dès 40")
+    assert cal.describe({"w": [0, 0, 0, 0], "t": 0.1}) == []  # older calibration files: nothing to explain
+
+
+def test_describe_says_when_the_old_factor_rule_is_in_use():
+    records, selected = _records(ROWS), {c for c, *_, y in ROWS if y}
+    fitted = cal.calibrate(records, selected, list_factor=0.5)
+    assert fitted["basis"]["list"]["rule"] == "f2_factor" and fitted["basis"]["yellow"]["rule"] == "half_list"
+    de = cal.describe(fitted, "de")
+    assert "Faktor 0.5 (von Hand gesetzt)" in de[0] and "halbe Listenschwelle" in de[1]
+
+
+def test_committed_calibration_explains_the_q2_list():
+    stored = json.loads(Path("results/tables/relevance_calibration_q2_2026.json").read_text(encoding="utf-8"))
+    lst = stored["basis"]["list"]
+    assert lst["rule"] == "recall_target" and lst["target"] == load_config().target_recall
+    assert lst["known"] == stored["n_pos"] and lst["known_kept"] / lst["known"] >= lst["target"]
+    assert abs(lst["threshold"] - stored["t_recall"]) < 1e-9

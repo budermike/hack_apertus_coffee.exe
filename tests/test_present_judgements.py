@@ -463,3 +463,23 @@ def test_without_a_learner_the_list_behaves_as_before(tmp_path):
     item = next(i for i in judgements.items() if i["id"] == "8C_10_2026")
     assert item["adjustment"] == -55.0 and item["score"] == item["baseScore"]
     assert "learning" not in config_response(judgements)[1]
+
+
+def test_config_explains_the_thresholds_from_the_calibration_file(tmp_path):
+    """GET /api/config carries the reasons for the thresholds in both UI languages (#75)."""
+    cal = {"w": [1, 1, 0, 0], "t": 0.15, "n_pos": 4, "periods": ["2025-Q4"], "basis": {
+        "list": {"rule": "recall_target", "target": 0.75, "threshold": 0.07, "known": 4, "known_kept": 3,
+                 "candidates": 20, "candidates_kept": 9, "lowest_kept": {"case_id": "8C_1/2025", "p": 0.08}, "highest_missed": None},
+        "yellow": {"rule": "recall_target", "target": 1.0, "threshold": 0.05, "known": 4, "known_kept": 4,
+                   "candidates": 20, "candidates_kept": 12, "lowest_kept": {"case_id": "8C_2/2025", "p": 0.06}, "highest_missed": None},
+    }}
+    cal_path = tmp_path / "cal.json"
+    cal_path.write_text(json.dumps(cal), encoding="utf-8")
+    judgements = JudgementList(_write(tmp_path), config=TriageConfig(), calibration_path=cal_path)
+    basis = config_response(judgements)[1]["thresholdBasis"]
+    assert set(basis) == {"de", "fr"} and len(basis["de"]) == 2
+    assert "8C_1/2025" in basis["de"][0] and "3 von 4" in basis["de"][0] and basis["fr"][1].startswith("Jaune dès 40")
+    # no calibration file, or one written before the explanation existed: the field is left out
+    assert "thresholdBasis" not in config_response(JudgementList(_write(tmp_path), config=TriageConfig()))[1]
+    cal_path.write_text(json.dumps({"w": [1, 1, 0, 0], "t": 0.15}), encoding="utf-8")
+    assert "thresholdBasis" not in config_response(judgements)[1]

@@ -164,7 +164,7 @@ def to_results(
     """Ranked ``TriageResult`` list on the project's traffic-light scale.
 
     ``final_score`` is the relevance value mapped so that the list threshold is
-    ``config.green_threshold`` and half of it ``config.yellow_threshold``; the
+    ``config.green_threshold`` and the lower bound of yellow ``config.yellow_threshold``; the
     colours therefore agree with ``TriageConfig.ampel_for`` and with the UI.
     """
     config = config or TriageConfig()
@@ -185,7 +185,7 @@ def to_results(
         item = (items or {}).get(record["case_id"])
         metadata = dict(item.metadata) if item else {k: record[k] for k in ("case_ids", "decision_date", "subject")}
         metadata["relevance"] = {
-            "p": p, "threshold": round(t_list, 4), "area": record["area"], "outcome": record.get("outcome"),
+            "p": p, "threshold": round(t_list, 4), "yellow_threshold": round(t_yellow, 4), "area": record["area"], "outcome": record.get("outcome"),
             "question": triage.get("a_rechtsfrage"), "criteria": triage.get("b_kriterien", []),
             "principle": deep.get("a_grundsatz"), "uv_use": deep.get("b_nutzen_uv"), "rule": deep.get("d_merksatz"),
             "deep_score": deep.get("e_score"),
@@ -281,7 +281,7 @@ def run(
     out: dict[str, Any] = {"period": period, "records": records, "items": items, "calibration": None, "results": []}
     if train:
         cfg = config or TriageConfig()
-        cal = calibration.calibrate(train, selected, cfg.target_recall, cfg.yellow_recall)
+        cal = calibration.calibrate(train, selected, cfg.target_recall, cfg.yellow_recall, list_factor)
         cal["periods"] = list(earlier)
         out["calibration"] = cal
         out["results"] = to_results(records, cal, items, list_factor, config)

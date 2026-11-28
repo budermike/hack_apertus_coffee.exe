@@ -572,6 +572,11 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--judgements-dir", default=load_paths().judgements_dir, help="Suva example summaries")
     parser.add_argument("--examples", type=int, default=2, help="Few-shot examples per language")
     parser.add_argument("--triage", default=None, help="Triage results JSON for GET /api/judgements")
+    parser.add_argument(
+        "--calibration",
+        default="results/tables/relevance_calibration_q2_2026.json",
+        help="Calibration of the relevance thresholds (written by triage.cli relevance); explains them in GET /api/config",
+    )
     parser.add_argument("--auto-summarize", action="store_true", help="Queue relevant triage cases on startup")
     args = parser.parse_args(argv)
     load_dotenv()  # SUMMARY_DB_PATH and gateway settings from .env
@@ -588,6 +593,7 @@ def main(argv: list[str] | None = None) -> int:
             extra_triage_dir="data/processed/triage_periods",
             fr_cache_path="data/processed/triage/fr_cache.json",
             learner=FeedbackLearner(),  # relevance decisions are learned from, not added to a score
+            calibration_path=args.calibration,
         )
         if args.triage else None
     )
@@ -599,6 +605,7 @@ def main(argv: list[str] | None = None) -> int:
         backend=backend,
         judgements_dir=args.judgements_dir,
         model=args.model,
+        calibration_path=args.calibration,
     )
     if args.auto_summarize and judgements is not None:
         green_threshold = judgements.config.green_threshold

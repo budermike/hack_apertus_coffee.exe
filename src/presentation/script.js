@@ -6,6 +6,8 @@
  *  before the first search. */
 let SUMMARY_THRESHOLD = 60;
 let MEDIUM_THRESHOLD = 40;
+/** Why the thresholds sit where they do ({ de: [...], fr: [...] } from GET /api/config); null = not known. */
+let THRESHOLD_BASIS = null;
 /** Summaries are requested one after the other (this many at a time), best relevance first:
  *  each one takes several Apertus calls on a shared gateway. */
 const SUMMARY_CONCURRENCY = 2;
@@ -190,6 +192,13 @@ async function loadThresholds() {
         SUMMARY_THRESHOLD = high;
         MEDIUM_THRESHOLD = medium;
     }
+    if (config?.thresholdBasis && typeof config.thresholdBasis === "object") THRESHOLD_BASIS = config.thresholdBasis;
+}
+
+/** Sentences that explain the thresholds in the current language; empty when the backend sent none. */
+function thresholdBasisText() {
+    const basis = THRESHOLD_BASIS?.[currentLang] || THRESHOLD_BASIS?.de;
+    return Array.isArray(basis) ? basis.filter((line) => typeof line === "string") : [];
 }
 
 let thresholdsReady = Promise.resolve();
@@ -866,7 +875,7 @@ async function onClearDb() {
 function relevanceScale(item) {
     const score = effectiveScore(item);
     return el("div", { class: "scale-cell" },
-        el("div", { class: `scale ${scoreLevel(score)}`, title: t("scaleTitle", score, SUMMARY_THRESHOLD) },
+        el("div", { class: `scale ${scoreLevel(score)}`, title: [t("scaleTitle", score, SUMMARY_THRESHOLD), ...thresholdBasisText()].join("\n\n") },
             el("i", { style: `left:${SUMMARY_THRESHOLD}%` }),
             el("b", { style: `left:${score}%` })),
         el("span", { class: "pnum", text: String(score) }),
@@ -1152,6 +1161,7 @@ function summarySection(item) {
             return [
                 heading,
                 el("p", { class: "note", text: t("notAutoSummarized", SUMMARY_THRESHOLD, effectiveScore(item)) }),
+                ...(thresholdBasisText().length > 0 ? [el("p", { class: "note", text: thresholdBasisText().join(" ") })] : []),
                 summarizeButton(id, "summarize"),
             ];
     }

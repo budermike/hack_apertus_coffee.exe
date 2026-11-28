@@ -34,8 +34,8 @@ Die Schwelle wird auf dem einen Quartal so gesetzt, dass dort mindestens dieser 
 |---|---|---|---|---|---|
 | 80 % | 97 | 49 von 59 | 83.0 % | 0.736 | 2025-Q4: 22 von 28 (35 auf der Liste); 2026-Q1: 27 von 31 (62 auf der Liste) |
 | 85 % | 104 | 50 von 59 | 84.8 % | 0.735 | 2025-Q4: 23 von 28 (38 auf der Liste); 2026-Q1: 27 von 31 (66 auf der Liste) |
-| 90 % **(eingestellt)** | 152 | 53 von 59 | 89.8 % | 0.683 | 2025-Q4: 24 von 28 (52 auf der Liste); 2026-Q1: 29 von 31 (100 auf der Liste) |
-| 95 % | 193 | 58 von 59 | 98.3 % | 0.676 | 2025-Q4: 28 von 28 (83 auf der Liste); 2026-Q1: 30 von 31 (110 auf der Liste) |
+| 90 % | 152 | 53 von 59 | 89.8 % | 0.683 | 2025-Q4: 24 von 28 (52 auf der Liste); 2026-Q1: 29 von 31 (100 auf der Liste) |
+| 95 % **(eingestellt)** | 193 | 58 von 59 | 98.3 % | 0.676 | 2025-Q4: 28 von 28 (83 auf der Liste); 2026-Q1: 30 von 31 (110 auf der Liste) |
 | 100 % | 206 | 58 von 59 | 98.3 % | 0.656 | 2025-Q4: 28 von 28 (96 auf der Liste); 2026-Q1: 30 von 31 (110 auf der Liste) |
 
 ## Was diese Zahlen nicht zeigen

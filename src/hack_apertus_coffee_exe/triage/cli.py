@@ -231,6 +231,8 @@ def _cmd_relevance(args: argparse.Namespace) -> int:
         f"{args.period}: {len(green)} on the list, {sum(r.ampel == 'gelb' for r in results)} yellow, {len(results)} candidates.",
         file=sys.stderr,
     )
+    for line in calibration.describe(cal, "de", config.green_threshold, config.yellow_threshold):
+        print(f"  {line}", file=sys.stderr)  # why the thresholds sit where they do (#75)
     if args.output:
         out_path = Path(args.output)
         out_path.parent.mkdir(parents=True, exist_ok=True)

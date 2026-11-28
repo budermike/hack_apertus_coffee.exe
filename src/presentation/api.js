@@ -10,6 +10,7 @@
  *
  *   GET  {API_BASE}/config
  *        -> { thresholds: { high, medium } }   from configs/triage.json
+ *           + thresholdBasis: { de: [...], fr: [...] }   why the thresholds sit there (calibration, #75)
  *
  *   GET  {API_BASE}/judgements?from=YYYY-MM-DD&to=YYYY-MM-DD&lang=de|fr
  *        -> [{ id, caseNumber, date, url, lang, area, subject: {de, fr}, explanation: {de, fr},

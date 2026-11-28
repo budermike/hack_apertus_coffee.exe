@@ -42,7 +42,7 @@ class TriageConfig:
     # Recall target (#75): share of the known Suva judgements of the labelled periods that
     # must be on the list (green) / at least yellow. When target_recall is set it replaces
     # list_factor; null in the JSON goes back to list_factor.
-    target_recall: float | None = 0.9
+    target_recall: float | None = 0.95
     yellow_recall: float | None = 1.0
 
     def __post_init__(self) -> None:
