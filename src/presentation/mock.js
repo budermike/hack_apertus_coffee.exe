@@ -182,15 +182,6 @@ const mockBackend = (() => {
                 }));
         },
 
-        /** POST /judgements/add (mock) */
-        async addJudgement(caseNumber) {
-            await delay(400);
-            const clean = String(caseNumber || "").trim().replace(/\s+/, "_");
-            const existing = MOCK_JUDGEMENTS.find((j) => j.caseNumber.toLowerCase() === clean.toLowerCase());
-            if (existing) return { ...existing, url: "#", summarized: Boolean(db.load().kb[existing.id]) };
-            throw new Error(`mock judgement ${clean} not found`);
-        },
-
         /** POST /judgements/{id}/summary */
         async summarizeJudgement(id) {
             const stored = db.load().kb[id];
@@ -210,38 +201,63 @@ const mockBackend = (() => {
             return entry;
         },
 
-        /** PUT /judgements/{id}/summary — the mock has no approval step, the edit is shown at once.
-         *  As in the backend, only a language whose text changed becomes a human version. */
+        /** PUT /judgements/{id}/summary: as in the backend, a changed language becomes the one
+         *  edited version and is shown at once; if only one changed, the other follows (here
+         *  a marked placeholder instead of an Apertus text), unless it was typed by hand. */
         async saveSummary(id, texts) {
             await delay(300);
             const data = db.load();
             const entry = data.kb[id];
             if (!entry) throw new Error("not in database");
-            const status = { ...entry.status };
-            const model = { ...entry.model };
-            for (const lang of ["de", "fr"]) {
-                if (texts[lang] !== entry[lang]) {
-                    status[lang] = "approved";
-                    model[lang] = "human";
+            const next = {
+                ...entry,
+                status: { ...entry.status },
+                model: { ...entry.model },
+                alignedBy: { de: null, fr: null, ...entry.alignedBy },
+                editedAt: new Date().toISOString(),
+            };
+            const changed = ["de", "fr"].filter((lang) => typeof texts[lang] === "string" && texts[lang] !== entry[lang]);
+            for (const lang of changed) {
+                next[lang] = texts[lang];
+                next.status[lang] = "approved";
+                next.model[lang] = "human";
+                next.alignedBy[lang] = null;
+            }
+            let alignment = null;
+            if (changed.length === 1) {
+                const source = changed[0];
+                const target = source === "de" ? "fr" : "de";
+                if (entry.status[target] !== "generated" && !next.alignedBy[target]) {
+                    alignment = { lang: target, ok: false, reason: "edited_by_hand" };
+                } else {
+                    const base = entry[target].replace(/\n\n\[Mock: [^\]]*\]$/, "");
+                    next[target] = `${base}\n\n[Mock: ${target.toUpperCase()} ← ${source.toUpperCase()} angeglichen]`;
+                    next.status[target] = "approved";
+                    next.model[target] = "human";
+                    next.alignedBy[target] = "mock";
+                    alignment = { lang: target, ok: true };
                 }
             }
-            data.kb[id] = { ...entry, de: texts.de, fr: texts.fr, status, model, editedAt: new Date().toISOString() };
+            data.kb[id] = next;
+            db.save(data);
+            return { ...next, alignment };
+        },
+
+        /** DELETE /judgements/{id}/summary/edit: back to the generated text */
+        async resetSummary(id) {
+            await delay(200);
+            const data = db.load();
+            const entry = data.kb[id];
+            const j = MOCK_JUDGEMENTS.find((m) => m.id === id);
+            if (!entry || !j) throw new Error("not in database");
+            data.kb[id] = {
+                ...entry,
+                de: MOCK_SUMMARY.de(j), fr: MOCK_SUMMARY.fr(j),
+                status: { de: "generated", fr: "generated" }, model: { de: "mock", fr: "mock" },
+                alignedBy: { de: null, fr: null }, editedAt: null,
+            };
             db.save(data);
             return data.kb[id];
-        },
-
-        /** POST /judgements/{id}/summary/approve — nothing waits for approval in the mock */
-        async approveSummary(id) {
-            return db.load().kb[id];
-        },
-
-        /** POST /judgements/{id}/summary/align */
-        async alignSummary(_id, { targetLang, targetText, sourceLang, instruction }) {
-            await delay(400);
-            const note = instruction
-                ? `[${instruction}]`
-                : `[${targetLang.toUpperCase()} ← ${(sourceLang || "").toUpperCase()} angeglichen]`;
-            return { lang: targetLang, text: `${targetText}\n\n${note}`.trim() };
         },
 
         /** POST /judgements/{id}/feedback */
@@ -269,17 +285,6 @@ const mockBackend = (() => {
         async clearDatabase() {
             await delay(150);
             db.save({ feedback: {}, kb: {} });
-        },
-
-        /** GET /evaluation — demo mode never fabricates evaluation numbers (#71). */
-        async getEvaluation() {
-            await delay(80);
-            return {
-                available: false,
-                tables: [],
-                calibration: null,
-                models: { runtime: { columns: [], rows: [] }, development: { columns: [], rows: [] } },
-            };
         },
     };
 })();

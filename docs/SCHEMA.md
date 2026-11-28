@@ -92,7 +92,7 @@ Zentrale, durchsuchbare Wissensbasis für alle erzeugten und bearbeiteten Urteil
 - Engine: SQLite (`sqlite3`, Python-Standardbibliothek)
 - Pfad: konfigurierbar über `SUMMARY_DB_PATH` (Default unter `data/processed/`, nicht im Git)
 - Code: `src/hack_apertus_coffee_exe/summary/store.py` (Import: `hack_apertus_coffee_exe.summary.store`)
-- Schreibende Stellen: Batch und On-demand (`summary/run.py`) sowie die UI-API (`summary/api.py`), alle über `store.get_or_generate_languages`, `save_edit` und `approve`
+- Schreibende Stellen: Batch und On-demand (`summary/run.py`) über `store.get_or_generate_languages`; die UI-API (`summary/api.py`) über `store.replace_edit` und `store.discard_edit` (seit 28.11.2026, siehe «Bearbeiten und Zurücksetzen»)
 - Fremdschlüssel sind nur aktiv mit `PRAGMA foreign_keys = ON` (setzt `store.py` bei jeder Verbindung).
 
 ### Tabellen im Überblick
@@ -127,7 +127,7 @@ Ein erneutes Speichern desselben Urteils überschreibt bekannte Werte nicht mit 
 
 ### Tabelle `summaries`
 
-Eine Zeile = eine Version einer Summary in einer Sprache. Zeilen werden **nie geändert oder gelöscht**; jede Änderung erzeugt eine neue Zeile (Verlauf).
+Eine Zeile = eine Version einer Summary in einer Sprache. **Generierte Zeilen werden nie geändert oder gelöscht.** Daneben gibt es pro Sprache höchstens **eine** bearbeitete Fassung: Eine neue Bearbeitung ersetzt die vorherige, «Zurücksetzen» löscht sie (siehe Regeln).
 
 ```sql
 CREATE TABLE IF NOT EXISTS summaries (
@@ -165,7 +165,7 @@ CREATE TABLE IF NOT EXISTS summaries (
 | `model` | Herkunft des Texts: Apertus-Modell-ID (z. B. `apertus-v1-5-70b`) bei `generated`; immer `human` bei `edited` und `approved` (wird vom Code automatisch gesetzt) |
 | `prompt_version` | Prompt-Fassung, mit der generiert wurde (z. B. `v2`); für die Evaluation. `NULL` bei bearbeiteten Texten |
 | `created_at` | Zeitpunkt der Erstellung (ISO-8601, UTC) |
-| `status` | `generated` (vom Modell, gilt ohne weiteren Schritt als freigegeben), `edited` (von Jurist:in geändert, wartet auf Freigabe), `approved` (bearbeitete Fassung freigegeben) |
+| `status` | `generated` (vom Modell, gilt ohne weiteren Schritt als gültig), `approved` (die bearbeitete Fassung, sofort angezeigt), `edited` (nur noch in Datenbanken von vor dem 28.11.2026: Bearbeitung, die damals auf eine Freigabe wartete) |
 | `coherence_ok` | Ergebnis des Coherence-Checks: `1` = bestanden, `0` = Problem gefunden, `NULL` = nicht geprüft (siehe Regeln) |
 | `issues` | JSON-Liste der Befunde des Coherence-Checks für diese Sprache (z. B. erfundene Erwägung), damit die UI zeigen kann, was nicht passt; `NULL` bei Bearbeitungen |
 | `facts` | JSON-Objekt der extrahierten Fakten (Zwischenschritt der Pipeline); `NULL` bei Bearbeitungen |
@@ -196,32 +196,58 @@ CREATE INDEX IF NOT EXISTS idx_summaries_case_lang
     ON summaries (case_id, language, version);
 ```
 
+### Tabelle `summary_alignments`
+
+Vermerkt, welche bearbeitete Fassung nicht getippt, sondern von Apertus an die Bearbeitung der anderen Sprache angeglichen wurde.
+
+```sql
+CREATE TABLE IF NOT EXISTS summary_alignments (
+    summary_id INTEGER PRIMARY KEY REFERENCES summaries (id) ON DELETE CASCADE,
+    model      TEXT    NOT NULL
+);
+```
+
+| Spalte | Bedeutung |
+|---|---|
+| `summary_id` | Die Zeile in `summaries`, deren Text Apertus geschrieben hat. Wird die Zeile gelöscht (neue Bearbeitung, Zurücksetzen), verschwindet der Vermerk mit |
+| `model` | Apertus-Modell-ID, z. B. `apertus-v1-5-8b` |
+
+Die Zeile in `summaries` bleibt `model = 'human'` (der `CHECK` verlangt das für bearbeitete Fassungen); im Code steht der Vermerk als `Summary.aligned_by`. Eine eigene Tabelle statt einer zusätzlichen Spalte, damit Code von vor dem 28.11.2026 dieselbe Datenbank weiterhin lesen kann (`SELECT *` auf `summaries` liefert die gewohnten Spalten).
+
 ### Regeln für Summaries
 
 **Generieren**
 
-- **Pro `(case_id, language)` wird höchstens einmal generiert.** Existiert bereits eine Zeile (egal welcher Status), ruft weder Batch noch UI das LLM erneut auf. Neue Versionen entstehen nur durch Bearbeiten und Freigeben.
-- **Coherence-Check** ist Teil der Summary-Pipeline: Beim Generieren wird die Summary inhaltlich mit dem Originalurteil verglichen. `coherence_ok` wird beim Einfügen gesetzt und danach nie geändert. Bei `edited`/`approved` bleibt es `NULL` (kein Check auf menschlich bearbeiteten Text).
+- **Pro `(case_id, language)` wird höchstens einmal generiert.** Existiert bereits eine Zeile (egal welcher Status), ruft weder Batch noch UI das LLM erneut auf. Danach ändert nur noch eine Bearbeitung den angezeigten Text.
+- **Coherence-Check** ist Teil der Summary-Pipeline: Beim Generieren wird die Summary inhaltlich mit dem Originalurteil verglichen. `coherence_ok` wird beim Einfügen gesetzt und danach nie geändert. Bei `edited`/`approved` bleibt es `NULL` (kein Check auf bearbeiteten oder angeglichenen Text).
 
-**Bearbeiten und Freigeben**
+**Bearbeiten und Zurücksetzen** (Stand 28.11.2026)
 
-- **Modell-Summaries brauchen keine Freigabe:** `generated` gilt direkt als freigegeben.
-- **Bearbeiten setzt automatisch** `status = 'edited'`, `model = 'human'`, `prompt_version = NULL`; der Aufrufer übergibt nur den neuen Text. Der `CHECK` in der Tabelle verhindert inkonsistente Zeilen.
-- **Nur menschlich bearbeitete Fassungen werden freigegeben:** `approved` ist nur erlaubt, wenn die neueste Version `edited` ist (geprüft im Code, `store.py`).
+- **Keine Freigabe mehr:** Eine gespeicherte Bearbeitung wird sofort angezeigt. `generated` gilt wie bisher ohne weiteren Schritt als gültig.
+- **Eine bearbeitete Fassung pro Sprache:** `store.replace_edit` löscht die bisherige bearbeitete Fassung dieser Sprache und legt die neue an (`status = 'approved'`, `model = 'human'`, `prompt_version = NULL`). Es entstehen also keine immer neuen Versionen. Die generierte Zeile bleibt unangetastet.
+- **Die andere Sprache zieht nach:** Wird nur eine Sprache geändert, gleicht Apertus die andere an (`Summarizer.align_language`). Der angeglichene Text wird als bearbeitete Fassung der anderen Sprache gespeichert; die Modell-ID steht in `summary_alignments` (im Code `Summary.aligned_by`).
+- **Von Hand Geschriebenes überschreibt Apertus nie:** Ist die andere Sprache von Hand bearbeitet (kein Vermerk in `summary_alignments`), bleibt sie stehen; die Oberfläche sagt das.
+- **Kann Apertus nicht angleichen** (kein Schlüssel, Gateway nicht erreichbar), wird die Bearbeitung trotzdem gespeichert; die andere Sprache bleibt unverändert und die Oberfläche meldet es.
+- **Zurücksetzen:** `store.discard_edit` löscht die bearbeitete Fassung (eine Sprache oder beide). Angezeigt wird wieder der generierte Text. Das geht immer, weil generierte Zeilen nie gelöscht werden.
 
-Ablauf Generieren → Bearbeiten → Freigeben ergibt drei Zeilen:
+Ablauf Generieren → Deutsch bearbeiten → (Französisch zieht nach) ergibt pro Sprache höchstens zwei Zeilen:
 
-| version | status | model | prompt_version | text |
-|---|---|---|---|---|
-| 1 | `generated` | `apertus-v1-5-70b` | `v2` | Modell-Output (bereits gültig) |
-| 2 | `edited` | `human` | `NULL` | bearbeiteter Text |
-| 3 | `approved` | `human` | `NULL` | Kopie von v2 |
+| language | version | status | model | Vermerk in `summary_alignments` | text |
+|---|---|---|---|---|---|
+| `de` | 1 | `generated` | `apertus-v1-5-70b` | `NULL` | Modell-Output |
+| `de` | 2 | `approved` | `human` | `NULL` | von Hand bearbeitet |
+| `fr` | 1 | `generated` | `apertus-v1-5-70b` | `NULL` | Modell-Output |
+| `fr` | 2 | `approved` | `human` | `apertus-v1-5-70b` | von Apertus an die deutsche Bearbeitung angeglichen |
 
 **Anzeigen**
 
-- **Neueste Version** = Zeile mit der höchsten `version` pro `(case_id, language)`.
-- **Angezeigte Version:** neueste `approved`-Zeile, sonst die `generated`-Zeile.
-- **Offene Bearbeitung** (neueste Zeile ist `edited`): wird als Entwurf „wartet auf Freigabe“ angezeigt, ersetzt die angezeigte Version aber erst nach `approved`.
+- **Angezeigte Version:** die `approved`-Zeile, sonst die `generated`-Zeile.
+- **Herkunft in der Oberfläche:** «generiert» (`generated`), «bearbeitet» (`approved`, ohne Vermerk), «angeglichen» (`approved`, mit Vermerk in `summary_alignments`).
+
+**Datenbanken von vor dem 28.11.2026**
+
+- Damals war jede Bearbeitung eine neue Zeile (`edited`) und wurde erst nach einer Freigabe (`approved`, Kopie) angezeigt. `store.save_edit`, `store.approve` und `POST …/summary/approve` gibt es weiter, die Oberfläche benutzt sie nicht mehr.
+- Eine Bearbeitung, die noch auf die Freigabe wartete, geht nicht verloren: Die Oberfläche zeigt sie im Editor mit einem Hinweis; «Speichern» übernimmt sie als bearbeitete Fassung, «Zurücksetzen» verwirft sie. Ältere bearbeitete Zeilen derselben Sprache werden dabei entfernt.
 
 ### Beispiel-Abfrage: alle Infos zu einer Summary
 
