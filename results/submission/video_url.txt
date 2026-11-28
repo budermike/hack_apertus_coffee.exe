@@ -1,2 +1,3 @@
 # Paste the URL of the demo video (max. 2 minutes) on the next line.
 # It also goes into the Demo field at the top of technical_report.md.
+https://youtu.be/84kTLvLu0q8
