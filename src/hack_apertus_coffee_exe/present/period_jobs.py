@@ -1,4 +1,10 @@
-"""Dynamic period crawling/triage (#69, #91) and single-judgement add (#70) for the UI."""
+"""Dynamic period crawling/triage (#69, #91) and single-judgement add (#70) for the UI.
+
+Overlapping periods (#96): a period job sends only judgements to Apertus that have no
+valid relevance value yet (``reusable_row``); its result file holds only those. Coverage
+is the union of every loaded period and the primary triage file, with overlapping and
+adjacent date ranges merged (``merge_intervals``).
+"""
 
 from __future__ import annotations
 
@@ -21,6 +27,44 @@ from ..triage.pipeline import CrawlItem
 from .judgements import JudgementList, _OUTCOMES, _is_single_judge, to_ui_item, ui_id
 
 logger = logging.getLogger(__name__)
+
+
+def merge_intervals(intervals: Any) -> list[list[str]]:
+    """Merge ``[from, to]`` ISO date pairs that overlap or touch (one ends the day before the next starts).
+
+    Malformed pairs are dropped. The result is sorted and never has two pairs that could be merged.
+    """
+    parsed: list[tuple[date, date]] = []
+    for pair in intervals or []:
+        try:
+            start, end = date.fromisoformat(pair[0]), date.fromisoformat(pair[1])
+        except (TypeError, ValueError, IndexError):
+            continue
+        if start <= end:
+            parsed.append((start, end))
+    merged: list[list[date]] = []
+    for start, end in sorted(parsed):
+        if merged and start <= merged[-1][1] + timedelta(days=1):
+            merged[-1][1] = max(merged[-1][1], end)
+        else:
+            merged.append([start, end])
+    return [[start.isoformat(), end.isoformat()] for start, end in merged]
+
+
+def reusable_row(row: dict[str, Any]) -> bool:
+    """True if a stored triage result can be shown again without asking Apertus.
+
+    That is every row with a relevance value, and rows outside the areas Apertus scores
+    (they never reach Apertus). A row whose Apertus call failed (no value in a scored area)
+    and rows without relevance data (older ``triage.cli score`` output) are scored again.
+    """
+    rel = (row.get("metadata") or {}).get("relevance")
+    if not isinstance(rel, dict):
+        return False
+    p = rel.get("p")
+    if isinstance(p, (int, float)) and not isinstance(p, bool):
+        return True
+    return rel.get("area") not in relevance.LIST_AREAS
 
 
 def _parse_range(date_from: Any, date_to: Any) -> tuple[date, date]:
@@ -98,18 +142,18 @@ class PeriodTriageManager:
     def _mark_covered(self, date_from: str, date_to: str) -> None:
         with self._covered_lock:
             self.store_dir.mkdir(parents=True, exist_ok=True)
-            covered = self._read_covered_unlocked()
-            if [date_from, date_to] not in covered:
-                covered.append([date_from, date_to])
+            covered = merge_intervals([*self._read_covered_unlocked(), [date_from, date_to]])
             tmp = self._covered_file().with_name(f"._covered.{os.getpid()}.{threading.get_ident()}.json.tmp")
             tmp.write_text(json.dumps(covered, ensure_ascii=False), encoding="utf-8")
             tmp.replace(self._covered_file())
 
     def covers(self, date_from: str, date_to: str) -> bool:
-        for start, end in self._load_covered():
-            if start <= date_from and date_to <= end:
-                return True
-        return self.judgements is not None and self.judgements.covers(date_from, date_to)
+        """True if ``[date_from, date_to]`` lies in the union of the loaded periods and the primary triage file."""
+        intervals = list(self._load_covered())
+        avail = self.judgements.available_range() if self.judgements is not None else None
+        if isinstance(avail, dict) and avail.get("from") and avail.get("to"):
+            intervals.append([avail["from"], avail["to"]])
+        return any(start <= date_from and date_to <= end for start, end in merge_intervals(intervals))
 
     def _load_calibration(self) -> dict[str, Any]:
         if self.calibration_path.exists():
@@ -197,7 +241,14 @@ class PeriodTriageManager:
             if failed_days:
                 raise RuntimeError(f"Crawl/Ingest fehlgeschlagen für: {', '.join(failed_days[:5])}")
             items = relevance_period.load_period_items(self.raw_dir, DateRange(since, until))
+            # Judgements that already have a valid relevance value (primary file or an earlier
+            # period) are shown as they are and not sent to Apertus again (#96).
+            known = {r["case_id"] for r in self.judgements.rows() if reusable_row(r)} if self.judgements is not None else set()
+            in_period = len(items)
+            items = [i for i in items if i.case_id not in known]
+            reused = in_period - len(items)
             candidates = [i for i in items if relevance.is_candidate(i)]
+            logger.info("Period %s..%s: %d judgement(s) already triaged, %d to score", key[0], key[1], reused, len(candidates))
             with self._lock:
                 self._jobs[key].update({
                     "stage": "triaging",
@@ -246,7 +297,7 @@ class PeriodTriageManager:
                     "status": "done",
                     "stage": "done",
                     "completed": self._jobs[key]["total"],
-                    "message": f"{len(payload)} Urteile bereit.",
+                    "message": f"{len(payload)} Urteile neu bewertet, {reused} bereits vorhanden.",
                 })
         except Exception as exc:
             logger.exception("Period job failed for %s..%s", *key)

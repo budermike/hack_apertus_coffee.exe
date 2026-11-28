@@ -237,3 +237,125 @@ def test_failed_crawl_days_and_today_are_never_marked_covered(tmp_path):
         assert mgr.covers("2026-07-01", "2026-07-03") is False
     finally:
         mgr.stop()
+
+
+# ---------- overlapping periods (#96) ----------
+
+from hack_apertus_coffee_exe.present.period_jobs import merge_intervals, reusable_row  # noqa: E402
+
+
+def test_merge_intervals_joins_overlapping_and_adjacent_ranges():
+    assert merge_intervals([["2026-03-16", "2026-03-31"], ["2026-03-01", "2026-03-15"]]) == [["2026-03-01", "2026-03-31"]]
+    assert merge_intervals([["2026-04-01", "2026-06-30"], ["2026-03-01", "2026-04-10"]]) == [["2026-03-01", "2026-06-30"]]
+    assert merge_intervals([["2026-03-01", "2026-03-10"], ["2026-03-12", "2026-03-20"]]) == [
+        ["2026-03-01", "2026-03-10"], ["2026-03-12", "2026-03-20"],     # a one-day gap stays a gap
+    ]
+    assert merge_intervals([["2026-03-05", "2026-03-01"], ["x", "2026-03-01"], ["2026-03-01"], None]) == []
+    assert merge_intervals([]) == merge_intervals(None) == []
+
+
+def _row(case_id, day, p, area="UV", score=70.0):
+    return {
+        "case_id": case_id, "final_score": score, "rank_score": score, "judgement_date": day, "ampel": "gruen",
+        "metadata": {"case_ids": [case_id], "decision_date": day, "subject": "Unfallversicherung",
+                     "relevance": {"p": p, "threshold": 0.07, "area": area}},
+    }
+
+
+def test_reusable_row_keeps_scored_rows_and_rescores_failed_ones():
+    assert reusable_row(_row("8C_1/2026", "2026-07-01", 0.4)) is True
+    assert reusable_row(_row("8C_2/2026", "2026-07-01", None, area="UV")) is False   # the Apertus call failed
+    assert reusable_row(_row("8C_3/2026", "2026-07-01", None, area="KV")) is True    # never goes to Apertus
+    assert reusable_row({"case_id": "8C_4/2026", "metadata": {}}) is False             # older output without relevance
+
+
+def test_covers_uses_the_union_of_loaded_periods_and_the_primary_file(tmp_path):
+    store_dir = tmp_path / "periods"
+    store_dir.mkdir()
+    (store_dir / "_covered.json").write_text(json.dumps([["2026-03-16", "2026-03-31"], ["2026-03-01", "2026-03-15"]]))
+    primary = _write_triage(tmp_path / "triage.json", [_row("8C_1/2026", "2026-04-01", 0.4), _row("8C_2/2026", "2026-06-30", 0.4)])
+    jl = JudgementList(primary, config=TriageConfig(), extra_triage_dir=store_dir)
+    mgr = PeriodTriageManager(raw_dir=tmp_path / "raw", store_dir=store_dir, judgements=jl, ensure_fn=Mock())
+    try:
+        assert mgr.covers("2026-03-01", "2026-03-31") is True       # two halves
+        assert mgr.covers("2026-03-01", "2026-06-30") is True       # March + the primary file
+        assert mgr.covers("2026-02-28", "2026-03-31") is False
+        mgr._mark_covered("2026-07-01", "2026-07-07")
+        mgr._mark_covered("2026-07-08", "2026-07-10")
+        assert json.loads((store_dir / "_covered.json").read_text()) == [["2026-03-01", "2026-03-31"], ["2026-07-01", "2026-07-10"]]
+    finally:
+        mgr.stop()
+
+
+def _raw(raw_dir, case_id, day):
+    record = {
+        "id": case_id.replace("/", "_"), "case_id": case_id, "case_ids": [case_id], "decision_date": day,
+        "subject": "Unfallversicherung (Kausalzusammenhang)", "language": "de", "url": "https://search.bger.ch/x",
+        "text": "IV. öffentlich-rechtliche Abteilung\nErwägungen:\n1. Die Suva lehnte ab.\n"
+                "Demnach erkennt das Bundesgericht:\n1. Die Beschwerde wird abgewiesen.",
+    }
+    month = raw_dir / day[:7]
+    month.mkdir(parents=True, exist_ok=True)
+    (month / f"{day}_{case_id.replace('/', '_')}.json").write_text(json.dumps(record), encoding="utf-8")
+
+
+class CountingClient:
+    """Fake Apertus: records which judgements it was asked about."""
+
+    model = "apertus-v1-5-70b"
+    asked: list[str] = []
+
+    def call(self, stage, key, system, user, schema, max_tokens):
+        CountingClient.asked.append(next(c for c in ("8C_500/2026", "8C_501/2026", "8C_502/2026") if c in user))
+        if stage == "triage":
+            return {"a_rechtsfrage": "Kausalzusammenhang?", "b_kriterien": [], "c_begruendung": "UVG-Fall.", "d_score": 82}
+        return {"a_grundsatz": 2, "b_nutzen_uv": 3, "c_korrektur": False, "d_merksatz": "Merke.", "e_score": 80}
+
+
+def _run_job(mgr, date_from, date_to):
+    mgr.ensure_async(date_from, date_to)
+    deadline = time.monotonic() + 3.0
+    while time.monotonic() < deadline:
+        cur = mgr.status(date_from, date_to)
+        if cur["status"] != "running":
+            return cur
+        time.sleep(0.02)
+    return cur
+
+
+def test_overlapping_period_reuses_triaged_judgements_and_rescores_failed_ones(tmp_path):
+    raw_dir, store_dir = tmp_path / "raw", tmp_path / "periods"
+    for case_id, day in (("8C_500/2026", "2026-07-01"), ("8C_501/2026", "2026-07-02"), ("8C_502/2026", "2026-07-03")):
+        _raw(raw_dir, case_id, day)
+    primary = _write_triage(tmp_path / "triage.json", [
+        _row("8C_500/2026", "2026-07-01", 0.4, score=71.5),   # already triaged: shown as it is
+        _row("8C_502/2026", "2026-07-03", None),               # Apertus failed on it: scored again
+    ])
+    jl = JudgementList(primary, config=TriageConfig(), crawl_dir=raw_dir, extra_triage_dir=store_dir)
+    CountingClient.asked = []
+    mgr = PeriodTriageManager(raw_dir=raw_dir, store_dir=store_dir, judgements=jl,
+                              ensure_fn=lambda *a, **kw: None, client_factory=CountingClient)
+    try:
+        cur = _run_job(mgr, "2026-06-25", "2026-07-05")
+        assert cur["status"] == "done" and "1 bereits vorhanden" in cur["message"]
+        assert "8C_500/2026" not in CountingClient.asked
+        assert set(CountingClient.asked) == {"8C_501/2026", "8C_502/2026"}
+        stored = json.loads((store_dir / "2026-06-25_2026-07-05.json").read_text(encoding="utf-8"))
+        assert sorted(r["case_id"] for r in stored) == ["8C_501/2026", "8C_502/2026"]   # only what was scored now
+        items = {i["caseNumber"]: i for i in jl.items("2026-06-25", "2026-07-05")}
+        assert set(items) == {"8C_500/2026", "8C_501/2026", "8C_502/2026"}
+        assert items["8C_500/2026"]["score"] == 71.5
+    finally:
+        mgr.stop()
+
+
+def test_a_period_file_never_replaces_a_judgement_of_the_primary_file(tmp_path):
+    store_dir = tmp_path / "periods"
+    store_dir.mkdir()
+    primary = _write_triage(tmp_path / "triage.json", [_row("8C_676/2025", "2026-06-10", 0.05, score=36.0)])
+    _write_triage(store_dir / "2026-06-01_2026-07-07.json", [
+        _row("8C_676/2025", "2026-06-10", 0.09, score=60.8),     # a second Apertus run of the same judgement
+        _row("8C_900/2026", "2026-07-02", 0.2, score=75.0),      # new: added
+    ])
+    items = {i["caseNumber"]: i for i in JudgementList(primary, config=TriageConfig(), extra_triage_dir=store_dir).items()}
+    assert items["8C_676/2025"]["score"] == 36.0 and items["8C_900/2026"]["score"] == 75.0

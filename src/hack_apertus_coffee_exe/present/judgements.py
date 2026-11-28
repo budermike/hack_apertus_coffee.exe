@@ -404,11 +404,14 @@ class JudgementList:
                 if not isinstance(data, list):
                     raise ValueError(f"{self.triage_path}: expected a JSON list of triage results")
                 by_id: dict[str, dict[str, Any]] = {r["case_id"]: r for r in data if isinstance(r, dict) and r.get("case_id")}
+                primary_ids = set(by_id)
                 for extra_path in extra_files:
                     extra = json.loads(extra_path.read_text(encoding="utf-8"))
                     if isinstance(extra, list):
                         for row in extra:
-                            if isinstance(row, dict) and row.get("case_id"):
+                            # the primary file is the evaluated run: a period file may add judgements,
+                            # never replace one of it (#96)
+                            if isinstance(row, dict) and row.get("case_id") and row["case_id"] not in primary_ids:
                                 by_id[row["case_id"]] = row
                 self._primary_rows = [r for r in data if isinstance(r, dict) and r.get("case_id")]
                 self._rows = list(by_id.values())
