@@ -101,7 +101,8 @@ class Backend:
 
         If only one language was changed, Apertus brings the other language in line with
         it and that text is saved too, so both keep saying the same (``"align": false`` in
-        the body switches this off). Apertus never overwrites what a lawyer typed: a language
+        the body switches this off). The changed text is authoritative: the other language
+        is rewritten to say exactly what it says (``prompts.ALIGN_SYSTEM``). Apertus never overwrites what a lawyer typed: a language
         that was edited by hand stays as it is. When Apertus cannot do it (no key, gateway
         down), the edit is saved anyway. ``alignment`` in the answer says what happened:
         ``null`` (nothing to align), ``{lang, ok: true}`` or
@@ -144,13 +145,15 @@ class Backend:
             return {"lang": target, "ok": False, "reason": "edited_by_hand"}
         try:
             summarizer = self.get_summarizer()
+            # The lawyer's text is what counts: no facts of the judgement are passed, so
+            # Apertus cannot "correct" the edit back to what the judgement says.
             aligned = summarizer.align_language(
                 target_lang=target,
                 target_text=target_text,
                 source_lang=source,
                 source_text=source_text,
                 instruction=None,
-                facts=(entry.get("facts") or {}).get(target) or None,
+                facts=None,
             )
         except ValueError as exc:  # our own message, e.g. no gateway key set
             logger.warning("Could not align %s (%s) after an edit: %s", case_number, target, exc)
