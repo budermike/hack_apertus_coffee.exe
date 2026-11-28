@@ -119,9 +119,37 @@ def write_system(language: str, prompts_dir: Path = PROMPTS_DIR) -> str:
     return WRITE_SYSTEM[language].format(style=style(language, prompts_dir), glossary=glossary(prompts_dir))
 
 
+ALIGN_SYSTEM = {
+    "de": """\
+Du bist Juristin / Jurist im Rechtsdienst der Suva und überarbeitest eine deutsche Urteilszusammenfassung.
+
+Wichtige Regeln:
+1. Wenn eine geänderte Vorlage in der anderen Sprache mitgegeben wird, ist diese geänderte Vorlage MASSGEBEND: Übernimm alle inhaltlichen Änderungen, Ergänzungen, Kürzungen, Bewertungen und Streichungen 1:1 ins Deutsche (gleicher Umfang, gleiche Aussagen). Behalte nichts aus der alten deutschen Fassung bei, was in der geänderten Vorlage gestrichen oder ersetzt wurde.
+2. Wenn eine ausdrückliche Anweisung mitgegeben wird, setze diese Anweisung direkt und vollständig um.
+3. Verwende korrekte Schweizer Rechtsterminologie im Suva-Stil:
+{glossary}
+
+Ausgabe: ausschliesslich der überarbeitete deutsche Text (ohne Titel, ohne Vorbemerkung, ohne Erklärungen).
+""",
+    "fr": """\
+Tu es juriste au service juridique de la Suva et tu adaptes un résumé d'arrêt en français juridique suisse.
+
+Règles impératives :
+1. Lorsqu'une version modifiée dans l'autre langue est fournie, cette version modifiée FAIT FOI : reprends fidèlement tous les ajouts, raccourcissements, reformulations, appréciations et suppressions (même longueur et même contenu). Ne conserve aucun passage de l'ancienne version française qui a été supprimé ou remplacé dans la version modifiée.
+2. Lorsqu'une instruction explicite est donnée, applique-la directement et intégralement.
+3. Respecte la terminologie juridique romande de la Suva :
+{glossary}
+
+Sortie : uniquement le texte français révisé (sans titre, sans préambule ni commentaire).
+""",
+}
+
+
 def align_system(language: str, prompts_dir: Path = PROMPTS_DIR) -> str:
     """System prompt for adapting/refining one summary language in Suva style (#65)."""
-    return write_system(language, prompts_dir)
+    if language not in ALIGN_SYSTEM:
+        raise ValueError(f"language must be 'de' or 'fr', got {language!r}")
+    return ALIGN_SYSTEM[language].format(glossary=glossary(prompts_dir))
 
 
 def align_user(
@@ -137,26 +165,41 @@ def align_user(
     if target_language not in _LABELS:
         raise ValueError(f"language must be 'de' or 'fr', got {target_language!r}")
     blocks: list[str] = []
+    has_source = bool(source_text and source_text.strip() and source_language)
     if target_language == "de":
-        blocks.append("Überarbeite die bestehende deutsche Zusammenfassung nach den folgenden Vorgaben.")
-        if source_text and source_language:
-            blocks.append(f"Geänderte Fassung ({source_language.upper()}), an die angeglichen werden soll:\n{source_text}")
-        if instruction:
-            blocks.append(f"Gewünschte Anpassung:\n{instruction}")
-        if facts:
-            blocks.append(f"Verbindliche Fakten aus dem Urteil (nichts hinzuerfinden):\n{json.dumps(facts, ensure_ascii=False, indent=2)}")
-        blocks.append(f"Bisherige deutsche Fassung:\n{target_text}")
-        blocks.append("Gib ausschliesslich die überarbeitete deutsche Zusammenfassung ohne Titel zurück.")
+        if has_source:
+            blocks.append(
+                f"Massgebende geänderte Fassung ({source_language.upper()}), an die der deutsche Text 1:1 angeglichen werden muss:\n{source_text.strip()}"
+            )
+            if instruction:
+                blocks.append(f"Zusätzliche Anweisung:\n{instruction.strip()}")
+            blocks.append(f"Bisherige deutsche Fassung (nur als sprachliche Referenz für unveränderte Stellen):\n{target_text.strip()}")
+            blocks.append("Schreibe jetzt ausschliesslich die angeglichene deutsche Fassung (ohne Titel).")
+        else:
+            blocks.append("Überarbeite die bestehende deutsche Zusammenfassung strikt gemäss der folgenden Anweisung.")
+            if instruction:
+                blocks.append(f"Anweisung:\n{instruction.strip()}")
+            if facts:
+                blocks.append(f"Fakten aus dem Urteil (nichts hinzuerfinden):\n{json.dumps(facts, ensure_ascii=False, indent=2)}")
+            blocks.append(f"Bisherige deutsche Fassung:\n{target_text.strip()}")
+            blocks.append("Gib ausschliesslich die überarbeitete deutsche Zusammenfassung ohne Titel zurück.")
     else:
-        blocks.append("Adapte le résumé français existant selon les indications suivantes.")
-        if source_text and source_language:
-            blocks.append(f"Version modifiée ({source_language.upper()}) avec laquelle harmoniser le texte :\n{source_text}")
-        if instruction:
-            blocks.append(f"Ajustement demandé :\n{instruction}")
-        if facts:
-            blocks.append(f"Faits établis dans l'arrêt (ne rien inventer) :\n{json.dumps(facts, ensure_ascii=False, indent=2)}")
-        blocks.append(f"Version française actuelle :\n{target_text}")
-        blocks.append("Retourne uniquement le résumé français révisé, sans titre.")
+        if has_source:
+            blocks.append(
+                f"Version modifiée faisant foi ({source_language.upper()}), sur laquelle aligner intégralement le texte français :\n{source_text.strip()}"
+            )
+            if instruction:
+                blocks.append(f"Instruction complémentaire :\n{instruction.strip()}")
+            blocks.append(f"Ancienne version française (uniquement comme repère terminologique pour les passages inchangés) :\n{target_text.strip()}")
+            blocks.append("Rédige maintenant uniquement la version française alignée (sans titre).")
+        else:
+            blocks.append("Révise le résumé français existant strictement selon l'instruction ci-dessous.")
+            if instruction:
+                blocks.append(f"Instruction :\n{instruction.strip()}")
+            if facts:
+                blocks.append(f"Faits établis dans l'arrêt (ne rien inventer) :\n{json.dumps(facts, ensure_ascii=False, indent=2)}")
+            blocks.append(f"Version française actuelle :\n{target_text.strip()}")
+            blocks.append("Retourne uniquement le résumé français révisé, sans titre.")
     return "\n\n".join(blocks)
 
 
