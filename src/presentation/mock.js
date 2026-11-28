@@ -192,6 +192,7 @@ const mockBackend = (() => {
             const entry = {
                 id: j.id, caseNumber: j.caseNumber, date: j.date, url: "#", area: j.area, subject: j.subject,
                 de: MOCK_SUMMARY.de(j), fr: MOCK_SUMMARY.fr(j),
+                status: { de: "generated", fr: "generated" }, model: { de: "mock", fr: "mock" },
                 storedAt: new Date().toISOString(),
             };
             const data = db.load();   // re-read: parallel calls may have written meanwhile
@@ -200,12 +201,22 @@ const mockBackend = (() => {
             return entry;
         },
 
-        /** PUT /judgements/{id}/summary — the mock has no approval step, the edit is shown at once */
+        /** PUT /judgements/{id}/summary — the mock has no approval step, the edit is shown at once.
+         *  As in the backend, only a language whose text changed becomes a human version. */
         async saveSummary(id, texts) {
             await delay(300);
             const data = db.load();
-            if (!data.kb[id]) throw new Error("not in database");
-            data.kb[id] = { ...data.kb[id], de: texts.de, fr: texts.fr, editedAt: new Date().toISOString() };
+            const entry = data.kb[id];
+            if (!entry) throw new Error("not in database");
+            const status = { ...entry.status };
+            const model = { ...entry.model };
+            for (const lang of ["de", "fr"]) {
+                if (texts[lang] !== entry[lang]) {
+                    status[lang] = "approved";
+                    model[lang] = "human";
+                }
+            }
+            data.kb[id] = { ...entry, de: texts.de, fr: texts.fr, status, model, editedAt: new Date().toISOString() };
             db.save(data);
             return data.kb[id];
         },

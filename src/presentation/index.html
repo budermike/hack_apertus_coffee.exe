@@ -11,6 +11,7 @@
     </script>
     <script src="i18n.js" defer></script>
     <script src="datepicker.js" defer></script>
+    <script src="splitter.js" defer></script>
     <script src="mock.js" defer></script>
     <script src="api.js" defer></script>
     <script src="script.js" defer></script>
@@ -20,7 +21,6 @@
         <div class="top">
             <h1 data-i18n="appTitle">Urteilsradar</h1>
             <span id="mock-badge" class="tag warn" hidden data-i18n="mockBadge" data-i18n-attr="title:mockBadgeHint">Demo-Daten</span>
-            <p id="sum-line" class="tagline" aria-live="polite"></p>
             <div class="lang-switch" role="group" data-i18n-attr="aria-label:language">
                 <button type="button" data-lang="de">DE</button><button type="button" data-lang="fr">FR</button>
             </div>
@@ -71,7 +71,6 @@
                         <input id="filter-text" type="search" autocomplete="off"
                                data-i18n-attr="placeholder:filterText;aria-label:filterText">
                         <div id="filter-level" class="seg" role="group" data-i18n-attr="aria-label:filterLevel"></div>
-                        <select id="filter-area" data-i18n-attr="aria-label:filterArea"></select>
                         <span class="filter-label" data-i18n="relevance">Relevanz</span>
                         <input id="filter-min" type="text" class="num" inputmode="numeric" maxlength="3" autocomplete="off" value="0"
                                data-i18n-attr="aria-label:filterMin">
@@ -79,7 +78,6 @@
                         <input id="filter-max" type="text" class="num" inputmode="numeric" maxlength="3" autocomplete="off" value="100"
                                data-i18n-attr="aria-label:filterMax">
                         <button id="filter-reset" type="button" class="btn" data-i18n="resetFilters">Zurücksetzen</button>
-                        <button id="summarize-checked" type="button" class="btn pri" hidden></button>
                         <span id="results-count" class="sub results-count"></span>
                     </div>
                     <div class="scroll">
@@ -90,6 +88,10 @@
                         <p id="results-status" class="empty"></p>
                     </div>
                 </section>
+                <!-- drag (or arrow keys) to change the detail width; double-click: default -->
+                <div id="split-handle" class="split-handle" role="separator" aria-orientation="vertical"
+                     aria-controls="detail-pane" tabindex="0" hidden
+                     data-i18n-attr="aria-label:resizeDetail;title:resizeDetail"></div>
                 <section id="detail-pane" class="detailpane scroll" hidden>
                     <article id="detail" class="detail"></article>
                 </section>
