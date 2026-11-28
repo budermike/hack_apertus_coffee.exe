@@ -38,6 +38,9 @@ never replaces a valid row of the primary file; a period job asks Apertus only a
 judgements without a valid relevance value, #96), and the lawyers' relevance decisions are learned
 from (`triage/feedback_learning.py`): one correction per legal area and criterion on top
 of the unchanged calibration, so judgements similar to a decided one move with it. The
+decided judgement itself is clamped by `feedback_learning.apply_decision`: «relevant» =
+at least `green_threshold`, «nicht relevant» = below `yellow_threshold` (the UI applies
+the same rule at once, before the server answers). The
 files in `results/` are never changed by that.
 
 ## Components

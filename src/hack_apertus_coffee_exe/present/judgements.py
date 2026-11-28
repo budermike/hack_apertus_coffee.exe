@@ -12,7 +12,9 @@ UI item (``GET /api/judgements``)::
      topics, question: {de, fr}, rule: {de, fr}, criteria: [{id, at, quote, status}],
      similarCases, ampel, rank, scored}
 
-Lawyer feedback (#64): ``userLevel`` is the lawyer's own decision on this judgement. With a
+Lawyer feedback (#64): ``userLevel`` is the lawyer's own decision on this judgement, and it is
+final for it: ``score`` is then at least the green threshold ("high") or below the yellow one
+("low"), ``ampel`` follows (``feedback_learning.apply_decision``). With a
 ``learner`` (``triage.feedback_learning``, the way the server runs) the decisions are training
 examples: ``score`` is the relevance after learning from all of them, ``baseScore`` the stored
 one, and ``adjustment`` is always 0 (nothing is added to a single score any more). Without a
@@ -34,6 +36,7 @@ from typing import Any, Callable, Iterable
 from ..summary.judgement import load_judgements, operative_outcome
 from ..triage import calibration
 from ..triage.config import TriageConfig, load_config
+from ..triage.feedback_learning import apply_decision
 from ..triage.date_filter import DateRange
 
 logger = logging.getLogger(__name__)
@@ -220,6 +223,7 @@ def to_ui_item(
     selected_ids: set[str] | None = None,
     fr_cache: dict[str, dict[str, str]] | None = None,
     learned: Any | None = None,
+    config: TriageConfig | None = None,
     subject_lookup: Callable[[str], str | None] | None = None,
 ) -> dict[str, Any]:
     """One triage result -> one UI list item."""
@@ -285,6 +289,11 @@ def to_ui_item(
         item["caseIds"] = [str(x) for x in case_ids if isinstance(x, str)]
     if isinstance(feedback, dict) and feedback.get("userLevel") in ("high", "low"):
         item["userLevel"] = feedback["userLevel"]
+        # The decision is final for this judgement: relevant = at least green, not relevant = red.
+        # Learning (above) moves the judgements that resemble it; baseScore keeps the stored value.
+        green, yellow = (config.green_threshold, config.yellow_threshold) if config else (60.0, 40.0)
+        item["score"] = round(apply_decision(item["score"], feedback["userLevel"] == "high", green, yellow), 1)
+        item["ampel"] = "gruen" if item["score"] >= green else "rot"
     if isinstance(rel, dict) and "p" in rel:
         # False: Apertus gave this judgement no relevance value (area outside the scoring, or a
         # failed call). A lawyer's decision on it stands, but there is nothing to learn from.
@@ -738,6 +747,7 @@ class JudgementList:
                     selected_ids=self.selected_ids,
                     fr_cache=fr_cache,
                     learned=learned,
+                    config=self.config,
                     subject_lookup=self.subject_for if has_crawl or self._subjects else None,
                 )
             )
