@@ -1,5 +1,38 @@
 # Hack Apertus Zurich — Challenge Partner: Suva
 
+## Our solution: Urteilsradar (Team Coffee.exe)
+
+The Federal Supreme Court publishes about 2000 judgements per quarter; Suva's legal specialists need the roughly 30 that matter for accident insurance, summarised in German and French. **Urteilsradar** fetches the judgements, lets **Apertus v1.5** score every candidate in two passes and explain the score with quotes from the judgement, writes the summaries in Suva's style in both languages, and shows everything in a web interface where lawyers search, read, correct and decide.
+
+- Measured on the two quarters with a known Suva selection, always with the calibration of the other quarter: 49 of 59 selected judgements found at the F2-optimal threshold, 59 of 59 at the shipped setting (longer list). Details and limits: [`technical_report.md`](technical_report.md).
+- How it is built: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md). Every model used: [`docs/MODELS.md`](docs/MODELS.md). Decisions: [`docs/DECISIONS.md`](docs/DECISIONS.md).
+- Demo video and pitch deck: linked in `technical_report.md` and the submission form.
+
+### Run it
+
+Python 3.13. The environment variables are the ones named under [Environment](#environment): `LLM_NAME`, `LLM_BASE_URL`, `LLM_API_KEY`.
+
+```
+python3 -m venv .venv && source .venv/bin/activate
+pip install -r requirements-dev.txt
+cp .env.example .env            # set LLM_API_KEY
+pytest                          # unit tests, no network
+python src/keera_example.py     # one test call to the Apertus gateway
+
+# web application on the shipped results for Q2/2026: http://127.0.0.1:8000
+python -m hack_apertus_coffee_exe.summary.api --static src/presentation --triage results/triage_q2_2026.json
+```
+
+Enter 01.04.2026 to 30.06.2026 as period and search. Judgements on the list are summarised automatically (this calls Apertus); without a key the list, the reasons and the stored texts still work. In a container: `docker compose up --build`, see [Deployment](#deployment).
+
+The pipeline from scratch (several hours of Apertus calls):
+
+```
+python -m hack_apertus_coffee_exe.crawl.ensure --from 2026-04-01 --to 2026-06-30
+python -m hack_apertus_coffee_exe.triage.cli relevance --period 2026-Q2 --output results/triage_q2_2026.json
+python -m hack_apertus_coffee_exe.summary.run batch --triage results/triage_q2_2026.json
+```
+
 ## 🎯 The Challenge
 
 ### Identification of relevant Federal Court judgements and preparation of a legal summary
@@ -37,6 +70,16 @@ Keep the files and directories as shown below — don't rename or move them.
 | `challenge_description.md` | Complete Challenge description incl. deliverables 
 | `LICENSE` | Apache-2.0 |
 | `src/` | Your code |
+| `src/hack_apertus_coffee_exe/` | The Python package: `crawl/`, `triage/`, `summary/`, `present/`, `eval/` |
+| `src/presentation/` | The web interface (plain JavaScript, served by the backend) |
+| `configs/` | Settings: paths, crawl source, thresholds |
+| `prompts/` | Style profiles and glossary for the summaries |
+| `judgements/` | Suva's example summaries and selection lists (reference data of the challenge partner) |
+| `data/` | `raw/`: fetched judgements; `processed/`: Vector-DB, caches, summaries database |
+| `results/` | Scores, lists, evaluation tables and reports |
+| `tests/` | Unit tests (no network) |
+| `docs/` | Architecture, model register, decisions, schema, audit |
+| `Dockerfile`, `docker-compose.yml` | Container for backend and web interface |
 
 ## Environment
 
@@ -76,7 +119,7 @@ The submission must:
 
 ## Getting started
 
-1. Click **Use this template** to create your own repository.
+See [Run it](#run-it) at the top of this file; the same instructions with the commands for the evaluation are in section 6 of [`technical_report.md`](technical_report.md).
 
 ## Deployment
 
