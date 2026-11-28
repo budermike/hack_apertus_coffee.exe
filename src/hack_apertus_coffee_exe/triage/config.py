@@ -35,8 +35,15 @@ class TriageConfig:
     recall_top_n: int = 30
     export_dir: str = "results"
     cache_dir: str = "data/processed/triage"
+    # Relevance scoring (`triage.cli relevance`, docs/ISSUE_RECALL.md): quarters whose Suva
+    # selection is known, and the multiplier on the F2 threshold (below 1 = longer list, higher recall).
+    label_periods: tuple[str, ...] = ("2025-Q4", "2026-Q1")
+    list_factor: float = 0.3
 
     def __post_init__(self) -> None:
+        object.__setattr__(self, "label_periods", tuple(self.label_periods))
+        if not 0.0 < self.list_factor <= 1.5:
+            raise ValueError("list_factor must be between 0 and 1.5")
         if self.rank_by not in ("final_score", "cosine_score"):
             raise ValueError(f"rank_by must be 'final_score' or 'cosine_score', got {self.rank_by!r}")
         if not 0.0 <= self.llm_weight <= 1.0:

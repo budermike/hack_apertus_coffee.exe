@@ -5,6 +5,8 @@
 
     # all green judgements of a triage run
     python -m hack_apertus_coffee_exe.summary.run batch --triage results/triage.json --input data/raw
+    # ... or of the relevance scoring for the Suva list (triage.cli relevance, docs/ISSUE_RECALL.md)
+    python -m hack_apertus_coffee_exe.summary.run batch --triage results/triage_q2_2026.json --input data/raw
 
     # print what is stored
     python -m hack_apertus_coffee_exe.summary.run show --case 8C_901/2026

@@ -23,6 +23,10 @@
  *        Mapping from the triage output (see ../triage-README.md):
  *          caseNumber = case_id, date = judgement_date, lang = language, score = final_score,
  *          explanation = relevance_reason, similarCases = similar_cases.
+ *        The relevance scoring (`triage.cli relevance`, results/triage_<period>.json) also fills
+ *        metadata.relevance: area, outcome, question, rule and criteria
+ *        [{a_id, b_stelle, c_zitat, beleg_status}] = criteria [{id, at, quote, status}].
+ *        Its score is already on this 0..100 scale: 60 and above = on the Suva list.
  *
  *   POST {API_BASE}/judgements/{id}/summary
  *        -> { id, caseNumber, date, area, subject: {de, fr}, de, fr, storedAt }
