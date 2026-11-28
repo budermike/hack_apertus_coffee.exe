@@ -33,7 +33,9 @@ the embedding model (`EMBEDDING_MODEL`, open weights) runs locally.
 
 Two things happen when the list is served, not when it is scored (`present/judgements.py`):
 the stored triage results are read from `results/triage_<period>.json` and
-`data/processed/triage_periods/*.json`, and the lawyers' relevance decisions are learned
+`data/processed/triage_periods/*.json` (a period file adds judgements and re-scores failed ones but
+never replaces a valid row of the primary file; a period job asks Apertus only about
+judgements without a valid relevance value, #96), and the lawyers' relevance decisions are learned
 from (`triage/feedback_learning.py`): one correction per legal area and criterion on top
 of the unchanged calibration, so judgements similar to a decided one move with it. The
 files in `results/` are never changed by that.
