@@ -45,7 +45,7 @@ CALL_TIMEOUT = 60    # seconds per Apertus call: a lawyer is waiting for the sav
 # A full stop after one of these does not end a sentence («Art. 6», «consid. 4.2», «al. 2»).
 _ABBREVIATIONS = frozenset(
     "art abs al lit let ziff ch nr no e erw consid cons vgl cf bzw resp ca env s ss ff p pp inkl sog evtl ggf "
-    "dr prof st rz n bge atf sr rs chf z b u a d h i v m c par".split()
+    "dr med prof st rz n bge atf sr rs chf z b u a d h i v m c par dres iur lic phil dipl eidg".split()
 )
 
 _SENTENCE_END_RE = re.compile(r"[.!?][»“”\")\]]*(\s+)")

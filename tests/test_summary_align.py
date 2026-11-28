@@ -65,6 +65,7 @@ def test_split_sentences_keeps_abbreviations_together_and_loses_nothing():
     assert parts[1][1] == "\n\n"
     assert "".join(sentence + gap for sentence, gap in parts) == DE
     assert len(align.split_sentences("Vgl. Art. 4 ATSG und E. 3.1. Am 12. März 2025 entschied B.________ anders.")) == 2
+    assert len(align.split_sentences("Das Gutachten des Dr. med. D.________ vom 25. Juni 2025 ist beweiskräftig. Darauf ist abzustellen.")) == 2
     # a year or an amount at the end of a sentence ends it; an abbreviation of a statute too
     french = "L'accident est survenu le 3 mai 2021. La Suva a nié son obligation de prester. Voir l'art. 29 al. 2 Cst. Le recours est rejeté."
     assert [sentence[:10] for sentence, _ in align.split_sentences(french)] == ["L'accident", "La Suva a ", "Voir l'art", "Le recours"]
