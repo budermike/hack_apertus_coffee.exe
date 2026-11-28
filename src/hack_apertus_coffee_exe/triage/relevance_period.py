@@ -105,12 +105,12 @@ def precedent_pool(
     return build_pool(items, effective_selected, summaries)
 
 
-def _load_feedback_overrides() -> dict[str, bool]:
+def _load_feedback_overrides(db_path: str | Path | None = None) -> dict[str, bool]:
     """Latest lawyer relevance decisions from the summaries DB (#64), fail-safe if no DB exists."""
     try:
         from ..summary import store
 
-        path = store.db_path_from_env()
+        path = Path(db_path) if db_path is not None else store.db_path_from_env()
         if not path.exists():
             return {}
         with closing(store.connect(path)) as conn:
@@ -183,7 +183,15 @@ def to_results(
     for rank, (score, p, record, ampel) in enumerate(scored, start=1):
         triage, deep = record.get("triage") or {}, record.get("deep") or {}
         item = (items or {}).get(record["case_id"])
-        metadata = dict(item.metadata) if item else {k: record[k] for k in ("case_ids", "decision_date", "subject")}
+        metadata = (
+            dict(item.metadata)
+            if item
+            else {
+                "case_ids": record.get("case_ids") or [record["case_id"]],
+                "decision_date": record.get("decision_date"),
+                "subject": record.get("subject"),
+            }
+        )
         metadata["relevance"] = {
             "p": p, "threshold": round(t_list, 4), "yellow_threshold": round(t_yellow, 4), "area": record["area"], "outcome": record.get("outcome"),
             "question": triage.get("a_rechtsfrage"), "criteria": triage.get("b_kriterien", []),
