@@ -147,9 +147,10 @@ const I18N = {
         pendingLegacy: "Frühere Bearbeitung, noch nicht übernommen: «Speichern» übernimmt sie, «Zurücksetzen» verwirft sie.",
         alignPromptTitle: (target) => `${target === "de" ? "Deutsche" : "Französische"} Fassung inhaltlich angleichen?`,
         alignPromptBody: (source, target) =>
-            `Sie haben die ${source === "de" ? "deutsche" : "französische"} Fassung geändert. Soll Apertus die inhaltlichen `
-            + `Änderungen in die ${target === "de" ? "deutsche" : "französische"} Fassung übertragen? Es wird nicht übersetzt: `
-            + "Nur die betroffenen Sätze werden angepasst, alles andere bleibt wörtlich stehen. Der Urteilstext dient als Referenz.",
+            `Sie haben die ${source === "de" ? "deutsche" : "französische"} Fassung geändert. Soll Apertus die `
+            + `${target === "de" ? "deutsche" : "französische"} Fassung daran angleichen? Eine kleine Änderung innerhalb eines Satzes `
+            + "wird nur an dieser Stelle übertragen. Wurden Sätze gestrichen oder ergänzt, schreibt Apertus die andere Fassung neu, "
+            + "so dass sie dasselbe sagt wie Ihre.",
         alignApply: "Mit Apertus angleichen",
         alignKeep: "Nein, nur speichern",
         cancel: "Abbrechen",
@@ -352,9 +353,10 @@ const I18N = {
         pendingLegacy: "Modification antérieure pas encore reprise : « Enregistrer » la reprend, « Réinitialiser » la supprime.",
         alignPromptTitle: (target) => `Aligner le contenu de la version ${target === "de" ? "allemande" : "française"} ?`,
         alignPromptBody: (source, target) =>
-            `Vous avez modifié la version ${source === "de" ? "allemande" : "française"}. Apertus doit-il reporter les changements `
-            + `de fond dans la version ${target === "de" ? "allemande" : "française"} ? Il ne traduit pas : seules les phrases `
-            + "concernées sont adaptées, tout le reste demeure mot pour mot. Le texte de l'arrêt sert de référence.",
+            `Vous avez modifié la version ${source === "de" ? "allemande" : "française"}. Apertus doit-il aligner la version `
+            + `${target === "de" ? "allemande" : "française"} ? Une petite modification à l'intérieur d'une phrase n'est reportée `
+            + "qu'à cet endroit. Si des phrases ont été supprimées ou ajoutées, Apertus réécrit l'autre version "
+            + "pour qu'elle dise la même chose que la vôtre.",
         alignApply: "Aligner avec Apertus",
         alignKeep: "Non, enregistrer seulement",
         cancel: "Annuler",

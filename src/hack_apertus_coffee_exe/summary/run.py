@@ -151,6 +151,9 @@ def summarizer_factory(
 
             chosen = model or env(SUMMARY_MODEL_ENV, default=DEFAULT_SUMMARY_MODEL)
             llm = SummaryLLM(config=GatewayConfig.from_env(model=chosen), timeout=300)
+            # Carrying an edit over to the other language: the same model, but a lawyer is waiting
+            # for the save, so a hanging call ends after a minute and is tried once more only.
+            align_llm = SummaryLLM(config=GatewayConfig.from_env(model=chosen), timeout=60, max_retries=1)
             if pipeline == "v1":
                 from .examples import ExampleSelector
                 from .generate import SummarizerV1
@@ -161,6 +164,7 @@ def summarizer_factory(
                 from .generate import Summarizer
 
                 cache["s"] = Summarizer(llm, StyleExamples(load_reference_corpus(judgements_dir)))
+            cache["s"].align_llm = align_llm
         return cache["s"]
 
     return factory

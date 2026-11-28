@@ -49,7 +49,7 @@ from urllib.parse import parse_qs, unquote, urlparse
 
 from dotenv import load_dotenv
 
-from ..config import load_paths
+from ..config import env, load_paths
 from ..present.evaluation import evaluation_response
 from ..present.judgements import JudgementList, config_response, list_response, parse_feedback_body
 from ..present.period_jobs import PeriodTriageManager
@@ -63,6 +63,12 @@ from .queue import SummaryQueue
 from .run import summarize_case, summarizer_factory
 
 logger = logging.getLogger(__name__)
+
+
+def ALIGN_CHECK_ENV_ON() -> bool:
+    """``SUMMARY_ALIGN_CHECK=1``: after carrying an edit over, Apertus also lists where the two
+    languages still differ (one more call). Off by default."""
+    return (env("SUMMARY_ALIGN_CHECK", default="0") or "").lower() in ("1", "true", "yes", "on")
 
 Response = tuple[int, Any]
 
@@ -185,6 +191,7 @@ class Backend:
                 source_before=source_before,
                 judgement=self.find_judgement(case_number),
                 considerations=[c for c in written_from or [] if isinstance(c, str)],
+                final_check=ALIGN_CHECK_ENV_ON(),
             )
             aligned = result.text
         except ValueError as exc:  # our own message, e.g. no gateway key set
@@ -199,7 +206,8 @@ class Backend:
             return {**failed, "error": "Apertus returned no text"}
         changed = aligned.strip() != target_text.strip()
         if changed:
-            model = getattr(getattr(summarizer, "llm", None), "model", None) or "apertus"
+            used = getattr(summarizer, "align_llm", None) or getattr(summarizer, "llm", None)
+            model = getattr(used, "model", None) or "apertus"
             store.replace_edit(conn, case_number, target, aligned, aligned_by=model)
         return {"lang": target, "ok": True, "changed": changed,
                 "notes": list(result.notes), "reference": bool(result.has_reference)}
