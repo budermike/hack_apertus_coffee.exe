@@ -1,12 +1,15 @@
-# Development / test / docs dependencies — install with: pip install -r requirements-dev.txt
+# Development / test dependencies — install with: pip install -r requirements-dev.txt
 # `-e .` installs the project itself (editable) plus everything in requirements.txt.
 # Needed so `python -m hack_apertus_coffee_exe...` works from the project folder.
 -e .
+
+# Tests
+pytest==9.2.0
+
+# Notebooks and their plots (notebooks/)
 jupyterlab==4.6.6
 ipykernel==7.4.0
-pytest==9.2.0
-sphinx==9.2.0
-myst-parser==5.2.0
+matplotlib==3.11.2
 
 # Multilingual open-weights embeddings (issue #5, intfloat/multilingual-e5-small, MIT)
 # Needed only to embed new judgements or run free-text vector queries.

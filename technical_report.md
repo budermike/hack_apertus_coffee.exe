@@ -6,7 +6,7 @@ numbers say.
 - **Challenge partner:** Suva
 - **Challenge:** Identification of relevant Federal Court judgements and preparation of a legal summary
 - **Event:** On-site Zurich
-- **Team:** Coffee.exe — Mike (project management), Abi (LLM and backend), Linus (frontend and demo), Ben (data and evaluation)
+- **Team:** Coffee.exe - Mike (project management), Abi (backend), Linus (frontend and demo), Ben (backend and evaluation)
 - **Demo:** link to the video (max. 2 minutes) is added by the team with the submission
 
 ## 1. Summary
@@ -24,7 +24,13 @@ finds **49 of 59** (recall 83 %, F2 0.74) at the F2-optimal threshold and **58 o
 (recall 98 %, F2 0.68) at the setting we ship, a recall target of 95 %, where the list has 193
 instead of 97 entries out of about 3900 published judgements. For the quarter of the task,
 Q2/2026, the list has 103 entries out of 2096 judgements. Suva's selection for Q2 is not known to us, so recall on
-Q2 itself is not measured.
+Q2 itself is not measured. The summaries (Apertus 70B) reach a mean of 3.8 of 5 when an Apertus judge compares
+them with Suva's own texts by a fixed rubric (section 5).
+
+Beyond the task (bonus «better customer experience»): every score comes with the criteria and verbatim quotes it
+rests on; lawyers edit and release summaries (the knowledge base keeps every version); a click on «relevant» /
+«not relevant» is learned for similar judgements without ever removing a judgement from the list; full-text search
+over all stored summaries; the interface works in German and French.
 
 ## 2. Architecture
 
@@ -58,7 +64,7 @@ regression with four parameters (weight of each score, one intercept for acciden
 insurance, one for the other areas) turns them into a relevance value `p`. It is fitted
 only on quarters before the scored one.
 
-**The thresholds are derived, not set by hand (#75).** The list threshold is the highest
+**The thresholds are derived, not set by hand.** The list threshold is the highest
 value of `p` at which 95 % of the judgements Suva actually selected in the labelled quarters
 are on the list (`target_recall` in `configs/triage.json`); yellow starts where all of them
 are at least yellow (`yellow_recall` 1.0). The value is shown on a 0–100 scale where 60 is
@@ -121,7 +127,7 @@ runtime.
 | Task | Model (gateway ID) | How |
 |---|---|---|
 | Relevance, pass 1 and 2 | `apertus-v1-5-70b` (default of `triage.cli relevance`) | Inference. Prompt with Suva's criteria (K1–K5 for, N1–N3 against) and similar earlier judgements with Suva's decision; answer as JSON with quotes |
-| Summaries German / French | `LLM_NAME` (default `apertus-v1-5-8b`) | Inference in two steps: extract the facts, then write each language from the facts with a style profile (`prompts/style_de.md`, `style_fr.md`, `glossary.md`) and Suva examples. A check without a model follows: every consideration and article of law the summary cites must occur in the judgement, and the outcome and a remand must agree with the operative part; on an error the text is written again |
+| Summaries German / French | `SUMMARY_MODEL` (default `apertus-v1-5-70b`) | Inference in two steps (`summary.generate.Summarizer`): name the core question and the 1–3 decisive considerations (JSON), then write each language from the wording of those considerations with a style profile measured on Suva's 55 texts (`prompts/style_de.md`, `style_fr.md`, `glossary.md`), three Suva examples marked as other cases, and a rule-based block on who appealed and who won. A check without a model follows (cited considerations and articles exist, outcome and remand agree with the operative part, length, paragraphs); on a fault the text is written once more |
 | Other language after an edit | same as summaries | Inference: brings the untouched language in line with the lawyer's edit |
 | Reasons in French | same as relevance | Inference, once per judgement, cached |
 | Subjects, quotes and summary basis in the language of the interface | same as relevance | Inference in batches with the glossary: legal wording of the target language, not word for word; stored after the first time |
@@ -134,9 +140,10 @@ and not adopted: the reasoning mode of the 70B model (50 instead of 49 of 59 at 
 F2 threshold, no difference at the shipped setting; `results/tables/thinking_vs_normal_relevanz.csv`).
 
 Models used in development only (coding assistants: Claude Code with Claude Opus 5.5 and
-Claude Fable 5.2, Claude Sonnet 5.5, Antigravity with Gemini) are listed with their roles
+Claude Fable 5.2, Claude Sonnet 5.5, Antigravity with Gemini, including Gemini 4 Hydrogen) are listed with their roles
 in `docs/MODELS.md`. They wrote code, tests and documentation; they score, select and
-summarise nothing at runtime, and no model judges the evaluation.
+summarise nothing at runtime. One model judges in the evaluation: Apertus 70B grades the
+summaries against Suva's texts (open weights, as required; section 5).
 
 ## 4. Data
 
@@ -163,14 +170,15 @@ All numbers come from `results/` and can be recomputed without a model call.
 | Same, shipped setting (recall target 95 %) | 58 of 59 found, F2 0.68, list 193 | `results/relevance_eval.md` |
 | Same, earlier setting (`list_factor` 0.3) | 59 of 59 found, F2 0.64, list 226 | `results/relevance_eval.md` |
 | Q2/2026 as shipped | 410 candidates, 187 scored by Apertus, 103 on the list, 8 just below | `results/triage_q2_2026.json` |
+| Summaries, 4 models × 4 prompt versions, 20 development cases, judge Apertus 70B (rubric 1–5) | only 70B reaches ≥ 3.5 in every criterion (70B 4.2); best 8B variant 3.2 (8B thinking) | `notebooks/summary/02_modelle_prompts.ipynb` |
+| Summaries as shipped (70B), all 55 Suva cases | core message 4.0, outcome 4.1, faithfulness 4.0, style 3.6, language 4.3, overall 3.8; on the 35 held-out cases overall 3.5, style 3.3 | `results/tables/summary_bestaetigung_70b.csv` |
 | Learning from decisions, simulated with Suva's decisions | unprotected: list shrinks, recall falls by up to 67 points in single runs; protected: recall never falls in the 80 runs (0 to +1.3 points); ranking not measurably better | `results/reports/feedback_learning.md` |
 
 Limitations, stated plainly:
 
 - **Recall on Q2 is unknown**, because Suva's selection for Q2 is not available to us. The 100 % is measured on two quarters with 59 selected judgements; one or two judgements more or less are chance. The criteria in the prompt were written with both labelled quarters in view, so the values are rather too favourable.
 - **The list is long on purpose:** 103 of 2096 in Q2, where Suva selects about 30. We accept reading more to miss almost nothing: in the hold-out 1 of 59 Suva judgements was missed. On the calibration quarters the one known case below the list threshold (9C_65/2025) is yellow, so still in view.
-- **Summaries are not evaluated with numbers.** They are checked by rules (cited considerations and articles exist in the judgement, the outcome agrees with the operative part) and were compared with Suva's examples by reading. A comparison of ten summaries with Suva's own texts and of the 8B with the 70B model is open.
-- **Learning from decisions has no proven benefit yet.** It is safe (the list never loses a judgement) and it reorders; with two quarters and coarse features (area, criteria) a better ranking could not be shown.
+- **Summaries are graded by a model, not by Suva's lawyers.** The judge is Apertus 70B, which may favour texts of its own model; a rule-based style measure (length, paragraphs, opening, outcome sentence, wording) points the same way. The new prompt is clearly closer to Suva's form (0.51 vs 0.39 on that measure) but, on the 35 cases it was not tuned on, not better in content than the old prompt with the same model (3.46 vs 3.72 overall); style stays the weakest criterion. About one text in five scores 2 or less, mostly because it picks a different core question than Suva.
 - Only judgements of the social-law divisions are candidates, and Apertus scores accident, invalidity and military insurance. A relevant judgement from another division is not found.
 - Fetching a new period needs the embedding library, which the container does not contain; quotes marked «approximate» or «missing» must be checked by the reader; the application has no login and is meant to run inside a protected network.
 
@@ -206,6 +214,7 @@ The numbers of section 5 without any model call:
 ```
 python -m hack_apertus_coffee_exe.eval.relevance_eval      # results/relevance_eval.md
 python -m hack_apertus_coffee_exe.eval.feedback_sim        # results/reports/feedback_learning.md
+jupyter nbconvert --execute --to notebook notebooks/summary/02_modelle_prompts.ipynb   # summary tables from the stored answers
 ```
 
 `temperature = 0` and a fixed seed in the Apertus calls, fixed seeds in the simulation (50

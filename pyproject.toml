@@ -25,9 +25,8 @@ packages = [
     "hack_apertus_coffee_exe.summary",
     "hack_apertus_coffee_exe.eval",
     "hack_apertus_coffee_exe.present",
-    "crawl",
 ]
-package-dir = { "hack_apertus_coffee_exe" = "src/hack_apertus_coffee_exe", "crawl" = "src/crawl" }
+package-dir = { "hack_apertus_coffee_exe" = "src/hack_apertus_coffee_exe" }
 
 [tool.setuptools.dynamic]
 dependencies = { file = ["requirements.txt"] }
