@@ -1,3 +1,8 @@
+---
+geometry: "a4paper, margin=2cm"
+fontsize: 10pt
+---
+
 # Technical report — Urteilsradar, Team Coffee.exe
 
 - **Challenge partner:** Suva
@@ -27,62 +32,49 @@ judge compares them with Suva's own texts by a fixed rubric.
 judgements that are *not* selected, each quote checked against the judgement text; editing
 of summaries, the other language following through Apertus, every version kept; lawyers'
 «relevant» / «not relevant» decisions learned for similar judgements; full-text search over
-all summaries; the stored judgement text readable inside the application; a German and a
-French interface.
+all summaries; the judgement text readable inside the application; German and French interface.
 
 ## 2. Architecture
 
-```
-entscheidsuche.ch (mirror of bger.ch)
-   │ crawl: one JSON per judgement, only missing days
-   ▼
-data/raw/  ──►  Vector-DB (SQLite + FTS5, e5 embeddings, used by the analyses)
-   │
-   ▼
-triage: Apertus v1.5 70B, pass 1 (criteria with quotes, score), pass 2 (use for accident
-        insurance, practical rule, score) ─► calibration (logistic regression) ─► list
-   │ judgements on the list queued after a search, others on request
-   ▼
-summary: Apertus v1.5 70B, core question ─► German text / French text ─► check by rules ─► SQLite
-   │
-   ▼
-backend (Python standard library HTTP server, /api/...)  ◄──►  web UI (plain JavaScript)
-```
+![Architecture of Urteilsradar: grey arrows are the data flow, orange arrows the feedback and on-demand loops](docs/Architecture.png){width=100%}
 
-**Relevance is computed, not guessed.** Apertus gives two scores per judgement. A logistic
-regression with four parameters (one weight per score, one intercept for accident insurance,
-one for the other areas) turns them into a relevance value, fitted only on quarters other
-than the scored one.
+- **Data Crawl:** one JSON per judgement from entscheidsuche.ch (mirror of bger.ch) into `data/raw/`, only missing days. **Embeddings** (`multilingual-e5-small`, local) go into a **Vector DB** (SQLite + FTS5) for the analyses and the evaluation.
+- **Score Relevance:** only social-law candidates; Apertus v1.5 70B in two passes (1: criteria with quotes, score; 2: use for accident insurance, practical rule, score), with Suva's earlier decisions as precedents ─► calibration ─► traffic light and list in `results/triage_<period>.json`.
+- **Make Summaries:** Apertus v1.5 70B, core question ─► German and French written separately, Suva's texts as style examples ─► check by rules ─► DE/FR cross-check ─► Summaries DB (SQLite: summaries, edits, decisions). Judgements on the list are queued after a search, others on request.
+- **API Backend / UI:** Python standard library HTTP server (`summary/api.py`, `/api/...`), web UI in plain JavaScript (German / French).
+- **Loops (orange):** a search for a new period makes the backend fetch and score it; after an edit Apertus aligns the other language; lawyers' «relevant» / «not relevant» decisions become precedents of the next scoring run.
+
+**Relevance is computed, not guessed.** A logistic regression with four parameters (one weight
+per Apertus score, one intercept for accident insurance, one for the other areas) turns the two
+scores into a relevance value, fitted only on quarters other than the scored one.
 
 **Thresholds are derived, not set by hand.** The list threshold is the highest value at which
 95 % of the judgements Suva selected in the labelled quarters are on the list; yellow starts
-where all of them are at least yellow. Each calibration stores why its thresholds sit where
-they do, and the UI shows that reason next to the score.
+where all of them are at least yellow. The UI shows why a threshold sits where it does.
 
-**Lawyers' decisions are learned from.** A click on «Für Suva relevant» / «Nicht relevant» is a
-training example: on top of the unchanged calibration one correction per legal area and
+**Lawyers' decisions are learned from.** Each click on «Für Suva relevant» / «Nicht relevant»
+is a training example: on top of the unchanged calibration one correction per legal area and
 criterion is learned, so similar judgements move with a decided one. Learning can add
 judgements to the list and reorder it; only the lawyer's own decision takes one off.
 
 ### Target architecture (mandatory)
 
 The solution is deployable **a) on-premise**, **b) air-gapped** and **c) on a sovereign Swiss
-cloud**. One container (`Dockerfile`, `docker-compose.yml`) holds backend, UI and the whole pipeline; all settings
-are environment variables; data lives in one mounted folder (`data/`).
+cloud**. One container (`Dockerfile`, `docker-compose.yml`) holds backend, UI and the whole
+pipeline, including PyTorch (CPU) and the embedding model; all settings are environment
+variables; data lives in one mounted folder (`data/`).
 
 | Dependency | Build time | Runtime |
 |---|---|---|
 | Apertus v1.5 endpoint (OpenAI-compatible, `LLM_BASE_URL`) | – | yes; on-premise any server with the open weights |
 | Python packages (`requirements.txt`) | PyPI | no network |
-| Embedding model `intfloat/multilingual-e5-small` (open weights) | Hugging Face, once, into the image | local, CPU; when `crawl.ensure` embeds new judgements into the Vector-DB |
+| Embedding model `intfloat/multilingual-e5-small` (open weights) | Hugging Face, once, into the image | local, CPU |
 | entscheidsuche.ch | – | only when a new period is fetched |
 | Proprietary AI services | none | none |
 
 With **no network at all** the container serves the UI, the Q2 list, reasons, stored
 summaries, editing, decisions and search; only Apertus calls and fetching new judgements need
-a connection. The image contains everything, including PyTorch (CPU) and the embedding model, so
-the whole pipeline from crawling to summaries runs inside the container. Azure: nothing is tied to a cloud provider; the steps are in `README.md`, not
-tested.
+a connection. Nothing is tied to a cloud provider (Azure steps in `README.md`, not tested).
 
 ## 3. Use of Apertus
 
@@ -90,10 +82,10 @@ Apertus v1.5 performs the core task everywhere; no other language model is calle
 
 | Task | Model | How |
 |---|---|---|
-| Relevance, two passes | `apertus-v1-5-70b` | Prompt with Suva's criteria (K1–K5 for, N1–N3 against) and similar earlier judgements with Suva's decision; JSON answer with quotes |
-| Summaries German / French | `SUMMARY_MODEL` (default `apertus-v1-5-70b`) | First the core question and the 1–3 decisive considerations (JSON), then each language written from their wording with a style profile measured on Suva's 55 texts, a glossary, three Suva examples marked as other cases and a rule-based block on who appealed and who won; a check by rules (cited considerations and articles exist, outcome agrees with the operative part) triggers one rewrite. After an edit, Apertus aligns the other language |
-| DE/FR check | `SUMMARY_MODEL` (default `apertus-v1-5-70b`) | Lengths compared by rules (at most 30 % apart, in characters); the language out of bounds is rewritten once. Optional, off by default: a reviewer that looks for contradictions and omissions in two passes, and a referee that decides from the judgement which language is right (`summary/crosscheck.py`, `SUMMARY_CROSSCHECK=1`). In a first test it tripled the time and its repair cut a correct French text in half, so it is off |
-| Interface language | `apertus-v1-5-70b` | Reasons, subjects and quotes carried over into German or French in legal wording, stored after the first time |
+| Relevance, two passes | `apertus-v1-5-70b` | Suva's criteria (K1–K5 for, N1–N3 against) and similar earlier judgements with Suva's decision in the prompt; JSON answer with quotes |
+| Summaries German / French | `SUMMARY_MODEL` (default `apertus-v1-5-70b`) | First the core question and the 1–3 decisive considerations (JSON), then each language from their wording, with a style profile measured on Suva's 55 texts, a glossary, three Suva examples and a rule-based block on who appealed and who won. A check by rules (considerations and articles exist, outcome matches the operative part) triggers one rewrite. After an edit, Apertus aligns the other language |
+| DE/FR check | `SUMMARY_MODEL` | Lengths compared by rules (at most 30 % apart); the language out of bounds is rewritten once. An Apertus reviewer for contradictions exists but is off by default: it tripled the time and its repair once cut a correct text in half |
+| Interface language | `apertus-v1-5-70b` | Reasons, subjects and quotes carried over into German or French, stored after the first time |
 
 No fine-tuning. `temperature = 0` with a fixed seed; calls go through one wrapper per stage with
 timeouts and retries, answers are cached. Supporting model: `intfloat/multilingual-e5-small`
@@ -111,10 +103,9 @@ they wrote code, prompts and texts and do nothing at runtime.
 | Suva's selection for Q4/2025 and Q1/2026, 55 example summaries | challenge partner | `judgements/`, subject to the partner's permission |
 | Scores, lists, evaluation tables | this project | `results/` |
 
-The task names bger.ch; its search is protected against automated access, so the crawler reads
-the mirror, which carries the same decisions with the link to bger.ch (`--source bger` exists).
-«The last three months» is Q2/2026 (1 April to 30 June 2026). No personal data beyond what the
-court publishes.
+The search of bger.ch is protected against automated access, so the crawler reads the mirror,
+which carries the same decisions with the link to bger.ch. «The last three months» is Q2/2026
+(1 April to 30 June 2026). No personal data beyond what the court publishes.
 
 ## 5. Evaluation and limitations
 
