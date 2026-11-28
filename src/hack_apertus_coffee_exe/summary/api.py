@@ -12,6 +12,9 @@ Implements the summary part of the contract in ``src/presentation/api.js``:
                                                  back to the generated text
     POST   /api/judgements/{id}/summary/approve  body {languages?}: approve pending edits (no longer
                                                  used by the UI: edits need no approval)
+    GET    /api/judgements/{id}/original         the judgement text as the crawler stored it, as a
+                                                 plain HTML page (?lang=de|fr for the labels): the
+                                                 original can be read without leaving the installation
     GET    /api/knowledge-base?q=...             search over all stored summaries, newest first
     DELETE /api/knowledge-base                   405: the knowledge base is append-only
 
@@ -26,6 +29,7 @@ Run (``--triage`` is needed for the judgement list; without it every search answ
 from __future__ import annotations
 
 import argparse
+import html
 import json
 import logging
 import threading
@@ -194,6 +198,35 @@ class Backend:
         with closing(store.connect(self.db_path)) as conn:
             return HTTPStatus.OK, store.save_feedback(conn, case_number, **parsed)
 
+    def original_page(self, case_number: str, lang: str = "de") -> tuple[int, str]:
+        """The stored judgement text as a self-contained HTML page (status, HTML).
+
+        The text comes from an external site, so every character of it is escaped; the
+        page loads nothing from elsewhere and works without network access.
+        """
+        labels = _ORIGINAL_LABELS["fr" if lang == "fr" else "de"]
+        judgement = self.find_judgement(case_number)
+        if judgement is None:
+            head, _, year = case_number.rpartition("_")  # 8C_7_2025 -> 8C_7/2025
+            spelled = f"{head}/{year}" if "_" in head and year.isdigit() and len(year) == 4 else case_number
+            number = html.escape(spelled)
+            body = f"<h1>{number}</h1><p class=\"meta\">{labels['missing']}</p>"
+            return HTTPStatus.NOT_FOUND, _ORIGINAL_PAGE.format(lang=labels["code"], title=number, body=body)
+        number = html.escape(judgement.case_id)
+        meta = [labels["stored"]]
+        if judgement.decision_date:
+            meta.append(f"{labels['decided']} {judgement.decision_date.strftime('%d.%m.%Y')}")
+        if judgement.language:
+            meta.append(f"{labels['language']} {html.escape(judgement.language.upper())}")
+        url = judgement.url or ""
+        if url.startswith(("https://", "http://")):
+            meta.append(f'<a href="{html.escape(url, quote=True)}" rel="noopener noreferrer">{labels["external"]}</a>')
+        body = (
+            f"<h1>{labels['heading']} {number}</h1><p class=\"meta\">{' · '.join(meta)}</p>"
+            f"<pre lang=\"{html.escape(judgement.language or labels['code'], quote=True)}\">{html.escape(judgement.text)}</pre>"
+        )
+        return HTTPStatus.OK, _ORIGINAL_PAGE.format(lang=labels["code"], title=f"{number} – {labels['title']}", body=body)
+
     def enqueue_summaries(self, body: dict[str, Any]) -> Response:
         case_ids = body.get("caseIds")
         if not isinstance(case_ids, list) or not case_ids:
@@ -220,6 +253,32 @@ class Backend:
                 if same_case(judgement.case_id, case_number):
                     return judgement
         return None
+
+
+_ORIGINAL_LABELS = {
+    "de": {
+        "code": "de", "heading": "BGer-Urteil", "title": "gespeicherter Volltext",
+        "stored": "Lokal gespeicherter Volltext, wie ihn der Crawler abgerufen hat",
+        "decided": "Entscheid vom", "language": "Sprache", "external": "Original auf der Website öffnen",
+        "missing": "Der Volltext dieses Urteils ist lokal nicht gespeichert.",
+    },
+    "fr": {
+        "code": "fr", "heading": "Arrêt du TF", "title": "texte intégral enregistré",
+        "stored": "Texte intégral enregistré localement, tel que le crawler l'a récupéré",
+        "decided": "Arrêt du", "language": "Langue", "external": "Ouvrir l'original sur le site",
+        "missing": "Le texte intégral de cet arrêt n'est pas enregistré localement.",
+    },
+}
+
+_ORIGINAL_PAGE = (
+    '<!DOCTYPE html><html lang="{lang}"><head><meta charset="UTF-8">'
+    '<meta name="viewport" content="width=device-width, initial-scale=1"><title>{title}</title>'
+    "<style>body{{max-width:46rem;margin:2rem auto;padding:0 1rem;font:16px/1.6 Georgia,serif;color:#1b1f24}}"
+    "h1{{font:600 22px/1.3 system-ui,sans-serif}}"
+    ".meta{{font:13px/1.5 system-ui,sans-serif;color:#555;border-bottom:1px solid #ccc;padding-bottom:.7rem}}"
+    "pre{{white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;margin:1rem 0}}</style></head>"
+    "<body>{body}</body></html>"
+)
 
 
 def summary_entry(conn, case_number: str) -> dict[str, Any] | None:
@@ -294,6 +353,9 @@ class Handler(SimpleHTTPRequestHandler):
             return self._respond(lambda: self.backend.queue_status(ids))
         if len(parts) == 3 and parts[0] == "judgements" and parts[2] == "summary":
             return self._respond(lambda: self.backend.get_summary(parts[1]))
+        if len(parts) == 3 and parts[0] == "judgements" and parts[2] == "original":
+            lang = parse_qs(url.query).get("lang", ["de"])[0]
+            return self._respond_html(lambda: self.backend.original_page(parts[1], lang))
         self._respond(lambda: _error(HTTPStatus.NOT_FOUND, "unknown endpoint"))
 
     def do_POST(self) -> None:
@@ -378,6 +440,22 @@ class Handler(SimpleHTTPRequestHandler):
         except json.JSONDecodeError:
             return {}
         return data if isinstance(data, dict) else {}
+
+    def _respond_html(self, call: Callable[[], tuple[int, str]]) -> None:
+        try:
+            status, page = call()
+        except Exception:
+            logger.exception("request failed: %s %s", self.command, self.path)
+            status, page = HTTPStatus.INTERNAL_SERVER_ERROR, "<!DOCTYPE html><title>Error</title><p>internal error</p>"
+        data = page.encode("utf-8")
+        self.send_response(status)
+        self.send_header("Content-Type", "text/html; charset=utf-8")
+        # the page shows text from an external site: no scripts, nothing loaded from elsewhere
+        self.send_header("Content-Security-Policy", "default-src 'none'; style-src 'unsafe-inline'")
+        self.send_header("X-Content-Type-Options", "nosniff")
+        self.send_header("Content-Length", str(len(data)))
+        self.end_headers()
+        self.wfile.write(data)
 
     def _respond(self, call: Callable[[], Response]) -> None:
         try:

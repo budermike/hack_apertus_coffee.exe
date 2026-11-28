@@ -1238,6 +1238,8 @@ function renderDetail() {
         typeof item.uvUse === "number" && el("span", { class: "tag blue", text: t("uvUseLabel", item.uvUse) }),
     ].filter(Boolean);
     const url = item.url && (currentLang === "fr" ? item.url.replace("lang=de", "lang=fr") : item.url);
+    // the text the crawler stored, served by our own backend: readable without leaving the installation
+    const localUrl = USE_MOCK ? "" : originalPageUrl(item.id, currentLang);
     preservingFocus(detail, () => detail.replaceChildren(...[
         el("button", {
             type: "button", class: "detail-close", "aria-label": t("close"), title: t("close"), onclick: closeDetail,
@@ -1245,6 +1247,8 @@ function renderDetail() {
         // as in the demo: the title of the summary once there is one
         el("h2", { text: loc(state.summaries[item.id]?.title) || `${t("judgement")} ${item.caseNumber}` }),
         el("p", { class: "meta" }, meta.filter(Boolean).join(", "), ". ",
+            localUrl && el("a", { href: localUrl, target: "_blank", rel: "noopener", class: "local-original", text: t("openLocal") }),
+            localUrl && url && " · ",
             url && el("a", { href: url, target: "_blank", rel: "noopener", text: t("openOriginal") })),
         badges.length > 0 && el("div", { class: "row detail-badges" }, badges),
         textSection("question", item.question),
