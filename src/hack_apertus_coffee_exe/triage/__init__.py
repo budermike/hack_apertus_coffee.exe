@@ -25,7 +25,12 @@ from .reference_corpus import ReferenceCase, load_reference_corpus
 from .relevance import ApertusRelevanceClient
 from .relevance_period import run as run_relevance
 
+from .service import apply_feedback, get_cases, score_period  # contract (#48)
+
 __all__ = [
+    "apply_feedback",
+    "get_cases",
+    "score_period",
     "ApertusRelevanceClient",
     "DateRange",
     "Embedder",

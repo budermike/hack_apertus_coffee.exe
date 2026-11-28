@@ -1,0 +1,8 @@
+{
+  "_comment": "Shared folders and the default period (#48). Paths are relative to the project folder. Domain settings per stage stay in crawl.json / triage.json; secrets and environment (API key, model, SUMMARY_DB_PATH, EMBEDDING_MODEL) go into .env.",
+  "raw_dir": "data/raw",
+  "vectordb_dir": "data/processed/vectordb",
+  "judgements_dir": "judgements",
+  "vectordb_report": "results/tables/vectordb_report.csv",
+  "default_period": {"from": "2026-04-01", "to": "2026-06-30"}
+}
