@@ -34,6 +34,7 @@ from .judgement import Judgement, consideration_numbers, consideration_passages,
 
 LANGUAGES = ("de", "fr")
 MAX_CHECK_NOTES = 5  # findings of the closing comparison that are shown
+CALL_TIMEOUT = 60    # seconds per Apertus call: a lawyer is waiting for the save
 
 # A full stop after one of these does not end a sentence («Art. 6», «consid. 4.2», «al. 2»).
 _ABBREVIATIONS = frozenset(
@@ -237,6 +238,7 @@ _LABELS = {
         "tasks": {
             "replace": "Aufgabe: «{removed}» wurde durch «{added}» ersetzt. Kopiere in «alt» die Sätze der {target}n Fassung, die die Aussage «{removed}» enthalten, und gib sie in «neu» mit der neuen Aussage wieder.",
             "delete": "Aufgabe: «{removed}» wurde gestrichen. Kopiere in «alt» die Sätze der {target}n Fassung, die genau diese gestrichene Aussage enthalten (nicht den Rest des Satzes unter «vorher»), und gib sie in «neu» ohne diese Aussage wieder; enthält ein Satz nur diese Aussage, ist «neu» leer.",
+            "drop": "Aufgabe: Der Satz unter «vorher» wurde ganz gestrichen. Kopiere in «alt» wörtlich den einen Satz der {target}n Fassung, der dasselbe aussagt; «neu» bleibt leer (\"\"). Sagt kein Satz der {target}n Fassung dasselbe, bleibt auch «alt» leer.",
             "extend": "Aufgabe: «{added}» wurde ergänzt. Kopiere in «alt» den Satz der {target}n Fassung, der dem Satz unter «vorher» entspricht, und gib ihn in «neu» mit dieser zusätzlichen Aussage wieder.",
             "insert": "Aufgabe: Die Stelle unter «nachher» ist neu. Kopiere in «alt» den Satz der {target}n Fassung, nach dem sie stehen soll, und gib ihn in «neu» unverändert wieder, gefolgt von einem neuen Satz, der nur diese Aussage enthält.",
         },
@@ -259,6 +261,7 @@ _LABELS = {
         "tasks": {
             "replace": "Tâche : «{removed}» a été remplacé par «{added}». Copie dans «alt» les phrases de la version {target} qui contiennent l'affirmation «{removed}» et rends-les dans «neu» avec la nouvelle affirmation.",
             "delete": "Tâche : «{removed}» a été supprimé. Copie dans «alt» les phrases de la version {target} qui contiennent précisément cette affirmation supprimée (et non le reste de la phrase sous «avant») et rends-les dans «neu» sans cette affirmation ; si une phrase ne contient que cette affirmation, «neu» est vide.",
+            "drop": "Tâche : la phrase sous «avant» a été entièrement supprimée. Copie dans «alt», mot pour mot, la seule phrase de la version {target} qui dit la même chose ; «neu» reste vide (\"\"). Si aucune phrase de la version {target} ne dit la même chose, «alt» reste vide aussi.",
             "extend": "Tâche : «{added}» a été ajouté. Copie dans «alt» la phrase de la version {target} qui correspond à la phrase sous «avant» et rends-la dans «neu» avec cette affirmation supplémentaire.",
             "insert": "Tâche : le passage sous «après» est nouveau. Copie dans «alt» la phrase de la version {target} après laquelle il doit figurer et rends-la telle quelle dans «neu», suivie d'une nouvelle phrase qui ne contient que cette affirmation.",
         },
@@ -293,7 +296,10 @@ def change_user(target_lang: str, source_lang: str, change: dict[str, str], targ
 
 
 def _task(change: dict[str, str]) -> str:
-    """Kind of a change: words replaced, removed, added to a sentence (``extend``) or a new passage."""
+    """Kind of a change: words replaced, removed (``delete``) or added (``extend``) within a
+    sentence, a whole sentence removed (``drop``) or a new one (``insert``)."""
+    if not change["after"]:
+        return "drop"
     return ("replace" if change["removed"] and change["added"] else "delete" if change["removed"]
             else "extend" if change["before"] else "insert")
 
@@ -447,7 +453,7 @@ def _json(llm: Any, system: str, user: str, name: str, schema: dict[str, Any]) -
     fmt = {"type": "json_schema", "json_schema": {"name": name, "strict": True, "schema": schema}}
     for temperature in (None, 0.3):
         try:
-            data = json.loads(llm.chat(system, user, response_format=fmt, temperature=temperature))
+            data = json.loads(llm.chat(system, user, response_format=fmt, temperature=temperature, timeout=CALL_TIMEOUT))
         except json.JSONDecodeError:
             continue
         if isinstance(data, dict):
@@ -474,8 +480,8 @@ def align_edit(
     for the closing comparison when ``final_check`` is set (off by default: the lawyer asked
     for the change to be carried over, not for a list of differences). The notes are written
     in ``source_lang``, the language the lawyer worked in. A change Apertus gives no usable answer for is
-    not applied and noted. A gateway error while carrying a change over is raised; one in
-    the closing comparison is noted.
+    not applied and noted. A gateway error is raised when nothing was carried over yet;
+    after that, the changes that are left are noted, as is an error in the closing comparison.
     """
     if target_lang not in LANGUAGES or source_lang not in LANGUAGES or target_lang == source_lang:
         raise ValueError(f"languages must be two of {LANGUAGES}, got {source_lang!r} -> {target_lang!r}")
@@ -489,7 +495,7 @@ def align_edit(
     system = change_system(target_lang, prompts_dir)
     lab = _LABELS[source_lang]  # notes are for the lawyer, in the language of the text they edited
     notes: list[str] = []  # one per change that needs the lawyer: never cut short
-    for change in changes[:MAX_CHANGES]:
+    for position, change in enumerate(changes[:MAX_CHANGES]):
         sentences = split_sentences(text)
         shown = change["after"] or change["before"]
         try:
@@ -498,16 +504,34 @@ def align_edit(
         except ValueError:  # no JSON, twice
             notes.append(lab["not_applied"].format(change=shown))
             continue
+        except Exception:
+            # The gateway fell away in the middle. What was carried over so far is kept and the
+            # rest is left to the lawyer; when nothing was carried over yet, the caller reports
+            # that Apertus could not be reached.
+            if text == target_text.strip():
+                raise
+            notes += [lab["not_applied"].format(change=c["after"] or c["before"]) for c in changes[position:MAX_CHANGES]]
+            break
         reason = str(answer.get("hinweis") or "").strip()
         if answer.get("unklar"):  # nothing is read into an unclear edit
             notes.append(" ".join(filter(None, [lab["unclear"].format(change=shown), reason])))
             continue
-        if not answer.get("inhaltlich"):
+        quote, fresh = str(answer.get("alt") or ""), str(answer.get("neu") or "")
+        if not change["after"]:  # a whole sentence was removed: never "wording only"
+            if not quote.strip():
+                continue  # the other language does not have it: nothing to do
+            if not fresh.strip() or _similar(quote, fresh) >= 0.9:
+                # Apertus names the sentence that says the same; it often hands it back
+                # unchanged instead of an empty text. Removing it is done here.
+                numbers = sorted({_locate(sentences, quoted) for quoted, _ in split_sentences(quote)})
+                if numbers and 0 not in numbers and len(numbers) <= 2 and numbers[-1] - numbers[0] == len(numbers) - 1:
+                    text = replace_sentences(sentences, numbers, "")
+                else:
+                    notes.append(lab["not_applied"].format(change=shown))
+                continue
+        elif not answer.get("inhaltlich"):
             continue  # wording only
-        quote = str(answer.get("alt") or "")
-        if not quote.strip() and not change["after"]:
-            continue  # a removed sentence that the other language does not have: nothing to do
-        plan = planned_replacement(sentences, quote, str(answer.get("neu") or ""), change)
+        plan = planned_replacement(sentences, quote, fresh, change)
         if not plan:  # nothing to apply safely: this change is left to the lawyer
             notes.append(lab["not_applied"].format(change=shown))
             continue

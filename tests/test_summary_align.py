@@ -274,10 +274,42 @@ def test_a_shortened_text_is_shortened_in_the_other_language_without_notes():
     assert result.text == ("Le revenu sans invalidité se détermine selon les salaires de la CCT.\n\n"
                            "Le Tribunal fédéral a rappelé les principes applicables.")
     assert result.notes == [] and len(llm.calls) == 3
-    assert "a été supprimé" in llm.calls[0][1] and "Elektromonteurs" in llm.calls[0][1]
+    assert "entièrement supprimée" in llm.calls[0][1] and "Elektromonteurs" in llm.calls[0][1]
+    # what Apertus really answers (28.11.): the right sentence, handed back unchanged, once even
+    # marked "wording only". The sentence is removed all the same.
+    llm = FakeLLM(change(alt=minimum, neu=minimum, inhaltlich=False), change(alt=employer, neu=employer), change(alt=outcome, neu=""))
+    again = align.align_edit(llm, target_lang="fr", target_text=fr, source_lang="de", source_text=de_after, source_before=de_before)
+    assert again.text == result.text and again.notes == []
+    # a sentence Apertus makes up is not in the text: nothing is removed, the lawyer is told in German
+    llm = FakeLLM(change(alt="Cette phrase inventée ne figure nulle part dans le résumé.", neu=""), change(alt=employer, neu=""), change(alt=outcome, neu=""))
+    partly = align.align_edit(llm, target_lang="fr", target_text=fr, source_lang="de", source_text=de_after, source_before=de_before)
+    assert minimum in partly.text and employer not in partly.text
+    assert len(partly.notes) == 1 and NOT_CARRIED_OVER in partly.notes[0] and "Elektromonteurs" in partly.notes[0]
 
 
 def test_a_removed_sentence_the_other_language_never_had_is_no_note():
     llm = FakeLLM(change(alt="", neu=""))
     result = run(llm, DE.replace("\n\nDas Bundesgericht wies die Beschwerde ab.", ""))
     assert result.text == FR and result.notes == []
+
+
+def test_a_gateway_error_keeps_what_was_carried_over_and_reports_the_rest():
+    class Failing(FakeLLM):
+        def __init__(self, *answers, fail_from):
+            super().__init__(*answers)
+            self.fail_from = fail_from
+
+        def chat(self, system, user, **kwargs):
+            if len(self.calls) >= self.fail_from:
+                raise TimeoutError("gateway")
+            return super().chat(system, user, **kwargs)
+
+    after = DE.replace("hinreichender", "überwiegender").replace("wies die Beschwerde ab", "hiess die Beschwerde gut")
+    first = change(alt="La Suva doit apporter la preuve avec une vraisemblance suffisante.",
+                   neu="La Suva doit apporter la preuve avec une vraisemblance prépondérante.")
+    result = run(Failing(first, fail_from=1), after)
+    assert "prépondérante" in result.text and "rejeté" in result.text
+    assert len(result.notes) == 1 and NOT_CARRIED_OVER in result.notes[0] and "hiess die Beschwerde gut" in result.notes[0]
+    with pytest.raises(TimeoutError):  # nothing carried over yet: the API reports that Apertus could not be reached
+        run(Failing(fail_from=0), after)
+    assert FakeLLM(first).chat("s", "u", timeout=1) and align.CALL_TIMEOUT == 60
