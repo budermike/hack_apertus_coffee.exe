@@ -187,7 +187,7 @@ const mockBackend = (() => {
             await delay(400);
             const clean = String(caseNumber || "").trim().replace(/\s+/, "_");
             const existing = MOCK_JUDGEMENTS.find((j) => j.caseNumber.toLowerCase() === clean.toLowerCase());
-            if (existing) return { ...existing, url: "#", summarized: false };
+            if (existing) return { ...existing, url: "#", summarized: Boolean(db.load().kb[existing.id]) };
             throw new Error(`mock judgement ${clean} not found`);
         },
 

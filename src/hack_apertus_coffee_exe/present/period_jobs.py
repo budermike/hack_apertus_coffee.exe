@@ -2,22 +2,23 @@
 
 from __future__ import annotations
 
-from datetime import date
+from datetime import date, timedelta
 import json
 import logging
+import os
 from pathlib import Path
 import threading
 from typing import Any, Callable
 
 from ..crawl import crawl as crawl_mod
 from ..crawl.ensure import ProgressEvent, ensure_period
+from ..summary.judgement import operative_outcome
 from ..triage import calibration, relevance, relevance_period
 from ..triage.config import TriageConfig, load_config
 from ..triage.date_filter import DateRange
 from ..triage.llm import GatewayConfig
 from ..triage.pipeline import CrawlItem
 from .judgements import JudgementList, _OUTCOMES, _is_single_judge, to_ui_item, ui_id
-from ..summary.judgement import operative_outcome
 
 logger = logging.getLogger(__name__)
 
@@ -30,9 +31,9 @@ def _parse_range(date_from: Any, date_to: Any) -> tuple[date, date]:
     if since > until:
         raise ValueError("from must not be after to")
     today = date.today()
-    if since > today:
-        raise ValueError("from must not be in the future")
-    return since, min(until, today)
+    if since >= today:
+        raise ValueError("today and future dates are not completely available yet")
+    return since, min(until, today - timedelta(days=1))
 
 
 class PeriodTriageManager:
@@ -72,6 +73,7 @@ class PeriodTriageManager:
             )
         )
         self._lock = threading.Lock()
+        self._covered_lock = threading.Lock()
         self._jobs: dict[tuple[str, str], dict[str, Any]] = {}
         self._threads: list[threading.Thread] = []
         self._stop = False
@@ -79,7 +81,7 @@ class PeriodTriageManager:
     def _covered_file(self) -> Path:
         return self.store_dir / "_covered.json"
 
-    def _load_covered(self) -> list[list[str]]:
+    def _read_covered_unlocked(self) -> list[list[str]]:
         path = self._covered_file()
         if not path.exists():
             return []
@@ -89,14 +91,19 @@ class PeriodTriageManager:
         except (OSError, ValueError):
             return []
 
+    def _load_covered(self) -> list[list[str]]:
+        with self._covered_lock:
+            return self._read_covered_unlocked()
+
     def _mark_covered(self, date_from: str, date_to: str) -> None:
-        self.store_dir.mkdir(parents=True, exist_ok=True)
-        covered = self._load_covered()
-        if [date_from, date_to] not in covered:
-            covered.append([date_from, date_to])
-        tmp = self._covered_file().with_name("_covered.json.tmp")
-        tmp.write_text(json.dumps(covered, ensure_ascii=False), encoding="utf-8")
-        tmp.replace(self._covered_file())
+        with self._covered_lock:
+            self.store_dir.mkdir(parents=True, exist_ok=True)
+            covered = self._read_covered_unlocked()
+            if [date_from, date_to] not in covered:
+                covered.append([date_from, date_to])
+            tmp = self._covered_file().with_name(f"._covered.{os.getpid()}.{threading.get_ident()}.json.tmp")
+            tmp.write_text(json.dumps(covered, ensure_ascii=False), encoding="utf-8")
+            tmp.replace(self._covered_file())
 
     def covers(self, date_from: str, date_to: str) -> bool:
         for start, end in self._load_covered():
@@ -176,13 +183,19 @@ class PeriodTriageManager:
                 })
 
         try:
-            self._ensure_fn(
+            ensure_res = self._ensure_fn(
                 since,
                 until,
                 raw_dir=self.raw_dir,
                 summary_db_path=self.db_path,
                 on_progress=on_progress,
             )
+            failed_days = (
+                ensure_res.get("failed_days") if isinstance(ensure_res, dict)
+                else getattr(ensure_res, "failed_days", None)
+            )
+            if failed_days:
+                raise RuntimeError(f"Crawl/Ingest fehlgeschlagen für: {', '.join(failed_days[:5])}")
             items = relevance_period.load_period_items(self.raw_dir, DateRange(since, until))
             candidates = [i for i in items if relevance.is_candidate(i)]
             with self._lock:
@@ -283,7 +296,7 @@ class PeriodTriageManager:
                     pass
             by_id = {r["case_id"]: r for r in existing if isinstance(r, dict) and r.get("case_id")}
             by_id[result["case_id"]] = result
-            tmp = added_path.with_name(".added_cases.json.tmp")
+            tmp = added_path.with_name(f".added_cases.{os.getpid()}.{threading.get_ident()}.json.tmp")
             tmp.write_text(json.dumps(list(by_id.values()), ensure_ascii=False, indent=1), encoding="utf-8")
             tmp.replace(added_path)
 

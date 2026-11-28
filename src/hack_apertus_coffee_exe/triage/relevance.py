@@ -27,8 +27,10 @@ from dataclasses import dataclass
 import hashlib
 import json
 import math
+import os
 from pathlib import Path
 import re
+import threading
 from typing import Any, Callable, Sequence
 
 from .cache import entry_key
@@ -389,6 +391,7 @@ class ApertusRelevanceClient:
         self._timeout = timeout
         self.cache_dir = Path(cache_dir) / "relevance" if cache_dir else None
         self.calls = 0  # real gateway calls (cache hits do not count)
+        self._lock = threading.Lock()
 
     @property
     def model(self) -> str:
@@ -410,12 +413,14 @@ class ApertusRelevanceClient:
         last = "no answer"
         # First try deterministic. The retry gets a little temperature and more room: a greedy
         # decoding that ran into a loop or an invalid object would otherwise fail the same way.
-        if self._client is None:
-            # One transport retry only: a hanging shared gateway must not block a worker for many minutes.
-            # A judgement that still fails is stored with its error and scored on the next run (the rest is cached).
-            self._client = _build_client(self.config, timeout=self._timeout, max_retries=1)
+        with self._lock:
+            if self._client is None:
+                # One transport retry only: a hanging shared gateway must not block a worker for many minutes.
+                # A judgement that still fails is stored with its error and scored on the next run (the rest is cached).
+                self._client = _build_client(self.config, timeout=self._timeout, max_retries=1)
         for attempt, limit in enumerate((max_tokens, max_tokens * 2)):
-            self.calls += 1
+            with self._lock:
+                self.calls += 1
             response = self._client.chat.completions.create(
                 model=self.model,
                 messages=messages,
@@ -541,6 +546,9 @@ FR_TRANSLATE_SCHEMA = _object({
 })
 
 
+_FR_CACHE_LOCK = threading.Lock()
+
+
 def translate_reason_fr(
     client: ApertusRelevanceClient | Any,
     *,
@@ -553,13 +561,15 @@ def translate_reason_fr(
     if not reason_de.strip() and not question_de.strip() and not rule_de.strip():
         return {"reason_fr": "", "question_fr": "", "rule_fr": ""}
     key = _fr_cache_key(reason_de, question_de, rule_de)
-    if cache_path and cache_path.exists():
-        try:
-            cached = json.loads(cache_path.read_text(encoding="utf-8"))
-            if isinstance(cached, dict) and isinstance(cached.get(key), dict):
-                return cached[key]
-        except (OSError, ValueError):
-            pass
+    if cache_path:
+        with _FR_CACHE_LOCK:
+            if cache_path.exists():
+                try:
+                    cached = json.loads(cache_path.read_text(encoding="utf-8"))
+                    if isinstance(cached, dict) and isinstance(cached.get(key), dict):
+                        return cached[key]
+                except (OSError, ValueError):
+                    pass
 
     user = (
         f"Motivation (DE) : {reason_de.strip() or '-'}\n"
@@ -582,19 +592,20 @@ def translate_reason_fr(
         "rule_fr": str(answer.get("rule_fr") or "").strip() if rule_de.strip() else "",
     }
     if cache_path:
-        cache_path.parent.mkdir(parents=True, exist_ok=True)
-        existing: dict[str, Any] = {}
-        if cache_path.exists():
-            try:
-                loaded = json.loads(cache_path.read_text(encoding="utf-8"))
-                if isinstance(loaded, dict):
-                    existing = loaded
-            except (OSError, ValueError):
-                pass
-        existing[key] = out
-        tmp = cache_path.with_name(cache_path.name + ".tmp")
-        tmp.write_text(json.dumps(existing, ensure_ascii=False, indent=1), encoding="utf-8")
-        tmp.replace(cache_path)
+        with _FR_CACHE_LOCK:
+            cache_path.parent.mkdir(parents=True, exist_ok=True)
+            existing: dict[str, Any] = {}
+            if cache_path.exists():
+                try:
+                    loaded = json.loads(cache_path.read_text(encoding="utf-8"))
+                    if isinstance(loaded, dict):
+                        existing = loaded
+                except (OSError, ValueError):
+                    pass
+            existing[key] = out
+            tmp = cache_path.with_name(f".{cache_path.name}.{os.getpid()}.{threading.get_ident()}.tmp")
+            tmp.write_text(json.dumps(existing, ensure_ascii=False, indent=1), encoding="utf-8")
+            tmp.replace(cache_path)
     return out
 
 
@@ -608,12 +619,15 @@ def score_items(
     """Score all candidates in parallel; the order of ``items`` is kept."""
     candidates = [item for item in items if is_candidate(item)]
     done = [0]
+    done_lock = threading.Lock()
 
     def one(item: CrawlItem) -> dict[str, Any]:
         record = score_item(item, pool, client)
-        done[0] += 1
-        if progress and (done[0] % 25 == 0 or done[0] == len(candidates)):
-            progress(done[0], len(candidates))
+        with done_lock:
+            done[0] += 1
+            cur = done[0]
+        if progress and (cur % 25 == 0 or cur == len(candidates)):
+            progress(cur, len(candidates))
         return record
 
     with ThreadPoolExecutor(max(1, workers)) as executor:

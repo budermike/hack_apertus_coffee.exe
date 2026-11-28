@@ -561,7 +561,7 @@ def fetch_single_case(case_id: str, out_dir: str | Path, config_path: str | Path
                     record = build_record(es_cfg, entry, html, url)
                     write_json(record_path(target_dir, entry), record)
                     return record
-        except (httpx.HTTPError, ValueError, KeyError) as exc:
+        except (httpx.HTTPError, ValueError, KeyError, TypeError) as exc:
             log.warning("%s: entscheidsuche lookup failed (%s), trying bger.ch", normalized, exc)
 
     if "bger" in sources:
@@ -583,7 +583,7 @@ def fetch_single_case(case_id: str, out_dir: str | Path, config_path: str | Path
                     record = build_record(bger_cfg, entry, doc_html, url)
                     write_json(record_path(target_dir, entry), record)
                     return record
-        except (httpx.HTTPError, ValueError, KeyError) as exc:
+        except (httpx.HTTPError, ValueError, KeyError, TypeError) as exc:
             log.warning("%s: bger lookup failed: %s", normalized, exc)
 
     raise LookupError(f"Judgement {normalized} not found locally or on bger.ch / entscheidsuche.ch")

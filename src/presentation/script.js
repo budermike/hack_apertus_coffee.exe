@@ -33,7 +33,7 @@ const state = {
     hasSearched: false,
     searching: false,
     searchProgress: null,
-    searchErrorMsg: null,
+    searchErrorArg: null,
     error: null,               // i18n key of a list-level error
     selectedId: null,          // judgement shown in the detail panel
     sort: { key: "score", dir: -1 },
@@ -299,35 +299,51 @@ async function onSearch(event) {
         await thresholdsReady;      // levels must be judged with the backend's thresholds
         if (!USE_MOCK) {
             let period = await ensurePeriod(range.from, range.to);
+            let pollErrors = 0;
             while (period && period.status === "running") {
                 if (searchGen !== periodSearchGeneration) return;
                 state.searchProgress = period;
                 renderList();
                 await new Promise((resolve) => setTimeout(resolve, 1200));
                 if (searchGen !== periodSearchGeneration) return;
-                period = await periodStatus(range.from, range.to);
+                try {
+                    period = await periodStatus(range.from, range.to);
+                    pollErrors = 0;
+                } catch (pollErr) {
+                    console.warn("period status poll error", pollErr);
+                    pollErrors += 1;
+                    if (pollErrors >= 5) throw pollErr;
+                }
             }
             if (period && period.status === "error") {
                 state.items = [];
-                state.error = null;
-                state.searchErrorMsg = t("periodError", period.error || period.message || "");
+                state.error = "periodError";
+                state.searchErrorArg = period.error || period.message || "";
             } else {
-                state.items = await searchJudgements(range.from, range.to, currentLang);
+                const fetched = await searchJudgements(range.from, range.to, currentLang);
+                // Preserve any cases manually added via #add-case-form during the wait
+                const seen = new Set(fetched.map((i) => i.id));
+                const kept = (state.items || []).filter((i) => i._manuallyAdded && !seen.has(i.id));
+                state.items = [...kept, ...fetched];
                 state.error = null;
+                state.searchErrorArg = null;
             }
         } else {
             state.items = await searchJudgements(range.from, range.to, currentLang);
             state.error = null;
+            state.searchErrorArg = null;
         }
     } catch (err) {
         console.error(err);
         state.items = [];
         state.error = "errorSearch";
+        state.searchErrorArg = null;
     }
     if (searchGen !== periodSearchGeneration) return;
     state.hasSearched = true;
     state.searching = false;
     state.searchProgress = null;
+    frReasonAttempted.clear();
     button.disabled = false;
     button.classList.remove("loading");
     renderResults();
@@ -341,32 +357,29 @@ async function onAddCase(event) {
     const button = $("#add-case-btn");
     const value = input.value.trim();
     if (!value) {
-        $("#form-error").textContent = t("addCaseError");
+        showFormError("addCaseError");
         input.focus();
         return;
     }
-    $("#form-error").textContent = "";
+    showFormError(null);
     button.disabled = true;
     button.classList.add("loading");
     try {
         await thresholdsReady;
         const item = await addJudgement(value);
+        item._manuallyAdded = true;
         const idx = state.items.findIndex((i) => i.id === item.id);
         if (idx >= 0) state.items[idx] = item;
         else state.items.unshift(item);
         state.hasSearched = true;
         state.error = null;
-        state.searchErrorMsg = null;
+        state.searchErrorArg = null;
         input.value = "";
         renderResults();
         selectCase(item.id);
-        if (!USE_MOCK && !item.summarized) {
-            trackedQueueIds.add(item.id);
-            pollServerQueue(queueGeneration);
-        }
     } catch (err) {
         console.error(err);
-        $("#form-error").textContent = t("addCaseError");
+        showFormError("addCaseError");
     } finally {
         button.disabled = false;
         button.classList.remove("loading");
@@ -1078,11 +1091,6 @@ function renderList() {
                 p.total > 0 && el("span", { class: "sub", text: `${p.completed || 0} / ${p.total} (${pct} %)` })));
         return;
     }
-    if (state.searchErrorMsg) {
-        status.hidden = false;
-        status.textContent = state.searchErrorMsg;
-        return;
-    }
     let statusKey = null;
     if (searching) statusKey = "searching";
     else if (state.error) statusKey = state.error;
@@ -1090,7 +1098,7 @@ function renderList() {
     else if (total === 0) statusKey = "emptyNoResults";
     else if (visible.length === 0) statusKey = "emptyFiltered";
     status.hidden = !statusKey;
-    status.textContent = statusKey ? t(statusKey) : "";
+    status.textContent = statusKey ? t(statusKey, state.searchErrorArg || "") : "";
 }
 
 /* ---------- rendering: summary editor (detail panel and database) ---------- */
@@ -1314,17 +1322,18 @@ async function ensureFrenchReason(item) {
     const exp = item.explanation;
     if (!exp?.de || (exp.fr && exp.fr !== exp.de)) return;
     frReasonLoading.add(item.id);
+    let updated = false;
     try {
         const res = await translateReasonFr(item.id);
-        if (res?.explanation?.fr) item.explanation = { ...item.explanation, fr: res.explanation.fr };
-        if (res?.question?.fr && item.question) item.question = { ...item.question, fr: res.question.fr };
-        if (res?.rule?.fr && item.rule) item.rule = { ...item.rule, fr: res.rule.fr };
+        if (res?.explanation?.fr) { item.explanation = { ...item.explanation, fr: res.explanation.fr }; updated = true; }
+        if (res?.question?.fr && item.question) { item.question = { ...item.question, fr: res.question.fr }; updated = true; }
+        if (res?.rule?.fr && item.rule) { item.rule = { ...item.rule, fr: res.rule.fr }; updated = true; }
+        frReasonAttempted.add(item.id);
     } catch (err) {
         console.warn("FR translation failed", err);
     } finally {
         frReasonLoading.delete(item.id);
-        frReasonAttempted.add(item.id);
-        if (state.selectedId === item.id) renderDetail();
+        if (updated && state.selectedId === item.id) renderDetail();
     }
 }
 

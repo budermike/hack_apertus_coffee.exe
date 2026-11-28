@@ -204,3 +204,36 @@ def test_add_single_case_and_translate_fr_http(tmp_path):
         backend.queue.stop()
         server.shutdown()
         server.server_close()
+
+
+def test_failed_crawl_days_and_today_are_never_marked_covered(tmp_path):
+    from datetime import date
+
+    raw_dir = tmp_path / "raw"
+    raw_dir.mkdir()
+    store_dir = tmp_path / "periods"
+    jl = JudgementList(_write_triage(tmp_path / "triage.json", []), config=TriageConfig(), crawl_dir=raw_dir, extra_triage_dir=store_dir)
+
+    today = date.today().isoformat()
+    mgr = PeriodTriageManager(
+        raw_dir=raw_dir,
+        store_dir=store_dir,
+        judgements=jl,
+        ensure_fn=lambda *a, **kw: SimpleNamespace(failed_days=["2026-07-03"]),
+    )
+    try:
+        with pytest.raises(ValueError, match="today"):
+            mgr.ensure_async(today, today)
+
+        snap = mgr.ensure_async("2026-07-01", "2026-07-03")
+        assert snap["status"] == "running"
+        deadline = time.monotonic() + 2.0
+        while time.monotonic() < deadline:
+            cur = mgr.status("2026-07-01", "2026-07-03")
+            if cur["status"] != "running":
+                break
+            time.sleep(0.02)
+        assert cur["status"] == "error"
+        assert mgr.covers("2026-07-01", "2026-07-03") is False
+    finally:
+        mgr.stop()
