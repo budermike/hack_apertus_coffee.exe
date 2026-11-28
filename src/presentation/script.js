@@ -382,9 +382,9 @@ async function onSearch(event) {
     button.classList.remove("loading");
     renderResults();
 
-    if (USE_MOCK) {
-        queueRelevantSummaries();
-    }
+    // Right after the search the summaries of everything rated relevant start, best first
+    // (also for a period that was just fetched): nobody has to open a judgement first.
+    queueRelevantSummaries();
     localizeListSubjects();
 }
 
