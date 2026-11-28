@@ -69,6 +69,8 @@ def learned_scores(
     date_from: str,
     date_to: str,
     train_from: str | None = None,
+    train_to: str | None = None,
+    centre: bool = True,
     domain_flags: bool = True,
     l2: float = 1.0,
     extra_positive: tuple[str, ...] = (),
@@ -76,13 +78,16 @@ def learned_scores(
 ) -> pd.DataFrame:
     """Score a period with a model trained only on judgements decided before it.
 
+    ``train_from`` / ``train_to`` choose another labelled window (e.g. the next quarter for a
+    backward hold-out fold). ``centre=False`` uses the raw e5 vectors.
     ``extra_positive`` / ``extra_negative`` flip training labels: that is exactly what a
     boost / buff click would do before the next retraining.
     """
-    train_to = (pd.Timestamp(date_from) - pd.Timedelta(days=1)).date().isoformat()
+    if train_to is None:
+        train_to = (pd.Timestamp(date_from) - pd.Timedelta(days=1)).date().isoformat()
     train = corpus.keys(train_from, train_to)
     test = corpus.keys(date_from, date_to)
-    mean = corpus.mean_vector(date_to)
+    mean = corpus.mean_vector(max(date_to, train_to)) if centre else np.zeros(next(iter(corpus.vectors.values())).shape[1])
     y = corpus.meta.loc[train, "is_reference"].to_numpy(float)
     index = {k: i for i, k in enumerate(train)}
     for key in extra_positive:
