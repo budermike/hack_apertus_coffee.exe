@@ -526,8 +526,13 @@ async function enqueueOnServer(ids, priority = false) {
     } catch (err) {
         console.error(err);
         if (gen !== queueGeneration) return;
-        clean.forEach((id) => state.summaryError.add(id));
-        clean.forEach((id) => onSummaryChange(id));
+        const cleanSet = new Set(clean);
+        state.summaryQueue = state.summaryQueue.filter((id) => !cleanSet.has(id));
+        clean.forEach((id) => {
+            trackedQueueIds.delete(id);
+            state.summaryError.add(id);
+            onSummaryChange(id);
+        });
     }
 }
 
