@@ -924,7 +924,10 @@ class VectorDB:
         self._init_fts_sqlite()
         with self._connect_fts() as fts_conn:
             fts_count = int(fts_conn.execute("SELECT COUNT(*) FROM judgements_fts").fetchone()[0])
-        if fts_count == 0 and not self._fts_auto_rebuilt and self.count() > 0:
+        # fts.sqlite3 is not in Git. On a fresh clone the first ingest of a new day creates it
+        # with only that day's judgements, so "fewer rows than judgements" means incomplete,
+        # not just "empty": searching it would silently ignore everything older.
+        if fts_count < self.count() and not self._fts_auto_rebuilt:
             fts_raw_dir = self.raw_dir
             if fts_raw_dir is None and self.db_dir.resolve() == Path(DEFAULT_DB_DIR).resolve():
                 fts_raw_dir = Path(DEFAULT_RAW_DIR)
