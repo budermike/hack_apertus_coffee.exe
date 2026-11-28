@@ -100,4 +100,5 @@ pytest                                # unit tests (no network)
 - Prefer minimal scaffolding. Implement what the issue asks for, no more. If the task is unclear or the scope grows, stop and ask.
 - Do not rewrite or reformat unrelated files. Do not delete other people's work.
 - Explain non-obvious decisions in the PR description; larger decisions go to `docs/DECISIONS.md`.
-- TODO: add project-specific conventions after the challenge is assigned.
+- Summaries database: all access goes through `summary/store.py`; the file is set with `SUMMARY_DB_PATH`. Generated rows are never changed or deleted. Next to them there is at most one edited version per language (`replace_edit`); `discard_edit` returns to the generated text.
+- The web UI talks only to `/api/...` in `summary/api.py`. Modules call each other only through the functions listed in `docs/ARCHITECTURE.md` ("Contract").
