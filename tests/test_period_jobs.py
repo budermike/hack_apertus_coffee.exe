@@ -606,3 +606,71 @@ def test_a_period_file_never_replaces_a_valid_judgement_of_the_primary_file(tmp_
     items = {i["caseNumber"]: i for i in JudgementList(primary, config=TriageConfig(), extra_triage_dir=store_dir).items()}
     assert items["8C_676/2025"]["score"] == 36.0
     assert items["8C_677/2025"]["score"] == 72.0 and items["8C_900/2026"]["score"] == 75.0
+
+
+def test_fast_crawl_failure_sets_crawl_failed_code_and_days(tmp_path, monkeypatch):
+    from hack_apertus_coffee_exe.crawl import crawl as crawl_mod
+
+    raw_dir = tmp_path / "raw"
+    raw_dir.mkdir()
+    store_dir = tmp_path / "periods"
+    jl = JudgementList(_write_triage(tmp_path / "triage.json", []), config=TriageConfig(), crawl_dir=raw_dir, extra_triage_dir=store_dir)
+
+    def failing_list(_cfg, _day):
+        raise OSError("network unreachable")
+
+    monkeypatch.setitem(crawl_mod.SOURCES, "entscheidsuche", (failing_list, lambda *_a: ("", "")))
+    mgr = PeriodTriageManager(
+        raw_dir=raw_dir,
+        crawl_cache_dir=tmp_path / "crawl_cache",
+        store_dir=store_dir,
+        judgements=jl,
+    )
+    try:
+        mgr.ensure_async("2025-05-01", "2025-05-02")
+        deadline = time.monotonic() + 2.0
+        while time.monotonic() < deadline:
+            cur = mgr.status("2025-05-01", "2025-05-02")
+            if cur["status"] != "running":
+                break
+            time.sleep(0.02)
+        assert cur["status"] == "error"
+        assert cur["errorCode"] == "crawl_failed"
+        assert cur["failedDays"] == ["2025-05-01", "2025-05-02"]
+    finally:
+        mgr.stop()
+
+
+def test_total_triage_failure_sets_triage_failed_code(tmp_path):
+    raw_dir = tmp_path / "raw"
+    _raw(raw_dir, "8C_500/2026", "2026-07-01")
+    store_dir = tmp_path / "periods"
+    jl = JudgementList(_write_triage(tmp_path / "triage.json", []), config=TriageConfig(), crawl_dir=raw_dir, extra_triage_dir=store_dir)
+
+    class FailingClient:
+        model = "apertus-v1-5-70b"
+
+        def call(self, stage, key, system, user, schema, max_tokens):
+            raise RuntimeError("gateway 503")
+
+    mgr = PeriodTriageManager(
+        raw_dir=raw_dir,
+        crawl_cache_dir=tmp_path / "crawl_cache",
+        store_dir=store_dir,
+        judgements=jl,
+        ensure_fn=lambda *a, **kw: None,
+        client_factory=FailingClient,
+    )
+    try:
+        mgr.ensure_async("2026-07-01", "2026-07-01")
+        deadline = time.monotonic() + 2.0
+        while time.monotonic() < deadline:
+            cur = mgr.status("2026-07-01", "2026-07-01")
+            if cur["status"] != "running":
+                break
+            time.sleep(0.02)
+        assert cur["status"] == "error"
+        assert cur["errorCode"] == "triage_failed"
+        assert cur["failedDays"] == []
+    finally:
+        mgr.stop()
