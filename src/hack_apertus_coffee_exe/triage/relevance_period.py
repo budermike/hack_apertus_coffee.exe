@@ -145,6 +145,9 @@ def to_results(
             "principle": deep.get("a_grundsatz"), "uv_use": deep.get("b_nutzen_uv"), "rule": deep.get("d_merksatz"),
             "deep_score": deep.get("e_score"),
         }
+        thinking = "\n\n".join(t for t in (triage.get("thinking"), deep.get("thinking")) if t)
+        if thinking:  # reasoning of a "-thinking" model before its answer (#76)
+            metadata["relevance"]["thinking"] = thinking
         results.append(
             TriageResult(
                 case_id=record["case_id"], final_score=score, cosine_score=0.0, relevant=ampel == calibration.AMPEL_GREEN,

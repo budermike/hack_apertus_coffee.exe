@@ -32,10 +32,11 @@ import re
 from typing import Any, Callable, Sequence
 
 from .cache import entry_key
+from .config import load_config
 from .llm import GatewayConfig, _build_client
 from .pipeline import CrawlItem
 
-DEFAULT_MODEL = "apertus-v1-5-70b"
+DEFAULT_MODEL = load_config().relevance_model  # configs/triage.json; "-thinking" = reasoning mode (#76)
 SEED = 7
 DEEP_MIN_SCORE = 50  # triage score from which the second pass runs
 LIST_AREAS = ("UV", "IV", "MV")  # only these areas can reach the Suva list
@@ -359,6 +360,35 @@ def _valid(data: Any, schema: dict[str, Any]) -> bool:
 # ------------------------------------------------------------------ Apertus calls
 
 
+_THINK_RE = re.compile(r"<think>(.*?)</think>", re.S | re.I)
+
+
+def is_thinking_model(model: str) -> bool:
+    """Apertus reasoning models end in ``-thinking`` (e.g. ``apertus-v1-5-70b-thinking``)."""
+    return model.endswith("-thinking")
+
+
+def split_thinking(message: Any) -> tuple[str, str]:
+    """Reasoning and answer text of a thinking model's message (#76).
+
+    The reasoning comes either in a separate field (``reasoning_content`` / ``reasoning``)
+    or as ``<think>…</think>`` in front of the answer. The answer text is reduced to the
+    JSON object (from the first ``{`` to the last ``}``).
+    """
+    content = message.content or ""
+    parts = [getattr(message, "reasoning_content", None) or getattr(message, "reasoning", None) or ""]
+    parts += _THINK_RE.findall(content)
+    content = _THINK_RE.sub("", content)
+    start, end = content.find("{"), content.rfind("}")
+    answer = content[start : end + 1] if start != -1 and end > start else content.strip()
+    return "\n".join(p.strip() for p in parts if p and p.strip()), answer
+
+
+def _format_rejected(exc: Exception) -> bool:
+    """The gateway refused ``response_format`` (HTTP 400 / 422), e.g. for a reasoning model."""
+    return type(exc).__name__ in ("BadRequestError", "UnprocessableEntityError")
+
+
 class RelevanceError(RuntimeError):
     """Apertus gave no valid answer after the retry; the judgement is reported, never dropped silently."""
 
@@ -372,10 +402,17 @@ class ApertusRelevanceClient:
         client: Any | None = None,
         cache_dir: str | Path | None = None,
         timeout: int = 120,
+        thinking_extra_tokens: int | None = None,
     ) -> None:
         self.config = config or GatewayConfig.from_env(model=DEFAULT_MODEL)
         self._client = client  # built on the first real call, so cached runs need no API key
         self._timeout = timeout
+        # Thinking models (#76) reason before they answer: more tokens, reasoning kept separately.
+        self.thinking = is_thinking_model(self.config.model)
+        self.thinking_extra_tokens = (
+            load_config().thinking_extra_tokens if thinking_extra_tokens is None else thinking_extra_tokens
+        )
+        self._send_format = True  # switched off once the gateway refuses response_format
         self.cache_dir = Path(cache_dir) / "relevance" if cache_dir else None
         self.calls = 0  # real gateway calls (cache hits do not count)
 
@@ -403,23 +440,38 @@ class ApertusRelevanceClient:
             # One transport retry only: a hanging shared gateway must not block a worker for many minutes.
             # A judgement that still fails is stored with its error and scored on the next run (the rest is cached).
             self._client = _build_client(self.config, timeout=self._timeout, max_retries=1)
+        extra = self.thinking_extra_tokens if self.thinking else 0
         for attempt, limit in enumerate((max_tokens, max_tokens * 2)):
-            self.calls += 1
-            response = self._client.chat.completions.create(
+            request_args: dict[str, Any] = dict(
                 model=self.model,
                 messages=messages,
                 temperature=0.0 if attempt == 0 else 0.4,
                 seed=SEED,
-                max_tokens=limit,
-                response_format=fmt,
+                max_tokens=limit + extra,
             )
-            choice = response.choices[0]
+            if self._send_format:
+                request_args["response_format"] = fmt
+            self.calls += 1
             try:
-                answer = json.loads(choice.message.content or "")
+                response = self._client.chat.completions.create(**request_args)
+            except Exception as exc:
+                if not (self.thinking and self._send_format and _format_rejected(exc)):
+                    raise
+                # Reasoning model without structured output: ask again, the prompt still demands JSON.
+                self._send_format = False
+                request_args.pop("response_format")
+                self.calls += 1
+                response = self._client.chat.completions.create(**request_args)
+            choice = response.choices[0]
+            thinking, text = split_thinking(choice.message) if self.thinking else ("", choice.message.content or "")
+            try:
+                answer = json.loads(text)
             except json.JSONDecodeError as exc:
                 last = f"invalid JSON ({exc.msg})"
                 continue
             if choice.finish_reason == "stop" and _valid(answer, schema):
+                if thinking:
+                    answer["thinking"] = thinking  # kept with the answer (cache and results), not part of the schema
                 if path:
                     path.parent.mkdir(parents=True, exist_ok=True)
                     tmp = path.with_name(path.name + ".tmp")

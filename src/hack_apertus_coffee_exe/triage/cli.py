@@ -179,8 +179,12 @@ def _cmd_relevance(args: argparse.Namespace) -> int:
 
     config = load_config(args.config)
     list_factor = args.list_factor if args.list_factor is not None else config.list_factor
-    cfg = GatewayConfig.from_env(model=args.model or relevance.DEFAULT_MODEL)
-    client = relevance.ApertusRelevanceClient(config=cfg, cache_dir=None if args.no_cache else (args.cache_dir or config.cache_dir))
+    cfg = GatewayConfig.from_env(model=args.model or config.relevance_model)
+    client = relevance.ApertusRelevanceClient(
+        config=cfg,
+        cache_dir=None if args.no_cache else (args.cache_dir or config.cache_dir),
+        thinking_extra_tokens=config.thinking_extra_tokens,
+    )
     out = relevance_period.run(
         args.period,
         label_periods=args.label_periods or config.label_periods,
@@ -258,7 +262,10 @@ def build_parser() -> argparse.ArgumentParser:
     p_rel.add_argument("--label-periods", nargs="*", default=None, help="Periods with known Suva selection (default: config)")
     p_rel.add_argument("--input", default="data/raw", help="Crawl folder with <YYYY-MM>/ sub-folders")
     p_rel.add_argument("--judgements-dir", default="judgements", help="Directory with the Suva label list and summaries")
-    p_rel.add_argument("--model", default=None, help="Apertus model ID (default: apertus-v1-5-70b)")
+    p_rel.add_argument(
+        "--model", default=None,
+        help="Apertus model ID (default: relevance_model in configs/triage.json; '-thinking' = reasoning mode, #76)",
+    )
     p_rel.add_argument("--list-factor", type=float, default=None, help="Multiplier on the F2 threshold; below 1 = longer list, higher recall")
     p_rel.add_argument("--workers", type=int, default=8, help="Parallel gateway calls")
     p_rel.add_argument("--config", default=None, help="Triage config JSON (default: configs/triage.json)")

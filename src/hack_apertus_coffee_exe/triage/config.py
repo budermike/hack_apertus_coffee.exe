@@ -39,6 +39,12 @@ class TriageConfig:
     # selection is known, and the multiplier on the F2 threshold (below 1 = longer list, higher recall).
     label_periods: tuple[str, ...] = ("2025-Q4", "2026-Q1")
     list_factor: float = 0.3
+    # Apertus model of the relevance scoring. A "-thinking" model reasons before it answers
+    # (#76); thinking_extra_tokens leaves room for that reasoning on top of the answer limit.
+    # Another model gives other scores: after a change, re-run the labelled periods so the
+    # calibration fits (docs/DECISIONS.md).
+    relevance_model: str = "apertus-v1-5-70b"
+    thinking_extra_tokens: int = 4000
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "label_periods", tuple(self.label_periods))
