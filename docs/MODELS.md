@@ -39,6 +39,7 @@ Hier stehen auch **Coding-Assistenten** und alle Modelle, mit denen Texte, Code,
 | D4 | <Video- oder Sprachtool, z.B. ElevenLabs, Edit with Ava, falls genutzt> | | | Demo-Video / Pitch (nicht in der Lösung) | Entwicklung | nein | |
 | D5 | Claude Code (Coding-Assistent) | Claude Opus 5.5 (`claude-opus-5-5`) | Anthropic | Summary-Modul (`src/hack_apertus_coffee_exe/summary/`), Stilprofile und Glossar (`prompts/`), Tests; Paket-Layout-Fix | Entwicklung | nein | Mike, 27.11.2026 |
 | D6 | Claude Code (Coding-Assistent) | Claude Fable 5.2 (`claude-fable-5-2`) | Anthropic | Evaluation #21: `eval/eval.py`, Tests, `results/eval.md` (rechnet nur Metriken, bewertet keine Antworten). Relevanz-Bewertung für die Suva-Liste: `triage/relevance.py`, `triage/calibration.py`, `triage/relevance_period.py`, `eval/relevance_eval.py`, Tests, Benchmark und `docs/ISSUE_RECALL.md` (schreibt Code und Prompts; die Bewertung der Urteile macht Apertus) | Entwicklung | nein | abirahm, 27.11.2026 |
+| D7 | Claude Code (Coding-Assistent) | Claude Fable 5.2 (`claude-fable-5-2`), Claude Opus 5.5 (`claude-opus-5-5`) | Anthropic | Web-Oberfläche (`src/presentation/`), Urteilsliste für die UI (`present/judgements.py`), Audit und Issue-Entwürfe (`docs/FRONTEND_OPEN_ISSUES.md`) | Entwicklung | nein | lim_n_to_infty, 27.11.2026 |
 
 Hinweis: Diese Tools dürfen beim Entwickeln benutzt werden (Regel 2), aber **nicht zur Laufzeit** der Lösung (Regel 3).
 

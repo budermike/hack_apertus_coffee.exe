@@ -22,7 +22,6 @@ services:
       # Crawled judgements (data/raw), vector DB (data/processed/vectordb) and the
       # summaries DB (data/processed/summaries.db) live on the host.
       - ./data:/app/data
-    # Once the judgement list is merged (GET /api/judgements, feat/present-judgements),
-    # the server needs the triage results as well:
-    # command: ["--input", "data/raw", "--static", "src/presentation", "--triage", "results/triage_q2_2026.json"]
+    # Serves the UI with real Q2/2026 Apertus triage results (GET /api/judgements):
+    command: ["--input", "data/raw", "--static", "src/presentation", "--triage", "results/triage_q2_2026.json"]
     restart: unless-stopped

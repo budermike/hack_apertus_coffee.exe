@@ -11,6 +11,7 @@
     </script>
     <script src="i18n.js" defer></script>
     <script src="datepicker.js" defer></script>
+    <script src="mock.js" defer></script>
     <script src="api.js" defer></script>
     <script src="script.js" defer></script>
 </head>
@@ -18,7 +19,8 @@
     <header class="appbar">
         <div class="top">
             <h1 data-i18n="appTitle">Urteilsradar</h1>
-            <p class="tagline" data-i18n="appSubtitle"></p>
+            <span id="mock-badge" class="tag warn" hidden data-i18n="mockBadge" data-i18n-attr="title:mockBadgeHint">Demo-Daten</span>
+            <p id="sum-line" class="tagline" aria-live="polite"></p>
             <div class="lang-switch" role="group" data-i18n-attr="aria-label:language">
                 <button type="button" data-lang="de">DE</button><button type="button" data-lang="fr">FR</button>
             </div>
@@ -68,6 +70,8 @@
                     <div id="filter-bar" class="filters" hidden>
                         <input id="filter-text" type="search" autocomplete="off"
                                data-i18n-attr="placeholder:filterText;aria-label:filterText">
+                        <div id="filter-level" class="seg" role="group" data-i18n-attr="aria-label:filterLevel"></div>
+                        <select id="filter-area" data-i18n-attr="aria-label:filterArea"></select>
                         <span class="filter-label" data-i18n="relevance">Relevanz</span>
                         <input id="filter-min" type="text" class="num" inputmode="numeric" maxlength="3" autocomplete="off" value="0"
                                data-i18n-attr="aria-label:filterMin">
@@ -75,6 +79,7 @@
                         <input id="filter-max" type="text" class="num" inputmode="numeric" maxlength="3" autocomplete="off" value="100"
                                data-i18n-attr="aria-label:filterMax">
                         <button id="filter-reset" type="button" class="btn" data-i18n="resetFilters">Zurücksetzen</button>
+                        <button id="summarize-checked" type="button" class="btn pri" hidden></button>
                         <span id="results-count" class="sub results-count"></span>
                     </div>
                     <div class="scroll">
@@ -100,8 +105,8 @@
                     <input id="kb-search" type="search" autocomplete="off"
                            data-i18n-attr="placeholder:kbSearchPlaceholder;aria-label:kbSearchPlaceholder">
                     <span id="kb-count" class="sub results-count"></span>
-                    <!-- TEMPORARY (development): remove together with clearDatabase() in api.js -->
-                    <button id="kb-clear" type="button" class="btn" data-i18n="clearDb">Datenbank leeren (temporär)</button>
+                    <!-- mock mode only (development): the real database keeps every version -->
+                    <button id="kb-clear" type="button" class="btn" hidden data-i18n="clearDb">Datenbank leeren (temporär)</button>
                 </div>
                 <p id="kb-status" class="empty"></p>
                 <ul id="kb-list" class="kb-list"></ul>
