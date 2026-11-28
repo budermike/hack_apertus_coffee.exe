@@ -522,7 +522,14 @@ class PeriodTriageManager:
                         list_factor=self.config.list_factor,
                         config=self.config,
                     )
-                    payload = [r.to_dict() for r in results]
+                    rec_by_id = {r["case_id"]: r for r in valid_records}
+                    payload = []
+                    for r in results:
+                        row_dict = r.to_dict()
+                        src_rec = rec_by_id.get(row_dict["case_id"])
+                        if src_rec and isinstance(src_rec.get("single_judge"), bool):
+                            row_dict.setdefault("metadata", {}).setdefault("relevance", {})["single_judge"] = src_rec["single_judge"]
+                        payload.append(row_dict)
 
             if cancel_event.is_set():
                 raise _CancelledJob("Suche abgebrochen.")

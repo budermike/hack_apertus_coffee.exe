@@ -6,6 +6,8 @@
  *  before the first search. */
 let SUMMARY_THRESHOLD = 60;
 let MEDIUM_THRESHOLD = 40;
+/** Why the thresholds sit where they do ({ de: [...], fr: [...] } from GET /api/config); null = not known. */
+let THRESHOLD_BASIS = null;
 /** Summaries are requested one after the other (this many at a time), best relevance first:
  *  each one takes several Apertus calls on a shared gateway. */
 const SUMMARY_CONCURRENCY = 2;
@@ -198,6 +200,13 @@ async function loadThresholds() {
             setDateInput(toInput, config.availableRange.to);
         }
     }
+    if (config?.thresholdBasis && typeof config.thresholdBasis === "object") THRESHOLD_BASIS = config.thresholdBasis;
+}
+
+/** Sentences that explain the thresholds in the current language; empty when the backend sent none. */
+function thresholdBasisText() {
+    const basis = THRESHOLD_BASIS?.[currentLang] || THRESHOLD_BASIS?.de;
+    return Array.isArray(basis) ? basis.filter((line) => typeof line === "string") : [];
 }
 
 let thresholdsReady = Promise.resolve();
@@ -349,6 +358,7 @@ async function onSearch(event) {
     if (USE_MOCK) {
         queueRelevantSummaries();
     }
+    localizeListSubjects();
 }
 
 /* ---------- filters + sorting ---------- */
@@ -513,8 +523,12 @@ async function setRelevance(id, level) {
     renderList();
     if (id === state.selectedId) renderDetail();
     if (moved) queueRelevantSummaries();   // learning may have lifted judgements over the threshold
-    const message = !stored ? t("feedbackLocalOnly") : moved ? t("feedbackLearned", moved) : t("feedbackSaved");
-    toast(message, stored && !moved ? 4000 : 7000);
+    // a judgement Apertus did not score has nothing the system could learn from: say so
+    const notLearnable = stored && Boolean(item.userLevel) && item.scored === false;
+    const message = !stored ? t("feedbackLocalOnly")
+        : notLearnable ? t("feedbackNotLearnable")
+        : moved ? t("feedbackLearned", moved) : t("feedbackSaved");
+    toast(message, stored && !moved && !notLearnable ? 4000 : 8000);
 }
 
 /* ---------- summaries: server-side queue (#68) + mock fallback ---------- */
@@ -879,7 +893,7 @@ async function onClearDb() {
 function relevanceScale(item) {
     const score = effectiveScore(item);
     return el("div", { class: "scale-cell" },
-        el("div", { class: `scale ${scoreLevel(score)}`, title: t("scaleTitle", score, SUMMARY_THRESHOLD) },
+        el("div", { class: `scale ${scoreLevel(score)}`, title: [t("scaleTitle", score, SUMMARY_THRESHOLD), ...thresholdBasisText()].join("\n\n") },
             el("i", { style: `left:${SUMMARY_THRESHOLD}%` }),
             el("b", { style: `left:${score}%` })),
         el("span", { class: "pnum", text: String(score) }),
@@ -1089,12 +1103,20 @@ function criteriaSection(item) {
     const count = item.criteria.length;
     const signals = [...item.signals, ...item.topics];
     const body = el("div", { class: "crit-body", hidden: !state.criteriaOpen },
-        count > 0 && el("ul", { class: "crit" }, item.criteria.map((c) => {
+        count > 0 && el("ul", { class: "crit" }, item.criteria.map((c, index) => {
             const status = QUOTE_STATUS[c.status];
+            // The court's wording exists in the language of the judgement only. In the other
+            // UI language Apertus' rendering is shown and marked; the original stays one click away.
+            const rendered = item.lang !== currentLang ? item.localized?.[currentLang]?.quotes?.[index] : null;
             return el("li", {},
                 el("strong", { text: `${c.id} ` }), criterionName(c.id), " ",
                 status && el("span", { class: `tag ${status.tag}`, text: t(status.key) }),
-                el("blockquote", { lang: item.lang }, `«${c.quote}»`, el("div", { class: "sub", text: formatRef(c.at) })));
+                el("blockquote", { lang: rendered ? currentLang : item.lang }, `«${rendered || c.quote}»`,
+                    rendered && el("div", { class: "sub rendered-note", text: t("quoteRendered", item.lang) }),
+                    el("div", { class: "sub", text: formatRef(c.at) }),
+                    rendered && el("details", { class: "quote-original" },
+                        el("summary", { text: t("quoteOriginal") }),
+                        el("p", { lang: item.lang, text: `«${c.quote}»` }))));
         })),
         count === 0 && signals.length > 0 && el("p", { class: "signals" },
             el("span", { class: "sub", text: `${t("signals")}: ` }),
@@ -1118,10 +1140,14 @@ function summarizeButton(id, labelKey) {
 
 function summaryBasisSection(entry) {
     const facts = entry?.facts;
-    const laws = Array.isArray(facts?.gesetzesartikel) ? facts.gesetzesartikel.filter(Boolean) : [];
-    const points = Array.isArray(facts?.kernerwaegungen)
-        ? facts.kernerwaegungen.filter((k) => k && (k.aussage || k.erwaegung))
-        : [];
+    // the facts are stored in German; `basis` holds Apertus' rendering in the other language
+    const rendered = currentLang !== "de" ? entry?.basis?.[currentLang] : null;
+    const laws = rendered?.laws?.length
+        ? rendered.laws
+        : (Array.isArray(facts?.gesetzesartikel) ? facts.gesetzesartikel.filter(Boolean) : []);
+    const points = rendered?.considerations?.length
+        ? rendered.considerations
+        : (Array.isArray(facts?.kernerwaegungen) ? facts.kernerwaegungen.filter((k) => k && (k.aussage || k.erwaegung)) : []);
     const examples = Array.isArray(entry?.examples) ? entry.examples.filter(Boolean) : [];
     if (!laws.length && !points.length && !examples.length) return null;
     return el("details", { class: "summary-basis" },
@@ -1153,6 +1179,7 @@ function summarySection(item) {
             return [
                 heading,
                 el("p", { class: "note", text: t("notAutoSummarized", SUMMARY_THRESHOLD, effectiveScore(item)) }),
+                ...(thresholdBasisText().length > 0 ? [el("p", { class: "note", text: thresholdBasisText().join(" ") })] : []),
                 summarizeButton(id, "summarize"),
             ];
     }
@@ -1185,7 +1212,7 @@ function correctionSection(item) {
     });
     return [
         el("h3", { text: t("correction") }),
-        el("p", { class: "note", text: t("correctionNote") }),
+        el("p", { class: "note", text: t(item.scored === false ? "correctionNoteUnscored" : "correctionNote") }),
         item.feedbackLocalOnly && el("p", { class: "note warn-note", text: t("feedbackLocalOnly") }),
         el("div", { class: "row editor-footer" },
             button("high", "markRelevant", "relevant"),
@@ -1207,6 +1234,76 @@ function textSection(titleKey, field) {
 
 const frReasonLoading = new Set();
 const frReasonAttempted = new Set();
+
+/* ---------- one language throughout: subjects, quotes, summary basis ---------- */
+
+let subjectRun = 0;
+
+/** Subjects of the list in the language of the UI. The backend delivers the stored ones;
+ *  the missing ones are asked for in portions (Apertus), best judgements first, and each
+ *  row is updated as soon as its subject is there. Stops when Apertus cannot be reached:
+ *  the originals stay. */
+async function localizeListSubjects() {
+    if (USE_MOCK) return;
+    const run = ++subjectRun;
+    const lang = currentLang;
+    const ids = state.items.filter((item) => item.subjectMissing.includes(lang)).map((item) => item.id);
+    for (let start = 0; start < ids.length; start += 40) {
+        let answer;
+        try {
+            answer = await localizeSubjects(lang, ids.slice(start, start + 40));
+        } catch (err) {
+            console.warn("subjects not carried over", err);
+            return;
+        }
+        if (run !== subjectRun) return;   // a newer search or another language took over
+        for (const [id, text] of Object.entries(answer?.subjects || {})) {
+            const item = findItem(id);
+            if (!item) continue;
+            item.subject = { ...item.subject, [lang]: text };
+            item.subjectMissing = item.subjectMissing.filter((missing) => missing !== lang);
+            refreshRow(id);
+        }
+        if (state.selectedId && ids.slice(start, start + 40).includes(state.selectedId)) renderDetail();
+        if (state.activeTab === "kb") renderKb();
+        if (answer?.complete === false) return;
+    }
+}
+
+const localizeLoading = new Set();
+const localizeDone = new Set();
+
+/** Quotes under the criteria and the basis of the summary in the language of the UI, for
+ *  the judgement on show. Asked once per judgement, language and state (with or without a
+ *  summary); the backend stores every text after the first time. */
+async function ensureLocalized(item) {
+    if (USE_MOCK || !item) return;
+    const lang = currentLang;
+    const entry = state.summaries[item.id];
+    const wantsQuotes = item.lang !== lang && item.criteria.length > 0 && !item.localized?.[lang];
+    const wantsBasis = lang !== "de" && Boolean(entry?.facts) && !entry.basis?.[lang];
+    const key = `${item.id}:${lang}:${entry ? "summary" : "list"}`;
+    if ((!wantsQuotes && !wantsBasis) || localizeLoading.has(key) || localizeDone.has(key)) return;
+    localizeLoading.add(key);
+    try {
+        const answer = await localizeJudgement(item.id, lang);
+        if (!answer) return;
+        item.localized = { ...item.localized, [lang]: { quotes: answer.quotes || {} } };
+        if (answer.subject) {
+            item.subject = { ...item.subject, [lang]: answer.subject };
+            item.subjectMissing = item.subjectMissing.filter((missing) => missing !== lang);
+            refreshRow(item.id);
+        }
+        const current = state.summaries[item.id];
+        if (current && answer.basis) current.basis = { ...current.basis, [lang]: answer.basis };
+        if (answer.complete !== false) localizeDone.add(key);
+        if (state.selectedId === item.id) renderDetail();
+    } catch (err) {
+        console.warn("judgement not carried over", err);
+    } finally {
+        localizeLoading.delete(key);
+    }
+}
 
 async function ensureFrenchReason(item) {
     if (USE_MOCK || currentLang !== "fr" || !item || frReasonLoading.has(item.id) || frReasonAttempted.has(item.id)) {
@@ -1246,6 +1343,7 @@ function renderDetail() {
     }
     detailSplitter?.refresh();
     ensureFrenchReason(item);
+    ensureLocalized(item);
 
     const meta = [
         item.date && formatDate(item.date), loc(item.court), areaLabel(item), subjectDetail(item), outcomeName(item.outcome),
@@ -1363,6 +1461,7 @@ function renderLanguage() {
     showFormError(formErrorKey);
     renderResults();
     renderKb();
+    localizeListSubjects();   // subjects of the list in the language just chosen
 }
 
 /* ---------- init ---------- */

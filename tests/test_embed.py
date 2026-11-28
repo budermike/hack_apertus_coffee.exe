@@ -35,7 +35,7 @@ def test_chunk_text_splits_with_overlap():
 
 
 def test_e5_prefixes_and_l2_normalization(monkeypatch):
-    import sentence_transformers
+    sentence_transformers = pytest.importorskip("sentence_transformers")
 
     fake_holder: dict[str, _FakeSentenceTransformer] = {}
 

@@ -152,6 +152,8 @@ Auf dem Rechner, auf dem der Lauf lief, kostet ein neuer Lauf mit anderem Faktor
 
 ## Ergebnis für Q2/2026
 
+> **Seit #75 (28.11.2026):** Die Liste entsteht nicht mehr mit `list_factor` 0,3, sondern mit dem Recall-Ziel `target_recall` 0,95 in `configs/triage.json`: Die Schwelle steht dort, wo 95 % der bekannten Suva-Urteile aus Q4/2025 und Q1/2026 darüber liegen (0,068); gelb beginnt, wo alle darüber liegen (0,053). Für Q2/2026: **103 Urteile auf der Liste** (39 Unfall-, 63 Invaliden-, 1 Militärversicherung), 26 davon im Juni, 8 gelb. Im Hold-out: 58 von 59 gefunden (98,3 %), Liste 193 statt 226 in zwei Quartalen (`results/relevance_eval.md`). Warum die Schwellen dort liegen, steht in `basis` der Kalibrierdatei und in der Oberfläche beim Score. Die Zahlen unten beschreiben den Stand mit Faktor 0,3.
+
 Lauf vom 27.11.2026 mit `apertus-v1-5-70b`, kalibriert auf Q4/2025 und Q1/2026 (300 bewertete Urteile, 59 von der Suva gewählt, F2-Schwelle 0,148).
 
 - 410 Urteile der beiden Abteilungen, 187 davon von Apertus bewertet (313 Aufrufe, rund sieben Minuten), kein Urteil gescheitert.

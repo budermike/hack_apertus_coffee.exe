@@ -164,16 +164,17 @@ def to_results(
     """Ranked ``TriageResult`` list on the project's traffic-light scale.
 
     ``final_score`` is the relevance value mapped so that the list threshold is
-    ``config.green_threshold`` and half of it ``config.yellow_threshold``; the
+    ``config.green_threshold`` and the lower bound of yellow ``config.yellow_threshold``; the
     colours therefore agree with ``TriageConfig.ampel_for`` and with the UI.
     """
     config = config or TriageConfig()
-    t_list = cal["t"] * list_factor
+    t_list = calibration.list_threshold(cal, list_factor)
+    t_yellow = calibration.yellow_threshold(cal, list_factor)
     scored = []
     for record in records:
         p = calibration.relevance(record, cal)
         ampel = calibration.ampel_for(p, cal, list_factor)
-        score = calibration.display_score(p, t_list, config.green_threshold, config.yellow_threshold)
+        score = calibration.display_score(p, t_list, config.green_threshold, config.yellow_threshold, t_yellow)
         if record.get("error"):  # a failed call must be looked at, never silently red
             ampel, score = calibration.AMPEL_YELLOW, config.yellow_threshold
         scored.append((score, p, record, ampel))
@@ -192,25 +193,18 @@ def to_results(
             }
         )
         metadata["relevance"] = {
-            "p": p, "threshold": round(t_list, 4), "area": record["area"], "outcome": record.get("outcome"),
-            "single_judge": record.get("single_judge"),
+            "p": p, "threshold": round(t_list, 4), "yellow_threshold": round(t_yellow, 4), "area": record["area"], "outcome": record.get("outcome"),
             "question": triage.get("a_rechtsfrage"), "criteria": triage.get("b_kriterien", []),
             "principle": deep.get("a_grundsatz"), "uv_use": deep.get("b_nutzen_uv"), "rule": deep.get("d_merksatz"),
             "deep_score": deep.get("e_score"),
         }
-        similar_cases = []
-        for x in record.get("precedents", []):
-            entry = {"case_id": x["case_id"], "similarity": x["similarity"]}
-            if x.get("subject"):
-                entry["subject"] = x["subject"]
-            similar_cases.append(entry)
         results.append(
             TriageResult(
                 case_id=record["case_id"], final_score=score, cosine_score=0.0, relevant=ampel == calibration.AMPEL_GREEN,
                 relevance_reason=_reason(record), cosine_max_similarity=0.0, cosine_topk_similarity=0.0,
                 apertus_score=float(triage["d_score"]) if triage else None, keyword_hits=[],
                 key_topics=[c["a_id"] for c in triage.get("b_kriterien", [])],
-                similar_cases=similar_cases,
+                similar_cases=[{"case_id": x["case_id"], "similarity": x["similarity"]} for x in record.get("precedents", [])],
                 metadata=metadata, language=record.get("language") or "de", embedder="none (relevance scoring)",
                 llm_model=record.get("model") if triage else None, judgement_date=record.get("decision_date") or None,
                 rank=rank, ampel=ampel, rank_score=score,
@@ -231,6 +225,7 @@ def run(
     log: Callable[[str], None] = print,
     config: TriageConfig | None = None,
     allow_failed: bool = False,
+    from_scores: bool = False,
 ) -> dict[str, Any]:
     """Score ``period_name`` and the labelled periods before it; returns records, calibration and results.
 
@@ -240,6 +235,10 @@ def run(
     raised: a list from such a run is shorter and its calibration differs. Run again; with
     a cache only the missing judgements are asked. ``allow_failed`` writes everything anyway
     and shows these judgements in yellow.
+
+    ``from_scores`` reads the stored score files of ``tables_dir`` instead of asking
+    Apertus (no gateway, no key): for changing thresholds or the calibration only.
+    The score files are then left as they are.
     """
     period = DateRange.from_period(period_name)
     client = client or ApertusRelevanceClient(cache_dir="data/processed/triage")
@@ -255,7 +254,14 @@ def run(
     scored = []
     for name in [*earlier, period_name]:
         rng = DateRange.from_period(name)
-        records, items = score_period(rng, client, pool, raw_dir, workers, lambda a, b, n=name: log(f"  {n}: {a}/{b}"))
+        if from_scores:
+            path = scores_path(tables_dir, rng)
+            if not path.exists():
+                raise FileNotFoundError(f"{path} is missing: score {name} with Apertus first (without --from-scores)")
+            records = json.loads(path.read_text(encoding="utf-8"))
+            items = {item.case_id: item for item in load_period_items(raw_dir, rng)}
+        else:
+            records, items = score_period(rng, client, pool, raw_dir, workers, lambda a, b, n=name: log(f"  {n}: {a}/{b}"))
         scored.append((name, rng, records, items))
 
     missing = {name: [r for r in records if not_asked(r)] for name, _, records, _ in scored}
@@ -272,15 +278,18 @@ def run(
     train: list[dict[str, Any]] = []
     for name, rng, records, items in scored:
         path = scores_path(tables_dir, rng)
-        path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(json.dumps([public_record(r) for r in records], ensure_ascii=False, indent=1), encoding="utf-8")
+        if not from_scores:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(json.dumps([public_record(r) for r in records], ensure_ascii=False, indent=1), encoding="utf-8")
         failed = sum(bool(r.get("error")) for r in records)
-        log(f"{name}: {len(records)} candidates, {sum(r['triage'] is not None for r in records)} scored by Apertus, {failed} failed -> {path}")
+        source = "read from" if from_scores else "->"
+        log(f"{name}: {len(records)} candidates, {sum(r['triage'] is not None for r in records)} scored by Apertus, {failed} failed {source} {path}")
         if name != period_name:
             train += records
     out: dict[str, Any] = {"period": period, "records": records, "items": items, "calibration": None, "results": []}
     if train:
-        cal = calibration.calibrate(train, selected)
+        cfg = config or TriageConfig()
+        cal = calibration.calibrate(train, selected, cfg.target_recall, cfg.yellow_recall, list_factor)
         cal["periods"] = list(earlier)
         out["calibration"] = cal
         out["results"] = to_results(records, cal, items, list_factor, config)

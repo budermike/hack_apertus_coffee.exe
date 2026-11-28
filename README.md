@@ -4,7 +4,7 @@
 
 The Federal Supreme Court publishes about 2000 judgements per quarter; Suva's legal specialists need the roughly 30 that matter for accident insurance, summarised in German and French. **Urteilsradar** fetches the judgements, lets **Apertus v1.5** score every candidate in two passes and explain the score with quotes from the judgement, writes the summaries in Suva's style in both languages, and shows everything in a web interface where lawyers search, read, correct and decide.
 
-- Measured on the two quarters with a known Suva selection, always with the calibration of the other quarter: 49 of 59 selected judgements found at the F2-optimal threshold, 59 of 59 at the shipped setting (longer list). Details and limits: [`technical_report.md`](technical_report.md).
+- Measured on the two quarters with a known Suva selection, always with the calibration of the other quarter: 49 of 59 selected judgements found at the F2-optimal threshold, 58 of 59 at the shipped setting (a recall target of 95 %, longer list). Why each threshold sits where it does is shown next to the score in the UI. Details and limits: [`technical_report.md`](technical_report.md).
 - How it is built: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md). Every model used: [`docs/MODELS.md`](docs/MODELS.md). Decisions: [`docs/DECISIONS.md`](docs/DECISIONS.md).
 - Demo video and pitch deck: linked in `technical_report.md` and the submission form.
 

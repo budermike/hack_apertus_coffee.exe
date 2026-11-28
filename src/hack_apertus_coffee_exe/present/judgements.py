@@ -4,6 +4,19 @@ Read-only. Serves pre-scored triage JSON files (including pre-computed
 ``relevance_scores_*.json`` when ``tables_dir`` is provided), applies ``FeedbackLearner``
 (#29), and resolves per-case outcomes, single-judge flags, and similar-case subjects lazily
 in O(1) without scanning thousands of crawl files upfront.
+
+UI item (``GET /api/judgements``)::
+
+    {id, caseNumber, date, url, lang, area, subject: {de, fr}, explanation: {de, fr},
+     score, baseScore, adjustment, userLevel, summarized, outcome, court: {de, fr}, signals,
+     topics, question: {de, fr}, rule: {de, fr}, criteria: [{id, at, quote, status}],
+     similarCases, ampel, rank, scored}
+
+Lawyer feedback (#64): ``userLevel`` is the lawyer's own decision on this judgement. With a
+``learner`` (``triage.feedback_learning``, the way the server runs) the decisions are training
+examples: ``score`` is the relevance after learning from all of them, ``baseScore`` the stored
+one, and ``adjustment`` is always 0 (nothing is added to a single score any more). Without a
+learner ``adjustment`` is the stored manual correction, as before.
 """
 
 from __future__ import annotations
@@ -19,6 +32,7 @@ from pathlib import Path
 from typing import Any, Callable, Iterable
 
 from ..summary.judgement import load_judgements, operative_outcome
+from ..triage import calibration
 from ..triage.config import TriageConfig, load_config
 from ..triage.date_filter import DateRange
 
@@ -271,6 +285,10 @@ def to_ui_item(
         item["caseIds"] = [str(x) for x in case_ids if isinstance(x, str)]
     if isinstance(feedback, dict) and feedback.get("userLevel") in ("high", "low"):
         item["userLevel"] = feedback["userLevel"]
+    if isinstance(rel, dict) and "p" in rel:
+        # False: Apertus gave this judgement no relevance value (area outside the scoring, or a
+        # failed call). A lawyer's decision on it stands, but there is nothing to learn from.
+        item["scored"] = isinstance(rel["p"], (int, float)) and not isinstance(rel["p"], bool)
     item.update(relevance_details(meta, fr_entry=fr_entry))
     if "singleJudge" not in item and single_judge is not None:
         item["singleJudge"] = single_judge
@@ -298,8 +316,10 @@ class JudgementList:
         learner: Any | None = None,
         tables_dir: str | Path | None = None,
         extra_crawl_dir: str | Path | None = None,
+        calibration_path: str | Path | None = None,
     ) -> None:
-        self.learner = learner
+        self.learner = learner  # triage.feedback_learning.FeedbackLearner, or None: no learning
+        self.calibration_path = Path(calibration_path) if calibration_path else None  # why the thresholds sit where they do
         self.triage_path = Path(triage_path)
         self.config = config or load_config()
         self.summarized_ids = summarized_ids
@@ -480,7 +500,11 @@ class JudgementList:
         """Load pre-scored ``relevance_scores_*.json`` quarters in ~12 ms without scanning crawl files."""
         if self.tables_dir is None or not self.tables_dir.is_dir():
             return []
-        cal_path = self.tables_dir / "relevance_calibration_q2_2026.json"
+        cal_path = (
+            self.calibration_path
+            if self.calibration_path is not None and self.calibration_path.is_file()
+            else self.tables_dir / "relevance_calibration_q2_2026.json"
+        )
         cal: dict[str, Any] = {"w": [4.0, 2.5, 0.8, -0.8], "t": 0.1484}
         if cal_path.is_file():
             try:
@@ -507,6 +531,7 @@ class JudgementList:
             covered.append((rng.since.isoformat(), rng.until.isoformat()))
 
             missing_records = []
+            missing_by_id: dict[str, dict[str, Any]] = {}
             for rec in records:
                 if not isinstance(rec, dict) or not rec.get("case_id"):
                     continue
@@ -527,6 +552,7 @@ class JudgementList:
                             rel["outcome"] = rec["outcome"]
                 else:
                     missing_records.append(rec)
+                    missing_by_id[cid] = rec
 
             if missing_records:
                 converted = relevance_period.to_results(
@@ -537,6 +563,9 @@ class JudgementList:
                 )
                 for tr in converted:
                     row_dict = tr.to_dict()
+                    src_rec = missing_by_id.get(row_dict["case_id"])
+                    if src_rec and isinstance(src_rec.get("single_judge"), bool):
+                        row_dict.setdefault("metadata", {}).setdefault("relevance", {})["single_judge"] = src_rec["single_judge"]
                     by_id[row_dict["case_id"]] = row_dict
         return covered
 
@@ -693,6 +722,21 @@ class JudgementList:
         """Traffic-light thresholds from ``configs/triage.json`` (UI: high / medium)."""
         return {"high": self.config.green_threshold, "medium": self.config.yellow_threshold}
 
+    def threshold_basis(self) -> dict[str, list[str]] | None:
+        """Why the thresholds sit where they do, per UI language (``calibration.describe``); ``None`` without a calibration file."""
+        if self.calibration_path is None or not self.calibration_path.exists():
+            return None
+        try:
+            cal = json.loads(self.calibration_path.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            logger.warning("calibration file %s could not be read", self.calibration_path)
+            return None
+        if not isinstance(cal, dict):
+            return None
+        green, yellow = self.config.green_threshold, self.config.yellow_threshold
+        texts = {lang: calibration.describe(cal, lang, green, yellow) for lang in ("de", "fr")}
+        return texts if texts["de"] else None
+
 
 def parse_feedback_body(body: dict[str, Any]) -> dict[str, Any]:
     """Validate and coerce ``POST /api/judgements/{id}/feedback`` payload; raises ValueError on invalid types."""
@@ -775,6 +819,9 @@ def config_response(judgements: JudgementList | None) -> tuple[int, Any]:
     """``GET /api/config``: settings the UI needs (traffic-light thresholds & available range)."""
     if judgements is not None:
         body: dict[str, Any] = {"thresholds": judgements.thresholds()}
+        basis = judgements.threshold_basis() if hasattr(judgements, "threshold_basis") else None
+        if isinstance(basis, dict) and basis:  # plain-language reasons for the thresholds, from the calibration (#75)
+            body["thresholdBasis"] = basis
         avail = judgements.available_range() if hasattr(judgements, "available_range") else None
         if isinstance(avail, dict):
             body["availableRange"] = avail

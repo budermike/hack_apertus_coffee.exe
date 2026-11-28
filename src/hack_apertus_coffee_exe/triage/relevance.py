@@ -535,9 +535,12 @@ def _fr_cache_key(reason_de: str, question_de: str = "", rule_de: str = "") -> s
 
 
 FR_TRANSLATE_SYSTEM = (
-    "Tu es juriste au service juridique de la Suva. Traduis et adapte en français juridique suisse "
-    "clair les textes allemands ci-dessous (motivation, question juridique, règle pratique). "
-    "Ne modifie pas le sens ni les références d'arrêts ou de lois. Réponds uniquement avec l'objet JSON."
+    "Tu es juriste au service juridique de la Suva. Rends en français juridique suisse clair les textes "
+    "allemands ci-dessous (motivation, question juridique, règle pratique). Pas de traduction mot à mot : "
+    "écris comme le ferait une juriste romande, avec les termes et abréviations consacrés (UVG devient LAA, "
+    "ATSG devient LPGA, IVG devient LAI, «Art. 6 Abs. 2 UVG» devient «art. 6 al. 2 LAA», «E.» devient «consid.», "
+    "Einspracheentscheid = décision sur opposition, Beschwerde = recours). "
+    "Ne modifie pas le sens ni les numéros d'arrêts. Réponds uniquement avec l'objet JSON."
 )
 FR_TRANSLATE_SCHEMA = _object({
     "reason_fr": {"type": "string"},
