@@ -253,7 +253,7 @@ class Summarizer(_AlignLanguage):
     5. DE/FR cross-check (``crosscheck``): an adversarial Apertus reviewer and a number
        comparison look for points where DE and FR disagree; the judgement decides which one is
        right and the other is rewritten once. What still disagrees is an error in the check
-       report. On with ``crosscheck=True`` or ``SUMMARY_CROSSCHECK=1`` (off by default until evaluated).
+       report. On by default; off with ``crosscheck=False`` or ``SUMMARY_CROSSCHECK=0``.
 
     With Apertus 70B every criterion of the 70B judge was >= 4.2 on 20 development cases;
     the older ``SummarizerV1`` scored 4.0 with 70B and 2.3 with 8B.
@@ -270,8 +270,7 @@ class Summarizer(_AlignLanguage):
         if crosscheck is None:
             import os
 
-            # off until eval/crosscheck_eval.py has been run against the gateway (see docs/DECISIONS.md)
-            crosscheck = os.environ.get("SUMMARY_CROSSCHECK", "0").strip().lower() in ("1", "true", "yes", "on")
+            crosscheck = os.environ.get("SUMMARY_CROSSCHECK", "1").strip().lower() not in ("0", "false", "no", "off")
         self.crosscheck = crosscheck
 
     # --- step 1: core question -------------------------------------------------------------
