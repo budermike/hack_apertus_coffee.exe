@@ -162,14 +162,14 @@ CHANGE_SYSTEM = {
 Du bist Juristin / Jurist im Rechtsdienst der Suva. Zu einem Bundesgerichtsurteil bestehen eine deutsche und eine französische Zusammenfassung. In der französischen Fassung wurde von Hand eine Stelle geändert. Du überträgst diese eine Änderung in die deutsche Fassung, sofern sie den Inhalt betrifft.
 
 Antworte mit JSON:
-1. «inhaltlich»: true, wenn die Änderung eine rechtliche Aussage, Voraussetzung, Einschränkung, Rechtsfolge oder Tatsache ändert, ergänzt oder streicht. false, wenn sie nur Wortwahl, Satzbau oder Rechtschreibung betrifft; dann «alt»: "" und «neu»: "".
+1. «inhaltlich»: true, wenn die Änderung eine rechtliche Aussage, Voraussetzung, Einschränkung, Rechtsfolge oder Tatsache ändert, ergänzt oder streicht. false, wenn sie nur Wortwahl, Zeitform, Satzbau oder Rechtschreibung betrifft (z. B. «hat festgehalten» wird «hält fest», ein Synonym, ein umgestellter Satz); dann «alt»: "" und «neu»: "". Im Zweifel false.
 2. «alt»: die Sätze der deutschen Fassung, die die geänderte Aussage enthalten, wörtlich und vollständig aus der deutschen Fassung kopiert (in der Regel ein Satz, höchstens drei aufeinanderfolgende). Ist die Aussage neu, kopiere den einen Satz, nach dem sie stehen soll. Leer (""), wenn die deutsche Fassung die gestrichene Aussage gar nicht enthält oder bereits sagt, was die Änderung sagt.
 3. «neu»: der Text, der «alt» ersetzt. KEINE ÜBERSETZUNG der bearbeiteten Fassung: Gehe vom Wortlaut in «alt» aus und ändere daran nur, was die Änderung verlangt; alles Übrige bleibt wörtlich.
    - geänderte Aussage: derselbe Satz mit der geänderten Aussage;
    - neue Aussage: der Satz aus «alt» unverändert, danach ein neuer deutscher Satz mit der neuen Aussage;
    - gestrichene Aussage: der Satz ohne diese Aussage; enthält er sonst nichts, ist «neu» leer ("").
 4. Was von Hand geändert wurde, gilt. Übernimm die Änderung auch dann, wenn sie dem Urteilstext widerspricht, und setze in diesem Fall «widerspricht_urteil»: true.
-5. Der Urteilstext ist die verbindliche Referenz für die juristische Bedeutung und den Zusammenhang: Entnimm ihm, was mit der geänderten Stelle gemeint ist und wie die Begriffe lauten. Füge daraus nichts hinzu, was die bearbeitete Fassung nicht sagt, und erfinde nichts.
+5. Der Urteilstext ist die verbindliche Referenz für die juristische Bedeutung und den Zusammenhang: Entnimm ihm, was mit der geänderten Stelle gemeint ist und wie die Begriffe lauten. Füge daraus nichts hinzu, was die bearbeitete Fassung nicht sagt (keine Beträge, Daten oder Artikel aus dem Urteil), und erfinde nichts.
 6. Schreibe in der deutschen Rechtssprache der Schweiz, mit den festen Begriffen und Abkürzungen des Glossars (LAA wird UVG, «consid.» wird «E.»), so wie es eine Juristin der Suva auf Deutsch schreibt:
 {glossary}
 7. «unklar»: true, wenn nicht eindeutig ist, was die Änderung rechtlich aussagen will. Dann nichts hineininterpretieren.
@@ -179,14 +179,14 @@ Antworte mit JSON:
 Tu es juriste au service juridique de la Suva. Un arrêt du Tribunal fédéral fait l'objet d'un résumé en allemand et d'un résumé en français. Un passage de la version allemande a été modifié à la main. Tu reportes cette seule modification dans la version française, pour autant qu'elle touche le fond.
 
 Réponds en JSON :
-1. «inhaltlich» : true si la modification change, ajoute ou supprime une affirmation juridique, une condition, une restriction, une conséquence juridique ou un fait. false si elle ne touche que le choix des mots, la syntaxe ou l'orthographe ; alors «alt» : "" et «neu» : "".
+1. «inhaltlich» : true si la modification change, ajoute ou supprime une affirmation juridique, une condition, une restriction, une conséquence juridique ou un fait. false si elle ne touche que le choix des mots, le temps du verbe, la syntaxe ou l'orthographe (p. ex. «hat festgehalten» devient «hält fest», un synonyme, une phrase réordonnée) ; alors «alt» : "" et «neu» : "". En cas de doute, false.
 2. «alt» : les phrases de la version française qui contiennent l'affirmation modifiée, copiées mot pour mot et en entier depuis la version française (en règle générale une phrase, trois phrases consécutives au plus). Si l'affirmation est nouvelle, copie la seule phrase après laquelle elle doit figurer. Vide ("") si la version française ne contient pas l'affirmation supprimée ou dit déjà ce que dit la modification.
 3. «neu» : le texte qui remplace «alt». PAS DE TRADUCTION de la version modifiée : pars du libellé de «alt» et n'y change que ce que la modification exige ; tout le reste demeure mot pour mot.
    - affirmation modifiée : la même phrase avec l'affirmation modifiée ;
    - affirmation nouvelle : la phrase de «alt» telle quelle, suivie d'une nouvelle phrase française contenant la nouvelle affirmation ;
    - affirmation supprimée : la phrase sans cette affirmation ; si elle ne contient rien d'autre, «neu» est vide ("").
 4. Ce qui a été modifié à la main fait foi. Reprends la modification même si elle contredit le texte de l'arrêt, et mets dans ce cas «widerspricht_urteil» : true.
-5. Le texte de l'arrêt est la référence contraignante pour le sens juridique et le contexte : tires-en ce que signifie le passage modifié et les termes exacts. N'y ajoute rien que la version modifiée ne dise pas, et n'invente rien.
+5. Le texte de l'arrêt est la référence contraignante pour le sens juridique et le contexte : tires-en ce que signifie le passage modifié et les termes exacts. N'y ajoute rien que la version modifiée ne dise pas (ni montants, ni dates, ni articles tirés de l'arrêt), et n'invente rien.
 6. Écris dans la langue juridique française de Suisse, avec les termes et abréviations consacrés du glossaire (UVG devient LAA, «E.» devient «consid.»), comme le ferait une juriste romande de la Suva :
 {glossary}
 7. «unklar» : true s'il n'est pas clair ce que la modification veut dire juridiquement. Dans ce cas, n'interprète rien.
@@ -295,15 +295,19 @@ def _locate(sentences: Sequence[tuple[str, str]], quoted: str) -> int:
     return number if score >= MIN_QUOTE_MATCH else 0
 
 
+_FIGURE_RE = re.compile(r"\d+")
+
+
 def planned_replacement(sentences: Sequence[tuple[str, str]], quote: str, new: str,
-                        task: str) -> tuple[list[int], str] | None:
+                        change: dict[str, str]) -> tuple[list[int], str] | None:
     """Which sentences Apertus' answer replaces by which text; None when it cannot be applied safely.
 
     ``quote`` (the answer's «alt») and ``new`` («neu») are compared sentence by sentence; only
     where they differ something changes. Not safe, hence None: a quoted sentence that is not
     in the text, sentences that do not follow each other, a replacement that keeps less than
-    half of the old wording (a new text, not the old one with the change), and removing a
-    sentence when the edit removed nothing.
+    half of the old wording (a new text, not the old one with the change), more new sentences
+    than the edit has, a figure that is neither in the old sentence nor in the edit (taken
+    from the judgement or invented), and removing a sentence when the edit removed nothing.
     """
     old_s = [sentence for sentence, _ in split_sentences(quote)]
     new_s = [sentence for sentence, _ in split_sentences(new)]
@@ -317,17 +321,21 @@ def planned_replacement(sentences: Sequence[tuple[str, str]], quote: str, new: s
     added = " ".join(new_rest)
     if not old_rest:  # only new sentences: after the quoted sentence before them, else before the one after
         neighbour = old_s[head - 1] if head else old_s[head] if tail else ""
-        number = _locate(sentences, neighbour) if neighbour and added else 0
-        if not number:
-            return None
-        kept = sentences[number - 1][0]
-        return [number], f"{kept} {added}" if head else f"{added} {kept}"
-    numbers = [_locate(sentences, quoted) for quoted in old_rest]
+        numbers = [_locate(sentences, neighbour)] if neighbour and added else [0]
+    else:
+        numbers = [_locate(sentences, quoted) for quoted in old_rest]
     if 0 in numbers or len(numbers) > MAX_SENTENCES_PER_CHANGE or numbers != list(range(numbers[0], numbers[0] + len(numbers))):
         return None
+    kept = " ".join(sentences[n - 1][0] for n in numbers)
+    if set(_FIGURE_RE.findall(added)) - set(_FIGURE_RE.findall(kept + " " + change["after"])):
+        return None
+    if not old_rest:
+        if len(new_rest) > len(split_sentences(change["after"])):
+            return None
+        return numbers, f"{kept} {added}" if head else f"{added} {kept}"
     if not added:
-        return (numbers, "") if task == "delete" else None
-    if _similar(" ".join(sentences[n - 1][0] for n in numbers), added) < MIN_KEPT:
+        return (numbers, "") if _task(change) == "delete" else None
+    if _similar(kept, added) < MIN_KEPT:
         return None
     return numbers, added
 
@@ -408,7 +416,7 @@ def align_edit(
             continue  # wording only, or the other language already says it
         plan = None
         if answer and not answer.get("unklar"):
-            plan = planned_replacement(sentences, str(answer["alt"]), str(answer.get("neu") or ""), _task(change))
+            plan = planned_replacement(sentences, str(answer["alt"]), str(answer.get("neu") or ""), change)
         if plan:
             text = replace_sentences(sentences, *plan)
         else:  # no usable answer: this change is left to the lawyer

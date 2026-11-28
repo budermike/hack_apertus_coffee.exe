@@ -128,6 +128,10 @@ def test_new_and_removed_statements():
     change(alt="Le recours est rejeté.", neu="Die Suva war dazu berechtigt, wirklich."),  # a new text, not the old one changed
     change(alt="Le recours est rejeté.", neu=""),                                           # removes although nothing was removed
     change(alt="Le recours est rejeté.", neu="Le recours est rejeté."),                    # says "substance" but changes nothing
+    # a figure that is neither in the old sentence nor in the edit (taken from the judgement or invented)
+    change(alt="Le recours est rejeté.", neu="Le recours est rejeté, les frais de 800 fr. restant dus."),
+    # more new sentences than the edit has
+    change(alt="Le recours est rejeté.", neu="Le recours est rejeté. La preuve est prépondérante. Les frais suivent."),
     change(alt="Le recours est rejeté.", neu="Le recours est admis.", unklar=True, hinweis="Peu clair."),
     "no json",
 ])
