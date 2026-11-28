@@ -568,7 +568,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--db", default=None, help=f"SQLite file (default: ${store.DB_PATH_ENV} or {store.DEFAULT_DB_PATH})")
     parser.add_argument("--input", default=load_paths().raw_dir, help="Crawl folder with the judgements")
     parser.add_argument("--static", default="src/presentation", help="Folder with the UI files")
-    parser.add_argument("--model", default=None, help="Gateway model ID (default: LLM_NAME / APERTUS_MODEL)")
+    parser.add_argument("--model", default=None, help="Gateway model ID (default: $SUMMARY_MODEL or apertus-v1-5-70b)")
     parser.add_argument("--judgements-dir", default=load_paths().judgements_dir, help="Suva example summaries")
     parser.add_argument("--examples", type=int, default=2, help="Few-shot examples per language")
     parser.add_argument("--triage", default=None, help="Triage results JSON for GET /api/judgements")

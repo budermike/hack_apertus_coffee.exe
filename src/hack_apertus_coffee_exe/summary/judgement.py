@@ -227,3 +227,62 @@ def operative_outcome(text: str) -> Outcome:
                 return Outcome(result=name, remand=bool(_REMAND_RE.search(item)))
         return Outcome(result=None, remand=bool(_REMAND_RE.search(item)))
     return Outcome(result=None, remand=False)
+
+
+# --- parties and outcome (who appealed, who won) ------------------------------------------
+# Without this, "Beschwerde abgewiesen" is ambiguous: the model (and the 70B judge) turned the
+# outcome around when the Suva itself had appealed (e.g. 8C_334/2025, notebooks/summary/01).
+
+_PARTIES_RE = re.compile(r"Verfahrensbeteiligte|Participants à la procédure|Parti nel procedimento|Parteien")
+_AGAINST_RE = re.compile(r"\n\s*(?:gegen|contre|contro)\s*\n")
+_INSURER_RE = re.compile(r"Suva|SUVA|CNA|Caisse nationale|Unfallversicherungsanstalt|Versicherung|versicherung|assurance|"
+                         r"Assurance|assicura|IV-Stelle|Office de l'assurance|Office AI|Ufficio AI|Kasse|Caisse|Stelle|Office")
+_OPERATIVE_HEAD = re.compile(r"Demnach erkennt[^\n]*|Par ces motifs[^\n]*|Per questi motivi[^\n]*")
+
+
+def appellant(text: str) -> str | None:
+    """'versicherer' or 'versicherte' from the party block of the judgement, None if not found."""
+    head = text[:6000]
+    start = _PARTIES_RE.search(head)
+    if not start:
+        return None
+    against = _AGAINST_RE.search(head, start.end())
+    if not against:
+        return None
+    return "versicherer" if _INSURER_RE.search(head[start.end():against.start()]) else "versicherte"
+
+
+def operative_text(text: str, max_chars: int = 700) -> str:
+    """Verbatim first items of the operative part ("Demnach erkennt …")."""
+    matches = list(_OPERATIVE_HEAD.finditer(text))
+    if not matches:
+        return ""
+    part = " ".join(text[matches[-1].end():].split())
+    # keep the items on the outcome; costs, notification and signatures follow
+    cut = re.search(r"\s\d+\.\s*(?:Die Gerichtskosten|Es werden keine Gerichtskosten|Les frais|Il n'est pas perçu|Le spese)", part)
+    return (part[: cut.start()] if cut else part)[:max_chars]
+
+
+def outcome_block(judgement: Judgement, language: str) -> str:
+    """Who appealed, what the court decided, and what that means: the facts 8B got wrong in v3."""
+    outcome = operative_outcome(judgement.text)
+    who = appellant(judgement.text)
+    result = outcome.result or ""
+    won = None
+    if result in ("gutgeheissen", "teilweise gutgeheissen"):
+        won = who
+    elif result in ("abgewiesen", "nicht eingetreten") and who:
+        won = "versicherte" if who == "versicherer" else "versicherer"
+    if language == "de":
+        party = {"versicherer": "der Versicherer (Suva / IV-Stelle)", "versicherte": "die versicherte Person"}.get(who, "unbekannt")
+        winner = {"versicherer": "Der Versicherer obsiegt.", "versicherte": "Die versicherte Person obsiegt."}.get(won, "")
+        if result == "teilweise gutgeheissen":
+            winner = "Teilweise gutgeheissen: " + winner
+        return (f"Beschwerde vor Bundesgericht geführt von: {party}. Ergebnis: {outcome.describe_de()}. {winner}\n"
+                f"Wortlaut des Dispositivs: {operative_text(judgement.text)}")
+    party = {"versicherer": "l'assureur (Suva / office AI)", "versicherte": "la personne assurée"}.get(who, "inconnu")
+    winner = {"versicherer": "L'assureur obtient gain de cause.", "versicherte": "La personne assurée obtient gain de cause."}.get(won, "")
+    if result == "teilweise gutgeheissen":
+        winner = "Admission partielle : " + winner
+    return (f"Recours au Tribunal fédéral formé par : {party}. Issue : {outcome.describe_fr()}. {winner}\n"
+            f"Texte du dispositif : {operative_text(judgement.text)}")
