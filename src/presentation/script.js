@@ -184,7 +184,7 @@ function toggleTheme() {
 
 /* ---------- thresholds ---------- */
 
-/** Takes the thresholds from the backend; keeps the defaults if it does not answer. */
+/** Takes the thresholds (and default cached date span) from the backend; keeps defaults if it does not answer. */
 async function loadThresholds() {
     const config = await fetchConfig();
     const high = toNumber(config?.thresholds?.high, NaN);
@@ -192,6 +192,14 @@ async function loadThresholds() {
     if (Number.isFinite(high) && Number.isFinite(medium) && medium <= high) {
         SUMMARY_THRESHOLD = high;
         MEDIUM_THRESHOLD = medium;
+    }
+    if (config?.availableRange?.from && config?.availableRange?.to && !state.hasSearched && !state.searching) {
+        const fromInput = $("#date-from");
+        const toInput = $("#date-to");
+        if (fromInput && toInput) {
+            setDateInput(fromInput, config.availableRange.from);
+            setDateInput(toInput, config.availableRange.to);
+        }
     }
     if (config?.thresholdBasis && typeof config.thresholdBasis === "object") THRESHOLD_BASIS = config.thresholdBasis;
 }
@@ -257,9 +265,14 @@ function validateRange() {
         fromInput.classList.add("invalid");
         return { error: "errOrder" };
     }
-    if (to > toIso(new Date())) {
+    const todayIso = toIso(new Date());
+    if (to > todayIso) {
         toInput.classList.add("invalid");
         return { error: "errFuture" };
+    }
+    if (from >= todayIso) {
+        fromInput.classList.add("invalid");
+        return { error: "errToday" };
     }
     return { from, to };
 }
@@ -277,15 +290,13 @@ async function onSearch(event) {
     event.preventDefault();
     const range = validateRange();
     showFormError(range.error || null);
-    if (range.error || state.searching) return;
+    if (range.error) return;
 
     const searchGen = ++periodSearchGeneration;
     const button = $("#search-btn");
-    button.disabled = true;
     button.classList.add("loading");
     state.searching = true;
     state.searchProgress = null;
-    state.searchErrorMsg = null;
     state.selectedId = null;
     state.summaryQueue = [];        // summaries still waiting belong to the previous search
     state.summaryError.clear();
@@ -304,7 +315,7 @@ async function onSearch(event) {
                 if (searchGen !== periodSearchGeneration) return;
                 state.searchProgress = period;
                 renderList();
-                await new Promise((resolve) => setTimeout(resolve, 1200));
+                await new Promise((resolve) => setTimeout(resolve, 1000));
                 if (searchGen !== periodSearchGeneration) return;
                 try {
                     period = await periodStatus(range.from, range.to);
@@ -330,6 +341,7 @@ async function onSearch(event) {
             state.searchErrorArg = null;
         }
     } catch (err) {
+        if (searchGen !== periodSearchGeneration) return;
         console.error(err);
         state.items = [];
         state.error = "errorSearch";
@@ -341,11 +353,12 @@ async function onSearch(event) {
     state.searching = false;
     state.searchProgress = null;
     frReasonAttempted.clear();
-    button.disabled = false;
     button.classList.remove("loading");
     renderResults();
 
-    queueRelevantSummaries();
+    if (USE_MOCK) {
+        queueRelevantSummaries();
+    }
     localizeListSubjects();
 }
 
@@ -439,8 +452,13 @@ function selectCase(id) {
     }
     // the open case goes first: its automatic summary, or the one stored in an earlier session
     const item = findItem(id);
-    const status = item && summaryStatus(item);
-    if (status === "queued" || status === "missing" || (status === "manual" && item.summarized)) {
+    if (!item || state.summaries[id]) return;
+    if (item.summarized) {
+        fetchStoredIntoState(id);
+        return;
+    }
+    const status = summaryStatus(item);
+    if (status === "queued" || status === "missing") {
         requestSummary(id, { first: true });
     }
 }
