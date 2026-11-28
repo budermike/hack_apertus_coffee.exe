@@ -155,8 +155,10 @@ def _reason_without_rule(reason: str, meta: dict[str, Any]) -> str:
     """
     relevance = meta.get("relevance")
     rule = relevance.get("rule") if isinstance(relevance, dict) else None
-    appended = f" Merksatz: {rule}" if isinstance(rule, str) and rule.strip() else None
-    return reason[: -len(appended)] if appended and reason.endswith(appended) else reason
+    cleaned_rule = rule.strip() if isinstance(rule, str) else ""
+    appended = f" Merksatz: {cleaned_rule}" if cleaned_rule else None
+    stripped = reason.rstrip()
+    return stripped[: -len(appended)] if appended and stripped.endswith(appended) else reason
 
 
 def to_ui_item(row: dict[str, Any], summarized: bool = False, outcome: str | None = None) -> dict[str, Any]:

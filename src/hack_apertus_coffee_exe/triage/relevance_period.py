@@ -27,7 +27,6 @@ from .relevance import (
     ApertusRelevanceClient,
     Precedent,
     build_pool,
-    describe,
     is_candidate,
     not_asked,
     score_items,

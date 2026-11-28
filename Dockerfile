@@ -41,4 +41,4 @@ STOPSIGNAL SIGINT
 
 # Options after the entrypoint can be replaced in docker-compose.yml (`command:`).
 ENTRYPOINT ["python", "-m", "hack_apertus_coffee_exe.summary.api", "--host", "0.0.0.0", "--port", "8000"]
-CMD ["--input", "data/raw", "--static", "src/presentation"]
+CMD ["--input", "data/raw", "--static", "src/presentation", "--triage", "results/triage_q2_2026.json"]
