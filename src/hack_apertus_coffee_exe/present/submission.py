@@ -5,7 +5,7 @@
 
 What Suva grades (``challenge_description.md``, evaluation criteria):
 
-1. "your high scored relevant court judgements": ``recall_<label>.csv``, every relevant
+1. "your high scored relevant court judgements": ``recall_list.csv``, every relevant
    judgement (green, on the list) and every almost relevant one (yellow, just below the list),
    in rank order, one row each (``RECALL_COLUMNS``; ``Einstufung`` tells them apart).
 2. "your top 10 highly relevant summaries" (against a hold-out set): the ``n`` best-ranked
@@ -244,7 +244,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     out.mkdir(parents=True, exist_ok=True)
 
     relevant = ranked_relevant(rows)
-    path = write_recall_csv(relevant, out / f"recall_{label}.csv")
+    path = write_recall_csv(relevant, out / "recall_list.csv")
     n_green = sum(r.get("ampel") == GREEN for r in relevant)
     print(f"recall list: {n_green} relevant + {len(relevant) - n_green} almost relevant -> {path}", file=sys.stderr)
 
