@@ -94,15 +94,9 @@ Ein Issue ist erledigt, wenn:
 
 ## 5. Modell- und Tool-Register (für Regel 6)
 
-Wir führen dieses Register laufend in `docs/MODELS.md` (Vorlage unten). Sobald jemand ein Modell oder einen KI-Assistenten nutzt, trägt er es **sofort** ein. Aus dem Register wird später der Abschnitt im Technical Report.
+Wir führen dieses Register laufend in [`docs/MODELS.md`](docs/MODELS.md). Sobald jemand ein Modell oder einen KI-Assistenten nutzt, trägt er es **sofort** ein. Aus dem Register wird später der Abschnitt im Technical Report.
 
-| Modell / Tool | Version | Rolle | Phase | Open-Weights? | Lizenz |
-|---|---|---|---|---|---|
-| Apertus v1.5 8B/70B | | Kernaufgabe: <...> | Laufzeit | ja | |
-| <Embedding-Modell> | | Retrieval | Laufzeit | ja | |
-| <Coding-Assistent> | | Code schreiben | Entwicklung | nein | |
-
-Regel zur Selbstkontrolle: Steht in der Spalte «Phase» *Laufzeit* ein «nein» bei Open-Weights, ist das ein Regelverstoss. Dann sofort beim PM melden.
+Regel zur Selbstkontrolle: Steht im Abschnitt «Laufzeit» des Registers ein «nein» bei Open-Weights, ist das ein Regelverstoss. Dann sofort beim PM melden.
 
 ---
 
@@ -114,7 +108,7 @@ Das Repo ist **öffentlich**.
 - **Daten der Challenge-Partner:** Nur so verwenden, wie der Partner es erlaubt. Im Zweifel **nicht** ins öffentliche Repo. Dann kommen synthetische oder öffentlich verfügbare Beispieldaten ins Repo, und die Originaldaten bleiben lokal.
 - **Personendaten:** Keine echten Personendaten im Repo, auch nicht in Beispielen.
 - **Abhängigkeiten:** Nur Bibliotheken und Modelle verwenden, deren Lizenz Open-Source-Nutzung zulässt. Lizenz im Register vermerken.
-- **Lizenz des Repos:** Wird nach den Vorgaben im Template-Repo und den Hackathon-Regeln entschieden (offen, z.B. Apache-2.0 oder MIT).
+- **Lizenz des Repos:** gemäss Vorlage der Organisatoren: Code unter Apache-2.0 (`LICENSE`), Technical Report unter CC-BY-4.0 (Abschnitt «License» in `technical_report.md`).
 
 ---
 

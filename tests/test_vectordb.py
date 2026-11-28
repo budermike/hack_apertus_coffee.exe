@@ -342,6 +342,46 @@ def test_ingest_without_rebuild_drops_stale_search_index(tmp_path):
     assert {h["case_id"] for h in hits} == {"8C_1/2025", "8C_2/2025"}
 
 
+def test_first_ingest_on_a_fresh_clone_does_not_leave_a_partial_fts_index(tmp_path):
+    """ensure_period ingests only the new day. Without fts.sqlite3 (fresh clone) that created an
+    index with just those judgements, and search and the hybrid score ignored everything older."""
+    raw_dir = tmp_path / "raw"
+    db_dir = tmp_path / "db"
+    old = [
+        _make_record("8C_50/2025", "2025-11-15", "Suva Unfallversicherung nach Art. 6 UVG, Sturz."),
+        _make_record("9C_70/2026", "2026-02-10", "Rente nach Art. 6 UVG, Suva als Versicherer.", subject="Invalidenversicherung"),
+    ]
+    for record in old:
+        _write_raw(raw_dir, record)
+    vectordb.VectorDB(db_dir=db_dir, embedder=_DummyDenseEmbedder(), raw_dir=raw_dir).ingest_records(
+        old, reference_ids={"8C_50/2025"}
+    )
+    complete = vectordb.VectorDB(db_dir=db_dir, embedder=_DummyDenseEmbedder(), raw_dir=raw_dir).score_candidates(
+        date_from="2026-01-01", date_to="2026-03-31"
+    )
+    for path in db_dir.glob("fts.sqlite3*"):  # the state of a fresh clone
+        path.unlink()
+
+    new = _make_record("8C_90/2026", "2026-07-01", "Neues Urteil zu Art. 6 UVG und Suva.")
+    _write_raw(raw_dir, new)
+    fresh = vectordb.VectorDB(db_dir=db_dir, embedder=_DummyDenseEmbedder(), raw_dir=raw_dir)
+    fresh.ingest_records([new], rebuild_index=False)  # what ensure_period does per day
+    with fresh._connect_fts() as conn:
+        assert conn.execute("SELECT COUNT(*) FROM judgements_fts").fetchone()[0] == 1  # the partial index
+
+    assert {h["case_id"] for h in fresh.fulltext_search("Art. 6 UVG")} == {"8C_50/2025", "9C_70/2026", "8C_90/2026"}
+    with fresh._connect_fts() as conn:
+        assert conn.execute("SELECT COUNT(*) FROM judgements_fts").fetchone()[0] == 3
+
+    # and the hybrid score of the older quarter is the one a complete index gives
+    for path in db_dir.glob("fts.sqlite3*"):
+        path.unlink()
+    again = vectordb.VectorDB(db_dir=db_dir, embedder=_DummyDenseEmbedder(), raw_dir=raw_dir)
+    again.ingest_records([new], rebuild_index=False)
+    rescored = again.score_candidates(date_from="2026-01-01", date_to="2026-03-31")
+    assert [(r["case_id"], r["score"]) for r in rescored] == [(r["case_id"], r["score"]) for r in complete]
+
+
 def test_isolated_db_does_not_rebuild_fts_from_repo_raw_dir(tmp_path):
     db_dir = tmp_path / "isolated_db"
     db = vectordb.VectorDB(db_dir=db_dir, embedder=_DummyDenseEmbedder())

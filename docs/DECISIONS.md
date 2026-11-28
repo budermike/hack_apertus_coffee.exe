@@ -5,7 +5,7 @@ Short entries, newest on top. Format: date/time · decision · why · who.
 ## Challenge choice
 - Options: ti&m Trust Room / Suva legal summaries / Digitec Galaxus image classification
 - Criteria: fit with Apertus, feasibility in ~24 h, team skills, demo impact, sponsor clarity
-- Decision: <TBD>
+- Decision: Suva legal summaries (`challenge_description.md`)
 
 ## Decisions
 - 2026-11-28 · #48 decision 1: the Vector-DB (`judgements`, `case_lookup`) is the source of judgement metadata and case-number aliases. The Summaries-DB keeps `cases` / `case_numbers` only as foreign-key target for its summaries; `crawl.ensure_period` fills them (since #60). · One source avoids diverging metadata; the summaries store keeps working offline without the Vector-DB. · Team (#48) + Claude Code

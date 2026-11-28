@@ -6,8 +6,8 @@ Primer for coding agents working in this repository. Read this fully before chan
 
 Hackathon project for **Hack Apertus Zürich** (27–28 Nov 2026). Submission deadline: **Sat 28 Nov 2026, 14:30** — time is short, so a small, working, well-tested core beats many half-finished features.
 
-Project: <ONE SENTENCE — fill in after the challenge is assigned: who has which problem, what we build>.
-Challenge: <ti&m Trust Room | Suva legal summaries | Digitec Galaxus image classification>.
+Project: Suva's legal specialists have to find the Federal Supreme Court judgements that matter for accident insurance among about 2000 published per quarter and summarise them in German and French; we crawl the judgements, let Apertus v1.5 rank them and explain their relevance, write the summaries in Suva's style, and show everything in a searchable web UI.
+Challenge: Suva legal summaries (`challenge_description.md`).
 
 Team workflow, roles and the submission checklist: see `CONTRIBUTING.md` and `docs/LEITFADEN.md`.
 
@@ -23,13 +23,15 @@ If a request would break one of these rules, stop and say so instead of implemen
 
 ## Apertus access
 
-Configuration comes **only** from environment variables:
+Configuration comes **only** from environment variables. The names are the ones the organisers require (`README.md`, "Environment"):
 
 ```
-APERTUS_BASE_URL   # CSCS/Keera gateway endpoint
-APERTUS_API_KEY    # team key — never commit, never print, never log
-APERTUS_MODEL      # default: apertus-v1-5-8b
+LLM_BASE_URL   # CSCS/Keera gateway endpoint
+LLM_API_KEY    # team key — never commit, never print, never log
+LLM_NAME       # model ID, default: apertus-v1-5-8b
 ```
+
+The older names `APERTUS_BASE_URL`, `APERTUS_API_KEY` and `APERTUS_MODEL` are still read as aliases; `LLM_*` wins when both are set (`triage.llm.GatewayConfig.from_env`). One exception: `triage.cli relevance` does not read `LLM_NAME`; it uses `apertus-v1-5-70b` unless `--model` is given.
 
 Available model IDs on the gateway:
 
@@ -53,28 +55,28 @@ Available model IDs on the gateway:
 - Documentation: `docs/ARCHITECTURE.md`, `docs/DECISIONS.md`, `docs/MODELS.md`, `docs/LEITFADEN.md`.
 - Each element of the workflow (Crawl, Triage, Summary and Present) get it's own folder.
 
-> Package name note: `hack_apertus_coffee.exe` is not a valid Python identifier. Use a valid name such as `hack_apertus_coffee_exe` for the package directory and imports.
+> Package name: the package is `hack_apertus_coffee_exe` (`src/hack_apertus_coffee_exe/`), because `hack_apertus_coffee.exe` is not a valid Python identifier. `<package>` in this file means that folder.
 
 ## Setup & checks
 
-We use **pip with `requirements.txt` only. Do not use uv** (no `uv add`, `uv sync`, `uv run`, no `uv.lock`).
+We use **pip only. Do not use uv** (no `uv add`, `uv sync`, `uv run`, no `uv.lock`).
 
 ```
 python3 -m venv .venv
 source .venv/bin/activate
-pip install -r requirements.txt
-cp .env.example .env          # then fill in APERTUS_API_KEY
-python keera_example.py       # smoke test against the Apertus gateway
-pytest                        # unit tests (no network)
+pip install -r requirements-dev.txt   # installs the package (editable), requirements.txt and the dev tools
+cp .env.example .env                  # then fill in LLM_API_KEY
+python src/keera_example.py           # smoke test against the Apertus gateway
+pytest                                # unit tests (no network)
 ```
 
-- Dependencies live **only** in `requirements.txt` with exact pins (`package==x.y.z`). Do not add them to `pyproject.toml`.
+- Dependencies live **only** in `requirements.txt` and `requirements-dev.txt` (the second adds the editable install and `sentence-transformers` for the local embedding model), with exact pins (`package==x.y.z`). Do not add them to `pyproject.toml`.
 - To add a dependency (after asking): `pip install <pkg>`, then add the line with the installed version from `pip freeze` to `requirements.txt`.
 
 ## Data, secrets and the public repo
 
 - The repository is **public**. Never commit `.env`, API keys, tokens, customer/partner data or personal data.
-- Data supplied by challenge partners goes into the repo **only if the partner allows it**. When unsure, keep it local (`data/raw/` stays out of git) and use synthetic or public sample data in the repo.
+- Data supplied by challenge partners goes into the repo **only if the partner allows it**. When unsure, keep it local and use synthetic or public sample data in the repo. The crawled Federal Supreme Court judgements in `data/raw/` are public and are tracked in git.
 - Do not print secrets or full private documents into logs, notebooks or test output.
 
 ## Tests and evaluation

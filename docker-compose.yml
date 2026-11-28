@@ -1,0 +1,27 @@
+# Start:  docker compose up --build      then open http://localhost:8000
+# Stop:   docker compose down             (data/ stays on the host)
+#
+# Gateway settings come from .env (cp .env.example .env, fill in LLM_API_KEY).
+# Without .env the app still starts: stored summaries, editing, approving and
+# search work; only generating a new summary needs the key.
+services:
+  app:
+    build: .
+    image: coffee-exe-suva:latest
+    ports:
+      # This machine only by default: the app has no login. APP_BIND=0.0.0.0 opens it
+      # to the network, APP_PORT changes the port.
+      - "${APP_BIND:-127.0.0.1}:${APP_PORT:-8000}:8000"
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      # Summaries DB inside the mounted data folder, so it survives a restart.
+      SUMMARY_DB_PATH: data/processed/summaries.db
+    volumes:
+      # Crawled judgements (data/raw), vector DB (data/processed/vectordb) and the
+      # summaries DB (data/processed/summaries.db) live on the host.
+      - ./data:/app/data
+    # Serves the UI with real Q2/2026 Apertus triage results (GET /api/judgements):
+    command: ["--input", "data/raw", "--static", "src/presentation", "--triage", "results/triage_q2_2026.json"]
+    restart: unless-stopped

@@ -57,18 +57,21 @@ Ein JSON pro Bundesgerichtsurteil unter `data/raw/<YYYY-MM>/<decision_date>_<saf
 
 ### Ergebnisfelder (Triage & Summary)
 
-Nachgelagerte Pipeline-Schritte ergänzen gemäss Issue `#3` folgende Felder:
+Die Rohdaten bleiben unverändert. Die Triage schreibt eine eigene Ergebnisdatei (`triage.cli score --output <datei>`): eine JSON-Liste mit einem Objekt pro Urteil. Die wichtigsten Felder (die in Issue `#3` vorgesehenen Namen `score`, `summary_de` und `summary_fr` gibt es so nicht):
 
 | Feld | Typ | Beschreibung |
 |---|---|---|
-| `score` | `number` | Relevanz-Score für Suva (`0`–`100`). |
+| `case_id` | `string` | Geschäftsnummer in Originalschreibweise. |
+| `final_score` | `number` | Relevanz-Score für Suva (`0`–`100`), Alias `relevance_score`. Gereiht wird nach `rank_score` (`rank_by` in `configs/triage.json`). |
+| `rank` | `integer` | Rang im bewerteten Zeitraum, 1 = höchster Score. |
 | `ampel` | `string` | Ampel-Einstufung: `"gruen"`, `"gelb"` oder `"rot"` (ASCII ohne Umlaut gemäss `#12`/`#28`/`#40`). |
-| `relevance_reason` | `string` | Begründung der Triage-Einstufung. |
-| `similar_cases` | `list[object]` | Ähnlichste Referenzfälle (`case_id`, `id`, `decision_date`, `subject`, `similarity`). |
-| `summary_de` | `string` | Zusammenfassung auf Deutsch. |
-| `summary_fr` | `string` | Zusammenfassung auf Französisch. |
+| `relevance_reason` | `string` | Begründung der Triage-Einstufung, Alias `reason`. |
+| `similar_cases` | `list[object]` | Ähnlichste Suva-Referenzfälle (`case_id`, `title`, `similarity`, `summary_snippet`, `bger_url`), Alias `top_reference_matches`. |
+| `judgement_date`, `language`, `metadata` | | Urteilsdatum, Sprache und die Metadaten aus dem Crawl-JSON. |
 
-> Summaries werden verbindlich in der [Summaries-DB](#2-summaries-datenbank-sqlite) gespeichert (mit Verlauf und Status).
+`triage.cli relevance` (#62) schreibt dieselben Felder. `similar_cases` enthält dort nur `case_id` und `similarity`; die Einzelheiten der Bewertung (Rechtsfrage, Kriterien mit Zitaten, Merksatz) stehen in `metadata.relevance`.
+
+> Summaries stehen nicht in dieser Datei. Sie werden verbindlich in der [Summaries-DB](#2-summaries-datenbank-sqlite) gespeichert (mit Verlauf und Status).
 
 ---
 
@@ -239,4 +242,3 @@ ORDER BY s.language, s.version;
 
 - **Volltextsuche:** Aktuell einfache Teilstring-Suche (`store.search`, alle Begriffe müssen vorkommen, Akzente zählen). Bei Bedarf SQLite FTS5.
 - **Triage-Feedback / Ampel:** zurückgestellt, Entwurf in `src/hack_apertus_coffee_exe/summary/VORGEHEN_DB.md`.
->>>>>>> origin/main

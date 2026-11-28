@@ -363,6 +363,17 @@ class RelevanceError(RuntimeError):
     """Apertus gave no valid answer after the retry; the judgement is reported, never dropped silently."""
 
 
+def not_asked(record: dict[str, Any]) -> bool:
+    """True when the judgement has no score because Apertus could not be asked at all.
+
+    No key, no connection, a time-out or a rate limit: the next run can score it. This is
+    not the same as ``RelevanceError`` (Apertus answered twice and both answers were
+    invalid), which is final and is shown to the lawyer in yellow.
+    """
+    error = record.get("error")
+    return bool(error) and not str(error).startswith(f"{RelevanceError.__name__}:")
+
+
 class ApertusRelevanceClient:
     """Structured Apertus calls with one retry and a per-judgement file cache."""
 

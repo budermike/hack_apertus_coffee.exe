@@ -1,0 +1,25 @@
+# Keep secrets, local state and the large data folder out of the image.
+# data/ is mounted as a volume (docker-compose.yml).
+.git
+.github
+.env
+.env.*
+!.env.example
+.venv
+venv
+data
+docs
+notebooks
+tests
+**/__pycache__
+**/*.py[cod]
+*.egg-info
+.pytest_cache
+build
+dist
+*.db
+*.db-wal
+*.db-shm
+.DS_Store
+.idea
+.vscode

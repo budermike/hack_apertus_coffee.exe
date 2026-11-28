@@ -5,6 +5,7 @@ from __future__ import annotations
 from dataclasses import asdict, dataclass
 import hashlib
 import json
+import math
 import os
 import re
 from typing import Any, Sequence
@@ -13,6 +14,14 @@ from .embeddings import ReferenceMatch, SimilarityScore
 
 DEFAULT_BASE_URL = "https://gateway.keera.ch/api/v1"
 DEFAULT_MODEL = "apertus-v1-5-8b"
+
+
+class TriageAnswerError(ValueError):
+    """Apertus answered, but not with a usable decision (prose, cut-off JSON, no score).
+
+    Raised per judgement, so the pipeline can go on with the next one. Gateway errors
+    (no connection, time-out, rate limit) are not converted: they still stop the run.
+    """
 
 _SYSTEM_PROMPT = """\
 Du bist eine erfahrene Juristin / ein erfahrener Jurist bei der Suva (Schweizerische Unfallversicherungsanstalt).
@@ -203,8 +212,20 @@ def _parse_json_decision(raw: str, model: str) -> TriageDecision:
         if brace_match:
             cleaned = brace_match.group(0)
 
-    data = json.loads(cleaned)
-    score = float(data.get("apertus_score", 0.0))
+    try:
+        data = json.loads(cleaned)
+    except json.JSONDecodeError as exc:
+        raise TriageAnswerError(f"answer is not valid JSON ({exc.msg})") from exc
+    if not isinstance(data, dict):
+        raise TriageAnswerError("answer is not a JSON object")
+    # No score is not the same as score 0: a judgement without an assessment must not
+    # silently drop to the bottom of the ranking.
+    try:
+        score = float(data["apertus_score"])
+    except (KeyError, TypeError, ValueError, OverflowError) as exc:
+        raise TriageAnswerError("answer has no numeric apertus_score") from exc
+    if not math.isfinite(score):
+        raise TriageAnswerError("answer has no numeric apertus_score")
     score = max(0.0, min(100.0, score))
     relevant = bool(data.get("relevant", score >= 50.0))
     reason = str(data.get("reason", "")).strip() or "Keine Begründung geliefert."
@@ -290,6 +311,8 @@ class ApertusTriageClient:
             temperature=self.temperature,
             max_tokens=self.max_tokens,
         )
+        if not response.choices:
+            raise TriageAnswerError("answer has no choices")
         content = response.choices[0].message.content or ""
         return _parse_json_decision(content, model=self.config.model)
 
