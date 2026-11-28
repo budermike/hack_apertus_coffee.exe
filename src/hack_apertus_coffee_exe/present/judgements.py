@@ -165,14 +165,14 @@ def _fr_cache_key(reason_de: str, question_de: str = "", rule_de: str = "") -> s
 def relevance_details(
     meta: dict[str, Any],
     fr_entry: dict[str, str] | None = None,
-    segments: Callable[[], list[dict[str, str]] | None] | None = None,
+    locate: Callable[[str, str], dict[str, Any] | None] | None = None,
 ) -> dict[str, Any]:
     """``question``, ``rule`` and ``criteria`` of the UI from ``metadata.relevance`` (#62, #66).
 
     A quote Apertus did not copy word for word (``status`` other than ``exakt``) gets
     ``passage``: the wording of the judgement it renders, with its mark, looked up in the
-    stored text (``segments`` returns ``relevance.segment(text)["segs"]``, asked only when
-    needed). Without ``passage`` the judgement has no passage close to the quote.
+    stored text by ``locate(quote, at)`` (``relevance.locate_passage``). Without ``passage``
+    the judgement has no passage close to the quote.
     """
     relevance = meta.get("relevance")
     if not isinstance(relevance, dict):
@@ -186,7 +186,6 @@ def relevance_details(
             fr_text = fr_raw.strip() if isinstance(fr_raw, str) and fr_raw.strip() else de_text
             details[key] = {"de": de_text, "fr": fr_text}
     criteria = []
-    segs: list[dict[str, str]] | None = None  # the judgement, read only if a quote is not verbatim
     listed = relevance.get("criteria")
     for criterion in listed if isinstance(listed, list) else []:
         if not isinstance(criterion, dict):
@@ -203,10 +202,8 @@ def relevance_details(
             "quote": quote,
             "status": criterion.get("beleg_status"),  # "exakt" | "ungefähr" | "fehlt"
         }
-        if entry["status"] != "exakt" and segments is not None:
-            if segs is None:
-                segs = segments() or []
-            passage = relevance_scoring.locate_passage(quote, entry["at"], segs)
+        if entry["status"] != "exakt" and locate is not None:
+            passage = locate(quote, entry["at"])
             if passage:
                 entry["passage"] = passage
         criteria.append(entry)
@@ -251,7 +248,7 @@ def to_ui_item(
     learned: Any | None = None,
     config: TriageConfig | None = None,
     subject_lookup: Callable[[str], str | None] | None = None,
-    segments: Callable[[], list[dict[str, str]] | None] | None = None,
+    locate: Callable[[str, str], dict[str, Any] | None] | None = None,
 ) -> dict[str, Any]:
     """One triage result -> one UI list item."""
     meta = row.get("metadata") or {}
@@ -325,7 +322,7 @@ def to_ui_item(
         # False: Apertus gave this judgement no relevance value (area outside the scoring, or a
         # failed call). A lawyer's decision on it stands, but there is nothing to learn from.
         item["scored"] = isinstance(rel["p"], (int, float)) and not isinstance(rel["p"], bool)
-    item.update(relevance_details(meta, fr_entry=fr_entry, segments=segments))
+    item.update(relevance_details(meta, fr_entry=fr_entry, locate=locate))
     if "singleJudge" not in item and single_judge is not None:
         item["singleJudge"] = single_judge
     if outcome is not None:
@@ -396,6 +393,7 @@ class JudgementList:
         self._text_meta_cache: dict[str, tuple[str | None, bool | None]] = {}
         self._subjects: dict[str, str] = {}
         self._segments_cache: dict[str, list[dict[str, str]] | None] = {}
+        self._passage_cache: dict[tuple[str, str, str], dict[str, Any] | None] = {}
         self._lock = threading.Lock()
 
     def invalidate(self) -> None:
@@ -549,6 +547,16 @@ class JudgementList:
         if segs is not None:  # a judgement that is not stored yet may be crawled later
             self._segments_cache[key] = segs
         return segs
+
+    def passage_for(self, key: str, quote: str, at: str) -> dict[str, Any] | None:
+        """``relevance.locate_passage`` for one quote of the judgement ``key``; found once, then kept."""
+        cache_key = (key, quote, at)
+        if cache_key not in self._passage_cache:
+            segs = self.segments_for(key)
+            if segs is None:  # the text is not stored (yet): asked again next time
+                return None
+            self._passage_cache[cache_key] = relevance_scoring.locate_passage(quote, at, segs)
+        return self._passage_cache[cache_key]
 
     def subject_for(self, case_id: str) -> str | None:
         """Fast subject lookup for ``similarCases`` without scanning all files."""
@@ -795,7 +803,7 @@ class JudgementList:
                     learned=learned,
                     config=self.config,
                     subject_lookup=self.subject_for if has_crawl or self._subjects else None,
-                    segments=(lambda key=key: self.segments_for(key)) if has_crawl else None,
+                    locate=(lambda quote, at, key=key: self.passage_for(key, quote, at)) if has_crawl else None,
                 )
             )
         return sorted(out, key=lambda item: item["score"], reverse=True)

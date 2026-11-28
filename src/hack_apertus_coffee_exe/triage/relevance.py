@@ -194,12 +194,13 @@ def quote_status(quote: str, source_squashed: str) -> str:
 # A full stop after one of these does not end a sentence («Art. 6», «Dr. med.», «consid. 4.2»).
 _NO_SENTENCE_END = frozenset(
     "art abs al lit let ziff ch nr no e erw consid cons vgl cf bzw resp ca env s ss ff p pp inkl sog evtl ggf "
-    "dr med prof st rz n bge atf sr rs chf z b u a d h i v m c par dres iur lic phil dipl prakt pract sc nat rer oec jur ing".split()
+    "dr med prof st rz n bge atf sr rs chf z b u a d h i v m c par dres iur lic phil dipl prakt pract sc nat rer oec jur ing eidg kant".split()
 )
 _SENTENCE_GAP = re.compile(r"(?<=[.!?])\s+(?=[A-ZÄÖÜÀÂÉÈÊÎÔÛÇ«“„\"(])")
 _WORD = re.compile(r"[0-9]{2,}|[a-zà-ÿ]{5,}")
 MIN_PASSAGE_WORDS = 4      # a quote with fewer telling words cannot be placed
 MIN_PASSAGE_SHARE = 0.7    # share of the quote's telling words a passage must contain
+MAX_PASSAGE_CHARS = 700    # a longer "sentence" (an enumeration, a ruling written as one sentence) is no passage to show
 
 
 def sentences(text: str) -> list[str]:
@@ -222,32 +223,67 @@ def _telling_words(text: str) -> set[str]:
     return {word[:8] for word in _WORD.findall((text or "").lower())}
 
 
-def locate_passage(quote: str, at: str, segs: Sequence[dict[str, str]]) -> dict[str, str] | None:
-    """The passage of the judgement that a quote of Apertus renders: ``{"at": mark, "text": wording}``.
+def _place(wanted: set[str], pools: Sequence[Sequence[tuple[str, list[str]]]], sizes: Sequence[int]) -> tuple[str, str] | None:
+    """``(mark, wording)`` of the sentence (or ``sizes`` sentences in a row) that shares most of ``wanted``."""
+    for pool in pools:
+        best: tuple[float, int, str, str] | None = None
+        for mark, parts in pool:
+            for size in sizes:
+                for start in range(len(parts) - size + 1):
+                    text = " ".join(parts[start:start + size])
+                    if len(text) > MAX_PASSAGE_CHARS:
+                        continue
+                    share = len(wanted & _telling_words(text)) / len(wanted)
+                    if share >= MIN_PASSAGE_SHARE and (best is None or (share, -len(text)) > best[:2]):
+                        best = (share, -len(text), mark, text)
+        if best:
+            return best[2], best[3]
+    return None
+
+
+def locate_passage(quote: str, at: str, segs: Sequence[dict[str, str]]) -> dict[str, Any] | None:
+    """The passage of the judgement that a quote of Apertus renders: ``{"at", "text", "close"}``.
 
     For quotes that are not verbatim (``quote_status`` other than ``exakt``): Apertus often
-    rewords the sentence it cites. The passage is one sentence, or two that follow each other,
-    taken word for word from the judgement: first looked for in the paragraphs Apertus named
-    (``at``, e.g. ``E2.1, E5.1``), then in the whole judgement. ``None`` when no passage
-    contains at least 70 % of the quote's telling words: then there is no passage to show.
+    rewords or shortens the sentence it cites. The passage is taken word for word from the
+    considerations, facts or operative part (not from the header; in a single-judge ruling
+    the header holds the whole text as one sentence), at most ``MAX_PASSAGE_CHARS`` long:
+
+    - one sentence, or two that follow each other, that contain at least 70 % of the quote's
+      numbers and longer words; looked for first in the paragraphs Apertus named (``at``,
+      e.g. ``E2.1, E5.1``), then in the whole judgement;
+    - else, for a quote of several sentences, the sentence behind each of them, joined with
+      «[…]» (``at`` lists their marks).
+
+    ``close`` says that the passage contains at least 90 % of those words: Apertus' wording is
+    then the passage with something left out, and showing both would show the same text twice.
+    ``None`` when nothing is that close: then there is no passage to show. The passage is found
+    by shared words, not by meaning: it is the most similar place, not a proven source.
     """
     wanted = _telling_words(quote)
     if len(wanted) < MIN_PASSAGE_WORDS:
         return None
     named = {mark.strip() for mark in re.split(r"[,;]|\bbis\b|\bund\b", at or "") if mark.strip()}
-    for pool in ([s for s in segs if s["id"] in named], segs):
-        best: tuple[float, int, dict[str, str]] | None = None
-        for seg in pool:
-            parts = sentences(seg["text"])
-            for size in (1, 2):
-                for start in range(len(parts) - size + 1):
-                    text = " ".join(parts[start:start + size])
-                    share = len(wanted & _telling_words(text)) / len(wanted)
-                    if share >= MIN_PASSAGE_SHARE and (best is None or (share, -len(text)) > (best[0], best[1])):
-                        best = (share, -len(text), {"at": seg["id"], "text": text})
-        if best:
-            return best[2]
-    return None
+    everywhere = [(seg["id"], sentences(seg["text"])) for seg in segs if seg.get("sec") != "rubrum"]
+    pools = [[entry for entry in everywhere if entry[0] in named], everywhere]
+    found = _place(wanted, pools, (1, 2))
+    marks, texts = ([found[0]], [found[1]]) if found else ([], [])
+    if not found:
+        pieces = [words for words in map(_telling_words, sentences(quote)) if len(words) >= MIN_PASSAGE_WORDS]
+        placed = [_place(words, pools, (1,)) for words in pieces] if len(pieces) >= 2 else [None]
+        if None in placed:
+            return None
+        for mark, text in placed:
+            if text not in texts:
+                marks, texts = marks + [mark], texts + [text]
+    passage = " […] ".join(texts)
+    if len(passage) > 2 * MAX_PASSAGE_CHARS:
+        return None
+    return {
+        "at": ", ".join(dict.fromkeys(marks)),
+        "text": passage,
+        "close": len(wanted & _telling_words(passage)) / len(wanted) >= 0.9,
+    }
 
 
 # ------------------------------------------------------------------ similar earlier judgements
@@ -600,10 +636,10 @@ def fr_cache_key(reason_de: str, question_de: str = "", rule_de: str = "") -> st
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
 
-def same_text(a: str, b: str) -> bool:
-    """True when two texts are the same but for small differences in wording (>= 90 % alike)."""
+def same_text(a: str, b: str, alike: float = 0.9) -> bool:
+    """True when two texts are the same but for differences in wording (at least ``alike`` the same)."""
     a, b = " ".join((a or "").split()).lower(), " ".join((b or "").split()).lower()
-    return bool(a) and bool(b) and difflib.SequenceMatcher(a=a, b=b, autojunk=False).ratio() >= 0.9
+    return bool(a) and bool(b) and difflib.SequenceMatcher(a=a, b=b, autojunk=False).ratio() >= alike
 
 
 FR_TRANSLATE_SYSTEM = (
@@ -625,6 +661,28 @@ FR_TRANSLATE_SCHEMA = _object({
     "b_question_fr": {"type": "string"},
     "c_regle_fr": {"type": "string"},
 })
+
+
+FR_ONE_SYSTEM = (
+    "Tu es juriste au service juridique de la Suva. Rends en français juridique suisse clair le texte allemand "
+    "ci-dessous, dans le champ «fr». Pas de traduction mot à mot : écris comme le ferait une juriste romande, avec "
+    "les termes et abréviations consacrés (UVG devient LAA, ATSG devient LPGA, IVG devient LAI, «Art. 6 Abs. 2 UVG» "
+    "devient «art. 6 al. 2 LAA», «E.» devient «consid.», Einspracheentscheid = décision sur opposition, "
+    "Beschwerde = recours). Ne modifie pas le sens ni les numéros d'arrêts. Réponds uniquement avec l'objet JSON."
+)
+FR_ONE_SCHEMA = _object({"fr": {"type": "string"}})
+MIXED_UP = 0.65  # two French texts this much alike, from German texts that are not: one text in two fields
+
+
+def _ask_json(client: Any, stage: str, key: str, system: str, user: str, schema: dict[str, Any], max_tokens: int) -> dict[str, Any]:
+    if hasattr(client, "call"):
+        return client.call(stage, key, system, user, schema, max_tokens)
+    return json.loads(client.chat.completions.create(
+        model=DEFAULT_MODEL,
+        messages=[{"role": "system", "content": system}, {"role": "user", "content": user}],
+        temperature=0.0,
+        max_tokens=max_tokens,
+    ).choices[0].message.content)
 
 
 _FR_CACHE_LOCK = threading.Lock()
@@ -657,31 +715,31 @@ def translate_reason_fr(
         f"Texte B, question juridique (DE) : {question_de.strip() or '-'}\n\n"
         f"Texte C, à retenir pour la pratique (DE) : {rule_de.strip() or '-'}"
     )
-    if hasattr(client, "call"):
-        answer = client.call("fr_reason", key[:16], FR_TRANSLATE_SYSTEM, user, FR_TRANSLATE_SCHEMA, 900)
-    else:
-        answer = json.loads(client.chat.completions.create(
-            model=DEFAULT_MODEL,
-            messages=[{"role": "system", "content": FR_TRANSLATE_SYSTEM}, {"role": "user", "content": user}],
-            temperature=0.0,
-            max_tokens=900,
-        ).choices[0].message.content)
-
+    answer = _ask_json(client, "fr_reason", key[:16], FR_TRANSLATE_SYSTEM, user, FR_TRANSLATE_SCHEMA, 900)
+    german = {"reason": reason_de, "question": question_de, "rule": rule_de}
     out = {
         "reason_fr": str(answer.get("a_motivation_fr") or "").strip() if reason_de.strip() else "",
         "question_fr": str(answer.get("b_question_fr") or "").strip() if question_de.strip() else "",
         "rule_fr": str(answer.get("c_regle_fr") or "").strip() if rule_de.strip() else "",
     }
-    # Two different German texts must not come back as the same French text: then Apertus put
-    # one text into two fields. Such an answer is not stored; the German text stays on show.
-    mixed_up = [
-        (a, b) for a, b in (("reason", "rule"), ("reason", "question"), ("question", "rule"))
-        if same_text(out[f"{a}_fr"], out[f"{b}_fr"])
-        and not same_text({"reason": reason_de, "question": question_de, "rule": rule_de}[a],
-                          {"reason": reason_de, "question": question_de, "rule": rule_de}[b])
-    ]
-    if mixed_up:
-        return {"reason_fr": "", "question_fr": "", "rule_fr": ""}
+
+    def mixed_up() -> set[str]:
+        """Fields that hold the same French text although their German texts differ."""
+        return {
+            name for a, b in (("reason", "rule"), ("reason", "question"), ("question", "rule"))
+            if same_text(out[f"{a}_fr"], out[f"{b}_fr"], MIXED_UP) and not same_text(german[a], german[b], MIXED_UP)
+            for name in (a, b)
+        }
+
+    # Apertus put one text into two fields: each of them is asked for again on its own, where
+    # no field can be mistaken for another. What is still the same afterwards is not shown.
+    for name in sorted(mixed_up()):
+        digest = hashlib.sha256(german[name].strip().encode("utf-8")).hexdigest()[:16]
+        single = _ask_json(client, "fr_text", digest, FR_ONE_SYSTEM, f"Texte (DE) : {german[name].strip()}", FR_ONE_SCHEMA, 600)
+        out[f"{name}_fr"] = str(single.get("fr") or "").strip()
+    still = mixed_up()
+    if still:
+        return {field: ("" if field[:-3] in still else text) for field, text in out.items()}
     if cache_path:
         with _FR_CACHE_LOCK:
             cache_path.parent.mkdir(parents=True, exist_ok=True)

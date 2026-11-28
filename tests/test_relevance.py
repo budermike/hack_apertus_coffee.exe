@@ -142,14 +142,40 @@ def test_locate_passage_finds_the_wording_of_the_judgement_behind_a_reworded_quo
     # nothing in the judgement is close: no passage, and none is invented
     assert rel.locate_passage("Das Bundesgericht ändert seine Rechtsprechung zum Schleudertrauma grundlegend", "E2.1", PASSAGE_SEGS) is None
     assert rel.locate_passage("zu kurz", "E2.1", PASSAGE_SEGS) is None
+    assert passage["close"] is False  # «bewirkte» is not in the judgement: Apertus' wording is shown next to it
+
+
+def test_locate_passage_never_shows_the_header_or_a_whole_ruling_and_places_long_quotes_sentence_by_sentence():
+    # a single-judge ruling is one long sentence in the header: that is no passage to show
+    ruling = "Nach Einsicht in die Beschwerde vom 3. Mai 2021 gegen das Urteil und in Erwägung, dass die Beschwerde verspätet ist, erkennt der Einzelrichter"
+    header = [{"id": "R", "sec": "rubrum", "text": ruling}]
+    assert rel.locate_passage("Die Beschwerde vom 3. Mai 2021 gegen das Urteil ist verspätet.", "", header) is None
+    long_sentence = [{"id": "E1", "sec": "law", "text": "Die Beschwerde ist verspätet, weil " + "die Frist abgelaufen war und " * 40 + "nichts anderes gilt."}]
+    assert rel.locate_passage("Die Beschwerde ist verspätet, weil die Frist abgelaufen war.", "E1", long_sentence) is None
+    # a quote of two sentences that stand far apart in the judgement
+    segs = [
+        {"id": "E3.1", "sec": "law", "text": "Die Gutachterin stellte eine posttraumatische Arthrose des oberen Sprunggelenks rechts fest. Davon ist auszugehen."},
+        {"id": "E4", "sec": "law", "text": "Zur Sache."},
+        {"id": "E7.2", "sec": "law", "text": "Die Beschwerdeführerin leidet an einer leichten neurokognitiven Störung mit Defiziten im exekutiven Bereich."},
+    ]
+    quote = ("Die Gutachterin stellte eine posttraumatische Arthrose des oberen Sprunggelenks fest. "
+             "Die Beschwerdeführerin leidet an einer leichten neurokognitiven Störung mit exekutiven Defiziten.")
+    passage = rel.locate_passage(quote, "E3.1", segs)
+    assert passage["at"] == "E3.1, E7.2" and " […] " in passage["text"]
+    # Apertus only left words out: the passage says it all, its wording need not be shown again
+    assert rel.locate_passage("Die Gutachterin stellte eine posttraumatische Arthrose rechts fest.", "E3.1", segs)["close"] is True
 
 
 class _FrClient:
-    def __init__(self, answer):
-        self.answer, self.users = answer, []
+    """Answers the call for all three texts with ``answer`` and the calls for one text with ``singles``."""
+
+    def __init__(self, answer, singles=()):
+        self.answer, self.singles, self.calls = answer, list(singles), []
 
     def call(self, stage, key, system, user, schema, max_tokens):
-        self.users.append(user)
+        self.calls.append((stage, user))
+        if stage == "fr_text":
+            return {"fr": self.singles.pop(0)}
         # the gateway returns the fields in alphabetical order: the prefixes keep the order of the texts
         assert list(schema["properties"]) == sorted(schema["properties"]) == ["a_motivation_fr", "b_question_fr", "c_regle_fr"]
         return self.answer
@@ -161,17 +187,28 @@ def test_french_reason_and_rule_stay_two_texts(tmp_path):
              "question_de": "Besteht ein Kausalzusammenhang?", "rule_de": "Der Rückfall ist nach Art. 11 UVV zu entschädigen."}
     good = {"a_motivation_fr": "L'arrêt porte sur le lien de causalité et intéresse la Suva.",
             "b_question_fr": "Existe-t-il un lien de causalité ?", "c_regle_fr": "La rechute est indemnisée selon l'art. 11 OLAA."}
+    expected = {"reason_fr": good["a_motivation_fr"], "question_fr": good["b_question_fr"], "rule_fr": good["c_regle_fr"]}
     client = _FrClient(good)
-    out = rel.translate_reason_fr(client, cache_path=cache, **texts)
-    assert out == {"reason_fr": good["a_motivation_fr"], "question_fr": good["b_question_fr"], "rule_fr": good["c_regle_fr"]}
-    assert "Texte A, motivation" in client.users[0] and "Texte C, à retenir pour la pratique" in client.users[0]
-    assert rel.translate_reason_fr(_FrClient({}), cache_path=cache, **texts) == out  # from the cache
+    assert rel.translate_reason_fr(client, cache_path=cache, **texts) == expected
+    assert "Texte A, motivation" in client.calls[0][1] and "Texte C, à retenir pour la pratique" in client.calls[0][1]
+    assert rel.translate_reason_fr(_FrClient({}), cache_path=cache, **texts) == expected  # from the cache
 
-    # Apertus puts the rule into the field of the reason as well: not shown, not stored
-    mixed = dict(good, a_motivation_fr="La rechute est indemnisée selon l'art. 11 OLAA.")
+    # Apertus puts the rule into the field of the reason as well (reworded a little): both
+    # texts are asked for again, each on its own, and the answer is then stored
+    mixed = dict(good, a_motivation_fr="La rechute est indemnisée conformément à l'art. 11 OLAA.")
     other = dict(texts, question_de="Ist der Rückfall zu entschädigen?")
-    assert rel.translate_reason_fr(_FrClient(mixed), cache_path=cache, **other) == {"reason_fr": "", "question_fr": "", "rule_fr": ""}
-    assert rel.fr_cache_key(other["reason_de"], other["question_de"], other["rule_de"]) not in json.loads(cache.read_text())
+    client = _FrClient(mixed, singles=[good["a_motivation_fr"], good["c_regle_fr"]])
+    assert rel.translate_reason_fr(client, cache_path=cache, **other) == expected
+    assert [stage for stage, _ in client.calls] == ["fr_reason", "fr_text", "fr_text"]
+    assert texts["reason_de"] in client.calls[1][1] and texts["rule_de"] in client.calls[2][1]
+    assert rel.fr_cache_key(other["reason_de"], other["question_de"], other["rule_de"]) in json.loads(cache.read_text())
+
+    # still the same text twice: those two fields stay empty (German is shown), nothing is stored
+    third = dict(texts, question_de="Wie ist der Rückfall zu entschädigen?")
+    client = _FrClient(mixed, singles=[good["c_regle_fr"], good["c_regle_fr"]])
+    assert rel.translate_reason_fr(client, cache_path=cache, **third) == {
+        "reason_fr": "", "question_fr": good["b_question_fr"], "rule_fr": ""}
+    assert rel.fr_cache_key(third["reason_de"], third["question_de"], third["rule_de"]) not in json.loads(cache.read_text())
 
 
 def test_french_cache_entries_from_before_the_fix_are_not_read():

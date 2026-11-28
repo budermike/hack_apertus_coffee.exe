@@ -24,9 +24,10 @@
  *              question: {de, fr}, rule: {de, fr},
  *              criteria: [{ id, at, quote, status, passage? }],   // id: K1..K5 / N1..N3,
  *                                                       // status: "exakt" | "ungefähr" | "fehlt"
- *                                                       // passage: { at, text }, only when the quote is
- *                                                       // not verbatim: the judgement's own wording
- *                                                       // that Apertus reworded, found in the stored text
+ *                                                       // passage: { at, text, close }, only when the
+ *                                                       // quote is not verbatim: the judgement's own
+ *                                                       // wording, found in the stored text by its words;
+ *                                                       // close = Apertus only left something out
  *              similarCases: [{ caseNumber, subject, similarity }] }]
  *
  *        Area and outcome codes: AREA_NAMES / OUTCOME_NAMES in i18n.js.
