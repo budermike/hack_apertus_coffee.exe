@@ -67,21 +67,21 @@ judgements to the list and reorder it; only the lawyer's own decision takes one 
 ### Target architecture (mandatory)
 
 The solution is deployable **a) on-premise**, **b) air-gapped** and **c) on a sovereign Swiss
-cloud**. One container (`Dockerfile`, `docker-compose.yml`) holds backend and UI; all settings
+cloud**. One container (`Dockerfile`, `docker-compose.yml`) holds backend, UI and the whole pipeline; all settings
 are environment variables; data lives in one mounted folder (`data/`).
 
 | Dependency | Build time | Runtime |
 |---|---|---|
 | Apertus v1.5 endpoint (OpenAI-compatible, `LLM_BASE_URL`) | – | yes; on-premise any server with the open weights |
 | Python packages (`requirements.txt`) | PyPI | no network |
-| Embedding model `intfloat/multilingual-e5-small` (open weights) | Hugging Face, once | local; only when new judgements are taken in |
+| Embedding model `intfloat/multilingual-e5-small` (open weights) | Hugging Face, once, into the image | local, CPU; when `crawl.ensure` embeds new judgements into the Vector-DB |
 | entscheidsuche.ch | – | only when a new period is fetched |
 | Proprietary AI services | none | none |
 
 With **no network at all** the container serves the UI, the Q2 list, reasons, stored
 summaries, editing, decisions and search; only Apertus calls and fetching new judgements need
-a connection. The image has no PyTorch, so a new period is taken into the Vector-DB outside
-the container. Azure: nothing is tied to a cloud provider; the steps are in `README.md`, not
+a connection. The image contains everything, including PyTorch (CPU) and the embedding model, so
+the whole pipeline from crawling to summaries runs inside the container. Azure: nothing is tied to a cloud provider; the steps are in `README.md`, not
 tested.
 
 ## 3. Use of Apertus
@@ -92,14 +92,16 @@ Apertus v1.5 performs the core task everywhere; no other language model is calle
 |---|---|---|
 | Relevance, two passes | `apertus-v1-5-70b` | Prompt with Suva's criteria (K1–K5 for, N1–N3 against) and similar earlier judgements with Suva's decision; JSON answer with quotes |
 | Summaries German / French | `SUMMARY_MODEL` (default `apertus-v1-5-70b`) | First the core question and the 1–3 decisive considerations (JSON), then each language written from their wording with a style profile measured on Suva's 55 texts, a glossary, three Suva examples marked as other cases and a rule-based block on who appealed and who won; a check by rules (cited considerations and articles exist, outcome agrees with the operative part) triggers one rewrite. After an edit, Apertus aligns the other language |
+| DE/FR check | `SUMMARY_MODEL` (default `apertus-v1-5-70b`) | Lengths compared by rules (at most 30 % apart, in characters); the language out of bounds is rewritten once. Optional, off by default: a reviewer that looks for contradictions and omissions in two passes, and a referee that decides from the judgement which language is right (`summary/crosscheck.py`, `SUMMARY_CROSSCHECK=1`). In a first test it tripled the time and its repair cut a correct French text in half, so it is off |
 | Interface language | `apertus-v1-5-70b` | Reasons, subjects and quotes carried over into German or French in legal wording, stored after the first time |
 
 No fine-tuning. `temperature = 0` with a fixed seed; calls go through one wrapper per stage with
 timeouts and retries, answers are cached. Supporting model: `intfloat/multilingual-e5-small`
 (MIT, open weights, local). All four Apertus variants (8B, 70B, each with and without
 reasoning mode) were compared; the reasoning mode brought no measurable gain. Coding assistants
-used in development are listed in `docs/MODELS.md`; they wrote code, prompts and texts and do
-nothing at runtime.
+used in development (Claude Code with Claude Opus 5.5 and Claude Fable 5.2, Claude Sonnet 5.5,
+Antigravity with Gemini and Gemini 4 Hydrogen) are listed with their roles in `docs/MODELS.md`;
+they wrote code, prompts and texts and do nothing at runtime.
 
 ## 4. Data
 

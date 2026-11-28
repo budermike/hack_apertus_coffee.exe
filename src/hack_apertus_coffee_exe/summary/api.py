@@ -6,8 +6,9 @@ Implements the summary part of the contract in ``src/presentation/api.js``:
     POST   /api/judgements/{id}/summary          stored entry; generates DE + FR first if missing
     PUT    /api/judgements/{id}/summary          body {de, fr}: a changed text becomes the one edited
                                                  version of that language and is shown at once; if only
-                                                 one language changed, Apertus aligns the other one
-                                                 (unless a lawyer wrote that one by hand)
+                                                 one language changed, Apertus carries the change
+                                                 over to the other one (content only, no translation;
+                                                 unless a lawyer wrote that one by hand)
     DELETE /api/judgements/{id}/summary/edit     drop the edited version (?lang=de|fr, default both):
                                                  back to the generated text
     POST   /api/judgements/{id}/summary/approve  body {languages?}: approve pending edits (no longer
@@ -112,13 +113,19 @@ class Backend:
     def edit_summary(self, case_number: str, body: dict[str, Any]) -> Response:
         """Save the lawyer's texts: one edited version per language, shown at once.
 
-        If only one language was changed, Apertus brings the other language in line with
-        it and that text is saved too, so both keep saying the same (``"align": false`` in
-        the body switches this off). The changed text is authoritative: the other language
-        is rewritten to say exactly what it says (``prompts.ALIGN_SYSTEM``). Apertus never overwrites what a lawyer typed: a language
+        If only one language was changed, Apertus carries the change over to the other
+        language and that text is saved too, so both keep saying the same (``"align": false``
+        in the body switches this off). It is not a translation: Apertus compares the text
+        before and after the edit, changes only the passages of the other language that the
+        edit touches and uses the judgement as the reference for the legal meaning
+        (``summary/align.py``). Apertus never overwrites what a lawyer typed: a language
         that was edited by hand stays as it is. When Apertus cannot do it (no key, gateway
         down), the edit is saved anyway. ``alignment`` in the answer says what happened:
-        ``null`` (nothing to align), ``{lang, ok: true}`` or
+        ``null`` (nothing to align),
+        ``{lang, ok: true, changed, notes, reference}`` (``changed``: the other language got a
+        new text; ``notes``: what Apertus' closing check asks the lawyer to look at, e.g. an
+        unclear edit or one that contradicts the judgement; ``reference``: the judgement was
+        found and given to Apertus) or
         ``{lang, ok: false, reason: "edited_by_hand" | "failed", error?}``.
         """
         with closing(store.connect(self.db_path)) as conn:
@@ -156,18 +163,30 @@ class Backend:
         typed_by_hand = entry["status"].get(target) != "generated" and not entry["alignedBy"].get(target)
         if typed_by_hand or entry["pending"].get(target) is not None:
             return {"lang": target, "ok": False, "reason": "edited_by_hand"}
+        facts = entry["facts"].get(target)
+        written_from = facts.get("erwaegungen") if isinstance(facts, dict) else None
+        # What the edit is compared with: the text of the edited language that the other language
+        # matches. While the other language is still the generated one, that is the generated text
+        # of the edited language, so an earlier edit that was not carried over (gateway down, or
+        # saved with "align": false) is caught up now. Otherwise the text before this edit.
+        source_before = entry.get(source) or ""
+        if entry["status"].get(target) == "generated":
+            generated = next((s for s in store.get_history(conn, case_number, source) if s.status == "generated"), None)
+            source_before = generated.text if generated else source_before
         try:
             summarizer = self.get_summarizer()
-            # The lawyer's text is what counts: no facts of the judgement are passed, so
-            # Apertus cannot "correct" the edit back to what the judgement says.
-            aligned = summarizer.align_language(
+            # The lawyer's edit is what counts; the judgement only tells Apertus what an edited
+            # passage means. An edit that contradicts the judgement is carried over and noted.
+            result = summarizer.align_edit(
                 target_lang=target,
                 target_text=target_text,
                 source_lang=source,
                 source_text=source_text,
-                instruction=None,
-                facts=None,
+                source_before=source_before,
+                judgement=self.find_judgement(case_number),
+                considerations=[c for c in written_from or [] if isinstance(c, str)],
             )
+            aligned = result.text
         except ValueError as exc:  # our own message, e.g. no gateway key set
             logger.warning("Could not align %s (%s) after an edit: %s", case_number, target, exc)
             return {**failed, "error": str(exc)[:300]}
@@ -178,10 +197,12 @@ class Backend:
             return {**failed, "error": "Apertus call failed"}
         if not isinstance(aligned, str) or not aligned.strip():
             return {**failed, "error": "Apertus returned no text"}
-        if aligned != target_text:
+        changed = aligned.strip() != target_text.strip()
+        if changed:
             model = getattr(getattr(summarizer, "llm", None), "model", None) or "apertus"
             store.replace_edit(conn, case_number, target, aligned, aligned_by=model)
-        return {"lang": target, "ok": True}
+        return {"lang": target, "ok": True, "changed": changed,
+                "notes": list(result.notes), "reference": bool(result.has_reference)}
 
     def reset_summary(self, case_number: str, language: str | None = None) -> Response:
         """Drop the edited version (one language or both): the generated text is shown again."""

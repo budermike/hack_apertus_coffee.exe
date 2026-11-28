@@ -266,3 +266,12 @@ def test_default_summarizer_offers_align_language_for_the_api():
     llm = FakeLLM("Aligned.")
     summarizer = gen_mod.Summarizer(llm, ex_mod.StyleExamples([_style_ref("8C_2/2025", "BGer-Urteil 8C_2/2025")]))
     assert summarizer.align_language(target_lang="fr", target_text="Texte.", instruction="plus court") == "Aligned."
+
+
+def test_summarizers_offer_align_edit_for_the_api(summarizer):
+    # wording only (the model says so): the other language stays; details in tests/test_summary_align.py
+    summarizer.llm = SimpleNamespace(chat=lambda system, user, **kwargs: '{"inhaltlich": false, "alt": "", "neu": "", '
+                                     '"unklar": false, "widerspricht_urteil": false, "hinweis": "", "abweichungen": []}')
+    result = summarizer.align_edit(target_lang="fr", target_text="Texte.", source_lang="de",
+                                   source_text="Neuer Text.", source_before="Alter Text.")
+    assert result.text == "Texte." and result.notes == []

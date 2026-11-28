@@ -55,7 +55,13 @@
  *        -> entry + alignment. A changed text becomes the ONE edited version of its language
  *        and is shown at once (no approval, a later edit replaces it). If only one language
  *        changed, Apertus brings the other one in line, unless a lawyer typed that one.
- *        alignment: null | { lang, ok: true } | { lang, ok: false, reason: "edited_by_hand" | "failed" }
+ *        alignment: null | { lang, ok: true, changed, notes, reference }
+ *                        | { lang, ok: false, reason: "edited_by_hand" | "failed" }
+ *        Apertus carries over only what the edit changed in substance (no translation; every
+ *        sentence not concerned stays word for word). `changed`: the other language got a new
+ *        text; `notes`: what Apertus asks the lawyer to check (unclear edit, edit against the
+ *        judgement, a change it could not carry over, points where both languages still differ);
+ *        `reference`: the judgement text was available as the reference.
  *
  *   DELETE {API_BASE}/judgements/{id}/summary/edit
  *        -> entry. Drops the edited version of both languages: back to the generated text,

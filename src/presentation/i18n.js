@@ -145,14 +145,18 @@ const I18N = {
         resetDone: "Zurückgesetzt auf den generierten Text",
         errorReset: "Zurücksetzen fehlgeschlagen.",
         pendingLegacy: "Frühere Bearbeitung, noch nicht übernommen: «Speichern» übernimmt sie, «Zurücksetzen» verwirft sie.",
-        alignPromptTitle: (target) => `${target === "de" ? "Deutsche" : "Französische"} Fassung neu erstellen?`,
+        alignPromptTitle: (target) => `${target === "de" ? "Deutsche" : "Französische"} Fassung inhaltlich angleichen?`,
         alignPromptBody: (source, target) =>
-            `Sie haben die ${source === "de" ? "deutsche" : "französische"} Fassung geändert. Soll Apertus die `
-            + `${target === "de" ? "deutsche" : "französische"} Fassung entsprechend neu erstellen?`,
-        alignApply: "Mit Apertus neu erstellen",
+            `Sie haben die ${source === "de" ? "deutsche" : "französische"} Fassung geändert. Soll Apertus die inhaltlichen `
+            + `Änderungen in die ${target === "de" ? "deutsche" : "französische"} Fassung übertragen? Es wird nicht übersetzt: `
+            + "Nur die betroffenen Sätze werden angepasst, alles andere bleibt wörtlich stehen. Der Urteilstext dient als Referenz.",
+        alignApply: "Mit Apertus angleichen",
         alignKeep: "Nein, nur speichern",
         cancel: "Abbrechen",
         alignedToast: (lang) => `Gespeichert. Apertus hat die ${lang === "de" ? "deutsche" : "französische"} Fassung an Ihre Änderung angeglichen. Bitte prüfen.`,
+        alignUnchangedToast: (lang) => `Gespeichert. Apertus hat die ${lang === "de" ? "deutsche" : "französische"} Fassung nicht geändert.`,
+        alignNotesTitle: (lang) => `Hinweise von Apertus zur Angleichung der ${lang === "de" ? "deutschen" : "französischen"} Fassung, bitte prüfen:`,
+        alignNoReference: "Der Urteilstext war nicht verfügbar: Apertus hat ohne Referenz angeglichen.",
         alignSkippedToast: (lang) => `Gespeichert. Die ${lang === "de" ? "deutsche" : "französische"} Fassung ist von Hand bearbeitet und wurde deshalb nicht automatisch angeglichen.`,
         alignFailedToast: (lang) => `Gespeichert. Die ${lang === "de" ? "deutsche" : "französische"} Fassung konnte nicht angeglichen werden (Apertus nicht erreichbar) und ist unverändert.`,
         openSuvaFormat: "Im Suva-Format öffnen",
@@ -190,6 +194,7 @@ const I18N = {
         ],
         suvaSelected: "Von Suva gewählt",
         summaryBasis: "Worauf sich die Zusammenfassung stützt",
+        langConflictTitle: "Deutsch und Französisch sagen hier nicht dasselbe. Bitte prüfen:",
         summaryBasisLaws: "Gesetzesartikel",
         summaryBasisConsiderations: "Massgebende Erwägungen",
         summaryBasisExamples: "Stil-Vorbilder",
@@ -345,14 +350,18 @@ const I18N = {
         resetDone: "Texte généré rétabli",
         errorReset: "La réinitialisation a échoué.",
         pendingLegacy: "Modification antérieure pas encore reprise : « Enregistrer » la reprend, « Réinitialiser » la supprime.",
-        alignPromptTitle: (target) => `Régénérer la version ${target === "de" ? "allemande" : "française"} ?`,
+        alignPromptTitle: (target) => `Aligner le contenu de la version ${target === "de" ? "allemande" : "française"} ?`,
         alignPromptBody: (source, target) =>
-            `Vous avez modifié la version ${source === "de" ? "allemande" : "française"}. Apertus doit-il régénérer `
-            + `la version ${target === "de" ? "allemande" : "française"} en conséquence ?`,
-        alignApply: "Régénérer avec Apertus",
+            `Vous avez modifié la version ${source === "de" ? "allemande" : "française"}. Apertus doit-il reporter les changements `
+            + `de fond dans la version ${target === "de" ? "allemande" : "française"} ? Il ne traduit pas : seules les phrases `
+            + "concernées sont adaptées, tout le reste demeure mot pour mot. Le texte de l'arrêt sert de référence.",
+        alignApply: "Aligner avec Apertus",
         alignKeep: "Non, enregistrer seulement",
         cancel: "Annuler",
         alignedToast: (lang) => `Enregistré. Apertus a aligné la version ${lang === "de" ? "allemande" : "française"} sur votre modification. Veuillez la relire.`,
+        alignUnchangedToast: (lang) => `Enregistré. Apertus n'a pas modifié la version ${lang === "de" ? "allemande" : "française"}.`,
+        alignNotesTitle: (lang) => `Remarques d'Apertus sur l'alignement de la version ${lang === "de" ? "allemande" : "française"}, à vérifier :`,
+        alignNoReference: "Le texte de l'arrêt n'était pas disponible : Apertus a aligné sans référence.",
         alignSkippedToast: (lang) => `Enregistré. La version ${lang === "de" ? "allemande" : "française"} a été modifiée à la main et n'a donc pas été alignée automatiquement.`,
         alignFailedToast: (lang) => `Enregistré. La version ${lang === "de" ? "allemande" : "française"} n'a pas pu être alignée (Apertus injoignable) et reste inchangée.`,
         openSuvaFormat: "Ouvrir au format Suva",
@@ -387,6 +396,7 @@ const I18N = {
         ],
         suvaSelected: "Sélectionné par la Suva",
         summaryBasis: "Sur quoi s'appuie le résumé",
+        langConflictTitle: "L'allemand et le français ne disent pas la même chose ici. Veuillez vérifier (détail en allemand) :",
         summaryBasisLaws: "Articles de loi",
         summaryBasisConsiderations: "Considérants déterminants",
         summaryBasisExamples: "Exemples de style",

@@ -29,11 +29,16 @@ summary/api.py  (/api/..., stdlib http.server)  ◄──►  UI  src/presentati
 The UI talks only to `/api/...` in `summary/api.py`, never to Python modules or a database.
 Apertus runs behind the configurable gateway (`LLM_BASE_URL`): the summaries use
 `SUMMARY_MODEL` (default `apertus-v1-5-70b`), the relevance scoring `apertus-v1-5-70b`
-unless `--model` is given. The embedding model (`EMBEDDING_MODEL`, open weights) runs locally
-and is needed only when new judgements are taken into the Vector-DB.
+unless `--model` is given. The embedding model (`EMBEDDING_MODEL`, open weights) runs locally;
+`crawl.ensure` embeds newly fetched judgements with it into the Vector-DB.
+
+New judgements arrive in two ways:
+- **`crawl.ensure`** (pipeline): all divisions into `data/raw/`, embedded into the Vector-DB.
+- **Web app, period without results** (`present/period_jobs.py`): only the social-law divisions
+  into `data/processed/triage/`, scored by Apertus right away, not embedded.
 
 When the list is served (`present/judgements.py`), the stored triage results are read from
-`results/triage_<period>.json` and `data/processed/triage_periods/*.json`, and the lawyers'
+`results/triage_<period>.json` and `data/processed/triage/periods/*.json`, and the lawyers'
 relevance decisions are learned from (`triage/feedback_learning.py`): one correction per legal
 area and criterion on top of the unchanged calibration, so judgements similar to a decided
 one move with it. The files in `results/` are never changed by that.
@@ -43,9 +48,9 @@ one move with it. The files in `results/` are never changed by that.
 | Stage | Folder | Stores | Main files |
 |---|---|---|---|
 | Crawl | `src/hack_apertus_coffee_exe/crawl/` | `data/raw/`, Vector-DB | `crawl.py` (sources, `fetch_single_case`), `ensure.py` (missing days, ingest), `vectordb.py` |
-| Triage | `src/hack_apertus_coffee_exe/triage/` | `results/triage_<period>.json`, `data/processed/triage_periods/`, `results/tables/relevance_scores_*.json` | `relevance.py` (prompts, two passes), `relevance_period.py` (one period), `calibration.py`, `feedback_learning.py`, `cli.py` |
-| Summary | `src/hack_apertus_coffee_exe/summary/` | Summaries-DB | `generate.py` (`Summarizer`), `check.py`, `examples.py`, `prompts.py` with the files in `prompts/`, `store.py`, `run.py`, `api.py` |
-| Present | `src/hack_apertus_coffee_exe/present/`, `src/presentation/` | `data/processed/triage_periods/` | judgement list and config for the UI, background jobs for new periods, translation of subjects and quotes; the web UI |
+| Triage | `src/hack_apertus_coffee_exe/triage/` | `results/triage_<period>.json`, `data/processed/triage/`, `results/tables/relevance_scores_*.json` | `relevance.py` (prompts, two passes), `relevance_period.py` (one period), `calibration.py`, `feedback_learning.py`, `cli.py` |
+| Summary | `src/hack_apertus_coffee_exe/summary/` | Summaries-DB | `generate.py` (`Summarizer`), `align.py`, `check.py`, `examples.py`, `prompts.py` with the files in `prompts/`, `store.py`, `run.py`, `api.py` |
+| Present | `src/hack_apertus_coffee_exe/present/`, `src/presentation/` | `data/processed/triage/` (periods fetched from the UI) | judgement list and config for the UI, background jobs for new periods, translation of subjects and quotes; the web UI |
 | Evaluation | `src/hack_apertus_coffee_exe/eval/`, `notebooks/` | `results/tables/`, `results/*.md`, `results/figures/` | metrics of the relevance list; for the summaries an Apertus 70B judge with a fixed rubric and a rule-based style measure; not part of the running system |
 
 ## Interfaces
@@ -59,7 +64,7 @@ The functions the stages and the backend call on each other.
 | `triage.relevance_period` | `run(period, label_periods, …)` | both Apertus passes for every candidate, calibration on the labelled periods, triage results | `triage.cli relevance`, `present/period_jobs.py` |
 | `triage.feedback_learning` | `FeedbackLearner.learned(decisions, rows) -> Learned` | corrections per area and criterion learned from all decisions; `Learned.score(row)` | `present.judgements.JudgementList`, `GET /api/config` |
 | `summary` | `summarize(conn, case_id) -> dict[str, Summary]` | DE + FR summary, generated only if none is stored | `summary.run batch`, `POST …/summary`, summary queue |
-| `summary.generate` | `Summarizer.summarize(judgement)`, `align_language(target_lang, target_text, …)` | DE + FR summary (`SummaryResult`); one language aligned to an edit of the other | `summary.run.summarizer_factory`, `PUT …/summary` |
+| `summary.generate` | `Summarizer.summarize(judgement)`, `align_edit(target_lang, target_text, source_lang, source_text, source_before, judgement, …)` | DE + FR summary (`SummaryResult`); a lawyer's edit of one language carried over to the other (`Alignment`: text and notes; logic in `summary/align.py`) | `summary.run.summarizer_factory`, `PUT …/summary` |
 | `summary.store` | `get_case`, `get_display` / `get_history`, `replace_edit` / `discard_edit`, `search` | read, edit (one edited version per language), reset to the generated text, full-text search | API |
 | `summary.store` | `save_feedback`, `get_latest_feedback`, `feedback_examples` | the lawyer's decision per judgement, appended to table `feedback` | `POST …/feedback`, judgement list, precedents of the next scoring run |
 
@@ -70,7 +75,7 @@ The functions the stages and the backend call on each other.
 - **Connections:** `conn` comes from `summary.store.connect()`; the Summaries-DB is only
   accessed through `summary/store.py`.
 - **Apertus calls:** only scoring (`relevance_period`), summarising (`Summarizer`,
-  `align_language`) and translating subjects and quotes (`present/translation.py`) call the model;
+  `align_edit`) and translating subjects and quotes (`present/translation.py`) call the model;
   reading and listing never do.
 - **Knowledge base:** generated summaries are never changed or deleted; an edit is stored next
   to the generated text.
@@ -109,7 +114,7 @@ Folders, periods and thresholds come from `configs/*.json`, secrets and model ch
 
 ## Deployment
 
-One container holds backend and UI (`Dockerfile`, `docker-compose.yml`); everything is set
+One container holds everything, backend, UI and pipeline (`Dockerfile`, `docker-compose.yml`); everything is set
 through environment variables; state lives in the mounted folder `data/`. Commands for local
 use, on-premise / air-gapped and Azure are in `README.md` ("Deployment").
 
@@ -117,7 +122,7 @@ use, on-premise / air-gapped and Azure are in `README.md` ("Deployment").
 |---|---|---|
 | Apertus v1.5 endpoint, OpenAI-compatible (`LLM_BASE_URL`) | – | yes; inside the network for on-premise and air-gapped use |
 | Python packages | PyPI | – |
-| Embedding model (open weights) | Hugging Face, once | local; only when new judgements are taken into the Vector-DB |
+| Embedding model (open weights) | Hugging Face, once, into the image | local (CPU); when `crawl.ensure` embeds new judgements into the Vector-DB |
 | entscheidsuche.ch / bger.ch | – | only to fetch new judgements |
 | Proprietary AI services | none | none |
 
@@ -126,5 +131,6 @@ use, on-premise / air-gapped and Azure are in `README.md` ("Deployment").
   search, stored judgement texts).
 - **Azure (not tested):** no provider-specific code; container registry, one container with a
   persistent volume for `data/`, the three `LLM_*` variables as secrets.
-- **Not in the image:** PyTorch and `sentence-transformers`. A new period is taken into the
-  Vector-DB outside the container; the result is copied in with `data/`.
+- **Everything in the image:** PyTorch (CPU build) and `sentence-transformers` with the embedding
+  model downloaded at build time, so `crawl.ensure`, scoring, summaries and evaluation run in the
+  same container as the web app (`docker compose exec app python -m …`).

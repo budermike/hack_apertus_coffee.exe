@@ -53,6 +53,7 @@ const state = {
     drafts: {},                // id -> { de, fr } while the user edits a summary
     saveStatus: {},            // id -> "saving" | "aligning" | "saved" | "resetting" | "reset"
                                //       | "error" | "resetError"
+    alignNotes: {},            // id -> alignment of the last save, while it has something to tell (notes of Apertus)
 
     kbEntries: [],
     kbError: false,            // the database could not be read
@@ -779,7 +780,7 @@ function onDraftInput(id, lang, value, editor) {
  *  database keeps one edited version per language next to the generated one.
  *  If only one language was changed, the backend lets Apertus bring the other one in line
  *  (never a text a lawyer typed); `entry.alignment` says what came of it. */
-/** Popup on "Speichern": regenerate the other language? Resolves to "apply", "keep" or
+/** Popup on "Speichern": carry the change over to the other language? Resolves to "apply", "keep" or
  *  "cancel" (Escape and "Abbrechen"). The dialog closes at once; the save runs afterwards,
  *  shown in the editor's status line. */
 function askAlign(source, target) {
@@ -813,8 +814,9 @@ function askConfirm(title, body, confirmLabel) {
 const popupOpen = () => Boolean(document.querySelector("dialog[open]"));
 
 /** "Speichern". If exactly one language was changed and Apertus may rewrite the other one
- *  (generated or "angeglichen", not typed by hand), the popup asks first: "neu erstellen"
- *  saves and lets Apertus regenerate the other language, "nur speichern" saves the edit
+ *  (generated or "angeglichen", not typed by hand), the popup asks first: "angleichen"
+ *  saves and lets Apertus carry the change of substance over to the other language (no
+ *  translation, only the sentences concerned), "nur speichern" saves the edit
  *  alone (align: false), "Abbrechen" saves nothing. A language typed by hand is never
  *  rewritten by Apertus (backend rule), so then there is nothing to ask. */
 async function onSave(id) {
@@ -831,6 +833,7 @@ async function onSave(id) {
         align = answer === "apply";
     }
     state.saveStatus[id] = align && other && stored.origin[other] !== "edited" ? "aligning" : "saving";
+    delete state.alignNotes[id];
     renderEditors();
     try {
         const entry = await saveSummary(id, sent, { align });
@@ -846,7 +849,9 @@ async function onSave(id) {
         }
         state.saveStatus[id] = "saved";
         const alignment = entry.alignment;
-        if (alignment?.ok) toast(t("alignedToast", alignment.lang), 8000);
+        // What Apertus asks the lawyer to look at stays under the editor until the next save or reset.
+        if (alignment?.ok && (alignment.notes?.length || alignment.reference === false)) state.alignNotes[id] = alignment;
+        if (alignment?.ok) toast(t(alignment.changed === false ? "alignUnchangedToast" : "alignedToast", alignment.lang), 8000);
         else if (alignment?.reason === "edited_by_hand") toast(t("alignSkippedToast", alignment.lang), 8000);
         else if (alignment) toast(t("alignFailedToast", alignment.lang), 8000);
     } catch (err) {
@@ -870,6 +875,7 @@ async function onReset(id) {
         return;
     }
     state.saveStatus[id] = "resetting";
+    delete state.alignNotes[id];
     renderEditors();
     try {
         state.summaries[id] = await resetSummary(id);
@@ -1145,8 +1151,17 @@ function summaryEditor(scope, id) {
             textarea);
     });
 
+    // Notes of Apertus on the last alignment: an unclear edit, one that contradicts the
+    // judgement, a change it could not carry over, points where both languages still differ.
+    const alignment = state.alignNotes[id];
+    const alignNotes = alignment && el("div", { class: "warn-note", role: "note" },
+        alignment.notes?.length > 0 && el("strong", { text: t("alignNotesTitle", alignment.lang) }),
+        alignment.notes?.length > 0 && el("ul", { class: "basis-list" }, alignment.notes.map((note) => el("li", { text: note }))),
+        alignment.reference === false && el("p", { class: "note", text: t("alignNoReference") }));
+
     editor.append(
         el("div", { class: "duo" }, columns),
+        alignNotes || "",   // Element.append would print "undefined"
         el("div", { class: "row editor-footer" },
             el("button", { type: "button", class: "btn pri save-btn", text: t("save"), onclick: () => onSave(id) }),
             el("button", {
@@ -1236,6 +1251,17 @@ function summarizeButton(id, labelKey) {
         el("button", { type: "button", class: "btn pri", text: t(labelKey), onclick: () => requestSummary(id, { first: true }) }));
 }
 
+/** Points where DE and FR still disagree after the automatic correction (summary/crosscheck.py). */
+function langConflictNotice(entry) {
+    const issues = entry?.issues?.[currentLang] || entry?.issues?.de || [];
+    const conflicts = Array.isArray(issues)
+        ? issues.filter((i) => i && (i.kind === "de_fr_conflict" || i.kind === "length_mismatch") && i.detail) : [];
+    if (!conflicts.length) return null;
+    return el("div", { class: "warn-note", role: "note" },
+        el("strong", { text: t("langConflictTitle") }),
+        el("ul", { class: "basis-list" }, conflicts.map((i) => el("li", { text: i.detail }))));
+}
+
 function summaryBasisSection(entry) {
     const facts = entry?.facts;
     // the facts are stored in German; `basis` holds Apertus' rendering in the other language
@@ -1268,7 +1294,7 @@ function summarySection(item) {
     const heading = el("h3", { text: t("summary") });
     const busy = (key) => el("p", { class: "note loading-line" }, spinner(), t(key));
     switch (summaryStatus(item)) {
-        case "ready": return [heading, summaryEditor("res", id), summaryBasisSection(state.summaries[id])].filter(Boolean);
+        case "ready": return [heading, langConflictNotice(state.summaries[id]), summaryEditor("res", id), summaryBasisSection(state.summaries[id])].filter(Boolean);
         case "loading": return [heading, busy("summarizing")];
         case "queued": return [heading, busy("summaryQueued")];
         case "error": return [heading, el("p", { class: "form-error", text: t("errorSummary") }), summarizeButton(id, "retry")];

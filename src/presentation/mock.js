@@ -210,7 +210,7 @@ const mockBackend = (() => {
 
         /** PUT /judgements/{id}/summary: as in the backend, a changed language becomes the one
          *  edited version and is shown at once; if only one changed, the other follows (here
-         *  a marked placeholder instead of an Apertus text), unless it was typed by hand. */
+         *  a marked placeholder and a sample note instead of Apertus' work), unless it was typed by hand. */
         async saveSummary(id, texts, align = true) {
             await delay(300);
             const data = db.load();
@@ -242,7 +242,10 @@ const mockBackend = (() => {
                     next.status[target] = "approved";
                     next.model[target] = "human";
                     next.alignedBy[target] = "mock";
-                    alignment = { lang: target, ok: true };
+                    alignment = {
+                        lang: target, ok: true, changed: true, reference: true,
+                        notes: ["Mock: Hier stehen die Hinweise von Apertus (unklare Änderung, Widerspruch zum Urteil, verbleibende Abweichung)."],
+                    };
                 }
             }
             data.kb[id] = next;
