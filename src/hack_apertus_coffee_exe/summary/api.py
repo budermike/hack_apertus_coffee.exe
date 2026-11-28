@@ -15,6 +15,10 @@ Implements the summary part of the contract in ``src/presentation/api.js``:
     GET    /api/judgements/{id}/original         the judgement text as the crawler stored it, as a
                                                  plain HTML page (?lang=de|fr for the labels): the
                                                  original can be read without leaving the installation
+    POST   /api/subjects/localize                body {lang, ids}: subjects of these judgements in the
+                                                 language of the UI (Apertus, stored after the first time)
+    POST   /api/judgements/{id}/localize         body {lang}: subject, quotes under the criteria and the
+                                                 basis of the summary of one judgement in that language
     GET    /api/knowledge-base?q=...             search over all stored summaries, newest first
     DELETE /api/knowledge-base                   405: the knowledge base is append-only
 
@@ -48,6 +52,9 @@ from ..config import load_paths
 from ..present.evaluation import evaluation_response
 from ..present.judgements import JudgementList, config_response, list_response, parse_feedback_body
 from ..present.period_jobs import PeriodTriageManager
+from ..present.translation import Localizer, Translator
+from ..triage import relevance
+from ..triage.llm import GatewayConfig
 from ..triage.feedback_learning import FeedbackLearner
 from . import store
 from .judgement import Judgement, load_judgements, same_case
@@ -328,6 +335,7 @@ class Handler(SimpleHTTPRequestHandler):
     backend: Backend  # set by make_server
     judgements: JudgementList | None = None  # set by make_server (present/judgements.py)
     periods: PeriodTriageManager | None = None  # set by make_server (present/period_jobs.py)
+    localizer: Localizer | None = None  # set by make_server (present/translation.py)
     tables_dir: Path = Path("results/tables")
     models_path: Path = Path("docs/MODELS.md")
 
@@ -337,7 +345,7 @@ class Handler(SimpleHTTPRequestHandler):
         if parts is None:
             return super().do_GET()
         if parts == ["judgements"]:  # present/judgements.py
-            return self._respond(lambda: list_response(self.judgements, parse_qs(url.query)))
+            return self._respond(lambda: self._judgement_list(parse_qs(url.query)))
         if parts == ["config"]:  # present/judgements.py
             return self._respond(lambda: config_response(self.judgements))
         if parts == ["evaluation"]:  # present/evaluation.py
@@ -367,6 +375,10 @@ class Handler(SimpleHTTPRequestHandler):
             return self._respond(lambda: self._add_judgement(body))
         if parts == ["summaries", "queue"]:
             return self._respond(lambda: self.backend.enqueue_summaries(body))
+        if parts == ["subjects", "localize"]:
+            return self._respond(lambda: self._localize(lambda localizer: localizer.subjects(body)))
+        if len(parts) == 3 and parts[0] == "judgements" and parts[2] == "localize":
+            return self._respond(lambda: self._localize(lambda localizer: localizer.judgement(parts[1], body)))
         if len(parts) == 3 and parts[0] == "judgements" and parts[2] == "reason-fr":
             return self._respond(lambda: self._translate_reason_fr(parts[1]))
         if len(parts) == 3 and parts[0] == "judgements" and parts[2] == "summary":
@@ -376,6 +388,17 @@ class Handler(SimpleHTTPRequestHandler):
         if len(parts) == 3 and parts[0] == "judgements" and parts[2] == "feedback":
             return self._respond(lambda: self.backend.save_feedback(parts[1], body))
         self._respond(lambda: _error(HTTPStatus.NOT_FOUND, "unknown endpoint"))
+
+    def _judgement_list(self, query: dict[str, list[str]]) -> Response:
+        status, body = list_response(self.judgements, query)
+        if status == HTTPStatus.OK and self.localizer is not None:
+            self.localizer.fill_subjects(body)  # subjects already carried over into the other language
+        return status, body
+
+    def _localize(self, call: Callable[[Localizer], Response]) -> Response:
+        if self.localizer is None:
+            return _error(HTTPStatus.SERVICE_UNAVAILABLE, "no triage results loaded: start the server with --triage <file>")
+        return call(self.localizer)
 
     def _period_status(self, query: dict[str, list[str]]) -> Response:
         if self.periods is None:
@@ -486,6 +509,7 @@ def make_server(
     periods: PeriodTriageManager | None = None,
     tables_dir: str | Path = Path("results/tables"),
     models_path: str | Path = Path("docs/MODELS.md"),
+    localizer: Localizer | None = None,
 ) -> ThreadingHTTPServer:
     handler = type(
         "BoundHandler",
@@ -494,6 +518,7 @@ def make_server(
             "backend": backend,
             "judgements": judgements,
             "periods": periods,
+            "localizer": localizer,
             "tables_dir": Path(tables_dir),
             "models_path": Path(models_path),
         },
@@ -547,6 +572,11 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--judgements-dir", default=load_paths().judgements_dir, help="Suva example summaries")
     parser.add_argument("--examples", type=int, default=2, help="Few-shot examples per language")
     parser.add_argument("--triage", default=None, help="Triage results JSON for GET /api/judgements")
+    parser.add_argument(
+        "--calibration",
+        default="results/tables/relevance_calibration_q2_2026.json",
+        help="Calibration of the relevance thresholds (written by triage.cli relevance); explains them in GET /api/config",
+    )
     parser.add_argument("--auto-summarize", action="store_true", help="Queue relevant triage cases on startup")
     args = parser.parse_args(argv)
     load_dotenv()  # SUMMARY_DB_PATH and gateway settings from .env
@@ -563,6 +593,7 @@ def main(argv: list[str] | None = None) -> int:
             extra_triage_dir="data/processed/triage_periods",
             fr_cache_path="data/processed/triage/fr_cache.json",
             learner=FeedbackLearner(),  # relevance decisions are learned from, not added to a score
+            calibration_path=args.calibration,
         )
         if args.triage else None
     )
@@ -574,13 +605,24 @@ def main(argv: list[str] | None = None) -> int:
         backend=backend,
         judgements_dir=args.judgements_dir,
         model=args.model,
+        calibration_path=args.calibration,
     )
     if args.auto_summarize and judgements is not None:
         green_threshold = judgements.config.green_threshold
         ids = [i["id"] for i in judgements.items() if i["score"] >= green_threshold and not i["summarized"]]
         if ids:
             backend.queue.enqueue(ids)
-    server = make_server(backend, args.host, args.port, args.static, judgements, periods=periods)
+    localizer = None
+    if judgements is not None:
+        # Same model as the relevance scoring (70B unless --model says otherwise): it knows the legal terms best.
+        translator = Translator(
+            lambda: relevance.ApertusRelevanceClient(
+                config=GatewayConfig.from_env(model=args.model or relevance.DEFAULT_MODEL),
+                cache_dir=judgements.config.cache_dir,
+            )
+        )
+        localizer = Localizer(translator, judgements, args.db)
+    server = make_server(backend, args.host, args.port, args.static, judgements, periods=periods, localizer=localizer)
     logger.info("Serving on http://%s:%s (API under /api)", args.host, args.port)
     try:
         server.serve_forever()

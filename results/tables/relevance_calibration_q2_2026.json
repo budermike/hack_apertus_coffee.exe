@@ -8,6 +8,43 @@
  "n": 300,
  "n_pos": 59,
  "t": 0.1484,
+ "target_recall": 0.95,
+ "t_recall": 0.068126,
+ "yellow_recall": 1.0,
+ "t_yellow": 0.053352,
+ "basis": {
+  "list": {
+   "rule": "recall_target",
+   "target": 0.95,
+   "threshold": 0.068126,
+   "known": 59,
+   "known_kept": 58,
+   "candidates": 300,
+   "candidates_kept": 191,
+   "lowest_kept": {
+    "case_id": "8C_149/2025",
+    "p": 0.0682
+   },
+   "highest_missed": {
+    "case_id": "9C_65/2025",
+    "p": 0.0535
+   }
+  },
+  "yellow": {
+   "rule": "recall_target",
+   "target": 1.0,
+   "threshold": 0.053352,
+   "known": 59,
+   "known_kept": 59,
+   "candidates": 300,
+   "candidates_kept": 206,
+   "lowest_kept": {
+    "case_id": "9C_65/2025",
+    "p": 0.0535
+   },
+   "highest_missed": null
+  }
+ },
  "periods": [
   "2025-Q4",
   "2026-Q1"

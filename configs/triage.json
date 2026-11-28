@@ -1,5 +1,5 @@
 {
-  "_comment": "Triage settings (issues #11, #12, #33). Thresholds are placeholders until the eval sweep (#21) gives the F2-best value. label_periods and list_factor belong to `triage.cli relevance` (docs/ISSUE_RECALL.md): quarters with known Suva selection, and the multiplier on the F2 threshold (1.0 = best F2, lower = longer list and higher recall; 0.3 found all 59 Suva judgements of the two labelled quarters). The relevance value is shown on this file's 0-100 scale: list threshold = green_threshold.",
+  "_comment": "Triage settings (issues #11, #12, #33). green_threshold / yellow_threshold are only the display scale: the calibrated list threshold is shown as green_threshold, the start of yellow as yellow_threshold. label_periods and list_factor belong to `triage.cli relevance` (docs/ISSUE_RECALL.md): quarters with known Suva selection, and the multiplier on the F2 threshold (1.0 = best F2, lower = longer list and higher recall; 0.3 found all 59 Suva judgements of the two labelled quarters). The relevance value is shown on this file's 0-100 scale: list threshold = green_threshold. target_recall (#75) replaces list_factor when set: the list threshold is the highest value at which that share of the known Suva judgements of the labelled periods is on the list (0.95 = 95 %; why each threshold sits where it does is stored as basis in the calibration file and shown in the UI); yellow_recall sets the lower bound of yellow the same way (1.0 = every known Suva judgement at least yellow). Set target_recall to null to use list_factor again.",
   "rank_by": "final_score",
   "llm_weight": 0.75,
   "top_k": 3,
@@ -9,5 +9,7 @@
   "export_dir": "results",
   "cache_dir": "data/processed/triage",
   "label_periods": ["2025-Q4", "2026-Q1"],
-  "list_factor": 0.3
+  "list_factor": 0.3,
+  "target_recall": 0.95,
+  "yellow_recall": 1.0
 }

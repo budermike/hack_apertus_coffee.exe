@@ -26,6 +26,18 @@ Alle Hold-out-Messungen zusammen. Faktor 1.0 ist die F2-Schwelle der Kalibrierun
 | 0.4 | 206 | 58 von 59 | 98.3 % (94.3 % bis 100.0 %) | 0.656 (0.576 bis 0.721) | +6.8 bis +25.4 Punkte | -0.157 bis +0.006 |
 | 0.3 **(eingestellt)** | 226 | 59 von 59 | 100.0 % (100.0 % bis 100.0 %) | 0.638 (0.561 bis 0.702) | +7.9 bis +27.5 Punkte | -0.178 bis -0.009 |
 
+## Recall-Ziel (#75): Anteil der bekannten Suva-Urteile über der Schwelle
+
+Die Schwelle wird auf dem einen Quartal so gesetzt, dass dort mindestens dieser Anteil der Suva-Urteile auf der Liste steht, und auf dem anderen Quartal gemessen. Ist ein Recall-Ziel eingestellt, ersetzt es den Faktor oben.
+
+| Ziel | Auf der Liste | Gefunden | Recall | F2 | Je Quartal |
+|---|---|---|---|---|---|
+| 80 % | 97 | 49 von 59 | 83.0 % | 0.736 | 2025-Q4: 22 von 28 (35 auf der Liste); 2026-Q1: 27 von 31 (62 auf der Liste) |
+| 85 % | 104 | 50 von 59 | 84.8 % | 0.735 | 2025-Q4: 23 von 28 (38 auf der Liste); 2026-Q1: 27 von 31 (66 auf der Liste) |
+| 90 % | 152 | 53 von 59 | 89.8 % | 0.683 | 2025-Q4: 24 von 28 (52 auf der Liste); 2026-Q1: 29 von 31 (100 auf der Liste) |
+| 95 % **(eingestellt)** | 193 | 58 von 59 | 98.3 % | 0.676 | 2025-Q4: 28 von 28 (83 auf der Liste); 2026-Q1: 30 von 31 (110 auf der Liste) |
+| 100 % | 206 | 58 von 59 | 98.3 % | 0.656 | 2025-Q4: 28 von 28 (96 auf der Liste); 2026-Q1: 30 von 31 (110 auf der Liste) |
+
 ## Was diese Zahlen nicht zeigen
 
 - Die Kriterien im Prompt wurden mit Blick auf beide gelabelten Quartale formuliert. Die Werte sind deshalb eher zu günstig.

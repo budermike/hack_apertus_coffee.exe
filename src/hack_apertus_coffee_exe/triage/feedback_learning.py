@@ -142,6 +142,12 @@ def row_base(row: Mapping[str, Any]) -> tuple[float, float, tuple[str, ...]] | N
     return float(p0), float(threshold), feature_names(relevance.get("area"), criteria)
 
 
+def row_yellow(row: Mapping[str, Any]) -> float | None:
+    """Lower bound of yellow stored with a triage result (#75); ``None`` for older files (half the list threshold)."""
+    value = ((row.get("metadata") or {}).get("relevance") or {}).get("yellow_threshold")
+    return float(value) if isinstance(value, (int, float)) and not isinstance(value, bool) and value > 0 else None
+
+
 @dataclass(frozen=True)
 class Learned:
     """The corrections learned from a set of decisions, and how to score a judgement with them."""
@@ -175,7 +181,7 @@ class Learned:
         if p is None:
             return None
         p0, t_list, _ = row_base(row)
-        score = calibration.display_score(p, t_list, self.green, self.yellow)
+        score = calibration.display_score(p, t_list, self.green, self.yellow, row_yellow(row))
         if self.protect_list and p0 > t_list:
             score = max(score, self.green)  # was on the list: stays on it, at its end at worst
         return score
@@ -187,7 +193,7 @@ class Learned:
         p0, t_list, _ = row_base(row)
         if self.protect_list and p0 > t_list:
             return calibration.AMPEL_GREEN
-        return calibration.ampel_for(p, {"t": t_list})
+        return calibration.ampel_between(p, t_list, row_yellow(row))
 
     def summary(self) -> dict[str, Any]:
         """For ``GET /api/config``: what was learned, largest correction first."""

@@ -100,6 +100,7 @@ No paths or thresholds are hard-coded in modules; defaults live only in `configs
 | `POST /api/periods/ensure`, `GET /api/periods/status` | fetch and score a period without stored results (background job) |
 | `GET /api/judgements/{id}/original` | the stored judgement text as an HTML page |
 | `POST /api/judgements/{id}/reason-fr` | French version of reason, question and rule (Apertus, cached) |
+| `POST /api/subjects/localize`, `POST /api/judgements/{id}/localize` | subject, quotes under the criteria and the basis of the summary in the language of the UI (`present/translation.py`): carried over by Apertus in legal wording, not word for word, once, then stored; a carried-over quote is marked and the original stays one click away |
 | `POST /api/judgements/{id}/feedback` | store the lawyer's relevance decision |
 | `GET`, `POST /api/judgements/{id}/summary` | stored summary; `POST` generates German and French first if missing |
 | `PUT /api/judgements/{id}/summary` | save an edit; the other language follows through Apertus |
