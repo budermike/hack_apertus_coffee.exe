@@ -1,0 +1,354 @@
+[
+ {
+  "rank": 2,
+  "case_id": "8C_17/2026",
+  "date": "2026-06-29",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://29-06-2026-8C_17-2026",
+  "score": 89.23,
+  "area": "UV",
+  "reason": "Das Bundesgericht korrigiert die Leistungseinstellung der Suva, weil die vorbestehende Instabilität der Sprunggelenke die Heilung der unfallbedingten Muskelzerrung behindert hat. Es stellt klar, dass die blosse Angabe einer «üblichen» Heilungsdauer nicht ausreicht, um den natürlichen Kausalzusammenhang zu verneinen, solange die unfallbedingte Läsion nicht abgeheilt ist. Zudem wird die Sache zur weiteren Abklärung an die Suva zurückgewiesen, was für die Schadenpraxis und die Beurteilung von Rückfällen sowie der Leistungseinstellung bei komplexen Heilungsverläufen von hoher Bedeutung ist. Merksatz: Bei einer unfallbedingten Muskelzerrung, die aufgrund eines vorbestehenden instabilen Zustands der beiden Sprunggelenke nicht vollständig ausheilt, bleibt der natürliche Kausalzusammenhang zum Unfall bestehen, solange der Status quo sine vel ante nicht mit überwiegender Wahrscheinlichkeit nachgewiesen ist. Die blosse Angabe einer «üblichen» Heilungsdauer genügt nicht, um den Wegfall der Kausalität zu beweisen.",
+  "de": {
+   "text": "Das Bundesgericht hält fest, dass die persistierenden Beschwerden am rechten Unterschenkel über den 31. März 2024 hinaus weiterhin in einem natürlichen Kausalzusammenhang mit dem Unfall vom 13. Mai 2022 stehen. Die Vorinstanz durfte die Leistungseinstellung nicht bestätigen, da die unfallbedingte Muskelzerrung nicht verheilt ist und die vorbestehende chronische Instabilität der Sprunggelenke die Heilung lediglich verzögert hat, ohne den Kausalzusammenhang zu unterbrechen. Die blosse Berufung auf eine «übliche» Heilungsdauer genügt nicht, um den Wegfall der Unfallkausalität zu belegen. Da der Nachweis des Erreichens des status quo sine vel ante nicht erbracht ist, muss die Suva die Sache zurücknehmen und ergänzende Abklärungen treffen, um die über den 31. März 2024 hinaus geschuldeten Leistungen zu bestimmen. Die Beschwerde wird gutgeheissen und die Sache zur weiteren Abklärung und Neuverfügung an die Suva zurückgewiesen.",
+   "title": "BGer-Urteil 8C_17/2026 vom 29. Juni 2026",
+   "model": "apertus-v1-5-70b",
+   "prompt_version": "v3-8dc791e8ab",
+   "status": "generated",
+   "coherence_ok": true,
+   "issues": [],
+   "source": "stored",
+   "outdated": false
+  },
+  "fr": {
+   "text": "Le Tribunal fédéral rappelle que l'assureur-accidents ne peut mettre fin aux prestations que lorsque le statu quo sine vel ante est rétabli, ce qui suppose que l'accident ne constitue plus la cause naturelle de l'atteinte. En l'espèce, l'assuré a subi une déchirure musculaire de la jambe droite le 13 mai 2022. Bien que l'instabilité chronique préexistante de la cheville ait pu ralentir la guérison, la persistance de cette déchirure musculaire démontre que l'atteinte résultant de l'accident demeure présente. Le fait que la lésion n'ait pas guéri dans un délai \"habituel\" ne suffit pas à nier le lien de causalité naturelle, d'autant que l'accident est la cause au moins partielle de la lésion constatée. Partant, l'intimée ne pouvait pas considérer que le statu quo sine était atteint au 31 mars 2024.\n\nEn conséquence, le Tribunal fédéral admet le recours, annule l'arrêt cantonal et la décision sur opposition de la Suva, et renvoie la cause à l'assureur-accidents pour qu'il procède à une instruction complémentaire afin de déterminer les prestations dues au-delà de cette date.",
+   "title": "Arrêt du TF 8C_17/2026 du 29 juin 2026",
+   "model": "apertus-v1-5-70b",
+   "prompt_version": "v3-8dc791e8ab",
+   "status": "generated",
+   "coherence_ok": true,
+   "issues": [],
+   "source": "stored",
+   "outdated": false
+  }
+ },
+ {
+  "rank": 3,
+  "case_id": "8C_254/2025",
+  "date": "2026-06-23",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://23-06-2026-8C_254-2025",
+  "score": 89.23,
+  "area": "UV",
+  "reason": "Das Urteil befasst sich zentral mit der Frage, ob die im Rahmen der IV-Revision eingeführten Korrekturen bei den Vergleichseinkommen (Parallelisierung des Valideneinkommens und pauschaler Abzug beim Invalideneinkommen) auch in der Unfallversicherung anwendbar sind. Das Bundesgericht verneint dies klar und betont, dass die Delegationsnormen und die spezifischen gesetzgeberischen Absichten (insbesondere die niedrigere Schwelle für den Rentenanspruch in der UVG) einer analogen Übernahme der IV-rechtlichen Bestimmungen entgegenstehen. Da die Suva bei der Invaliditätsbemessung ebenfalls auf die LSE-Tabellen angewiesen ist, hat diese Rechtsprechung direkte Auswirkungen auf die Schadenpraxis und die Berechnung von Invaliditätsgraden und Rentenleistungen. Die Abgrenzung zwischen den Versicherungszweigen ist für die einheitliche, aber dennoch zweigspezifische Rechtsanwendung essenziell. Merksatz: Das Bundesgericht lehnt die analoge Anwendung der IV-rechtlichen Bestimmungen zur Parallelisierung und zur pauschalen 10%igen Abzugsmöglichkeit (Art. 26 und 26bis OAI) im Bereich der Unfallversicherung ab, da es sich um eine bewusste gesetzgeberische Entscheidung handelt, die nicht durch richterliche Analogie korrigiert werden darf.",
+  "de": {
+   "text": "Das Bundesgericht verneint die analoge Anwendung von Art. 26bis Abs. 3 IVV im Bereich der Unfallversicherung. Es besteht keine echte Gesetzeslücke, die eine solche analoge Anwendung rechtfertigen würde. Eine solche wäre mit dem Grundsatz der Gewaltenteilung unvereinbar und würde dem qualifizierten Schweigen des Gesetzgebers widersprechen. Die Bestimmung wurde spezifisch im Rahmen der IV-Revision eingeführt, um die Bemessung des Invalideneinkommens zu vereinheitlichen und gerichtliche Streitigkeiten zu reduzieren. Im Unfallversicherungsrecht fehlt eine entsprechende Norm, und die wesentlichen Unterschiede zwischen den beiden Sozialversicherungszweigen – insbesondere die tiefere Schwelle von 10 % für eine Rente nach UVG gegenüber 40 % nach IVG – sowie die historische Absicht, nur erhebliche Erwerbsbeeinträchtigungen zu entschädigen, stehen einer analogen Einführung einer pauschalen Abzugsregel durch die Rechtsprechung entgegen. Das Bundesgericht bestätigt damit die Verfügung der Suva und hebt das kantonale Urteil auf.",
+   "title": "BGer-Urteil 8C_254/2025 vom 23. Juni 2026",
+   "model": "apertus-v1-5-70b",
+   "prompt_version": "v3-8dc791e8ab",
+   "status": "generated",
+   "coherence_ok": false,
+   "issues": [
+    {
+     "language": "de/fr",
+     "severity": "error",
+     "kind": "length_mismatch",
+     "detail": "FR ist 78 % länger als die andere Sprache (Zeichen; erlaubt: 30 %)."
+    }
+   ],
+   "source": "stored",
+   "outdated": false
+  },
+  "fr": {
+   "text": "Le Tribunal fédéral rappelle qu’il n’existe pas de lacune propre au droit de l’assurance-accidents justifiant l’application par analogie de l’art. 26bis al. 3 OAI. Introduite dans le cadre de la révision de l’assurance-invalidité, cette disposition vise à uniformiser l’évaluation du revenu d’invalide et à limiter les litiges dans ce domaine. Son application au droit de l’assurance-accidents serait contraire au principe de la séparation des pouvoirs et au silence qualifié du législateur, qui n’a pas étendu ce correctif à l’assurance-accidents. Les différences substantielles entre les deux branches – seuil de 10 % pour la rente LAA contre 40 % pour la rente LAI, indépendance des évaluations, objectifs distincts – ainsi que la volonté historique d’exclure les rentes pour de légers préjudices économiques dans l’assurance-accidents rendent inappropriée l’introduction d’une déduction forfaitaire automatique par la jurisprudence.\n\nL’art. 18 al. 1 LAA fixe un seuil minimal d’invalidité de 10 % pour ouvrir le droit à une rente, alors que l’art. 28 al. 1 LAI exige un taux de 40 %. Cette différence n’est pas fortuite : la modification législative de 2000, entrée en vigueur en 2001, a expressément introduit ce seuil de 10 % pour exclure les rentes en cas de légers préjudices économiques, conformément à la volonté du législateur de ne pas accorder de prestations pour des atteintes mineures. Le Tribunal fédéral souligne que cette volonté claire ne peut être contournée par une application analogique de la règle de l’assurance-invalidité, d’autant que l’introduction d’une déduction forfaitaire de 10 % dans l’assurance-accidents conduirait à l’octroi de rentes dans des cas que le législateur a consciemment voulu exclure.\n\nEn définitive, le recours de l’assureur-accidents est admis et la décision sur opposition confirmée.",
+   "title": "Arrêt du TF 8C_254/2025 du 23 juin 2026",
+   "model": "apertus-v1-5-70b",
+   "prompt_version": "v3-8dc791e8ab",
+   "status": "generated",
+   "coherence_ok": false,
+   "issues": [
+    {
+     "language": "de/fr",
+     "severity": "error",
+     "kind": "length_mismatch",
+     "detail": "FR ist 78 % länger als die andere Sprache (Zeichen; erlaubt: 30 %)."
+    }
+   ],
+   "source": "stored",
+   "outdated": false
+  }
+ },
+ {
+  "rank": 4,
+  "case_id": "8C_343/2025",
+  "date": "2026-06-17",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://17-06-2026-8C_343-2025",
+  "score": 89.23,
+  "area": "UV",
+  "reason": "Das Urteil befasst sich zentral mit der Bemessung des Valideneinkommens, einem Kernpunkt der Schadenpraxis der Suva. Es präzisiert, dass bei der Ermittlung des Valideneinkommens nicht nur der vertraglich vereinbarte Grundlohn massgeblich ist, sondern auch regelmässig geleistete Überstunden und Lohnzulagen, sofern diese mit überwiegender Wahrscheinlichkeit auch ohne Unfall weiterhin erzielt worden wären. Die Vorinstanz hatte diesbezüglich den Untersuchungsgrundsatz verletzt, indem sie ohne Rückfrage bei der Arbeitgeberin und ohne Berücksichtigung der aktenkundigen Einkommensbestandteile einzig auf den Grundlohn abstellte. Das Bundesgericht hebt den Entscheid auf und weist die Sache zur weiteren Abklärung und Neuverfügung an die Suva zurück. Dies betrifft eine grundsätzliche Frage der Einkommensermittlung, die für die gesamte Schadenpraxis der Suva bei Invalidenrenten relevant ist. Merksatz: Bei der Ermittlung des Valideneinkommens sind regelmässig geleistete Überstunden und Lohnzulagen zu berücksichtigen, wenn mit überwiegender Wahrscheinlichkeit davon auszugehen ist, dass die versicherte Person diese auch ohne Unfall weiterhin erhalten hätte. Fehlt es an entsprechenden Abklärungen, verletzt dies den Untersuchungsgrundsatz und führt zur Rückweisung.",
+  "de": {
+   "text": "Das Valideneinkommen ist nur dann um Zusatzeinkommen wie Überstundenentschädigungen oder regelmässige Lohnzulagen zu erhöhen, wenn mit überwiegender Wahrscheinlichkeit erstellt ist, dass die versicherte Person auch ohne Unfall weiterhin entsprechende Einkommensbestandteile hätte erzielen können. Die blosse Möglichkeit reicht nicht aus. Für die Beantwortung dieser Frage sind insbesondere Auskünfte der damaligen Arbeitgeberin einzuholen, da deren Angaben in der Regel am genauesten wiedergeben, was die versicherte Person im Gesundheitsfall tatsächlich verdient hätte. Fehlt es an hinreichenden Feststellungen dazu, verletzt die Verwaltung den Untersuchungsgrundsatz (Art. 61 lit. c ATSG), wenn sie solche Einkommensbestandteile ohne weitere Abklärungen unberücksichtigt lässt. Im vorliegenden Fall war strittig, ob bei der Berechnung des Valideneinkommens die vom Versicherten geltend gemachten regelmässig geleisteten Überstunden und ein Qualitätsbonus zu berücksichtigen sind, nachdem die Arbeitgeberin das Arbeitsverhältnis per Ende September 2021 aus betrieblichen Gründen aufgelöst hatte. Das kantonale Gericht bemass das Valideneinkommen abweichend vom Einspracheentscheid auf der Basis des zuletzt erzielten Verdienstes, liess jedoch die weiteren Einkommensbestandteile ohne Beizug weiterer Akten und ohne Nachfrage bei der ehemaligen Arbeitgeberin unberücksichtigt. Damit verletzte es den Untersuchungsgrundsatz und damit Bundesrecht. Die Beschwerde wird teilweise gutgeheissen (Rückweisung).",
+   "title": "BGer-Urteil 8C_343/2025 vom 17. Juni 2026",
+   "model": "apertus-v1-5-70b",
+   "prompt_version": "v3-8dc791e8ab",
+   "status": "generated",
+   "coherence_ok": true,
+   "issues": [],
+   "source": "stored",
+   "outdated": false
+  },
+  "fr": {
+   "text": "Lorsque la détermination du revenu sans invalidité doit inclure des éléments de rémunération supplémentaires tels que les indemnités pour heures supplémentaires ou des primes de qualité, leur prise en compte n'est admissible que si la personne assurée aurait, selon toute vraisemblance prépondérante, continué à percevoir ces revenus sans l'accident. La simple possibilité d'obtenir de telles prestations ne suffit pas. Pour trancher cette question, il convient de se fonder sur les renseignements fournis par l'employeur, qui reflètent le plus précisément ce que l'assuré aurait effectivement gagné dans le futur. En l'absence d'informations suffisantes à ce sujet, l'assureur-accidents viole le principe inquisitoire prévu à l'art. 61 let. c LPGA s'il exclut ces composantes de la rémunération sans procéder à des investigations complémentaires, par exemple auprès de l'ancien employeur.\n\nEn l'espèce, il s'est avéré que le revenu sans invalidité devait être calculé sur la base du gain effectivement réalisé, ce qui imposait de clarifier la question des revenus supplémentaires. Or, la juridiction cantonale a fixé le revenu sans invalidité en se limitant au salaire contractuel, sans tenir compte des indemnités pour heures supplémentaires ni du bonus de qualité, ni même sans requérir d'informations auprès de l'ancienne employeuse. En agissant ainsi, elle a violé le devoir d'instruction et le droit fédéral. Le recours de l'assuré est donc partiellement admis, l'arrêt cantonal et la décision sur opposition sont annulés et la cause renvoyée à la Suva pour nouvelle décision.",
+   "title": "Arrêt du TF 8C_343/2025 du 17 juin 2026",
+   "model": "apertus-v1-5-70b",
+   "prompt_version": "v3-8dc791e8ab",
+   "status": "generated",
+   "coherence_ok": true,
+   "issues": [],
+   "source": "stored",
+   "outdated": false
+  }
+ },
+ {
+  "rank": 9,
+  "case_id": "8C_184/2026",
+  "date": "2026-06-05",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://05-06-2026-8C_184-2026",
+  "score": 85.95,
+  "area": "UV",
+  "reason": "Das Urteil betrifft eine zentrale Frage der Unfallversicherungspraxis: die Beweiswürdigung bei divergierenden medizinischen Einschätzungen zur Unfallkausalität von Sehnenrissen nach einem Misstritt. Das Bundesgericht korrigiert die Vorinstanz, weil diese einseitig auf die Einschätzung des behandelnden Operateurs abstellte, ohne die gegenteiligen fachärztlichen radiologischen Gutachten und das MZR-Gutachten bundesrechtskonform zu würdigen. Zudem wird die Rechtsprechung zur Leistungseinstellung ex nunc et pro futuro und zur Abgrenzung von Art. 6 Abs. 1 und Abs. 2 UVG präzisiert. Für die Suva ist dies relevant, da es die Anforderungen an die medizinische Beweiswürdigung und die Zulässigkeit von Leistungseinstellungen bei geänderter medizinischer Einschätzung betrifft. Merksatz: Ein Rückkommen auf die Kausalitätsbeurteilung ist zulässig, wenn der Unfallversicherer gestützt auf neue medizinische Erkenntnisse die Unfallkausalität verneint. Bei widersprüchlichen medizinischen Einschätzungen muss das Gericht eine umfassende Beweiswürdigung vornehmen und darf nicht einseitig auf die Einschätzung des behandelnden Arztes abstellen, da dieser aufgrund der auftragsrechtlichen Vertrauensstellung eher zugunsten der versicherten Person aussagt.",
+  "de": {
+   "text": "Die Unfallversicherung kann ihre Leistungen auch rückwirkend einstellen, wenn der natürliche Kausalzusammenhang zwischen Unfall und Gesundheitsschaden wegfällt. Die Vorinstanz verletzt Bundesrecht, wenn sie bei widersprechenden medizinischen Einschätzungen ohne nachvollziehbare Begründung auf die Angaben des behandelnden Arztes abstellt und weitere Abklärungen unterlässt. Bei unklarer medizinischer Sachlage muss ein Gerichtsgutachten eingeholt werden, um die Unfallkausalität zuverlässig zu beurteilen.\n\nIm vorliegenden Fall verletzte sich der Versicherte am 18. Juli 2019 am rechten Fuss. Die Unfallversicherung anerkannte zunächst Leistungen, verneinte später die Unfallkausalität eines Sehnenrisses und stellte die Leistungen rückwirkend ein. Das kantonale Gericht bestätigte die Leistungspflicht, wogegen die Versicherung vor Bundesgericht Beschwerde erhob. Das Bundesgericht hielt fest, dass die Vorinstanz zwar eine Stellungnahme des Operateurs einholte, jedoch nicht aufzeigte, weshalb den übrigen medizinischen Ansichten gestützt darauf der Beweiswert abgesprochen werden müsste. Insbesondere äusserte sich die Vorinstanz nicht zur versicherungsmedizinischen Beurteilung, welche den Bericht des Operateurs kritisch würdigte und den Unfallhergang als nicht mit den Schilderungen des Versicherten vereinbar bezeichnete. Auch den Umstand, dass der Versicherte selbst die falsche Beschreibung des Unfallhergangs durch den Operateur bestätigte, liess die Vorinstanz unbeachtet. Damit bestanden unter den beteiligten Ärzten und Gutachtern gegenteilige medizinische Ansichten betreffend das Vorliegen eines Sehnenrisses und dessen Unfallkausalität. Diese Fragen konnten aufgrund der vorhandenen Aktenlage nicht abschliessend beantwortet werden, weshalb ergänzende Abklärungen angezeigt gewesen wären.\n\nDa die Vorinstanz dennoch auf die Einschätzung des behandelnden Operateurs abstellte und auf die Anordnung weiterer Erhebungen verzichtete, verletzte sie Bundesrecht. Die Beschwerde wird daher teilweise gutgeheissen, das angefochtene Urteil aufgehoben und die Sache zu neuem Entscheid an die Vorinstanz zurückgewiesen, damit diese ein klärendes Gerichtsgutachten einhole.",
+   "title": "BGer-Urteil 8C_184/2026 vom 5. Juni 2026",
+   "model": "apertus-v1-5-70b",
+   "prompt_version": "v3-8dc791e8ab",
+   "status": "generated",
+   "coherence_ok": true,
+   "issues": [],
+   "source": "stored",
+   "outdated": false
+  },
+  "fr": {
+   "text": "Lorsque l'assureur-accidents constate après coup que les troubles allégués ne sont plus en lien de causalité naturelle avec l'accident, il peut mettre fin aux prestations avec effet rétroactif. La juridiction cantonale viole le droit fédéral si elle se fonde sur les seules indications du médecin traitant, en écartant sans justification les avis divergents des experts de la médecine d'assurance ou des radiologues, et qu'elle renonce à ordonner une instruction complémentaire alors que la situation médicale demeure incertaine. En présence de contradictions entre les avis médicaux, un expertise judiciaire doit être mise en œuvre pour établir de manière fiable le lien de causalité entre les atteintes constatées et l'accident.\n\nEn l'espèce, la cour cantonale a confirmé la suppression des prestations en se basant principalement sur l'appréciation du chirurgien traitant, sans expliquer pourquoi les autres évaluations médicales devraient être écartées. Le Tribunal fédéral relève que l'assureur avait produit une prise de position de son médecin-conseil critiquant le rapport du chirurgien, notamment en contestant la description de l'accident et en estimant qu'une rupture des tendons décrite était impossible selon le mécanisme lésionnel. La juridiction précédente n'a pas examiné ces éléments, ce qui constitue une violation du droit fédéral. De plus, l'existence d'avis médicaux contradictoires sur la présence d'un déchirement des tendons et sur la causalité accidentelle impose des investigations supplémentaires. Partant, le Tribunal fédéral admet partiellement le recours, annule le jugement cantonal et renvoie la cause à l'autorité précédente pour qu'elle mette en œuvre une expertise judiciaire destinée à clarifier la causalité accidentelle.",
+   "title": "Arrêt du TF 8C_184/2026 du 5 juin 2026",
+   "model": "apertus-v1-5-70b",
+   "prompt_version": "v3-8dc791e8ab",
+   "status": "generated",
+   "coherence_ok": true,
+   "issues": [],
+   "source": "stored",
+   "outdated": false
+  }
+ },
+ {
+  "rank": 19,
+  "case_id": "8C_738/2025",
+  "date": "2026-06-09",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://09-06-2026-8C_738-2025",
+  "score": 83.71,
+  "area": "UV",
+  "reason": "Das Urteil befasst sich zentral mit der Frage der Bemessung des Invalideneinkommens, einem Kernpunkt der Schadenpraxis der Suva. Es präzisiert die Rechtsprechung zur Anwendung der LSE-Tabellen, indem es klärt, dass bei der Zuordnung der Branche und des Kompetenzniveaus nicht primär die Branche des Arbeitgebers massgeblich ist, sondern die tatsächlich ausgeübten, komplexen administrativ-technischen Aufgaben der versicherten Person. Da die Suva regelmässig mit der Festsetzung von Invalidenrenten konfrontiert ist und dabei stets die korrekte Anwendung der LSE-Tabellen sowie die Unterscheidung zwischen branchenspezifischer Zuordnung und tatsächlicher Tätigkeitsnatur zu beurteilen hat, liefert dieses Urteil eine klare und präzise Leitlinie für die interne Rechtsanwendung und die Schadenbeurteilung. Merksatz: Bei der Bestimmung des Invalideneinkommens anhand der LSE ist nicht die Branche des früheren Arbeitgebers massgeblich, sondern die Art der tatsächlich ausgeübten Tätigkeiten und die damit verbundenen Anforderungen. Eine spezialisierte, technisch-administrative Tätigkeit im Finanzbereich mit komplexen Aufgaben, Autonomie und Verantwortung rechtfertigt die Anwendung des Kompetenzniveaus 3, selbst wenn der Arbeitgeber dem Finanzsektor angehörte.",
+  "de": {
+   "text": "Das Bundesgericht bestätigt, dass für die Bemessung des Invalideneinkommens nicht die Branche des früheren Arbeitgebers allein massgebend ist, sondern das Anforderungsprofil der konkret noch zumutbaren Tätigkeiten unter Berücksichtigung der beruflichen Qualifikationen. Die Zuordnung zu einer LSE-Lohnklasse erfolgt nach dem Typ der auszuführenden Arbeiten und den dafür erforderlichen Kompetenzen. Im vorliegenden Fall war die versicherte Person als Assistenzkraft im Finanzbereich tätig und hat komplexe administrative sowie finanztechnische Aufgaben wahrgenommen, die über ein einfaches Sekretariat hinausgehen. Diese Tätigkeitsmerkmale entsprechen dem Kompetenzniveau 3, welches für Berufs- und Fachkenntnisse voraussetzt, die zur Lösung praktischer, komplexer Probleme in einem Spezialgebiet erforderlich sind.\n\nIm konkreten Fall war der versicherten Person nach dem Unfall eine angepasste Tätigkeit noch zu 50 % zumutbar. Die Vorinstanz hatte das Invalideneinkommen gestützt auf die Lohnklasse 66 (Auxiliar-Tätigkeiten im Finanz- und Versicherungsbereich) und das Kompetenzniveau 3 bemessen. Das Bundesgericht prüft die Anwendung der LSE-Tabellen frei und bestätigt, dass die Zuordnung in diesem Fall rechtlich korrekt ist. Die bisherige Tätigkeit als Assistenzkraft im Finanzbereich erforderte ein grosses Wissen in diesem Bereich und die Fähigkeit, komplexe administrative Aufgaben zu lösen, was die Einordnung in das Kompetenzniveau 3 rechtfertigt.\n\nDamit bleibt es bei der Bemessung des Invalideneinkommens auf Basis der LSE-Lohnklasse 66 und des Kompetenzniveaus 3, da diese Auswahl dem Anforderungsprofil der noch zumutbaren Tätigkeiten der versicherten Person am besten entspricht.",
+   "title": "BGer-Urteil 8C_738/2025 vom 9. Juni 2026",
+   "model": "apertus-v1-5-70b",
+   "prompt_version": "v3-8dc791e8ab",
+   "status": "generated",
+   "coherence_ok": true,
+   "issues": [],
+   "source": "generated for the export",
+   "outdated": false
+  },
+  "fr": {
+   "text": "Pour déterminer le revenu d’invalide selon l’ESS, il convient de se référer au profil des tâches que la personne assurée est encore en mesure d’exercer, compte tenu de ses qualifications, et non à la branche de son ancien employeur. Depuis la dixième édition de l’ESS (2012), les professions sont classées par l’OFS selon le type de travail effectué et les compétences requises, en quatre niveaux de compétence. Le niveau 4 regroupe les fonctions exigeant la résolution de problèmes complexes et une vaste connaissance théorique dans un domaine spécialisé. Le niveau 3 regroupe les tâches pratiques complexes nécessitant un vaste ensemble de connaissances dans un domaine spécialisé. Le niveau 2 regroupe les tâches pratiques simples, et le niveau 1 les tâches physiques ou manuelles simples. Le choix de la table et du niveau de compétences applicable constitue une question de droit que le Tribunal fédéral revoit librement.\n\nEn l’espèce, l’assurée travaillait comme assistante dans le domaine financier. Après stabilisation de son état de santé, une activité adaptée à 50 % lui était encore exigible. La cour cantonale avait retenu la table TA1, ligne « Auxiliar-Tätigkeiten im Finanz- und Versicherungsbereich », niveau de compétence 3, au motif que les tâches administratives et financières qu’elle pouvait encore assumer dépassaient un simple secrétariat et requéraient des connaissances spécialisées. Le Tribunal fédéral a confirmé cette appréciation, rappelant que l’accent doit être mis sur le type de tâches réellement possibles, et non sur les qualifications en soi. La référence à la ligne 66 de l’ESS et au niveau de compétence 3 était ainsi conforme au droit fédéral, dès lors que l’activité d’assistante dans le secteur financier implique des tâches pratiques complexes nécessitant un vaste ensemble de connaissances dans ce domaine spécialisé.\n\nEn définitive, le Tribunal fédéral a rejeté le recours de l’assurée.",
+   "title": "Arrêt du TF 8C_738/2025 du 9 juin 2026",
+   "model": "apertus-v1-5-70b",
+   "prompt_version": "v3-8dc791e8ab",
+   "status": "generated",
+   "coherence_ok": true,
+   "issues": [],
+   "source": "generated for the export",
+   "outdated": false
+  }
+ },
+ {
+  "rank": 21,
+  "case_id": "8C_365/2025",
+  "date": "2026-06-16",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://16-06-2026-8C_365-2025",
+  "score": 83.12,
+  "area": "UV",
+  "reason": "Das Urteil befasst sich zentral mit der materiellen Frage der Leistungseinstellung bei der Unfallversicherung, einem Kernbereich der Schadenpraxis der Suva. Es präzisiert die Anforderungen an die Beweisführung und die Beurteilung des natürlichen Kausalzusammenhangs im Kontext von Heilbehandlung und Taggeld. Zudem ändert das Bundesgericht den kantonalen Entscheid ab und bestätigt die Einstellung der Leistungen per 17. September 2023, was eine klare Präzisierung der Rechtsprechung darstellt, die für die Suva bei der Beurteilung ähnlicher Fälle von Bedeutung ist. Merksatz: Die Unfallversicherung darf die vorübergehenden Leistungen (Heilbehandlung, Taggeld) beenden, wenn der Unfall nach zwei Monaten keine kausalen Auswirkungen mehr hat, sofern keine unfallbedingte Verschlimmerung eines Vorzustands vorliegt und keine weiteren Abklärungen nötig sind.",
+  "de": {
+   "text": "Das Bundesgericht bestätigt, dass der Unfallversicherer die vorübergehenden Leistungen (Heilbehandlung und Taggeld) zwei Monate nach einem Unfall einstellen darf, wenn das Ereignis lediglich eine vorübergehende Verschlimmerung eines Vorzustands bewirkt hat und die spezifische Behandlung im Zusammenhang mit diesem Unfall bereits abgeschlossen ist. Selbst wenn Beschwerden anhalten, fehlt es dann am erforderlichen natürlichen Kausalzusammenhang im Sinne der überwiegenden Wahrscheinlichkeit. Im vorliegenden Fall hatte der Versicherte am 17. Juli 2023 eine Prellung und Verstauchung der linken Körperregion erlitten. Die Suva stellte die Leistungen per 17. September 2023 ein. Die Vorinstanz verlängerte den Anspruch bis zum 3. September 2024, was das Bundesgericht aufhebt.\n\nDie Beschwerde der Suva wird gutgeheissen. Die Erwägungen des Bundesgerichts stützen sich auf die nachträglich eingereichten Berichte des Arztes D.________ vom 14. März und 10. Oktober 2024, die vor dem kantonalen Entscheid erstellt wurden und den Sachverhalt entscheidend klären. Darin wird dargelegt, dass der Unfall nur eine vorübergehende Verschlimmerung eines Vorzustands bewirkt und die spezifische Schmerzbehandlung bereits am 1. September 2023 endete, da die Morphiumverordnung nur für 28 Tage galt und zuvor keine radiologischen Abklärungen notwendig waren. Der behandelnde Arzt C.________ hatte keine wesentlichen Einwände gegen diese Einschätzung erhoben und insbesondere kein komplexes Krankheitsbild wie ein CRPS bestätigt. Das kantonale Gericht durfte diese überzeugenden und unbestrittenen ärztlichen Feststellungen nicht einfach übergehen und durfte die Leistungseinstellung nicht auf den Zeitpunkt der Begutachtung im September 2024 verschieben. Damit ist die Einstellung der Leistungen per 17. September 2023 rechtmässig.",
+   "title": "BGer-Urteil 8C_365/2025 vom 16. Juni 2026",
+   "model": "apertus-v1-5-70b",
+   "prompt_version": "v3-8dc791e8ab",
+   "status": "generated",
+   "coherence_ok": true,
+   "issues": [],
+   "source": "generated for the export",
+   "outdated": false
+  },
+  "fr": {
+   "text": "Si l'accident n'a provoqué qu'une décompensation passagère d'un état antérieur et que le traitement spécifique lié à cet événement a pris fin, l'assureur-accidents peut mettre fin aux prestations provisoires deux mois après l'accident, même en présence de douleurs persistantes, dès lors que le lien de causalité naturelle entre l'accident et les troubles subsistants n'est plus établi au degré de la vraisemblance prépondérante.\n\nEn l'espèce, les rapports médicaux ultérieurs du docteur D.________ des 14 mars et 10 octobre 2024, établis avant l'arrêt cantonal, ont permis d'affirmer que l'accident du 17 juillet 2023 avait décompensé de façon transitoire un état antérieur au niveau de la cheville et du genou gauches et avait cessé de déployer ses effets délétères au plus tard deux mois après le traumatisme. Le traitement des douleurs liées à l'événement avait en effet pris fin le 1er septembre 2023, la prescription de morphine ayant été limitée à 28 jours le 4 août 2023. Les juges cantonaux ne pouvaient pas se fonder sur l'expertise du 19 septembre 2024, qui ne prenait pas en compte l'accident du 17 juillet 2023, pour prolonger les prestations au-delà du 17 septembre 2023.\n\nC'est à bon droit que l'assureur a mis un terme aux prestations provisoires à cette date, les constatations du docteur D.________ étant convaincantes et non remises en cause par les autres avis médicaux au dossier. Le recours de l'assureur-accidents est admis, l'arrêt cantonal annulé et la décision sur opposition confirmée.",
+   "title": "Arrêt du TF 8C_365/2025 du 16 juin 2026",
+   "model": "apertus-v1-5-70b",
+   "prompt_version": "v3-8dc791e8ab",
+   "status": "generated",
+   "coherence_ok": true,
+   "issues": [],
+   "source": "generated for the export",
+   "outdated": false
+  }
+ },
+ {
+  "rank": 25,
+  "case_id": "8C_607/2025",
+  "date": "2026-06-30",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://30-06-2026-8C_607-2025",
+  "score": 83.12,
+  "area": "UV",
+  "reason": "Das Urteil befasst sich zentral mit der Beweiswürdigung in der Unfallversicherung, einem Kernbereich der Suva-Praxis. Es präzisiert die Anforderungen an die Nachvollziehbarkeit und Widerspruchsfreiheit von medizinischen Gutachten, insbesondere wenn es um die Abgrenzung zwischen unfallkausalen und degenerativen Knieverletzungen bei Rückfällen geht. Die Vorinstanz und das Bundesgericht setzen sich eingehend mit der Frage auseinander, wann ein versicherungsinternes Gutachten gegenüber einem externen Gutachten den Vorzug verdient und welche Mängel die Beweiskraft eines Gutachtens zerstören. Da die Suva regelmässig mit der Würdigung von medizinischen Unterlagen und der Beurteilung von Rückfällen konfrontiert ist, bietet dieses Urteil klare Leitlinien für die interne Rechtsanwendung und die Kommunikation mit den Versicherten. Merksatz: Bei der Beurteilung einer Rückfallmeldung ist die Beweiswürdigung zentral: Das Bundesgericht bestätigte die Vorinstanz, die eine erste Expertise als beweisuntauglich verworfen und stattdessen einer zweiten, schlüssigeren Expertise gefolgt war. Entscheidend war, dass die zweite Expertise die medizinischen Widersprüche auflöste und nachwies, dass die geltend gemachten Beschwerden nicht mehr überwiegend wahrscheinlich auf das Unfallereignis zurückzuführen waren.",
+  "de": {
+   "text": "Das Bundesgericht bestätigte, dass die Unfallversicherung eine zweite, beweistaugliche Expertise heranziehen darf, um den natürlichen Kausalzusammenhang zwischen den geltend gemachten Beschwerden und dem Unfall zu verneinen, wenn die erste Expertise den Anforderungen an die Beweiskraft nicht genügt. Im vorliegenden Fall hatte die Suva die erste Expertise als nicht beweiskräftig eingestuft und eine zweite angeordnet. Das kantonale Gericht hatte der zweiten Expertise vollen Beweiswert zuerkannt und gestützt darauf den Anspruch auf Leistungen für die angezeigte Rückfall abgelehnt. Das Bundesgericht hielt fest, dass die Vorinstanz die erste Expertise zu Recht als ungenügend verworfen hatte, da diese unzureichend begründet, widersprüchlich und ohne Auseinandersetzung mit abweichenden medizinischen Meinungen war. Demgegenüber entsprach die zweite Expertise den Anforderungen der Rechtsprechung an die Beweiskraft, da sie eine klare Begründung enthielt, alle medizinischen Elemente berücksichtigte und keine Widersprüche aufwies. Der zweite Gutachter hatte überzeugend dargelegt, dass nur eine leichte Bandverletzung in Zusammenhang mit dem Unfall stand, während die übrigen Befunde degenerativer oder vorbestehender Natur waren und der medizinische Endzustand spätestens mit der MRI vom 15. September 2015 erreicht war. Die Vorbringen des Versicherten, insbesondere der Hinweis auf einen früheren MRI-Befund und die Einschätzung des ersten Gutachters, vermochten die überzeugenden Schlussfolgerungen der zweiten Expertise nicht in Frage zu stellen. Das Bundesgericht wies die Beschwerde ab.",
+   "title": "BGer-Urteil 8C_607/2025 vom 30. Juni 2026",
+   "model": "apertus-v1-5-70b",
+   "prompt_version": "v3-8dc791e8ab",
+   "status": "generated",
+   "coherence_ok": false,
+   "issues": [
+    {
+     "language": "de/fr",
+     "severity": "error",
+     "kind": "length_mismatch",
+     "detail": "DE ist 30 % länger als die andere Sprache (Zeichen; erlaubt: 30 %)."
+    }
+   ],
+   "source": "generated for the export",
+   "outdated": false
+  },
+  "fr": {
+   "text": "Lorsque l'assureur-accidents écarte une expertise médicale dépourvue de valeur probante et se fonde sur une seconde expertise répondant aux exigences jurisprudentielles pour nier le lien de causalité naturelle entre les troubles persistants et l'accident initial, cette appréciation est conforme au droit. En l'espèce, la cour cantonale a à juste titre nié toute valeur probante au rapport du premier expert, qui présentait des carences importantes, des contradictions et une motivation insuffisante, notamment en retenant simultanément une origine dégénérative et accidentelle des lésions sans justification convaincante. Elle a en revanche attribué pleine valeur probante à la seconde expertise, dûment motivée et exempte de contradictions, qui concluait que seule une entorse de grade 2 du ligament latéral interne était en lien de causalité avec l'accident, les autres atteintes étant d'origine dégénérative ou préexistantes, le statu quo sine ayant été atteint. Le recourant ne remet pas en cause la valeur probante de cette seconde expertise et ne démontre pas en quoi l'appréciation des premiers juges serait erronée. En conséquence, le Tribunal fédéral rejette le recours.\n\nLe recours formé par l'assuré est rejeté.",
+   "title": "Arrêt du TF 8C_607/2025 du 30 juin 2026",
+   "model": "apertus-v1-5-70b",
+   "prompt_version": "v3-8dc791e8ab",
+   "status": "generated",
+   "coherence_ok": false,
+   "issues": [
+    {
+     "language": "de/fr",
+     "severity": "error",
+     "kind": "length_mismatch",
+     "detail": "DE ist 30 % länger als die andere Sprache (Zeichen; erlaubt: 30 %)."
+    }
+   ],
+   "source": "generated for the export",
+   "outdated": false
+  }
+ },
+ {
+  "rank": 26,
+  "case_id": "8C_63/2026",
+  "date": "2026-06-29",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://29-06-2026-8C_63-2026",
+  "score": 83.12,
+  "area": "UV",
+  "reason": "Das Urteil befasst sich zentral mit der Frage, ob Taggelder der Unfallversicherung bei vorübergehender Arbeitsfähigkeit unterbrochen werden dürfen und ob Verzugszinsen nach Art. 26 Abs. 2 LPGA geschuldet sind, wenn die Auszahlung nach rechtskräftiger Feststellung des Anspruchs verzögert erfolgt. Es präzisiert die Bindungswirkung eines früheren kantonalen Urteils (res iudicata) und bestätigt, dass der Anspruch auf ununterbrochene Taggelder bis zur medizinischen Stabilisierung besteht. Für die Suva ist dies relevant, da es die korrekte Anwendung der Leistungsvoraussetzungen und die Vermeidung von Doppelspurigkeiten in der Schadenpraxis betrifft. Merksatz: Ein kantonaler Rückweisungsentscheid, der den ununterbrochenen Anspruch auf Taggelder bis zur medizinischen Stabilisierung bestätigt, ist für die Unfallversicherung verbindlich; die Suva kann die Taggelder nicht nachträglich kürzen, weil die Arbeitsfähigkeit in der Zwischenzeit schwankte.",
+  "de": {
+   "text": "Das Bundesgericht bestätigte, dass die Sache bereits rechtskräftig entschieden ist und der Unfallversicherer den Anspruch auf ununterbrochenen Taggeldbezug bis zu einem bestimmten Datum nicht mehr in Frage stellen kann. Die materielle Rechtskraft eines kantonalen Urteils verbietet es, eine identische, bereits endgültig beurteilte Forderung in einem neuen Verfahren zwischen denselben Parteien erneut zu prüfen. Im vorliegenden Fall hatte ein kantonales Urteil vom 20. April 2023 den Anspruch der versicherten Person auf ununterbrochenen Taggeldbezug bis zum 23. Dezember 2019 rechtskräftig festgestellt. Da die Suva gegen diesen Entscheid kein Rechtsmittel ergriffen hatte, ist sie in der vorliegenden Beschwerde nicht mehr befugt, diesen Punkt anzufechten. Das kantonale Gericht hatte den Anspruch gestützt auf die medizinische Einschätzung einer vollständigen Arbeitsunfähigkeit bis zum 18. November 2019 und einer hälftigen Arbeitsunfähigkeit bis zum 23. Dezember 2019 sowie die gesetzlichen Bestimmungen über den Beginn und das Ende des Taggeldanspruchs bejaht. Das Bundesgericht wies die Beschwerde des Unfallversicherers ab und bestätigte den kantonalen Entscheid.",
+   "title": "BGer-Urteil 8C_63/2026 vom 29. Juni 2026",
+   "model": "apertus-v1-5-70b",
+   "prompt_version": "v3-8dc791e8ab",
+   "status": "generated",
+   "coherence_ok": true,
+   "issues": [],
+   "source": "generated for the export",
+   "outdated": false
+  },
+  "fr": {
+   "text": "L'autorité de la chose jugée interdit de remettre en cause, dans une nouvelle procédure entre les mêmes parties, une prétention identique qui a été définitivement tranchée par un arrêt cantonal. En l'espèce, l'arrêt du 20 avril 2023 avait définitivement reconnu le droit de l'intimée au versement ininterrompu des indemnités journalières jusqu'au 23 décembre 2019. La recourante ne peut donc plus contester ce point dans la présente procédure, même si l'assurée a exercé une activité lucrative durant certaines périodes.\n\nSelon l'art. 16 al. 1 LAA, l'assuré totalement ou partiellement incapable de travailler à la suite d'un accident a droit à une indemnité journalière. Ce droit naît le troisième jour suivant l'accident et s'éteint notamment dès la naissance du droit à la rente, conformément à l'art. 19 al. 1 LAA. Dans le cas particulier, l'arrêt cantonal du 20 avril 2023, qui constituait matériellement une décision finale, avait constaté une incapacité de travail totale puis partielle jusqu'au 23 décembre 2019 et en avait déduit le droit au versement continu des indemnités journalières jusqu'à cette date. La recourante, qui n'a pas recouru contre cet arrêt, ne peut plus remettre en question cette appréciation dans la présente cause.\n\nEn définitive, le recours de l'assureur-accidents est rejeté, confirmant ainsi l'arrêt cantonal qui ordonne le versement complet des indemnités journalières et des intérêts moratoires jusqu'au 23 décembre 2019.",
+   "title": "Arrêt du TF 8C_63/2026 du 29 juin 2026",
+   "model": "apertus-v1-5-70b",
+   "prompt_version": "v3-8dc791e8ab",
+   "status": "generated",
+   "coherence_ok": true,
+   "issues": [],
+   "source": "generated for the export",
+   "outdated": false
+  }
+ },
+ {
+  "rank": 32,
+  "case_id": "8C_739/2025",
+  "date": "2026-06-29",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://29-06-2026-8C_739-2025",
+  "score": 79.51,
+  "area": "UV",
+  "reason": "Das Urteil befasst sich zentral mit der Frage der Arbeitsfähigkeit nach Unfall und der Beurteilung von Schmerzen sowie deren Auswirkungen auf die Leistungsfähigkeit. Es präzisiert die Anforderungen an die medizinische Beurteilung und die Beweiskraft von versicherungsinternen Gutachten im Kontext neuropathischer Schmerzen. Für die Suva ist dies relevant, da die Einschätzung der Restarbeitsfähigkeit und die Abgrenzung gegenüber den Einschätzungen der behandelnden Ärzte in der Schadenpraxis häufig vorkommen. Das Bundesgericht bestätigt hier die Vorgehensweise der Suva, wonach nicht jede Schmerzangabe automatisch eine höhere Arbeitsunfähigkeit begründet, wenn die versicherungsinternen Ärzte die funktionellen Einschränkungen bereits berücksichtigt haben. Merksatz: Die Vorinstanz durfte auf die schlüssigen und umfassenden Einschätzungen der versicherungsinternen Ärzte abstellen, auch wenn behandelnde Ärzte eine geringere Arbeitsfähigkeit attestierten; reine subjektive Schmerzangaben oder unbegründete Atteste behandelnder Ärzte genügen nicht, um die versicherungsmedizinische Beurteilung in Zweifel zu ziehen.",
+  "de": {
+   "text": "Das Bundesgericht bestätigt, dass neuropathische Schmerzen, die unabhängig von der Belastung auftreten und auch in Ruhe bestehen, bei der Beurteilung der verbleibenden Arbeitsfähigkeit durch die versicherungsmedizinischen Fachpersonen zu berücksichtigen sind. Ein abweichender Bericht des behandelnden Arztes genügt jedoch nicht, um die Einschätzung der Versicherung zu entkräften, wenn dieser sich nicht zur tatsächlichen Zumutbarkeit einer angepassten Tätigkeit äussert und keine zusätzlichen funktionellen Einschränkungen benennt. Ebenso wenig vermögen blosse subjektive Angaben des Versicherten oder unbegründete Atteste einer Arbeitsfähigkeit von 50 % die versicherungsmedizinische Beurteilung in Frage zu stellen, insbesondere wenn Faktoren wie Katastrophisierung, Bewegungsangst oder eine übermässige Fokussierung auf die Schmerzen die geschilderten funktionellen Einschränkungen beeinflussen. Im vorliegenden Fall hat die Vorinstanz die Einschätzung der Suva zur vollen Arbeitsfähigkeit in einer leichten, einhändigen Tätigkeit zu Recht bestätigt, da die zitierten medizinischen Berichte keine abweichenden Schlussfolgerungen zur Arbeitsfähigkeit enthalten und die Schmerzangaben des Versicherten nicht durch objektive Befunde untermauert sind. Die Suva hat die funktionellen Einschränkungen des Versicherten zudem korrekt in die Bemessung des Invalideneinkommens einfliessen lassen, indem sie einen angemessenen Abzug vom Tabellenlohn gewährte. Das Bundesgericht weist die Beschwerde ab.",
+   "title": "BGer-Urteil 8C_739/2025 vom 29. Juni 2026",
+   "model": "apertus-v1-5-70b",
+   "prompt_version": "v3-8dc791e8ab",
+   "status": "generated",
+   "coherence_ok": true,
+   "issues": [],
+   "source": "generated for the export",
+   "outdated": false
+  },
+  "fr": {
+   "text": "Lorsque l'assuré fait valoir des douleurs neuropathiques chroniques, indépendantes de l'effort et présentes même au repos, l'assureur-accidents doit les intégrer dans l'évaluation des limitations fonctionnelles. Toutefois, un simple avis divergent du médecin traitant, qui ne se prononce pas sur l'exigibilité définitive dans une activité adaptée ni ne pose de limitations fonctionnelles supplémentaires, ne suffit pas à remettre en cause les conclusions des médecins de l'assurance, surtout lorsque des facteurs contextuels influencent les aptitudes fonctionnelles rapportées.\n\nDans le cas présent, le recourant soutient que ses douleurs neuropathiques réduisent sa capacité de travail à 50 %, mais son argumentation repose sur de simples allégations, sans référence à un rapport médical précis. Les rapports médicaux cités ne contiennent pas de conclusions sur l'exigibilité. La doctoresse F.________ a expressément indiqué ne pas être en mesure d'évaluer la capacité résiduelle de travail. Ses réponses sur la fatigue ou les troubles de la concentration ne sont pas déterminantes, pas plus que des certificats médicaux attestant une capacité de travail de 50 % sans motivation. L'intimée a néanmoins tenu compte des limitations fonctionnelles pour justifier un abattement sur le revenu d'invalide, ce qui confirme la pertinence de son évaluation.\n\nEn conséquence, les considérations de la juridiction cantonale sur la capacité résiduelle de travail du recourant échappent à la critique. Le recours, mal fondé, est rejeté.",
+   "title": "Arrêt du TF 8C_739/2025 du 29 juin 2026",
+   "model": "apertus-v1-5-70b",
+   "prompt_version": "v3-8dc791e8ab",
+   "status": "generated",
+   "coherence_ok": true,
+   "issues": [],
+   "source": "generated for the export",
+   "outdated": false
+  }
+ },
+ {
+  "rank": 34,
+  "case_id": "8C_609/2025",
+  "date": "2026-06-17",
+  "url": "https://search.bger.ch/ext/eurospider/live/de/php/aza/http/index.php?lang=de&type=show_document&highlight_docid=aza://17-06-2026-8C_609-2025",
+  "score": 78.28,
+  "area": "UV",
+  "reason": "Das Urteil befasst sich zentral mit der Kausalitätsprüfung bei einer vorbestehenden, durch einen Unfall aktivierten Verletzung des vorderen Kreuzbandes, einem klassischen und häufigen Problem in der Unfallversicherungspraxis. Es präzisiert die Anforderungen an die medizinische Beweisführung und die Würdigung von Gutachten sowie versicherungsinternen Berichten. Das Bundesgericht bestätigt hier, dass bei übereinstimmenden fachärztlichen Einschätzungen (insbesondere Radiologen) und fehlenden stichhaltigen Gegenbeweisen seitens des Versicherten auf weitere Abklärungen verzichtet werden kann. Dies ist für die Suva relevant, da es die Rechtsprechung zur Beweislast und zur antizipierten Beweiswürdigung im Zusammenhang mit komplexen Kausalitätsfragen bei Vorzuständen schärft. Merksatz: Bei der Beurteilung des Kausalzusammenhangs zwischen einem Unfall und einer vorbestehenden Verletzung des vorderen Kreuzbandes (LCA) ist auf die übereinstimmende Einschätzung von Fachärzten für Radiologie abzustellen, wenn diese eine frische Ruptur ausschliessen und eine chronische oder alte Läsion bestätigen. Das kantonale Gericht darf auf weitere Abklärungen verzichten, wenn die bereits vorhandenen medizinischen Unterlagen schlüssig sind und die versicherte Person keine überzeugenden Gegenbeweise vorlegt.",
+  "de": {
+   "text": "Das Bundesgericht kann auf eine zusätzliche medizinische Begutachtung verzichten, wenn die vorhandenen Unterlagen, insbesondere übereinstimmende Einschätzungen von Radiologie-Spezialisten, eine ausreichend sichere Beurteilung der strittigen Frage erlauben. Die Beweiswürdigung hat sich an der Beweiskraft der einzelnen medizinischen Berichte zu orientieren; blosse Hinweise der behandelnden Ärzte genügen nicht, um die Schlussfolgerungen der versicherungsinternen Fachärzte in Frage zu stellen, solange diese die gleichen bildgebenden Befunde geprüft und ihre abweichende Meinung begründet haben. Der Untersuchungsgrundsatz verpflichtet das Gericht nicht zu weiteren Abklärungen, wenn es sich als hinreichend informiert erachtet, erst recht nicht, wenn die beschwerdeführende Partei keine eigenen medizinischen Unterlagen vorlegt, welche die Beurteilung der versicherungsinternen Ärzte zu widerlegen vermögen.\n\nIm vorliegenden Fall hatte die Unfallversicherung vor ihrem ablehnenden Entscheid vom 7. November 2024 die Einschätzung dreier ihrer beratenden Ärzte eingeholt. Diese verneinten einen Kausalzusammenhang zwischen dem gemeldeten Ereignis und der Ruptur des vorderen Kreuzbandes am linken Knie, wobei sie sich auf die übereinstimmende Interpretation der IRM-Bilder vom 6. Februar 2024 durch die Radiologen K.________ und I.________ stützten. Letztere hatten explizit festgehalten, dass bei einer frischen Läsion des Kreuzbandes drei Wochen nach dem Trauma typischerweise eine Knochenprellung sichtbar wäre, was beim Versicherten nicht der Fall gewesen sei; sie gingen vielmehr von einer Hypoplasie oder einer chronischen Teilruptur aus. Der Versicherte legte im Verwaltungs- und kantonalen Verfahren diverse Berichte seiner behandelnden Ärzte vor. Keiner dieser Fachpersonen setzte sich jedoch mit der radiologischen Beurteilung der beiden Spezialisten auseinander und widerlegte deren Schlussfolgerungen nicht. Die von den behandelnden Ärzten angeführten Indizien – wie die vor dem Unfall bestehende Beschwerdefreiheit, die sportliche Aktivität oder die Instabilität des Knies nach dem beschriebenen Verdrehmechanismus – sind für sich allein nicht geeignet, die fundierte Meinung der Radiologen zu entkräften, zumal der Versicherte selbst indirekt die Existenz einer vorbestehenden Läsion anerkennt. Auch die nachgereichten Operations- und Austrittsberichte vom 27. März und 8. April 2025 bestätigen zwar die Diagnose einer Kreuzbandruptur, enthalten jedoch keine Aussage zur Unfallkausalität. Unter diesen Umständen durfte die Vorinstanz ohne Verletzung von Bundesrecht auf die vorhandenen Unterlagen abstellen und von einer unabhängigen Expertise absehen. Der Versicherte hätte die Möglichkeit gehabt, einen Bericht des operierenden Arztes L.________ einzureichen, falls er dessen Einschätzung als entscheidend erachtet hätte; dies hat er unterlassen.\n\nDie Beschwerde wird abgewiesen.",
+   "title": "BGer-Urteil 8C_609/2025 vom 17. Juni 2026",
+   "model": "apertus-v1-5-70b",
+   "prompt_version": "v3-8dc791e8ab",
+   "status": "generated",
+   "coherence_ok": false,
+   "issues": [
+    {
+     "language": "de/fr",
+     "severity": "error",
+     "kind": "length_mismatch",
+     "detail": "DE ist 44 % länger als die andere Sprache (Zeichen; erlaubt: 30 %)."
+    }
+   ],
+   "source": "generated for the export",
+   "outdated": false
+  },
+  "fr": {
+   "text": "Lorsque les rapports des médecins-conseils de l'assureur et ceux des médecins traitants divergent, le juge peut renoncer à ordonner une expertise médicale complémentaire s'il dispose au dossier d'avis concordants de spécialistes en radiologie permettant de trancher la question litigieuse avec suffisamment de certitude. L'appréciation des preuves doit se faire en tenant compte de la force probante de chaque rapport médical; des indices apportés par les médecins traitants ne suffisent pas à remettre en cause l'avis des spécialistes si ceux-ci ont examiné les mêmes éléments d'imagerie et ont expliqué les raisons de leur divergence. Le principe inquisitoire n'oblige pas le juge à compléter l'instruction s'il estime être suffisamment renseigné, d'autant plus lorsque la partie recourante n'a pas fourni d'éléments médicaux propres à infirmer les conclusions des médecins-conseils.\n\nEn l'espèce, l'intimée s'est fondée sur l'avis de trois médecins-conseils dont les conclusions respectives niant un lien de causalité entre l'accident et la rupture du ligament croisé antérieur s'appuyaient sur l'appréciation concordante de deux spécialistes en radiologie. Ces derniers ont retenu l'existence d'une ancienne lésion du LCA, constatant l'absence de contusion osseuse typique d'une rupture fraîche trois semaines après le traumatisme. Bien que le recourant ait produit plusieurs rapports médicaux en procédure, aucun de ces documents ne remettait en cause l'interprétation radiologique des spécialistes ni n'apportait d'éléments objectifs propres à infirmer leurs conclusions. Le recourant n'a pas non plus fourni d'avis déterminant du chirurgien qui l'a opéré, les documents postérieurs à l'intervention ne faisant que constater le diagnostic sans établir le lien de causalité avec l'accident. Dans ces conditions, la cour cantonale pouvait s'estimer suffisamment renseignée pour statuer sans ordonner d'expertise indépendante.\n\nEn définitive, le recours de l'assuré est rejeté, l'assureur obtenant gain de cause.",
+   "title": "Arrêt du TF 8C_609/2025 du 17 juin 2026",
+   "model": "apertus-v1-5-70b",
+   "prompt_version": "v3-8dc791e8ab",
+   "status": "generated",
+   "coherence_ok": false,
+   "issues": [
+    {
+     "language": "de/fr",
+     "severity": "error",
+     "kind": "length_mismatch",
+     "detail": "DE ist 44 % länger als die andere Sprache (Zeichen; erlaubt: 30 %)."
+    }
+   ],
+   "source": "generated for the export",
+   "outdated": false
+  }
+ }
+]
