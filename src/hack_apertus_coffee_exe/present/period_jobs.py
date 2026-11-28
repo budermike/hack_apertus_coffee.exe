@@ -471,7 +471,11 @@ class PeriodTriageManager:
                 )
 
             if failed_days and self._ensure_fn is not None:
-                raise RuntimeError(f"Crawl fehlgeschlagen für: {', '.join(failed_days[:5])}")
+                raise PeriodJobError(
+                    f"Crawl fehlgeschlagen für: {', '.join(failed_days[:5])}",
+                    "crawl_failed",
+                    list(failed_days[:5]),
+                )
             if cancel_event.is_set():
                 raise _CancelledJob("Suche abgebrochen.")
 
@@ -512,7 +516,7 @@ class PeriodTriageManager:
                     raise _CancelledJob("Suche abgebrochen.")
                 if all(relevance.not_asked(r) for r in records):
                     err = next((r["error"] for r in records if r.get("error")), "Gateway nicht erreichbar")
-                    raise RuntimeError(f"Apertus-Triage fehlgeschlagen: {err}")
+                    raise PeriodJobError(f"Apertus-Triage fehlgeschlagen: {err}", "triage_failed")
 
                 # Do not permanently cover days whose items failed due to transport errors (not_asked)
                 transport_failed_days = {
@@ -571,7 +575,8 @@ class PeriodTriageManager:
                 self.judgements.invalidate()
 
             if failed_set and not payload and failed_days:
-                raise RuntimeError(f"Crawl fehlgeschlagen für: {', '.join(sorted(failed_set)[:5])}")
+                days_list = sorted(failed_set)[:5]
+                raise PeriodJobError(f"Crawl fehlgeschlagen für: {', '.join(days_list)}", "crawl_failed", days_list)
 
             set_job(
                 status="done",
@@ -584,7 +589,14 @@ class PeriodTriageManager:
             set_job(status="idle", stage="idle", message="Abgebrochen.")
         except Exception as exc:
             logger.exception("Period job failed for %s..%s", *key)
-            set_job(status="error", stage="error", error=str(exc), message=str(exc))
+            set_job(
+                status="error",
+                stage="error",
+                error=str(exc),
+                message=str(exc),
+                errorCode=getattr(exc, "code", "failed"),
+                failedDays=getattr(exc, "days", []),
+            )
 
     def add_case(self, case_number: str, *, summarize: bool = True) -> dict[str, Any]:
         """Fetch into crawl_cache_dir, score via Apertus v1.5 and register one single judgement (#70)."""
