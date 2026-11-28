@@ -267,4 +267,4 @@ ORDER BY s.language, s.version;
 ## Offene Punkte
 
 - **Volltextsuche:** Aktuell einfache Teilstring-Suche (`store.search`, alle Begriffe müssen vorkommen, Akzente zählen). Bei Bedarf SQLite FTS5.
-- **Triage-Feedback / Ampel:** zurückgestellt, Entwurf in `src/hack_apertus_coffee_exe/summary/VORGEHEN_DB.md`.
+- **Triage-Feedback / Ampel:** umgesetzt in `triage/feedback_learning.py` (#29), siehe `src/hack_apertus_coffee_exe/triage/README.md`.

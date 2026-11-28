@@ -4,8 +4,9 @@ Other modules use only these, never the internals (``pipeline``, ``relevance``,
 ``relevance_period``). Reading functions never call the LLM; only
 :func:`score_period` does.
 
-- Stage 1 = Vector-DB similarity (``VectorDB.score_candidates``), Stage 2 = two-pass
-  Apertus relevance with calibration (#62/#63). Decision in ``docs/DECISIONS.md``.
+- The list comes from the two-pass Apertus relevance with calibration (#62/#63); the
+  Vector-DB similarity (``VectorDB.score_candidates``) is not part of it any more and is
+  used only in the evaluation. Decision in ``docs/DECISIONS.md``.
 - Traffic-light thresholds (``green_threshold`` / ``yellow_threshold`` in
   ``configs/triage.json``) are derived from the data as described in #75.
 """

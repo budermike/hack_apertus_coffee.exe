@@ -90,7 +90,7 @@ The scoring that produces the Suva list with the highest recall (reasons and mea
 - **Output:** the usual `TriageResult` list (`final_score`, `ampel`, `relevance_reason`), so ranking CSV, Suva list, summary batch and UI work unchanged. `final_score` is the relevance value on the 0-100 scale of `configs/triage.json`: the list threshold is mapped onto `green_threshold`, half of it onto `yellow_threshold`. The raw value and the details (criteria, quotes, rule) are in `metadata["relevance"]`.
 
 ### `triage/config.py` + `configs/triage.json`
-All tunables (issue #12): `rank_by`, `llm_weight`, `top_k`, `green_threshold` (60) / `yellow_threshold` (40) — **placeholders until the eval sweep (#21)** — `recall_top_n` (30), `export_dir`, `cache_dir`.
+All tunables (issue #12): `rank_by`, `llm_weight`, `top_k`, `green_threshold` (60) / `yellow_threshold` (40) — the 0–100 display scale onto which the calibrated list threshold is mapped (`docs/DECISIONS.md`, #75) — `recall_top_n` (30), `export_dir`, `cache_dir`.
 
 ### `triage/cache.py`
 Mirror of the crawler's data index in `data/processed/triage/` (`_index.json` + `<YYYY-MM>/<date>_<case>.npy|.json`). Chunk vectors are reused while the text SHA-256 and embedder fingerprint (name, chunking, TF-IDF vocabulary hash) match; Apertus decisions are reused while the request key (model, temperature, max_tokens, full prompt) matches. A changed text invalidates both. The TF-IDF vocabulary is fitted once on all 55 summaries (vocabulary only, no labels), so cached vectors stay valid across periods; leakage is handled at scoring time. Safe to delete.

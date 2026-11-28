@@ -116,7 +116,7 @@ Das Repo ist **öffentlich**.
 
 Die Hauptjury bewertet unter anderem «Technical rigour» und «Implementation feasibility». Dafür brauchen wir minimal:
 
-- **Ein Befehl startet die Demo** (Skript oder `make run`), dokumentiert im README.
+- **Ein Befehl startet die Demo:** `python -m hack_apertus_coffee_exe.summary.api --static src/presentation --triage results/triage_q2_2026.json` oder `docker compose up --build` (README, Abschnitt «Run it»).
 - **Ein Evaluationsskript** mit einer kleinen, ehrlichen Ergebnistabelle (Datensatz, Metrik, Ergebnis, bekannte Schwächen). Die Tabelle wandert in den Technical Report.
 - **Reproduzierbar:** Abhängigkeiten festgehalten (z.B. `requirements.txt` oder `pyproject.toml`), Modellversionen genannt.
 - **Deployment-Skizze:** Wie läuft das on-premise, air-gapped oder in der Schweizer Cloud? Ein kurzer Abschnitt in `docs/ARCHITECTURE.md` reicht.
