@@ -13,7 +13,7 @@ CURRENT = ("apertus-v1-5-70b", "v3-abc")
 
 def _row(case_id, rank, day, ampel="gruen", score=80.0):
     return {"case_id": case_id, "rank": rank, "ampel": ampel, "final_score": score, "judgement_date": day,
-            "metadata": {"url": f"https://bger/{case_id}", "relevance": {"area": "UV"}}, "relevance_reason": "UVG-Fall."}
+            "metadata": {"url": f"https://bger/{case_id}", "relevance": {"area": "UV", "p": 0.09123}}, "relevance_reason": "UVG-Fall."}
 
 
 ROWS = [
@@ -88,12 +88,16 @@ def test_markdown_marks_outdated_and_lawyer_texts():
     assert "von Jurist:in bearbeitet" in md and "VERALTET: 8b, Prompt v1" in md and "## 1. 8C_1/2026 (2026-06-10)" in md
 
 
-def test_recall_csv_has_one_row_per_judgement_in_rank_order(tmp_path):
+def test_recall_csv_has_relevant_and_almost_relevant_in_rank_order(tmp_path):
     import csv
 
-    path = sub.write_recall_csv(sub.ranked_green(ROWS), tmp_path / "recall.csv")
+    rows_in = [*ROWS, _row("8C_8/2026", 8, "2026-06-22", ampel="rot")]
+    path = sub.write_recall_csv(sub.ranked_relevant(rows_in), tmp_path / "recall.csv")
     with path.open(encoding="utf-8-sig", newline="") as handle:
         rows = list(csv.reader(handle))
     assert tuple(rows[0]) == sub.RECALL_COLUMNS
-    assert [r[1] for r in rows[1:]] == ["8C_1/2026", "8C_2/2026", "8C_3/2026", "8C_4/2026"]
-    assert rows[1][0] == "1" and rows[1][3] == "80.0" and rows[1][4] == "UV" and rows[1][6] == "https://bger/8C_1/2026"
+    assert [r[1] for r in rows[1:]] == ["8C_1/2026", "8C_2/2026", "8C_3/2026", "8C_4/2026", "8C_9/2026"]   # red is left out
+    assert [r[2] for r in rows[1:]] == ["relevant"] * 4 + ["fast relevant"]
+    first = dict(zip(rows[0], rows[1]))
+    assert first["Rang"] == "1" and first["Relevanz"] == "80.0" and first["Relevanzwert"] == "0.0912"
+    assert first["Rechtsgebiet"] == "UV" and first["Link"] == "https://bger/8C_1/2026"

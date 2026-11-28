@@ -5,9 +5,9 @@
 
 What Suva grades (``challenge_description.md``, evaluation criteria):
 
-1. "your 30 high scored relevant court judgements": ``recall_top30_<label>.csv``, the 30
-   best-ranked judgements, one row each (``RECALL_COLUMNS``); ``recall_all_<label>.csv`` has
-   every judgement on the list ("you didn't miss anything").
+1. "your high scored relevant court judgements": ``recall_<label>.csv``, every relevant
+   judgement (green, on the list) and every almost relevant one (yellow, just below the list),
+   in rank order, one row each (``RECALL_COLUMNS``; ``Einstufung`` tells them apart).
 2. "your top 10 highly relevant summaries" (against a hold-out set): the ``n`` best-ranked
    judgements of ``month`` with their summary in German and French,
    ``summaries_top<n>_<month>.md`` (to read) and ``.json`` (complete).
@@ -35,7 +35,8 @@ from typing import Any, Callable, Sequence
 logger = logging.getLogger(__name__)
 
 LANGUAGES = ("de", "fr")
-GREEN = "gruen"
+GREEN, YELLOW = "gruen", "gelb"
+LEVELS = {GREEN: "relevant", YELLOW: "fast relevant"}
 
 
 # ---------------------------------------------------------------- recall lists
@@ -47,7 +48,16 @@ def ranked_green(rows: Sequence[dict[str, Any]]) -> list[dict[str, Any]]:
     return sorted(green, key=lambda r: (r.get("rank") if isinstance(r.get("rank"), int) else 10**9, -(r.get("final_score") or 0)))
 
 
-RECALL_COLUMNS = ("Rang", "Geschaeftsnummer", "Entscheiddatum", "Score", "Rechtsgebiet", "Begruendung", "Link")
+# Relevanz: the 0-100 scale of the UI (list from 60, yellow from 40). Relevanzwert: the calibrated
+# value p behind it (triage/calibration.py), on which the thresholds are set.
+RECALL_COLUMNS = ("Rang", "Geschaeftsnummer", "Einstufung", "Relevanz", "Relevanzwert", "Entscheiddatum", "Rechtsgebiet",
+                  "Begruendung", "Link")
+
+
+def ranked_relevant(rows: Sequence[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Relevant (green) and almost relevant (yellow) judgements, best rank first."""
+    keep = [r for r in rows if r.get("ampel") in LEVELS and r.get("case_id")]
+    return sorted(keep, key=lambda r: (r.get("rank") if isinstance(r.get("rank"), int) else 10**9, -(r.get("final_score") or 0)))
 
 
 def suva_format(rows: Sequence[dict[str, Any]]) -> str:
@@ -62,11 +72,14 @@ def write_recall_csv(rows: Sequence[dict[str, Any]], path: Path) -> Path:
         writer.writerow(RECALL_COLUMNS)
         for r in rows:
             meta = r.get("metadata") or {}
-            score = r.get("final_score")
+            rel = meta.get("relevance") or {}
+            score, p = r.get("final_score"), rel.get("p")
             writer.writerow([
-                r.get("rank"), r["case_id"], r.get("judgement_date") or meta.get("decision_date") or "",
+                r.get("rank"), r["case_id"], LEVELS.get(r.get("ampel"), ""),
                 f"{score:.1f}" if isinstance(score, (int, float)) else "",
-                (meta.get("relevance") or {}).get("area") or "",
+                f"{p:.4f}" if isinstance(p, (int, float)) and not isinstance(p, bool) else "",
+                r.get("judgement_date") or meta.get("decision_date") or "",
+                rel.get("area") or "",
                 (r.get("relevance_reason") or r.get("reason") or "").strip(), meta.get("url") or "",
             ])
     return path
@@ -212,7 +225,6 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument("--triage", default="results/triage_q2_2026.json")
     parser.add_argument("--month", default="2026-06", help="Month of the top summaries (YYYY-MM)")
     parser.add_argument("--n", type=int, default=10, help="Number of summaries (Suva grades the top 10)")
-    parser.add_argument("--top", type=int, default=None, help="Length of the top list (default: recall_top_n in configs/triage.json, 30)")
     parser.add_argument("--db", default=None, help="Summaries DB (default: $SUMMARY_DB_PATH)")
     parser.add_argument("--input", default="data/raw", help="Crawl folder, for --generate")
     parser.add_argument("--model", default=None, help="Summary model (default: $SUMMARY_MODEL or Apertus 70B)")
@@ -224,19 +236,17 @@ def main(argv: Sequence[str] | None = None) -> int:
     from dotenv import load_dotenv
 
     from ..summary import store
-    from ..triage.config import load_config
 
     load_dotenv(Path(".env"))
     rows = json.loads(Path(args.triage).read_text(encoding="utf-8"))
     label = Path(args.triage).stem.removeprefix("triage_")
-    top_n = args.top if args.top is not None else load_config().recall_top_n
     out = Path(args.out_dir)
     out.mkdir(parents=True, exist_ok=True)
 
-    green = ranked_green(rows)
-    write_recall_csv(green[:top_n], out / f"recall_top{top_n}_{label}.csv")
-    write_recall_csv(green, out / f"recall_all_{label}.csv")
-    print(f"recall lists: top {min(top_n, len(green))} and all {len(green)} -> {out}", file=sys.stderr)
+    relevant = ranked_relevant(rows)
+    path = write_recall_csv(relevant, out / f"recall_{label}.csv")
+    n_green = sum(r.get("ampel") == GREEN for r in relevant)
+    print(f"recall list: {n_green} relevant + {len(relevant) - n_green} almost relevant -> {path}", file=sys.stderr)
 
     current = current_pipeline(args.model)
     db_path = Path(args.db) if args.db else store.db_path_from_env()
