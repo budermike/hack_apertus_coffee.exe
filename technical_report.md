@@ -132,7 +132,7 @@ and not adopted: the reasoning mode of the 70B model (50 instead of 49 of 59 at 
 F2 threshold, no difference at the shipped setting; `results/tables/thinking_vs_normal_relevanz.csv`).
 
 Models used in development only (coding assistants: Claude Code with Claude Opus 5.5 and
-Claude Fable 5.2, Claude Sonnet 5.5, Antigravity with Gemini) are listed with their roles
+Claude Fable 5.2, Claude Sonnet 5.5, Antigravity with Gemini, including Gemini 4 Hydrogen) are listed with their roles
 in `docs/MODELS.md`. They wrote code, tests and documentation; they score, select and
 summarise nothing at runtime, and no model judges the evaluation.
 
