@@ -4,10 +4,17 @@ All database access for summaries goes through this module. Schema and rules
 are documented in ``docs/SCHEMA.md`` (section "Summaries-Datenbank").
 
 Key rules:
-- Summary rows are never updated or deleted; every change is a new version.
+- Generated rows are never updated or deleted: the model output stays traceable.
 - A summary is generated at most once per (case_id, language).
 - Editing always stores ``model = "human"`` and ``prompt_version = NULL``.
-- Only an edited version can be approved; a generated summary needs no approval.
+- The UI keeps one human version per language (``replace_edit``): a new edit replaces the
+  previous one and is shown at once, ``discard_edit`` returns to the generated text.
+  ``save_edit`` / ``approve`` (every edit a new version, shown after approval) remain for
+  callers that want the full history.
+- ``Summary.aligned_by`` names the Apertus model when the text of that version was not typed
+  by the lawyer but brought in line with their edit of the other language. It is kept in its
+  own table (``summary_alignments``) and not as a column of ``summaries``, so a checkout
+  from before 28.11.2026 can still read a database this code has used.
 - Any case number (also secondary numbers of joined cases) resolves to the
   main ``case_id`` via the ``case_numbers`` table.
 """
@@ -76,6 +83,11 @@ CREATE TABLE IF NOT EXISTS feedback (
     created_at TEXT    NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS summary_alignments (
+    summary_id INTEGER PRIMARY KEY REFERENCES summaries (id) ON DELETE CASCADE,
+    model      TEXT    NOT NULL
+);
+
 CREATE INDEX IF NOT EXISTS idx_summaries_case_lang
     ON summaries (case_id, language, version);
 
@@ -116,6 +128,7 @@ class Summary:
     issues: list[dict[str, Any]] = field(default_factory=list)
     facts: dict[str, Any] = field(default_factory=dict)
     examples: list[str] = field(default_factory=list)
+    aligned_by: str | None = None
 
 
 @dataclass(frozen=True)
@@ -333,6 +346,87 @@ def approve(conn: sqlite3.Connection, case_number: str, language: str) -> Summar
         )
 
 
+def replace_edit(
+    conn: sqlite3.Connection,
+    case_number: str,
+    language: str,
+    text: str,
+    *,
+    aligned_by: str | None = None,
+) -> Summary:
+    """Store the lawyer's text as the one edited version of this summary and show it at once.
+
+    What the UI uses since the correction of 28.11.: there is the generated version (kept
+    for good, so the model output stays traceable) and at most one human version per
+    language. A new edit replaces the previous one instead of adding a version, and it
+    needs no approval. ``discard_edit`` goes back to the generated text.
+
+    ``aligned_by`` is the model ID when Apertus wrote ``text`` to follow the lawyer's edit
+    of the other language. The row still belongs to the edited version (``model = human``,
+    as the table's CHECK demands); table ``summary_alignments`` says who wrote it.
+    """
+    case_id = _require_case(conn, case_number)
+    with conn:
+        generated = conn.execute(
+            "SELECT * FROM summaries WHERE case_id = ? AND language = ? AND status = 'generated' "
+            "ORDER BY version DESC LIMIT 1",
+            (case_id, language),
+        ).fetchone()
+        if generated is None:
+            raise InvalidTransitionError(f"No summary to edit for {case_id} ({language})")
+        conn.execute(
+            "DELETE FROM summaries WHERE case_id = ? AND language = ? AND model = ?",
+            (case_id, language, HUMAN),
+        )
+        return _insert(
+            conn,
+            case_id=case_id,
+            language=language,
+            version=generated["version"] + 1,
+            title=generated["title"],
+            text=text,
+            model=HUMAN,
+            prompt_version=None,
+            status="approved",
+            coherence_ok=None,
+            aligned_by=aligned_by,
+        )
+
+
+def discard_edit(conn: sqlite3.Connection, case_number: str, language: str | None = None) -> int:
+    """Delete the human version (of one language or of both): the generated text is shown again.
+
+    Returns the number of deleted rows. Generated rows are never touched.
+    """
+    case_id = _require_case(conn, case_number)
+    languages = LANGUAGES if language is None else (language,)
+    for lang in languages:
+        if lang not in LANGUAGES:
+            raise ValueError(f"language must be one of {LANGUAGES}, got {lang!r}")
+    with conn:
+        deleted = 0
+        for lang in languages:
+            deleted += conn.execute(
+                "DELETE FROM summaries WHERE case_id = ? AND language = ? AND model = ?",
+                (case_id, lang, HUMAN),
+            ).rowcount
+        return deleted
+
+
+def discard_pending(conn: sqlite3.Connection, case_number: str, language: str) -> int:
+    """Delete the edits of one language that still wait for approval (status 'edited').
+
+    Such rows come from the time before 28.11.2026, when an edit had to be approved.
+    Returns the number of deleted rows; the shown version is not touched.
+    """
+    case_id = _require_case(conn, case_number)
+    with conn:
+        return conn.execute(
+            "DELETE FROM summaries WHERE case_id = ? AND language = ? AND status = 'edited'",
+            (case_id, language),
+        ).rowcount
+
+
 def get_or_generate(
     conn: sqlite3.Connection,
     case_number: str,
@@ -378,9 +472,10 @@ def get_display(conn: sqlite3.Connection, case_number: str, language: str) -> Su
         return None
     row = conn.execute(
         """
-        SELECT * FROM summaries
-        WHERE case_id = ? AND language = ? AND status IN ('approved', 'generated')
-        ORDER BY (status = 'approved') DESC, version DESC
+        SELECT s.*, a.model AS aligned_by
+        FROM summaries s LEFT JOIN summary_alignments a ON a.summary_id = s.id
+        WHERE s.case_id = ? AND s.language = ? AND s.status IN ('approved', 'generated')
+        ORDER BY (s.status = 'approved') DESC, s.version DESC
         LIMIT 1
         """,
         (case_id, language),
@@ -403,7 +498,8 @@ def get_history(conn: sqlite3.Connection, case_number: str, language: str) -> li
     if case_id is None:
         return []
     rows = conn.execute(
-        "SELECT * FROM summaries WHERE case_id = ? AND language = ? ORDER BY version",
+        "SELECT s.*, a.model AS aligned_by FROM summaries s LEFT JOIN summary_alignments a ON a.summary_id = s.id "
+        "WHERE s.case_id = ? AND s.language = ? ORDER BY s.version",
         (case_id, language),
     ).fetchall()
     return [_to_summary(r) for r in rows]
@@ -549,9 +645,10 @@ def _require_case(conn: sqlite3.Connection, case_number: str) -> str:
 def _latest(conn: sqlite3.Connection, case_id: str, language: str) -> Summary | None:
     row = conn.execute(
         """
-        SELECT * FROM summaries
-        WHERE case_id = ? AND language = ?
-        ORDER BY version DESC
+        SELECT s.*, a.model AS aligned_by
+        FROM summaries s LEFT JOIN summary_alignments a ON a.summary_id = s.id
+        WHERE s.case_id = ? AND s.language = ?
+        ORDER BY s.version DESC
         LIMIT 1
         """,
         (case_id, language),
@@ -574,6 +671,7 @@ def _insert(
     issues: list[dict[str, Any]] | None = None,
     facts: dict[str, Any] | None = None,
     examples: list[str] | None = None,
+    aligned_by: str | None = None,
 ) -> Summary:
     if language not in LANGUAGES:
         raise ValueError(f"language must be one of {LANGUAGES}, got {language!r}")
@@ -592,6 +690,8 @@ def _insert(
             _to_json(issues), _to_json(facts), _to_json(examples),
         ),
     )
+    if aligned_by:
+        conn.execute("INSERT INTO summary_alignments (summary_id, model) VALUES (?, ?)", (cursor.lastrowid, aligned_by))
     return Summary(
         id=cursor.lastrowid,
         case_id=case_id,
@@ -607,6 +707,7 @@ def _insert(
         issues=issues or [],
         facts=facts or {},
         examples=examples or [],
+        aligned_by=aligned_by or None,
     )
 
 

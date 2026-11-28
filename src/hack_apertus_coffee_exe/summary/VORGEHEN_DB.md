@@ -43,6 +43,7 @@ CREATE TABLE case_numbers (
 
 - **Verlauf:** Nie `UPDATE` – jede Änderung ist eine neue Zeile mit `version + 1`.
   Entschieden: Generieren → Bearbeiten → Freigeben ergibt 3 Zeilen (`generated` v1, `edited` v2, `approved` v3 als Kopie von v2).
+  **Überholt am 28.11.2026:** keine Freigabe mehr, pro Sprache eine bearbeitete Fassung, die ersetzt und zurückgesetzt werden kann (siehe `docs/SCHEMA.md`, «Bearbeiten und Zurücksetzen»).
 - **Aktuelle Version** = höchste `version` pro `(case_id, language)`.
 - **Mehrere Nummern:** Summaries nur einmal unter der Haupt-`case_id` speichern (keine Duplikate, sonst laufen Bearbeitungen/Freigaben auseinander). Suche nach irgendeiner Nummer → über `case_numbers` zur Haupt-`case_id` auflösen.
 - Schema zusätzlich in `docs/SCHEMA.md` dokumentieren.

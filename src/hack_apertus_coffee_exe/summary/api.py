@@ -4,8 +4,17 @@ Implements the summary part of the contract in ``src/presentation/api.js``:
 
     GET    /api/judgements/{id}/summary          stored entry, never generates (404 if none)
     POST   /api/judgements/{id}/summary          stored entry; generates DE + FR first if missing
-    PUT    /api/judgements/{id}/summary          body {de, fr}: changed texts become 'edited' versions
-    POST   /api/judgements/{id}/summary/approve  body {languages?}: approve pending edits
+    PUT    /api/judgements/{id}/summary          body {de, fr}: a changed text becomes the one edited
+                                                 version of that language and is shown at once; if only
+                                                 one language changed, Apertus aligns the other one
+                                                 (unless a lawyer wrote that one by hand)
+    DELETE /api/judgements/{id}/summary/edit     drop the edited version (?lang=de|fr, default both):
+                                                 back to the generated text
+    POST   /api/judgements/{id}/summary/approve  body {languages?}: approve pending edits (no longer
+                                                 used by the UI: edits need no approval)
+    GET    /api/judgements/{id}/original         the judgement text as the crawler stored it, as a
+                                                 plain HTML page (?lang=de|fr for the labels): the
+                                                 original can be read without leaving the installation
     GET    /api/knowledge-base?q=...             search over all stored summaries, newest first
     DELETE /api/knowledge-base                   405: the knowledge base is append-only
 
@@ -20,6 +29,7 @@ Run (``--triage`` is needed for the judgement list; without it every search answ
 from __future__ import annotations
 
 import argparse
+import html
 import json
 import logging
 import threading
@@ -38,6 +48,7 @@ from ..config import load_paths
 from ..present.evaluation import evaluation_response
 from ..present.judgements import JudgementList, config_response, list_response, parse_feedback_body
 from ..present.period_jobs import PeriodTriageManager
+from ..triage.feedback_learning import FeedbackLearner
 from . import store
 from .judgement import Judgement, load_judgements, same_case
 from .queue import SummaryQueue
@@ -86,18 +97,85 @@ class Backend:
             return HTTPStatus.OK, summary_entry(conn, judgement.case_id)
 
     def edit_summary(self, case_number: str, body: dict[str, Any]) -> Response:
+        """Save the lawyer's texts: one edited version per language, shown at once.
+
+        If only one language was changed, Apertus brings the other language in line with
+        it and that text is saved too, so both keep saying the same (``"align": false`` in
+        the body switches this off). The changed text is authoritative: the other language
+        is rewritten to say exactly what it says (``prompts.ALIGN_SYSTEM``). Apertus never overwrites what a lawyer typed: a language
+        that was edited by hand stays as it is. When Apertus cannot do it (no key, gateway
+        down), the edit is saved anyway. ``alignment`` in the answer says what happened:
+        ``null`` (nothing to align), ``{lang, ok: true}`` or
+        ``{lang, ok: false, reason: "edited_by_hand" | "failed", error?}``.
+        """
         with closing(store.connect(self.db_path)) as conn:
-            if summary_entry(conn, case_number) is None:
+            entry = summary_entry(conn, case_number)
+            if entry is None:
                 return _error(HTTPStatus.NOT_FOUND, "no summary stored")
+            changed = []
             for lang in store.LANGUAGES:
                 text = body.get(lang)
                 if not isinstance(text, str) or not text.strip():
                     continue
-                current = store.get_pending_edit(conn, case_number, lang) or store.get_display(
-                    conn, case_number, lang
-                )
-                if current is None or text != current.text:
-                    store.save_edit(conn, case_number, lang, text)
+                if text != entry.get(lang):
+                    store.replace_edit(conn, case_number, lang, text)
+                    changed.append(lang)
+                elif entry["pending"].get(lang) is not None:
+                    # an edit from before 28.11. still waited for approval, and the lawyer
+                    # went back to the shown text: that waiting edit is obsolete
+                    store.discard_pending(conn, case_number, lang)
+            alignment = None
+            if len(changed) == 1 and body.get("align") is not False:
+                source = changed[0]
+                target = next(lang for lang in store.LANGUAGES if lang != source)
+                alignment = self._align_other_language(conn, case_number, entry, source, body[source], target)
+            result = summary_entry(conn, case_number)
+            result["alignment"] = alignment
+            return HTTPStatus.OK, result
+
+    def _align_other_language(
+        self, conn: Any, case_number: str, entry: dict[str, Any], source: str, source_text: str, target: str
+    ) -> dict[str, Any]:
+        failed = {"lang": target, "ok": False, "reason": "failed"}
+        target_text = entry.get(target)
+        if not target_text:
+            return {**failed, "error": "no summary in that language"}
+        typed_by_hand = entry["status"].get(target) != "generated" and not entry["alignedBy"].get(target)
+        if typed_by_hand or entry["pending"].get(target) is not None:
+            return {"lang": target, "ok": False, "reason": "edited_by_hand"}
+        try:
+            summarizer = self.get_summarizer()
+            # The lawyer's text is what counts: no facts of the judgement are passed, so
+            # Apertus cannot "correct" the edit back to what the judgement says.
+            aligned = summarizer.align_language(
+                target_lang=target,
+                target_text=target_text,
+                source_lang=source,
+                source_text=source_text,
+                instruction=None,
+                facts=None,
+            )
+        except ValueError as exc:  # our own message, e.g. no gateway key set
+            logger.warning("Could not align %s (%s) after an edit: %s", case_number, target, exc)
+            return {**failed, "error": str(exc)[:300]}
+        except Exception as exc:  # gateway errors may quote request details: log the kind only
+            logger.warning(
+                "Could not align %s (%s) after an edit: %s", case_number, target, type(exc).__name__
+            )
+            return {**failed, "error": "Apertus call failed"}
+        if not isinstance(aligned, str) or not aligned.strip():
+            return {**failed, "error": "Apertus returned no text"}
+        if aligned != target_text:
+            model = getattr(getattr(summarizer, "llm", None), "model", None) or "apertus"
+            store.replace_edit(conn, case_number, target, aligned, aligned_by=model)
+        return {"lang": target, "ok": True}
+
+    def reset_summary(self, case_number: str, language: str | None = None) -> Response:
+        """Drop the edited version (one language or both): the generated text is shown again."""
+        with closing(store.connect(self.db_path)) as conn:
+            if summary_entry(conn, case_number) is None:
+                return _error(HTTPStatus.NOT_FOUND, "no summary stored")
+            store.discard_edit(conn, case_number, language or None)
             return HTTPStatus.OK, summary_entry(conn, case_number)
 
     def approve_summary(self, case_number: str, body: dict[str, Any]) -> Response:
@@ -120,46 +198,34 @@ class Backend:
         with closing(store.connect(self.db_path)) as conn:
             return HTTPStatus.OK, store.save_feedback(conn, case_number, **parsed)
 
-    def align_summary(self, case_number: str, body: dict[str, Any]) -> Response:
-        """Align/adjust one language draft via Apertus v1.5 without saving (#65)."""
-        target_lang = body.get("targetLang") or body.get("lang")
-        if target_lang not in store.LANGUAGES:
-            raise ValueError(f"target language must be one of {store.LANGUAGES}, got {target_lang!r}")
-        raw_target = body.get("targetText") if "targetText" in body else body.get("text")
-        if raw_target is not None and not isinstance(raw_target, str):
-            raise ValueError("targetText must be a string")
-        source_lang = body.get("sourceLang")
-        if source_lang is not None and source_lang not in store.LANGUAGES:
-            raise ValueError(f"source language must be one of {store.LANGUAGES}, got {source_lang!r}")
-        source_text = body.get("sourceText")
-        if source_text is not None and not isinstance(source_text, str):
-            raise ValueError("sourceText must be a string")
-        if source_text and source_text.strip() and source_lang is None:
-            raise ValueError("sourceLang is required when sourceText is provided")
-        instruction = body.get("instruction")
-        if instruction is not None and not isinstance(instruction, str):
-            raise ValueError("instruction must be a string")
+    def original_page(self, case_number: str, lang: str = "de") -> tuple[int, str]:
+        """The stored judgement text as a self-contained HTML page (status, HTML).
 
-        with closing(store.connect(self.db_path)) as conn:
-            entry = summary_entry(conn, case_number)
-        target_text = raw_target if raw_target is not None else (entry.get(target_lang) if entry else None)
-        if not target_text or not target_text.strip():
-            if entry is None:
-                return _error(HTTPStatus.NOT_FOUND, "no summary stored")
-            raise ValueError("targetText must not be empty")
-        if not ((instruction and instruction.strip()) or (source_text and source_text.strip())):
-            raise ValueError("instruction or sourceText is required")
-
-        facts = (entry or {}).get("facts", {}).get(target_lang) if entry else None
-        aligned = self.get_summarizer().align_language(
-            target_lang=target_lang,
-            target_text=target_text,
-            source_lang=source_lang,
-            source_text=source_text,
-            instruction=instruction.strip() if instruction else None,
-            facts=facts or None,
+        The text comes from an external site, so every character of it is escaped; the
+        page loads nothing from elsewhere and works without network access.
+        """
+        labels = _ORIGINAL_LABELS["fr" if lang == "fr" else "de"]
+        judgement = self.find_judgement(case_number)
+        if judgement is None:
+            head, _, year = case_number.rpartition("_")  # 8C_7_2025 -> 8C_7/2025
+            spelled = f"{head}/{year}" if "_" in head and year.isdigit() and len(year) == 4 else case_number
+            number = html.escape(spelled)
+            body = f"<h1>{number}</h1><p class=\"meta\">{labels['missing']}</p>"
+            return HTTPStatus.NOT_FOUND, _ORIGINAL_PAGE.format(lang=labels["code"], title=number, body=body)
+        number = html.escape(judgement.case_id)
+        meta = [labels["stored"]]
+        if judgement.decision_date:
+            meta.append(f"{labels['decided']} {judgement.decision_date.strftime('%d.%m.%Y')}")
+        if judgement.language:
+            meta.append(f"{labels['language']} {html.escape(judgement.language.upper())}")
+        url = judgement.url or ""
+        if url.startswith(("https://", "http://")):
+            meta.append(f'<a href="{html.escape(url, quote=True)}" rel="noopener noreferrer">{labels["external"]}</a>')
+        body = (
+            f"<h1>{labels['heading']} {number}</h1><p class=\"meta\">{' · '.join(meta)}</p>"
+            f"<pre lang=\"{html.escape(judgement.language or labels['code'], quote=True)}\">{html.escape(judgement.text)}</pre>"
         )
-        return HTTPStatus.OK, {"lang": target_lang, "text": aligned}
+        return HTTPStatus.OK, _ORIGINAL_PAGE.format(lang=labels["code"], title=f"{number} – {labels['title']}", body=body)
 
     def enqueue_summaries(self, body: dict[str, Any]) -> Response:
         case_ids = body.get("caseIds")
@@ -189,6 +255,32 @@ class Backend:
         return None
 
 
+_ORIGINAL_LABELS = {
+    "de": {
+        "code": "de", "heading": "BGer-Urteil", "title": "gespeicherter Volltext",
+        "stored": "Lokal gespeicherter Volltext, wie ihn der Crawler abgerufen hat",
+        "decided": "Entscheid vom", "language": "Sprache", "external": "Original auf der Website öffnen",
+        "missing": "Der Volltext dieses Urteils ist lokal nicht gespeichert.",
+    },
+    "fr": {
+        "code": "fr", "heading": "Arrêt du TF", "title": "texte intégral enregistré",
+        "stored": "Texte intégral enregistré localement, tel que le crawler l'a récupéré",
+        "decided": "Arrêt du", "language": "Langue", "external": "Ouvrir l'original sur le site",
+        "missing": "Le texte intégral de cet arrêt n'est pas enregistré localement.",
+    },
+}
+
+_ORIGINAL_PAGE = (
+    '<!DOCTYPE html><html lang="{lang}"><head><meta charset="UTF-8">'
+    '<meta name="viewport" content="width=device-width, initial-scale=1"><title>{title}</title>'
+    "<style>body{{max-width:46rem;margin:2rem auto;padding:0 1rem;font:16px/1.6 Georgia,serif;color:#1b1f24}}"
+    "h1{{font:600 22px/1.3 system-ui,sans-serif}}"
+    ".meta{{font:13px/1.5 system-ui,sans-serif;color:#555;border-bottom:1px solid #ccc;padding-bottom:.7rem}}"
+    "pre{{white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;margin:1rem 0}}</style></head>"
+    "<body>{body}</body></html>"
+)
+
+
 def summary_entry(conn, case_number: str) -> dict[str, Any] | None:
     """One knowledge-base entry in the shape the UI expects, or None if nothing is stored."""
     shown = {lang: store.get_display(conn, case_number, lang) for lang in store.LANGUAGES}
@@ -216,6 +308,7 @@ def summary_entry(conn, case_number: str) -> dict[str, Any] | None:
         "fr": shown["fr"].text if shown["fr"] else None,
         "status": per_lang(lambda s: s.status),
         "model": per_lang(lambda s: s.model),
+        "alignedBy": per_lang(lambda s: s.aligned_by),
         "coherenceOk": per_lang(lambda s: s.coherence_ok),
         "issues": per_lang(lambda s: s.issues),
         "facts": per_lang_or_history(lambda s: s.facts, {}),
@@ -260,6 +353,9 @@ class Handler(SimpleHTTPRequestHandler):
             return self._respond(lambda: self.backend.queue_status(ids))
         if len(parts) == 3 and parts[0] == "judgements" and parts[2] == "summary":
             return self._respond(lambda: self.backend.get_summary(parts[1]))
+        if len(parts) == 3 and parts[0] == "judgements" and parts[2] == "original":
+            lang = parse_qs(url.query).get("lang", ["de"])[0]
+            return self._respond_html(lambda: self.backend.original_page(parts[1], lang))
         self._respond(lambda: _error(HTTPStatus.NOT_FOUND, "unknown endpoint"))
 
     def do_POST(self) -> None:
@@ -277,8 +373,6 @@ class Handler(SimpleHTTPRequestHandler):
             return self._respond(lambda: self.backend.create_summary(parts[1]))
         if len(parts) == 4 and parts[0] == "judgements" and parts[2:] == ["summary", "approve"]:
             return self._respond(lambda: self.backend.approve_summary(parts[1], body))
-        if len(parts) == 4 and parts[0] == "judgements" and parts[2] == "summary" and parts[3] in ("align", "adjust"):
-            return self._respond(lambda: self.backend.align_summary(parts[1], body))
         if len(parts) == 3 and parts[0] == "judgements" and parts[2] == "feedback":
             return self._respond(lambda: self.backend.save_feedback(parts[1], body))
         self._respond(lambda: _error(HTTPStatus.NOT_FOUND, "unknown endpoint"))
@@ -321,9 +415,13 @@ class Handler(SimpleHTTPRequestHandler):
         self._respond(lambda: _error(HTTPStatus.NOT_FOUND, "unknown endpoint"))
 
     def do_DELETE(self) -> None:
-        parts = _api_parts(urlparse(self.path).path) or []
+        url = urlparse(self.path)
+        parts = _api_parts(url.path) or []
         if len(parts) == 3 and parts[:2] == ["summaries", "queue"]:
             return self._respond(lambda: self.backend.cancel_queued_summary(parts[2]))
+        if len(parts) == 4 and parts[0] == "judgements" and parts[2:] == ["summary", "edit"]:
+            language = parse_qs(url.query).get("lang", [""])[0]
+            return self._respond(lambda: self.backend.reset_summary(parts[1], language))
         self._respond(lambda: _error(HTTPStatus.METHOD_NOT_ALLOWED, "knowledge base is append-only"))
 
     def end_headers(self) -> None:
@@ -342,6 +440,22 @@ class Handler(SimpleHTTPRequestHandler):
         except json.JSONDecodeError:
             return {}
         return data if isinstance(data, dict) else {}
+
+    def _respond_html(self, call: Callable[[], tuple[int, str]]) -> None:
+        try:
+            status, page = call()
+        except Exception:
+            logger.exception("request failed: %s %s", self.command, self.path)
+            status, page = HTTPStatus.INTERNAL_SERVER_ERROR, "<!DOCTYPE html><title>Error</title><p>internal error</p>"
+        data = page.encode("utf-8")
+        self.send_response(status)
+        self.send_header("Content-Type", "text/html; charset=utf-8")
+        # the page shows text from an external site: no scripts, nothing loaded from elsewhere
+        self.send_header("Content-Security-Policy", "default-src 'none'; style-src 'unsafe-inline'")
+        self.send_header("X-Content-Type-Options", "nosniff")
+        self.send_header("Content-Length", str(len(data)))
+        self.end_headers()
+        self.wfile.write(data)
 
     def _respond(self, call: Callable[[], Response]) -> None:
         try:
@@ -448,6 +562,7 @@ def main(argv: list[str] | None = None) -> int:
             selected_ids=_load_selected_ids(args.judgements_dir),
             extra_triage_dir="data/processed/triage_periods",
             fr_cache_path="data/processed/triage/fr_cache.json",
+            learner=FeedbackLearner(),  # relevance decisions are learned from, not added to a score
         )
         if args.triage else None
     )

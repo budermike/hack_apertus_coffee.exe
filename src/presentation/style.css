@@ -493,6 +493,7 @@ blockquote {
 .tag.origin-tag { font-weight: 400; cursor: help; }
 .tag.origin-tag.generated { background: var(--tagbg); color: var(--muted); }
 .tag.origin-tag.edited { background: var(--bluebg); color: var(--blue); }
+.tag.origin-tag.aligned { background: var(--warnbg); color: var(--warn); }
 .summary-textarea {
     flex: 1;
     width: 100%;
@@ -533,22 +534,6 @@ blockquote {
 .kb-entry summary:hover { background: var(--soft); }
 .kb-entry-title { flex: 1 1 260px; min-width: 0; }
 .kb-entry-body { padding: 6px 14px 16px; }
-
-/* ---------- modal dialog (#65) ---------- */
-dialog.modal {
-    border: 1px solid var(--line);
-    border-radius: 6px;
-    padding: 0;
-    max-width: 520px;
-    width: calc(100% - 32px);
-    background: var(--paper);
-    color: var(--ink);
-    box-shadow: var(--shadow);
-}
-dialog.modal::backdrop { background: rgba(11, 16, 23, .45); }
-.modal-card { padding: 20px 22px; display: flex; flex-direction: column; gap: 12px; }
-.modal-card h3 { font: 600 17px/1.3 var(--ui); }
-.modal-actions { margin-top: 4px; justify-content: flex-end; }
 
 /* ---------- toast ---------- */
 #toast {

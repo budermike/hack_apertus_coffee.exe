@@ -14,7 +14,9 @@
  *   GET  {API_BASE}/judgements?from=YYYY-MM-DD&to=YYYY-MM-DD&lang=de|fr
  *        -> [{ id, caseNumber, date, url, lang, area, subject: {de, fr}, explanation: {de, fr},
  *              score,        // relevance 0..100
- *              adjustment,   // net manual correction; always 0 until the backend stores feedback
+ *              baseScore,    // relevance without the lawyers' decisions (= score until one exists)
+ *              adjustment,   // always 0: nothing is added to a single score any more
+ *              userLevel,    // "high" | "low": the lawyer's own decision on this judgement
  *              summarized,   // true if a summary is stored
  *              // optional — the UI shows what is there:
  *              court: {de, fr}, outcome, signals: [..], topics: [..],
@@ -34,24 +36,35 @@
  *
  *   POST {API_BASE}/judgements/{id}/summary
  *        -> entry { id, caseNumber, date, url, title: {de, fr}, de, fr,
- *                   status: {de, fr}, model: {de, fr}, coherenceOk: {de, fr}, issues: {de, fr},
- *                   pending: {de, fr}, storedAt, editedAt }
+ *                   status: {de, fr}, model: {de, fr}, alignedBy: {de, fr},
+ *                   coherenceOk: {de, fr}, issues: {de, fr}, pending: {de, fr}, storedAt, editedAt }
  *        Returns the stored summary; generates DE + FR with Apertus first if there is none.
  *        `status` / `model` are the columns summaries.status / summaries.model of the shown
- *        version ("generated" + model ID, or "approved" + "human"); `pending` is the text of a
- *        newer 'edited' version. The UI's origin tag per language is derived from these three
- *        fields only (see summaryOrigin), never from the text or from what was typed.
+ *        version ("generated" + model ID, or "approved" + "human"); `alignedBy` is the Apertus
+ *        model ID if that edited version was not typed but brought in line with the other
+ *        language. The UI's origin tag per language is derived from these fields only (see
+ *        summaryOrigin), never from the text or from what was typed.
+ *        `pending` is only filled for edits saved before 28.11.2026 that were never approved.
  *
  *   PUT  {API_BASE}/judgements/{id}/summary   body: { de, fr }
- *        -> entry. Changed texts are stored as 'edited' versions (`pending`); `de` / `fr`
- *        keep showing the generated or last approved text until the edit is approved.
+ *        -> entry + alignment. A changed text becomes the ONE edited version of its language
+ *        and is shown at once (no approval, a later edit replaces it). If only one language
+ *        changed, Apertus brings the other one in line, unless a lawyer typed that one.
+ *        alignment: null | { lang, ok: true } | { lang, ok: false, reason: "edited_by_hand" | "failed" }
  *
- *   POST {API_BASE}/judgements/{id}/summary/approve   body: { languages? }
- *        -> entry. The pending edits become the shown version.
+ *   DELETE {API_BASE}/judgements/{id}/summary/edit
+ *        -> entry. Drops the edited version of both languages: back to the generated text,
+ *        which is never deleted.
  *
- *   POST {API_BASE}/judgements/{id}/feedback   body: { adjustment, direction, level, decision }
- *        -> { stored: true, ... }   Persists the decision in the summaries DB and returns
- *        `adjustment` and `userLevel` (= decision) with every later GET /api/judgements.
+ *   POST {API_BASE}/judgements/{id}/feedback   body: { adjustment: 0, direction, level, decision }
+ *        -> { stored: true, ... }   Persists the decision in the summaries DB. Every later
+ *        GET /api/judgements returns it as `userLevel`, and the scores of all judgements are
+ *        the ones learned from all decisions (triage/feedback_learning.py); GET /api/config
+ *        lists what was learned under `learning`.
+ *
+ *   GET  {API_BASE}/judgements/{id}/original?lang=de|fr
+ *        -> HTML page with the judgement text as the crawler stored it (opened in a new tab,
+ *        not fetched by script): the original can be read without the external site.
  *
  *   GET  {API_BASE}/knowledge-base?q=<query>&lang=de|fr
  *        -> [entry]   all stored summaries containing every search term, newest first
@@ -64,10 +77,6 @@
  *
  *   DELETE {API_BASE}/summaries/queue/{id}
  *        -> { cancelled: bool }
- *
- *   POST {API_BASE}/judgements/{id}/summary/align (or /adjust)
- *        body: { targetLang, targetText?, sourceLang?, sourceText?, instruction? }
- *        -> { lang, text }   Apertus v1.5 draft alignment/adjustment (not saved in DB)
  *
  *   (criteria with quotes, question and rule are delivered when using `triage.cli relevance` output)
  */
@@ -87,6 +96,11 @@ async function jsonFetch(url, options = {}) {
     });
     if (!res.ok) throw new Error(`${options.method || "GET"} ${url} failed: ${res.status}`);
     return res.json();
+}
+
+/** Address of the page with the locally stored judgement text (served by the backend). */
+function originalPageUrl(id, lang) {
+    return `${API_BASE}/judgements/${encodeURIComponent(id)}/original?${new URLSearchParams({ lang })}`;
 }
 
 function summaryUrl(id) {
@@ -131,17 +145,11 @@ const httpBackend = {
     cancelQueuedSummary(id) {
         return jsonFetch(`${API_BASE}/summaries/queue/${encodeURIComponent(id)}`, { method: "DELETE" });
     },
-    alignSummary(id, payload) {
-        return jsonFetch(`${summaryUrl(id)}/align`, {
-            method: "POST",
-            body: JSON.stringify(payload),
-        });
-    },
     saveSummary(id, texts) {
         return jsonFetch(summaryUrl(id), { method: "PUT", body: JSON.stringify({ de: texts.de, fr: texts.fr }) });
     },
-    approveSummary(id) {
-        return jsonFetch(`${summaryUrl(id)}/approve`, { method: "POST", body: "{}" });
+    resetSummary(id) {
+        return jsonFetch(`${summaryUrl(id)}/edit`, { method: "DELETE" });
     },
     sendFeedback(id, adjustment, direction, level, decision) {
         return jsonFetch(`${API_BASE}/judgements/${encodeURIComponent(id)}/feedback`, {
@@ -171,6 +179,7 @@ function normalizeJudgement(raw) {
         ...raw,
         caseNumber: raw.caseNumber || raw.id,
         score: toNumber(raw.score),
+        baseScore: toNumber(raw.baseScore ?? raw.score),
         adjustment: toNumber(raw.adjustment),
         userLevel: raw.userLevel || null,   // "high" | "low": decided by hand
         feedbackLocalOnly: false,
@@ -186,14 +195,16 @@ function normalizeJudgement(raw) {
 }
 
 /** Origin of the text the editor shows for `lang`, from the database flags:
- *    "edited"     a saved human edit waits for approval (pending), or the shown version
- *                 is an approved human edit (status "approved"/"edited", model "human")
+ *    "edited"     the shown version was typed by a lawyer (status "approved", model "human"),
+ *                 or an edit from before 28.11. still waits (pending)
+ *    "aligned"    the shown version belongs to the edit, but Apertus wrote it to follow the
+ *                 lawyer's change of the other language (alignedBy = model ID)
  *    "generated"  the shown version is the model's text (status "generated")
  *    null         the backend sent no status for this language: no tag is shown */
 function summaryOrigin(raw, lang) {
     if (typeof raw.pending?.[lang] === "string") return "edited";
     const status = raw.status?.[lang];
-    if (status === "edited" || status === "approved") return "edited";
+    if (status === "edited" || status === "approved") return raw.alignedBy?.[lang] ? "aligned" : "edited";
     if (status === "generated") return "generated";
     return null;
 }
@@ -207,8 +218,9 @@ function nonEmptyArr(arr) {
     return Array.isArray(arr) && arr.length > 0 ? arr : null;
 }
 
-/** Summary entry for the editor. `de` / `fr` hold the newest text: a saved edit that still
- *  waits for approval (`pendingLangs`) wins over the shown version. */
+/** Summary entry for the editor. `de` / `fr` hold the newest text: an edit saved before
+ *  28.11. that never got approved (`pendingLangs`) wins over the shown version, so it is not
+ *  lost; the next "Speichern" takes it over. `alignment` is only set on the answer to a save. */
 function normalizeEntry(raw) {
     const pending = raw.pending || {};
     const entry = {
@@ -227,6 +239,8 @@ function normalizeEntry(raw) {
         pendingLangs: SUMMARY_LANGS.filter((lang) => typeof pending[lang] === "string"),
         origin: Object.fromEntries(SUMMARY_LANGS.map((lang) => [lang, summaryOrigin(raw, lang)])),
         model: Object.fromEntries(SUMMARY_LANGS.map((lang) => [lang, raw.model?.[lang] || null])),
+        alignedBy: Object.fromEntries(SUMMARY_LANGS.map((lang) => [lang, raw.alignedBy?.[lang] || null])),
+        alignment: raw.alignment || null,
     };
     for (const lang of SUMMARY_LANGS) entry[lang] = pending[lang] ?? raw[lang] ?? "";
     return entry;
@@ -283,18 +297,15 @@ async function cancelQueuedSummary(id) {
     return backend.cancelQueuedSummary ? await backend.cancelQueuedSummary(id) : { cancelled: false };
 }
 
-async function alignSummary(id, payload) {
-    return await backend.alignSummary(id, payload);
-}
-
-/** Saves edited summary texts ({ de, fr }). */
+/** Saves edited summary texts ({ de, fr }); they are shown at once. The entry's `alignment`
+ *  tells whether Apertus brought the other language in line. */
 async function saveSummary(id, texts) {
     return normalizeEntry(await backend.saveSummary(id, texts));
 }
 
-/** Approves the saved edits, so they become the shown version. */
-async function approveSummary(id) {
-    return normalizeEntry(await backend.approveSummary(id));
+/** Drops the edited version of both languages: the generated text is shown again. */
+async function resetSummary(id) {
+    return normalizeEntry(await backend.resetSummary(id));
 }
 
 /** Sends a relevance decision (`decision`: "high" | "low" | null = taken back). */

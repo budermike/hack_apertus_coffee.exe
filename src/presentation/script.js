@@ -31,6 +31,7 @@ const COLUMNS = [
 const state = {
     items: [],                 // judgements from the last search
     hasSearched: false,
+    lastRange: null,           // { from, to } of the last search, to fetch the scores again
     searching: false,
     searchProgress: null,
     searchErrorArg: null,
@@ -45,13 +46,15 @@ const state = {
     summaryLoading: new Set(), // ids being summarized right now
     summaryError: new Set(),   // ids whose summary failed
     drafts: {},                // id -> { de, fr } while the user edits a summary
-    alignedDraft: {},          // id -> { lang, text }: unsaved text Apertus regenerated for that language
-    saveStatus: {},            // id -> "saving" | "saved" | "approving" | "approved" | "error"
+    saveStatus: {},            // id -> "saving" | "aligning" | "saved" | "resetting" | "reset"
+                               //       | "error" | "resetError"
 
     kbEntries: [],
     kbError: false,            // the database could not be read
     kbQuery: "",
-    activeTab: localStorage.getItem("tab") === "kb" ? "kb" : "search",
+    activeTab: ["search", "kb"].includes(localStorage.getItem("tab"))
+        ? localStorage.getItem("tab")
+        : "search",
 };
 
 /* ---------- helpers ---------- */
@@ -85,11 +88,19 @@ function findItem(id) {
     return state.items.find((i) => i.id === id);
 }
 
-/** Displayed score: base score + net manual adjustment, 0..100, one decimal at most.
+/** Displayed score: the relevance the backend delivers, 0..100, one decimal at most.
+ *  Nothing is added by hand any more (28.11.): a lawyer's decision is a training example on
+ *  the server (triage/feedback_learning.py) and comes back in `score` of every judgement it
+ *  says something about; `baseScore` is the value without the decisions.
  *  This is the ONE number that is shown, filtered, sorted and compared with the thresholds. */
 function effectiveScore(item) {
-    const score = item.score + (item.adjustment || 0);
-    return Math.round(Math.max(0, Math.min(100, score)) * 10) / 10;
+    return Math.round(Math.max(0, Math.min(100, item.score)) * 10) / 10;
+}
+
+/** By how much the lawyers' decisions moved this judgement's score (0 = not at all). */
+function learnedDelta(item) {
+    const base = Number.isFinite(item.baseScore) ? item.baseScore : item.score;
+    return Math.round((item.score - base) * 10) / 10;
 }
 
 function scoreLevel(score) {
@@ -98,17 +109,12 @@ function scoreLevel(score) {
     return "low";
 }
 
-const itemLevel = (item) => scoreLevel(effectiveScore(item));
-
-/** Score a judgement is moved to when the user puts it into a level its own score is not in.
- *  Follows the thresholds, so the judgement really lands in that level. */
-function levelTarget(level) {
-    return level === "high" ? Math.max(85, SUMMARY_THRESHOLD) : Math.min(20, Math.max(0, MEDIUM_THRESHOLD - 1));
-}
+/** Level of a judgement: the lawyer's own decision if there is one, otherwise by its score. */
+const itemLevel = (item) => item.userLevel || scoreLevel(effectiveScore(item));
 
 /** Level the user decided by hand ("high" | "low"), or null if the judgement is as triage scored it. */
 function decidedLevel(item) {
-    return item.userLevel || (item.adjustment ? itemLevel(item) : null);
+    return item.userLevel || null;
 }
 /** Relevant = at or above the threshold = summarized automatically. */
 const isRelevant = (item) => itemLevel(item) === "high";
@@ -175,9 +181,7 @@ function toggleTheme() {
 
 /* ---------- thresholds ---------- */
 
-let availableRange = null;
-
-/** Takes the thresholds (and cached date span) from the backend; keeps defaults if it does not answer. */
+/** Takes the thresholds from the backend; keeps the defaults if it does not answer. */
 async function loadThresholds() {
     const config = await fetchConfig();
     const high = toNumber(config?.thresholds?.high, NaN);
@@ -186,21 +190,6 @@ async function loadThresholds() {
         SUMMARY_THRESHOLD = high;
         MEDIUM_THRESHOLD = medium;
     }
-    if (config?.availableRange?.from && config?.availableRange?.to) {
-        availableRange = config.availableRange;
-        renderQuickRangeButton();
-    }
-}
-
-function renderQuickRangeButton() {
-    const btn = $("#quick-range-btn");
-    if (!btn) return;
-    if (!availableRange) {
-        btn.hidden = true;
-        return;
-    }
-    btn.hidden = false;
-    btn.textContent = `${t("quickRangePrefix")}${formatDate(availableRange.from)} – ${formatDate(availableRange.to)}`;
 }
 
 let thresholdsReady = Promise.resolve();
@@ -338,6 +327,7 @@ async function onSearch(event) {
     }
     if (searchGen !== periodSearchGeneration) return;
     state.hasSearched = true;
+    state.lastRange = { from: range.from, to: range.to };
     state.searching = false;
     state.searchProgress = null;
     frReasonAttempted.clear();
@@ -454,21 +444,38 @@ function closeDetail() {
 
 /* ---------- relevance correction ---------- */
 
+/** After a decision the backend has learned from it: fetch the scores again, because other
+ *  judgements may have moved too, and keep everything else of the list as it is.
+ *  Returns how many scores changed. */
+async function refreshScores() {
+    if (USE_MOCK || !state.lastRange) return 0;   // the demo backend does not learn
+    try {
+        const fresh = await searchJudgements(state.lastRange.from, state.lastRange.to, currentLang);
+        const byId = new Map(fresh.map((item) => [item.id, item]));
+        let moved = 0;
+        for (const item of state.items) {
+            const next = byId.get(item.id);
+            if (!next) continue;
+            if (next.score !== item.score) moved += 1;
+            item.score = next.score;
+            item.baseScore = next.baseScore;
+        }
+        return moved;
+    } catch (err) {
+        console.warn("scores not refreshed after the decision", err);
+        return 0;
+    }
+}
+
 /** "Für Suva relevant" / "Nicht relevant": the user's own decision for this judgement.
- *  It moves the judgement into the level `high` / `low` (or confirms the level it has);
- *  clicking the active decision again takes it back. Every click is sent as feedback. */
+ *  It puts the judgement into the level `high` / `low` (or confirms the level it has);
+ *  clicking the active decision again takes it back. Every click is sent as feedback and
+ *  the backend learns from it: no fixed number is added to the score. */
 async function setRelevance(id, level) {
     const item = findItem(id);
     if (!item) return;
     const before = itemLevel(item);
-    if (decidedLevel(item) === level) {
-        item.userLevel = null;
-        item.adjustment = 0;
-    } else {
-        item.userLevel = level;
-        item.adjustment = scoreLevel(item.score) === level
-            ? 0 : Math.round((levelTarget(level) - item.score) * 10) / 10;
-    }
+    item.userLevel = decidedLevel(item) === level ? null : level;
 
     const after = itemLevel(item);
     const direction = Math.sign(LEVELS.indexOf(before) - LEVELS.indexOf(after));   // +1 raised, -1 lowered, 0 same level
@@ -482,11 +489,14 @@ async function setRelevance(id, level) {
     renderList();
     renderDetail();
 
-    const { stored } = await sendFeedback(id, item.adjustment, direction, after, item.userLevel);
+    const { stored } = await sendFeedback(id, 0, direction, after, item.userLevel);
     item.feedbackLocalOnly = !stored && Boolean(item.userLevel);
-    refreshRow(id);
+    const moved = stored ? await refreshScores() : 0;
+    renderList();
     if (id === state.selectedId) renderDetail();
-    toast(t(stored ? "feedbackSaved" : "feedbackLocalOnly"), stored ? 4000 : 7000);
+    if (moved) queueRelevantSummaries();   // learning may have lifted judgements over the threshold
+    const message = !stored ? t("feedbackLocalOnly") : moved ? t("feedbackLearned", moved) : t("feedbackSaved");
+    toast(message, stored && !moved ? 4000 : 7000);
 }
 
 /* ---------- summaries: server-side queue (#68) + mock fallback ---------- */
@@ -672,18 +682,33 @@ function onSummaryChange(id) {
     if (id === state.selectedId) renderDetail();
 }
 
-/* ---------- editing, saving and approving summaries ---------- */
+/* ---------- editing, saving and resetting summaries ---------- */
 
 /** Text currently in the editor: the draft if there is one, otherwise the stored summary. */
 function currentTexts(id) {
     return state.drafts[id] || state.summaries[id];
 }
 
+/** The database holds an edited version of this summary (typed by a lawyer, or brought in
+ *  line by Apertus), or an edit from before 28.11. that never got approved. */
+function hasStoredEdit(id) {
+    const stored = state.summaries[id];
+    return stored.pendingLangs.length > 0
+        || SUMMARY_LANGS.some((lang) => stored.origin[lang] && stored.origin[lang] !== "generated");
+}
+
+/** Something to save: the user typed, or an edit saved before the approval step was dropped
+ *  (28.11.) still waits in the database. "Speichern" takes that one over as well. */
 function isDirty(id) {
     const draft = state.drafts[id];
     const stored = state.summaries[id];
-    return Boolean(draft && stored && (draft.de !== stored.de || draft.fr !== stored.fr));
+    if (!stored) return false;
+    if (stored.pendingLangs.length > 0) return true;
+    return Boolean(draft && (draft.de !== stored.de || draft.fr !== stored.fr));
 }
+
+const canReset = (id) => isDirty(id) || hasStoredEdit(id);
+const isSaveBusy = (id) => ["saving", "aligning", "resetting"].includes(state.saveStatus[id]);
 
 function onDraftInput(id, lang, value, editor) {
     const texts = currentTexts(id);
@@ -692,61 +717,36 @@ function onDraftInput(id, lang, value, editor) {
     updateEditorFooter(editor, id);   // no full re-render while typing
 }
 
-async function performSave(id) {
-    if (!isDirty(id) || state.saveStatus[id] === "saving") return false;
-    const texts = state.drafts[id];
-    state.saveStatus[id] = "saving";
-    renderEditors();
-    try {
-        const entry = await saveSummary(id, texts);
-        state.summaries[id] = entry;
-        delete state.alignedDraft[id];
-        // keep the draft if the user typed on while saving
-        const draft = state.drafts[id];
-        if (draft && draft.de === entry.de && draft.fr === entry.fr) delete state.drafts[id];
-        state.saveStatus[id] = "saved";
-        renderEditors();
-        refreshKb();
-        return true;
-    } catch (err) {
-        console.error(err);
-        state.saveStatus[id] = "error";
-        renderEditors();
-        refreshKb();
-        return false;
-    }
-}
-
+/** Saves the editor's texts. They are shown at once: there is no approval step, and the
+ *  database keeps one edited version per language next to the generated one.
+ *  If only one language was changed, the backend lets Apertus bring the other one in line
+ *  (never a text a lawyer typed); `entry.alignment` says what came of it. */
 async function onSave(id) {
-    if (!isDirty(id) || state.saveStatus[id] === "saving") return;
-    const draft = state.drafts[id];
+    if (!isDirty(id) || isSaveBusy(id)) return;
     const stored = state.summaries[id];
-    const changedDe = draft.de !== stored.de;
-    const changedFr = draft.fr !== stored.fr;
-    // A language counts as edited by hand unless it still holds, unchanged, the text Apertus
-    // regenerated for it. Every save with exactly one hand-edited language offers to
-    // regenerate the other one; saving only the untouched Apertus text does not ask.
-    const aligned = state.alignedDraft[id];
-    const byHand = (lang, changed) => changed && !(aligned?.lang === lang && draft[lang] === aligned.text);
-    const handDe = byHand("de", changedDe);
-    const handFr = byHand("fr", changedFr);
-    if (handDe !== handFr) {
-        const edited = handDe ? "de" : "fr";
-        openAlignAfterEditDialog(id, edited, edited === "de" ? "fr" : "de");
-        return;
-    }
-    await performSave(id);
-}
-
-/** The backend stores an edit as a version that waits for approval; approving makes it
- *  the shown version (and the one the database search finds). */
-async function onApprove(id) {
-    if (isDirty(id) || state.saveStatus[id] === "approving") return;
-    state.saveStatus[id] = "approving";
+    const texts = currentTexts(id);
+    const sent = { de: texts.de, fr: texts.fr };
+    const changed = SUMMARY_LANGS.filter((lang) => sent[lang] !== stored[lang] || stored.pendingLangs.includes(lang));
+    const other = changed.length === 1 ? SUMMARY_LANGS.find((lang) => lang !== changed[0]) : null;
+    state.saveStatus[id] = other && stored.origin[other] !== "edited" ? "aligning" : "saving";
     renderEditors();
     try {
-        state.summaries[id] = await approveSummary(id);
-        state.saveStatus[id] = "approved";
+        const entry = await saveSummary(id, sent);
+        state.summaries[id] = entry;
+        // Keep only what the user typed on while saving; everything else follows the saved
+        // entry (Apertus may have rewritten the other language).
+        const draft = state.drafts[id];
+        if (draft) {
+            const merged = Object.fromEntries(
+                SUMMARY_LANGS.map((lang) => [lang, draft[lang] === sent[lang] ? entry[lang] : draft[lang]]));
+            if (merged.de === entry.de && merged.fr === entry.fr) delete state.drafts[id];
+            else state.drafts[id] = merged;
+        }
+        state.saveStatus[id] = "saved";
+        const alignment = entry.alignment;
+        if (alignment?.ok) toast(t("alignedToast", alignment.lang), 8000);
+        else if (alignment?.reason === "edited_by_hand") toast(t("alignSkippedToast", alignment.lang), 8000);
+        else if (alignment) toast(t("alignFailedToast", alignment.lang), 8000);
     } catch (err) {
         console.error(err);
         state.saveStatus[id] = "error";
@@ -755,75 +755,29 @@ async function onApprove(id) {
     refreshKb();
 }
 
-function setAlignDialogBusy(dialog, busy, message = "", isError = false) {
-    const status = $("#align-status");
-    status.hidden = !busy && !message;
-    status.classList.toggle("form-error", isError);
-    if (busy) status.replaceChildren(spinner(), message);
-    else status.textContent = message;
-    for (const id of ["#align-apply", "#align-keep", "#align-cancel"]) {
-        $(id).disabled = busy;
+/** Drops the edited version of both languages, and what is typed but not saved: the text
+ *  Apertus generated is shown again. That one is never deleted, so this always works. */
+async function onReset(id) {
+    if (!canReset(id) || isSaveBusy(id)) return;
+    if (!confirm(t("resetConfirm"))) return;
+    if (!hasStoredEdit(id)) {        // only typed, nothing saved: nothing to ask the backend
+        delete state.drafts[id];
+        delete state.saveStatus[id];
+        renderEditors();
+        return;
     }
-}
-
-function showAlignDialog({ title, desc, applyLabel, keepLabel, onApply, onKeep }) {
-    const dialog = $("#align-dialog");
-    $("#align-title").textContent = title;
-    $("#align-desc").textContent = desc;
-    const applyBtn = $("#align-apply");
-    const keepBtn = $("#align-keep");
-    const cancelBtn = $("#align-cancel");
-    applyBtn.textContent = applyLabel;
-    keepBtn.textContent = keepLabel;
-    setAlignDialogBusy(dialog, false, "");
-
-    const close = () => { if (dialog.open) dialog.close(); };
-    applyBtn.onclick = () => onApply(dialog, close);
-    keepBtn.onclick = () => onKeep(dialog, close);
-    cancelBtn.onclick = close;
-    dialog.showModal();
-    applyBtn.focus();
-}
-
-function openAlignAfterEditDialog(id, sourceLang, targetLang) {
-    const targetName = t(targetLang === "de" ? "langDe" : "langFr");
-    showAlignDialog({
-        title: t("alignPromptTitle", targetLang),
-        desc: t("alignPromptBody", sourceLang, targetLang),
-        applyLabel: t("alignApply"),
-        keepLabel: t("alignKeep"),
-        onApply: async (dialog, close) => {
-            const sourceText = currentTexts(id)[sourceLang];
-            const baseTarget = currentTexts(id)[targetLang];
-            setAlignDialogBusy(dialog, true, t("alignBusy"));
-            try {
-                if (isDirty(id) && !(await performSave(id))) {
-                    setAlignDialogBusy(dialog, false, t("errorSave"), true);
-                    return;
-                }
-                const aligned = await alignSummary(id, {
-                    sourceLang,
-                    sourceText,
-                    targetLang,
-                    targetText: baseTarget,
-                });
-                const latest = currentTexts(id);
-                state.drafts[id] = { de: latest.de, fr: latest.fr, [targetLang]: aligned.text };
-                state.alignedDraft[id] = { lang: targetLang, text: aligned.text };   // see onSave
-                delete state.saveStatus[id];
-                close();
-                renderEditors();
-                toast(t("alignDone", targetName), 6000);
-            } catch (err) {
-                console.error(err);
-                setAlignDialogBusy(dialog, false, t("alignFailed"), true);
-            }
-        },
-        onKeep: async (_dialog, close) => {
-            close();
-            await performSave(id);
-        },
-    });
+    state.saveStatus[id] = "resetting";
+    renderEditors();
+    try {
+        state.summaries[id] = await resetSummary(id);
+        delete state.drafts[id];
+        state.saveStatus[id] = "reset";
+    } catch (err) {
+        console.error(err);
+        state.saveStatus[id] = "resetError";
+    }
+    renderEditors();
+    refreshKb();
 }
 
 function escapeHtml(text) {
@@ -911,9 +865,10 @@ function relevanceScale(item) {
             el("i", { style: `left:${SUMMARY_THRESHOLD}%` }),
             el("b", { style: `left:${score}%` })),
         el("span", { class: "pnum", text: String(score) }),
-        // manual correction: show by how much the score was moved
-        Boolean(item.adjustment) && el("span", {
-            class: "sub delta", text: (item.adjustment > 0 ? "+" : "−") + Math.abs(item.adjustment),
+        // learned from the lawyers' decisions: show by how much that moved the score
+        Boolean(learnedDelta(item)) && el("span", {
+            class: "sub delta", title: t("learnedDeltaHint", item.baseScore),
+            text: (learnedDelta(item) > 0 ? "+" : "−") + Math.abs(learnedDelta(item)),
         }));
 }
 
@@ -926,7 +881,9 @@ function statusTags(item) {
         item.summarized && el("span", { class: "tag ok", text: t("tagInDb") }),
         Boolean(decidedLevel(item)) && el("span", {
             class: "tag",
-            text: t(item.adjustment ? "tagCorrected" : "tagConfirmed") + (item.feedbackLocalOnly ? t("localSuffix") : ""),
+            // "korrigiert": the decision differs from what the score says; "bestätigt": it agrees
+            text: t(scoreLevel(effectiveScore(item)) === item.userLevel ? "tagConfirmed" : "tagCorrected")
+                + (item.feedbackLocalOnly ? t("localSuffix") : ""),
         }),
     ];
 }
@@ -1026,37 +983,36 @@ function renderList() {
 
 function saveStatusText(id) {
     const status = state.saveStatus[id];
-    const pending = state.summaries[id].pendingLangs.length > 0;
     if (status === "saving") return t("saving");
-    if (status === "approving") return t("approving");
+    if (status === "aligning") return t("savingAligning");
+    if (status === "resetting") return t("resetting");
     if (status === "error") return t("errorSave");
+    if (status === "resetError") return t("errorReset");
+    if (!state.drafts[id] && state.summaries[id].pendingLangs.length > 0) return t("pendingLegacy");
     if (isDirty(id)) return t("unsaved");
-    if (status === "approved") return `✓ ${t("approved")}`;
-    if (pending) return (status === "saved" ? `✓ ${t("saved")} · ` : "") + t("pendingApproval");
     if (status === "saved") return `✓ ${t("saved")}`;
+    if (status === "reset") return `✓ ${t("resetDone")}`;
     return "";
 }
 
 function updateEditorFooter(editor, id) {
-    const busy = state.saveStatus[id] === "saving" || state.saveStatus[id] === "approving";
-    const dirty = isDirty(id);
-    editor.querySelector(".save-btn").disabled = !dirty || busy;
-    const approve = editor.querySelector(".approve-btn");
-    approve.hidden = state.summaries[id].pendingLangs.length === 0;
-    approve.disabled = dirty || busy;
+    const busy = isSaveBusy(id);
+    editor.querySelector(".save-btn").disabled = !isDirty(id) || busy;
+    editor.querySelector(".reset-btn").disabled = !canReset(id) || busy;
     const status = editor.querySelector(".save-status");
     status.textContent = saveStatusText(id);
-    status.classList.toggle("error", state.saveStatus[id] === "error");
+    status.classList.toggle("error", ["error", "resetError"].includes(state.saveStatus[id]));
 }
 
-/** Two tags above one summary language: the language, and where its text comes from
- *  ("generiert" / "bearbeitet"). The origin is the database's (entry.origin, see
- *  summaryOrigin in api.js): typing does not change it, only a saved edit does. */
+/** Two tags above one summary language: the language, and where its text comes from:
+ *  "generiert" (Apertus), "bearbeitet" (typed by a lawyer) or "angeglichen" (written by
+ *  Apertus to follow the lawyer's edit of the other language). The origin is the database's
+ *  (entry.origin, see summaryOrigin in api.js): typing does not change it, only saving does. */
 function summaryTags(entry, lang, name) {
     const origin = entry.origin?.[lang];
-    const pending = entry.pendingLangs.includes(lang);
     const hint = origin === "generated" ? t("originGeneratedHint", entry.model?.[lang] || "?")
-        : pending ? t("originPendingHint") : t("originEditedHint");
+        : origin === "aligned" ? t("originAlignedHint", entry.alignedBy?.[lang] || "Apertus")
+        : t("originEditedHint");
     return el("h4", { class: "duo-tags" },
         el("span", { class: "tag lang-tag", lang, text: name }),
         origin && el("span", {
@@ -1064,8 +1020,8 @@ function summaryTags(entry, lang, name) {
         }));
 }
 
-/** German and French summary next to each other, each editable; one save button for both
- *  (saving an edit of one language offers to regenerate the other, see onSave). `scope` tells the detail panel ("res") from the database ("kb")
+/** German and French summary next to each other, each editable; one "Speichern" and one
+ *  "Zurücksetzen" for both. `scope` tells the detail panel ("res") from the database ("kb")
  *  so the caret can be restored after a re-render. */
 function summaryEditor(scope, id) {
     const entry = state.summaries[id];
@@ -1091,8 +1047,8 @@ function summaryEditor(scope, id) {
         el("div", { class: "row editor-footer" },
             el("button", { type: "button", class: "btn pri save-btn", text: t("save"), onclick: () => onSave(id) }),
             el("button", {
-                type: "button", class: "btn approve-btn", text: t("approve"), title: t("approveHint"),
-                onclick: () => onApprove(id),
+                type: "button", class: "btn reset-btn", text: t("resetSummary"), title: t("resetSummaryHint"),
+                onclick: () => onReset(id),
             }),
             el("span", { class: "note save-status", "aria-live": "polite" }),
             el("button", { type: "button", class: "btn export-btn", text: t("openSuvaFormat"), onclick: () => openSuvaExport(id) })));
@@ -1282,6 +1238,8 @@ function renderDetail() {
         typeof item.uvUse === "number" && el("span", { class: "tag blue", text: t("uvUseLabel", item.uvUse) }),
     ].filter(Boolean);
     const url = item.url && (currentLang === "fr" ? item.url.replace("lang=de", "lang=fr") : item.url);
+    // the text the crawler stored, served by our own backend: readable without leaving the installation
+    const localUrl = USE_MOCK ? "" : originalPageUrl(item.id, currentLang);
     preservingFocus(detail, () => detail.replaceChildren(...[
         el("button", {
             type: "button", class: "detail-close", "aria-label": t("close"), title: t("close"), onclick: closeDetail,
@@ -1289,6 +1247,8 @@ function renderDetail() {
         // as in the demo: the title of the summary once there is one
         el("h2", { text: loc(state.summaries[item.id]?.title) || `${t("judgement")} ${item.caseNumber}` }),
         el("p", { class: "meta" }, meta.filter(Boolean).join(", "), ". ",
+            localUrl && el("a", { href: localUrl, target: "_blank", rel: "noopener", class: "local-original", text: t("openLocal") }),
+            localUrl && url && " · ",
             url && el("a", { href: url, target: "_blank", rel: "noopener", text: t("openOriginal") })),
         badges.length > 0 && el("div", { class: "row detail-badges" }, badges),
         textSection("question", item.question),
@@ -1318,7 +1278,6 @@ function renderKbEntry(entry) {
             el("summary", {},
                 el("span", { class: "nr", text: entry.caseNumber }),
                 el("span", { class: "kb-entry-title", text: kbTitle(entry) }),
-                entry.pendingLangs.length > 0 && el("span", { class: "tag warn", text: t("tagPending") }),
                 el("span", { class: "sub", text: entry.storedAt ? `${t("storedAt")} ${formatDate(entry.storedAt.slice(0, 10))}` : "" })),
             el("div", { class: "kb-entry-body" }, summaryEditor("kb", entry.id))));
 }
@@ -1383,7 +1342,6 @@ function renderLanguage() {
         btn.setAttribute("aria-pressed", String(active));
     });
     refreshDateInputs();
-    renderQuickRangeButton();
     showFormError(formErrorKey);
     renderResults();
     renderKb();
@@ -1427,12 +1385,6 @@ function init() {
     setDateInput(toInput, toIso(today));
 
     $("#search-form").addEventListener("submit", onSearch);
-    $("#quick-range-btn").addEventListener("click", () => {
-        if (!availableRange) return;
-        setDateInput(fromInput, availableRange.from);
-        setDateInput(toInput, availableRange.to);
-        $("#search-form").requestSubmit();
-    });
     for (const id of ["#filter-text", "#filter-min", "#filter-max"]) {
         $(id).addEventListener("input", onFilterChange);
     }
@@ -1449,9 +1401,9 @@ function init() {
         }, 200);
     });
 
-    // Escape closes the detail panel (unless a dialog/calendar is open or the user is typing)
+    // Escape closes the detail panel (unless a calendar is open or the user is typing)
     document.addEventListener("keydown", (e) => {
-        if (e.key !== "Escape" || !state.selectedId || openPickers.size || $("#align-dialog")?.open) return;
+        if (e.key !== "Escape" || !state.selectedId || openPickers.size) return;
         if (e.target.closest("input, textarea, select")) return;
         closeDetail();
     });
