@@ -373,7 +373,7 @@ table { border-collapse: collapse; width: 100%; }
 #results-table { table-layout: fixed; }
 #results-table th.col-case { width: 112px; }
 #results-table th.col-date { width: 96px; }
-#results-table th.col-score { width: 150px; }
+#results-table th.col-score { width: 176px; }   /* scale + score + learned correction ("86.2 +12.5") */
 #results-table th.col-status { width: 230px; }
 th {
     position: sticky;
@@ -537,6 +537,21 @@ blockquote {
 .kb-entry-title { flex: 1 1 260px; min-width: 0; }
 .kb-entry-body { padding: 6px 14px 16px; }
 
+/* ---------- popup on save ("andere Sprache neu erstellen?") ---------- */
+dialog.modal {
+    width: min(480px, calc(100vw - 32px));
+    padding: 0;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: var(--paper);
+    color: var(--ink);
+    box-shadow: var(--shadow);
+}
+dialog.modal::backdrop { background: rgba(11, 16, 23, .45); }
+.modal-card { display: flex; flex-direction: column; gap: 12px; padding: 20px 22px; }
+.modal-card h3 { font: 600 17px/1.3 var(--ui); }
+.modal-actions { justify-content: flex-end; margin-top: 4px; }
+
 /* ---------- toast ---------- */
 #toast {
     position: fixed;
@@ -550,6 +565,7 @@ blockquote {
     background: #16202E;
     color: #fff;
     z-index: 30;
+    pointer-events: none;   /* information only: clicks go to the buttons underneath (e.g. "Speichern") */
 }
 
 /* ---------- small screens: one pane at a time ---------- */

@@ -15,7 +15,7 @@ Provides ``ensure_period(date_from, date_to) -> PeriodStatus`` for Triage and th
 from __future__ import annotations
 
 import argparse
-from contextlib import contextmanager
+from contextlib import closing, contextmanager
 from dataclasses import asdict, dataclass
 from datetime import date, datetime, timedelta
 import json
@@ -38,6 +38,7 @@ from hack_apertus_coffee_exe.crawl.vectordb import (
     DEFAULT_JUDGEMENTS_DIR,
     ISO_DATE_PREFIX_RE,
     VectorDB,
+    _is_sqlite_corruption,
     embedder_fingerprint,
     load_reference_case_ids,
 )
@@ -203,7 +204,7 @@ def _existing_db_doc_keys(
     rows: list[tuple[Any, Any, Any]] = []
 
     if db is not None:
-        with db._connect() as conn:
+        with closing(db._connect()) as conn:
             rows = conn.execute(
                 "SELECT doc_key, fingerprint, vector_file FROM judgements WHERE decision_date >= ? AND decision_date <= ?",
                 (date_from, date_to),
@@ -213,20 +214,31 @@ def _existing_db_doc_keys(
         if not sqlite_path.exists():
             return set()
         try:
-            conn = sqlite3.connect(f"{sqlite_path.resolve().as_uri()}?mode=ro", uri=True, timeout=10.0)
+            with closing(sqlite3.connect(f"{sqlite_path.resolve().as_uri()}?mode=ro", uri=True, timeout=10.0)) as conn:
+                rows = conn.execute(
+                    "SELECT doc_key, fingerprint, vector_file FROM judgements WHERE decision_date >= ? AND decision_date <= ?",
+                    (date_from, date_to),
+                ).fetchall()
         except sqlite3.DatabaseError as exc:
-            logger.warning("Metadata SQLite unreadable (%s); treating period as uningested", exc)
-            return set()
-        try:
-            rows = conn.execute(
-                "SELECT doc_key, fingerprint, vector_file FROM judgements WHERE decision_date >= ? AND decision_date <= ?",
-                (date_from, date_to),
-            ).fetchall()
-        except sqlite3.DatabaseError as exc:
-            logger.warning("Metadata SQLite query failed (%s); treating period as uningested", exc)
-            return set()
-        finally:
-            conn.close()
+            msg = str(exc).lower()
+            if _is_sqlite_corruption(exc) or "no such table" in msg:
+                logger.warning("Metadata SQLite unreadable (%s); treating period as uningested", exc)
+                return set()
+            # WAL-mode DB without -shm or readonly handle error: retry brief normal connect unless locked
+            if "unable to open" in msg or "readonly" in msg:
+                try:
+                    with closing(sqlite3.connect(sqlite_path, timeout=10.0)) as rw_conn:
+                        rows = rw_conn.execute(
+                            "SELECT doc_key, fingerprint, vector_file FROM judgements WHERE decision_date >= ? AND decision_date <= ?",
+                            (date_from, date_to),
+                        ).fetchall()
+                except sqlite3.DatabaseError as rw_exc:
+                    if _is_sqlite_corruption(rw_exc) or "no such table" in str(rw_exc).lower():
+                        logger.warning("Metadata SQLite unreadable (%s); treating period as uningested", rw_exc)
+                        return set()
+                    raise
+            else:
+                raise
 
     present: set[str] = set()
     for doc_key, fingerprint, vector_file in rows:

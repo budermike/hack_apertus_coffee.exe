@@ -1009,4 +1009,44 @@ def test_vectordb_recovers_from_corrupt_wal_sidecar(tmp_path):
     (db_dir / "metadata.sqlite3-shm").write_bytes(b"\xde\xad\xbe\xef" * 1024)
 
     reopened = VectorDB(db_dir=db_dir, embedder=emb)
-    assert reopened.count() in (0, 1)  # never raises sqlite3.DatabaseError
+    assert reopened.count() == 1
+
+
+def test_vectordb_does_not_unlink_wal_or_quarantine_on_locked_db(tmp_path, monkeypatch):
+    import sqlite3
+    import hack_apertus_coffee_exe.crawl.vectordb as vdb_mod
+
+    db_dir = tmp_path / "vectordb"
+    emb = _tfidf_embedder()
+    db = VectorDB(db_dir=db_dir, embedder=emb)
+    db.ingest_records([{
+        "id": "8C_106_2026",
+        "case_id": "8C_106/2026",
+        "case_ids": ["8C_106/2026"],
+        "decision_date": "2026-07-01",
+        "subject": "UVG",
+        "language": "de",
+        "text": "Suva Lock Test.",
+    }])
+    assert db.count() == 1
+
+    db_file = db_dir / "metadata.sqlite3"
+    wal_file = db_dir / "metadata.sqlite3-wal"
+    shm_file = db_dir / "metadata.sqlite3-shm"
+    wal_file.write_bytes(b"active-wal")
+    shm_file.write_bytes(b"active-shm")
+
+    class LockedConn:
+        def execute(self, *_a, **_kw):
+            raise sqlite3.OperationalError("database is locked")
+
+        def close(self):
+            pass
+
+    monkeypatch.setattr(vdb_mod.sqlite3, "connect", lambda *_a, **_kw: LockedConn())
+    VectorDB._ensure_sqlite_healthy(db_file)
+
+    assert db_file.exists()
+    assert wal_file.exists()
+    assert shm_file.exists()
+    assert not list(db_dir.glob(".metadata.sqlite3.corrupt-*"))

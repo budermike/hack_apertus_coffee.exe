@@ -205,7 +205,7 @@ const mockBackend = (() => {
         /** PUT /judgements/{id}/summary: as in the backend, a changed language becomes the one
          *  edited version and is shown at once; if only one changed, the other follows (here
          *  a marked placeholder instead of an Apertus text), unless it was typed by hand. */
-        async saveSummary(id, texts) {
+        async saveSummary(id, texts, align = true) {
             await delay(300);
             const data = db.load();
             const entry = data.kb[id];
@@ -225,7 +225,7 @@ const mockBackend = (() => {
                 next.alignedBy[lang] = null;
             }
             let alignment = null;
-            if (changed.length === 1) {
+            if (changed.length === 1 && align) {
                 const source = changed[0];
                 const target = source === "de" ? "fr" : "de";
                 if (entry.status[target] !== "generated" && !next.alignedBy[target]) {

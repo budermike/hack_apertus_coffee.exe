@@ -168,8 +168,9 @@ const httpBackend = {
     cancelQueuedSummary(id) {
         return jsonFetch(`${API_BASE}/summaries/queue/${encodeURIComponent(id)}`, { method: "DELETE" });
     },
-    saveSummary(id, texts) {
-        return jsonFetch(summaryUrl(id), { method: "PUT", body: JSON.stringify({ de: texts.de, fr: texts.fr }) });
+    saveSummary(id, texts, align = true) {
+        const body = { de: texts.de, fr: texts.fr, ...(align ? {} : { align: false }) };
+        return jsonFetch(summaryUrl(id), { method: "PUT", body: JSON.stringify(body) });
     },
     resetSummary(id) {
         return jsonFetch(`${summaryUrl(id)}/edit`, { method: "DELETE" });
@@ -332,10 +333,11 @@ async function cancelQueuedSummary(id) {
     return backend.cancelQueuedSummary ? await backend.cancelQueuedSummary(id) : { cancelled: false };
 }
 
-/** Saves edited summary texts ({ de, fr }); they are shown at once. The entry's `alignment`
- *  tells whether Apertus brought the other language in line. */
-async function saveSummary(id, texts) {
-    return normalizeEntry(await backend.saveSummary(id, texts));
+/** Saves edited summary texts ({ de, fr }); they are shown at once. `align: false` keeps
+ *  Apertus from rewriting the other language. The entry's `alignment` tells whether Apertus
+ *  brought the other language in line. */
+async function saveSummary(id, texts, { align = true } = {}) {
+    return normalizeEntry(await backend.saveSummary(id, texts, align));
 }
 
 /** Drops the edited version of both languages: the generated text is shown again. */

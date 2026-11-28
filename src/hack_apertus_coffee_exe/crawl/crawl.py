@@ -513,13 +513,21 @@ def normalize_case_id(raw: str) -> str:
     return cleaned
 
 
-def fetch_single_case(case_id: str, out_dir: str | Path, config_path: str | Path = "configs/crawl.json") -> dict[str, Any]:
-    """Return one judgement record from ``out_dir`` or fetch it from entscheidsuche.ch / bger.ch (#70)."""
+def fetch_single_case(
+    case_id: str,
+    out_dir: str | Path,
+    config_path: str | Path = "configs/crawl.json",
+    *,
+    read_dirs: tuple[str | Path, ...] = (),
+) -> dict[str, Any]:
+    """Return one judgement record from ``read_dirs``/``out_dir`` or fetch into ``out_dir`` (#70)."""
     normalized = normalize_case_id(case_id)
     target_dir = Path(out_dir)
     safe_id = safe_case_id(normalized)
-    if target_dir.exists():
-        for existing in sorted(target_dir.rglob(f"*{safe_id}.json")):
+    for search_dir in (target_dir, *(Path(d) for d in read_dirs)):
+        if not search_dir.exists():
+            continue
+        for existing in sorted(search_dir.rglob(f"*{safe_id}.json")):
             if existing.is_file():
                 try:
                     rec = json.loads(existing.read_text(encoding="utf-8"))

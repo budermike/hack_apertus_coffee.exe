@@ -470,6 +470,86 @@ def test_without_a_learner_the_decision_still_decides_its_own_judgement(tmp_path
     assert "learning" not in config_response(judgements)[1]
 
 
+def test_tables_quarters_load_with_learner_and_lazy_lookups_skip_full_crawl_scan(tmp_path, monkeypatch):
+    import hack_apertus_coffee_exe.present.judgements as judgements_mod
+    from hack_apertus_coffee_exe.triage.feedback_learning import FeedbackLearner
+
+    crawl_dir = tmp_path / "crawl"
+    crawl_dir.mkdir()
+    (crawl_dir / "2025-11-10_8C_720_2024.json").write_text(
+        json.dumps({"case_id": "8C_720/2024", "subject": "Unfallversicherung (Schleudertrauma)", "url": "https://search.bger.ch/720"}),
+        encoding="utf-8",
+    )
+    (crawl_dir / "2025-10-15_8C_300_2025.json").write_text(
+        json.dumps({
+            "case_id": "8C_300/2025",
+            "subject": "Unfallversicherung (Rückfall)",
+            "url": "https://search.bger.ch/300",
+            "department": "IV. öffentlich-rechtliche Abteilung",
+        }),
+        encoding="utf-8",
+    )
+
+    tables_dir = tmp_path / "tables"
+    tables_dir.mkdir()
+    (tables_dir / "relevance_calibration_q2_2026.json").write_text(
+        json.dumps({"w": [4.0, 2.5, 0.8, -0.8], "t": 0.1484}),
+        encoding="utf-8",
+    )
+    q4_records = [
+        {
+            "case_id": "8C_300/2025",
+            "case_ids": ["8C_300/2025"],
+            "decision_date": "2025-10-15",
+            "language": "de",
+            "subject": "Unfallversicherung (Rückfall)",
+            "area": "UV",
+            "outcome": "abgewiesen",
+            "single_judge": False,
+            "triage": {
+                "a_rechtsfrage": "Wer trägt die Beweislast?",
+                "b_kriterien": [{"a_id": "K5", "b_stelle": "E1", "c_zitat": "Suva lehnte ab", "beleg_status": "exakt"}],
+                "c_begruendung": "Suva ist Partei.",
+                "d_score": 88,
+            },
+            "deep": {
+                "a_grundsatz": 2,
+                "b_nutzen_uv": 3,
+                "c_korrektur": False,
+                "d_merksatz": "Beweislast beim Versicherten.",
+                "e_score": 85,
+            },
+            "precedents": [{"case_id": "8C_720/2024", "similarity": 0.68}],
+            "error": None,
+            "model": "apertus-v1-5-70b",
+        }
+    ]
+    (tables_dir / "relevance_scores_q4_2025.json").write_text(json.dumps(q4_records), encoding="utf-8")
+
+    # Full-text load_judgements must NOT be called when outcome & single_judge come from relevance metadata
+    monkeypatch.setattr(judgements_mod, "load_judgements", lambda *_a, **_kw: pytest.fail("must not parse full text"))
+
+    jl = JudgementList(
+        _write(tmp_path, []),
+        config=TriageConfig(),
+        crawl_dir=crawl_dir,
+        tables_dir=tables_dir,
+        learner=FeedbackLearner(config=TriageConfig()),
+    )
+    assert jl.covers("2025-10-01", "2025-12-31") is True
+    items = jl.items("2025-10-01", "2025-12-31")
+    assert len(items) == 1
+    item = items[0]
+    assert item["caseNumber"] == "8C_300/2025"
+    assert item["outcome"] == "abgewiesen"
+    assert item["singleJudge"] is False
+    assert item["url"] == "https://search.bger.ch/300"
+    assert item["court"]["de"] == "IV. öffentlich-rechtliche Abteilung"
+    assert item["similarCases"] == [
+        {"caseNumber": "8C_720/2024", "subject": "Unfallversicherung (Schleudertrauma)", "similarity": 0.68}
+    ]
+
+
 def test_config_explains_the_thresholds_from_the_calibration_file(tmp_path):
     """GET /api/config carries the reasons for the thresholds in both UI languages (#75)."""
     cal = {"w": [1, 1, 0, 0], "t": 0.15, "n_pos": 4, "periods": ["2025-Q4"], "basis": {
