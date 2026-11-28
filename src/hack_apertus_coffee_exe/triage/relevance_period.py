@@ -103,7 +103,7 @@ def precedent_pool(
             cids = set(item.metadata.get("case_ids") or [item.case_id])
             if cids & neg:
                 effective_selected -= cids
-    return build_pool(items, effective_selected, summaries)
+    return build_pool(items, effective_selected, summaries, feedback_ids=set(feedback_overrides or ()))
 
 
 def _load_feedback_overrides() -> dict[str, bool]:
@@ -127,9 +127,14 @@ def public_record(record: dict[str, Any]) -> dict[str, Any]:
     return out
 
 
-def scores_path(tables_dir: str | Path, period: DateRange, prompt: str = "v1") -> Path:
-    """``relevance_scores_<period>.json``; other prompt versions get their suffix (``_v2``)."""
-    return Path(tables_dir) / f"relevance_scores_{period.label()}{prompt_suffix(prompt)}.json"
+def file_suffix(prompt: str = "v1", feedback: bool = False) -> str:
+    """File-name suffix of a run: ``""`` for v1, ``_v2``, plus ``_fb`` with lawyer feedback (#64)."""
+    return prompt_suffix(prompt) + ("_fb" if feedback else "")
+
+
+def scores_path(tables_dir: str | Path, period: DateRange, prompt: str = "v1", feedback: bool = False) -> Path:
+    """``relevance_scores_<period>.json``; other runs get their suffix (``_v2``, ``_fb``)."""
+    return Path(tables_dir) / f"relevance_scores_{period.label()}{file_suffix(prompt, feedback)}.json"
 
 
 def score_period(
@@ -223,6 +228,7 @@ def run(
     config: TriageConfig | None = None,
     allow_failed: bool = False,
     from_scores: bool = False,
+    feedback: dict[str, bool] | None = None,
 ) -> dict[str, Any]:
     """Score ``period_name`` and the labelled periods before it; returns records, calibration and results.
 
@@ -236,24 +242,35 @@ def run(
     ``from_scores`` reads the stored score files of ``tables_dir`` instead of asking
     Apertus (no gateway, no key): for changing thresholds or the calibration only.
     The score files are then left as they are.
+
+    Lawyer feedback (#64) is used only with ``config.feedback_learn`` (``--feedback``):
+    ``feedback`` (``{case_id: relevant}``), or, if ``None``, the decisions in
+    ``SUMMARY_DB_PATH``. Such a run writes its files with the suffix ``_fb``, so the
+    committed results never depend on someone's local database. The calibration keeps
+    Suva's own labels.
     """
     period = DateRange.from_period(period_name)
-    prompt = (config or TriageConfig()).relevance_prompt
+    cfg = config or TriageConfig()
+    prompt, learn = cfg.relevance_prompt, cfg.feedback_learn
     client = client or ApertusRelevanceClient(cache_dir="data/processed/triage")
     selected = load_selected_ids(judgements_dir)
+    overrides: dict[str, bool] = {}
+    if learn:
+        overrides = dict(_load_feedback_overrides() if feedback is None else feedback)
+        log(f"Lawyer feedback: {sum(overrides.values())} relevant, {len(overrides) - sum(overrides.values())} not relevant")
     pool = precedent_pool(
         raw_dir,
         label_periods,
         selected,
         load_summaries_de(judgements_dir),
-        feedback_overrides=_load_feedback_overrides(),
+        feedback_overrides=overrides,
     )
     earlier = [p for p in label_periods if DateRange.from_period(p).until < period.since]
     scored = []
     for name in [*earlier, period_name]:
         rng = DateRange.from_period(name)
         if from_scores:
-            path = scores_path(tables_dir, rng, prompt)
+            path = scores_path(tables_dir, rng, prompt, learn)
             if not path.exists():
                 raise FileNotFoundError(f"{path} is missing: score {name} with Apertus first (without --from-scores)")
             records = json.loads(path.read_text(encoding="utf-8"))
@@ -277,7 +294,7 @@ def run(
 
     train: list[dict[str, Any]] = []
     for name, rng, records, items in scored:
-        path = scores_path(tables_dir, rng, prompt)
+        path = scores_path(tables_dir, rng, prompt, learn)
         if not from_scores:
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text(json.dumps([public_record(r) for r in records], ensure_ascii=False, indent=1), encoding="utf-8")
@@ -288,7 +305,6 @@ def run(
             train += records
     out: dict[str, Any] = {"period": period, "records": records, "items": items, "calibration": None, "results": []}
     if train:
-        cfg = config or TriageConfig()
         cal = calibration.calibrate(train, selected, cfg.target_recall, cfg.yellow_recall)
         cal["periods"] = list(earlier)
         out["calibration"] = cal

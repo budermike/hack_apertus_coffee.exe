@@ -47,6 +47,10 @@ class TriageConfig:
     # Prompt version of the relevance scoring: "v1" (#62) or "v2" (no label rates in the
     # prompt, reason also in French, #67). v2 writes its own files with suffix "_v2".
     relevance_prompt: str = "v1"
+    # Lawyer feedback (#64) as precedents in `triage.cli relevance`: off by default, so the
+    # committed results do not depend on a local SUMMARY_DB_PATH; on, files get suffix "_fb".
+    # The UI's period jobs (present/period_jobs.py) always use the feedback.
+    feedback_learn: bool = False
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "label_periods", tuple(self.label_periods))

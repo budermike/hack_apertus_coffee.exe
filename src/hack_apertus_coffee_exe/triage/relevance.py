@@ -206,6 +206,7 @@ class Precedent:
     keys: frozenset[str]  # norms, leading cases, area and subject words
     selected: bool
     summary: str = ""  # start of Suva's German summary, if there is one
+    feedback: bool = False  # ``selected`` comes from a lawyer's decision in the UI (#64), not from Suva's list
 
 
 def fingerprint(area: str, subject: str, text: str) -> frozenset[str]:
@@ -520,11 +521,17 @@ def describe(item: CrawlItem) -> dict[str, Any]:
     }
 
 
-def build_pool(items: Sequence[CrawlItem], selected_ids: set[str], summaries: dict[str, str] | None = None) -> list[Precedent]:
+def build_pool(
+    items: Sequence[CrawlItem],
+    selected_ids: set[str],
+    summaries: dict[str, str] | None = None,
+    feedback_ids: set[str] = frozenset(),
+) -> list[Precedent]:
     """Precedents for the prompts: judgements of labelled periods with Suva's decision.
 
     ``items`` must only contain judgements whose Suva decision is known: every
     UV/IV/MV judgement of a labelled quarter, plus older selected ones.
+    ``feedback_ids``: judgements whose decision comes from a lawyer (#64); marked ``feedback``.
     """
     pool = []
     for item in items:
@@ -538,6 +545,7 @@ def build_pool(items: Sequence[CrawlItem], selected_ids: set[str], summaries: di
                 case_id=doc["case_id"], decision_date=doc["decision_date"], area=doc["area"], subject=doc["subject"],
                 outcome=doc["outcome"], single_judge=doc["single_judge"], keys=doc["keys"], selected=is_selected,
                 summary=summary if is_selected else "",
+                feedback=bool(set(doc["case_ids"]) & feedback_ids),
             )
         )
     return pool
@@ -549,6 +557,10 @@ def score_item(
     """Both Apertus passes for one judgement. Never raises: a failure is stored in ``error``.
 
     ``prompt`` selects the prompt version (``PROMPTS``); v1 keeps its cache stages.
+    When a precedent shown comes from lawyer feedback (#64), the answers go to their
+    own cache stage (``*_fb``). The cache already asks again whenever the request
+    changes; the own stage keeps a run with feedback (e.g. a UI period job) from
+    overwriting the cached answers of a run without it, and the other way round.
     """
     texts, suffix = PROMPTS[prompt], prompt_suffix(prompt)
     doc = describe(item)
@@ -560,12 +572,15 @@ def score_item(
     record["precedents"] = [
         {"case_id": p.case_id, "similarity": round(s, 3), "selected": p.selected, "subject": p.subject} for s, p in similar_cases
     ]
+    with_feedback = any(p.feedback for _, p in similar_cases)
     fields = dict(
         exemplars=exemplar_text(similar_cases), case_id=doc["case_id"], title=doc["title"], court=doc["court"],
         subject=doc["subject"] or "ohne Angabe", single="ja" if doc["single_judge"] else "nein", outcome=doc["outcome"],
         text=labelled_text(doc["segs"]),
     )
     key = entry_key(doc["case_id"], doc["decision_date"] or None)
+    if with_feedback:
+        suffix += "_fb"
     try:
         task = f"Beurteile jetzt die Relevanz des Urteils {doc['case_id']} für die Suva: erst die Belege, dann die Begründung, zuletzt der Score."
         triage = client.call(

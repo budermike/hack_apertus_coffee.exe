@@ -187,6 +187,8 @@ def _cmd_relevance(args: argparse.Namespace) -> int:
     config = load_config(args.config)
     if args.prompt is not None:
         config = replace(config, relevance_prompt=args.prompt)
+    if args.feedback:
+        config = replace(config, feedback_learn=True)
     if args.target_recall is not None:  # explicit recall target on the command line
         config = replace(config, target_recall=args.target_recall)
     elif args.list_factor is not None:  # explicit factor: the old rule, no recall target
@@ -239,7 +241,7 @@ def _cmd_relevance(args: argparse.Namespace) -> int:
         out_path.write_text(json.dumps([r.to_dict() for r in results], ensure_ascii=False, indent=2), encoding="utf-8")
         print(f"Wrote {len(results)} triage result(s) to {out_path}", file=sys.stderr)
     if not args.no_export:
-        label = out["period"].label() + relevance.prompt_suffix(config.relevance_prompt)  # v1 keeps its file names
+        label = out["period"].label() + relevance_period.file_suffix(config.relevance_prompt, config.feedback_learn)
         ranking, recall = export_period(results, args.export_dir or config.export_dir, label, len(green))
         cal_path = Path(args.tables_dir) / f"relevance_calibration_{label}.json"
         cal_path.write_text(json.dumps({**cal, "list_factor": list_factor}, indent=1), encoding="utf-8")
@@ -291,6 +293,8 @@ def build_parser() -> argparse.ArgumentParser:
                        help="Multiplier on the F2 threshold; below 1 = longer list, higher recall (switches the recall target off)")
     p_rel.add_argument("--prompt", choices=("v1", "v2"), default=None,
                        help="Prompt version (default: relevance_prompt in the config); v2 writes files with suffix _v2")
+    p_rel.add_argument("--feedback", action="store_true",
+                       help="Show the lawyers' decisions from SUMMARY_DB_PATH as precedents (#64, feedback_learn); files get suffix _fb")
     p_rel.add_argument("--target-recall", type=float, default=None,
                        help="Share of the known Suva judgements that must be on the list, e.g. 0.9 (default: config)")
     p_rel.add_argument("--workers", type=int, default=8, help="Parallel gateway calls")
