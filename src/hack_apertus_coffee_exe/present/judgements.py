@@ -56,7 +56,7 @@ _AREAS = {
     "MV": r"militärversicherung|assurance militaire|assicurazione militare",
     "ALV": r"arbeitslosenversicherung|assurance[- ]chômage|assicurazione contro la disoccupazione",
     "EL": r"ergänzungsleistung|prestations? complémentaires?|prestazion[ei] complementar[ei]",
-    "KV": r"krankenversicherung|assurance[- ]maladie|assicurazione malattie",
+    "KV": r"krankenversicherung|assurance[- ]maladie|assicurazione (?:contro le )?malattie",
     "AHV": r"\bAHV\b|\bAVS\b|alters- und hinterlassenen|assurance[- ]vieillesse|assicurazione per la vecchiaia",
     "BV": r"berufliche vorsorge|prévoyance professionnelle|previdenza professionale",
     "FZ": r"familienzulage|allocations? familiales?|assegn[oi] familiar[ei]",
@@ -240,8 +240,10 @@ class JudgementList:
                 if self._outcomes is None:
                     loaded: dict[str, str] = {}
                     if self.crawl_dir is not None:
-                        if not self.crawl_dir.exists():
-                            logger.warning("Crawl folder not found, leaving outcomes empty: %s", self.crawl_dir)
+                        if not self.crawl_dir.exists() or (
+                            self.crawl_dir.is_dir() and not any(self.crawl_dir.rglob("*.json"))
+                        ):
+                            logger.warning("Crawl folder missing or empty, leaving outcomes empty: %s", self.crawl_dir)
                         else:
                             for judgement in load_judgements(self.crawl_dir):
                                 loaded[ui_id(judgement.case_id)] = _OUTCOMES.get(

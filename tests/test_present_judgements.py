@@ -169,6 +169,7 @@ def test_area_code_takes_the_first_area_named():
     assert area_code("Assicurazione sociale cantonale (riduzione dei premi)") == "SOZ"
     assert area_code("Assicurazione per la vecchiaia e per i superstiti (obbligo contributivo)") == "AHV"
     assert area_code("Assegno familiare") == "FZ"
+    assert area_code("Assicurazione contro le malattie") == "KV"
     assert area_code("Ehescheidung") is None
 
 
@@ -190,13 +191,16 @@ def test_outcome_from_the_crawl_folder(tmp_path):
     assert judgements.items()[0]["outcome"] == "teilweise"
 
 
-def test_missing_crawl_dir_leaves_outcomes_empty(tmp_path):
-    judgements = JudgementList(_write(tmp_path), config=TriageConfig(), crawl_dir=tmp_path / "missing")
-    first = judgements.items()
-    second = judgements.items()
-    assert len(first) == 3 and len(second) == 3
-    assert all("outcome" not in item for item in first)
-    assert all("outcome" not in item for item in second)
+def test_missing_or_empty_crawl_dir_leaves_outcomes_empty(tmp_path):
+    empty_dir = tmp_path / "empty_crawl"
+    empty_dir.mkdir()
+    for crawl_dir in (tmp_path / "missing", empty_dir):
+        judgements = JudgementList(_write(tmp_path), config=TriageConfig(), crawl_dir=crawl_dir)
+        first = judgements.items()
+        second = judgements.items()
+        assert len(first) == 3 and len(second) == 3
+        assert all("outcome" not in item for item in first)
+        assert all("outcome" not in item for item in second)
 
 
 def test_outcomes_are_loaded_once_under_concurrent_access(tmp_path, monkeypatch):
@@ -204,6 +208,7 @@ def test_outcomes_are_loaded_once_under_concurrent_access(tmp_path, monkeypatch)
 
     crawl_dir = tmp_path / "crawl"
     crawl_dir.mkdir()
+    (crawl_dir / "8C_7_2025.json").write_text("{}", encoding="utf-8")
     calls = 0
 
     def fake_load_judgements(_dir):
