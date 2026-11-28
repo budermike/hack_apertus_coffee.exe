@@ -188,3 +188,15 @@ def test_on_the_committed_results_one_decision_moves_scores_one_way_only():
     on_list = [r for r in scored if r["final_score"] >= 60]
     assert all((learned.score(r) or r["final_score"]) >= 60 for r in on_list)
     assert np.isfinite([new for new, _ in moved]).all()
+
+
+def test_learning_colours_with_the_stored_yellow_bound_not_half_the_list_threshold():
+    """Rows written with a recall-based yellow bound (#75) keep it when learning moves them."""
+    base = row("8C_9/2026", 0.045, "UV", ("K1",))
+    base["metadata"]["relevance"]["yellow_threshold"] = 0.044  # well above half of T_LIST (0.025)
+    rows = [*ROWS, base]
+    learned = learner(protect_list=False).learned({"8C_1/2026": False}, rows)
+    p = learned.relevance(base)
+    assert p is not None and 0.025 < p <= 0.044  # yellow by the old half rule, red by the stored bound
+    assert learned.ampel(base) == calibration.AMPEL_RED
+    assert learned.score(base) < TriageConfig().yellow_threshold

@@ -95,15 +95,21 @@ def one_run(examples: Sequence[feedback_learning.Example], decided: Sequence[int
     return out
 
 
-def simulate(records: dict[str, list[dict[str, Any]]], selected_ids: set[str], list_factor: float) -> list[dict[str, Any]]:
+def simulate(
+    records: dict[str, list[dict[str, Any]]],
+    selected_ids: set[str],
+    list_factor: float,
+    target_recall: float | None = None,
+) -> list[dict[str, Any]]:
+    """Every (test, train) pair of quarters; the list threshold follows ``target_recall`` when set (#75), else ``list_factor``."""
     rows: list[dict[str, Any]] = []
     names = list(records)
     for test in names:
         for train in names:
             if train == test:
                 continue
-            cal = calibration.calibrate(records[train], selected_ids)
-            t_list = cal["t"] * list_factor
+            cal = calibration.calibrate(records[train], selected_ids, target_recall)
+            t_list = calibration.list_threshold(cal, list_factor)
             examples = scored_examples(records[test], cal, selected_ids)
             by_rank = sorted(range(len(examples)), key=lambda i: -examples[i].p0)
             for k in KS:
@@ -144,7 +150,7 @@ def _pp(value: float) -> str:
     return "–" if np.isnan(value) else f"{100 * value:+.1f}"
 
 
-def render(rows: Sequence[dict[str, Any]], list_factor: float) -> str:
+def render(rows: Sequence[dict[str, Any]], list_factor: float, target_recall: float | None = None) -> str:
     """The German report: mean changes per number of decisions, and the range over all runs."""
     summary = summarise(rows)
     quarters = sorted({r["quarter"] for r in rows})
@@ -154,6 +160,11 @@ def render(rows: Sequence[dict[str, Any]], list_factor: float) -> str:
         changes = [c for c in changes if not np.isnan(c)]
         return min(changes), max(changes)
 
+    rule = (
+        f"Recall-Ziel {target_recall:.0%} der bekannten Suva-Urteile des Kalibrierquartals".replace("%", " %")
+        if target_recall is not None
+        else f"`list_factor` {list_factor}"
+    )
     lines = [
         "# Simulation: Lernen aus Relevanz-Entscheiden",
         "",
@@ -166,7 +177,7 @@ def render(rows: Sequence[dict[str, Any]], list_factor: float) -> str:
         "Quartals stammt aus der Kalibrierung auf dem jeweils anderen Quartal, wie im Betrieb. Die simulierte "
         "Juristin entscheidet `k` Urteile genau so, wie Suva es getan hat: entweder die ersten `k` der Liste "
         f"(«von oben») oder `k` zufällige (Mittel über {SEEDS} Ziehungen). Gemessen wird die Liste der "
-        f"**noch nicht entschiedenen** Urteile an der Listenschwelle (`list_factor` {list_factor}). "
+        f"**noch nicht entschiedenen** Urteile an der Listenschwelle ({rule}). "
         "«Ungeschützt» ist das Lernen ohne weitere Regel, «geschützt» mit der Regel im Betrieb: Ein Urteil, das "
         "auf der Liste war, bleibt auf der Liste. Es wird kein Modell aufgerufen.",
         "",
@@ -225,14 +236,16 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument("--periods", nargs="*", default=list(DEFAULT_LABEL_PERIODS), help="Labelled periods")
     parser.add_argument("--judgements-dir", default="judgements")
     parser.add_argument("--tables-dir", default=DEFAULT_TABLES_DIR)
-    parser.add_argument("--list-factor", type=float, default=None, help="Default: configs/triage.json")
+    parser.add_argument("--list-factor", type=float, default=None, help="Old rule instead of the recall target of configs/triage.json")
     parser.add_argument("--out", default=None, help="Default: <tables-dir>/feedback_learning_sim.csv")
     parser.add_argument("--report", default="results/reports/feedback_learning.md")
     args = parser.parse_args(argv)
 
     from hack_apertus_coffee_exe.triage.config import load_config
 
-    list_factor = args.list_factor if args.list_factor is not None else load_config().list_factor
+    config = load_config()
+    list_factor = args.list_factor if args.list_factor is not None else config.list_factor
+    target_recall = None if args.list_factor is not None else config.target_recall  # explicit factor: the old rule
     selected_ids = load_selected_ids(args.judgements_dir)
     records = {}
     for name in args.periods:
@@ -240,7 +253,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         if not path.exists():
             raise SystemExit(f"{path} is missing: run `python -m hack_apertus_coffee_exe.triage.cli relevance --period {name}` first")
         records[name] = json.loads(path.read_text(encoding="utf-8"))
-    rows = simulate(records, selected_ids, list_factor)
+    rows = simulate(records, selected_ids, list_factor, target_recall)
     out_path = Path(args.out) if args.out else Path(args.tables_dir) / "feedback_learning_sim.csv"
     out_path.parent.mkdir(parents=True, exist_ok=True)
     with out_path.open("w", encoding="utf-8", newline="") as handle:
@@ -250,7 +263,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             writer.writerow({key: (round(value, 4) if isinstance(value, float) else value) for key, value in row.items()})
     report_path = Path(args.report)
     report_path.parent.mkdir(parents=True, exist_ok=True)
-    report_path.write_text(render(rows, list_factor), encoding="utf-8")
+    report_path.write_text(render(rows, list_factor, target_recall), encoding="utf-8")
     print(f"{len(rows)} rows -> {out_path}, report -> {report_path}")
     print("mean change against the base list, over the quarters (unprotected | list protected):")
     print("protocol  prior_sd   k |  list  recall  precision      AP |  list  recall  precision      AP")
