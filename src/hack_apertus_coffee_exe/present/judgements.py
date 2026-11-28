@@ -68,20 +68,24 @@ _AREAS = {
 _AREA_RES = {code: re.compile(pattern, re.I) for code, pattern in _AREAS.items()}
 
 _SINGLE_JUDGE_RE = re.compile(r"Einzelrichter|juge unique|giudice unico", re.I)
-_RUBRUM_FACTS_RE = re.compile(r"^(Sachverhalt|Faits|Fatti|Ritenuto in fatto)\s*:?$", re.I)
+_COMPOSITION_END_RE = re.compile(
+    r"^(?:Verfahrensbeteiligte|Participants|Partecipanti|Gegenstand|Objet|Oggetto|"
+    r"Sachverhalt|Faits|Fatti|Ritenuto in fatto|Erwägung|Considérant|Considerando)\b",
+    re.I,
+)
 _RUBRUM_LAW_RE = re.compile(r"(erwägung|considérant|considerando|diritto|^vu\b|^visto\b)", re.I)
 _RUBRUM_DISP_RE = re.compile(r"^(Demnach (erkennt|verfügt|beschliesst)|Par ces motifs|Per questi motivi)", re.I)
 
 
 def _is_single_judge(text: str) -> bool:
-    """True if single-judge composition appears in the rubrum (before facts/law headings)."""
+    """True if single-judge composition appears in the Besetzung header (before party/subject lines)."""
     for raw_line in (text or "").split("\n"):
         para = " ".join(raw_line.split())
         if not para:
             continue
-        if len(para) < 70 and para.endswith(":") and (_RUBRUM_FACTS_RE.match(para) or _RUBRUM_LAW_RE.search(para)):
+        if _COMPOSITION_END_RE.match(para) or _RUBRUM_DISP_RE.match(para):
             break
-        if _RUBRUM_DISP_RE.match(para):
+        if len(para) < 70 and para.endswith(":") and _RUBRUM_LAW_RE.search(para):
             break
         if _SINGLE_JUDGE_RE.search(para):
             return True

@@ -354,7 +354,10 @@ def test_single_judge_is_detected_from_crawl_text(tmp_path):
     item = judgements.items()[0]
     assert isinstance(item["singleJudge"], bool)
     assert _is_single_judge("Urteil\nBesetzung\nEinzelrichter Müller\nSachverhalt:\n...") is True
-    # lower-court mention in facts must NOT mark a three-judge panel as single-judge
+    # lower-court mention in subject/facts must NOT mark a three-judge panel as single-judge
+    assert _is_single_judge(
+        "Urteil\nBesetzung\nBundesrichter A, B, C\nGegenstand\nBeschwerde gegen Einzelrichter..."
+    ) is False
     assert _is_single_judge("Urteil\nBesetzung\nBundesrichter A, B, C\nSachverhalt:\nGegen Einzelrichter...\n") is False
 
 
