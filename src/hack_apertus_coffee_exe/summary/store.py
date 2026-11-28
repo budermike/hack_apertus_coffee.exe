@@ -11,8 +11,10 @@ Key rules:
   previous one and is shown at once, ``discard_edit`` returns to the generated text.
   ``save_edit`` / ``approve`` (every edit a new version, shown after approval) remain for
   callers that want the full history.
-- ``aligned_by`` names the Apertus model when the text of that version was not typed by the
-  lawyer but brought in line with their edit of the other language. It is NULL otherwise.
+- ``Summary.aligned_by`` names the Apertus model when the text of that version was not typed
+  by the lawyer but brought in line with their edit of the other language. It is kept in its
+  own table (``summary_alignments``) and not as a column of ``summaries``, so a checkout
+  from before 28.11.2026 can still read a database this code has used.
 - Any case number (also secondary numbers of joined cases) resolves to the
   main ``case_id`` via the ``case_numbers`` table.
 """
@@ -57,7 +59,6 @@ CREATE TABLE IF NOT EXISTS summaries (
     issues         TEXT,
     facts          TEXT,
     examples       TEXT,
-    aligned_by     TEXT,
     UNIQUE (case_id, language, version),
     CHECK (
         (status = 'generated' AND model <> 'human')
@@ -80,6 +81,11 @@ CREATE TABLE IF NOT EXISTS feedback (
     comment    TEXT,
     user       TEXT    NOT NULL DEFAULT 'ui',
     created_at TEXT    NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS summary_alignments (
+    summary_id INTEGER PRIMARY KEY REFERENCES summaries (id) ON DELETE CASCADE,
+    model      TEXT    NOT NULL
 );
 
 CREATE INDEX IF NOT EXISTS idx_summaries_case_lang
@@ -174,17 +180,6 @@ def connect(path: str | Path | None = None) -> sqlite3.Connection:
 def init_db(conn: sqlite3.Connection) -> None:
     """Create all tables and indexes if they do not exist (idempotent)."""
     conn.executescript(SCHEMA_SQL)
-    # Databases created before 28.11.2026 have no ``aligned_by``: add it, the rows stay.
-    if "aligned_by" not in _summary_columns(conn):
-        try:
-            conn.execute("ALTER TABLE summaries ADD COLUMN aligned_by TEXT")
-        except sqlite3.OperationalError:
-            if "aligned_by" not in _summary_columns(conn):  # not just added by another connection
-                raise
-
-
-def _summary_columns(conn: sqlite3.Connection) -> set[str]:
-    return {row[1] for row in conn.execute("PRAGMA table_info(summaries)")}
 
 
 # --- Cases -------------------------------------------------------------------
@@ -368,7 +363,7 @@ def replace_edit(
 
     ``aligned_by`` is the model ID when Apertus wrote ``text`` to follow the lawyer's edit
     of the other language. The row still belongs to the edited version (``model = human``,
-    as the table's CHECK demands), but the database says who wrote it.
+    as the table's CHECK demands); table ``summary_alignments`` says who wrote it.
     """
     case_id = _require_case(conn, case_number)
     with conn:
@@ -477,9 +472,10 @@ def get_display(conn: sqlite3.Connection, case_number: str, language: str) -> Su
         return None
     row = conn.execute(
         """
-        SELECT * FROM summaries
-        WHERE case_id = ? AND language = ? AND status IN ('approved', 'generated')
-        ORDER BY (status = 'approved') DESC, version DESC
+        SELECT s.*, a.model AS aligned_by
+        FROM summaries s LEFT JOIN summary_alignments a ON a.summary_id = s.id
+        WHERE s.case_id = ? AND s.language = ? AND s.status IN ('approved', 'generated')
+        ORDER BY (s.status = 'approved') DESC, s.version DESC
         LIMIT 1
         """,
         (case_id, language),
@@ -502,7 +498,8 @@ def get_history(conn: sqlite3.Connection, case_number: str, language: str) -> li
     if case_id is None:
         return []
     rows = conn.execute(
-        "SELECT * FROM summaries WHERE case_id = ? AND language = ? ORDER BY version",
+        "SELECT s.*, a.model AS aligned_by FROM summaries s LEFT JOIN summary_alignments a ON a.summary_id = s.id "
+        "WHERE s.case_id = ? AND s.language = ? ORDER BY s.version",
         (case_id, language),
     ).fetchall()
     return [_to_summary(r) for r in rows]
@@ -648,9 +645,10 @@ def _require_case(conn: sqlite3.Connection, case_number: str) -> str:
 def _latest(conn: sqlite3.Connection, case_id: str, language: str) -> Summary | None:
     row = conn.execute(
         """
-        SELECT * FROM summaries
-        WHERE case_id = ? AND language = ?
-        ORDER BY version DESC
+        SELECT s.*, a.model AS aligned_by
+        FROM summaries s LEFT JOIN summary_alignments a ON a.summary_id = s.id
+        WHERE s.case_id = ? AND s.language = ?
+        ORDER BY s.version DESC
         LIMIT 1
         """,
         (case_id, language),
@@ -683,15 +681,17 @@ def _insert(
         """
         INSERT INTO summaries
             (case_id, language, version, title, text, model, prompt_version,
-             created_at, status, coherence_ok, issues, facts, examples, aligned_by)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+             created_at, status, coherence_ok, issues, facts, examples)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """,
         (
             case_id, language, version, title, text, model, prompt_version,
             created_at, status, coherence,
-            _to_json(issues), _to_json(facts), _to_json(examples), aligned_by,
+            _to_json(issues), _to_json(facts), _to_json(examples),
         ),
     )
+    if aligned_by:
+        conn.execute("INSERT INTO summary_alignments (summary_id, model) VALUES (?, ?)", (cursor.lastrowid, aligned_by))
     return Summary(
         id=cursor.lastrowid,
         case_id=case_id,
@@ -707,7 +707,7 @@ def _insert(
         issues=issues or [],
         facts=facts or {},
         examples=examples or [],
-        aligned_by=aligned_by,
+        aligned_by=aligned_by or None,
     )
 
 

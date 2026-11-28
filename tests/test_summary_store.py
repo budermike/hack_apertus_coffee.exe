@@ -295,27 +295,43 @@ def test_replace_edit_records_who_wrote_an_aligned_text(conn):
     assert store.get_display(conn, CASE, "fr").aligned_by is None
 
 
-def test_database_from_before_the_aligned_by_column_is_upgraded(db_path):
-    old_schema = store.SCHEMA_SQL.replace("    aligned_by     TEXT,\n", "")
-    assert "aligned_by" not in old_schema
-    old = sqlite3.connect(db_path)
-    old.executescript(old_schema)
-    old.execute("INSERT INTO cases (case_id) VALUES (?)", (CASE,))
-    old.execute("INSERT INTO case_numbers (case_number, case_id) VALUES (?, ?)", (CASE, CASE))
-    old.execute(
-        "INSERT INTO summaries (case_id, language, version, text, model, prompt_version, created_at, status) "
-        "VALUES (?, 'de', 1, 'Alter Text', 'apertus-v1-5-70b', 'v1', '2026-11-27T10:00:00+00:00', 'generated')",
-        (CASE,),
-    )
-    old.commit()
-    old.close()
-
+def test_a_checkout_from_before_can_still_read_the_database(db_path):
+    """Code from before 28.11. builds ``Summary(**row)`` from ``SELECT *``: no new column may appear."""
     conn = store.connect(db_path)
-    kept = store.get_display(conn, CASE, "de")
-    assert kept.text == "Alter Text" and kept.aligned_by is None
-    assert store.replace_edit(conn, CASE, "de", "Neu", aligned_by="apertus-v1-5-8b").aligned_by == "apertus-v1-5-8b"
+    store.save_case(conn, CASE, "2025-06-01", "https://search.bger.ch/8C_129")
+    store.save_generated(conn, CASE, "de", GENERATED)
+    store.save_generated(conn, CASE, "fr", GENERATED)
+    store.replace_edit(conn, CASE, "de", "Von Hand")
+    store.replace_edit(conn, CASE, "fr", "Aligné", aligned_by="apertus-v1-5-8b")
     conn.close()
-    store.connect(db_path).close()  # opening it again is harmless
+
+    old_columns = {
+        "id", "case_id", "language", "version", "title", "text", "model", "prompt_version",
+        "created_at", "status", "coherence_ok", "issues", "facts", "examples",
+    }
+    raw = sqlite3.connect(db_path)
+    raw.row_factory = sqlite3.Row
+    rows = raw.execute("SELECT * FROM summaries").fetchall()
+    assert len(rows) == 4 and all(set(row.keys()) == old_columns for row in rows)
+    # the rows satisfy the CHECK of the old schema as well (edited rows are 'human', no prompt version)
+    assert all(row["model"] == "human" and row["prompt_version"] is None for row in rows if row["status"] != "generated")
+    raw.close()
+
+
+def test_alignment_marker_goes_away_with_the_edit(conn):
+    store.save_generated(conn, CASE, "fr", GENERATED)
+    store.replace_edit(conn, CASE, "fr", "Aligné", aligned_by="apertus-v1-5-8b")
+    markers = lambda: conn.execute("SELECT COUNT(*) FROM summary_alignments").fetchone()[0]  # noqa: E731
+    assert markers() == 1
+    assert [s.aligned_by for s in store.get_history(conn, CASE, "fr")] == [None, "apertus-v1-5-8b"]
+    store.replace_edit(conn, CASE, "fr", "Aligné, zweite Fassung", aligned_by="apertus-v1-5-70b")
+    assert markers() == 1 and store.get_display(conn, CASE, "fr").aligned_by == "apertus-v1-5-70b"
+    store.discard_edit(conn, CASE, "fr")
+    assert markers() == 0 and store.get_display(conn, CASE, "fr").aligned_by is None
+    # the old flow (edit, then approve) never carries a marker
+    store.save_edit(conn, CASE, "fr", "Alt, offen")
+    assert store.get_pending_edit(conn, CASE, "fr").aligned_by is None
+    assert store.approve(conn, CASE, "fr").aligned_by is None and markers() == 0
 
 
 # --- Pipeline fields, both languages, lookup, search -----------------------------
