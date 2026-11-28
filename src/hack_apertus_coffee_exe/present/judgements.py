@@ -241,7 +241,11 @@ class JudgementList:
                     loaded: dict[str, str] = {}
                     if self.crawl_dir is not None:
                         if not self.crawl_dir.exists() or (
-                            self.crawl_dir.is_dir() and not any(self.crawl_dir.rglob("*.json"))
+                            self.crawl_dir.is_dir()
+                            and not any(
+                                p.is_file() and not p.name.startswith("_")
+                                for p in self.crawl_dir.rglob("*.json")
+                            )
                         ):
                             logger.warning("Crawl folder missing or empty, leaving outcomes empty: %s", self.crawl_dir)
                         else:
