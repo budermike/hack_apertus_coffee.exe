@@ -5,12 +5,20 @@
 
 What Suva grades (``challenge_description.md``, evaluation criteria):
 
-1. "your high scored relevant court judgements": ``recall_list.csv``, every relevant
-   judgement (green, on the list) and every almost relevant one (yellow, just below the list),
-   in rank order, one row each (``RECALL_COLUMNS``; ``Einstufung`` tells them apart).
+1. "your high scored relevant court judgements": ``recall_list.txt`` in the submission folder,
+   every relevant judgement (green, on the list) in rank order in Suva's format
+   (``8C_691/2024, 9C_612/2025, ...``, the same as ``results/recall_q2_2026.txt`` of the triage
+   run); ``results/tables/recall_list.csv`` adds the almost relevant ones (yellow) and one row
+   per judgement with the details (``RECALL_COLUMNS``; ``Einstufung`` tells them apart).
 2. "your top 10 highly relevant summaries" (against a hold-out set): the ``n`` best-ranked
    judgements of ``month`` with their summary in German and French,
    ``summaries_top<n>_<month>.md`` (to read) and ``.json`` (complete).
+
+The command also assembles ``results/submission/`` for sprintd (``assemble``): a copy of the
+report PDF from the repo root (the organisers want it there as ``TeamName_Report.pdf``) under
+the same name, ``video_url.txt`` (checked against the Demo field of
+``technical_report.md``), ``pitch_deck.pdf`` (added by hand) and, once both PDFs are there,
+``submission.zip`` with exactly these two files, as sprintd asks; the report keeps its name.
 
 Which summary goes in, per judgement and language:
 
@@ -27,6 +35,9 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import re
+import shutil
+import zipfile
 import logging
 import sys
 from pathlib import Path
@@ -217,6 +228,74 @@ def render_markdown(entries: Sequence[dict[str, Any]], month: str, label: str, c
     return "\n".join(lines) + "\n"
 
 
+# ---------------------------------------------------------------- submission folder
+
+VIDEO_PLACEHOLDER = (
+    "# Paste the URL of the demo video (max. 2 minutes) on the next line.\n"
+    "# It also goes into the Demo field at the top of technical_report.md.\n"
+)
+
+
+def video_url(path: Path) -> str | None:
+    """The URL in ``video_url.txt`` (comment lines ignored), or ``None``."""
+    if not path.is_file():
+        return None
+    lines = [l.strip() for l in path.read_text(encoding="utf-8").splitlines() if l.strip() and not l.strip().startswith("#")]
+    return lines[0] if lines and re.match(r"https?://\S+$", lines[0]) else None
+
+
+def demo_field(report_md: Path) -> str:
+    """The Demo line at the top of ``technical_report.md`` (empty if there is none)."""
+    if not report_md.is_file():
+        return ""
+    return next((l for l in report_md.read_text(encoding="utf-8").splitlines() if l.strip().startswith("- **Demo:**")), "")
+
+
+def assemble(out: Path, root: Path, summaries_ready: bool) -> list[tuple[str, bool, str]]:
+    """Put the submission together in ``out``; returns the checklist as ``(item, done, text)``."""
+    checks: list[tuple[str, bool, str]] = []
+    reports = sorted(root.glob("*_Report.pdf"))
+    report: Path | None = None
+    if len(reports) == 1:
+        report = out / reports[0].name  # submitted under the name the organisers ask for: TeamName_Report.pdf
+        for old in out.glob("*_Report.pdf"):  # a copy under an older name must not end up in the ZIP
+            if old.name != report.name:
+                old.unlink()
+        shutil.copy2(reports[0], report)
+        checks.append(("report", True, f"{report.name} (copy of the report in the repo root, which stays there)"))
+    else:
+        checks.append(("report", False, f"report: expected one *_Report.pdf in the repo root, found {len(reports)}"))
+
+    video_file = out / "video_url.txt"
+    if not video_file.exists():
+        video_file.write_text(VIDEO_PLACEHOLDER, encoding="utf-8")
+    url = video_url(video_file)
+    if url is None:
+        checks.append(("video", False, "video_url.txt: paste the video URL"))
+    elif url not in demo_field(root / "technical_report.md"):
+        checks.append(("video", False, "video_url.txt has the URL, but the Demo field of technical_report.md does not"))
+    else:
+        checks.append(("video", True, f"video_url.txt: {url} (also in technical_report.md)"))
+
+    deck = out / "pitch_deck.pdf"
+    checks.append(("deck", deck.is_file(), "pitch_deck.pdf" if deck.is_file() else "pitch_deck.pdf: add the deck (PDF, max. 10 slides)"))
+
+    zip_path = out / "submission.zip"
+    if report is not None and report.is_file() and deck.is_file():
+        with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as archive:
+            archive.write(deck, "pitch_deck.pdf")
+            archive.write(report, report.name)
+        checks.append(("zip", True, f"submission.zip: pitch_deck.pdf + {report.name} (exactly two files, for sprintd)"))
+    else:
+        zip_path.unlink(missing_ok=True)  # never leave a ZIP from an older deck or report
+        checks.append(("zip", False, "submission.zip: built once both PDFs are there"))
+
+    checks.append(("recall", (out / "recall_list.txt").is_file(), "recall_list.txt"))
+    checks.append(("summaries", summaries_ready, "summaries of the current pipeline" if summaries_ready
+                   else "summaries: run again with --generate (needs the gateway key)"))
+    return checks
+
+
 # ---------------------------------------------------------------- command line
 
 
@@ -229,6 +308,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument("--input", default="data/raw", help="Crawl folder, for --generate")
     parser.add_argument("--model", default=None, help="Summary model (default: $SUMMARY_MODEL or Apertus 70B)")
     parser.add_argument("--out-dir", default="results/submission")
+    parser.add_argument("--tables-dir", default="results/tables", help="Where the detailed recall_list.csv goes")
     parser.add_argument("--generate", action="store_true", help="Generate missing or outdated summaries (Apertus gateway)")
     args = parser.parse_args(argv)
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
@@ -243,10 +323,14 @@ def main(argv: Sequence[str] | None = None) -> int:
     out = Path(args.out_dir)
     out.mkdir(parents=True, exist_ok=True)
 
+    green = ranked_green(rows)
+    (out / "recall_list.txt").write_text(suva_format(green) + "\n", encoding="utf-8")
     relevant = ranked_relevant(rows)
-    path = write_recall_csv(relevant, out / "recall_list.csv")
-    n_green = sum(r.get("ampel") == GREEN for r in relevant)
-    print(f"recall list: {n_green} relevant + {len(relevant) - n_green} almost relevant -> {path}", file=sys.stderr)
+    tables = Path(args.tables_dir)
+    tables.mkdir(parents=True, exist_ok=True)
+    csv_path = write_recall_csv(relevant, tables / "recall_list.csv")
+    print(f"recall list: {len(green)} relevant -> {out / 'recall_list.txt'}; with {len(relevant) - len(green)} almost relevant "
+          f"and details -> {csv_path}", file=sys.stderr)
 
     current = current_pipeline(args.model)
     db_path = Path(args.db) if args.db else store.db_path_from_env()
@@ -283,8 +367,13 @@ def main(argv: Sequence[str] | None = None) -> int:
     lawyer = sum(bool(e.get(lang) and e[lang]["source"] == "lawyer") for e in entries for lang in LANGUAGES)
     print(f"summaries: {len(entries)} judgements -> {md_path} | missing {missing}, outdated {outdated}, "
           f"lawyer-approved {lawyer} (of {2 * len(entries)} texts)", file=sys.stderr)
-    if missing or outdated:
-        print("not ready for submission: run again with --generate (needs the gateway key)", file=sys.stderr)
+
+    checks = assemble(out, Path("."), summaries_ready=not (missing or outdated))
+    print(f"\nsubmission folder {out}:", file=sys.stderr)
+    for _, done, text in checks:
+        print(f"  [{'x' if done else ' '}] {text}", file=sys.stderr)
+    if not all(done for _, done, _ in checks):
+        print("not ready for submission yet", file=sys.stderr)
         return 1
     return 0
 
