@@ -234,6 +234,7 @@ def test_failed_crawl_days_and_today_are_never_marked_covered(tmp_path):
                 break
             time.sleep(0.02)
         assert cur["status"] == "error"
+        assert cur["errorCode"] == "crawl_failed" and cur["failedDays"] == ["2026-07-03"]
         assert mgr.covers("2026-07-01", "2026-07-03") is False
     finally:
         mgr.stop()

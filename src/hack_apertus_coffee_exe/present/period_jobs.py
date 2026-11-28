@@ -36,6 +36,15 @@ def _parse_range(date_from: Any, date_to: Any) -> tuple[date, date]:
     return since, min(until, today - timedelta(days=1))
 
 
+class PeriodJobError(RuntimeError):
+    """A period job failure with a code the UI translates ("crawl_failed" | "triage_failed")."""
+
+    def __init__(self, message: str, code: str, days: list[str] | None = None) -> None:
+        super().__init__(message)
+        self.code = code
+        self.days = days or []
+
+
 class PeriodTriageManager:
     """Runs background crawl+triage for uncovered past periods and single-case additions."""
 
@@ -195,7 +204,10 @@ class PeriodTriageManager:
                 else getattr(ensure_res, "failed_days", None)
             )
             if failed_days:
-                raise RuntimeError(f"Crawl/Ingest fehlgeschlagen für: {', '.join(failed_days[:5])}")
+                raise PeriodJobError(
+                    f"Crawl/Ingest fehlgeschlagen für: {', '.join(failed_days[:5])}",
+                    "crawl_failed", list(failed_days[:5]),
+                )
             items = relevance_period.load_period_items(self.raw_dir, DateRange(since, until))
             candidates = [i for i in items if relevance.is_candidate(i)]
             with self._lock:
@@ -221,7 +233,7 @@ class PeriodTriageManager:
                 records = relevance.score_items(items, pool, client, workers=4, progress=triage_progress)
                 if any(r.get("error") for r in records):
                     err = next(r["error"] for r in records if r.get("error"))
-                    raise RuntimeError(f"Apertus-Triage fehlgeschlagen: {err}")
+                    raise PeriodJobError(f"Apertus-Triage fehlgeschlagen: {err}", "triage_failed")
                 cal = self._load_calibration()
                 results = relevance_period.to_results(
                     records,
@@ -256,6 +268,9 @@ class PeriodTriageManager:
                     "stage": "error",
                     "error": str(exc),
                     "message": str(exc),
+                    # for the UI, which words the message in the user's language
+                    "errorCode": getattr(exc, "code", "failed"),
+                    "failedDays": getattr(exc, "days", []),
                 })
 
     def add_case(self, case_number: str, *, summarize: bool = True) -> dict[str, Any]:
