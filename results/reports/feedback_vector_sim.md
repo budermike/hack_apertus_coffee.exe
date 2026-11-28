@@ -49,6 +49,27 @@ Wie gut trennt das Inhaltsmerkmal Suvas Auswahl, wenn *alle* Labels bekannt sind
 | 2025-Q4 | 135 (28) | 0.915 | 0.730 | 0.791 | 0.884 | 0.807 | 0.731 | +0.39 |
 | 2026-Q1 | 165 (31) | 0.852 | 0.645 | 0.669 | 0.737 | 0.540 | 0.508 | +0.51 |
 
+## Lernkurve: mehr Entscheide
+
+Entschieden sind das ganze andere Quartal (bisherige Entscheide) plus `k` zufällige Urteile des gemessenen Quartals (Mittel über 30 Ziehungen); gemessen am Rest. Links: wie gut das Inhaltsmerkmal *allein* Suvas Auswahl trennt (AUC). Rechts: Rangfolge (AP) von Apertus allein und mit dem Inhaltsmerkmal, Gewicht auf den Entscheiden gelernt. Die letzte Zeile je Quartal misst nur noch 20 Urteile und streut entsprechend.
+
+| Quartal | Entscheide (bisher + k) | gemessen | AUC proto | AUC knn | AUC Apertus | AP Apertus | AP + proto | AP + knn |
+|---|---|---|---|---|---|---|---|---|
+| 2025-Q4 | 165 + 0 | 135 | 0.730 | 0.728 | 0.915 | 0.807 | 0.807 | 0.804 |
+| 2025-Q4 | 165 + 10 | 125 | 0.781 | 0.754 | 0.916 | 0.812 | 0.810 | 0.807 |
+| 2025-Q4 | 165 + 20 | 115 | 0.821 | 0.777 | 0.914 | 0.808 | 0.803 | 0.801 |
+| 2025-Q4 | 165 + 40 | 95 | 0.809 | 0.776 | 0.910 | 0.800 | 0.793 | 0.791 |
+| 2025-Q4 | 165 + 80 | 55 | 0.855 | 0.833 | 0.917 | 0.828 | 0.825 | 0.822 |
+| 2025-Q4 | 165 + 115 | 20 | 0.866 | 0.868 | 0.932 | 0.846 | 0.825 | 0.853 |
+| 2026-Q1 | 135 + 0 | 165 | 0.645 | 0.761 | 0.852 | 0.540 | 0.515 | 0.541 |
+| 2026-Q1 | 135 + 10 | 155 | 0.654 | 0.764 | 0.852 | 0.545 | 0.519 | 0.552 |
+| 2026-Q1 | 135 + 20 | 145 | 0.680 | 0.762 | 0.855 | 0.554 | 0.531 | 0.560 |
+| 2026-Q1 | 135 + 40 | 125 | 0.680 | 0.771 | 0.852 | 0.537 | 0.521 | 0.527 |
+| 2026-Q1 | 135 + 80 | 85 | 0.713 | 0.771 | 0.851 | 0.557 | 0.542 | 0.527 |
+| 2026-Q1 | 135 + 145 | 20 | 0.732 | 0.818 | 0.869 | 0.652 | 0.648 | 0.602 |
+
+Lesart: Das Inhaltsmerkmal allein wird mit mehr Entscheiden besser (es lernt tatsächlich dazu), nähert sich aber der Trennschärfe, die Apertus schon hat. Zusammen mit Apertus bringt es in diesen zwei Quartalen keinen Gewinn über das Rauschen hinaus. Ob es bei deutlich mehr Entscheiden (über viele Quartale) etwas Eigenes beiträgt, zeigen zwei Quartale mit 59 Suva-Urteilen nicht; diese Tabelle lässt sich mit echten Entscheiden wiederholen.
+
 ## Was diese Zahlen nicht zeigen
 
 - Zwei Quartale mit zusammen 59 Suva-Urteilen; die zufälligen Ziehungen teilen dieselben Urteile, die Läufe sind nicht unabhängig.

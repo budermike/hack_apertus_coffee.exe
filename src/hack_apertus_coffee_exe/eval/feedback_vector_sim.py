@@ -242,6 +242,81 @@ def upper_bound(records, selected_ids, target_recall, vectors_dir: Path) -> list
     return out
 
 
+CURVE_KS = (0, 10, 20, 40, 80)
+CURVE_DRAWS = 30
+
+
+def _features_against(E_query: np.ndarray, E_dec: np.ndarray, y_dec: np.ndarray, kind: str) -> np.ndarray:
+    """Content feature of ``E_query`` against the decided judgements ``E_dec`` (unstandardised)."""
+    if kind == "proto":
+        r_pos = _unit(E_dec[y_dec].mean(axis=0)) if y_dec.any() else np.zeros(E_dec.shape[1])
+        r_neg = _unit(E_dec[~y_dec].mean(axis=0)) if (~y_dec).any() else np.zeros(E_dec.shape[1])
+        return E_query @ r_pos - E_query @ r_neg
+    sims = E_query @ E_dec.T
+    top = lambda m: np.sort(m, axis=1)[:, -KNN:].mean(axis=1) if m.shape[1] else np.zeros(len(E_query))  # noqa: E731
+    return top(sims[:, y_dec]) - top(sims[:, ~y_dec])
+
+
+def _fit_weight(offset: np.ndarray, x: np.ndarray, y: np.ndarray, prior_sd: float = 1.0) -> tuple[float, float]:
+    """Weight and intercept of ``x`` on top of the offset ``logit p0`` (MAP, normal prior)."""
+    theta = np.zeros(2)
+    X = np.column_stack([x, np.ones(len(x))])
+    for _ in range(60):
+        p = 1 / (1 + np.exp(-(offset + X @ theta)))
+        step = np.linalg.solve((X.T * (p * (1 - p))) @ X + np.eye(2) / prior_sd ** 2, X.T @ (p - y) + theta / prior_sd ** 2)
+        theta -= step
+        if float(np.abs(step).max()) < 1e-10:
+            break
+    return float(theta[0]), float(theta[1])
+
+
+def learning_curve(records, selected_ids, target_recall, vectors_dir: Path) -> list[dict[str, Any]]:
+    """Does the content feature get better as decisions accumulate, and does it then add to Apertus?
+
+    The decided judgements are the *whole* other quarter (accumulated past decisions) plus ``k``
+    random judgements of the measured quarter; everything is measured on the rest. The weight
+    on top of Apertus' relevance is fitted on the decided judgements with leave-one-out features.
+    """
+    from hack_apertus_coffee_exe.eval.feedback_sim import average_precision
+
+    logit = lambda p: np.log(np.clip(p, 1e-4, 1 - 1e-4) / (1 - np.clip(p, 1e-4, 1 - 1e-4)))  # noqa: E731
+    out = []
+    names = list(records)
+    for test in names:
+        for train in names:
+            if train == test:
+                continue
+            cal = calibration.calibrate(records[train], selected_ids, target_recall)
+            ex, E = quarter_data(records[test], cal, selected_ids, vectors_dir)
+            ex_t, E_t = quarter_data(records[train], cal, selected_ids, vectors_dir)
+            y, y_t = np.array([e.relevant for e in ex]), np.array([e.relevant for e in ex_t])
+            p0, p0_t = np.array([e.p0 for e in ex]), np.array([e.p0 for e in ex_t])
+            for k in (*CURVE_KS, len(ex) - 20):
+                rng = np.random.default_rng(k)
+                draws = []
+                for _ in range(CURVE_DRAWS if k else 1):
+                    pick = rng.choice(len(ex), size=k, replace=False) if k else np.array([], dtype=int)
+                    rest = np.setdiff1d(np.arange(len(ex)), pick)
+                    E_dec, y_dec = np.vstack([E_t, E[pick]]), np.concatenate([y_t, y[pick]])
+                    off_dec = logit(np.concatenate([p0_t, p0[pick]]))
+                    row = {"auc_apertus": auc(p0[rest], y[rest]), "ap_apertus": average_precision(p0[rest], y[rest])}
+                    for kind in ("proto", "knn"):
+                        x_rest = _features_against(E[rest], E_dec, y_dec, kind)
+                        row[f"auc_{kind}"] = auc(x_rest, y[rest])
+                        loo = np.array([
+                            _features_against(E_dec[i:i + 1], np.delete(E_dec, i, axis=0), np.delete(y_dec, i), kind)[0]
+                            for i in range(len(E_dec))
+                        ])
+                        mu, sd = loo.mean(), loo.std() or 1.0
+                        w, b = _fit_weight(off_dec, (loo - mu) / sd, y_dec.astype(float))
+                        combined = 1 / (1 + np.exp(-(logit(p0[rest]) + b + w * (x_rest - mu) / sd)))
+                        row[f"ap_apertus_{kind}"] = average_precision(combined, y[rest])
+                    draws.append(row)
+                mean = {key: float(np.nanmean([d[key] for d in draws])) for key in draws[0]}
+                out.append({"quarter": test, "past": len(ex_t), "k": k, "rest": len(ex) - k, "draws": len(draws), **mean})
+    return out
+
+
 def summarise(rows):
     """Per protocol, prior and k: mean change against the base list, and the share of runs where AP improved."""
     out = []
@@ -266,7 +341,7 @@ def summarise(rows):
     return out
 
 
-def render(summary, rows, target_recall, bound=()) -> str:
+def render(summary, rows, target_recall, bound=(), curve=()) -> str:
     def f(v, pct=False, sign=True):
         if v is None or (isinstance(v, float) and math.isnan(v)):
             return "–"
@@ -328,6 +403,32 @@ def render(summary, rows, target_recall, bound=()) -> str:
                 f"{b['auc_knn_loo']:.3f} | {b['ap_apertus']:.3f} | {b['ap_apertus_proto']:.3f} | {b['weight']:+.2f} |"
             )
         lines.append("")
+    if curve:
+        lines += [
+            "## Lernkurve: mehr Entscheide",
+            "",
+            "Entschieden sind das ganze andere Quartal (bisherige Entscheide) plus `k` zufällige Urteile des gemessenen "
+            f"Quartals (Mittel über {CURVE_DRAWS} Ziehungen); gemessen am Rest. Links: wie gut das Inhaltsmerkmal *allein* "
+            "Suvas Auswahl trennt (AUC). Rechts: Rangfolge (AP) von Apertus allein und mit dem Inhaltsmerkmal, Gewicht auf "
+            "den Entscheiden gelernt. Die letzte Zeile je Quartal misst nur noch 20 Urteile und streut entsprechend.",
+            "",
+            "| Quartal | Entscheide (bisher + k) | gemessen | AUC proto | AUC knn | AUC Apertus | AP Apertus | AP + proto | AP + knn |",
+            "|---|---|---|---|---|---|---|---|---|",
+        ]
+        for c in curve:
+            lines.append(
+                f"| {c['quarter']} | {c['past']} + {c['k']} | {c['rest']} | {c['auc_proto']:.3f} | {c['auc_knn']:.3f} | "
+                f"{c['auc_apertus']:.3f} | {c['ap_apertus']:.3f} | {c['ap_apertus_proto']:.3f} | {c['ap_apertus_knn']:.3f} |"
+            )
+        lines += [
+            "",
+            "Lesart: Das Inhaltsmerkmal allein wird mit mehr Entscheiden besser (es lernt tatsächlich dazu), nähert sich aber "
+            "der Trennschärfe, die Apertus schon hat. Zusammen mit Apertus bringt es in diesen zwei Quartalen keinen "
+            "Gewinn über das Rauschen hinaus. Ob es bei deutlich mehr Entscheiden (über viele Quartale) etwas Eigenes "
+            "beiträgt, zeigen zwei Quartale mit 59 Suva-Urteilen nicht; diese Tabelle lässt sich mit echten Entscheiden "
+            "wiederholen.",
+            "",
+        ]
     lines += [
         "## Was diese Zahlen nicht zeigen",
         "",
@@ -370,7 +471,11 @@ def main(argv: list[str] | None = None) -> int:
     report = Path(args.report)
     report.parent.mkdir(parents=True, exist_ok=True)
     bound = upper_bound(records, selected_ids, config.target_recall, Path(args.vectors_dir))
-    report.write_text(render(summary, rows, config.target_recall or 0.0, bound), encoding="utf-8")
+    curve = learning_curve(records, selected_ids, config.target_recall, Path(args.vectors_dir))
+    report.write_text(render(summary, rows, config.target_recall or 0.0, bound, curve), encoding="utf-8")
+    for c in curve:
+        print(f"curve {c['quarter']} {c['past']}+{c['k']:>3}: AUC proto {c['auc_proto']:.3f} knn {c['auc_knn']:.3f} | "
+              f"AP apertus {c['ap_apertus']:.3f} +proto {c['ap_apertus_proto']:.3f} +knn {c['ap_apertus_knn']:.3f}")
     for b in bound:
         print(f"upper bound {b['quarter']}: AUC apertus {b['auc_apertus']:.3f} proto(other) {b['auc_proto_other']:.3f} "
               f"knn(loo) {b['auc_knn_loo']:.3f} | AP {b['ap_apertus']:.3f} -> +proto {b['ap_apertus_proto']:.3f}")

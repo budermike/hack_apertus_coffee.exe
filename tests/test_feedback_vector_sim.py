@@ -52,3 +52,12 @@ def test_auc_counts_ties_half():
     assert fvs.auc([0.9, 0.1], [True, False]) == 1.0
     assert fvs.auc([0.5, 0.5], [True, False]) == 0.5
     assert np.isnan(fvs.auc([0.5, 0.4], [True, True]))
+
+
+def test_fit_weight_learns_a_useful_feature_and_ignores_noise():
+    rng = np.random.default_rng(0)
+    x = rng.normal(size=400)
+    y = (x + rng.normal(scale=0.5, size=400) > 0).astype(float)
+    w, _ = fvs._fit_weight(np.zeros(400), x, y)
+    w_noise, _ = fvs._fit_weight(np.zeros(400), rng.normal(size=400), y)
+    assert w > 1.0 and abs(w_noise) < 0.3
