@@ -1446,7 +1446,7 @@ function formatEvalCell(raw) {
 }
 
 function buildEvalTable(columns, rows) {
-    if (!columns?.length) return null;
+    if (!columns?.length || !rows?.length) return null;
     return el("div", { class: "eval-table-wrap" },
         el("table", { class: "eval-table" },
             el("thead", {},
@@ -1473,7 +1473,7 @@ function buildEvalTable(columns, rows) {
 function renderCalibrationCard(cal) {
     if (!cal || typeof cal !== "object") return null;
     const parts = [];
-    if (Array.isArray(cal.periods) && cal.periods.length) parts.push(`Periods: ${cal.periods.join(", ")}`);
+    if (Array.isArray(cal.periods) && cal.periods.length) parts.push(`${t("evalCalibrationPeriods")}: ${cal.periods.join(", ")}`);
     if (typeof cal.n === "number") parts.push(`n = ${cal.n}`);
     if (typeof cal.n_pos === "number") parts.push(`Suva = ${cal.n_pos}`);
     if (typeof cal.t === "number") parts.push(`t = ${cal.t}`);
@@ -1498,21 +1498,25 @@ function renderEvaluation() {
     const cal = data?.calibration || null;
 
     if (state.evalLoading && !data) {
+        status.hidden = false;
         status.textContent = t("evalLoading");
         container.replaceChildren();
         return;
     }
     if (state.evalError) {
+        status.hidden = false;
         status.textContent = t("evalError");
         container.replaceChildren();
         return;
     }
     if (!tables.length && !cal) {
+        status.hidden = false;
         status.textContent = t("evalEmpty");
         container.replaceChildren();
         return;
     }
 
+    status.hidden = true;
     status.textContent = "";
     const langKey = currentLang === "fr" ? "Fr" : "De";
     const cards = tables.map((tbl) => {

@@ -639,7 +639,7 @@ dialog.modal::backdrop { background: rgba(11, 16, 23, .45); }
 }
 
 .pipeline-step {
-    background: var(--bg);
+    background: var(--soft);
     border: 1px solid var(--line);
     border-radius: 5px;
     padding: 12px 14px;
@@ -676,7 +676,7 @@ dialog.modal::backdrop { background: rgba(11, 16, 23, .45); }
 }
 
 .eval-table thead th {
-    background: var(--bg);
+    background: var(--soft);
     font-weight: 600;
     white-space: nowrap;
 }

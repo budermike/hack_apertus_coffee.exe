@@ -182,6 +182,7 @@ const I18N = {
         evalEmpty: "Keine Auswertungstabellen verfügbar (im Demo-Modus werden keine Zahlen erfunden).",
         evalError: "Die Auswertungsdaten konnten nicht geladen werden.",
         evalCalibrationTitle: "Kalibrierung der Relevanz-Schwelle (Q2 2026)",
+        evalCalibrationPeriods: "Zeiträume",
         evalRowsLabel: (n) => `${n} Zeilen`,
 
         aboutTitle: "So arbeitet das System",
@@ -373,6 +374,7 @@ const I18N = {
         evalEmpty: "Aucun tableau d'évaluation disponible (aucune donnée fictive n'est générée en mode démo).",
         evalError: "Impossible de charger les données d'évaluation.",
         evalCalibrationTitle: "Calibration du seuil de pertinence (T2 2026)",
+        evalCalibrationPeriods: "Périodes",
         evalRowsLabel: (n) => `${n} lignes`,
 
         aboutTitle: "Fonctionnement du système",
