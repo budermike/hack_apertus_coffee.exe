@@ -1,0 +1,249 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Pipeline" id="8Iddo3gDbgSkvhiCZ1PH">
+    <mxGraphModel dx="1637" dy="1066" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- title and gateway -->
+        <mxCell id="title" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=22;" value="&lt;b&gt;hack_apertus_coffee.exe – Pipeline&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:13px&quot;&gt;BGer-Urteile holen, mit Apertus nach Relevanz für die Suva bewerten und im Suva-Stil auf DE/FR zusammenfassen · alles in einem Docker-Image&lt;/font&gt;" vertex="1">
+          <mxGeometry height="60" width="1100" x="20" y="10" as="geometry" />
+        </mxCell>
+        <mxCell id="gateway" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;dashed=1;fontSize=12;" value="&lt;b&gt;CSCS / Keera Gateway&lt;/b&gt; (LLM_BASE_URL, OpenAI-kompatibel)&lt;br&gt;Apertus v1.5 – einziges LLM zur Laufzeit" vertex="1">
+          <mxGeometry height="50" width="420" x="1240" y="15" as="geometry" />
+        </mxCell>
+
+        <!-- stage frames -->
+        <mxCell id="f_crawl" parent="1" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#f5f9ff;strokeColor=#99b3d9;dashed=1;fontSize=14;arcSize=3;" value="&lt;b&gt;1 · CRAWL&lt;/b&gt;&lt;br&gt;crawl/" vertex="1">
+          <mxGeometry height="760" width="440" x="210" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="f_triage" parent="1" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#fffaf3;strokeColor=#e0b97a;dashed=1;fontSize=14;arcSize=3;" value="&lt;b&gt;2 · TRIAGE&lt;/b&gt;&lt;br&gt;triage/" vertex="1">
+          <mxGeometry height="760" width="650" x="670" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="f_summary" parent="1" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#f7fbf5;strokeColor=#9cc28a;dashed=1;fontSize=14;arcSize=3;" value="&lt;b&gt;3 · SUMMARY&lt;/b&gt;&lt;br&gt;summary/" vertex="1">
+          <mxGeometry height="760" width="240" x="1340" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="f_present" parent="1" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#faf6fc;strokeColor=#b59bc7;dashed=1;fontSize=14;arcSize=3;" value="&lt;b&gt;4 · PRESENT&lt;/b&gt;&lt;br&gt;summary/api.py · present/ · src/presentation/" vertex="1">
+          <mxGeometry height="760" width="270" x="1600" y="90" as="geometry" />
+        </mxCell>
+
+        <!-- 1 crawl -->
+        <mxCell id="sources" parent="1" style="shape=cloud;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;" value="&lt;b&gt;Quellen&lt;/b&gt;&lt;br&gt;entscheidsuche.ch&lt;br&gt;(Spiegel von bger.ch)&lt;br&gt;&lt;i&gt;~2000 Urteile / Quartal&lt;/i&gt;" vertex="1">
+          <mxGeometry height="110" width="170" x="20" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="crawler" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="&lt;b&gt;Crawler (Pipeline)&lt;/b&gt;&lt;br&gt;crawl.ensure_period()&lt;br&gt;&lt;i&gt;alle Abteilungen,&lt;br&gt;nur fehlende Tage&lt;/i&gt;" vertex="1">
+          <mxGeometry height="90" width="180" x="230" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="raw" parent="1" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#fff2cc;strokeColor=#d6b656;" value="&lt;b&gt;data/raw/&lt;/b&gt;&lt;br&gt;&amp;lt;YYYY-MM&amp;gt;/*.json&lt;br&gt;1 JSON pro Urteil" vertex="1">
+          <mxGeometry height="100" width="180" x="450" y="165" as="geometry" />
+        </mxCell>
+        <mxCell id="periodjob" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" value="&lt;b&gt;Perioden-Job (Web-App)&lt;/b&gt;&lt;br&gt;present/period_jobs.py&lt;br&gt;nur Sozialversicherungs-Abteilungen&lt;br&gt;→ data/processed/triage/ · &lt;i&gt;kein Embedding&lt;/i&gt;" vertex="1">
+          <mxGeometry height="80" width="200" x="440" y="290" as="geometry" />
+        </mxCell>
+        <mxCell id="vectordb" parent="1" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#fff2cc;strokeColor=#d6b656;" value="&lt;b&gt;Vector-DB&lt;/b&gt; (SQLite)&lt;br&gt;data/processed/vectordb/&lt;br&gt;Metadaten · Embeddings · FTS5&lt;br&gt;&lt;i&gt;für Evaluation und Analysen&lt;/i&gt;" vertex="1">
+          <mxGeometry height="120" width="210" x="230" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" value="🧠 &lt;b&gt;intfloat/multilingual-e5-small&lt;/b&gt;&lt;br&gt;Embeddings DE/FR/IT beim Einlesen&lt;br&gt;lokal (CPU, im Image) · Open-Weights · MIT" vertex="1">
+          <mxGeometry height="70" width="230" x="220" y="580" as="geometry" />
+        </mxCell>
+        <mxCell id="evalbox" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=11;" value="&lt;b&gt;Evaluation &amp;amp; Analysen&lt;/b&gt;&lt;br&gt;eval/ · notebooks/&lt;br&gt;Recall · F2 · Summary-Richter (Apertus 70B)&lt;br&gt;&lt;i&gt;nicht Teil des laufenden Systems&lt;/i&gt;" vertex="1">
+          <mxGeometry height="85" width="200" x="440" y="700" as="geometry" />
+        </mxCell>
+
+        <!-- 2 triage -->
+        <mxCell id="candidates" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;" value="&lt;b&gt;Kandidaten + Präzedenzfälle&lt;/b&gt;&lt;br&gt;relevance.is_candidate():&lt;br&gt;Sozialversicherung (UV / IV / MV)&lt;br&gt;ähnliche frühere Suva-Fälle per&lt;br&gt;Stichwort-Ähnlichkeit (relevance.fingerprint)&lt;br&gt;⚙️ kein Modell" vertex="1">
+          <mxGeometry height="120" width="200" x="685" y="155" as="geometry" />
+        </mxCell>
+        <mxCell id="relevance" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;" value="&lt;b&gt;Relevanz-Bewertung&lt;/b&gt;&lt;br&gt;relevance_period.run()&lt;br&gt;(CLI: triage.cli relevance)&lt;br&gt;① Kriterien + Belegzitate + Score&lt;br&gt;② «Vertiefung» ab Score 50&lt;br&gt;&lt;i&gt;temperature = 0&lt;/i&gt;" vertex="1">
+          <mxGeometry height="120" width="200" x="900" y="155" as="geometry" />
+        </mxCell>
+        <mxCell id="apertus_rel" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;strokeWidth=2;" value="🦙 &lt;b&gt;Apertus v1.5 70B&lt;/b&gt;&lt;br&gt;apertus-v1-5-70b&lt;br&gt;Kernaufgabe · Apache-2.0" vertex="1">
+          <mxGeometry height="70" width="200" x="900" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="calibration" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;" value="&lt;b&gt;Kalibrierung + Schwellen&lt;/b&gt;&lt;br&gt;triage/calibration.py&lt;br&gt;logistische Regression,&lt;br&gt;Schwellen aus Suvas Auswahl&lt;br&gt;Rang · Score · Ampel · Begründung" vertex="1">
+          <mxGeometry height="110" width="185" x="1120" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="results" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=11;" value="⚙️ regelbasiert · kein Modell&lt;br&gt;→ results/triage_&amp;lt;period&amp;gt;.json&lt;br&gt;→ data/processed/triage/periods/" vertex="1">
+          <mxGeometry height="60" width="185" x="1120" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="variants" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fdf0ef;strokeColor=#b85450;dashed=1;fontSize=11;align=left;spacingLeft=8;" value="&lt;b&gt;Wählbare Modelle&lt;/b&gt; (--model, SUMMARY_MODEL)&lt;br&gt;🦙 apertus-v1-5-8b (kleiner, günstiger)&lt;br&gt;🦙 apertus-v1-5-70b-thinking · apertus-v1-5-8b-thinking&lt;br&gt;&lt;i&gt;Standard 70B; verglichen in notebooks/triage/ und notebooks/summary/&lt;/i&gt;" vertex="1">
+          <mxGeometry height="85" width="410" x="690" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="learning" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=11;" value="&lt;b&gt;Lernen aus Entscheidungen&lt;/b&gt;&lt;br&gt;triage/feedback_learning.py&lt;br&gt;Korrektur je Rechtsgebiet + Kriterium,&lt;br&gt;beim Ausliefern der Liste&lt;br&gt;⚙️ kein Modell" vertex="1">
+          <mxGeometry height="100" width="200" x="1110" y="580" as="geometry" />
+        </mxCell>
+
+        <!-- 3 summary -->
+        <mxCell id="summarizer" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" value="&lt;b&gt;Zusammenfassung&lt;/b&gt;&lt;br&gt;summary.generate.Summarizer&lt;br&gt;① Kernfrage + 1–3 Erwägungen&lt;br&gt;② Text DE + FR aus dem Wortlaut&lt;br&gt;(Stilprofil, Glossar, Suva-Beispiele,&lt;br&gt;Parteien/Ergebnis-Block)&lt;br&gt;③ einmal neu bei Fehlern" vertex="1">
+          <mxGeometry height="130" width="210" x="1355" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="apertus_sum" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;strokeWidth=2;" value="🦙 &lt;b&gt;Apertus v1.5 70B&lt;/b&gt;&lt;br&gt;apertus-v1-5-70b (SUMMARY_MODEL)&lt;br&gt;Kernaufgabe · Apache-2.0" vertex="1">
+          <mxGeometry height="70" width="210" x="1355" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="check" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=11;" value="&lt;b&gt;Regelprüfung&lt;/b&gt; summary/check.py&lt;br&gt;Erwägungen, Artikel, Dispositiv,&lt;br&gt;Länge, Absätze&lt;br&gt;⚙️ kein Modell" vertex="1">
+          <mxGeometry height="80" width="210" x="1355" y="420" as="geometry" />
+        </mxCell>
+
+        <!-- 4 present -->
+        <mxCell id="summarydb" parent="1" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#fff2cc;strokeColor=#d6b656;" value="&lt;b&gt;Summaries-DB&lt;/b&gt; (SQLite)&lt;br&gt;SUMMARY_DB_PATH&lt;br&gt;Versionen · Edits · Relevanz-Entscheide&lt;br&gt;&lt;i&gt;Zugriff nur via store.py&lt;/i&gt;" vertex="1">
+          <mxGeometry height="120" width="230" x="1620" y="155" as="geometry" />
+        </mxCell>
+        <mxCell id="backend" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;" value="&lt;b&gt;Backend&lt;/b&gt; summary/api.py&lt;br&gt;/api/… (http.server)&lt;br&gt;Urteilsliste · Zusammenfassungs-&lt;br&gt;Warteschlange · Perioden-Jobs · Suche" vertex="1">
+          <mxGeometry height="90" width="230" x="1620" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="translation" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;strokeWidth=2;" value="🦙 &lt;b&gt;Sprache der Oberfläche DE / FR&lt;/b&gt;&lt;br&gt;present/translation.py + Glossar&lt;br&gt;Apertus v1.5 70B, einmal, dann gespeichert" vertex="1">
+          <mxGeometry height="65" width="230" x="1620" y="490" as="geometry" />
+        </mxCell>
+        <mxCell id="ui" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;" value="&lt;b&gt;Web-UI&lt;/b&gt;&lt;br&gt;src/presentation/ (JavaScript)&lt;br&gt;Liste · Begründung mit Zitaten · Original&lt;br&gt;Zusammenfassung bearbeiten · Entscheide · Suche" vertex="1">
+          <mxGeometry height="100" width="230" x="1620" y="610" as="geometry" />
+        </mxCell>
+        <mxCell id="actor" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" value="Suva&lt;br&gt;Jurist:innen" vertex="1">
+          <mxGeometry height="70" width="35" x="1910" y="625" as="geometry" />
+        </mxCell>
+
+        <!-- edges: data path -->
+        <mxCell id="e_src_crawler" edge="1" parent="1" source="sources" target="crawler" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;" value="HTTP">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_crawler_raw" edge="1" parent="1" source="crawler" target="raw" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_raw_vdb" edge="1" parent="1" source="crawler" target="vectordb" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;fontSize=10;" value="einlesen + einbetten">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_e5_vdb" edge="1" parent="1" source="e5" target="vectordb" style="endArrow=none;dashed=1;html=1;strokeColor=#82b366;strokeWidth=2;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_vdb_eval" edge="1" parent="1" source="vectordb" target="evalbox" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_src_job" edge="1" parent="1" source="sources" target="periodjob" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;fontSize=10;" value="HTTP">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="105" y="330" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_raw_cand" edge="1" parent="1" source="raw" target="candidates" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;fontSize=10;" value="Urteile der Periode">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_job_cand" edge="1" parent="1" source="periodjob" target="candidates" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_cand_rel" edge="1" parent="1" source="candidates" target="relevance" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_rel_cal" edge="1" parent="1" source="relevance" target="calibration" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_cal_sum" edge="1" parent="1" source="calibration" target="summarizer" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;fontSize=10;" value="Liste: nach Suche in die&lt;br&gt;Warteschlange, übrige&lt;br&gt;auf Anfrage">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_sum_db" edge="1" parent="1" source="summarizer" target="summarydb" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_raw_sum" edge="1" parent="1" source="raw" target="summarizer" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;fontSize=10;" value="Urteilstext">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="540" y="120" />
+              <mxPoint x="1460" y="120" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_db_backend" edge="1" parent="1" source="summarydb" target="backend" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;startArrow=classic;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_results_backend" edge="1" parent="1" source="results" target="backend" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;fontSize=10;" value="Triage-Ergebnisse">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1212" y="390" />
+              <mxPoint x="1590" y="390" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_backend_ui" edge="1" parent="1" source="backend" target="ui" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;startArrow=classic;fontSize=10;" value="/api/…">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1860" y="415" />
+              <mxPoint x="1860" y="660" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_backend_tr" edge="1" parent="1" source="backend" target="translation" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;startArrow=classic;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_ui_actor" edge="1" parent="1" source="ui" target="actor" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;startArrow=classic;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_backend_job" edge="1" parent="1" source="backend" target="periodjob" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;fontSize=10;" value="neuer Zeitraum">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1735" y="820" />
+              <mxPoint x="540" y="820" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- edges: decisions -->
+        <mxCell id="e_db_learning" edge="1" parent="1" source="summarydb" target="learning" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;fontSize=10;" value="Relevanz-Entscheide">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1590" y="215" />
+              <mxPoint x="1590" y="630" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_learning_backend" edge="1" parent="1" source="learning" target="backend" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;fontSize=10;" value="Score-Korrektur&lt;br&gt;beim Ausliefern">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1210" y="740" />
+              <mxPoint x="1700" y="740" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_db_cand" edge="1" parent="1" source="summarydb" target="candidates" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;fontSize=10;" value="Entscheide als Präzedenzfälle im nächsten Lauf">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1735" y="105" />
+              <mxPoint x="785" y="105" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- model links -->
+        <mxCell id="e_ap_rel" edge="1" parent="1" source="apertus_rel" target="relevance" style="endArrow=none;dashed=1;html=1;strokeColor=#b85450;strokeWidth=2;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_results_cal" edge="1" parent="1" source="results" target="calibration" style="endArrow=none;dashed=1;html=1;strokeColor=#666666;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_ap_sum" edge="1" parent="1" source="apertus_sum" target="summarizer" style="endArrow=none;dashed=1;html=1;strokeColor=#b85450;strokeWidth=2;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_check_sum" edge="1" parent="1" source="check" target="apertus_sum" style="endArrow=classic;dashed=1;html=1;strokeColor=#666666;fontSize=10;" value="prüft">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_var_ap" edge="1" parent="1" source="variants" target="apertus_rel" style="endArrow=none;dashed=1;html=1;strokeColor=#b85450;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- legend -->
+        <mxCell id="legend" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#999999;verticalAlign=top;align=left;spacingLeft=10;arcSize=4;" value="&lt;b&gt;Legende – Modelle zur Laufzeit&lt;/b&gt;" vertex="1">
+          <mxGeometry height="130" width="1850" x="20" y="880" as="geometry" />
+        </mxCell>
+        <mxCell id="lg_apertus" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;strokeWidth=2;fontSize=11;" value="🦙 &lt;b&gt;Apertus v1.5&lt;/b&gt; – Kern-KI (Relevanz, Zusammenfassung, Sprache der Oberfläche)&lt;br&gt;über CSCS/Keera Gateway · Open-Weights · Apache-2.0" vertex="1">
+          <mxGeometry height="70" width="420" x="40" y="920" as="geometry" />
+        </mxCell>
+        <mxCell id="lg_e5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" value="🧠 &lt;b&gt;Open-Weights Hilfsmodell&lt;/b&gt;&lt;br&gt;intfloat/multilingual-e5-small – lokal (CPU) · MIT" vertex="1">
+          <mxGeometry height="70" width="330" x="480" y="920" as="geometry" />
+        </mxCell>
+        <mxCell id="lg_rules" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=11;" value="⚙️ &lt;b&gt;Regelbasiert&lt;/b&gt; – kein Modell&lt;br&gt;(Kandidaten, Kalibrierung, Prüfung, Lernen aus Entscheiden)" vertex="1">
+          <mxGeometry height="70" width="300" x="830" y="920" as="geometry" />
+        </mxCell>
+        <mxCell id="lg_text" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=11;" value="✅ &lt;b&gt;Keine proprietären KI-APIs zur Laufzeit&lt;/b&gt; · ein Docker-Image mit allem · on-prem / air-gapped / Swiss Cloud&lt;br&gt;Endpoint nur über LLM_BASE_URL / LLM_API_KEY / LLM_NAME, Modell der Zusammenfassungen über SUMMARY_MODEL&lt;br&gt;Durchgezogen: Hauptweg · gestrichelt: Nebenwege und Rückkopplung&lt;br&gt;Details: docs/ARCHITECTURE.md · docs/MODELS.md" vertex="1">
+          <mxGeometry height="80" width="700" x="1160" y="915" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
