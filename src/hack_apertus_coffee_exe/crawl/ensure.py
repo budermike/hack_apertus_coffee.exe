@@ -15,7 +15,7 @@ Provides ``ensure_period(date_from, date_to) -> PeriodStatus`` for Triage and th
 from __future__ import annotations
 
 import argparse
-from contextlib import contextmanager
+from contextlib import closing, contextmanager
 from dataclasses import asdict, dataclass
 from datetime import date, datetime, timedelta
 import json
@@ -204,7 +204,7 @@ def _existing_db_doc_keys(
     rows: list[tuple[Any, Any, Any]] = []
 
     if db is not None:
-        with db._connect() as conn:
+        with closing(db._connect()) as conn:
             rows = conn.execute(
                 "SELECT doc_key, fingerprint, vector_file FROM judgements WHERE decision_date >= ? AND decision_date <= ?",
                 (date_from, date_to),
@@ -214,14 +214,11 @@ def _existing_db_doc_keys(
         if not sqlite_path.exists():
             return set()
         try:
-            conn = sqlite3.connect(f"{sqlite_path.resolve().as_uri()}?mode=ro", uri=True, timeout=10.0)
-            try:
+            with closing(sqlite3.connect(f"{sqlite_path.resolve().as_uri()}?mode=ro", uri=True, timeout=10.0)) as conn:
                 rows = conn.execute(
                     "SELECT doc_key, fingerprint, vector_file FROM judgements WHERE decision_date >= ? AND decision_date <= ?",
                     (date_from, date_to),
                 ).fetchall()
-            finally:
-                conn.close()
         except sqlite3.DatabaseError as exc:
             msg = str(exc).lower()
             if _is_sqlite_corruption(exc) or "no such table" in msg:
@@ -230,7 +227,7 @@ def _existing_db_doc_keys(
             # WAL-mode DB without -shm or readonly handle error: retry brief normal connect unless locked
             if "unable to open" in msg or "readonly" in msg:
                 try:
-                    with sqlite3.connect(sqlite_path, timeout=10.0) as rw_conn:
+                    with closing(sqlite3.connect(sqlite_path, timeout=10.0)) as rw_conn:
                         rows = rw_conn.execute(
                             "SELECT doc_key, fingerprint, vector_file FROM judgements WHERE decision_date >= ? AND decision_date <= ?",
                             (date_from, date_to),

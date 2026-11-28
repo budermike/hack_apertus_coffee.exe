@@ -256,6 +256,24 @@ def test_superseded_job_cancels_and_stale_error_clears_when_superset_succeeds(tm
         while mgr.status("2026-07-19", "2026-07-22")["status"] == "running":
             time.sleep(0.02)
         assert mgr.status("2026-07-20", "2026-07-21")["status"] == "done"
+
+        # Re-searching a recently-cancelled range must start a fresh job rather than attaching to dying one
+        started_first.clear()
+        mgr.ensure_async("2026-07-01", "2026-07-10")
+        assert started_first.wait(timeout=2.0)
+        mgr.ensure_async("2026-07-25", "2026-07-25")  # supersedes 2026-07-01..2026-07-10
+        # Wait until 2026-07-25 starts/finishes, OR re-search 2026-07-01..2026-07-10 immediately
+        snap_again = mgr.ensure_async("2026-07-01", "2026-07-10")
+        assert snap_again["status"] == "running"
+        # Wait past the dying thread's sleep so any clobber would have occurred, then confirm healthy completion
+        deadline = time.monotonic() + 3.0
+        while time.monotonic() < deadline:
+            cur = mgr.status("2026-07-01", "2026-07-10")
+            if cur["status"] in ("done", "error"):
+                break
+            time.sleep(0.02)
+        assert cur["status"] == "done"
+        assert mgr.covers("2026-07-01", "2026-07-10") is True
     finally:
         mgr.stop()
 
@@ -316,6 +334,40 @@ def test_fast_crawl_only_fetches_social_chambers_and_skips_empty_recent_days(tmp
         while mgr.status(old_empty, old_empty)["status"] == "running":
             time.sleep(0.02)
         assert mgr.covers(old_empty, old_empty) is True
+
+        # Cancelling mid-download in _crawl_missing_days_fast must NOT mark the day covered in _index.json
+        mid_day = "2025-11-12"
+        started_dl = threading.Event()
+        release_dl = threading.Event()
+
+        def list_with_social(_cfg, day):
+            return [{"case_id": "8C_55/2025", "decision_date": day.isoformat(), "department": "IV", "subject": "UV", "language": "de", "metadata": {}}]
+
+        def blocking_fetch(_cfg, entry):
+            started_dl.set()
+            release_dl.wait(timeout=2.0)
+            return "<html></html>", "https://example.invalid/doc"
+
+        monkeypatch.setitem(crawl_mod.SOURCES, "entscheidsuche", (list_with_social, blocking_fetch))
+        cancel_ev = threading.Event()
+        err_holder = []
+
+        def run_fast():
+            try:
+                mgr._crawl_missing_days_fast([date.fromisoformat(mid_day)], lambda *_a: None, cancel_ev)
+            except BaseException as exc:
+                err_holder.append(exc)
+
+        th = threading.Thread(target=run_fast)
+        th.start()
+        assert started_dl.wait(timeout=2.0)
+        cancel_ev.set()
+        release_dl.set()
+        th.join(timeout=2.0)
+        assert err_holder and type(err_holder[0]).__name__ == "_CancelledJob"
+        idx_file = crawl_cache / "_index.json"
+        if idx_file.exists():
+            assert mid_day not in json.loads(idx_file.read_text(encoding="utf-8")).get("days", {})
     finally:
         mgr.stop()
 

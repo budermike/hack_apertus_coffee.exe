@@ -105,6 +105,7 @@ class PeriodTriageManager:
         self._pool_lock = threading.Lock()
         self._cached_pool: list[relevance.Precedent] | None = None
         self._jobs: dict[tuple[str, str], dict[str, Any]] = {}
+        self._job_cancels: dict[tuple[str, str], threading.Event] = {}
         self._active_cancel: threading.Event | None = None
         self._threads: list[threading.Thread] = []
 
@@ -225,7 +226,8 @@ class PeriodTriageManager:
         df, dt = since.isoformat(), until.isoformat()
         with self._lock:
             job = self._jobs.get((df, dt))
-            if job is not None and job.get("status") == "running":
+            job_cancel = self._job_cancels.get((df, dt))
+            if job is not None and job.get("status") == "running" and (job_cancel is None or not job_cancel.is_set()):
                 return dict(job)
         if self.covers(df, dt):
             return {"status": "done", "stage": "done", "from": df, "to": dt, "completed": 1, "total": 1, "message": ""}
@@ -241,12 +243,19 @@ class PeriodTriageManager:
             return {"status": "done", "stage": "done", "from": df, "to": dt, "completed": 1, "total": 1, "message": ""}
         with self._lock:
             existing = self._jobs.get((df, dt))
-            if existing is not None and existing["status"] == "running":
+            existing_cancel = self._job_cancels.get((df, dt))
+            if (
+                existing is not None
+                and existing["status"] == "running"
+                and existing_cancel is not None
+                and not existing_cancel.is_set()
+            ):
                 return dict(existing)
             if self._active_cancel is not None:
                 self._active_cancel.set()
             cancel_event = threading.Event()
             self._active_cancel = cancel_event
+            self._job_cancels[(df, dt)] = cancel_event
             covered = self._all_covered_days()
             missing_count = sum(1 for d in _iter_days(since, until) if d.isoformat() not in covered)
             job = {
@@ -352,6 +361,8 @@ class PeriodTriageManager:
                         except Exception as exc:
                             logger.warning("Fetch failed on %s: %s", iso, exc)
                             day_ok = False
+                if cancel_event.is_set():
+                    raise _CancelledJob("Suche abgebrochen.")
 
             if day_ok:
                 # Never permanently cache 0-hit recent days before BGer/entscheidsuche publishes them
@@ -405,6 +416,8 @@ class PeriodTriageManager:
 
         def set_job(**updates: Any) -> None:
             with self._lock:
+                if self._job_cancels.get(key) is not cancel_event:
+                    return
                 self._jobs[key].update(updates)
 
         try:

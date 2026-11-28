@@ -331,6 +331,7 @@ async function onSearch(event) {
             state.searchErrorArg = null;
         }
     } catch (err) {
+        if (searchGen !== periodSearchGeneration) return;
         console.error(err);
         state.items = [];
         state.error = "errorSearch";
