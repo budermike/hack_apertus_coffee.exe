@@ -337,3 +337,53 @@ def test_queue_http_routes_and_removed_adjust_route(backend, summarizer):
         backend.queue.stop()
         server.shutdown()
         server.server_close()
+
+
+# --- the stored judgement text as a page (original can be read without the external site) ---
+
+
+def test_original_page_shows_the_stored_text(backend):
+    status, page = backend.original_page(SAFE)
+    assert status == 200
+    assert "<h1>BGer-Urteil 8C_901/2026</h1>" in page and "Lokal gespeicherter Volltext" in page
+    judgement = backend.find_judgement(SAFE)
+    assert judgement.text[:40].replace("&", "&amp;") in page  # the text itself, not a summary of it
+    status, page_fr = backend.original_page(SAFE, "fr")
+    assert "Arrêt du TF 8C_901/2026" in page_fr and "Texte intégral enregistré localement" in page_fr
+
+
+def test_original_page_for_an_unknown_judgement_says_so(backend):
+    status, page = backend.original_page("8C_999_2026")
+    assert status == 404 and "lokal nicht gespeichert" in page and "8C_999/2026" in page
+
+
+def test_original_page_escapes_the_text_and_only_links_to_web_addresses(tmp_path, summarizer):
+    record = json.loads((CRAWL_DIR / "8C_901_2026.json").read_text(encoding="utf-8"))
+    record["judgement_text"] = 'Erwägung 1 <script>alert("x")</script> & <img src=x onerror=alert(1)>'
+    record["url"] = "javascript:alert(1)"
+    crawl = tmp_path / "crawl"
+    crawl.mkdir()
+    (crawl / "8C_901_2026.json").write_text(json.dumps(record), encoding="utf-8")
+    status, page = Backend(tmp_path / "s.db", crawl, lambda: summarizer).original_page(SAFE)
+    assert status == 200
+    assert "<script>" not in page and "<img" not in page and "javascript:" not in page
+    assert "&lt;script&gt;alert(&quot;x&quot;)&lt;/script&gt; &amp; &lt;img" in page
+    assert "<a " not in page  # no link for an address that is not http(s)
+
+
+def test_original_page_over_http_is_html_without_scripts(backend):
+    server = make_server(backend, "127.0.0.1", 0, CRAWL_DIR)
+    threading.Thread(target=server.serve_forever, daemon=True).start()
+    base = f"http://127.0.0.1:{server.server_address[1]}/api"
+    try:
+        with urllib.request.urlopen(f"{base}/judgements/{SAFE}/original?lang=fr") as res:
+            assert res.status == 200 and res.headers["Content-Type"] == "text/html; charset=utf-8"
+            assert "default-src 'none'" in res.headers["Content-Security-Policy"]
+            assert "Arrêt du TF 8C_901/2026" in res.read().decode("utf-8")
+        with pytest.raises(urllib.error.HTTPError) as missing:
+            urllib.request.urlopen(f"{base}/judgements/8C_999_2026/original")
+        assert missing.value.code == 404 and "text/html" in missing.value.headers["Content-Type"]
+    finally:
+        backend.queue.stop()
+        server.shutdown()
+        server.server_close()

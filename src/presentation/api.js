@@ -62,6 +62,10 @@
  *        the ones learned from all decisions (triage/feedback_learning.py); GET /api/config
  *        lists what was learned under `learning`.
  *
+ *   GET  {API_BASE}/judgements/{id}/original?lang=de|fr
+ *        -> HTML page with the judgement text as the crawler stored it (opened in a new tab,
+ *        not fetched by script): the original can be read without the external site.
+ *
  *   GET  {API_BASE}/knowledge-base?q=<query>&lang=de|fr
  *        -> [entry]   all stored summaries containing every search term, newest first
  *
@@ -92,6 +96,11 @@ async function jsonFetch(url, options = {}) {
     });
     if (!res.ok) throw new Error(`${options.method || "GET"} ${url} failed: ${res.status}`);
     return res.json();
+}
+
+/** Address of the page with the locally stored judgement text (served by the backend). */
+function originalPageUrl(id, lang) {
+    return `${API_BASE}/judgements/${encodeURIComponent(id)}/original?${new URLSearchParams({ lang })}`;
 }
 
 function summaryUrl(id) {
