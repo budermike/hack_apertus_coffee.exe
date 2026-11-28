@@ -4,7 +4,10 @@ Rule-based, no extra model call, so the result is reproducible:
 - every cited consideration (E. / Erw. / consid.) exists in the judgement,
 - every cited article (of a known law) appears in the judgement,
 - the closing paragraph does not contradict the operative part,
-- DE and FR cite the same articles and considerations.
+- DE and FR cite the same articles and considerations,
+- neither language is more than ``MAX_LENGTH_RATIO`` longer than the other, counted in
+  characters (in words French is about 20 % longer for the same content; in characters
+  Suva's own pairs have a median ratio of 0.98 and 54 of 55 lie within 30 %).
 
 ``error`` issues trigger one regeneration of that language; ``warning`` issues
 are only shown in the UI.
@@ -61,6 +64,17 @@ _COURT = re.compile(r"Bundesgericht|Bundesrichter|Tribunal fédéral|juges féd�
 _REMAND_WORDS = re.compile(
     r"zurück(?:ge)?wies|zurückgewiesen|zurückzuweisen|\bwies\b[^.]*\bzurück\b|Rückweisung|renvo(?:i|y)", re.I
 )
+
+
+MAX_LENGTH_RATIO = 1.3  # one language at most 30 % longer than the other (characters)
+
+
+def length_ratio(summary_de: str, summary_fr: str) -> tuple[float, str] | None:
+    """``(ratio >= 1, longer language)`` in characters; ``None`` if a text is empty."""
+    de, fr = len(summary_de.strip()), len(summary_fr.strip())
+    if not de or not fr:
+        return None
+    return (de / fr, "de") if de >= fr else (fr / de, "fr")
 
 
 @dataclass
@@ -163,6 +177,12 @@ def check_summaries(summary_de: str, summary_fr: str, judgement: Judgement, outc
         diff = sorted(art_de ^ art_fr)
         report.issues.append(Issue("de/fr", "warning", "article_mismatch",
                                    "DE und FR zitieren verschiedene Artikel: " + ", ".join(f"Art. {n} {l}" for n, l in diff)))
+    ratio = length_ratio(summary_de, summary_fr)
+    if ratio and ratio[0] > MAX_LENGTH_RATIO:
+        longer = "DE" if ratio[1] == "de" else "FR"
+        report.issues.append(Issue("de/fr", "error", "length_mismatch",
+                                   f"{longer} ist {ratio[0] - 1:.0%} länger als die andere Sprache (Zeichen; erlaubt: "
+                                   f"{MAX_LENGTH_RATIO - 1:.0%}).".replace("%", " %")))
     cons_de, cons_fr = cited_considerations(summary_de), cited_considerations(summary_fr)
     if cons_de != cons_fr:
         report.issues.append(Issue("de/fr", "warning", "consideration_mismatch",

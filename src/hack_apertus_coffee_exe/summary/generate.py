@@ -247,18 +247,31 @@ class Summarizer(_AlignLanguage):
        *other cases, style only* (``examples.StyleExamples``).
     3. One rewrite when the text is far too short, one paragraph only, starts with
        «In diesem Urteil», or the check finds a wrong outcome, remand or article.
+    4. Length: if one language is more than 30 % longer than the other (characters,
+       ``check.MAX_LENGTH_RATIO``), one rewrite (``length_fix``): the longer one is shortened,
+       unless the shorter one is below its length target, then that one is lengthened.
+    5. DE/FR cross-check (``crosscheck``): an adversarial Apertus reviewer and a number
+       comparison look for points where DE and FR disagree; the judgement decides which one is
+       right and the other is rewritten once. What still disagrees is an error in the check
+       report. On by default; off with ``crosscheck=False`` or ``SUMMARY_CROSSCHECK=0``.
 
     With Apertus 70B every criterion of the 70B judge was >= 4.2 on 20 development cases;
     the older ``SummarizerV1`` scored 4.0 with 70B and 2.3 with 8B.
     """
     def __init__(self, llm: Any, examples: StyleExamples | None = None, prompts_dir: Path = prompts.PROMPTS_DIR,
-                 max_judgement_chars: int = 40000, analysis_llm: Any | None = None) -> None:
+                 max_judgement_chars: int = 40000, analysis_llm: Any | None = None,
+                 crosscheck: bool | None = None) -> None:
         self.llm = llm  # summary.llm.SummaryLLM (default Apertus 70B, see run.summarizer_factory): writes the texts
         # optional other model for step 1 only (core question), e.g. Apertus 70B; default = same model
         self.analysis_llm = analysis_llm or llm
         self.examples = examples or StyleExamples()
         self.prompts_dir = Path(prompts_dir)
         self.max_chars = max_judgement_chars
+        if crosscheck is None:
+            import os
+
+            crosscheck = os.environ.get("SUMMARY_CROSSCHECK", "1").strip().lower() not in ("0", "false", "no", "off")
+        self.crosscheck = crosscheck
 
     # --- step 1: core question -------------------------------------------------------------
 
@@ -360,14 +373,51 @@ class Summarizer(_AlignLanguage):
             notes.append("Nicht mit «In diesem Urteil» beginnen." if language == "de" else "Ne pas commencer par « Dans cet arrêt ».")
         return notes
 
+    @staticmethod
+    def length_fix(texts: dict[str, str]) -> dict[str, list[str]]:
+        """Which language to rewrite, with what note, when DE and FR differ in length by more than 30 %.
+
+        The longer text is shortened, unless the shorter one is below its word target
+        (``LENGTH``, Suva's median band): then the shorter one probably left content out and is
+        lengthened instead. Empty when the lengths agree.
+        """
+        from .check import MAX_LENGTH_RATIO, length_ratio
+
+        ratio = length_ratio(texts["de"], texts["fr"])
+        if not ratio or ratio[0] <= MAX_LENGTH_RATIO:
+            return {}
+        longer = ratio[1]
+        shorter = "fr" if longer == "de" else "de"
+        chars = {lang: len(texts[lang].strip()) for lang in LANGUAGES}
+        words = {lang: len(texts[lang].split()) for lang in LANGUAGES}
+        pct = round((ratio[0] - 1) * 100)
+        if words[shorter] < LENGTH[shorter][0]:
+            target = int(chars[longer] / MAX_LENGTH_RATIO * 1.05)
+            note = (f"Die deutsche Fassung ist deutlich kürzer als die französische ({chars['de']} gegenüber {chars['fr']} Zeichen) "
+                    f"und vermutlich unvollständig. Ergänze sie auf mindestens etwa {target} Zeichen "
+                    f"({LENGTH['de'][0]}–{LENGTH['de'][1]} Wörter), nur mit Angaben aus den Erwägungen."
+                    if shorter == "de" else
+                    f"La version française est nettement plus courte que l'allemande ({chars['fr']} contre {chars['de']} caractères) "
+                    f"et probablement incomplète. Complète-la jusqu'à au moins {target} caractères environ "
+                    f"({LENGTH['fr'][0]}–{LENGTH['fr'][1]} mots), uniquement avec des éléments tirés des considérants.")
+            return {shorter: [note]}
+        target = int(chars[shorter] * MAX_LENGTH_RATIO * 0.95)
+        note = (f"Die deutsche Fassung ist {pct} % länger als die französische ({chars['de']} gegenüber {chars['fr']} Zeichen). "
+                f"Kürze sie auf höchstens etwa {target} Zeichen, ohne Aussagen wegzulassen, die auch in der französischen Fassung stehen."
+                if longer == "de" else
+                f"La version française est {pct} % plus longue que l'allemande ({chars['fr']} contre {chars['de']} caractères). "
+                f"Raccourcis-la à environ {target} caractères au plus, sans supprimer ce qui figure aussi dans la version allemande.")
+        return {longer: [note]}
+
     def summarize(self, judgement: Judgement, similar_case_ids: Sequence[str] = (),
                   exclude_ids: Sequence[str] = ()) -> SummaryResult:
         """DE + FR summary. ``similar_case_ids`` / ``exclude_ids`` are accepted for the
         ``generate.Summarizer`` interface; examples come from ``StyleExamples``."""
         analysis = self.analyse(judgement)
-        texts, attempts, used = {}, {}, []
+        texts, attempts, used, shots = {}, {}, [], {}
         for language in ("de", "fr"):
             examples = self.examples.select(judgement, language)
+            shots[language] = examples
             used += [e.case_id for e in examples if e.case_id not in used]
             text = self.write(judgement, language, analysis, examples)
             attempts[language] = 1
@@ -376,11 +426,29 @@ class Summarizer(_AlignLanguage):
                 text = self.write(judgement, language, analysis, examples, notes)
                 attempts[language] = 2
             texts[language] = text.strip()
-        return self.result(judgement, texts, analysis, used, attempts)
+        for language, notes in self.length_fix(texts).items():
+            attempts[language] = attempts.get(language, 1) + 1
+            texts[language] = self.write(judgement, language, analysis, shots[language], notes).strip()
+        extra: list = []
+        if self.crosscheck:
+            from . import crosscheck
+
+            def rewrite(language: str, notes: list[str]) -> str:
+                attempts[language] = attempts.get(language, 1) + 1
+                return self.write(judgement, language, analysis, shots[language], notes)
+
+            evidence = (consideration_passages(judgement.text, analysis["erwaegungen"], max_chars=6000)
+                        + "\n\nDispositiv / Parteien:\n" + outcome_block(judgement, "de"))
+            texts, extra, trace = crosscheck.crosscheck_and_repair(
+                texts, crosscheck.gateway_json_call(self.analysis_llm), evidence, rewrite)
+            analysis = {**analysis, "crosscheck": trace}
+        return self.result(judgement, texts, analysis, used, attempts, extra)
 
     def result(self, judgement: Judgement, texts: dict[str, str], analysis: dict[str, Any],
-               examples: list[str], attempts: dict[str, int]) -> SummaryResult:
+               examples: list[str], attempts: dict[str, int], extra_issues: Sequence[Any] = ()) -> SummaryResult:
         outcome = operative_outcome(judgement.text)
+        check = check_summaries(texts["de"], texts["fr"], judgement, outcome)
+        check.issues += list(extra_issues)
         return SummaryResult(
             case_id=judgement.case_id,
             title_de=title_de(judgement),
@@ -392,6 +460,6 @@ class Summarizer(_AlignLanguage):
             examples=examples,
             model=self.llm.model,
             prompt_version=prompts.prompt_files_version(self.prompts_dir),
-            check=check_summaries(texts["de"], texts["fr"], judgement, outcome),
+            check=check,
             attempts=attempts,
         )

@@ -84,3 +84,26 @@ def test_invented_remand_is_an_error():
     report = check_summaries(de, fr, PARTIAL_JUDGEMENT, PARTIAL_OUTCOME)
     assert [i.kind for i in report.errors_for("de")] == ["remand"]
     assert report.errors_for("fr") == []
+
+
+def test_length_mismatch_is_counted_in_characters_and_symmetric():
+    from hack_apertus_coffee_exe.summary.check import MAX_LENGTH_RATIO, length_ratio
+
+    assert MAX_LENGTH_RATIO == 1.3
+    assert length_ratio("a" * 100, "b" * 125) == (1.25, "fr")
+    assert length_ratio("a" * 140, "b" * 100) == (1.4, "de")
+    assert length_ratio("", "x") is None
+
+
+def test_check_summaries_flags_a_language_more_than_30_percent_longer():
+    from hack_apertus_coffee_exe.summary.check import check_summaries
+    from hack_apertus_coffee_exe.summary.judgement import Judgement, operative_outcome
+
+    j = Judgement(case_id="8C_1/2026", text="Erwägungen:\n1. Text.", language="de")
+    out = operative_outcome(j.text)
+    de = "Die Suva hat zu Recht entschieden. " * 4
+    ok = check_summaries(de, "La Suva a décidé à juste titre. " * 4, j, out)
+    assert not [i for i in ok.issues if i.kind == "length_mismatch"]
+    long_fr = check_summaries(de, "La Suva a décidé à juste titre. " * 8, j, out)
+    issue = next(i for i in long_fr.issues if i.kind == "length_mismatch")
+    assert (issue.language, issue.severity) == ("de/fr", "error") and issue.detail.startswith("FR ist") and not long_fr.ok
