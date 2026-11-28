@@ -16,8 +16,18 @@ from hack_apertus_coffee_exe.triage.config import TriageConfig, load_config
 from hack_apertus_coffee_exe.triage.date_filter import DateRange, parse_date_string
 from hack_apertus_coffee_exe.triage.embeddings import TfidfEmbedder
 from hack_apertus_coffee_exe.triage.export import RANKING_COLUMNS, export_period, format_recall_list
-from hack_apertus_coffee_exe.triage.llm import ApertusTriageClient, GatewayConfig
-from hack_apertus_coffee_exe.triage.pipeline import CrawlItem, TriagePipeline, _normalize_crawl_dict
+from hack_apertus_coffee_exe.triage.llm import (
+    ApertusTriageClient,
+    GatewayConfig,
+    TriageAnswerError,
+    _parse_json_decision,
+)
+from hack_apertus_coffee_exe.triage.pipeline import (
+    APERTUS_FAILED_PREFIX,
+    CrawlItem,
+    TriagePipeline,
+    _normalize_crawl_dict,
+)
 from hack_apertus_coffee_exe.triage.reference_corpus import ReferenceCase, load_reference_corpus
 
 ACCIDENT_TEXT = (
@@ -245,6 +255,133 @@ class CacheTests(unittest.TestCase):
         q1 = TriagePipeline(reference_cases=REFS, embedder=TfidfEmbedder(), date_range=DateRange.from_period("2026-Q1"))
         q2 = TriagePipeline(reference_cases=REFS, embedder=TfidfEmbedder(), date_range=DateRange.from_period("2026-Q2"))
         self.assertEqual(q1.fingerprint, q2.fingerprint)
+
+
+GOOD_ANSWER = json.dumps({"relevant": True, "apertus_score": 85, "reason": "Begründung.", "key_topics": []})
+NO_CHOICES = object()  # a gateway response without any choice
+
+
+class _AnswersByCase:
+    """Fake gateway: a fixed answer (or an exception) per case number, GOOD_ANSWER otherwise."""
+
+    def __init__(self, answers: dict[str, object]) -> None:
+        self.answers = answers
+        self.calls: list[str] = []
+
+    def create(self, **kwargs):
+        case_id = kwargs["messages"][1]["content"].split("\n", 1)[0].removeprefix("Urteil: ")
+        self.calls.append(case_id)
+        answer = self.answers.get(case_id, GOOD_ANSWER)
+        if isinstance(answer, Exception):
+            raise answer
+        if answer is NO_CHOICES:
+            return SimpleNamespace(choices=[])
+        return SimpleNamespace(choices=[SimpleNamespace(message=SimpleNamespace(content=answer))])
+
+
+def _llm_answering(answers: dict[str, object]) -> tuple[ApertusTriageClient, _AnswersByCase]:
+    completions = _AnswersByCase(answers)
+    client = SimpleNamespace(chat=SimpleNamespace(completions=completions))
+    cfg = GatewayConfig(api_key="dummy", base_url="https://example.invalid", model="apertus-v1-5-8b")
+    return ApertusTriageClient(config=cfg, client=client), completions
+
+
+class UnusableAnswerTests(unittest.TestCase):
+    """One answer that is not a usable decision must not cost the whole run (#13)."""
+
+    ITEMS = [
+        _item("8C_10/2026", "2026-05-20", ACCIDENT_TEXT),
+        _item("9C_449/2025", "2026-05-21", ACCIDENT_TEXT_2),
+        _item("5A_1/2026", "2026-04-02", DIVORCE_TEXT),
+    ]
+
+    def test_answers_that_are_no_decision_raise_triage_answer_error(self) -> None:
+        unusable = [
+            "Das Urteil ist für die Suva relevant.",                      # prose
+            '{"relevant": true, "apertus_score": 85, "reason": "Abgeschn',  # cut off
+            "",                                                           # empty
+            '[85, "relevant"]',                                           # JSON, but not an object
+            '{"relevant": true, "reason": "ohne Score"}',                 # no score
+            '{"apertus_score": null, "reason": "x"}',
+            '{"apertus_score": "hoch", "reason": "x"}',
+            '{"apertus_score": NaN, "reason": "x"}',
+            '{"apertus_score": 1e999, "reason": "x"}',                    # infinite
+            '{"apertus_score": ' + "9" * 400 + "}",                        # too large for a float
+        ]
+        for raw in unusable:
+            with self.subTest(raw=raw), self.assertRaises(TriageAnswerError):
+                _parse_json_decision(raw, model="apertus-v1-5-8b")
+        # still accepted: a number as text, an object inside other text, a score outside 0..100 (clamped)
+        self.assertEqual(_parse_json_decision('{"apertus_score": "85"}', model="m").apertus_score, 85.0)
+        self.assertEqual(_parse_json_decision('[{"apertus_score": 85}]', model="m").apertus_score, 85.0)
+        self.assertEqual(_parse_json_decision('{"apertus_score": 140}', model="m").apertus_score, 100.0)
+
+    def test_run_goes_on_and_marks_the_judgement(self) -> None:
+        llm, completions = _llm_answering({"9C_449/2025": "Keine JSON-Antwort."})
+        pipe = TriagePipeline(reference_cases=REFS, llm_client=llm, date_range=DateRange.from_period("2026-Q2"))
+        with self.assertLogs("hack_apertus_coffee_exe.triage.pipeline", level="WARNING") as logs:
+            results = pipe.score_items(self.ITEMS)
+
+        self.assertEqual(sorted(completions.calls), ["5A_1/2026", "8C_10/2026", "9C_449/2025"])
+        self.assertEqual(len(results), 3)
+        self.assertEqual([r.rank for r in results], [1, 2, 3])
+        self.assertEqual(pipe.last_failed, ["9C_449/2025"])
+        self.assertTrue(any("1 of 3 judgements were not assessed by Apertus" in line for line in logs.output))
+
+        by_id = {r.case_id: r for r in results}
+        failed = by_id["9C_449/2025"]
+        self.assertTrue(failed.relevance_reason.startswith(APERTUS_FAILED_PREFIX))
+        self.assertNotIn("Embedding-Only-Modus", failed.relevance_reason)
+        self.assertIn("Nächster Suva-Präzedenzfall", failed.relevance_reason)  # still says what it resembles
+        self.assertIsNone(failed.apertus_score)
+        self.assertIsNone(failed.llm_model)
+        # yellow, for a manual check: not red, and not ranked by the --no-llm score, which is
+        # on a more generous scale and would put this judgement above the assessed ones
+        self.assertEqual((failed.final_score, failed.ampel), (TriageConfig().yellow_threshold, "gelb"))
+        offline = TriagePipeline(reference_cases=REFS, date_range=DateRange.from_period("2026-Q2")).score_items(self.ITEMS)
+        self.assertGreater({r.case_id: r for r in offline}["9C_449/2025"].final_score, by_id["8C_10/2026"].final_score)
+        self.assertLess(by_id["8C_10/2026"].rank, failed.rank)
+        # the others are assessed by Apertus as before
+        ok = by_id["8C_10/2026"]
+        self.assertEqual((ok.apertus_score, ok.llm_model, ok.relevance_reason), (85.0, "apertus-v1-5-8b", "Begründung."))
+
+    def test_failed_answer_is_not_cached_and_asked_again(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            llm, completions = _llm_answering({"9C_449/2025": "Keine JSON-Antwort."})
+            pipe = TriagePipeline(reference_cases=REFS, llm_client=llm, cache=TriageCache(tmp))
+            pipe.score_items(self.ITEMS)
+            self.assertEqual(len(completions.calls), 3)
+
+            completions.answers.clear()  # e.g. a corrected prompt or another model version
+            cache = TriageCache(tmp)
+            pipe = TriagePipeline(reference_cases=REFS, llm_client=llm, cache=cache)
+            results = pipe.score_items(self.ITEMS)
+            self.assertEqual(completions.calls[3:], ["9C_449/2025"])
+            self.assertEqual((cache.stats.decision_hits, cache.stats.decision_misses), (2, 1))
+            self.assertEqual(pipe.last_failed, [])
+            self.assertEqual({r.case_id: r.apertus_score for r in results}["9C_449/2025"], 85.0)
+
+    def test_gateway_errors_still_stop_the_run(self) -> None:
+        llm, completions = _llm_answering({"9C_449/2025": ConnectionError("gateway not reachable")})
+        pipe = TriagePipeline(reference_cases=REFS, llm_client=llm)
+        with self.assertRaises(ConnectionError):
+            pipe.score_items(self.ITEMS)
+        self.assertEqual(completions.calls, ["8C_10/2026", "9C_449/2025"])
+
+    def test_single_judgement(self) -> None:
+        llm, _ = _llm_answering({"9C_449/2025": "{"})
+        pipe = TriagePipeline(reference_cases=REFS, llm_client=llm)
+        result = pipe.score_item(self.ITEMS[1])
+        self.assertTrue(result.relevance_reason.startswith(APERTUS_FAILED_PREFIX))
+        self.assertEqual(pipe.last_failed, ["9C_449/2025"])
+        pipe.score_item(self.ITEMS[0])
+        self.assertEqual(pipe.last_failed, [])
+
+    def test_response_without_choices_counts_as_unusable(self) -> None:
+        llm, _ = _llm_answering({"9C_449/2025": NO_CHOICES})
+        pipe = TriagePipeline(reference_cases=REFS, llm_client=llm)
+        self.assertEqual(len(pipe.score_items(self.ITEMS)), 3)
+        self.assertEqual(pipe.last_failed, ["9C_449/2025"])
 
 
 class ExportTests(unittest.TestCase):

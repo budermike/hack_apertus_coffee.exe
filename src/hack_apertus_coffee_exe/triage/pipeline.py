@@ -30,10 +30,14 @@ from .embeddings import (
     embedder_fingerprint,
     score_chunk_vectors,
 )
-from .llm import ApertusTriageClient, TriageDecision
+from .llm import ApertusTriageClient, TriageAnswerError, TriageDecision
 from .reference_corpus import ReferenceCase, load_reference_corpus
 
 logger = logging.getLogger(__name__)
+
+# Start of the reason when Apertus was asked but its answer could not be used.
+APERTUS_FAILED_PREFIX = "[Apertus-Antwort nicht auswertbar, bitte von Hand prüfen]"
+_EMBEDDING_ONLY_PREFIX = "[Embedding-Only-Modus]"
 
 # Crawl record fields that are never metadata (raw HTML is large and not needed).
 _DROP_FIELDS = ("content_html",)
@@ -239,7 +243,7 @@ def _heuristic_relevance_score(
         else "Keine Referenztreffer."
     )
     kw_desc = ", ".join(keyword_hits) if keyword_hits else "keine Suva/UVG-Schlüsselwörter"
-    reason = f"[Embedding-Only-Modus] {top_match_desc} Gefundene Signale: {kw_desc}."
+    reason = f"{_EMBEDDING_ONLY_PREFIX} {top_match_desc} Gefundene Signale: {kw_desc}."
     return total, reason
 
 
@@ -273,6 +277,8 @@ class TriagePipeline:
         self.cache = cache
         self.last_skipped: list[SkippedItem] = []
         self.last_excluded_references: list[str] = []
+        # Case numbers of the last run whose Apertus answer could not be used.
+        self.last_failed: list[str] = []
 
         # Fit TF-IDF once on all summaries (vocabulary only, no labels), so the
         # vectors - and the cache - stay valid when the reference subset changes.
@@ -380,8 +386,19 @@ class TriagePipeline:
         keyword_hits = extract_keyword_hits(item.text, item.metadata)
         cosine_score = round(min(100.0, max(0.0, similarity.top_k_mean_similarity * 100.0)), 2)
 
+        decision: TriageDecision | None = None
+        unusable = False
         if self.llm_client is not None:
-            decision = self._decision(item, date_str, text_hash, similarity, keyword_hits)
+            try:
+                decision = self._decision(item, date_str, text_hash, similarity, keyword_hits)
+            except TriageAnswerError as exc:
+                # One unusable answer must not cost the whole run (#13). Nothing is cached
+                # for this judgement, so the next run asks Apertus again.
+                logger.warning("Apertus answer for %s not usable: %s", item.case_id, exc)
+                self.last_failed.append(item.case_id)
+                unusable = True
+
+        if decision is not None:
             w = self.config.llm_weight
             final_score = round(w * decision.apertus_score + (1.0 - w) * cosine_score, 2)
             reason = decision.reason
@@ -392,6 +409,12 @@ class TriagePipeline:
             final_score, reason = _heuristic_relevance_score(
                 similarity, keyword_hits, embedder_name=self.embedder.name
             )
+            if unusable:
+                # Yellow, for a manual check, as in the relevance scoring (#62): never
+                # silently red, and not ranked by the --no-llm score, whose scale is more
+                # generous than the Apertus blend and would put the judgement on top.
+                final_score = self.config.yellow_threshold
+                reason = reason.replace(_EMBEDDING_ONLY_PREFIX, APERTUS_FAILED_PREFIX, 1)
             key_topics = []
             apertus_score = None
             llm_model = None
@@ -436,6 +459,7 @@ class TriagePipeline:
         else:
             resolved_date = extract_judgement_date(item.text, item.metadata)
         ref_idx = self.active_reference_indices({item.case_id})
+        self.last_failed = []
         result, _ = self._score_one(item, resolved_date, ref_idx)
         try:
             return self._finalize([result])[0]
@@ -461,6 +485,7 @@ class TriagePipeline:
 
         ref_idx = self.active_reference_indices({item.case_id for item in accepted})
         results: list[TriageResult] = []
+        self.last_failed = []
         try:
             for item in accepted:
                 resolved = extract_judgement_date(item.text, item.metadata)
@@ -469,4 +494,11 @@ class TriagePipeline:
         finally:
             if self.cache is not None:
                 self.cache.save()
+        if self.last_failed:
+            logger.warning(
+                "%d of %d judgements were not assessed by Apertus (answer not usable): %s",
+                len(self.last_failed),
+                len(accepted),
+                ", ".join(self.last_failed),
+            )
         return self._finalize(results)
