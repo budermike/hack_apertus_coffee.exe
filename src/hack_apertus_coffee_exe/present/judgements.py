@@ -27,6 +27,7 @@ from __future__ import annotations
 import json
 import logging
 import re
+import threading
 from pathlib import Path
 from typing import Any, Callable, Iterable
 
@@ -54,14 +55,14 @@ _AREAS = {
     "IV": r"invalidenversicherung|assurance[- ]invalidité|assicurazione per l'invalidità|\bIVG\b|\bLAI\b",
     "MV": r"militärversicherung|assurance militaire|assicurazione militare",
     "ALV": r"arbeitslosenversicherung|assurance[- ]chômage|assicurazione contro la disoccupazione",
-    "EL": r"ergänzungsleistung|prestations? complémentaires?|prestazioni complementari",
+    "EL": r"ergänzungsleistung|prestations? complémentaires?|prestazion[ei] complementar[ei]",
     "KV": r"krankenversicherung|assurance[- ]maladie|assicurazione malattie",
-    "AHV": r"\bAHV\b|\bAVS\b|alters- und hinterlassenen|assurance[- ]vieillesse",
+    "AHV": r"\bAHV\b|\bAVS\b|alters- und hinterlassenen|assurance[- ]vieillesse|assicurazione per la vecchiaia",
     "BV": r"berufliche vorsorge|prévoyance professionnelle|previdenza professionale",
-    "FZ": r"familienzulage|allocations? familiales?|assegni familiari",
+    "FZ": r"familienzulage|allocations? familiales?|assegn[oi] familiar[ei]",
     "EO": r"erwerbsersatz|perte de gain|perdita di guadagno",
     "MIET": r"\bmiete\b|mietrecht|\bbail\b|locazione",
-    "SOZ": r"sozialversicherung|assurances? sociales?|assicurazioni sociali",
+    "SOZ": r"sozialversicherung|assurances? sociales?|assicurazion[ei] social[ei]",
 }
 _AREA_RES = {code: re.compile(pattern, re.I) for code, pattern in _AREAS.items()}
 
@@ -82,6 +83,16 @@ def area_code(subject: str | None) -> str | None:
         return None
     hits = {code: m.start() for code, rx in _AREA_RES.items() if (m := rx.search(subject))}
     return min(hits, key=hits.get) if hits else None
+
+
+def _area_for_row(meta: dict[str, Any]) -> str | None:
+    """UI area code from subject first, falling back to a known code from ``metadata.relevance.area``."""
+    code = area_code(meta.get("subject"))
+    if code is not None:
+        return code
+    relevance = meta.get("relevance")
+    rel_area = relevance.get("area") if isinstance(relevance, dict) else None
+    return rel_area if isinstance(rel_area, str) and rel_area in _AREAS else None
 
 
 def _date(row: dict[str, Any]) -> str | None:
@@ -178,7 +189,7 @@ def to_ui_item(row: dict[str, Any], summarized: bool = False, outcome: str | Non
         "date": _date(row),
         "url": meta.get("url"),
         "lang": row.get("language") or meta.get("language"),
-        "area": area_code(meta.get("subject")),
+        "area": _area_for_row(meta),
         "subject": {"de": subject, "fr": subject},
         "explanation": {"de": reason, "fr": reason},
         "score": _score(row),
@@ -220,28 +231,36 @@ class JudgementList:
         self._rows: list[dict[str, Any]] = []
         self._mtime: float | None = None
         self._outcomes: dict[str, str] | None = None
+        self._lock = threading.Lock()
 
     def outcomes(self) -> dict[str, str]:
         """UI outcome code per case id, read once from the crawl folder (empty without one)."""
         if self._outcomes is None:
-            self._outcomes = {}
-            if self.crawl_dir is not None:
-                for judgement in load_judgements(self.crawl_dir):
-                    self._outcomes[ui_id(judgement.case_id)] = _OUTCOMES.get(
-                        operative_outcome(judgement.text).result, "unklar"
-                    )
-                logger.info("Read the outcome of %d judgements from %s", len(self._outcomes), self.crawl_dir)
+            with self._lock:
+                if self._outcomes is None:
+                    loaded: dict[str, str] = {}
+                    if self.crawl_dir is not None:
+                        if not self.crawl_dir.exists():
+                            logger.warning("Crawl folder not found, leaving outcomes empty: %s", self.crawl_dir)
+                        else:
+                            for judgement in load_judgements(self.crawl_dir):
+                                loaded[ui_id(judgement.case_id)] = _OUTCOMES.get(
+                                    operative_outcome(judgement.text).result, "unklar"
+                                )
+                            logger.info("Read the outcome of %d judgements from %s", len(loaded), self.crawl_dir)
+                    self._outcomes = loaded
         return self._outcomes
 
     def rows(self) -> list[dict[str, Any]]:
-        mtime = self.triage_path.stat().st_mtime
-        if mtime != self._mtime:
-            data = json.loads(self.triage_path.read_text(encoding="utf-8"))
-            if not isinstance(data, list):
-                raise ValueError(f"{self.triage_path}: expected a JSON list of triage results")
-            self._rows, self._mtime = data, mtime
-            logger.info("Loaded %d triage results from %s", len(data), self.triage_path)
-        return self._rows
+        with self._lock:
+            mtime = self.triage_path.stat().st_mtime
+            if mtime != self._mtime:
+                data = json.loads(self.triage_path.read_text(encoding="utf-8"))
+                if not isinstance(data, list):
+                    raise ValueError(f"{self.triage_path}: expected a JSON list of triage results")
+                self._rows, self._mtime = data, mtime
+                logger.info("Loaded %d triage results from %s", len(data), self.triage_path)
+            return self._rows
 
     def items(self, date_from: str | None = None, date_to: str | None = None) -> list[dict[str, Any]]:
         """UI items with ``date_from <= date <= date_to`` (ISO dates, both optional), best score first."""
