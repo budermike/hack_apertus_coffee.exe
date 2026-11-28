@@ -122,26 +122,45 @@ def run_batch(
     return done
 
 
-def summarizer_factory(
-    model: str | None = None, judgements_dir: str | None = None, n_examples: int = 2
-) -> Callable[[], Any]:
-    """Lazily build one ``Summarizer`` (no gateway access until the first summary).
+SUMMARY_MODEL_ENV = "SUMMARY_MODEL"
+DEFAULT_SUMMARY_MODEL = "apertus-v1-5-70b"  # notebooks/summary/02_modelle_prompts: 70B + v3 >= 4.2 in every criterion
 
+
+def summarizer_factory(
+    model: str | None = None, judgements_dir: str | None = None, n_examples: int = 2, pipeline: str = "v3"
+) -> Callable[[], Any]:
+    """Lazily build one summarizer (no gateway access until the first summary).
+
+    ``pipeline="v3"`` (default): ``generate.Summarizer`` with the prompts in ``prompts/``.
+    ``pipeline="v1"``: the older ``generate.SummarizerV1`` with ``prompts/v1/``.
+    Model: ``model``, else ``$SUMMARY_MODEL``, else Apertus 70B. The summaries use their own
+    variable because triage and summary run on different models.
     ``judgements_dir`` defaults to the Suva reference folder in ``configs/paths.json``.
     """
+    from ..config import env
+
     cache: dict[str, Any] = {}
     judgements_dir = judgements_dir or load_paths().judgements_dir
 
     def factory() -> Any:
         if "s" not in cache:
             from ..triage.llm import GatewayConfig
+            from ..triage.reference_corpus import load_reference_corpus
 
-            from .examples import ExampleSelector
-            from .generate import Summarizer
             from .llm import SummaryLLM
 
-            llm = SummaryLLM(config=GatewayConfig.from_env(model=model))
-            cache["s"] = Summarizer(llm, ExampleSelector(judgements_dir=judgements_dir), n_examples=n_examples)
+            chosen = model or env(SUMMARY_MODEL_ENV, default=DEFAULT_SUMMARY_MODEL)
+            llm = SummaryLLM(config=GatewayConfig.from_env(model=chosen), timeout=300)
+            if pipeline == "v1":
+                from .examples import ExampleSelector
+                from .generate import SummarizerV1
+
+                cache["s"] = SummarizerV1(llm, ExampleSelector(judgements_dir=judgements_dir), n_examples=n_examples)
+            else:
+                from .examples import StyleExamples
+                from .generate import Summarizer
+
+                cache["s"] = Summarizer(llm, StyleExamples(load_reference_corpus(judgements_dir)))
         return cache["s"]
 
     return factory
@@ -167,7 +186,7 @@ def _print(stored: dict[str, Summary | None]) -> None:
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="summary", description="Suva summaries DE/FR with Apertus")
     parser.add_argument("--db", default=None, help=f"SQLite file (default: ${store.DB_PATH_ENV} or {store.DEFAULT_DB_PATH})")
-    parser.add_argument("--model", default=None, help="Gateway model ID (default: LLM_NAME / APERTUS_MODEL)")
+    parser.add_argument("--model", default=None, help="Gateway model ID (default: $SUMMARY_MODEL or apertus-v1-5-70b)")
     parser.add_argument("--judgements-dir", default=load_paths().judgements_dir, help="Suva example summaries")
     parser.add_argument("--examples", type=int, default=2, help="Few-shot examples per language")
     parser.add_argument("-v", "--verbose", action="store_true")

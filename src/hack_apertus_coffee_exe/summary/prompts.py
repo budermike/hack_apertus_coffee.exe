@@ -16,7 +16,8 @@ from typing import Any, Sequence
 from ..triage.reference_corpus import ReferenceCase
 
 TEMPLATE_VERSION = "v1"
-PROMPTS_DIR = Path("prompts")
+PROMPTS_DIR = Path("prompts")  # current prompts (generate.Summarizer)
+PROMPTS_DIR_V1 = Path("prompts/v1")  # prompts of the older SummarizerV1
 
 FACTS_SYSTEM = """\
 Du bist Juristin / Jurist im Rechtsdienst der Suva (Unfallversicherung). Du liest ein Urteil des \
@@ -96,15 +97,15 @@ def _read(name: str, prompts_dir: str) -> str:
     return (Path(prompts_dir) / name).read_text(encoding="utf-8").strip()
 
 
-def style(language: str, prompts_dir: Path = PROMPTS_DIR) -> str:
+def style(language: str, prompts_dir: Path = PROMPTS_DIR_V1) -> str:
     return _read(f"style_{language}.md", str(prompts_dir))
 
 
-def glossary(prompts_dir: Path = PROMPTS_DIR) -> str:
+def glossary(prompts_dir: Path = PROMPTS_DIR_V1) -> str:
     return _read("glossary.md", str(prompts_dir))
 
 
-def prompt_version(prompts_dir: Path = PROMPTS_DIR) -> str:
+def prompt_version(prompts_dir: Path = PROMPTS_DIR_V1) -> str:
     parts = [TEMPLATE_VERSION, FACTS_SYSTEM, *WRITE_SYSTEM.values(),
              style("de", prompts_dir), style("fr", prompts_dir), glossary(prompts_dir)]
     digest = hashlib.sha256("\n".join(parts).encode("utf-8")).hexdigest()[:10]
@@ -115,7 +116,7 @@ def facts_user(case_id: str, judgement_excerpt: str) -> str:
     return f"Urteil {case_id}:\n\n{judgement_excerpt}"
 
 
-def write_system(language: str, prompts_dir: Path = PROMPTS_DIR) -> str:
+def write_system(language: str, prompts_dir: Path = PROMPTS_DIR_V1) -> str:
     return WRITE_SYSTEM[language].format(style=style(language, prompts_dir), glossary=glossary(prompts_dir))
 
 
@@ -148,3 +149,11 @@ def write_user(
         blocks.append(lab["fix"] + "\n" + "\n".join(f"- {n}" for n in fix_notes))
     blocks.append(lab["task"])
     return "\n\n".join(blocks)
+
+
+def prompt_files_version(prompts_dir: Path = PROMPTS_DIR) -> str:
+    """'v3-<hash>' over every prompt file of ``generate.Summarizer``, stored with each summary."""
+    digest = hashlib.sha256()
+    for path in sorted(Path(prompts_dir).glob("*.md")):
+        digest.update(path.read_bytes())
+    return f"v3-{digest.hexdigest()[:10]}"

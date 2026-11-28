@@ -1,4 +1,7 @@
-"""Pick 2-3 Suva reference summaries as few-shot examples (issue #15).
+"""Pick Suva reference summaries as few-shot examples (issue #15).
+
+``StyleExamples`` (used by ``generate.Summarizer``): 3 examples per language, similar cases first,
+originals in the target language preferred. ``ExampleSelector``: the older selection for ``SummarizerV1``.
 
 Order of preference:
 1. the ``similar_cases`` that triage already found for this judgement,
@@ -72,3 +75,26 @@ class ExampleSelector:
             if len(chosen) >= k:
                 break
         return chosen
+
+
+def original_language(ref: ReferenceCase) -> str:
+    """Language of the judgement (= title language); assumed to be the language of the original summary."""
+    low = ref.title.lower()
+    return "fr" if low.startswith("arrêt") else "it" if low.startswith("sentenza") else "de"
+
+
+class StyleExamples:
+    """3 Suva examples per language: similar cases first, originals in the target language preferred."""
+
+    def __init__(self, references: Sequence[ReferenceCase] | None = None) -> None:
+        refs = list(references) if references is not None else load_reference_corpus("judgements")
+        self.refs = [r for r in refs if r.text_de.strip() and r.text_fr.strip()]
+        self.emb = TfidfEmbedder().fit([r.text_for_language(None) for r in self.refs])
+        self.vecs = self.emb.embed([r.text_for_language(None) for r in self.refs])
+
+    def select(self, judgement: Judgement, language: str, k: int = 3) -> list[ReferenceCase]:
+        allowed = [i for i, r in enumerate(self.refs) if not same_case(r.case_id, judgement.case_id)]
+        sims = self.vecs[allowed] @ self.emb.embed([judgement.text[:20000]])[0]
+        bonus = np.array([0.15 if original_language(self.refs[i]) == language else 0.0 for i in allowed])
+        order = np.argsort(-(sims + bonus), kind="stable")
+        return [self.refs[allowed[i]] for i in order[:k]]

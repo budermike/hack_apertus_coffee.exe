@@ -9,23 +9,28 @@
 
 from __future__ import annotations
 
+import json
+import re
+
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Sequence
 
 from .check import CheckReport, check_summaries
-from .examples import ExampleSelector
+from .examples import ExampleSelector, StyleExamples
 from .judgement import (
     Judgement,
     consideration_numbers,
     consideration_passages,
     excerpt,
     operative_outcome,
+    outcome_block,
     title_de,
     title_fr,
 )
 from .llm import SummaryLLM, parse_json_object
 from . import prompts
+from ..triage.reference_corpus import ReferenceCase
 
 LANGUAGES = ("de", "fr")
 
@@ -87,14 +92,17 @@ class SummaryResult:
         }
 
 
-class Summarizer:
+class SummarizerV1:
+    """Older pipeline (facts JSON -> DE -> FR, prompts in ``prompts/v1/``), kept for comparison
+    (``notebooks/summary/``) and as ``run.summarizer_factory(pipeline="v1")``."""
+
     def __init__(
         self,
         llm: SummaryLLM,
         selector: ExampleSelector | None = None,
         n_examples: int = 2,
         max_judgement_chars: int = 40000,
-        prompts_dir: Path = prompts.PROMPTS_DIR,
+        prompts_dir: Path = prompts.PROMPTS_DIR_V1,
     ) -> None:
         self.llm = llm
         self.selector = selector or ExampleSelector()
@@ -177,5 +185,181 @@ class Summarizer:
             model=self.llm.model,
             prompt_version=prompts.prompt_version(self.prompts_dir),
             check=report,
+            attempts=attempts,
+        )
+
+
+LENGTH = {"de": (130, 240), "fr": (160, 290)}  # words, around the median of the Suva texts (25.-75. percentile)
+
+ANALYSIS_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "kernfrage": {"type": "string"},
+        "kernregel": {"type": "string"},
+        "erwaegungen": {"type": "array", "items": {"type": "string"}, "minItems": 1, "maxItems": 3},
+        "einstieg": {"type": "string", "enum": ["regel", "fall"]},
+        "sachverhalt_kurz": {"type": "string"},
+        "ergebnis_nennen": {"type": "boolean"},
+    },
+    "required": ["kernfrage", "kernregel", "erwaegungen", "einstieg", "sachverhalt_kurz", "ergebnis_nennen"],
+    "additionalProperties": False,
+}
+
+class Summarizer:
+    """DE + FR summary of one judgement (default pipeline, chosen in ``notebooks/summary/02_modelle_prompts``).
+
+    1. The model names the core question and the 1-3 considerations that make the judgement
+       noteworthy for Suva (structured JSON, ``prompts/analyse_system.md``).
+    2. It writes each language only from the wording of those considerations, with a block on
+       who appealed and who won (``judgement.outcome_block``) and 3 Suva examples marked as
+       *other cases, style only* (``examples.StyleExamples``).
+    3. One rewrite when the text is far too short, one paragraph only, starts with
+       «In diesem Urteil», or the check finds a wrong outcome, remand or article.
+
+    With Apertus 70B every criterion of the 70B judge was >= 4.2 on 20 development cases;
+    the older ``SummarizerV1`` scored 4.0 with 70B and 2.3 with 8B.
+    """
+    def __init__(self, llm: Any, examples: StyleExamples | None = None, prompts_dir: Path = prompts.PROMPTS_DIR,
+                 max_judgement_chars: int = 40000, analysis_llm: Any | None = None) -> None:
+        self.llm = llm  # summary.llm.SummaryLLM (Apertus 8B): writes the texts
+        # optional other model for step 1 only (core question), e.g. Apertus 70B; default = same model
+        self.analysis_llm = analysis_llm or llm
+        self.examples = examples or StyleExamples()
+        self.prompts_dir = Path(prompts_dir)
+        self.max_chars = max_judgement_chars
+
+    # --- step 1: core question -------------------------------------------------------------
+
+    def analyse(self, judgement: Judgement) -> dict[str, Any]:
+        known = sorted(consideration_numbers(judgement.text), key=lambda n: [int(x) for x in n.split(".")])
+        user = (f"Urteil {judgement.case_id}\n\nVorhandene Erwägungen: {', '.join(known) or 'keine Nummern'}\n\n"
+                f"Urteilstext:\n{excerpt(judgement.text, self.max_chars)}")
+        client = self.analysis_llm._client
+        fmt = {"type": "json_schema", "json_schema": {"name": "analyse", "strict": True, "schema": ANALYSIS_SCHEMA}}
+        data, error = None, None
+        for temperature in (0.0, 0.3):  # a greedy decoding that loops gets one retry with a little temperature
+            response = client.chat.completions.create(
+                model=self.analysis_llm.model, temperature=temperature, response_format=fmt,
+                max_tokens=int(900 * getattr(self.analysis_llm, "token_factor", 1)),
+                messages=[{"role": "system", "content": prompts._read("analyse_system.md", str(self.prompts_dir))},
+                          {"role": "user", "content": user}])
+            try:
+                data = json.loads(response.choices[0].message.content)
+                break
+            except json.JSONDecodeError as exc:
+                error = exc
+        if data is None:
+            raise error
+        data["erwaegungen"] = [e.strip().rstrip(".") for e in data["erwaegungen"] if e.strip().rstrip(".") in known] or known[-2:]
+        return data
+
+    # --- step 2: write -----------------------------------------------------------------------
+
+    def write_user(self, judgement: Judgement, language: str, analysis: dict[str, Any],
+                   examples: Sequence[ReferenceCase], notes: Sequence[str] = ()) -> str:
+        lo, hi = LENGTH[language]
+        passages = consideration_passages(judgement.text, analysis["erwaegungen"], max_chars=9000)
+        if language == "de":
+            shots = "\n\n".join(f"--- Stilbeispiel {i + 1} (ANDERER Fall, Inhalt nicht übernehmen) ---\n{ex.text_de}"
+                                for i, ex in enumerate(examples))
+            parts = [
+                "So schreibt die Suva. Übernimm Aufbau, Länge, Ton und Wendungen, aber KEINEN Inhalt:\n\n" + shots,
+                f"=== Zu zusammenfassendes Urteil: {title_de(judgement)} ===",
+                f"Kernfrage: {analysis['kernfrage']}\nKernregel: {analysis['kernregel']}",
+                f"Sachverhalt (nur falls nötig, höchstens 1–2 Sätze): {analysis['sachverhalt_kurz']}",
+                f"Wortlaut der massgebenden Erwägungen ({', '.join(analysis['erwaegungen'])}):\n{passages}",
+                "Verbindliche Angaben zu Parteien und Ergebnis (nie umkehren):\n" + outcome_block(judgement, "de") + "\n"
+                + ("Nenne das Ergebnis knapp im letzten Satz." if analysis["ergebnis_nennen"]
+                   else "Nenne das Ergebnis nicht, ende mit der Regel oder ihrer Anwendung."),
+                f"Einstieg: {'direkt mit der Rechtsregel' if analysis['einstieg'] == 'regel' else 'mit der versicherten Person und dem Ereignis'}.",
+                f"Länge: {lo}–{hi} Wörter in 2–3 Absätzen. Nur Angaben aus den Erwägungen oben.",
+                *([("Korrigiere diese Mängel der letzten Fassung:\n" + "\n".join(f"- {n}" for n in notes))] if notes else []),
+                "Schreibe jetzt die Zusammenfassung auf Deutsch.",
+            ]
+        else:
+            shots = "\n\n".join(f"--- Exemple de style {i + 1} (AUTRE affaire, ne pas reprendre le contenu) ---\n{ex.text_fr}"
+                                for i, ex in enumerate(examples))
+            parts = [
+                "Voici comment écrit la Suva. Reprends la structure, la longueur, le ton et les tournures, mais AUCUN contenu :\n\n" + shots,
+                f"=== Arrêt à résumer : {title_fr(judgement)} ===",
+                f"Question centrale (en allemand) : {analysis['kernfrage']}\nRègle centrale (en allemand) : {analysis['kernregel']}",
+                f"Faits (seulement si nécessaire, 1–2 phrases au plus ; en allemand) : {analysis['sachverhalt_kurz']}",
+                f"Texte des considérants déterminants ({', '.join(analysis['erwaegungen'])}) :\n{passages}",
+                "Indications contraignantes sur les parties et l'issue (ne jamais inverser) :\n" + outcome_block(judgement, "fr") + "\n"
+                + ("Mentionne brièvement l'issue dans la dernière phrase." if analysis["ergebnis_nennen"]
+                   else "Ne mentionne pas l'issue ; termine par la règle ou son application."),
+                f"Entrée : {'directement par la règle de droit' if analysis['einstieg'] == 'regel' else 'par la personne assurée et l’événement'}.",
+                f"Longueur : {lo}–{hi} mots en 2–3 paragraphes. Uniquement des éléments tirés des considérants ci-dessus.",
+                *([("Corrige ces défauts de la dernière version :\n" + "\n".join(f"- {n}" for n in notes))] if notes else []),
+                "Rédige maintenant le résumé en français.",
+            ]
+        return "\n\n".join(parts)
+
+    def write(self, judgement: Judgement, language: str, analysis: dict[str, Any],
+              examples: Sequence[ReferenceCase], notes: Sequence[str] = ()) -> str:
+        system = prompts._read(f"write_system_{language}.md", str(self.prompts_dir)).format(
+            style=prompts._read(f"style_{language}.md", str(self.prompts_dir)), glossary=prompts._read("glossary.md", str(self.prompts_dir)))
+        return self.llm.chat(system, self.write_user(judgement, language, analysis, examples, notes), max_tokens=1200)
+
+    def faults(self, text: str, language: str, judgement: Judgement) -> list[str]:
+        from hack_apertus_coffee_exe.summary.check import cited_considerations
+
+        lo, _ = LENGTH[language]
+        notes = []
+        words = len(text.split())
+        if words < 0.75 * lo:
+            notes.append(f"Zu kurz ({words} Wörter): schreibe {LENGTH[language][0]}–{LENGTH[language][1]} Wörter in 2–3 Absätzen."
+                         if language == "de" else
+                         f"Trop court ({words} mots) : écris {LENGTH[language][0]}–{LENGTH[language][1]} mots en 2–3 paragraphes.")
+        invented = cited_considerations(text) - consideration_numbers(judgement.text)
+        if invented:
+            notes.append(("Erwägung(en) existieren nicht: " if language == "de" else "Considérant(s) inexistant(s) : ")
+                         + ", ".join(sorted(invented)))
+        from hack_apertus_coffee_exe.summary.check import check_language
+
+        for issue in check_language(text, language, judgement, operative_outcome(judgement.text)):
+            if issue.severity == "error" and issue.kind in ("outcome", "remand", "article"):
+                notes.append(issue.detail)
+        paragraphs = [p for p in re.split(r"\n\s*\n", text.strip()) if p.strip()]
+        if len(paragraphs) == 1 and words >= 90:
+            notes.append("Nur ein Absatz: gliedere den Text in 2–3 Absätze, getrennt durch eine Leerzeile."
+                         if language == "de" else "Un seul paragraphe : structure le texte en 2–3 paragraphes séparés par une ligne vide.")
+        if text.lstrip().lower().startswith(("in diesem urteil", "dans cet arrêt", "dans cette affaire")):
+            notes.append("Nicht mit «In diesem Urteil» beginnen." if language == "de" else "Ne pas commencer par « Dans cet arrêt ».")
+        return notes
+
+    def summarize(self, judgement: Judgement, similar_case_ids: Sequence[str] = (),
+                  exclude_ids: Sequence[str] = ()) -> SummaryResult:
+        """DE + FR summary. ``similar_case_ids`` / ``exclude_ids`` are accepted for the
+        ``generate.Summarizer`` interface; examples come from ``StyleExamples``."""
+        analysis = self.analyse(judgement)
+        texts, attempts, used = {}, {}, []
+        for language in ("de", "fr"):
+            examples = self.examples.select(judgement, language)
+            used += [e.case_id for e in examples if e.case_id not in used]
+            text = self.write(judgement, language, analysis, examples)
+            attempts[language] = 1
+            notes = self.faults(text, language, judgement)
+            if notes:
+                text = self.write(judgement, language, analysis, examples, notes)
+                attempts[language] = 2
+            texts[language] = text.strip()
+        return self.result(judgement, texts, analysis, used, attempts)
+
+    def result(self, judgement: Judgement, texts: dict[str, str], analysis: dict[str, Any],
+               examples: list[str], attempts: dict[str, int]) -> SummaryResult:
+        outcome = operative_outcome(judgement.text)
+        return SummaryResult(
+            case_id=judgement.case_id,
+            title_de=title_de(judgement),
+            title_fr=title_fr(judgement),
+            summary_de=texts["de"],
+            summary_fr=texts["fr"],
+            facts=analysis,
+            outcome=outcome.describe_de(),
+            examples=examples,
+            model=self.llm.model,
+            prompt_version=prompts.prompt_files_version(self.prompts_dir),
+            check=check_summaries(texts["de"], texts["fr"], judgement, outcome),
             attempts=attempts,
         )

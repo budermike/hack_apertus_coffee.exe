@@ -11,7 +11,7 @@ from hack_apertus_coffee_exe.triage.reference_corpus import ReferenceCase
 
 from hack_apertus_coffee_exe.summary import prompts
 from hack_apertus_coffee_exe.summary.examples import ExampleSelector
-from hack_apertus_coffee_exe.summary.generate import Summarizer
+from hack_apertus_coffee_exe.summary.generate import SummarizerV1 as Summarizer
 from hack_apertus_coffee_exe.summary.judgement import find_judgement
 from hack_apertus_coffee_exe.summary.llm import SummaryLLM, parse_json_object
 from hack_apertus_coffee_exe.summary.run import run_batch, summarize_case
@@ -135,3 +135,89 @@ def test_invented_consideration_numbers_are_removed_from_the_facts(summarizer):
     finally:
         FACTS["kernerwaegungen"].pop()
     assert [k["erwaegung"] for k in facts["kernerwaegungen"]] == ["3", ""]
+
+
+# --- Summarizer (default pipeline, former v3) -------------------------------------------
+
+from datetime import date  # noqa: E402
+
+from hack_apertus_coffee_exe.summary import examples as ex_mod, generate as gen_mod, judgement as j_mod  # noqa: E402
+from hack_apertus_coffee_exe.summary.judgement import Judgement  # noqa: E402
+
+PARTY_JUDGEMENT = """Verfahrensbeteiligte
+Suva, Rechtsabteilung, 6002 Luzern,
+Beschwerdeführerin,
+gegen
+A.________,
+Beschwerdegegner.
+
+Sachverhalt:
+A. Der Versicherte stürzte von einer Leiter.
+
+Erwägungen:
+1. Die Beschwerde ist zulässig.
+2. Streitig ist der natürliche Kausalzusammenhang nach Art. 6 Abs. 1 UVG. Die Vorinstanz stützte sich auf ein Gutachten.
+3. Das Gutachten beruht auf einem falschen Unfallhergang; der Kausalzusammenhang ist nicht überwiegend wahrscheinlich.
+
+Demnach erkennt das Bundesgericht:
+1. Die Beschwerde wird gutgeheissen. Der Einspracheentscheid der Suva wird bestätigt.
+2. Die Gerichtskosten werden dem Beschwerdegegner auferlegt.
+"""
+
+
+def _party_judgement() -> Judgement:
+    return Judgement(case_id="8C_9/2025", text=PARTY_JUDGEMENT, language="de", decision_date=date(2025, 6, 1))
+
+
+def _style_ref(case_id: str, title: str) -> ReferenceCase:
+    return ReferenceCase(case_id=case_id, chamber="8C", title=title, text_de=f"Regel {case_id}.", text_fr=f"Règle {case_id}.",
+                         bger_url="", author="Frei Thomas (FRT), Rechtsanwalt", source_file="")
+
+
+def test_appellant_and_outcome_block_name_who_appealed_and_who_won():
+    assert j_mod.appellant(PARTY_JUDGEMENT) == "versicherer"
+    block = j_mod.outcome_block(_party_judgement(), "de")
+    assert "Versicherer" in block and "obsiegt" in block and "Gerichtskosten" not in block
+
+
+def test_style_examples_skip_own_case_and_prefer_target_language_originals():
+    refs = [_style_ref("8C_9/2025", "BGer-Urteil 8C_9/2025"), _style_ref("8C_1/2025", "Arrêt du TF 8C_1/2025"),
+            _style_ref("8C_2/2025", "BGer-Urteil 8C_2/2025")]
+    chosen = ex_mod.StyleExamples(refs).select(_party_judgement(), "de", k=2)
+    assert [r.case_id for r in chosen] == ["8C_2/2025", "8C_1/2025"]
+
+
+class FakeLLM:
+    """Answers the analysis (JSON) and every write call; records the prompts."""
+
+    model = "apertus-v1-5-70b"
+
+    def __init__(self, text: str) -> None:
+        self.text, self.users = text, []
+        analysis = {"kernfrage": "Kausalzusammenhang?", "kernregel": "Ein Gutachten mit falschem Hergang ist nicht beweiskräftig.",
+                    "erwaegungen": ["3", "9.9"], "einstieg": "regel", "sachverhalt_kurz": "Sturz.", "ergebnis_nennen": True}
+        message = type("M", (), {"content": json.dumps(analysis)})
+        response = type("R", (), {"choices": [type("C", (), {"message": message})]})
+        self._client = type("Cl", (), {"chat": type("Ch", (), {"completions": type("Co", (), {
+            "create": staticmethod(lambda **kw: response)})})})
+
+    def chat(self, system, user, max_tokens=None):
+        self.users.append(user)
+        return self.text
+
+
+def test_summarize_returns_summary_result_and_drops_unknown_considerations(tmp_path):
+    words = " ".join(["Wort"] * 160)
+    llm = FakeLLM(f"Ein Gutachten mit falschem Hergang ist nicht beweiskräftig. {words}\n\nDie Beschwerde der Suva wurde gutgeheissen.")
+    refs = [_style_ref("8C_2/2025", "BGer-Urteil 8C_2/2025")]
+    result = gen_mod.Summarizer(llm, ex_mod.StyleExamples(refs)).summarize(_party_judgement())
+    assert result.facts["erwaegungen"] == ["3"]          # 9.9 does not exist in the judgement
+    assert result.summary_de.startswith("Ein Gutachten")
+    assert result.prompt_version.startswith("v3-") and result.model == "apertus-v1-5-70b"
+    assert "obsiegt" in llm.users[0] and "ANDERER Fall" in llm.users[0]
+
+
+def test_faults_ask_for_rewrite_when_too_short_or_one_paragraph():
+    s = gen_mod.Summarizer(FakeLLM(""), ex_mod.StyleExamples([_style_ref("8C_2/2025", "BGer-Urteil 8C_2/2025")]))
+    assert any("Zu kurz" in n for n in s.faults("Kurz.", "de", _party_judgement()))
+    assert any("Absatz" in n for n in s.faults(" ".join(["Wort"] * 120), "de", _party_judgement()))
