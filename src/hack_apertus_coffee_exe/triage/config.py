@@ -44,6 +44,9 @@ class TriageConfig:
     # list_factor; null in the JSON goes back to list_factor.
     target_recall: float | None = 0.9
     yellow_recall: float | None = 1.0
+    # Prompt version of the relevance scoring: "v1" (#62) or "v2" (no label rates in the
+    # prompt, reason also in French, #67). v2 writes its own files with suffix "_v2".
+    relevance_prompt: str = "v1"
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "label_periods", tuple(self.label_periods))

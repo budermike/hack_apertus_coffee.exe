@@ -345,6 +345,55 @@ DEEP_SCHEMA = _object(
 )
 
 
+
+# ------------------------------------------------------------------ prompt v2 (opt-in)
+# Switched on with "relevance_prompt": "v2" in configs/triage.json. Differences to v1:
+# - no label rates of the evaluated quarters in the prompt (v1 states how often Suva
+#   picks accident vs invalidity judgements and quotas for the second pass; the audit
+#   flagged that as tuned on the measured data),
+# - the reason also in French (#67), written before the score like the German one.
+# Another prompt gives other scores: v2 has its own cache stages, score files,
+# calibration and exports (suffix "_v2"), so v1's results are never overwritten.
+
+PROMPT_VERSIONS = ("v1", "v2")
+
+_RATES_V1 = POLICY[POLICY.index("Erfahrungswerte:") :]
+POLICY_V2 = POLICY.replace(
+    _RATES_V1,
+    "Gewichtung: Ein materiell begründetes Urteil zur Unfallversicherung ist eher relevant als nicht. "
+    "Ein Urteil zur Invalidenversicherung ist nur relevant, wenn K2, K3 oder K4 deutlich erfüllt sind.",
+)
+TRIAGE_SYSTEM_V2 = TRIAGE_SYSTEM.replace(POLICY, POLICY_V2).replace(
+    "- d_score:",
+    "- c_begruendung_fr: dieselbe Begründung in zwei französischen Sätzen, direkt auf Französisch verfasst "
+    "in der Fachsprache der Romandie (l'assuré, le recourant, consid., LAA, LPGA), keine Wort-für-Wort-Übersetzung.\n"
+    "- d_score:",
+)
+DEEP_SYSTEM_V2 = DEEP_SYSTEM.replace(
+    "Der Platz ist knapp: Von den materiell begründeten Urteilen zur Unfallversicherung erscheint gut die Hälfte, "
+    "von jenen zur Invalidenversicherung etwa jedes zehnte. ",
+    "Der Platz ist knapp. ",
+).replace("Bedenke die Quoten oben.", "Sei streng.")
+TRIAGE_SCHEMA_V2 = _object(
+    {**{k: v for k, v in TRIAGE_SCHEMA["properties"].items() if k != "d_score"},
+     "c_begruendung_fr": {"type": "string"}, "d_score": {"type": "integer"}}
+)
+for _text, _marker in ((POLICY_V2, "Gewichtung:"), (TRIAGE_SYSTEM_V2, "c_begruendung_fr"), (DEEP_SYSTEM_V2, "Sei streng.")):
+    assert _marker in _text, f"prompt v2 could not be derived from v1 ({_marker})"
+assert "Erfahrungswerte" not in TRIAGE_SYSTEM_V2 and "jedes zehnte" not in DEEP_SYSTEM_V2
+
+PROMPTS: dict[str, dict[str, Any]] = {
+    "v1": {"triage": TRIAGE_SYSTEM, "triage_schema": TRIAGE_SCHEMA, "deep": DEEP_SYSTEM, "suffix": ""},
+    "v2": {"triage": TRIAGE_SYSTEM_V2, "triage_schema": TRIAGE_SCHEMA_V2, "deep": DEEP_SYSTEM_V2, "suffix": "_v2"},
+}
+
+
+def prompt_suffix(prompt: str) -> str:
+    """File-name suffix of a prompt version ("" for v1, so v1 keeps its existing files)."""
+    if prompt not in PROMPTS:
+        raise ValueError(f"relevance_prompt must be one of {PROMPT_VERSIONS}, got {prompt!r}")
+    return PROMPTS[prompt]["suffix"]
+
 def _valid(data: Any, schema: dict[str, Any]) -> bool:
     """Minimal check of a model answer against the two schemas above (no extra dependency)."""
     kind = schema["type"]
@@ -494,8 +543,14 @@ def build_pool(items: Sequence[CrawlItem], selected_ids: set[str], summaries: di
     return pool
 
 
-def score_item(item: CrawlItem, pool: Sequence[Precedent], client: ApertusRelevanceClient) -> dict[str, Any]:
-    """Both Apertus passes for one judgement. Never raises: a failure is stored in ``error``."""
+def score_item(
+    item: CrawlItem, pool: Sequence[Precedent], client: ApertusRelevanceClient, prompt: str = "v1"
+) -> dict[str, Any]:
+    """Both Apertus passes for one judgement. Never raises: a failure is stored in ``error``.
+
+    ``prompt`` selects the prompt version (``PROMPTS``); v1 keeps its cache stages.
+    """
+    texts, suffix = PROMPTS[prompt], prompt_suffix(prompt)
     doc = describe(item)
     record = {k: doc[k] for k in ("case_id", "case_ids", "decision_date", "language", "subject", "area", "outcome", "single_judge")}
     record.update(triage=None, deep=None, precedents=[], error=None, model=client.model)
@@ -513,7 +568,9 @@ def score_item(item: CrawlItem, pool: Sequence[Precedent], client: ApertusReleva
     key = entry_key(doc["case_id"], doc["decision_date"] or None)
     try:
         task = f"Beurteile jetzt die Relevanz des Urteils {doc['case_id']} für die Suva: erst die Belege, dann die Begründung, zuletzt der Score."
-        triage = client.call("triage", key, TRIAGE_SYSTEM, USER.format(task=task, **fields), TRIAGE_SCHEMA, 1600)
+        triage = client.call(
+            "triage" + suffix, key, texts["triage"], USER.format(task=task, **fields), texts["triage_schema"], 1600
+        )
         triage["d_score"] = max(0, min(100, triage["d_score"]))
         source = _squash(" ".join(s["text"] for s in doc["segs"]))
         for criterion in triage["b_kriterien"]:
@@ -521,7 +578,7 @@ def score_item(item: CrawlItem, pool: Sequence[Precedent], client: ApertusReleva
         record["triage"] = triage
         if triage["d_score"] >= DEEP_MIN_SCORE:
             task = f"Bewerte jetzt das Urteil {doc['case_id']}."
-            deep = client.call("deep", key, DEEP_SYSTEM, USER.format(task=task, **fields), DEEP_SCHEMA, 400)
+            deep = client.call("deep" + suffix, key, texts["deep"], USER.format(task=task, **fields), DEEP_SCHEMA, 400)
             deep["e_score"] = max(0, min(100, deep["e_score"]))
             record["deep"] = deep
     except Exception as exc:  # stored and shown, never swallowed
@@ -615,6 +672,7 @@ def score_items(
     client: ApertusRelevanceClient,
     workers: int = 8,
     progress: Callable[[int, int], None] | None = None,
+    prompt: str = "v1",
 ) -> list[dict[str, Any]]:
     """Score all candidates in parallel; the order of ``items`` is kept."""
     candidates = [item for item in items if is_candidate(item)]
@@ -622,7 +680,7 @@ def score_items(
     done_lock = threading.Lock()
 
     def one(item: CrawlItem) -> dict[str, Any]:
-        record = score_item(item, pool, client)
+        record = score_item(item, pool, client, prompt)
         with done_lock:
             done[0] += 1
             cur = done[0]

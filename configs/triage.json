@@ -1,5 +1,5 @@
 {
-  "_comment": "Triage settings (issues #11, #12, #33). Thresholds are placeholders until the eval sweep (#21) gives the F2-best value. label_periods and list_factor belong to `triage.cli relevance` (docs/ISSUE_RECALL.md): quarters with known Suva selection, and the multiplier on the F2 threshold (1.0 = best F2, lower = longer list and higher recall; 0.3 found all 59 Suva judgements of the two labelled quarters). The relevance value is shown on this file's 0-100 scale: list threshold = green_threshold. target_recall (#75) replaces list_factor when set: the list threshold is the highest value at which that share of the known Suva judgements of the labelled periods is on the list (0.9 = 90 %); yellow_recall sets the lower bound of yellow the same way (1.0 = every known Suva judgement at least yellow). Set target_recall to null to use list_factor again.",
+  "_comment": "Triage settings (issues #11, #12, #33). Thresholds are placeholders until the eval sweep (#21) gives the F2-best value. label_periods and list_factor belong to `triage.cli relevance` (docs/ISSUE_RECALL.md): quarters with known Suva selection, and the multiplier on the F2 threshold (1.0 = best F2, lower = longer list and higher recall; 0.3 found all 59 Suva judgements of the two labelled quarters). The relevance value is shown on this file's 0-100 scale: list threshold = green_threshold. target_recall (#75) replaces list_factor when set: the list threshold is the highest value at which that share of the known Suva judgements of the labelled periods is on the list (0.9 = 90 %); yellow_recall sets the lower bound of yellow the same way (1.0 = every known Suva judgement at least yellow). Set target_recall to null to use list_factor again. relevance_prompt: v1 (#62) or v2 (no label rates of the evaluated quarters in the prompt, reason also in French, #67); v2 writes its own score files, calibration and exports with the suffix _v2 and needs a new Apertus run.",
   "rank_by": "final_score",
   "llm_weight": 0.75,
   "top_k": 3,
@@ -11,5 +11,6 @@
   "label_periods": ["2025-Q4", "2026-Q1"],
   "list_factor": 0.3,
   "target_recall": 0.9,
-  "yellow_recall": 1.0
+  "yellow_recall": 1.0,
+  "relevance_prompt": "v1"
 }

@@ -206,29 +206,39 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument("--judgements-dir", default="judgements")
     parser.add_argument("--tables-dir", default=DEFAULT_TABLES_DIR)
     parser.add_argument("--list-factor", type=float, default=None, help="Factor to mark in the table (default: config)")
-    parser.add_argument("--report", default="results/relevance_eval.md")
+    parser.add_argument("--report", default=None, help="Report path (default: results/relevance_eval<suffix>.md)")
+    parser.add_argument("--prompt", choices=("v1", "v2"), default=None,
+                        help="Prompt version whose score files are evaluated (default: config)")
     args = parser.parse_args(argv)
 
     from hack_apertus_coffee_exe.triage.config import load_config
 
+    from hack_apertus_coffee_exe.triage.relevance import prompt_suffix
+
     config = load_config()
+    prompt = args.prompt or config.relevance_prompt
+    suffix = prompt_suffix(prompt)
+    args.report = args.report or f"results/relevance_eval{suffix}.md"
     list_factor = args.list_factor if args.list_factor is not None else config.list_factor
     selected_ids = load_selected_ids(args.judgements_dir)
     records = {}
     for name in args.periods:
-        path = scores_path(args.tables_dir, DateRange.from_period(name))
+        path = scores_path(args.tables_dir, DateRange.from_period(name), prompt)
         if not path.exists():
-            raise SystemExit(f"{path} is missing: run `python -m hack_apertus_coffee_exe.triage.cli relevance --period {name}` first")
+            raise SystemExit(
+                f"{path} is missing: run `python -m hack_apertus_coffee_exe.triage.cli relevance --period {name} --prompt {prompt}` first"
+            )
         records[name] = json.loads(path.read_text(encoding="utf-8"))
     folds = holdout(records, selected_ids)
     table = threshold_table(folds)
     model = next((r["model"] for rs in records.values() for r in rs if r.get("triage")), "?")
+    model = model if prompt == "v1" else f"{model}, Prompt {prompt}"
     Path(args.report).parent.mkdir(parents=True, exist_ok=True)
     targets = target_rows(folds)
     Path(args.report).write_text(
         render(folds, table, list_factor, model, targets, config.target_recall), encoding="utf-8"
     )
-    csv_path = Path(args.tables_dir) / "relevance_eval_thresholds.csv"
+    csv_path = Path(args.tables_dir) / f"relevance_eval_thresholds{suffix}.csv"
     with csv_path.open("w", encoding="utf-8", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=list(table[0].keys()))
         writer.writeheader()

@@ -24,6 +24,7 @@ from .date_filter import DateRange
 from .pipeline import CrawlItem, TriageResult, load_crawl_items
 from .reference_corpus import load_reference_corpus
 from .relevance import (
+    prompt_suffix,
     LIST_AREAS,
     ApertusRelevanceClient,
     Precedent,
@@ -126,8 +127,9 @@ def public_record(record: dict[str, Any]) -> dict[str, Any]:
     return out
 
 
-def scores_path(tables_dir: str | Path, period: DateRange) -> Path:
-    return Path(tables_dir) / f"relevance_scores_{period.label()}.json"
+def scores_path(tables_dir: str | Path, period: DateRange, prompt: str = "v1") -> Path:
+    """``relevance_scores_<period>.json``; other prompt versions get their suffix (``_v2``)."""
+    return Path(tables_dir) / f"relevance_scores_{period.label()}{prompt_suffix(prompt)}.json"
 
 
 def score_period(
@@ -137,10 +139,11 @@ def score_period(
     raw_dir: str | Path = "data/raw",
     workers: int = 8,
     progress: Callable[[int, int], None] | None = None,
+    prompt: str = "v1",
 ) -> tuple[list[dict[str, Any]], dict[str, CrawlItem]]:
     """Score every candidate of ``period``; returns the records and the crawl items by case number."""
     items = load_period_items(raw_dir, period)
-    records = score_items(items, pool, client, workers=workers, progress=progress)
+    records = score_items(items, pool, client, workers=workers, progress=progress, prompt=prompt)
     return records, {item.case_id: item for item in items}
 
 
@@ -190,6 +193,8 @@ def to_results(
             "principle": deep.get("a_grundsatz"), "uv_use": deep.get("b_nutzen_uv"), "rule": deep.get("d_merksatz"),
             "deep_score": deep.get("e_score"),
         }
+        if triage.get("c_begruendung_fr"):  # prompt v2: reason in French too (#67)
+            metadata["relevance"]["reason_fr"] = triage["c_begruendung_fr"]
         results.append(
             TriageResult(
                 case_id=record["case_id"], final_score=score, cosine_score=0.0, relevant=ampel == calibration.AMPEL_GREEN,
@@ -233,6 +238,7 @@ def run(
     The score files are then left as they are.
     """
     period = DateRange.from_period(period_name)
+    prompt = (config or TriageConfig()).relevance_prompt
     client = client or ApertusRelevanceClient(cache_dir="data/processed/triage")
     selected = load_selected_ids(judgements_dir)
     pool = precedent_pool(
@@ -247,13 +253,15 @@ def run(
     for name in [*earlier, period_name]:
         rng = DateRange.from_period(name)
         if from_scores:
-            path = scores_path(tables_dir, rng)
+            path = scores_path(tables_dir, rng, prompt)
             if not path.exists():
                 raise FileNotFoundError(f"{path} is missing: score {name} with Apertus first (without --from-scores)")
             records = json.loads(path.read_text(encoding="utf-8"))
             items = {item.case_id: item for item in load_period_items(raw_dir, rng)}
         else:
-            records, items = score_period(rng, client, pool, raw_dir, workers, lambda a, b, n=name: log(f"  {n}: {a}/{b}"))
+            records, items = score_period(
+                rng, client, pool, raw_dir, workers, lambda a, b, n=name: log(f"  {n}: {a}/{b}"), prompt=prompt
+            )
         scored.append((name, rng, records, items))
 
     missing = {name: [r for r in records if not_asked(r)] for name, _, records, _ in scored}
@@ -269,7 +277,7 @@ def run(
 
     train: list[dict[str, Any]] = []
     for name, rng, records, items in scored:
-        path = scores_path(tables_dir, rng)
+        path = scores_path(tables_dir, rng, prompt)
         if not from_scores:
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text(json.dumps([public_record(r) for r in records], ensure_ascii=False, indent=1), encoding="utf-8")
