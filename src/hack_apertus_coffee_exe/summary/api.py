@@ -4,8 +4,13 @@ Implements the summary part of the contract in ``src/presentation/api.js``:
 
     GET    /api/judgements/{id}/summary          stored entry, never generates (404 if none)
     POST   /api/judgements/{id}/summary          stored entry; generates DE + FR first if missing
-    PUT    /api/judgements/{id}/summary          body {de, fr}: changed texts become 'edited' versions
-    POST   /api/judgements/{id}/summary/approve  body {languages?}: approve pending edits
+    PUT    /api/judgements/{id}/summary          body {de, fr}: a changed text becomes the one edited
+                                                 version of that language and is shown at once; if only
+                                                 one language changed, Apertus aligns the other one
+    DELETE /api/judgements/{id}/summary/edit     drop the edited version (?lang=de|fr, default both):
+                                                 back to the generated text
+    POST   /api/judgements/{id}/summary/approve  body {languages?}: approve pending edits (no longer
+                                                 used by the UI: edits need no approval)
     GET    /api/knowledge-base?q=...             search over all stored summaries, newest first
     DELETE /api/knowledge-base                   405: the knowledge base is append-only
 
@@ -86,18 +91,63 @@ class Backend:
             return HTTPStatus.OK, summary_entry(conn, judgement.case_id)
 
     def edit_summary(self, case_number: str, body: dict[str, Any]) -> Response:
+        """Save the lawyer's texts: one edited version per language, shown at once.
+
+        If only one language was changed, Apertus brings the other language in line with
+        it and that text is saved too, so both keep saying the same (``"align": false`` in
+        the body switches this off). When Apertus cannot do it (no key, gateway down), the
+        edit is saved anyway. ``alignment`` in the answer says what happened:
+        ``null`` (nothing to align) or ``{lang, ok, error?}``.
+        """
+        with closing(store.connect(self.db_path)) as conn:
+            entry = summary_entry(conn, case_number)
+            if entry is None:
+                return _error(HTTPStatus.NOT_FOUND, "no summary stored")
+            changed = [
+                lang for lang in store.LANGUAGES
+                if isinstance(body.get(lang), str) and body[lang].strip() and body[lang] != entry.get(lang)
+            ]
+            for lang in changed:
+                store.replace_edit(conn, case_number, lang, body[lang])
+            alignment = None
+            if len(changed) == 1 and body.get("align") is not False:
+                source = changed[0]
+                target = next(lang for lang in store.LANGUAGES if lang != source)
+                alignment = self._align_other_language(conn, case_number, entry, source, body[source], target)
+            result = summary_entry(conn, case_number)
+            result["alignment"] = alignment
+            return HTTPStatus.OK, result
+
+    def _align_other_language(
+        self, conn: Any, case_number: str, entry: dict[str, Any], source: str, source_text: str, target: str
+    ) -> dict[str, Any]:
+        target_text = entry.get(target)
+        if not target_text:
+            return {"lang": target, "ok": False, "error": "no summary in that language"}
+        try:
+            aligned = self.get_summarizer().align_language(
+                target_lang=target,
+                target_text=target_text,
+                source_lang=source,
+                source_text=source_text,
+                instruction=None,
+                facts=(entry.get("facts") or {}).get(target) or None,
+            )
+        except Exception as exc:  # the edit itself is saved; the UI tells the user
+            logger.warning("Could not align %s (%s) after an edit: %s", case_number, target, exc)
+            return {"lang": target, "ok": False, "error": str(exc)[:300]}
+        if not isinstance(aligned, str) or not aligned.strip():
+            return {"lang": target, "ok": False, "error": "Apertus returned no text"}
+        if aligned != target_text:
+            store.replace_edit(conn, case_number, target, aligned)
+        return {"lang": target, "ok": True}
+
+    def reset_summary(self, case_number: str, language: str | None = None) -> Response:
+        """Drop the edited version (one language or both): the generated text is shown again."""
         with closing(store.connect(self.db_path)) as conn:
             if summary_entry(conn, case_number) is None:
                 return _error(HTTPStatus.NOT_FOUND, "no summary stored")
-            for lang in store.LANGUAGES:
-                text = body.get(lang)
-                if not isinstance(text, str) or not text.strip():
-                    continue
-                current = store.get_pending_edit(conn, case_number, lang) or store.get_display(
-                    conn, case_number, lang
-                )
-                if current is None or text != current.text:
-                    store.save_edit(conn, case_number, lang, text)
+            store.discard_edit(conn, case_number, language or None)
             return HTTPStatus.OK, summary_entry(conn, case_number)
 
     def approve_summary(self, case_number: str, body: dict[str, Any]) -> Response:
@@ -321,9 +371,13 @@ class Handler(SimpleHTTPRequestHandler):
         self._respond(lambda: _error(HTTPStatus.NOT_FOUND, "unknown endpoint"))
 
     def do_DELETE(self) -> None:
-        parts = _api_parts(urlparse(self.path).path) or []
+        url = urlparse(self.path)
+        parts = _api_parts(url.path) or []
         if len(parts) == 3 and parts[:2] == ["summaries", "queue"]:
             return self._respond(lambda: self.backend.cancel_queued_summary(parts[2]))
+        if len(parts) == 4 and parts[0] == "judgements" and parts[2:] == ["summary", "edit"]:
+            language = parse_qs(url.query).get("lang", [""])[0]
+            return self._respond(lambda: self.backend.reset_summary(parts[1], language))
         self._respond(lambda: _error(HTTPStatus.METHOD_NOT_ALLOWED, "knowledge base is append-only"))
 
     def end_headers(self) -> None:

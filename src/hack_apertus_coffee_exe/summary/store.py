@@ -4,10 +4,13 @@ All database access for summaries goes through this module. Schema and rules
 are documented in ``docs/SCHEMA.md`` (section "Summaries-Datenbank").
 
 Key rules:
-- Summary rows are never updated or deleted; every change is a new version.
+- Generated rows are never updated or deleted: the model output stays traceable.
 - A summary is generated at most once per (case_id, language).
 - Editing always stores ``model = "human"`` and ``prompt_version = NULL``.
-- Only an edited version can be approved; a generated summary needs no approval.
+- The UI keeps one human version per language (``replace_edit``): a new edit replaces the
+  previous one and is shown at once, ``discard_edit`` returns to the generated text.
+  ``save_edit`` / ``approve`` (every edit a new version, shown after approval) remain for
+  callers that want the full history.
 - Any case number (also secondary numbers of joined cases) resolves to the
   main ``case_id`` via the ``case_numbers`` table.
 """
@@ -331,6 +334,61 @@ def approve(conn: sqlite3.Connection, case_number: str, language: str) -> Summar
             status="approved",
             coherence_ok=None,
         )
+
+
+def replace_edit(conn: sqlite3.Connection, case_number: str, language: str, text: str) -> Summary:
+    """Store the lawyer's text as the one edited version of this summary and show it at once.
+
+    What the UI uses since the correction of 28.11.: there is the generated version (kept
+    for good, so the model output stays traceable) and at most one human version per
+    language. A new edit replaces the previous one instead of adding a version, and it
+    needs no approval. ``discard_edit`` goes back to the generated text.
+    """
+    case_id = _require_case(conn, case_number)
+    with conn:
+        generated = conn.execute(
+            "SELECT * FROM summaries WHERE case_id = ? AND language = ? AND status = 'generated' "
+            "ORDER BY version DESC LIMIT 1",
+            (case_id, language),
+        ).fetchone()
+        if generated is None:
+            raise InvalidTransitionError(f"No summary to edit for {case_id} ({language})")
+        conn.execute(
+            "DELETE FROM summaries WHERE case_id = ? AND language = ? AND model = ?",
+            (case_id, language, HUMAN),
+        )
+        return _insert(
+            conn,
+            case_id=case_id,
+            language=language,
+            version=generated["version"] + 1,
+            title=generated["title"],
+            text=text,
+            model=HUMAN,
+            prompt_version=None,
+            status="approved",
+            coherence_ok=None,
+        )
+
+
+def discard_edit(conn: sqlite3.Connection, case_number: str, language: str | None = None) -> int:
+    """Delete the human version (of one language or of both): the generated text is shown again.
+
+    Returns the number of deleted rows. Generated rows are never touched.
+    """
+    case_id = _require_case(conn, case_number)
+    languages = LANGUAGES if language is None else (language,)
+    for lang in languages:
+        if lang not in LANGUAGES:
+            raise ValueError(f"language must be one of {LANGUAGES}, got {lang!r}")
+    with conn:
+        deleted = 0
+        for lang in languages:
+            deleted += conn.execute(
+                "DELETE FROM summaries WHERE case_id = ? AND language = ? AND model = ?",
+                (case_id, lang, HUMAN),
+            ).rowcount
+        return deleted
 
 
 def get_or_generate(

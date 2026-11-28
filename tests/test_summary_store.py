@@ -230,6 +230,53 @@ def test_display_prefers_newest_approved(conn):
 
 def test_display_for_unknown_case_is_none(conn):
     assert store.get_display(conn, "9C_999/2025", "de") is None
+
+
+# --- One edited version (what the UI uses) ---------------------------------------
+
+
+def test_replace_edit_keeps_the_generated_text_and_one_human_version(conn):
+    store.save_generated(conn, CASE, "de", GENERATED)
+    store.replace_edit(conn, CASE, "de", "Erste Fassung")
+    second = store.replace_edit(conn, CASE, "de", "Zweite Fassung")
+    assert (second.status, second.model, second.version) == ("approved", "human", 2)
+    history = store.get_history(conn, CASE, "de")
+    assert [(s.status, s.text) for s in history] == [("generated", "Modell-Summary"), ("approved", "Zweite Fassung")]
+    assert store.get_display(conn, CASE, "de").text == "Zweite Fassung"  # shown at once, no approval
+    assert store.get_pending_edit(conn, CASE, "de") is None
+
+
+def test_replace_edit_also_replaces_versions_saved_the_old_way(conn):
+    store.save_generated(conn, CASE, "de", GENERATED)
+    store.save_edit(conn, CASE, "de", "Alt, freigegeben")
+    store.approve(conn, CASE, "de")
+    store.save_edit(conn, CASE, "de", "Alt, offen")
+    store.replace_edit(conn, CASE, "de", "Neu")
+    assert [s.text for s in store.get_history(conn, CASE, "de")] == ["Modell-Summary", "Neu"]
+
+
+def test_replace_edit_needs_a_generated_summary_and_leaves_the_other_language(conn):
+    with pytest.raises(InvalidTransitionError):
+        store.replace_edit(conn, CASE, "de", "ohne Vorlage")
+    store.save_generated(conn, CASE, "de", GENERATED)
+    store.save_generated(conn, CASE, "fr", GENERATED)
+    store.replace_edit(conn, CASE, "de", "Nur Deutsch")
+    assert store.get_display(conn, CASE, "fr").status == "generated"
+
+
+def test_discard_edit_returns_to_the_generated_text(conn):
+    store.save_generated(conn, CASE, "de", GENERATED)
+    store.save_generated(conn, CASE, "fr", GENERATED)
+    store.replace_edit(conn, CASE, "de", "Bearbeitet")
+    store.replace_edit(conn, CASE, "fr", "Modifié")
+    assert store.discard_edit(conn, CASE, "de") == 1
+    assert store.get_display(conn, CASE, "de").text == "Modell-Summary"
+    assert store.get_display(conn, CASE, "fr").text == "Modifié"
+    assert store.discard_edit(conn, CASE) == 1  # both languages: only FR had an edit left
+    assert store.discard_edit(conn, CASE) == 0
+    assert [s.status for s in store.get_history(conn, CASE, "fr")] == ["generated"]
+    with pytest.raises(ValueError):
+        store.discard_edit(conn, CASE, "it")
     assert store.get_history(conn, "9C_999/2025", "de") == []
 
 
