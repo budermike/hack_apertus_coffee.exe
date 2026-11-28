@@ -30,6 +30,7 @@ from hack_apertus_coffee_exe.triage.relevance_period import (
 )
 
 FACTORS = (1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3)
+TARGETS = (0.8, 0.85, 0.9, 0.95, 1.0)  # recall targets (#75): share of known Suva judgements above the threshold
 N_BOOT = 2000
 
 
@@ -64,7 +65,10 @@ def holdout(records: dict[str, list[dict[str, Any]]], selected_ids: set[str]) ->
             cal = calibration.calibrate(train_records, selected_ids)
             p = np.array([calibration.relevance(r, cal) or 0.0 for r in test_records])
             y = np.array([bool(set(r["case_ids"]) & selected_ids) for r in test_records])
-            folds.append({"train": train, "test": test, "cal": cal, "p": p, "y": y,
+            scored = [r for r in train_records if calibration.relevance(r, cal) is not None]
+            train_p = [calibration.relevance(r, cal) for r in scored]
+            train_y = [int(bool(set(r["case_ids"]) & selected_ids)) for r in scored]
+            folds.append({"train": train, "test": test, "cal": cal, "p": p, "y": y, "train_p": train_p, "train_y": train_y,
                           "direction": "vorwärts" if train < test else "rückwärts"})
     return folds
 
@@ -99,11 +103,35 @@ def threshold_table(folds: Sequence[dict[str, Any]], seed: int = 1) -> list[dict
     return rows
 
 
+def target_rows(folds: Sequence[dict[str, Any]], targets: Sequence[float] = TARGETS) -> list[dict[str, Any]]:
+    """Recall target (#75) in hold-out: threshold set on the training quarter, list measured on the other."""
+    rows = []
+    for target in targets:
+        tp = fp = fn = 0
+        per_fold = []
+        for fold in folds:
+            t = calibration.recall_threshold(fold["train_p"], fold["train_y"], target)
+            a, b, c = confusion(fold["p"] > t, fold["y"])
+            tp, fp, fn = tp + a, fp + b, fn + c
+            per_fold.append(f"{fold['test']}: {a} von {a + c} ({a + b} auf der Liste)")
+        rows.append({"target": target, "selected": tp + fp, "tp": tp, "fn": fn,
+                     "recall": round(tp / max(tp + fn, 1), 4), "f2": round(calibration.f2(tp, fp, fn), 4),
+                     "per_fold": "; ".join(per_fold)})
+    return rows
+
+
 def _pct(value: float) -> str:
     return f"{value * 100:.1f} %"
 
 
-def render(folds: Sequence[dict[str, Any]], table: Sequence[dict[str, Any]], list_factor: float, model: str) -> str:
+def render(
+    folds: Sequence[dict[str, Any]],
+    table: Sequence[dict[str, Any]],
+    list_factor: float,
+    model: str,
+    targets: Sequence[dict[str, Any]] = (),
+    target_recall: float | None = None,
+) -> str:
     lines = [
         "# Evaluation Relevanz-Bewertung: zwei Apertus-Durchgänge mit Kalibrierung",
         "",
@@ -142,6 +170,24 @@ def render(folds: Sequence[dict[str, Any]], table: Sequence[dict[str, Any]], lis
             f"{row['f2']:.3f} ({row['f2_lo']:.3f} bis {row['f2_hi']:.3f}) | "
             f"{row['d_recall_lo'] * 100:+.1f} bis {row['d_recall_hi'] * 100:+.1f} Punkte | {row['d_f2_lo']:+.3f} bis {row['d_f2_hi']:+.3f} |"
         )
+    if targets:
+        lines += [
+            "",
+            "## Recall-Ziel (#75): Anteil der bekannten Suva-Urteile über der Schwelle",
+            "",
+            "Die Schwelle wird auf dem einen Quartal so gesetzt, dass dort mindestens dieser Anteil der Suva-Urteile "
+            "auf der Liste steht, und auf dem anderen Quartal gemessen. "
+            "Ist ein Recall-Ziel eingestellt, ersetzt es den Faktor oben.",
+            "",
+            "| Ziel | Auf der Liste | Gefunden | Recall | F2 | Je Quartal |",
+            "|---|---|---|---|---|---|",
+        ]
+        for row in targets:
+            mark = " **(eingestellt)**" if target_recall is not None and abs(row["target"] - target_recall) < 1e-9 else ""
+            lines.append(
+                f"| {row['target'] * 100:.0f} %{mark} | {row['selected']} | {row['tp']} von {row['tp'] + row['fn']} | "
+                f"{_pct(row['recall'])} | {row['f2']:.3f} | {row['per_fold']} |"
+            )
     lines += [
         "",
         "## Was diese Zahlen nicht zeigen",
@@ -165,7 +211,8 @@ def main(argv: Sequence[str] | None = None) -> int:
 
     from hack_apertus_coffee_exe.triage.config import load_config
 
-    list_factor = args.list_factor if args.list_factor is not None else load_config().list_factor
+    config = load_config()
+    list_factor = args.list_factor if args.list_factor is not None else config.list_factor
     selected_ids = load_selected_ids(args.judgements_dir)
     records = {}
     for name in args.periods:
@@ -177,7 +224,10 @@ def main(argv: Sequence[str] | None = None) -> int:
     table = threshold_table(folds)
     model = next((r["model"] for rs in records.values() for r in rs if r.get("triage")), "?")
     Path(args.report).parent.mkdir(parents=True, exist_ok=True)
-    Path(args.report).write_text(render(folds, table, list_factor, model), encoding="utf-8")
+    targets = target_rows(folds)
+    Path(args.report).write_text(
+        render(folds, table, list_factor, model, targets, config.target_recall), encoding="utf-8"
+    )
     csv_path = Path(args.tables_dir) / "relevance_eval_thresholds.csv"
     with csv_path.open("w", encoding="utf-8", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=list(table[0].keys()))

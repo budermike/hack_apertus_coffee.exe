@@ -182,7 +182,13 @@ def _cmd_relevance(args: argparse.Namespace) -> int:
     """Two-pass Apertus scoring with calibration (docs/ISSUE_RECALL.md)."""
     from . import relevance, relevance_period
 
+    from dataclasses import replace
+
     config = load_config(args.config)
+    if args.target_recall is not None:  # explicit recall target on the command line
+        config = replace(config, target_recall=args.target_recall)
+    elif args.list_factor is not None:  # explicit factor: the old rule, no recall target
+        config = replace(config, target_recall=None, yellow_recall=None)
     list_factor = args.list_factor if args.list_factor is not None else config.list_factor
     cfg = GatewayConfig.from_env(model=args.model or relevance.DEFAULT_MODEL)
     client = relevance.ApertusRelevanceClient(config=cfg, cache_dir=None if args.no_cache else (args.cache_dir or config.cache_dir))
@@ -199,6 +205,7 @@ def _cmd_relevance(args: argparse.Namespace) -> int:
             log=lambda msg: print(msg, file=sys.stderr),
             config=config,
             allow_failed=args.allow_failed,
+            from_scores=args.from_scores,
         )
     except relevance_period.IncompleteRun as exc:
         print(f"Apertus calls: {client.calls} (model {client.model})", file=sys.stderr)
@@ -210,9 +217,17 @@ def _cmd_relevance(args: argparse.Namespace) -> int:
         print("No labelled period before this one: scores written, no calibration and no list.", file=sys.stderr)
         return 0
     green = [r for r in results if r.relevant]
+    from . import calibration
+
+    rule = (
+        f"recall target {cal['target_recall']:.0%} of the known Suva judgements"
+        if cal.get("t_recall") is not None
+        else f"factor {list_factor}"
+    )
     print(
         f"Calibration on {', '.join(cal['periods'])}: {cal['n']} judgements, {cal['n_pos']} selected by Suva, "
-        f"F2 threshold {cal['t']}, list threshold {cal['t'] * list_factor:.4f} (factor {list_factor}).\n"
+        f"F2 threshold {cal['t']}, list threshold {calibration.list_threshold(cal, list_factor):.4f} ({rule}), "
+        f"yellow from {calibration.yellow_threshold(cal, list_factor):.4f}.\n"
         f"{args.period}: {len(green)} on the list, {sum(r.ampel == 'gelb' for r in results)} yellow, {len(results)} candidates.",
         file=sys.stderr,
     )
@@ -270,7 +285,10 @@ def build_parser() -> argparse.ArgumentParser:
     p_rel.add_argument("--input", default="data/raw", help="Crawl folder with <YYYY-MM>/ sub-folders")
     p_rel.add_argument("--judgements-dir", default="judgements", help="Directory with the Suva label list and summaries")
     p_rel.add_argument("--model", default=None, help="Apertus model ID (default: apertus-v1-5-70b)")
-    p_rel.add_argument("--list-factor", type=float, default=None, help="Multiplier on the F2 threshold; below 1 = longer list, higher recall")
+    p_rel.add_argument("--list-factor", type=float, default=None,
+                       help="Multiplier on the F2 threshold; below 1 = longer list, higher recall (switches the recall target off)")
+    p_rel.add_argument("--target-recall", type=float, default=None,
+                       help="Share of the known Suva judgements that must be on the list, e.g. 0.9 (default: config)")
     p_rel.add_argument("--workers", type=int, default=8, help="Parallel gateway calls")
     p_rel.add_argument("--config", default=None, help="Triage config JSON (default: configs/triage.json)")
     p_rel.add_argument("--cache-dir", default=None, help="Override cache_dir from the config")
@@ -283,6 +301,11 @@ def build_parser() -> argparse.ArgumentParser:
         "--allow-failed",
         action="store_true",
         help="Write scores and list even if Apertus could not be asked for some judgements (shown in yellow)",
+    )
+    p_rel.add_argument(
+        "--from-scores",
+        action="store_true",
+        help="Recompute calibration, list and exports from the stored score files (no Apertus call)",
     )
     p_rel.set_defaults(func=_cmd_relevance)
 
