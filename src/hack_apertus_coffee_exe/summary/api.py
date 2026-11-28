@@ -34,6 +34,7 @@ from urllib.parse import parse_qs, unquote, urlparse
 
 from dotenv import load_dotenv
 
+from ..config import load_paths
 from ..present.judgements import JudgementList, config_response, list_response, record_feedback
 from . import store
 from .judgement import Judgement, load_judgements, same_case
