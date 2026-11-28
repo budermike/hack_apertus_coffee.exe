@@ -216,7 +216,7 @@ const I18N = {
         errorClearDb: "Die Datenbank konnte nicht geleert werden.",
     },
     fr: {
-        appTitle: "Radar des arrêts",
+        appTitle: "Urteilsradar",   // the name of the application is the same in both languages
         language: "Langue",
         toggleTheme: "Basculer entre thème clair et sombre",
         tabSearch: "Arrêts",
