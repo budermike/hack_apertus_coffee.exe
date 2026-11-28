@@ -1,7 +1,7 @@
 # Runtime dependencies (also used by the Docker image and by pyproject.toml).
 # Install: python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
 # Pin exact versions. Ask the team before adding a dependency.
-# Development tools (tests, notebooks, plots, local embeddings) are in requirements-dev.txt.
+# Development tools (tests, notebooks, plots) are in requirements-dev.txt.
 
 # Apertus gateway client + .env loading
 openai==3.60.0
@@ -11,9 +11,11 @@ python-dotenv==1.2.4
 httpx==0.29.0
 beautifulsoup4==4.15.0
 
-# Optional local embeddings (issue #5, intfloat/multilingual-e5-small, MIT):
-# pinned in requirements-dev.txt (pulls PyTorch). Pre-computed vectors are in Git,
-# so reading/scoring/triage/summary/tests work with numpy only.
+# Local open-weights embeddings (intfloat/multilingual-e5-small, MIT) for the Vector-DB:
+# crawl.ensure embeds newly fetched judgements. The Docker image installs the CPU build
+# of torch first (download.pytorch.org/whl/cpu), so the CUDA libraries stay out.
+torch==2.15.0
+sentence-transformers==6.3.0
 
 # Numerics and evaluation tables (eval/)
 numpy==2.5.5

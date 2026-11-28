@@ -67,21 +67,21 @@ judgements to the list and reorder it; only the lawyer's own decision takes one 
 ### Target architecture (mandatory)
 
 The solution is deployable **a) on-premise**, **b) air-gapped** and **c) on a sovereign Swiss
-cloud**. One container (`Dockerfile`, `docker-compose.yml`) holds backend and UI; all settings
+cloud**. One container (`Dockerfile`, `docker-compose.yml`) holds backend, UI and the whole pipeline; all settings
 are environment variables; data lives in one mounted folder (`data/`).
 
 | Dependency | Build time | Runtime |
 |---|---|---|
 | Apertus v1.5 endpoint (OpenAI-compatible, `LLM_BASE_URL`) | – | yes; on-premise any server with the open weights |
 | Python packages (`requirements.txt`) | PyPI | no network |
-| Embedding model `intfloat/multilingual-e5-small` (open weights) | Hugging Face, once | local; only when new judgements are taken in |
+| Embedding model `intfloat/multilingual-e5-small` (open weights) | Hugging Face, once, into the image | local, CPU; when `crawl.ensure` embeds new judgements into the Vector-DB |
 | entscheidsuche.ch | – | only when a new period is fetched |
 | Proprietary AI services | none | none |
 
 With **no network at all** the container serves the UI, the Q2 list, reasons, stored
 summaries, editing, decisions and search; only Apertus calls and fetching new judgements need
-a connection. The image has no PyTorch, so a new period is taken into the Vector-DB outside
-the container. Azure: nothing is tied to a cloud provider; the steps are in `README.md`, not
+a connection. The image contains everything, including PyTorch (CPU) and the embedding model, so
+the whole pipeline from crawling to summaries runs inside the container. Azure: nothing is tied to a cloud provider; the steps are in `README.md`, not
 tested.
 
 ## 3. Use of Apertus

@@ -21,7 +21,7 @@ Alles, was die Lösung beim Ausführen verwendet. **In dieser Tabelle darf in de
 |---|---|---|---|---|---|---|
 | R1 | Apertus v1.5 70B | `apertus-v1-5-70b`, Reasoning-Modus `apertus-v1-5-70b-thinking` (bzw. `swiss-ai/Apertus-v1.5-70B` auf Hugging Face) | CSCS/Keera Gateway | **Kernaufgabe (Standard):** Relevanz-Bewertung jedes Kandidaten in zwei Durchgängen mit Begründung und Belegzitaten; Zusammenfassungen DE und FR im Suva-Stil; Übertragung von Begründungen und Zitaten in die Sprache der Oberfläche. Der Reasoning-Modus ist wählbar (`--model`) | ja | Apache-2.0 |
 | R2 | Apertus v1.5 8B | `apertus-v1-5-8b`, Reasoning-Modus `apertus-v1-5-8b-thinking` (bzw. `swiss-ai/Apertus-v1.5-8B`) | CSCS/Keera Gateway | **Kernaufgabe (Option):** kleineres, günstigeres Modell für Relevanz-Bewertung und Zusammenfassungen (`--model`, `SUMMARY_MODEL`); Testaufruf des Gateways (`keera_example.py`) | ja | Apache-2.0 |
-| R3 | Multilingual-E5-small | `intfloat/multilingual-e5-small` (`sentence-transformers==6.3.0`) | Hugging Face, lokal | Mehrsprachige Embeddings (DE/FR/IT) für die Vector-DB; nur nötig, wenn neue Urteile aufgenommen werden | ja | MIT |
+| R3 | Multilingual-E5-small | `intfloat/multilingual-e5-small` (`sentence-transformers==6.3.0`) | Hugging Face, lokal | Mehrsprachige Embeddings (DE/FR/IT) für die Vector-DB: `crawl.ensure` bettet neu geholte Urteile ein; im Docker-Image enthalten (CPU) | ja | MIT |
 
 Alle vier Apertus-Varianten wurden auf denselben Daten verglichen (`notebooks/triage/`, `notebooks/summary/`); Standard ist 70B ohne Reasoning-Modus.
 
