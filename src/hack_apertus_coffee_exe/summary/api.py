@@ -44,6 +44,7 @@ from ..config import load_paths
 from ..present.evaluation import evaluation_response
 from ..present.judgements import JudgementList, config_response, list_response, parse_feedback_body
 from ..present.period_jobs import PeriodTriageManager
+from ..triage.feedback_learning import FeedbackLearner
 from . import store
 from .judgement import Judgement, load_judgements, same_case
 from .queue import SummaryQueue
@@ -483,6 +484,7 @@ def main(argv: list[str] | None = None) -> int:
             selected_ids=_load_selected_ids(args.judgements_dir),
             extra_triage_dir="data/processed/triage_periods",
             fr_cache_path="data/processed/triage/fr_cache.json",
+            learner=FeedbackLearner(),  # relevance decisions are learned from, not added to a score
         )
         if args.triage else None
     )

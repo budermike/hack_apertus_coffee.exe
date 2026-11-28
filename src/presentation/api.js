@@ -14,7 +14,9 @@
  *   GET  {API_BASE}/judgements?from=YYYY-MM-DD&to=YYYY-MM-DD&lang=de|fr
  *        -> [{ id, caseNumber, date, url, lang, area, subject: {de, fr}, explanation: {de, fr},
  *              score,        // relevance 0..100
- *              adjustment,   // net manual correction; always 0 until the backend stores feedback
+ *              baseScore,    // relevance without the lawyers' decisions (= score until one exists)
+ *              adjustment,   // always 0: nothing is added to a single score any more
+ *              userLevel,    // "high" | "low": the lawyer's own decision on this judgement
  *              summarized,   // true if a summary is stored
  *              // optional — the UI shows what is there:
  *              court: {de, fr}, outcome, signals: [..], topics: [..],
@@ -54,9 +56,11 @@
  *        -> entry. Drops the edited version of both languages: back to the generated text,
  *        which is never deleted.
  *
- *   POST {API_BASE}/judgements/{id}/feedback   body: { adjustment, direction, level, decision }
- *        -> { stored: true, ... }   Persists the decision in the summaries DB and returns
- *        `adjustment` and `userLevel` (= decision) with every later GET /api/judgements.
+ *   POST {API_BASE}/judgements/{id}/feedback   body: { adjustment: 0, direction, level, decision }
+ *        -> { stored: true, ... }   Persists the decision in the summaries DB. Every later
+ *        GET /api/judgements returns it as `userLevel`, and the scores of all judgements are
+ *        the ones learned from all decisions (triage/feedback_learning.py); GET /api/config
+ *        lists what was learned under `learning`.
  *
  *   GET  {API_BASE}/knowledge-base?q=<query>&lang=de|fr
  *        -> [entry]   all stored summaries containing every search term, newest first
@@ -166,6 +170,7 @@ function normalizeJudgement(raw) {
         ...raw,
         caseNumber: raw.caseNumber || raw.id,
         score: toNumber(raw.score),
+        baseScore: toNumber(raw.baseScore ?? raw.score),
         adjustment: toNumber(raw.adjustment),
         userLevel: raw.userLevel || null,   // "high" | "low": decided by hand
         feedbackLocalOnly: false,

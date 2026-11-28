@@ -8,11 +8,15 @@ the caller (the summaries DB belongs to ``summary.store``).
 UI item (``GET /api/judgements``)::
 
     {id, caseNumber, date, url, lang, area, subject: {de, fr}, explanation: {de, fr},
-     score, adjustment, summarized, outcome, court: {de, fr}, signals, topics,
-     question: {de, fr}, rule: {de, fr}, criteria: [{id, at, quote, status}],
+     score, baseScore, adjustment, userLevel, summarized, outcome, court: {de, fr}, signals,
+     topics, question: {de, fr}, rule: {de, fr}, criteria: [{id, at, quote, status}],
      similarCases, ampel, rank}
 
-``adjustment`` is always 0 until lawyer feedback (#64) exists. ``outcome`` is only
+Lawyer feedback (#64): ``userLevel`` is the lawyer's own decision on this judgement. With a
+``learner`` (``triage.feedback_learning``, the way the server runs) the decisions are training
+examples: ``score`` is the relevance after learning from all of them, ``baseScore`` the stored
+one, and ``adjustment`` is always 0 (nothing is added to a single score any more). Without a
+learner ``adjustment`` is the stored manual correction, as before. ``outcome`` is only
 set when the crawl folder is given. ``court`` is the chamber from the crawl metadata
 (left out if unknown). ``question``, ``rule`` and ``criteria`` (with quotes) come from
 the relevance scoring (``triage.cli relevance``, ``metadata.relevance``, #62 / #66).
@@ -220,8 +224,12 @@ def to_ui_item(
     single_judge: bool | None = None,
     selected_ids: set[str] | None = None,
     fr_cache: dict[str, dict[str, str]] | None = None,
+    learned: Any | None = None,
 ) -> dict[str, Any]:
     """One triage result -> one UI list item.
+
+    ``learned`` (``feedback_learning.Learned``) scores the judgement with what was learned
+    from the lawyers' decisions; then no manual ``adjustment`` is passed on.
 
     ``subject`` ("Gegenstand" / "Objet") exists only in the language of the judgement,
     so DE and FR show the same text. The triage explanation/question/rule use French
@@ -241,11 +249,14 @@ def to_ui_item(
         or (fr_entry.get("reason_fr") if isinstance(fr_entry, dict) else None)
     )
     reason_fr = reason_fr_raw.strip() if isinstance(reason_fr_raw, str) and reason_fr_raw.strip() else reason
-    raw_adj = feedback.get("adjustment") if isinstance(feedback, dict) else 0
+    raw_adj = feedback.get("adjustment") if isinstance(feedback, dict) and learned is None else 0
     adjustment = (
         0 if not isinstance(raw_adj, (int, float)) or isinstance(raw_adj, bool) or raw_adj == 0
         else round(float(raw_adj), 1)
     )
+    base_score = _score(row)
+    learned_score = learned.score(row) if learned is not None and learned.active else None
+    learned_ampel = learned.ampel(row) if learned_score is not None else None
     similar_cases = []
     for c in row.get("similar_cases") or []:
         if not (isinstance(c, dict) and c.get("case_id")):
@@ -267,14 +278,15 @@ def to_ui_item(
         "area": _area_for_row(meta),
         "subject": {"de": subject, "fr": subject},
         "explanation": {"de": reason, "fr": reason_fr},
-        "score": _score(row),
+        "score": base_score if learned_score is None else round(float(learned_score), 1),
+        "baseScore": base_score,
         "adjustment": adjustment,
         "summarized": summarized,
         "signals": _strings(row.get("keyword_hits")),
         "topics": _strings(row.get("key_topics")),
         "similarCases": similar_cases,
-        "ampel": row.get("ampel"),
-        "rank": row.get("rank"),
+        "ampel": learned_ampel or row.get("ampel"),
+        "rank": row.get("rank"),  # rank of the scoring run, not recomputed after learning
     }
     if isinstance(feedback, dict) and feedback.get("userLevel") in ("high", "low"):
         item["userLevel"] = feedback["userLevel"]
@@ -302,7 +314,9 @@ class JudgementList:
         selected_ids: Iterable[str] | None = None,
         extra_triage_dir: str | Path | None = None,
         fr_cache_path: str | Path | None = None,
+        learner: Any | None = None,
     ) -> None:
+        self.learner = learner  # triage.feedback_learning.FeedbackLearner, or None: no learning
         self.triage_path = Path(triage_path)
         self.config = config or load_config()
         self.summarized_ids = summarized_ids
@@ -409,12 +423,25 @@ class JudgementList:
         avail = self.available_range()
         return bool(avail and avail["from"] <= date_from and date_to <= avail["to"])
 
+    def learned(self, feedback: dict[str, dict[str, Any]] | None = None) -> Any | None:
+        """What was learned from the lawyers' decisions on all loaded judgements (``None`` without a learner)."""
+        if self.learner is None:
+            return None
+        feedback = self.feedback_map() if feedback is None else feedback
+        decisions = {
+            key: entry["userLevel"] == "high"
+            for key, entry in feedback.items()
+            if isinstance(entry, dict) and entry.get("userLevel") in ("high", "low")
+        }
+        return self.learner.learned(decisions, self.rows())
+
     def items(self, date_from: str | None = None, date_to: str | None = None) -> list[dict[str, Any]]:
         """UI items with ``date_from <= date <= date_to`` (ISO dates, both optional), best score first."""
         done = {ui_id(c) for c in self.summarized_ids()}
         outcomes = self.outcomes() if self.crawl_dir is not None else {}
         single_judges = self.single_judges() if self.crawl_dir is not None else {}
         feedback = self.feedback_map()
+        learned = self.learned(feedback)
         fr_cache = self._fr_cache()
         out = []
         for row in self.rows():
@@ -433,6 +460,7 @@ class JudgementList:
                     single_judge=single_judges.get(key),
                     selected_ids=self.selected_ids,
                     fr_cache=fr_cache,
+                    learned=learned,
                 )
             )
         return sorted(out, key=lambda item: item["score"], reverse=True)
@@ -526,6 +554,10 @@ def config_response(judgements: JudgementList | None) -> tuple[int, Any]:
         avail = judgements.available_range() if hasattr(judgements, "available_range") else None
         if isinstance(avail, dict):
             body["availableRange"] = avail
+        learned = judgements.learned() if hasattr(judgements, "learned") else None
+        learning = learned.summary() if learned is not None else None
+        if isinstance(learning, dict):  # what the scores have learned from the lawyers' decisions
+            body["learning"] = learning
         return 200, body
     config = load_config()
     return 200, {"thresholds": {"high": config.green_threshold, "medium": config.yellow_threshold}}
