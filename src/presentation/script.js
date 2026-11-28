@@ -20,6 +20,8 @@ const QUOTE_STATUS = {
     exakt: { key: "quoteExact", tag: "ok" },
     "ungefähr": { key: "quoteApprox", tag: "warn" },
     fehlt: { key: "quoteMissing", tag: "bad" },
+    // not a status of the backend: a quote that is not verbatim, but whose passage was found in the judgement
+    passage: { key: "quotePassage", tag: "warn" },
 };
 
 const COLUMNS = [
@@ -43,6 +45,7 @@ const state = {
     sort: { key: "score", dir: -1 },
     filter: { text: "", min: 0, max: 100, level: "all" },
     criteriaOpen: false,       // "Kriterien und Belege" expanded? (kept while switching cases)
+    openDetails: new Set(),    // keys of the <details> the user opened (see stickyDetails)
 
     summaries: {},             // id -> summary entry as stored in the database (see normalizeEntry)
     summaryQueue: [],          // ids waiting to be summarized, next one first
@@ -76,6 +79,20 @@ function el(tag, props = {}, ...children) {
         else node.setAttribute(key, value);
     }
     node.append(...children.flat(Infinity).filter((c) => c !== null && c !== undefined && c !== false));
+    return node;
+}
+
+/** A <details> that stays the way the user left it. The detail panel is rebuilt whenever
+ *  data arrives (texts carried over into the other language, a finished summary, a save);
+ *  a plain <details> would be created closed each time. So its state is kept in
+ *  `state.openDetails` under `key` and not in the DOM node. */
+function stickyDetails(key, props, ...children) {
+    const node = el("details", props, ...children);
+    node.open = state.openDetails.has(key);
+    node.addEventListener("toggle", () => {
+        if (node.open) state.openDetails.add(key);
+        else state.openDetails.delete(key);
+    });
     return node;
 }
 
@@ -778,13 +795,31 @@ function askAlign(source, target) {
     });
 }
 
+/** Popup with one confirming and one cancelling button, in the design of the popup on
+ *  "Speichern" (same <dialog class="modal">). Resolves to true when confirmed; Escape and
+ *  "Abbrechen" give false. */
+function askConfirm(title, body, confirmLabel) {
+    const dialog = $("#confirm-dialog");
+    $("#confirm-title").textContent = title;
+    $("#confirm-desc").textContent = body;
+    $("#confirm-apply").textContent = confirmLabel;
+    dialog.returnValue = "";
+    dialog.showModal();
+    $("#confirm-apply").focus();
+    return new Promise((resolve) => {
+        dialog.addEventListener("close", () => resolve(dialog.returnValue === "apply"), { once: true });
+    });
+}
+
+const popupOpen = () => Boolean(document.querySelector("dialog[open]"));
+
 /** "Speichern". If exactly one language was changed and Apertus may rewrite the other one
  *  (generated or "angeglichen", not typed by hand), the popup asks first: "neu erstellen"
  *  saves and lets Apertus regenerate the other language, "nur speichern" saves the edit
  *  alone (align: false), "Abbrechen" saves nothing. A language typed by hand is never
  *  rewritten by Apertus (backend rule), so then there is nothing to ask. */
 async function onSave(id) {
-    if (!isDirty(id) || isSaveBusy(id) || $("#align-dialog").open) return;
+    if (!isDirty(id) || isSaveBusy(id) || popupOpen()) return;
     const stored = state.summaries[id];
     const texts = currentTexts(id);
     const sent = { de: texts.de, fr: texts.fr };
@@ -826,8 +861,9 @@ async function onSave(id) {
 /** Drops the edited version of both languages, and what is typed but not saved: the text
  *  Apertus generated is shown again. That one is never deleted, so this always works. */
 async function onReset(id) {
-    if (!canReset(id) || isSaveBusy(id)) return;
-    if (!confirm(t("resetConfirm"))) return;
+    if (!canReset(id) || isSaveBusy(id) || popupOpen()) return;
+    if (!await askConfirm(t("resetPromptTitle"), t("resetConfirm"), t("resetSummary"))) return;
+    if (!canReset(id) || isSaveBusy(id)) return;   // the state may have changed while the popup was open
     if (!hasStoredEdit(id)) {        // only typed, nothing saved: nothing to ask the backend
         delete state.drafts[id];
         delete state.saveStatus[id];
@@ -903,7 +939,7 @@ function scheduleKbRefresh() {
 
 /** Mock only (development): wipes the stored summaries and the relevance feedback. */
 async function onClearDb() {
-    if (!confirm(t("clearDbConfirm"))) return;
+    if (popupOpen() || !await askConfirm(t("clearDbPromptTitle"), t("clearDbConfirm"), t("clearDbApply"))) return;
     try {
         await clearDatabase();
     } catch (err) {
@@ -1140,17 +1176,34 @@ function criteriaSection(item) {
     const signals = [...item.signals, ...item.topics];
     const body = el("div", { class: "crit-body", hidden: !state.criteriaOpen },
         count > 0 && el("ul", { class: "crit" }, item.criteria.map((c, index) => {
-            const status = QUOTE_STATUS[c.status];
             // The court's wording exists in the language of the judgement only. In the other
             // UI language Apertus' rendering is shown and marked; the original stays one click away.
             const rendered = item.lang !== currentLang ? item.localized?.[currentLang]?.quotes?.[index] : null;
-            return el("li", {},
+            const head = (status) => [
                 el("strong", { text: `${c.id} ` }), criterionName(c.id), " ",
                 status && el("span", { class: `tag ${status.tag}`, text: t(status.key) }),
+            ];
+            // What Apertus wrote, where it is not the court's wording: never in quotation marks.
+            const ownWords = (labelKey, ...args) => el("p", { class: "sub own-words" },
+                el("span", { text: `${t(labelKey, ...args)} ` }),
+                el("span", { lang: rendered ? currentLang : item.lang, text: rendered || c.quote }));
+            if (c.status !== "exakt" && c.passage) {
+                // Apertus reworded the sentence: shown is the passage as it stands in the judgement
+                // (found in the stored text), with Apertus' wording below it.
+                return el("li", {}, head(QUOTE_STATUS.passage),
+                    el("blockquote", { lang: item.lang }, `«${c.passage.text}»`,
+                        el("div", { class: "sub", text: formatRef(c.passage.at) })),
+                    ownWords("quoteParaphrase"));
+            }
+            if (c.status === "fehlt") {
+                // no sentence of the judgement is close to what Apertus wrote: said plainly, no quote
+                return el("li", {}, head(QUOTE_STATUS.fehlt), ownWords("quoteMissingNote", formatRef(c.at)));
+            }
+            return el("li", {}, head(QUOTE_STATUS[c.status]),
                 el("blockquote", { lang: rendered ? currentLang : item.lang }, `«${rendered || c.quote}»`,
                     rendered && el("div", { class: "sub rendered-note", text: t("quoteRendered", item.lang) }),
                     el("div", { class: "sub", text: formatRef(c.at) }),
-                    rendered && el("details", { class: "quote-original" },
+                    rendered && stickyDetails(`quote:${item.id}:${index}`, { class: "quote-original" },
                         el("summary", { text: t("quoteOriginal") }),
                         el("p", { lang: item.lang, text: `«${c.quote}»` }))));
         })),
@@ -1186,7 +1239,7 @@ function summaryBasisSection(entry) {
         : (Array.isArray(facts?.kernerwaegungen) ? facts.kernerwaegungen.filter((k) => k && (k.aussage || k.erwaegung)) : []);
     const examples = Array.isArray(entry?.examples) ? entry.examples.filter(Boolean) : [];
     if (!laws.length && !points.length && !examples.length) return null;
-    return el("details", { class: "summary-basis" },
+    return stickyDetails(`basis:${entry.id}`, { class: "summary-basis" },
         el("summary", { text: t("summaryBasis") }),
         laws.length > 0 && el("p", { class: "signals" },
             el("span", { class: "sub", text: `${t("summaryBasisLaws")}: ` }),
@@ -1384,10 +1437,17 @@ function renderDetail() {
     const meta = [
         item.date && formatDate(item.date), loc(item.court), areaLabel(item), subjectDetail(item), outcomeName(item.outcome),
     ];
+    // The two ratings of the second Apertus pass, each with the sentence that says what the
+    // level means (the same wording for every judgement, from the scale in the prompt).
+    const rating = (labelKey, levelsKey, value) => typeof value === "number" && el("p", { class: "rating" },
+        el("span", { class: "tag blue", text: t(labelKey, value) }), " ",
+        el("span", { class: "rating-text", text: t(levelsKey)[value] || "" }));
     const badges = [
         item.singleJudge === true && el("span", { class: "tag", text: t("tagSingleJudge") }),
-        typeof item.principle === "number" && el("span", { class: "tag blue", text: t("principleLabel", item.principle) }),
-        typeof item.uvUse === "number" && el("span", { class: "tag blue", text: t("uvUseLabel", item.uvUse) }),
+    ].filter(Boolean);
+    const ratings = [
+        rating("principleLabel", "principleLevels", item.principle),
+        rating("uvUseLabel", "uvUseLevels", item.uvUse),
     ].filter(Boolean);
     const url = item.url && (currentLang === "fr" ? item.url.replace("lang=de", "lang=fr") : item.url);
     // the text the crawler stored, served by our own backend: readable without leaving the installation
@@ -1403,6 +1463,7 @@ function renderDetail() {
             localUrl && url && " · ",
             url && el("a", { href: url, target: "_blank", rel: "noopener", text: t("openOriginal") })),
         badges.length > 0 && el("div", { class: "row detail-badges" }, badges),
+        ratings.length > 0 && el("div", { class: "ratings" }, ratings),
         textSection("question", item.question),
         // the explanation is triage's reasoning, so the heading follows triage's own score
         textSection(scoreLevel(item.score) === "high" ? "whyRelevant" : "whyNotRelevant", item.explanation),
@@ -1556,7 +1617,7 @@ function init() {
 
     // Escape closes the detail panel (unless a calendar is open or the user is typing)
     document.addEventListener("keydown", (e) => {
-        if (e.key !== "Escape" || !state.selectedId || openPickers.size || $("#align-dialog").open) return;
+        if (e.key !== "Escape" || !state.selectedId || openPickers.size || popupOpen()) return;
         if (e.target.closest("input, textarea, select")) return;
         closeDetail();
     });

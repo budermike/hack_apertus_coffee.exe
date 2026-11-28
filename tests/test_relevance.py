@@ -115,6 +115,70 @@ def test_quote_status_tells_verbatim_from_invented():
     assert rel.quote_status("zu kurz", source) == "fehlt"
 
 
+PASSAGE_SEGS = [
+    {"id": "E2.1", "sec": "law", "text": (
+        "Streitig ist die Leistungspflicht. Im Fokus steht die Frage, ob der Unfall vom 13. März 2018 zu einer "
+        "richtungsgebenden Verschlimmerung des Vorzustands führte (vgl. Urteil 8C_7/2022 vom 22. April 2022 E. 5.1). "
+        "Das Gutachten des Dr. med. F.________ vom 25. Juni 2025 ist beweiskräftig."
+    )},
+    {"id": "E5.1", "sec": "law", "text": "Die Vorinstanz begründete einlässlich, weshalb sie weitere Abklärungen als angezeigt erachtete."},
+]
+
+
+def test_sentences_do_not_end_at_abbreviations_or_dates():
+    assert [s[:12] for s in rel.sentences(PASSAGE_SEGS[0]["text"])] == ["Streitig ist", "Im Fokus ste", "Das Gutachte"]
+    assert len(rel.sentences("Der Unfall geschah am 3. Mai 2021. Die Suva lehnte ab, gestützt auf Art. 6 Abs. 2 UVG. Sie zahlte 800 Fr. Der Fall ist klar.")) == 4
+
+
+def test_locate_passage_finds_the_wording_of_the_judgement_behind_a_reworded_quote():
+    # Apertus states as a fact what the judgement puts as a question: the judgement's own sentence is shown
+    quote = "Der Unfall vom 13. März 2018 bewirkte eine richtungsgebende Verschlimmerung des Vorzustands."
+    assert rel.quote_status(quote, rel._squash(" ".join(s["text"] for s in PASSAGE_SEGS))) == "fehlt"
+    passage = rel.locate_passage(quote, "E2.1", PASSAGE_SEGS)
+    assert passage["at"] == "E2.1" and passage["text"].startswith("Im Fokus steht die Frage, ob der Unfall")
+    assert passage["text"] in PASSAGE_SEGS[0]["text"]  # word for word from the judgement, nothing made up
+    # the mark Apertus named is wrong: the passage is found in the rest of the judgement
+    assert rel.locate_passage(quote, "E9.9", PASSAGE_SEGS)["at"] == "E2.1"
+    # nothing in the judgement is close: no passage, and none is invented
+    assert rel.locate_passage("Das Bundesgericht ändert seine Rechtsprechung zum Schleudertrauma grundlegend", "E2.1", PASSAGE_SEGS) is None
+    assert rel.locate_passage("zu kurz", "E2.1", PASSAGE_SEGS) is None
+
+
+class _FrClient:
+    def __init__(self, answer):
+        self.answer, self.users = answer, []
+
+    def call(self, stage, key, system, user, schema, max_tokens):
+        self.users.append(user)
+        # the gateway returns the fields in alphabetical order: the prefixes keep the order of the texts
+        assert list(schema["properties"]) == sorted(schema["properties"]) == ["a_motivation_fr", "b_question_fr", "c_regle_fr"]
+        return self.answer
+
+
+def test_french_reason_and_rule_stay_two_texts(tmp_path):
+    cache = tmp_path / "fr_cache.json"
+    texts = {"reason_de": "Das Urteil betrifft den Kausalzusammenhang und ist für die Suva relevant.",
+             "question_de": "Besteht ein Kausalzusammenhang?", "rule_de": "Der Rückfall ist nach Art. 11 UVV zu entschädigen."}
+    good = {"a_motivation_fr": "L'arrêt porte sur le lien de causalité et intéresse la Suva.",
+            "b_question_fr": "Existe-t-il un lien de causalité ?", "c_regle_fr": "La rechute est indemnisée selon l'art. 11 OLAA."}
+    client = _FrClient(good)
+    out = rel.translate_reason_fr(client, cache_path=cache, **texts)
+    assert out == {"reason_fr": good["a_motivation_fr"], "question_fr": good["b_question_fr"], "rule_fr": good["c_regle_fr"]}
+    assert "Texte A, motivation" in client.users[0] and "Texte C, à retenir pour la pratique" in client.users[0]
+    assert rel.translate_reason_fr(_FrClient({}), cache_path=cache, **texts) == out  # from the cache
+
+    # Apertus puts the rule into the field of the reason as well: not shown, not stored
+    mixed = dict(good, a_motivation_fr="La rechute est indemnisée selon l'art. 11 OLAA.")
+    other = dict(texts, question_de="Ist der Rückfall zu entschädigen?")
+    assert rel.translate_reason_fr(_FrClient(mixed), cache_path=cache, **other) == {"reason_fr": "", "question_fr": "", "rule_fr": ""}
+    assert rel.fr_cache_key(other["reason_de"], other["question_de"], other["rule_de"]) not in json.loads(cache.read_text())
+
+
+def test_french_cache_entries_from_before_the_fix_are_not_read():
+    old_key = rel.hashlib.sha256(json.dumps(["Grund", "Frage", "Regel"], ensure_ascii=False).encode()).hexdigest()
+    assert rel.fr_cache_key("Grund", "Frage", "Regel") != old_key
+
+
 def test_exemplars_only_come_from_earlier_quarters():
     def prec(case, date, selected):
         return rel.Precedent(case, date, "UV", "Unfallversicherung", "abgewiesen", False, frozenset({"area:UV", "UVG:6"}), selected)

@@ -131,6 +131,18 @@
         </form>
     </dialog>
 
+    <!-- asked before something is discarded ("Zurücksetzen"): same design as the popup on "Speichern" -->
+    <dialog id="confirm-dialog" class="modal" aria-labelledby="confirm-title" aria-describedby="confirm-desc">
+        <form method="dialog" class="modal-card">
+            <h3 id="confirm-title"></h3>
+            <p id="confirm-desc" class="note"></p>
+            <div class="row modal-actions">
+                <button id="confirm-apply" value="apply" class="btn pri"></button>
+                <button id="confirm-cancel" value="cancel" class="btn" data-i18n="cancel">Abbrechen</button>
+            </div>
+        </form>
+    </dialog>
+
     <div id="toast" role="status"></div>
 </body>
 </html>
