@@ -18,9 +18,11 @@ supports ``TfidfEmbedder`` and custom dense embedders for offline unit tests.
 from __future__ import annotations
 
 import argparse
+from contextlib import closing
 import csv
 import hashlib
 import json
+import logging
 import math
 import os
 import re
@@ -31,6 +33,8 @@ from pathlib import Path
 from typing import Any, Sequence
 
 import numpy as np
+
+logger = logging.getLogger(__name__)
 
 from hack_apertus_coffee_exe.config import load_paths
 from hack_apertus_coffee_exe.crawl.crawl import CASE_ID_RE, safe_case_id, sha256
@@ -295,6 +299,48 @@ class VectorDB:
                 return get_default_embedder(saved.get("model_name"))
         return get_default_embedder()
 
+    @staticmethod
+    def _discard_wal_sidecars(db_file: Path) -> None:
+        for suffix in ("-wal", "-shm"):
+            Path(f"{db_file}{suffix}").unlink(missing_ok=True)
+
+    @classmethod
+    def _quarantine_corrupt_sqlite(cls, db_file: Path) -> None:
+        cls._discard_wal_sidecars(db_file)
+        if db_file.exists():
+            quarantine = db_file.with_name(f".{db_file.name}.corrupt-{os.getpid()}-{time.time_ns()}")
+            try:
+                db_file.replace(quarantine)
+                logger.warning("Quarantined malformed SQLite file %s -> %s", db_file, quarantine.name)
+            except OSError:
+                db_file.unlink(missing_ok=True)
+
+    @classmethod
+    def _ensure_sqlite_healthy(cls, db_file: Path) -> None:
+        """Verify SQLite B-tree header & root pages; discard stale WAL sidecars or quarantine corrupt DBs."""
+        if not db_file.exists() or db_file.stat().st_size == 0:
+            cls._discard_wal_sidecars(db_file)
+            if db_file.exists():
+                db_file.unlink(missing_ok=True)
+            return
+
+        def _quick_ok() -> bool:
+            try:
+                with closing(sqlite3.connect(db_file, timeout=10.0)) as conn:
+                    res = conn.execute("PRAGMA quick_check(1);").fetchone()
+                    return bool(res and res[0] == "ok")
+            except sqlite3.DatabaseError:
+                return False
+
+        if _quick_ok():
+            return
+        # First attempt: stale -wal/-shm left behind across a git checkout / interrupted process
+        cls._discard_wal_sidecars(db_file)
+        if _quick_ok():
+            logger.warning("Discarded stale WAL/SHM sidecars for %s", db_file)
+            return
+        cls._quarantine_corrupt_sqlite(db_file)
+
     def _connect(self) -> sqlite3.Connection:
         conn = sqlite3.connect(self.sqlite_path, timeout=10.0)
         conn.row_factory = sqlite3.Row
@@ -310,7 +356,8 @@ class VectorDB:
         return conn
 
     def _init_fts_sqlite(self) -> None:
-        with self._connect_fts() as conn:
+        self._ensure_sqlite_healthy(self.fts_path)
+        with closing(self._connect_fts()) as conn, conn:
             conn.execute(
                 """
                 CREATE VIRTUAL TABLE IF NOT EXISTS judgements_fts USING fts5(
@@ -324,7 +371,8 @@ class VectorDB:
             )
 
     def _init_sqlite(self) -> None:
-        with self._connect() as conn:
+        self._ensure_sqlite_healthy(self.sqlite_path)
+        with closing(self._connect()) as conn, conn:
             conn.executescript(
                 """
                 CREATE TABLE IF NOT EXISTS judgements (
@@ -611,12 +659,21 @@ class VectorDB:
                     fts_rows.append((doc_key, " ".join(case_ids), subject or "", text))
                     stats["embedded"] += 1
 
-            with self._connect_fts() as fts_conn:
+            with closing(self._connect_fts()) as fts_conn, fts_conn:
                 fts_conn.executemany("DELETE FROM judgements_fts WHERE doc_key = ?", [(r[0],) for r in fts_rows])
                 fts_conn.executemany(
                     "INSERT INTO judgements_fts (doc_key, case_id, subject, text) VALUES (?, ?, ?, ?)",
                     fts_rows,
                 )
+
+        # Checkpoint & truncate WAL so tracked metadata.sqlite3 never keeps unmerged WAL frames across git operations.
+        for db_file in (self.sqlite_path, self.fts_path):
+            if db_file.exists():
+                try:
+                    with closing(sqlite3.connect(db_file, timeout=5.0)) as cp_conn:
+                        cp_conn.execute("PRAGMA wal_checkpoint(TRUNCATE);")
+                except sqlite3.DatabaseError:
+                    pass
 
         if rebuild_index:
             self.rebuild_search_index()
