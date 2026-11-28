@@ -69,6 +69,8 @@ Die Rohdaten bleiben unverändert. Die Triage schreibt eine eigene Ergebnisdatei
 | `similar_cases` | `list[object]` | Ähnlichste Suva-Referenzfälle (`case_id`, `title`, `similarity`, `summary_snippet`, `bger_url`), Alias `top_reference_matches`. |
 | `judgement_date`, `language`, `metadata` | | Urteilsdatum, Sprache und die Metadaten aus dem Crawl-JSON. |
 
+`triage.cli relevance` (#62) schreibt dieselben Felder. `similar_cases` enthält dort nur `case_id` und `similarity`; die Einzelheiten der Bewertung (Rechtsfrage, Kriterien mit Zitaten, Merksatz) stehen in `metadata.relevance`.
+
 > Summaries stehen nicht in dieser Datei. Sie werden verbindlich in der [Summaries-DB](#2-summaries-datenbank-sqlite) gespeichert (mit Verlauf und Status).
 
 ---

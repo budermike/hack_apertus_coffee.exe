@@ -31,7 +31,7 @@ LLM_API_KEY    # team key — never commit, never print, never log
 LLM_NAME       # model ID, default: apertus-v1-5-8b
 ```
 
-The older names `APERTUS_BASE_URL`, `APERTUS_API_KEY` and `APERTUS_MODEL` are still read as aliases; `LLM_*` wins when both are set (`triage.llm.GatewayConfig.from_env`).
+The older names `APERTUS_BASE_URL`, `APERTUS_API_KEY` and `APERTUS_MODEL` are still read as aliases; `LLM_*` wins when both are set (`triage.llm.GatewayConfig.from_env`). One exception: `triage.cli relevance` does not read `LLM_NAME`; it uses `apertus-v1-5-70b` unless `--model` is given.
 
 Available model IDs on the gateway:
 
