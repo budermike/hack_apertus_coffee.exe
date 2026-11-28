@@ -1,7 +1,9 @@
 /* script.js — UI state and rendering. Depends on i18n.js, datepicker.js and api.js (loaded before). */
 
-/** From this relevance on a judgement counts as relevant and is summarized automatically. */
-const SUMMARY_THRESHOLD = 70;
+/** From this relevance on a judgement counts as relevant and is summarized automatically.
+ *  Must equal green_threshold / yellow_threshold in configs/triage.json: the triage maps its
+ *  list threshold onto exactly these values (docs/ISSUE_RECALL.md). */
+const SUMMARY_THRESHOLD = 60;
 const MEDIUM_THRESHOLD = 40;
 
 /** Relevance levels, highest first. */
