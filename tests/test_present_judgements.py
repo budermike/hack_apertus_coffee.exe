@@ -3,9 +3,13 @@
 import json
 import os
 import threading
+import time
 import urllib.request
 from pathlib import Path
+from types import SimpleNamespace
 from unittest.mock import Mock
+
+import pytest
 
 from hack_apertus_coffee_exe.present.judgements import (
     JudgementList,
@@ -161,7 +165,23 @@ def test_area_code_takes_the_first_area_named():
     assert area_code("Invalidenversicherung (Invalidenrente)") == "IV"
     assert area_code("Assicurazione contro gli infortuni") == "UV"
     assert area_code("Prestations complémentaires à l'AVS/AI") == "EL"
+    assert area_code("Prestazione complementare all'AVS/AI (restituzione)") == "EL"
+    assert area_code("Assicurazione sociale cantonale (riduzione dei premi)") == "SOZ"
+    assert area_code("Assicurazione per la vecchiaia e per i superstiti (obbligo contributivo)") == "AHV"
+    assert area_code("Assegno familiare") == "FZ"
+    assert area_code("Assicurazione contro le malattie") == "KV"
     assert area_code("Ehescheidung") is None
+
+
+def test_area_falls_back_to_relevance_area_only_for_known_codes():
+    assert to_ui_item({"case_id": "8C_1/2026", "metadata": {"relevance": {"area": "UV"}}})["area"] == "UV"
+    for invalid in ("andere", "ZIV", None, 123):
+        assert to_ui_item({"case_id": "8C_2/2026", "metadata": {"relevance": {"area": invalid}}})["area"] is None
+    item = to_ui_item({
+        "case_id": "8C_3/2026",
+        "metadata": {"subject": "Unfallversicherung", "relevance": {"area": "IV"}},
+    })
+    assert item["area"] == "UV"
 
 
 def test_outcome_from_the_crawl_folder(tmp_path):
@@ -169,6 +189,79 @@ def test_outcome_from_the_crawl_folder(tmp_path):
     rows = [{"case_id": "8C_901/2026", "final_score": 80.0, "judgement_date": "2026-10-14", "metadata": {}}]
     judgements = JudgementList(_write(tmp_path, rows), config=TriageConfig(), crawl_dir=mock)
     assert judgements.items()[0]["outcome"] == "teilweise"
+
+
+def test_missing_or_empty_crawl_dir_leaves_outcomes_empty(tmp_path):
+    empty_dir = tmp_path / "empty_crawl"
+    empty_dir.mkdir()
+    for crawl_dir in (tmp_path / "missing", empty_dir):
+        judgements = JudgementList(_write(tmp_path), config=TriageConfig(), crawl_dir=crawl_dir)
+        first = judgements.items()
+        second = judgements.items()
+        assert len(first) == 3 and len(second) == 3
+        assert all("outcome" not in item for item in first)
+        assert all("outcome" not in item for item in second)
+
+
+def test_outcomes_are_loaded_once_under_concurrent_access(tmp_path, monkeypatch):
+    import hack_apertus_coffee_exe.present.judgements as judgements_mod
+
+    crawl_dir = tmp_path / "crawl"
+    crawl_dir.mkdir()
+    (crawl_dir / "8C_7_2025.json").write_text("{}", encoding="utf-8")
+    calls = 0
+
+    def fake_load_judgements(_dir):
+        nonlocal calls
+        calls += 1
+        time.sleep(0.02)
+        return [SimpleNamespace(case_id="8C_7/2025", text="Demnach erkennt das Bundesgericht:\n1. Die Beschwerde wird abgewiesen.")]
+
+    monkeypatch.setattr(judgements_mod, "load_judgements", fake_load_judgements)
+    judgements = JudgementList(_write(tmp_path), config=TriageConfig(), crawl_dir=crawl_dir)
+
+    barrier = threading.Barrier(6)
+    results: list[dict[str, str]] = []
+    errors: list[BaseException] = []
+
+    def worker():
+        try:
+            barrier.wait(timeout=5)
+            results.append(judgements.outcomes())
+        except BaseException as exc:  # pragma: no cover
+            errors.append(exc)
+
+    threads = [threading.Thread(target=worker) for _ in range(6)]
+    for thread in threads:
+        thread.start()
+    for thread in threads:
+        thread.join(timeout=5)
+
+    assert not errors
+    assert calls == 1
+    assert len(results) == 6
+    assert all(res == {"8C_7_2025": "abgewiesen"} for res in results)
+
+
+def test_rule_whitespace_and_invalid_triage_json_and_config_fallback(tmp_path):
+    rule = "Angerechnet wird nur der unfallbedingte Teil der IV-Rente."
+    item = to_ui_item({
+        "case_id": "8C_137/2025",
+        "relevance_reason": f"Materielle Frage. Merksatz: {rule}   ",
+        "metadata": {"relevance": {"rule": f"  {rule}\n"}},
+    })
+    assert item["explanation"] == {"de": "Materielle Frage.", "fr": "Materielle Frage."}
+    assert item["rule"] == {"de": rule, "fr": rule}
+
+    bad_path = tmp_path / "bad.json"
+    bad_path.write_text('{"not": "a list"}', encoding="utf-8")
+    with pytest.raises(ValueError, match="expected a JSON list"):
+        JudgementList(bad_path, config=TriageConfig()).items()
+
+    status, body = config_response(None)
+    assert status == 200
+    assert set(body["thresholds"]) == {"high", "medium"}
+    assert body["thresholds"]["high"] >= body["thresholds"]["medium"]
 
 
 def test_items_filter_by_date_sort_by_score_and_mark_summarized(tmp_path):
