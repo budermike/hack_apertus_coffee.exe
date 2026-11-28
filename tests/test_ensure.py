@@ -951,3 +951,62 @@ def test_ensure_period_requires_the_crawl_config(tmp_path, monkeypatch):
             "2026-07-01", "2026-07-01", config_path=tmp_path / "missing.json", **_three_day_kwargs(tmp_path)
         )
     assert calls["list"] == []  # no request to a hard-coded fallback URL
+
+
+def test_ensure_period_self_heals_malformed_metadata_and_fts_sqlite(tmp_path, monkeypatch):
+    raw_dir = tmp_path / "raw"
+    db_dir = tmp_path / "vectordb"
+    emb = _tfidf_embedder()
+    _install_fake_source(
+        monkeypatch,
+        {"2026-07-01": [{"case_id": "8C_99/2026", "subject": "UVG", "body": "Suva Malformed Recovery."}]},
+    )
+
+    db_dir.mkdir(parents=True, exist_ok=True)
+    # Non-empty invalid SQLite header + pages trigger sqlite3.DatabaseError ("database disk image is malformed")
+    (db_dir / "metadata.sqlite3").write_bytes(b"SQLite format 3\x00" + b"\xff" * 8192)
+    (db_dir / "fts.sqlite3").write_bytes(b"SQLite format 3\x00" + b"\xff" * 8192)
+
+    status = ensure_period(
+        "2026-07-01",
+        "2026-07-01",
+        source="entscheidsuche",
+        raw_dir=raw_dir,
+        db_dir=db_dir,
+        embedder=emb,
+        today=date(2026, 7, 10),
+    )
+    assert status.complete is True
+    assert status.ingested_judgements == 1
+    assert list(db_dir.glob(".metadata.sqlite3.corrupt-*"))
+
+    import sqlite3
+
+    conn = sqlite3.connect(db_dir / "metadata.sqlite3")
+    try:
+        assert conn.execute("PRAGMA integrity_check").fetchone() == ("ok",)
+    finally:
+        conn.close()
+
+
+def test_vectordb_recovers_from_corrupt_wal_sidecar(tmp_path):
+    db_dir = tmp_path / "vectordb"
+    emb = _tfidf_embedder()
+    db = VectorDB(db_dir=db_dir, embedder=emb)
+    db.ingest_records([{
+        "id": "8C_105_2026",
+        "case_id": "8C_105/2026",
+        "case_ids": ["8C_105/2026"],
+        "decision_date": "2026-07-01",
+        "subject": "UVG",
+        "language": "de",
+        "text": "Suva WAL Test.",
+    }])
+    assert db.count() == 1
+
+    # Simulate stale/corrupt WAL sidecar left behind across a git checkout
+    (db_dir / "metadata.sqlite3-wal").write_bytes(b"\xde\xad\xbe\xef" * 1024)
+    (db_dir / "metadata.sqlite3-shm").write_bytes(b"\xde\xad\xbe\xef" * 1024)
+
+    reopened = VectorDB(db_dir=db_dir, embedder=emb)
+    assert reopened.count() in (0, 1)  # never raises sqlite3.DatabaseError

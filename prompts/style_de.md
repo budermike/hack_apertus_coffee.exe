@@ -1,43 +1,46 @@
 # Stilprofil Suva-Urteilszusammenfassung (Deutsch)
 
-Abgeleitet aus den 55 Suva-Beispielen in `judgements/Export_*.html` (Issue #14).
-Wird unverändert in den Prompt für die deutsche Zusammenfassung eingefügt.
+Abgeleitet und gemessen an den 55 Suva-Beispielen in `judgements/Export_*.html`
+(`notebooks/summary/01_stilanalyse.ipynb`). Wird unverändert in den Prompt für die deutsche Zusammenfassung eingefügt.
 
 ## Zweck und Leserschaft
 - Für Juristinnen und Juristen der Suva. Fachsprache, keine Erklärungen für Laien.
-- Die Zusammenfassung zeigt, **was das Urteil für die Praxis der Unfallversicherung bedeutet**,
-  nicht den ganzen Verfahrensablauf.
+- Die Zusammenfassung hält fest, **welche Rechtsregel das Urteil für die Praxis der Unfallversicherung aufstellt oder bestätigt**,
+  nicht den Verfahrensablauf.
 
 ## Länge
-- Meist 100–350 Wörter, 1–5 Absätze. Reine Grundsatzurteile oft nur 1–2 Absätze.
-- Ein einzelner Satz genügt, wenn das Urteil nur eine knappe Kernaussage hat
-  (z. B. «Eine akute Vergiftung mit Toluol war keine Berufskrankheit.»).
+- **130–240 Wörter** (typisch etwa 180) in **2–3 Absätzen**. Sätze mit rund 20–25 Wörtern.
+- Kürzer nur bei einem reinen Grundsatz mit einer einzigen Aussage.
 
-## Aufbau (zwei Grundformen)
+## Einstieg
+- Am häufigsten beginnt der Text **direkt mit der Rechtsregel**, als allgemeiner Satz in der Gegenwart, z. B.
+  «Erwartet der Versicherer von einer arbeitsunfähigen versicherten Person einen Berufswechsel, muss er ihr dies mitteilen …».
+- Wenn der Fall ohne Sachverhalt nicht verständlich ist, beginnt der Text mit der versicherten Person, z. B.
+  «Der Versicherte, ein 45-jähriger Maurer, stürzte 2021 von einem Gerüst …».
+- **Nicht** mit «In diesem Urteil …» oder «Das Bundesgericht hatte zu prüfen …» beginnen.
 
-**A. Grundsatz-Zusammenfassung** (wenn eine Rechtsfrage im Vordergrund steht):
-1. Einstieg mit der Rechtsregel oder «In diesem Urteil prüfte/erinnerte das Bundesgericht insbesondere daran, dass …».
-2. Die Regel präzise wiedergeben, mit Erwägungshinweis «(E. 5.2)».
-3. Optional: «Im vorliegenden Fall …» – kurze Anwendung auf den Sachverhalt.
+## Inhalt
+- Rund 90 % des Textes geben die **materielle Würdigung des Bundesgerichts** wieder: die 1–3 Erwägungen mit der Kernregel und wie sie angewendet wird.
+- Sachverhalt höchstens in 1–2 Sätzen und nur, soweit er für die Regel nötig ist.
+- **Weglassen:** Eintreten, Kognition, Kosten, Parteientschädigung, prozessuale Vorgeschichte.
+- Wendungen der Suva-Texte: «Das Bundesgericht hielt fest, dass …», «Es erinnerte daran, dass …», «Im vorliegenden Fall …»,
+  «Die Vorinstanz durfte … », «… bestätigte das Bundesgericht».
 
-**B. Fall-Zusammenfassung** (wenn der Sachverhalt für das Verständnis nötig ist):
-1. Sachverhalt im Telegrammstil: «Versicherter, Fliesenleger und Maler, der 2013 …» / «Versicherte, die am … einen Unfall erlitten hatte, …».
-2. Verfahren: Entscheid der Suva (Einspracheentscheid), danach Vorinstanz («Auf Beschwerde der Versicherten hin bestätigte das Kantonsgericht …»).
-3. Erwägungen des Bundesgerichts: «Die Bundesrichter erinnerten daran, dass …», «Das Bundesgericht hielt fest, …», mit Erwägungshinweisen.
-4. Ergebnis als eigener, kurzer Schlussabsatz: «Letztlich wies das Bundesgericht die Beschwerde der Suva ab.» /
-   «Die Beschwerde wird teilweise gutgeheissen und die Sache zur weiteren Abklärung an die Suva zurückgewiesen.»
+## Ergebnis
+- Das Ergebnis nur nennen, wenn es für die Praxis zählt (Gutheissung, Rückweisung, Aufhebung zulasten oder zugunsten der Suva), dann knapp im letzten Satz.
+  Sonst endet der Text mit der Rechtsregel oder ihrer Anwendung. Nur etwa ein Drittel der Suva-Texte nennt das Ergebnis.
+- Wenn das Ergebnis genannt wird, muss es dem Dispositiv entsprechen.
 
-Sonderform: Verfahrensfallen beginnen mit «cavete collegae:» und bestehen aus einem Satz.
+## Zitierweise
+- **Sparsam:** höchstens 1–2 Gesetzesartikel («Art. 6 Abs. 2 UVG», «Art. 44 ATSG») und Erwägungen («E. 4.4») nur, wenn eine bestimmte Erwägung die Regel enthält.
+  Die meisten Suva-Texte zitieren keine Erwägung.
+- Nur Erwägungen und Artikel nennen, die im Urteil wirklich vorkommen.
 
-## Sprache und Zitierweise
-- Erwägungen: «(E. 4.4)» oder «(Erw. 4.4)»; nur Erwägungen nennen, die im Urteil wirklich vorkommen.
-- Gesetze: «Art. 6 Abs. 2 UVG», «Art. 44 ATSG», «Art. 46 Abs. 1 BGG». Abkürzungen ohne Ausschreiben.
-- Parteien anonym: «die Versicherte», «der Versicherte», «die Beschwerdeführerin», «die Suva». Keine Namen.
-- Geschlecht der versicherten Person aus dem Urteil übernehmen («le recourant» → «der Versicherte», «la recourante» → «die Versicherte») und im ganzen Text beibehalten.
-- Rechtsmittel vor Bundesgericht heisst «Beschwerde», nicht «Rekurs».
-- Gerichte: «das Bundesgericht», «die Bundesrichter», «die Vorinstanz», «das Kantonsgericht <Kanton>».
-- Zeitform: Präteritum/Perfekt für Sachverhalt und Verfahren; Präsens für Rechtsregeln.
-- Schweizer Rechtschreibung: «ss» statt «ß».
-- Beträge: «CHF 67'071.–».
-- Keine Bewertung, keine Spekulation, keine Aussagen, die nicht im Urteil stehen.
+## Sprache
+- Parteien anonym: «der Versicherte», «die Versicherte», «die Suva», «das kantonale Gericht», «die Vorinstanz». Keine Namen.
+- Geschlecht der versicherten Person aus dem Urteil übernehmen und beibehalten.
+- Rechtsmittel vor Bundesgericht: «Beschwerde», nicht «Rekurs».
+- Präteritum für Sachverhalt und Verfahren, Präsens für Rechtsregeln.
+- Schweizer Rechtschreibung («ss» statt «ß»), Beträge «CHF 67'071.–».
+- Keine Bewertung, keine Spekulation, nichts, was nicht im Urteil steht.
 - Keine Überschriften, keine Aufzählungszeichen, kein Markdown: nur Fliesstext in Absätzen.

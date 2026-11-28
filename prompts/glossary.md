@@ -56,3 +56,10 @@ Wird in beide Prompts eingefügt. Immer den Begriff der Zielsprache aus dieser L
 | Untersuchungsgrundsatz | maxime inquisitoire |
 | ergänzende Abklärung | instruction complémentaire |
 | öffentliche Verhandlung (Art. 6 EMRK) | débats publics (art. 6 CEDH) |
+| Rechtsprechung | jurisprudence |
+| insbesondere | notamment |
+| im vorliegenden Fall | en l'espèce |
+| Leistungen (der Versicherung) | prestations |
+| kantonales Gericht | tribunal cantonal |
+| bestätigen (Entscheid, Rechtsprechung) | confirmer |
+| Beschwerden (gesundheitlich) | troubles |
