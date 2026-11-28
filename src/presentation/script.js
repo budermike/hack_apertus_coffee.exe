@@ -50,7 +50,12 @@ const state = {
     kbEntries: [],
     kbError: false,            // the database could not be read
     kbQuery: "",
-    activeTab: localStorage.getItem("tab") === "kb" ? "kb" : "search",
+    evaluation: null,          // loaded from GET /api/evaluation (#71)
+    evalLoading: false,
+    evalError: false,
+    activeTab: ["search", "kb", "eval", "about"].includes(localStorage.getItem("tab"))
+        ? localStorage.getItem("tab")
+        : "search",
 };
 
 /* ---------- helpers ---------- */
@@ -1430,6 +1435,161 @@ function renderKb() {
     status.textContent = statusKey ? t(statusKey) : "";
 }
 
+/* ---------- evaluation & architecture (#71) ---------- */
+
+function formatEvalCell(raw) {
+    const text = raw === null || raw === undefined ? "" : String(raw);
+    if (/^-?\d+\.\d{5,}$/.test(text)) {
+        return { display: Number(text).toFixed(4), numeric: true, title: text };
+    }
+    return { display: text, numeric: /^-?\d+(?:\.\d+)?$/.test(text), title: null };
+}
+
+function buildEvalTable(columns, rows) {
+    if (!columns?.length) return null;
+    return el("div", { class: "eval-table-wrap" },
+        el("table", { class: "eval-table" },
+            el("thead", {},
+                el("tr", {}, columns.map((col) => el("th", { text: col }))),
+            ),
+            el("tbody", {},
+                (rows || []).map((row) =>
+                    el("tr", {},
+                        row.map((cell) => {
+                            const { display, numeric, title } = formatEvalCell(cell);
+                            return el("td", {
+                                class: numeric ? "num" : null,
+                                text: display,
+                                title: title || null,
+                            });
+                        }),
+                    ),
+                ),
+            ),
+        ),
+    );
+}
+
+function renderCalibrationCard(cal) {
+    if (!cal || typeof cal !== "object") return null;
+    const parts = [];
+    if (Array.isArray(cal.periods) && cal.periods.length) parts.push(`Periods: ${cal.periods.join(", ")}`);
+    if (typeof cal.n === "number") parts.push(`n = ${cal.n}`);
+    if (typeof cal.n_pos === "number") parts.push(`Suva = ${cal.n_pos}`);
+    if (typeof cal.t === "number") parts.push(`t = ${cal.t}`);
+    if (typeof cal.list_factor === "number") parts.push(`list_factor = ${cal.list_factor}`);
+    if (!parts.length) return null;
+    return el("section", { class: "info-card" },
+        el("div", { class: "info-card-head" },
+            el("h3", { text: t("evalCalibrationTitle") }),
+            el("span", { class: "sub", text: "relevance_calibration_q2_2026.json" }),
+        ),
+        el("p", { class: "note", text: parts.join(" · ") }),
+    );
+}
+
+function renderEvaluation() {
+    const status = $("#eval-status");
+    const container = $("#eval-content");
+    if (!status || !container) return;
+
+    const data = state.evaluation;
+    const tables = data?.tables || [];
+    const cal = data?.calibration || null;
+
+    if (state.evalLoading && !data) {
+        status.textContent = t("evalLoading");
+        container.replaceChildren();
+        return;
+    }
+    if (state.evalError) {
+        status.textContent = t("evalError");
+        container.replaceChildren();
+        return;
+    }
+    if (!tables.length && !cal) {
+        status.textContent = t("evalEmpty");
+        container.replaceChildren();
+        return;
+    }
+
+    status.textContent = "";
+    const langKey = currentLang === "fr" ? "Fr" : "De";
+    const cards = tables.map((tbl) => {
+        const title = tbl[`title${langKey}`] || tbl.filename;
+        const desc = tbl[`description${langKey}`] || "";
+        return el("section", { class: "info-card" },
+            el("div", { class: "info-card-head" },
+                el("h3", { text: title }),
+                el("span", { class: "sub", text: `${tbl.filename} · ${t("evalRowsLabel", tbl.totalRows ?? tbl.rows?.length ?? 0)}` }),
+            ),
+            desc && el("p", { class: "note", text: desc }),
+            buildEvalTable(tbl.columns, tbl.rows),
+        );
+    });
+    const calCard = renderCalibrationCard(cal);
+    if (calCard) cards.unshift(calCard);
+    container.replaceChildren(...cards);
+}
+
+function renderAbout() {
+    const container = $("#about-content");
+    if (!container) return;
+
+    const pipelineCard = el("section", { class: "info-card" },
+        el("h3", { text: t("aboutPipelineTitle") }),
+        el("div", { class: "pipeline-grid" },
+            [1, 2, 3, 4].map((step) =>
+                el("div", { class: "pipeline-step" },
+                    el("h4", { text: t(`aboutStep${step}Title`) }),
+                    el("p", { text: t(`aboutStep${step}Body`) }),
+                ),
+            ),
+        ),
+    );
+
+    const complianceCard = el("section", { class: "info-card" },
+        el("h3", { text: t("aboutComplianceTitle") }),
+        el("p", { class: "note", text: t("aboutComplianceBody") }),
+    );
+
+    const models = state.evaluation?.models;
+    const runtimeTable = buildEvalTable(models?.runtime?.columns, models?.runtime?.rows);
+    const devTable = buildEvalTable(models?.development?.columns, models?.development?.rows);
+    const modelsCard = el("section", { class: "info-card" },
+        el("h3", { text: t("aboutModelsTitle") }),
+        (!runtimeTable && !devTable)
+            ? el("p", {
+                class: "note",
+                text: state.evalLoading ? t("evalLoading") : (state.evalError ? t("evalError") : t("aboutModelsEmpty")),
+            })
+            : [
+                runtimeTable && el("h4", { text: t("aboutRuntimeTitle"), style: "margin: 12px 0 8px" }),
+                runtimeTable,
+                devTable && el("h4", { text: t("aboutDevTitle"), style: "margin: 18px 0 8px" }),
+                devTable,
+            ],
+    );
+
+    container.replaceChildren(pipelineCard, complianceCard, modelsCard);
+}
+
+async function refreshEvaluation() {
+    state.evalLoading = true;
+    state.evalError = false;
+    renderEvaluation();
+    renderAbout();
+    try {
+        state.evaluation = await fetchEvaluation();
+    } catch {
+        state.evalError = true;
+    } finally {
+        state.evalLoading = false;
+        renderEvaluation();
+        renderAbout();
+    }
+}
+
 /* ---------- tabs, language ---------- */
 
 function renderResults() {
@@ -1445,6 +1605,8 @@ function renderTabs() {
     });
     $("#panel-search").hidden = state.activeTab !== "search";
     $("#panel-kb").hidden = state.activeTab !== "kb";
+    $("#panel-eval").hidden = state.activeTab !== "eval";
+    $("#panel-about").hidden = state.activeTab !== "about";
 }
 
 function selectTab(tab) {
@@ -1452,6 +1614,9 @@ function selectTab(tab) {
     state.activeTab = tab;
     localStorage.setItem("tab", tab);
     renderTabs();
+    if ((tab === "eval" || tab === "about") && state.evaluation === null && !state.evalLoading) {
+        refreshEvaluation();
+    }
     renderEditors();   // drafts may have changed in the other tab
 }
 
@@ -1468,6 +1633,8 @@ function renderLanguage() {
     showFormError(formErrorKey);
     renderResults();
     renderKb();
+    renderEvaluation();
+    renderAbout();
 }
 
 /* ---------- init ---------- */
@@ -1541,6 +1708,7 @@ function init() {
     thresholdsReady = loadThresholds();
     renderLanguage();
     refreshKb();
+    refreshEvaluation();
 }
 
 init();

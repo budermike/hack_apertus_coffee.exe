@@ -35,6 +35,8 @@
                 <span data-i18n="tabKb">Datenbank</span>
                 <span id="kb-tab-count" class="tab-count" hidden></span>
             </button>
+            <button id="tab-eval" type="button" role="tab" data-tab="eval" aria-controls="panel-eval" data-i18n="tabEval">Auswertung</button>
+            <button id="tab-about" type="button" role="tab" data-tab="about" aria-controls="panel-about" data-i18n="tabAbout">So arbeitet das System</button>
         </nav>
     </header>
 
@@ -124,6 +126,25 @@
                 </div>
                 <p id="kb-status" class="empty"></p>
                 <ul id="kb-list" class="kb-list"></ul>
+            </div>
+        </div>
+
+        <!-- Auswertung: metrics and tables from results/tables/ -->
+        <div id="panel-eval" class="view scroll" role="tabpanel" aria-labelledby="tab-eval" hidden>
+            <div class="page">
+                <h2 data-i18n="evalTitle">Auswertung</h2>
+                <p class="note" data-i18n="evalIntro"></p>
+                <p id="eval-status" class="empty"></p>
+                <div id="eval-content" class="eval-sections"></div>
+            </div>
+        </div>
+
+        <!-- So arbeitet das System: architecture & model register -->
+        <div id="panel-about" class="view scroll" role="tabpanel" aria-labelledby="tab-about" hidden>
+            <div class="page">
+                <h2 data-i18n="aboutTitle">So arbeitet das System</h2>
+                <p class="note" data-i18n="aboutIntro"></p>
+                <div id="about-content" class="about-sections"></div>
             </div>
         </div>
     </main>

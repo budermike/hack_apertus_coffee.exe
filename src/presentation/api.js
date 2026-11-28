@@ -158,6 +158,9 @@ const httpBackend = {
     searchKnowledgeBase(query, lang) {
         return jsonFetch(`${API_BASE}/knowledge-base?${new URLSearchParams({ q: query, lang })}`);
     },
+    getEvaluation() {
+        return jsonFetch(`${API_BASE}/evaluation`);
+    },
 };
 
 /* ---------- 2. mock backend: see mock.js ---------- */
@@ -322,6 +325,10 @@ async function sendFeedback(id, adjustment, direction, level, decision) {
 
 async function searchKnowledgeBase(query, lang) {
     return (await backend.searchKnowledgeBase(query, lang)).map(normalizeEntry);
+}
+
+async function fetchEvaluation() {
+    return await backend.getEvaluation();
 }
 
 /** Mock only (development): deletes all summaries and feedback. The real database keeps every version. */
