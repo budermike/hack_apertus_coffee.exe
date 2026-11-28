@@ -125,7 +125,8 @@ def test_editing_one_language_brings_the_other_in_line(backend, summarizer):
     call = summarizer.align_language.call_args.kwargs
     assert (call["source_lang"], call["source_text"]) == ("de", "Vom Juristen")
     assert (call["target_lang"], call["target_text"]) == ("fr", "Résumé FR")
-    assert call["instruction"] is None and call["facts"] == {"form": "fall"}
+    # the lawyer's text alone is authoritative: no facts of the judgement go along
+    assert call["instruction"] is None and call["facts"] is None
     # a further German edit: the French text Apertus wrote follows again, still one version
     summarizer.align_language.return_value = "Zweite Angleichung"
     _, entry = backend.edit_summary(SAFE, {"de": "Vom Juristen, zweite Fassung"})
