@@ -39,6 +39,11 @@ class TriageConfig:
     # selection is known, and the multiplier on the F2 threshold (below 1 = longer list, higher recall).
     label_periods: tuple[str, ...] = ("2025-Q4", "2026-Q1")
     list_factor: float = 0.3
+    # Recall target (#75): share of the known Suva judgements of the labelled periods that
+    # must be on the list (green) / at least yellow. When target_recall is set it replaces
+    # list_factor; null in the JSON goes back to list_factor.
+    target_recall: float | None = 0.9
+    yellow_recall: float | None = 1.0
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "label_periods", tuple(self.label_periods))

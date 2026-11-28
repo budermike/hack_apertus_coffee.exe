@@ -8,6 +8,10 @@
  "n": 300,
  "n_pos": 59,
  "t": 0.1484,
+ "target_recall": 0.9,
+ "t_recall": 0.075768,
+ "yellow_recall": 1.0,
+ "t_yellow": 0.053352,
  "periods": [
   "2025-Q4",
   "2026-Q1"
