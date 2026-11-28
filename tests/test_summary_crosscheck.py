@@ -166,3 +166,35 @@ def test_the_crosscheck_is_on_by_default_and_can_be_switched_off(monkeypatch):
     monkeypatch.setenv("SUMMARY_CROSSCHECK", "0")
     assert Summarizer(llm, examples).crosscheck is False
     assert Summarizer(llm, examples, crosscheck=True).crosscheck is True
+
+
+def test_one_failed_review_pass_keeps_the_other_but_confirms_nothing():
+    def half_broken(system, user, schema, name):
+        if user.index("(DE)") < user.index("(FR)"):
+            raise ValueError("cut off")
+        return {"abweichungen": [{"art": "widerspruch", "thema": "ergebnis", "gewicht": "hoch", "text_1": "a", "text_2": "b"}]}
+    findings = cc.review(half_broken, DE, FR_FLIPPED)
+    assert [(f.kind, f.confirmed) for f in findings] == [("widerspruch", False)]
+
+
+def test_findings_and_quotes_are_capped():
+    def chatty(system, user, schema, name):
+        return {"abweichungen": [{"art": "widerspruch", "thema": "andere", "gewicht": "niedrig",
+                                  "text_1": "x" * 1000, "text_2": "y"} for _ in range(20)]}
+    findings = cc._review_pass(chatty, ("de", DE), ("fr", FR_SAME))
+    assert len(findings) == cc.MAX_FINDINGS and len(findings[0].de) == cc.MAX_QUOTE_CHARS
+
+
+def test_a_cut_off_answer_is_asked_again_with_a_larger_budget():
+    from types import SimpleNamespace
+
+    budgets = []
+
+    def create(**kw):
+        budgets.append(kw["max_tokens"])
+        content = '{"abweichungen": [{"art"' if len(budgets) == 1 else '{"abweichungen": []}'
+        return SimpleNamespace(choices=[SimpleNamespace(message=SimpleNamespace(content=content))])
+
+    llm = SimpleNamespace(model="m", _client=SimpleNamespace(chat=SimpleNamespace(completions=SimpleNamespace(create=create))))
+    assert cc.gateway_json_call(llm, max_tokens=100)("s", "u", cc.REVIEW_SCHEMA, "abweichungen") == {"abweichungen": []}
+    assert budgets == [100, 200]

@@ -77,8 +77,12 @@ Prüfe besonders: Ergebnis (gutgeheissen / abgewiesen / teilweise / Rückweisung
 
 Keine Abweichung sind: andere Wortwahl, Satzstellung, Stil, Übersetzung von Fachbegriffen (UVG = LAA, Erw. = consid., Einspracheentscheid = décision sur opposition), Kürzungen ohne Inhaltsverlust.
 gewicht «hoch»: Ergebnis, Parteien, Zahl, Datum, Rechtsregel, oder eine Aussage, die eine Juristin anders verstehen liesse. Sonst «niedrig».
-In text_1 und text_2 zitierst du die betroffene Stelle wörtlich (leer, wenn sie in der Fassung fehlt).
+In text_1 und text_2 zitierst du die betroffene Stelle wörtlich, höchstens 20 Wörter (leer, wenn sie in der Fassung fehlt).
+Nenne höchstens 8 Abweichungen, die wichtigsten zuerst. Melde nichts zu Stil, Wortwahl oder Satzbau.
 Findest du nichts, gib eine leere Liste zurück. Erfinde keine Abweichungen."""
+
+MAX_FINDINGS = 8  # per pass; the prompt asks for the same
+MAX_QUOTE_CHARS = 200
 
 REFEREE_SYSTEM = """Du bist Schiedsrichter. Zwei Fassungen einer Urteilszusammenfassung (deutsch und französisch) widersprechen sich in einem Punkt, oder ein Punkt steht nur in einer Fassung.
 Entscheide allein anhand des Urteils (Erwägungen und Dispositiv unten), welche Fassung in diesem Punkt richtig ist:
@@ -166,16 +170,27 @@ def number_conflicts(summary_de: str, summary_fr: str) -> list[Finding]:
 JsonCall = Callable[[str, str, dict[str, Any], str], dict[str, Any]]
 
 
-def gateway_json_call(llm: Any, max_tokens: int = 900) -> JsonCall:
-    """Structured Apertus call through the gateway client of a ``SummaryLLM`` (temperature 0)."""
+def gateway_json_call(llm: Any, max_tokens: int = 1500) -> JsonCall:
+    """Structured Apertus call through the gateway client of a ``SummaryLLM`` (temperature 0).
+
+    An answer cut off at the token limit is not valid JSON: it is asked once more with twice the
+    budget before the error is raised (the caller turns it into a warning).
+    """
 
     def call(system: str, user: str, schema: dict[str, Any], name: str) -> dict[str, Any]:
         fmt = {"type": "json_schema", "json_schema": {"name": name, "strict": True, "schema": schema}}
-        response = llm._client.chat.completions.create(
-            model=llm.model, temperature=0.0, response_format=fmt, max_tokens=max_tokens,
-            messages=[{"role": "system", "content": system}, {"role": "user", "content": user}],
-        )
-        return json.loads(response.choices[0].message.content)
+        error: Exception | None = None
+        for budget in (max_tokens, 2 * max_tokens):
+            response = llm._client.chat.completions.create(
+                model=llm.model, temperature=0.0, response_format=fmt, max_tokens=budget,
+                messages=[{"role": "system", "content": system}, {"role": "user", "content": user}],
+            )
+            try:
+                return json.loads(response.choices[0].message.content)
+            except json.JSONDecodeError as exc:
+                error = exc
+                logger.info("cross-check %s: answer cut off at %d tokens, asking again with %d", name, budget, 2 * budget)
+        raise error  # type: ignore[misc]
 
     return call
 
@@ -185,20 +200,35 @@ def _review_pass(call: JsonCall, first: tuple[str, str], second: tuple[str, str]
     user = f"=== Text 1 ({lang_1.upper()}) ===\n{text_1}\n\n=== Text 2 ({lang_2.upper()}) ===\n{text_2}\n\nListe alle Abweichungen."
     data = call(REVIEW_SYSTEM, user, REVIEW_SCHEMA, "abweichungen")
     out = []
-    for item in data.get("abweichungen") or []:
+    for item in (data.get("abweichungen") or [])[:MAX_FINDINGS]:
         kind = {"widerspruch": "widerspruch", "nur_text_1": f"nur_{lang_1}", "nur_text_2": f"nur_{lang_2}"}.get(item.get("art"))
         if kind is None:
             continue
-        quotes = {lang_1: str(item.get("text_1") or "").strip(), lang_2: str(item.get("text_2") or "").strip()}
+        quotes = {lang_1: str(item.get("text_1") or "").strip()[:MAX_QUOTE_CHARS],
+                  lang_2: str(item.get("text_2") or "").strip()[:MAX_QUOTE_CHARS]}
         topic = item.get("thema") if item.get("thema") in TOPICS else "andere"
         out.append(Finding(kind, topic, quotes["de"], quotes["fr"], serious=item.get("gewicht") == "hoch"))
     return out
 
 
 def review(call: JsonCall, summary_de: str, summary_fr: str) -> list[Finding]:
-    """Two adversarial passes (DE first, then FR first); a finding of both is ``confirmed``."""
-    first = _review_pass(call, ("de", summary_de), ("fr", summary_fr))
-    second = _review_pass(call, ("fr", summary_fr), ("de", summary_de))
+    """Two adversarial passes (DE first, then FR first); a finding of both is ``confirmed``.
+
+    If one pass fails, the other one still counts, but nothing is confirmed (so nothing is
+    rewritten, findings are only warnings). If both fail, the error is raised.
+    """
+    passes = []
+    for order in ((("de", summary_de), ("fr", summary_fr)), (("fr", summary_fr), ("de", summary_de))):
+        try:
+            passes.append(_review_pass(call, *order))
+        except Exception as exc:
+            logger.warning("DE/FR review pass failed: %s", exc)
+            passes.append(None)
+    if passes[0] is None and passes[1] is None:
+        raise RuntimeError("both review passes failed")
+    if passes[0] is None or passes[1] is None:
+        return [f for f in (passes[0] or passes[1])]
+    first, second = passes
     keys_second = {(f.kind, f.topic) for f in second}
     keys_first = {(f.kind, f.topic) for f in first}
     for f in first:
