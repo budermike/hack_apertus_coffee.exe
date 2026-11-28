@@ -19,7 +19,6 @@ const LEVEL_LABEL = { high: "levelHigh", medium: "levelMedium", low: "levelLow" 
 const QUOTE_STATUS = {
     exakt: { key: "quoteExact", tag: "ok" },
     "ungefähr": { key: "quoteApprox", tag: "warn" },
-    fehlt: { key: "quoteMissing", tag: "bad" },
     // not a status of the backend: a quote that is not verbatim, but whose passage was found in the judgement
     passage: { key: "quotePassage", tag: "warn" },
 };
@@ -1172,10 +1171,14 @@ function renderEditors() {
  *  Shows the criteria with their quotes; while the backend delivers none, the signals
  *  triage found, and says that the quotes are missing. */
 function criteriaSection(item) {
-    const count = item.criteria.length;
+    // A criterion whose quote is not in the judgement, and for which no passage was found
+    // either, has no evidence to show: it is left out (decision of the team, 28.11.2026).
+    // `index` stays the position in the backend's list: the renderings are stored by it.
+    const shown = item.criteria.map((c, index) => ({ c, index })).filter(({ c }) => c.status !== "fehlt" || c.passage);
+    const count = shown.length;
     const signals = [...item.signals, ...item.topics];
     const body = el("div", { class: "crit-body", hidden: !state.criteriaOpen },
-        count > 0 && el("ul", { class: "crit" }, item.criteria.map((c, index) => {
+        count > 0 && el("ul", { class: "crit" }, shown.map(({ c, index }) => {
             // The court's wording exists in the language of the judgement only. In the other
             // UI language Apertus' rendering is shown and marked; the original stays one click away.
             const rendered = item.lang !== currentLang ? item.localized?.[currentLang]?.quotes?.[index] : null;
@@ -1183,21 +1186,27 @@ function criteriaSection(item) {
                 el("strong", { text: `${c.id} ` }), criterionName(c.id), " ",
                 status && el("span", { class: `tag ${status.tag}`, text: t(status.key) }),
             ];
-            // What Apertus wrote, where it is not the court's wording: never in quotation marks.
-            const ownWords = (labelKey, ...args) => el("p", { class: "sub own-words" },
-                el("span", { text: `${t(labelKey, ...args)} ` }),
-                el("span", { lang: rendered ? currentLang : item.lang, text: rendered || c.quote }));
+            // What Apertus wrote, where it is not the court's wording: never in quotation marks,
+            // and inside the same box as what it belongs to. In the other UI language it is
+            // Apertus' rendering, marked as such, with its original wording one click away.
+            const ownWords = (labelKey, ...args) => el("div", { class: "own-words" },
+                el("span", { class: "sub", text: `${t(labelKey, ...args)} ` }),
+                el("span", { lang: rendered ? currentLang : item.lang, text: rendered || c.quote }),
+                rendered && el("div", { class: "sub rendered-note", text: t("quoteRendered", item.lang) }),
+                rendered && stickyDetails(`quote:${item.id}:${index}`, { class: "quote-original" },
+                    el("summary", { text: t("quoteApertusOriginal") }),
+                    el("p", { lang: item.lang, text: c.quote })));
             if (c.status !== "exakt" && c.passage) {
-                // Apertus reworded the sentence: shown is the passage as it stands in the judgement
-                // (found in the stored text), with Apertus' wording below it.
+                // Apertus reworded or shortened the sentence: shown is the passage as it stands in
+                // the judgement (found in the stored text by its words). Apertus' wording is added
+                // when it says more or something else than the passage, or when it is the only
+                // text in the language of the UI.
+                const namedElsewhere = c.at && !c.at.split(/,\s*/).some((mark) => c.passage.at.split(/,\s*/).includes(mark));
                 return el("li", {}, head(QUOTE_STATUS.passage),
                     el("blockquote", { lang: item.lang }, `«${c.passage.text}»`,
-                        el("div", { class: "sub", text: formatRef(c.passage.at) })),
-                    ownWords("quoteParaphrase"));
-            }
-            if (c.status === "fehlt") {
-                // no sentence of the judgement is close to what Apertus wrote: said plainly, no quote
-                return el("li", {}, head(QUOTE_STATUS.fehlt), ownWords("quoteMissingNote", formatRef(c.at)));
+                        el("div", { class: "sub" }, formatRef(c.passage.at),
+                            namedElsewhere && ` · ${t("quoteNamedAt", formatRef(c.at))}`),
+                        (!c.passage.close || rendered) && ownWords("quoteParaphrase")));
             }
             return el("li", {}, head(QUOTE_STATUS[c.status]),
                 el("blockquote", { lang: rendered ? currentLang : item.lang }, `«${rendered || c.quote}»`,
@@ -1210,7 +1219,7 @@ function criteriaSection(item) {
         count === 0 && signals.length > 0 && el("p", { class: "signals" },
             el("span", { class: "sub", text: `${t("signals")}: ` }),
             signals.map((s) => [el("span", { class: "tag", text: s }), " "])),
-        count === 0 && el("p", { class: "note", text: t("criteriaMissing") }));
+        count === 0 && el("p", { class: "note", text: t(item.criteria.length > 0 ? "criteriaNoEvidence" : "criteriaMissing") }));
     const toggle = el("button", {
         type: "button", class: "toggle", "aria-expanded": String(state.criteriaOpen),
         onclick: () => {
@@ -1439,7 +1448,7 @@ function renderDetail() {
     ];
     // The two ratings of the second Apertus pass, each with the sentence that says what the
     // level means (the same wording for every judgement, from the scale in the prompt).
-    const rating = (labelKey, levelsKey, value) => typeof value === "number" && el("p", { class: "rating" },
+    const rating = (labelKey, levelsKey, value) => typeof value === "number" && t(levelsKey)[value] && el("p", { class: "rating" },
         el("span", { class: "tag blue", text: t(labelKey, value) }), " ",
         el("span", { class: "rating-text", text: t(levelsKey)[value] || "" }));
     const badges = [

@@ -603,7 +603,8 @@ dialog.modal::backdrop { background: rgba(11, 16, 23, .45); }
 
 /* ---------- quotes carried over into the language of the UI ---------- */
 .rendered-note { font-style: italic; }
-.own-words { margin: 4px 0 0; }
+/* what Apertus wrote in its own words, inside the box of the passage it belongs to */
+.own-words { margin-top: 8px; padding-top: 6px; border-top: 1px solid var(--line); font: 400 14px/1.5 var(--ui); }
 .quote-original { margin-top: 4px; }
 .quote-original summary { cursor: pointer; color: var(--muted); font: 400 12px/1.4 var(--ui); }
 .quote-original p { margin: 4px 0 0; color: var(--muted); }

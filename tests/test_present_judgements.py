@@ -615,12 +615,19 @@ def test_a_reworded_quote_gets_the_passage_of_the_judgement_and_the_rule_leaves_
     item = JudgementList(triage, config=TriageConfig(), crawl_dir=tmp_path / "raw").items()[0]
     first, second = item["criteria"]
     # the passage is the judgement's own wording with its mark; Apertus' wording stays as `quote`
-    assert first["passage"] == {"at": "E2.1", "text": "Im Fokus steht die Frage, ob der Unfall vom 13. März 2018 zu einer "
-                                                      "richtungsgebenden Verschlimmerung des Vorzustands führte."}
+    assert first["passage"] == {"at": "E2.1", "close": False,
+                                "text": "Im Fokus steht die Frage, ob der Unfall vom 13. März 2018 zu einer "
+                                        "richtungsgebenden Verschlimmerung des Vorzustands führte."}
     assert first["status"] == "fehlt" and first["quote"].startswith("Der Unfall vom 13. März 2018 bewirkte")
     assert "passage" not in second  # nothing close in the judgement: none is made up
     # «Warum relevant» and «Merksatz für die Praxis» are two different texts
     assert item["explanation"]["de"] == "Kausalzusammenhang, für die Suva relevant."
     assert item["rule"]["de"] == rule
+    # the lookup runs once per quote: a second list request reads the passage from the cache
+    lookups = []
+    jl = JudgementList(triage, config=TriageConfig(), crawl_dir=tmp_path / "raw")
+    original = jl.segments_for
+    jl.segments_for = lambda key: lookups.append(key) or original(key)
+    assert jl.items()[0]["criteria"] == jl.items()[0]["criteria"] and len(lookups) == 2  # two quotes, asked once each
     # without the stored judgement text there is no passage, and nothing breaks
     assert all("passage" not in c for c in to_ui_item(row)["criteria"])
