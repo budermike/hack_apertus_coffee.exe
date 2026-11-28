@@ -172,7 +172,9 @@ main { flex: 1; min-height: 0; display: flex; }
 }
 .icon-btn:hover { background: var(--soft); color: var(--ink); }
 
-input[type="text"], input[type="search"], textarea {
+input[type="checkbox"] { width: 16px; height: 16px; margin: 0; accent-color: var(--pri); cursor: pointer; }
+
+input[type="text"], input[type="search"], select, textarea {
     padding: 5px 8px;
     border: 1px solid var(--line);
     border-radius: 4px;
@@ -284,16 +286,23 @@ input[type="text"], input[type="search"], textarea {
     background: var(--paper);
 }
 .filters input[type="search"] { flex: 1; min-width: 160px; }
+.seg { display: flex; border: 1px solid var(--line); border-radius: 4px; overflow: hidden; }
+.seg button { border: 0; border-right: 1px solid var(--line); background: var(--paper); padding: 5px 10px; white-space: nowrap; }
+.seg button:last-child { border-right: 0; }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
 .filters input.num { width: 52px; text-align: center; font-variant-numeric: tabular-nums; }
 .filter-label { font-weight: 600; font-size: 13px; margin-left: 6px; }
 .results-count { margin-left: auto; white-space: nowrap; }
 
 table { border-collapse: collapse; width: 100%; }
 #results-table { table-layout: fixed; }
-#results-table th:nth-child(1) { width: 112px; }
-#results-table th:nth-child(2) { width: 96px; }
-#results-table th:nth-child(4) { width: 150px; }
-#results-table th:nth-child(5) { width: 190px; }
+#results-table th.col-select { width: 36px; }
+#results-table th.col-case { width: 112px; }
+#results-table th.col-date { width: 96px; }
+#results-table th.col-score { width: 150px; }
+#results-table th.col-status { width: 230px; }
+.col-select { padding-right: 0; }
+td.col-select { cursor: default; }
 th {
     position: sticky;
     top: 0;
@@ -316,8 +325,12 @@ td { padding: 7px 10px; border-bottom: 1px solid var(--rowline); vertical-align:
 .pnum { font-variant-numeric: tabular-nums; font-size: 13px; color: var(--muted); }
 
 /* next to an open case the list gets narrow: drop the status column */
-.split.has-detail #results-table th:nth-child(5),
-.split.has-detail #results-table td:nth-child(5) { display: none; }
+.split.has-detail #results-table .col-status { display: none; }
+/* … and show its tags below the subject instead */
+.inline-tags { display: none; margin-top: 3px; }
+.split.has-detail .inline-tags { display: flex; }
+.split.has-detail .filters input[type="search"] { flex-basis: 100%; }
+.delta { font-size: 12px; }
 
 /* relevance: dot on a 0–100 line, the tick marks the threshold for automatic summaries */
 .scale-cell { display: flex; gap: 8px; align-items: center; }
@@ -338,18 +351,32 @@ td { padding: 7px 10px; border-bottom: 1px solid var(--rowline); vertical-align:
 .read { font: 16px/1.6 var(--read); max-width: 72ch; }
 .read + .note { margin-top: 6px; }
 
+/* close button: a fixed square; the grid centres the icon whatever the size */
 .detail-close {
     position: sticky;
     top: 12px;
     float: right;
     z-index: 1;
+    display: grid;
+    place-items: center;
     width: 34px;
     height: 34px;
+    padding: 0;
     margin: -6px -14px 0 12px;
     border: 1px solid var(--line);
+    border-radius: 4px;
     background: var(--paper);
-    font-size: 20px;
-    line-height: 1;
+    color: var(--ink);
+}
+.detail-close:hover { border-color: var(--muted); }
+.detail-close svg {
+    display: block;
+    width: 14px;
+    height: 14px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
 }
 
 /* collapsible section: the heading itself is the toggle */
@@ -360,6 +387,7 @@ h3 .toggle:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; 
 h3 .toggle .sub { font-weight: 400; }
 
 .crit { margin: 10px 0; padding: 0; }
+.signals { margin-bottom: 6px; line-height: 1.9; }
 .crit li { list-style: none; margin: 0 0 12px; }
 blockquote {
     margin: 4px 0 0;
@@ -386,10 +414,12 @@ blockquote {
 }
 .summary-textarea:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px var(--bluebg); }
 .summary-textarea:disabled { opacity: .6; }
-.adjust-form { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
-.adjust-form input { flex: 1; min-width: 140px; }
-.adjust-form .form-error { flex-basis: 100%; }
 .editor-footer { margin-top: 10px; }
+.export-btn { margin-left: auto; }
+.check { margin-top: 10px; }
+.find { margin: 6px 0 0; padding-left: 18px; font-size: 14px; }
+.find li { margin: 2px 0; }
+.warn-note { color: var(--warn); margin-top: 4px; }
 .save-status.error { color: var(--bad); }
 .loading-line { display: flex; align-items: center; gap: 10px; }
 
@@ -440,10 +470,13 @@ blockquote {
     .tagline { min-width: 0; flex-basis: 100%; order: 3; }
     .split.has-detail { grid-template-columns: 1fr; }
     .split.has-detail .listpane { display: none; }
-    #results-table th:nth-child(2), #results-table td:nth-child(2),
-    #results-table th:nth-child(5), #results-table td:nth-child(5) { display: none; }
-    #results-table th:nth-child(1) { width: 98px; }
-    #results-table th:nth-child(4) { width: 58px; }
+    .inline-tags { display: flex; }
+    #results-table .col-date, #results-table .col-status { display: none; }
+    #results-table th.col-case { width: 98px; }
+    #results-table th.col-score { width: 58px; }
+    .seg { flex-wrap: wrap; width: 100%; }
+    .seg button { flex: 1 1 46%; border-bottom: 1px solid var(--line); }
+    .export-btn { margin-left: 0; }
     .scale { display: none; }
     th { position: static; }
     td { overflow-wrap: anywhere; }
