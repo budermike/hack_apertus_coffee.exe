@@ -97,6 +97,27 @@ const httpBackend = {
     searchJudgements(from, to, lang) {
         return jsonFetch(`${API_BASE}/judgements?${new URLSearchParams({ from, to, lang })}`);
     },
+    ensurePeriod(from, to) {
+        return jsonFetch(`${API_BASE}/periods/ensure`, {
+            method: "POST",
+            body: JSON.stringify({ from, to }),
+        });
+    },
+    periodStatus(from, to) {
+        return jsonFetch(`${API_BASE}/periods/status?${new URLSearchParams({ from, to })}`);
+    },
+    addJudgement(caseNumber) {
+        return jsonFetch(`${API_BASE}/judgements/add`, {
+            method: "POST",
+            body: JSON.stringify({ caseNumber, summarize: true }),
+        });
+    },
+    translateReasonFr(id) {
+        return jsonFetch(`${API_BASE}/judgements/${encodeURIComponent(id)}/reason-fr`, {
+            method: "POST",
+            body: "{}",
+        });
+    },
     summarizeJudgement(id) {
         return jsonFetch(summaryUrl(id), { method: "POST" });
     },
@@ -233,6 +254,23 @@ async function fetchConfig() {
 async function searchJudgements(from, to, lang) {
     const rows = await backend.searchJudgements(from, to, lang);
     return rows.map((row) => normalizeJudgement(row));
+}
+
+async function ensurePeriod(from, to) {
+    return backend.ensurePeriod ? await backend.ensurePeriod(from, to) : { status: "done" };
+}
+
+async function periodStatus(from, to) {
+    return backend.periodStatus ? await backend.periodStatus(from, to) : { status: "done" };
+}
+
+async function addJudgement(caseNumber) {
+    const raw = await backend.addJudgement(caseNumber);
+    return normalizeJudgement(raw);
+}
+
+async function translateReasonFr(id) {
+    return backend.translateReasonFr ? await backend.translateReasonFr(id) : null;
 }
 
 /** Returns the stored summary entry; the backend generates DE + FR first if there is none. */

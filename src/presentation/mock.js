@@ -182,6 +182,15 @@ const mockBackend = (() => {
                 }));
         },
 
+        /** POST /judgements/add (mock) */
+        async addJudgement(caseNumber) {
+            await delay(400);
+            const clean = String(caseNumber || "").trim().replace(/\s+/, "_");
+            const existing = MOCK_JUDGEMENTS.find((j) => j.caseNumber.toLowerCase() === clean.toLowerCase());
+            if (existing) return { ...existing, url: "#", summarized: false };
+            throw new Error(`mock judgement ${clean} not found`);
+        },
+
         /** POST /judgements/{id}/summary */
         async summarizeJudgement(id) {
             const stored = db.load().kb[id];

@@ -36,6 +36,7 @@ from dotenv import load_dotenv
 
 from ..config import load_paths
 from ..present.judgements import JudgementList, config_response, list_response, parse_feedback_body
+from ..present.period_jobs import PeriodTriageManager
 from . import store
 from .judgement import Judgement, load_judgements, same_case
 from .queue import SummaryQueue
@@ -232,6 +233,7 @@ class Handler(SimpleHTTPRequestHandler):
 
     backend: Backend  # set by make_server
     judgements: JudgementList | None = None  # set by make_server (present/judgements.py)
+    periods: PeriodTriageManager | None = None  # set by make_server (present/period_jobs.py)
 
     def do_GET(self) -> None:
         url = urlparse(self.path)
@@ -242,6 +244,9 @@ class Handler(SimpleHTTPRequestHandler):
             return self._respond(lambda: list_response(self.judgements, parse_qs(url.query)))
         if parts == ["config"]:  # present/judgements.py
             return self._respond(lambda: config_response(self.judgements))
+        if parts == ["periods", "status"]:
+            q = parse_qs(url.query)
+            return self._respond(lambda: self._period_status(q))
         if parts == ["knowledge-base"]:
             query = parse_qs(url.query).get("q", [""])[0]
             return self._respond(lambda: self.backend.search(query))
@@ -255,8 +260,14 @@ class Handler(SimpleHTTPRequestHandler):
     def do_POST(self) -> None:
         parts = _api_parts(urlparse(self.path).path) or []
         body = self._body()
+        if parts == ["periods", "ensure"]:
+            return self._respond(lambda: self._period_ensure(body))
+        if parts in (["judgements", "add"], ["add"]):
+            return self._respond(lambda: self._add_judgement(body))
         if parts == ["summaries", "queue"]:
             return self._respond(lambda: self.backend.enqueue_summaries(body))
+        if len(parts) == 3 and parts[0] == "judgements" and parts[2] == "reason-fr":
+            return self._respond(lambda: self._translate_reason_fr(parts[1]))
         if len(parts) == 3 and parts[0] == "judgements" and parts[2] == "summary":
             return self._respond(lambda: self.backend.create_summary(parts[1]))
         if len(parts) == 4 and parts[0] == "judgements" and parts[2:] == ["summary", "approve"]:
@@ -266,6 +277,36 @@ class Handler(SimpleHTTPRequestHandler):
         if len(parts) == 3 and parts[0] == "judgements" and parts[2] == "feedback":
             return self._respond(lambda: self.backend.save_feedback(parts[1], body))
         self._respond(lambda: _error(HTTPStatus.NOT_FOUND, "unknown endpoint"))
+
+    def _period_status(self, query: dict[str, list[str]]) -> Response:
+        if self.periods is None:
+            return _error(HTTPStatus.SERVICE_UNAVAILABLE, "period triage manager unavailable")
+        df = (query.get("from") or [None])[0]
+        dt = (query.get("to") or [None])[0]
+        return HTTPStatus.OK, self.periods.status(df, dt)
+
+    def _period_ensure(self, body: dict[str, Any]) -> Response:
+        if self.periods is None:
+            return _error(HTTPStatus.SERVICE_UNAVAILABLE, "period triage manager unavailable")
+        snap = self.periods.ensure_async(body.get("from"), body.get("to"))
+        code = HTTPStatus.OK if snap["status"] == "done" else HTTPStatus.ACCEPTED
+        return code, snap
+
+    def _add_judgement(self, body: dict[str, Any]) -> Response:
+        if self.periods is None:
+            return _error(HTTPStatus.SERVICE_UNAVAILABLE, "period triage manager unavailable")
+        case_number = body.get("caseNumber")
+        if not isinstance(case_number, str) or not case_number.strip():
+            raise ValueError("caseNumber must be a non-empty string")
+        summarize = body.get("summarize", True)
+        if not isinstance(summarize, bool):
+            raise ValueError("summarize must be a boolean")
+        return HTTPStatus.OK, self.periods.add_case(case_number, summarize=summarize)
+
+    def _translate_reason_fr(self, case_number: str) -> Response:
+        if self.periods is None:
+            return _error(HTTPStatus.SERVICE_UNAVAILABLE, "period triage manager unavailable")
+        return HTTPStatus.OK, self.periods.translate_reason_fr(case_number)
 
     def do_PUT(self) -> None:
         parts = _api_parts(urlparse(self.path).path) or []
@@ -318,9 +359,14 @@ class Handler(SimpleHTTPRequestHandler):
 
 
 def make_server(
-    backend: Backend, host: str, port: int, static_dir: str | Path, judgements: JudgementList | None = None
+    backend: Backend,
+    host: str,
+    port: int,
+    static_dir: str | Path,
+    judgements: JudgementList | None = None,
+    periods: PeriodTriageManager | None = None,
 ) -> ThreadingHTTPServer:
-    handler = type("BoundHandler", (Handler,), {"backend": backend, "judgements": judgements})
+    handler = type("BoundHandler", (Handler,), {"backend": backend, "judgements": judgements, "periods": periods})
     return ThreadingHTTPServer((host, port), partial(handler, directory=str(static_dir)))
 
 
@@ -383,21 +429,33 @@ def main(argv: list[str] | None = None) -> int:
             crawl_dir=args.input,
             feedback_map=lambda: _latest_feedback(args.db),
             selected_ids=_load_selected_ids(args.judgements_dir),
+            extra_triage_dir="data/processed/triage_periods",
+            fr_cache_path="data/processed/triage/fr_cache.json",
         )
         if args.triage else None
+    )
+    periods = PeriodTriageManager(
+        raw_dir=args.input,
+        store_dir="data/processed/triage_periods",
+        judgements=judgements,
+        db_path=args.db,
+        backend=backend,
+        judgements_dir=args.judgements_dir,
+        model=args.model,
     )
     if args.auto_summarize and judgements is not None:
         green_threshold = judgements.config.green_threshold
         ids = [i["id"] for i in judgements.items() if i["score"] >= green_threshold and not i["summarized"]]
         if ids:
             backend.queue.enqueue(ids)
-    server = make_server(backend, args.host, args.port, args.static, judgements)
+    server = make_server(backend, args.host, args.port, args.static, judgements, periods=periods)
     logger.info("Serving on http://%s:%s (API under /api)", args.host, args.port)
     try:
         server.serve_forever()
     except KeyboardInterrupt:
         pass
     finally:
+        periods.stop()
         backend.queue.stop()
         server.server_close()
     return 0

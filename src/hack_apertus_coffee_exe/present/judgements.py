@@ -24,6 +24,7 @@ may ignore.
 
 from __future__ import annotations
 
+import hashlib
 import json
 import logging
 import math
@@ -145,12 +146,16 @@ def _plain_quote(quote: str) -> str:
     return quote
 
 
-def relevance_details(meta: dict[str, Any]) -> dict[str, Any]:
+def _fr_cache_key(reason_de: str, question_de: str = "", rule_de: str = "") -> str:
+    payload = json.dumps([reason_de.strip(), question_de.strip(), rule_de.strip()], ensure_ascii=False)
+    return hashlib.sha256(payload.encode("utf-8")).hexdigest()
+
+
+def relevance_details(meta: dict[str, Any], fr_entry: dict[str, str] | None = None) -> dict[str, Any]:
     """``question``, ``rule`` and ``criteria`` of the UI from ``metadata.relevance`` (#62, #66).
 
-    Apertus writes the legal question and the practical rule in German only, like the
-    reason, so DE and FR carry the same text. What is missing or malformed is left out:
-    only judgements that the relevance scoring sent to Apertus have these details.
+    Uses French fields from ``metadata.relevance`` or ``fr_entry`` (#67) when present, falling
+    back to German so the UI shows what is available.
     """
     relevance = meta.get("relevance")
     if not isinstance(relevance, dict):
@@ -159,7 +164,10 @@ def relevance_details(meta: dict[str, Any]) -> dict[str, Any]:
     for key in ("question", "rule"):
         text = relevance.get(key)
         if isinstance(text, str) and text.strip():
-            details[key] = {"de": text.strip(), "fr": text.strip()}
+            de_text = text.strip()
+            fr_raw = (fr_entry or {}).get(f"{key}_fr") or relevance.get(f"{key}_fr")
+            fr_text = fr_raw.strip() if isinstance(fr_raw, str) and fr_raw.strip() else de_text
+            details[key] = {"de": de_text, "fr": fr_text}
     criteria = []
     listed = relevance.get("criteria")
     for criterion in listed if isinstance(listed, list) else []:
@@ -211,17 +219,28 @@ def to_ui_item(
     feedback: dict[str, Any] | None = None,
     single_judge: bool | None = None,
     selected_ids: set[str] | None = None,
+    fr_cache: dict[str, dict[str, str]] | None = None,
 ) -> dict[str, Any]:
     """One triage result -> one UI list item.
 
     ``subject`` ("Gegenstand" / "Objet") exists only in the language of the judgement,
-    so DE and FR show the same text. The triage reason is German only; FR shows the
-    same text until triage writes both.
+    so DE and FR show the same text. The triage explanation/question/rule use French
+    translations from metadata or ``fr_cache`` (#67) when available.
     """
     meta = row.get("metadata") or {}
+    rel = meta.get("relevance") if isinstance(meta.get("relevance"), dict) else {}
     case_id = row["case_id"]
     subject = meta.get("subject") or meta.get("title") or case_id
     reason = _reason_without_rule(row.get("relevance_reason") or row.get("reason") or "", meta)
+    question_de = rel.get("question") if isinstance(rel.get("question"), str) else ""
+    rule_de = rel.get("rule") if isinstance(rel.get("rule"), str) else ""
+    fr_entry = (fr_cache or {}).get(_fr_cache_key(reason, question_de, rule_de))
+    reason_fr_raw = (
+        row.get("relevance_reason_fr")
+        or rel.get("reason_fr")
+        or (fr_entry.get("reason_fr") if isinstance(fr_entry, dict) else None)
+    )
+    reason_fr = reason_fr_raw.strip() if isinstance(reason_fr_raw, str) and reason_fr_raw.strip() else reason
     raw_adj = feedback.get("adjustment") if isinstance(feedback, dict) else 0
     adjustment = (
         0 if not isinstance(raw_adj, (int, float)) or isinstance(raw_adj, bool) or raw_adj == 0
@@ -247,7 +266,7 @@ def to_ui_item(
         "lang": row.get("language") or meta.get("language"),
         "area": _area_for_row(meta),
         "subject": {"de": subject, "fr": subject},
-        "explanation": {"de": reason, "fr": reason},
+        "explanation": {"de": reason, "fr": reason_fr},
         "score": _score(row),
         "adjustment": adjustment,
         "summarized": summarized,
@@ -259,7 +278,7 @@ def to_ui_item(
     }
     if isinstance(feedback, dict) and feedback.get("userLevel") in ("high", "low"):
         item["userLevel"] = feedback["userLevel"]
-    item.update(relevance_details(meta))
+    item.update(relevance_details(meta, fr_entry=fr_entry))
     if "singleJudge" not in item and single_judge is not None:
         item["singleJudge"] = single_judge
     if outcome is not None:
@@ -271,7 +290,7 @@ def to_ui_item(
 
 
 class JudgementList:
-    """Serves triage results for a date range; reloads the file when it changes."""
+    """Serves triage results for a date range; reloads files when they change."""
 
     def __init__(
         self,
@@ -281,6 +300,8 @@ class JudgementList:
         crawl_dir: str | Path | None = None,
         feedback_map: Callable[[], dict[str, dict[str, Any]]] = lambda: {},
         selected_ids: Iterable[str] | None = None,
+        extra_triage_dir: str | Path | None = None,
+        fr_cache_path: str | Path | None = None,
     ) -> None:
         self.triage_path = Path(triage_path)
         self.config = config or load_config()
@@ -288,11 +309,31 @@ class JudgementList:
         self.crawl_dir = Path(crawl_dir) if crawl_dir else None
         self.feedback_map = feedback_map
         self.selected_ids: set[str] | None = set(selected_ids) if selected_ids is not None else None
+        self.extra_triage_dir = Path(extra_triage_dir) if extra_triage_dir else None
+        self.fr_cache_path = Path(fr_cache_path) if fr_cache_path else None
         self._rows: list[dict[str, Any]] = []
+        self._primary_rows: list[dict[str, Any]] = []
         self._mtime: float | None = None
+        self._extra_mtime: float = -1.0
         self._outcomes: dict[str, str] | None = None
         self._single_judges: dict[str, bool] = {}
         self._lock = threading.Lock()
+
+    def invalidate(self) -> None:
+        """Force reload of triage rows and crawl outcomes on the next read."""
+        with self._lock:
+            self._mtime = None
+            self._extra_mtime = -1.0
+            self._outcomes = None
+
+    def _fr_cache(self) -> dict[str, dict[str, str]]:
+        if self.fr_cache_path is None or not self.fr_cache_path.exists():
+            return {}
+        try:
+            data = json.loads(self.fr_cache_path.read_text(encoding="utf-8"))
+            return data if isinstance(data, dict) else {}
+        except (OSError, ValueError):
+            return {}
 
     def outcomes(self) -> dict[str, str]:
         """UI outcome code per case id, read once from the crawl folder (empty without one)."""
@@ -327,16 +368,46 @@ class JudgementList:
         self.outcomes()
         return self._single_judges
 
+    def _extra_files(self) -> list[Path]:
+        if self.extra_triage_dir is None or not self.extra_triage_dir.exists():
+            return []
+        return sorted(p for p in self.extra_triage_dir.glob("*.json") if not p.name.startswith("_"))
+
     def rows(self) -> list[dict[str, Any]]:
         with self._lock:
             mtime = self.triage_path.stat().st_mtime
-            if mtime != self._mtime:
+            extra_files = self._extra_files()
+            extra_mtime = max((p.stat().st_mtime for p in extra_files), default=0.0)
+            if mtime != self._mtime or extra_mtime != self._extra_mtime:
                 data = json.loads(self.triage_path.read_text(encoding="utf-8"))
                 if not isinstance(data, list):
                     raise ValueError(f"{self.triage_path}: expected a JSON list of triage results")
-                self._rows, self._mtime = data, mtime
-                logger.info("Loaded %d triage results from %s", len(data), self.triage_path)
+                by_id: dict[str, dict[str, Any]] = {r["case_id"]: r for r in data if isinstance(r, dict) and r.get("case_id")}
+                for extra_path in extra_files:
+                    extra = json.loads(extra_path.read_text(encoding="utf-8"))
+                    if isinstance(extra, list):
+                        for row in extra:
+                            if isinstance(row, dict) and row.get("case_id"):
+                                by_id[row["case_id"]] = row
+                self._primary_rows = [r for r in data if isinstance(r, dict) and r.get("case_id")]
+                self._rows = list(by_id.values())
+                self._mtime, self._extra_mtime = mtime, extra_mtime
+                logger.info("Loaded %d triage results from %s", len(self._rows), self.triage_path)
             return self._rows
+
+    def available_range(self) -> dict[str, str] | None:
+        """Min/max ISO dates across the primary triage file (single added cases do not inflate coverage)."""
+        self.rows()
+        dates = [d for row in self._primary_rows if (d := _date(row))]
+        return {"from": min(dates), "to": max(dates)} if dates else None
+
+    def covers(self, date_from: str | None, date_to: str | None) -> bool:
+        """True if ``[date_from, date_to]`` lies within the primary triaged date span."""
+        if not date_from or not date_to:
+            self.rows()
+            return bool(self._primary_rows)
+        avail = self.available_range()
+        return bool(avail and avail["from"] <= date_from and date_to <= avail["to"])
 
     def items(self, date_from: str | None = None, date_to: str | None = None) -> list[dict[str, Any]]:
         """UI items with ``date_from <= date <= date_to`` (ISO dates, both optional), best score first."""
@@ -344,6 +415,7 @@ class JudgementList:
         outcomes = self.outcomes() if self.crawl_dir is not None else {}
         single_judges = self.single_judges() if self.crawl_dir is not None else {}
         feedback = self.feedback_map()
+        fr_cache = self._fr_cache()
         out = []
         for row in self.rows():
             date = _date(row) or ""
@@ -360,6 +432,7 @@ class JudgementList:
                     feedback=feedback.get(key),
                     single_judge=single_judges.get(key),
                     selected_ids=self.selected_ids,
+                    fr_cache=fr_cache,
                 )
             )
         return sorted(out, key=lambda item: item["score"], reverse=True)
@@ -447,8 +520,12 @@ def list_response(judgements: JudgementList | None, query: dict[str, list[str]])
 
 
 def config_response(judgements: JudgementList | None) -> tuple[int, Any]:
-    """``GET /api/config``: settings the UI needs (traffic-light thresholds)."""
+    """``GET /api/config``: settings the UI needs (traffic-light thresholds & available range)."""
     if judgements is not None:
-        return 200, {"thresholds": judgements.thresholds()}
+        body: dict[str, Any] = {"thresholds": judgements.thresholds()}
+        avail = judgements.available_range() if hasattr(judgements, "available_range") else None
+        if isinstance(avail, dict):
+            body["availableRange"] = avail
+        return 200, body
     config = load_config()
     return 200, {"thresholds": {"high": config.green_threshold, "medium": config.yellow_threshold}}

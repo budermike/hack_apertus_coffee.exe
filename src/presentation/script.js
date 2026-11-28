@@ -32,6 +32,8 @@ const state = {
     items: [],                 // judgements from the last search
     hasSearched: false,
     searching: false,
+    searchProgress: null,
+    searchErrorMsg: null,
     error: null,               // i18n key of a list-level error
     selectedId: null,          // judgement shown in the detail panel
     sort: { key: "score", dir: -1 },
@@ -172,7 +174,9 @@ function toggleTheme() {
 
 /* ---------- thresholds ---------- */
 
-/** Takes the thresholds from the backend; keeps the defaults if it does not answer. */
+let availableRange = null;
+
+/** Takes the thresholds (and cached date span) from the backend; keeps defaults if it does not answer. */
 async function loadThresholds() {
     const config = await fetchConfig();
     const high = toNumber(config?.thresholds?.high, NaN);
@@ -181,6 +185,21 @@ async function loadThresholds() {
         SUMMARY_THRESHOLD = high;
         MEDIUM_THRESHOLD = medium;
     }
+    if (config?.availableRange?.from && config?.availableRange?.to) {
+        availableRange = config.availableRange;
+        renderQuickRangeButton();
+    }
+}
+
+function renderQuickRangeButton() {
+    const btn = $("#quick-range-btn");
+    if (!btn) return;
+    if (!availableRange) {
+        btn.hidden = true;
+        return;
+    }
+    btn.hidden = false;
+    btn.textContent = `${t("quickRangePrefix")}${formatDate(availableRange.from)} – ${formatDate(availableRange.to)}`;
 }
 
 let thresholdsReady = Promise.resolve();
@@ -252,16 +271,21 @@ function showFormError(key) {
     $("#form-error").textContent = key ? t(key) : "";
 }
 
+let periodSearchGeneration = 0;
+
 async function onSearch(event) {
     event.preventDefault();
     const range = validateRange();
     showFormError(range.error || null);
     if (range.error || state.searching) return;
 
+    const searchGen = ++periodSearchGeneration;
     const button = $("#search-btn");
     button.disabled = true;
     button.classList.add("loading");
     state.searching = true;
+    state.searchProgress = null;
+    state.searchErrorMsg = null;
     state.selectedId = null;
     state.summaryQueue = [];        // summaries still waiting belong to the previous search
     state.summaryError.clear();
@@ -273,20 +297,80 @@ async function onSearch(event) {
 
     try {
         await thresholdsReady;      // levels must be judged with the backend's thresholds
-        state.items = await searchJudgements(range.from, range.to, currentLang);
-        state.error = null;
+        if (!USE_MOCK) {
+            let period = await ensurePeriod(range.from, range.to);
+            while (period && period.status === "running") {
+                if (searchGen !== periodSearchGeneration) return;
+                state.searchProgress = period;
+                renderList();
+                await new Promise((resolve) => setTimeout(resolve, 1200));
+                if (searchGen !== periodSearchGeneration) return;
+                period = await periodStatus(range.from, range.to);
+            }
+            if (period && period.status === "error") {
+                state.items = [];
+                state.error = null;
+                state.searchErrorMsg = t("periodError", period.error || period.message || "");
+            } else {
+                state.items = await searchJudgements(range.from, range.to, currentLang);
+                state.error = null;
+            }
+        } else {
+            state.items = await searchJudgements(range.from, range.to, currentLang);
+            state.error = null;
+        }
     } catch (err) {
         console.error(err);
         state.items = [];
         state.error = "errorSearch";
     }
+    if (searchGen !== periodSearchGeneration) return;
     state.hasSearched = true;
     state.searching = false;
+    state.searchProgress = null;
     button.disabled = false;
     button.classList.remove("loading");
     renderResults();
 
     queueRelevantSummaries();
+}
+
+async function onAddCase(event) {
+    event.preventDefault();
+    const input = $("#add-case-input");
+    const button = $("#add-case-btn");
+    const value = input.value.trim();
+    if (!value) {
+        $("#form-error").textContent = t("addCaseError");
+        input.focus();
+        return;
+    }
+    $("#form-error").textContent = "";
+    button.disabled = true;
+    button.classList.add("loading");
+    try {
+        await thresholdsReady;
+        const item = await addJudgement(value);
+        const idx = state.items.findIndex((i) => i.id === item.id);
+        if (idx >= 0) state.items[idx] = item;
+        else state.items.unshift(item);
+        state.hasSearched = true;
+        state.error = null;
+        state.searchErrorMsg = null;
+        input.value = "";
+        renderResults();
+        selectCase(item.id);
+        if (!USE_MOCK && !item.summarized) {
+            trackedQueueIds.add(item.id);
+            pollServerQueue(queueGeneration);
+        }
+    } catch (err) {
+        console.error(err);
+        $("#form-error").textContent = t("addCaseError");
+    } finally {
+        button.disabled = false;
+        button.classList.remove("loading");
+    }
 }
 
 /* ---------- filters + sorting ---------- */
@@ -982,13 +1066,29 @@ function renderList() {
         ? t("resultsCountFiltered", visible.length, total)
         : t("resultsCount", total);
 
+    const status = $("#results-status");
+    if (searching && state.searchProgress) {
+        const p = state.searchProgress;
+        const pct = p.total > 0 ? Math.min(100, Math.round((p.completed / p.total) * 100)) : 0;
+        status.hidden = false;
+        status.replaceChildren(
+            el("div", { class: "period-progress" },
+                el("p", { class: "loading-line" }, spinner(), t("periodLoading", p.message)),
+                el("progress", { max: String(Math.max(1, p.total || 1)), value: String(p.completed || 0) }),
+                p.total > 0 && el("span", { class: "sub", text: `${p.completed || 0} / ${p.total} (${pct} %)` })));
+        return;
+    }
+    if (state.searchErrorMsg) {
+        status.hidden = false;
+        status.textContent = state.searchErrorMsg;
+        return;
+    }
     let statusKey = null;
     if (searching) statusKey = "searching";
     else if (state.error) statusKey = state.error;
     else if (!state.hasSearched) statusKey = "emptyInitial";
     else if (total === 0) statusKey = "emptyNoResults";
     else if (visible.length === 0) statusKey = "emptyFiltered";
-    const status = $("#results-status");
     status.hidden = !statusKey;
     status.textContent = statusKey ? t(statusKey) : "";
 }
@@ -1204,6 +1304,30 @@ function textSection(titleKey, field) {
     ];
 }
 
+const frReasonLoading = new Set();
+const frReasonAttempted = new Set();
+
+async function ensureFrenchReason(item) {
+    if (USE_MOCK || currentLang !== "fr" || !item || frReasonLoading.has(item.id) || frReasonAttempted.has(item.id)) {
+        return;
+    }
+    const exp = item.explanation;
+    if (!exp?.de || (exp.fr && exp.fr !== exp.de)) return;
+    frReasonLoading.add(item.id);
+    try {
+        const res = await translateReasonFr(item.id);
+        if (res?.explanation?.fr) item.explanation = { ...item.explanation, fr: res.explanation.fr };
+        if (res?.question?.fr && item.question) item.question = { ...item.question, fr: res.question.fr };
+        if (res?.rule?.fr && item.rule) item.rule = { ...item.rule, fr: res.rule.fr };
+    } catch (err) {
+        console.warn("FR translation failed", err);
+    } finally {
+        frReasonLoading.delete(item.id);
+        frReasonAttempted.add(item.id);
+        if (state.selectedId === item.id) renderDetail();
+    }
+}
+
 /** Divider between list and detail (splitter.js); created in init. */
 let detailSplitter = null;
 
@@ -1219,6 +1343,7 @@ function renderDetail() {
         return;
     }
     detailSplitter?.refresh();
+    ensureFrenchReason(item);
 
     const meta = [
         item.date && formatDate(item.date), loc(item.court), areaLabel(item), subjectDetail(item), outcomeName(item.outcome),
@@ -1330,6 +1455,7 @@ function renderLanguage() {
         btn.setAttribute("aria-pressed", String(active));
     });
     refreshDateInputs();
+    renderQuickRangeButton();
     showFormError(formErrorKey);
     renderResults();
     renderKb();
@@ -1373,6 +1499,13 @@ function init() {
     setDateInput(toInput, toIso(today));
 
     $("#search-form").addEventListener("submit", onSearch);
+    $("#add-case-form").addEventListener("submit", onAddCase);
+    $("#quick-range-btn").addEventListener("click", () => {
+        if (!availableRange) return;
+        setDateInput(fromInput, availableRange.from);
+        setDateInput(toInput, availableRange.to);
+        $("#search-form").requestSubmit();
+    });
     for (const id of ["#filter-text", "#filter-min", "#filter-max"]) {
         $(id).addEventListener("input", onFilterChange);
     }

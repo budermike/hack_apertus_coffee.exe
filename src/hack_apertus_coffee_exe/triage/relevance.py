@@ -524,6 +524,80 @@ def score_item(item: CrawlItem, pool: Sequence[Precedent], client: ApertusReleva
     return record
 
 
+def _fr_cache_key(reason_de: str, question_de: str = "", rule_de: str = "") -> str:
+    payload = json.dumps([reason_de.strip(), question_de.strip(), rule_de.strip()], ensure_ascii=False)
+    return hashlib.sha256(payload.encode("utf-8")).hexdigest()
+
+
+FR_TRANSLATE_SYSTEM = (
+    "Tu es juriste au service juridique de la Suva. Traduis et adapte en français juridique suisse "
+    "clair les textes allemands ci-dessous (motivation, question juridique, règle pratique). "
+    "Ne modifie pas le sens ni les références d'arrêts ou de lois. Réponds uniquement avec l'objet JSON."
+)
+FR_TRANSLATE_SCHEMA = _object({
+    "reason_fr": {"type": "string"},
+    "question_fr": {"type": "string"},
+    "rule_fr": {"type": "string"},
+})
+
+
+def translate_reason_fr(
+    client: ApertusRelevanceClient | Any,
+    *,
+    reason_de: str,
+    question_de: str = "",
+    rule_de: str = "",
+    cache_path: Path | None = Path("data/processed/triage/fr_cache.json"),
+) -> dict[str, str]:
+    """Translate German triage reason/question/rule into French using Apertus v1.5 (#67), with disk cache."""
+    if not reason_de.strip() and not question_de.strip() and not rule_de.strip():
+        return {"reason_fr": "", "question_fr": "", "rule_fr": ""}
+    key = _fr_cache_key(reason_de, question_de, rule_de)
+    if cache_path and cache_path.exists():
+        try:
+            cached = json.loads(cache_path.read_text(encoding="utf-8"))
+            if isinstance(cached, dict) and isinstance(cached.get(key), dict):
+                return cached[key]
+        except (OSError, ValueError):
+            pass
+
+    user = (
+        f"Motivation (DE) : {reason_de.strip() or '-'}\n"
+        f"Question juridique (DE) : {question_de.strip() or '-'}\n"
+        f"Règle pratique (DE) : {rule_de.strip() or '-'}"
+    )
+    if hasattr(client, "call"):
+        answer = client.call("fr_reason", key[:16], FR_TRANSLATE_SYSTEM, user, FR_TRANSLATE_SCHEMA, 600)
+    else:
+        answer = json.loads(client.chat.completions.create(
+            model=DEFAULT_MODEL,
+            messages=[{"role": "system", "content": FR_TRANSLATE_SYSTEM}, {"role": "user", "content": user}],
+            temperature=0.0,
+            max_tokens=600,
+        ).choices[0].message.content)
+
+    out = {
+        "reason_fr": str(answer.get("reason_fr") or "").strip() if reason_de.strip() else "",
+        "question_fr": str(answer.get("question_fr") or "").strip() if question_de.strip() else "",
+        "rule_fr": str(answer.get("rule_fr") or "").strip() if rule_de.strip() else "",
+    }
+    if cache_path:
+        cache_path.parent.mkdir(parents=True, exist_ok=True)
+        existing: dict[str, Any] = {}
+        if cache_path.exists():
+            try:
+                loaded = json.loads(cache_path.read_text(encoding="utf-8"))
+                if isinstance(loaded, dict):
+                    existing = loaded
+            except (OSError, ValueError):
+                pass
+        existing[key] = out
+        tmp = cache_path.with_name(cache_path.name + ".tmp")
+        tmp.write_text(json.dumps(existing, ensure_ascii=False, indent=1), encoding="utf-8")
+        tmp.replace(cache_path)
+    return out
+
+
 def score_items(
     items: Sequence[CrawlItem],
     pool: Sequence[Precedent],
