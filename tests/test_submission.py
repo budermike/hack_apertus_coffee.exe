@@ -101,3 +101,38 @@ def test_recall_csv_has_relevant_and_almost_relevant_in_rank_order(tmp_path):
     first = dict(zip(rows[0], rows[1]))
     assert first["Rang"] == "1" and first["Relevanz"] == "80.0" and first["Relevanzwert"] == "0.0912"
     assert first["Rechtsgebiet"] == "UV" and first["Link"] == "https://bger/8C_1/2026"
+
+
+def test_assemble_copies_the_report_checks_the_video_and_zips_exactly_two_pdfs(tmp_path):
+    import zipfile
+
+    root, out = tmp_path, tmp_path / "results" / "submission"
+    out.mkdir(parents=True)
+    (root / "Coffee_Exe_Report.pdf").write_bytes(b"%PDF report")
+    (root / "technical_report.md").write_text("- **Demo:** link to the video\n", encoding="utf-8")
+    (out / "recall_list.txt").write_text("8C_1/2026\n", encoding="utf-8")
+
+    checks = {item: done for item, done, _ in sub.assemble(out, root, summaries_ready=True)}
+    assert checks["report"] and (out / "technical_report.pdf").read_bytes() == b"%PDF report"
+    assert (root / "Coffee_Exe_Report.pdf").exists()                      # the original stays in the root
+    assert not checks["video"] and (out / "video_url.txt").exists()        # placeholder written
+    assert not checks["deck"] and not checks["zip"] and not (out / "submission.zip").exists()
+
+    (out / "video_url.txt").write_text(sub.VIDEO_PLACEHOLDER + "https://video.example/demo\n", encoding="utf-8")
+    assert not {i: d for i, d, _ in sub.assemble(out, root, True)}["video"]   # not in the Demo field of the report yet
+    (root / "technical_report.md").write_text("- **Demo:** https://video.example/demo\n", encoding="utf-8")
+    (out / "pitch_deck.pdf").write_bytes(b"%PDF deck")
+    checks = sub.assemble(out, root, summaries_ready=True)
+    assert all(done for _, done, _ in checks)
+    with zipfile.ZipFile(out / "submission.zip") as archive:
+        assert sorted(archive.namelist()) == ["pitch_deck.pdf", "technical_report.pdf"]
+
+
+def test_video_url_ignores_comments_and_needs_a_link(tmp_path):
+    path = tmp_path / "video_url.txt"
+    path.write_text(sub.VIDEO_PLACEHOLDER, encoding="utf-8")
+    assert sub.video_url(path) is None
+    path.write_text(sub.VIDEO_PLACEHOLDER + "not a link\n", encoding="utf-8")
+    assert sub.video_url(path) is None
+    path.write_text(sub.VIDEO_PLACEHOLDER + "https://youtu.be/x\n", encoding="utf-8")
+    assert sub.video_url(path) == "https://youtu.be/x"
