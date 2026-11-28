@@ -34,7 +34,6 @@ const state = {
     searching: false,
     error: null,               // i18n key of a list-level error
     selectedId: null,          // judgement shown in the detail panel
-    checked: new Set(),        // ids ticked for "summarize selected"
     sort: { key: "score", dir: -1 },
     filter: { text: "", min: 0, max: 100, level: "all" },
     criteriaOpen: false,       // "Kriterien und Belege" expanded? (kept while switching cases)
@@ -264,7 +263,6 @@ async function onSearch(event) {
     button.classList.add("loading");
     state.searching = true;
     state.selectedId = null;
-    state.checked.clear();
     state.summaryQueue = [];        // summaries still waiting belong to the previous search
     state.summaryError.clear();
     renderResults();
@@ -389,26 +387,6 @@ function closeDetail() {
     renderList();
     renderDetail();
     document.querySelector(`#results-rows tr[data-id="${CSS.escape(id)}"]`)?.focus();
-}
-
-/* ---------- ticking several cases ("summarize selected") ---------- */
-
-function toggleChecked(id, checked) {
-    if (checked) state.checked.add(id);
-    else state.checked.delete(id);
-    renderSelectionControls();
-}
-
-function toggleCheckAll(checked) {
-    state.checked = new Set(checked ? visibleItems().map((i) => i.id) : []);
-    renderList();
-}
-
-function summarizeChecked() {
-    const ids = [...state.checked];
-    state.checked.clear();
-    renderList();
-    ids.forEach((id) => requestSummary(id));
 }
 
 /* ---------- relevance correction ---------- */
@@ -684,12 +662,6 @@ function renderRow(item) {
         onclick: () => selectCase(item.id),
         onkeydown: (e) => { if (e.key === "Enter" && e.target === e.currentTarget) selectCase(item.id); },
     },
-        el("td", { class: "col-select", onclick: (e) => e.stopPropagation() },
-            el("input", {
-                type: "checkbox", checked: state.checked.has(item.id),
-                "aria-label": `${t("selectItem")} ${item.caseNumber}`,
-                onchange: (e) => toggleChecked(item.id, e.target.checked),
-            })),
         el("td", { class: "col-case nr" }, item.caseNumber, el("div", { class: "sub", text: (item.lang || "").toUpperCase() })),
         el("td", { class: "col-date pnum", text: item.date ? formatDate(item.date) : "" }),
         el("td", { class: "col-area" }, areaLabel(item),
@@ -710,17 +682,9 @@ function refreshRow(id) {
     if (hadFocus) fresh.focus({ preventScroll: true });
 }
 
-function renderHead(visible) {
+function renderHead() {
     const { key, dir } = state.sort;
-    const n = visible.filter((i) => state.checked.has(i.id)).length;
-    const checkAll = el("input", {
-        type: "checkbox", checked: n > 0 && n === visible.length,
-        "aria-label": t("selectAll"), title: t("selectAll"),
-        onchange: (e) => toggleCheckAll(e.target.checked),
-    });
-    checkAll.indeterminate = n > 0 && n < visible.length;
     $("#results-head").replaceChildren(
-        el("th", { class: "col-select" }, checkAll),
         ...COLUMNS.map((col) => {
             if (!col.key) return el("th", { class: col.cls, text: t(col.label) });
             const sorted = col.key === key;
@@ -731,17 +695,6 @@ function renderHead(visible) {
                     onclick: () => sortBy(col.key),
                 }));
         }));
-}
-
-/** "Ausgewählte zusammenfassen (n)" and the tick in the table head. */
-function renderSelectionControls(visible = visibleItems()) {
-    // selections that a filter has hidden are dropped, so the button never acts on unseen rows
-    const visibleIds = new Set(visible.map((i) => i.id));
-    state.checked = new Set([...state.checked].filter((id) => visibleIds.has(id)));
-    renderHead(visible);
-    const button = $("#summarize-checked");
-    button.hidden = state.checked.size === 0;
-    button.textContent = t("summarizeSelected", state.checked.size);
 }
 
 /** Level buttons with counts. */
@@ -763,7 +716,7 @@ function renderList() {
     const searching = state.searching;
 
     $("#results-rows").replaceChildren(...visible.map(renderRow));
-    renderSelectionControls(visible);
+    renderHead();
     $("#results-table").hidden = searching || visible.length === 0;
     $("#filter-bar").hidden = searching || total === 0;
     $("#results-count").textContent = isFilterActive()
@@ -1136,7 +1089,6 @@ function init() {
         $(id).addEventListener("input", onFilterChange);
     }
     $("#filter-reset").addEventListener("click", resetFilters);
-    $("#summarize-checked").addEventListener("click", summarizeChecked);
     $("#kb-clear").addEventListener("click", onClearDb);
     $("#kb-clear").hidden = !USE_MOCK;   // the real database keeps every version (append-only)
 

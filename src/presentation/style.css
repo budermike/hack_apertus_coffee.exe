@@ -171,7 +171,6 @@ main { flex: 1; min-height: 0; display: flex; }
 }
 .icon-btn:hover { background: var(--soft); color: var(--ink); }
 
-input[type="checkbox"] { width: 16px; height: 16px; margin: 0; accent-color: var(--pri); cursor: pointer; }
 
 input[type="text"], input[type="search"], select, textarea {
     padding: 5px 8px;
@@ -369,13 +368,10 @@ body.resizing, body.resizing * { cursor: col-resize !important; }
 
 table { border-collapse: collapse; width: 100%; }
 #results-table { table-layout: fixed; }
-#results-table th.col-select { width: 36px; }
 #results-table th.col-case { width: 112px; }
 #results-table th.col-date { width: 96px; }
 #results-table th.col-score { width: 150px; }
 #results-table th.col-status { width: 230px; }
-.col-select { padding-right: 0; }
-td.col-select { cursor: default; }
 th {
     position: sticky;
     top: 0;
