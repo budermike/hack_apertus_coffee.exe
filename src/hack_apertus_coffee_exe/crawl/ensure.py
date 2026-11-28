@@ -212,13 +212,18 @@ def _existing_db_doc_keys(
         sqlite_path = db_dir / "metadata.sqlite3"
         if not sqlite_path.exists():
             return set()
-        conn = sqlite3.connect(f"{sqlite_path.resolve().as_uri()}?mode=ro", uri=True, timeout=10.0)
+        try:
+            conn = sqlite3.connect(f"{sqlite_path.resolve().as_uri()}?mode=ro", uri=True, timeout=10.0)
+        except sqlite3.DatabaseError as exc:
+            logger.warning("Metadata SQLite unreadable (%s); treating period as uningested", exc)
+            return set()
         try:
             rows = conn.execute(
                 "SELECT doc_key, fingerprint, vector_file FROM judgements WHERE decision_date >= ? AND decision_date <= ?",
                 (date_from, date_to),
             ).fetchall()
-        except sqlite3.OperationalError:
+        except sqlite3.DatabaseError as exc:
+            logger.warning("Metadata SQLite query failed (%s); treating period as uningested", exc)
             return set()
         finally:
             conn.close()

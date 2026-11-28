@@ -46,3 +46,4 @@ data/processed/vectordb/*.sqlite3-wal
 data/processed/vectordb/*.sqlite3-shm
 data/processed/vectordb/*.lock
 data/processed/vectordb/**/*.tmp*
+data/processed/vectordb/.*.corrupt-*
