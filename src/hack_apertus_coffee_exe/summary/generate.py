@@ -179,3 +179,26 @@ class Summarizer:
             check=report,
             attempts=attempts,
         )
+
+    def align_language(
+        self,
+        *,
+        target_lang: str,
+        target_text: str,
+        source_lang: str | None = None,
+        source_text: str | None = None,
+        instruction: str | None = None,
+        facts: dict[str, Any] | None = None,
+    ) -> str:
+        """Align or refine one summary language using Apertus v1.5 (#65)."""
+        if target_lang not in LANGUAGES:
+            raise ValueError(f"language must be one of {LANGUAGES}, got {target_lang!r}")
+        user = prompts.align_user(
+            target_language=target_lang,
+            target_text=target_text,
+            source_language=source_lang,
+            source_text=source_text,
+            instruction=instruction,
+            facts=facts,
+        )
+        return self.llm.chat(prompts.align_system(target_lang, self.prompts_dir), user).strip()

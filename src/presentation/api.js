@@ -56,8 +56,19 @@
  *   GET  {API_BASE}/knowledge-base?q=<query>&lang=de|fr
  *        -> [entry]   all stored summaries containing every search term, newest first
  *
- * Not available in the backend yet (the UI says so instead of pretending):
- *   - adjusting one summary language with Apertus ("Anpassen")
+ *   POST {API_BASE}/summaries/queue   body: { caseIds: [..], priority?: bool }
+ *        -> { running: [..], queued: [..], done: [..], failed: {id: err}, total }
+ *
+ *   GET  {API_BASE}/summaries/status?ids=<comma-separated>
+ *        -> { running, queued, done, failed, total }
+ *
+ *   DELETE {API_BASE}/summaries/queue/{id}
+ *        -> { cancelled: bool }
+ *
+ *   POST {API_BASE}/judgements/{id}/summary/align (or /adjust)
+ *        body: { targetLang, targetText?, sourceLang?, sourceText?, instruction? }
+ *        -> { lang, text }   Apertus v1.5 draft alignment/adjustment (not saved in DB)
+ *
  *   (criteria with quotes, question and rule are delivered when using `triage.cli relevance` output)
  */
 
@@ -88,6 +99,28 @@ const httpBackend = {
     },
     summarizeJudgement(id) {
         return jsonFetch(summaryUrl(id), { method: "POST" });
+    },
+    getSummary(id) {
+        return jsonFetch(summaryUrl(id));
+    },
+    queueSummaries(caseIds, priority = false) {
+        return jsonFetch(`${API_BASE}/summaries/queue`, {
+            method: "POST",
+            body: JSON.stringify({ caseIds, priority }),
+        });
+    },
+    summaryQueueStatus(caseIds) {
+        const query = caseIds?.length ? `?${new URLSearchParams({ ids: caseIds.join(",") })}` : "";
+        return jsonFetch(`${API_BASE}/summaries/status${query}`);
+    },
+    cancelQueuedSummary(id) {
+        return jsonFetch(`${API_BASE}/summaries/queue/${encodeURIComponent(id)}`, { method: "DELETE" });
+    },
+    alignSummary(id, payload) {
+        return jsonFetch(`${summaryUrl(id)}/align`, {
+            method: "POST",
+            body: JSON.stringify(payload),
+        });
     },
     saveSummary(id, texts) {
         return jsonFetch(summaryUrl(id), { method: "PUT", body: JSON.stringify({ de: texts.de, fr: texts.fr }) });
@@ -205,6 +238,26 @@ async function searchJudgements(from, to, lang) {
 /** Returns the stored summary entry; the backend generates DE + FR first if there is none. */
 async function summarizeJudgement(id) {
     return normalizeEntry(await backend.summarizeJudgement(id));
+}
+
+async function fetchStoredSummary(id) {
+    return normalizeEntry(await (USE_MOCK ? mockBackend.summarizeJudgement(id) : httpBackend.getSummary(id)));
+}
+
+async function queueSummaries(caseIds, priority = false) {
+    return backend.queueSummaries ? await backend.queueSummaries(caseIds, priority) : null;
+}
+
+async function summaryQueueStatus(caseIds) {
+    return backend.summaryQueueStatus ? await backend.summaryQueueStatus(caseIds) : null;
+}
+
+async function cancelQueuedSummary(id) {
+    return backend.cancelQueuedSummary ? await backend.cancelQueuedSummary(id) : { cancelled: false };
+}
+
+async function alignSummary(id, payload) {
+    return await backend.alignSummary(id, payload);
 }
 
 /** Saves edited summary texts ({ de, fr }). */

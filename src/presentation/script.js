@@ -265,6 +265,10 @@ async function onSearch(event) {
     state.selectedId = null;
     state.summaryQueue = [];        // summaries still waiting belong to the previous search
     state.summaryError.clear();
+    queueGeneration += 1;
+    queuePollErrors = 0;
+    trackedQueueIds.clear();
+    clearTimeout(queuePollTimer);
     renderResults();
 
     try {
@@ -411,7 +415,11 @@ async function setRelevance(id, level) {
     const direction = Math.sign(LEVELS.indexOf(before) - LEVELS.indexOf(after));   // +1 raised, -1 lowered, 0 same level
     // relevant now: summarize automatically; no longer relevant: stop waiting for a summary
     if (isRelevant(item)) requestSummary(id, { first: true });
-    else state.summaryQueue = state.summaryQueue.filter((queued) => queued !== id);
+    else {
+        state.summaryQueue = state.summaryQueue.filter((queued) => queued !== id);
+        trackedQueueIds.delete(id);
+        if (!USE_MOCK) cancelQueuedSummary(id).catch((err) => console.warn(err));
+    }
     renderList();
     renderDetail();
 
@@ -422,7 +430,13 @@ async function setRelevance(id, level) {
     toast(t(stored ? "feedbackSaved" : "feedbackLocalOnly"), stored ? 4000 : 7000);
 }
 
-/* ---------- summaries: one queue for automatic and manual requests ---------- */
+/* ---------- summaries: server-side queue (#68) + mock fallback ---------- */
+
+const trackedQueueIds = new Set();
+const fetchingStored = new Set();
+let queuePollTimer = null;
+let queueGeneration = 0;
+let queuePollErrors = 0;
 
 /** Where the summary of a judgement stands. List tags, detail panel and messages all ask
  *  here, so they cannot contradict each other:
@@ -438,9 +452,106 @@ function summaryStatus(item) {
     return isRelevant(item) ? "missing" : "manual";
 }
 
+function applyServerQueueStatus(status, gen) {
+    if (!status || gen !== queueGeneration) return;
+    const prevActive = new Set([...state.summaryLoading, ...state.summaryQueue, ...state.summaryError]);
+    state.summaryLoading = new Set(status.running || []);
+    state.summaryQueue = [...(status.queued || [])];
+    state.summaryError = new Set(Object.keys(status.failed || {}));
+
+    const touched = new Set([...prevActive, ...state.summaryLoading, ...state.summaryQueue, ...state.summaryError]);
+    for (const id of status.done || []) {
+        touched.add(id);
+        if (!state.summaries[id] && !fetchingStored.has(id)) {
+            fetchStoredIntoState(id, gen);
+        }
+    }
+    for (const id of touched) onSummaryChange(id);
+
+    clearTimeout(queuePollTimer);
+    if (state.summaryLoading.size > 0 || state.summaryQueue.length > 0) {
+        queuePollTimer = setTimeout(() => pollServerQueue(gen), 1500);
+    }
+}
+
+async function fetchStoredIntoState(id, gen = queueGeneration) {
+    if (state.summaries[id] || fetchingStored.has(id)) return;
+    fetchingStored.add(id);
+    try {
+        const entry = await fetchStoredSummary(id);
+        if (gen !== queueGeneration) return;
+        state.summaries[id] = entry;
+        const item = findItem(id);
+        if (item) item.summarized = true;
+        scheduleKbRefresh();
+    } catch (err) {
+        console.error(err);
+    } finally {
+        fetchingStored.delete(id);
+        if (gen === queueGeneration) onSummaryChange(id);
+    }
+}
+
+async function pollServerQueue(gen = queueGeneration) {
+    if (USE_MOCK || gen !== queueGeneration || trackedQueueIds.size === 0) return;
+    try {
+        const status = await summaryQueueStatus([...trackedQueueIds]);
+        if (gen !== queueGeneration) return;
+        queuePollErrors = 0;
+        applyServerQueueStatus(status, gen);
+    } catch (err) {
+        console.error(err);
+        if (gen !== queueGeneration || trackedQueueIds.size === 0) return;
+        queuePollErrors += 1;
+        if (queuePollErrors < 5) {
+            queuePollTimer = setTimeout(() => pollServerQueue(gen), 3000);
+        }
+    }
+}
+
+async function enqueueOnServer(ids, priority = false) {
+    const clean = ids.filter((id) => id && !state.summaries[id]);
+    if (!clean.length) return;
+    const gen = queueGeneration;
+    clean.forEach((id) => trackedQueueIds.add(id));
+    try {
+        const status = await queueSummaries(clean, priority);
+        if (gen !== queueGeneration) return;
+        // Refresh full trackedQueueIds snapshot so prior running/queued items are never dropped.
+        if (trackedQueueIds.size > clean.length) {
+            await pollServerQueue(gen);
+        } else {
+            applyServerQueueStatus(status, gen);
+        }
+    } catch (err) {
+        console.error(err);
+        if (gen !== queueGeneration) return;
+        const cleanSet = new Set(clean);
+        state.summaryQueue = state.summaryQueue.filter((id) => !cleanSet.has(id));
+        clean.forEach((id) => {
+            trackedQueueIds.delete(id);
+            state.summaryError.add(id);
+            onSummaryChange(id);
+        });
+    }
+}
+
 /** Puts a judgement into the summary queue (`first`: ahead of everything waiting). */
 function requestSummary(id, { first = false } = {}) {
     if (state.summaries[id] || state.summaryLoading.has(id)) return;
+    const item = findItem(id);
+    if (!USE_MOCK) {
+        if (item?.summarized) {
+            fetchStoredIntoState(id);
+            return;
+        }
+        state.summaryError.delete(id);
+        if (first) state.summaryQueue = [id, ...state.summaryQueue.filter((q) => q !== id)];
+        else if (!state.summaryQueue.includes(id)) state.summaryQueue.push(id);
+        onSummaryChange(id);
+        enqueueOnServer([id], first);
+        return;
+    }
     state.summaryError.delete(id);
     state.summaryQueue = state.summaryQueue.filter((queued) => queued !== id);
     if (first) state.summaryQueue.unshift(id);
@@ -459,7 +570,7 @@ async function loadSummary(id) {
     state.summaryLoading.add(id);
     onSummaryChange(id);
     try {
-        state.summaries[id] = await summarizeJudgement(id);   // stored entry; generated first if missing
+        state.summaries[id] = await summarizeJudgement(id);
         const item = findItem(id);
         if (item) item.summarized = true;
     } catch (err) {
@@ -476,10 +587,25 @@ async function loadSummary(id) {
 /** Every judgement at or above the threshold gets its summary automatically, best first.
  *  Everything below gets a "Zusammenfassen" button in the detail panel. */
 function queueRelevantSummaries() {
-    state.items
+    const ids = state.items
         .filter(isRelevant)
         .sort((a, b) => effectiveScore(b) - effectiveScore(a))
-        .forEach((item) => requestSummary(item.id));
+        .map((item) => item.id);
+    if (!ids.length) return;
+    if (!USE_MOCK) {
+        const storedIds = ids.filter((id) => findItem(id)?.summarized && !state.summaries[id]);
+        const missingIds = ids.filter((id) => !findItem(id)?.summarized);
+        storedIds.forEach((id) => fetchStoredIntoState(id));
+        if (missingIds.length) {
+            missingIds.forEach((id) => {
+                if (!state.summaryQueue.includes(id)) state.summaryQueue.push(id);
+                onSummaryChange(id);
+            });
+            enqueueOnServer(missingIds, false);
+        }
+        return;
+    }
+    ids.forEach((id) => requestSummary(id));
 }
 
 function onSummaryChange(id) {
@@ -507,8 +633,8 @@ function onDraftInput(id, lang, value, editor) {
     updateEditorFooter(editor, id);   // no full re-render while typing
 }
 
-async function onSave(id) {
-    if (!isDirty(id) || state.saveStatus[id] === "saving") return;
+async function performSave(id) {
+    if (!isDirty(id) || state.saveStatus[id] === "saving") return false;
     const texts = state.drafts[id];
     state.saveStatus[id] = "saving";
     renderEditors();
@@ -519,12 +645,29 @@ async function onSave(id) {
         const draft = state.drafts[id];
         if (draft && draft.de === entry.de && draft.fr === entry.fr) delete state.drafts[id];
         state.saveStatus[id] = "saved";
+        renderEditors();
+        refreshKb();
+        return true;
     } catch (err) {
         console.error(err);
         state.saveStatus[id] = "error";
+        renderEditors();
+        refreshKb();
+        return false;
     }
-    renderEditors();
-    refreshKb();
+}
+
+async function onSave(id) {
+    if (!isDirty(id) || state.saveStatus[id] === "saving") return;
+    const draft = state.drafts[id];
+    const stored = state.summaries[id];
+    const changedDe = draft.de !== stored.de;
+    const changedFr = draft.fr !== stored.fr;
+    if (changedDe !== changedFr) {
+        openAlignAfterEditDialog(id, changedDe ? "de" : "fr", changedDe ? "fr" : "de");
+        return;
+    }
+    await performSave(id);
 }
 
 /** The backend stores an edit as a version that waits for approval; approving makes it
@@ -544,10 +687,126 @@ async function onApprove(id) {
     refreshKb();
 }
 
-/** "Anpassen" (refine one language with Apertus) is not connected: the backend has no
- *  route for it yet. The button is shown but deliberately does nothing. To connect it,
- *  add the call here; the result belongs into state.drafts[id][lang] (unsaved edit). */
-function onAdjust(_id, _lang) {}
+function setAlignDialogBusy(dialog, busy, message = "", isError = false) {
+    const status = $("#align-status");
+    status.hidden = !busy && !message;
+    status.classList.toggle("form-error", isError);
+    if (busy) status.replaceChildren(spinner(), message);
+    else status.textContent = message;
+    for (const id of ["#align-apply", "#align-keep", "#align-cancel"]) {
+        $(id).disabled = busy;
+    }
+    $("#align-instruction").disabled = busy;
+}
+
+function showAlignDialog({ title, desc, showInstruction, applyLabel, keepLabel, onApply, onKeep }) {
+    const dialog = $("#align-dialog");
+    $("#align-title").textContent = title;
+    $("#align-desc").textContent = desc;
+    $("#align-instruction-wrap").hidden = !showInstruction;
+    $("#align-instruction").value = "";
+    const applyBtn = $("#align-apply");
+    const keepBtn = $("#align-keep");
+    const cancelBtn = $("#align-cancel");
+    applyBtn.textContent = applyLabel;
+    keepBtn.textContent = keepLabel;
+    setAlignDialogBusy(dialog, false, "");
+
+    const close = () => { if (dialog.open) dialog.close(); };
+    applyBtn.onclick = () => onApply(dialog, close);
+    keepBtn.onclick = () => onKeep(dialog, close);
+    cancelBtn.onclick = close;
+    dialog.showModal();
+    if (showInstruction) $("#align-instruction").focus();
+    else applyBtn.focus();
+}
+
+function openAlignAfterEditDialog(id, sourceLang, targetLang) {
+    const targetName = t(targetLang === "de" ? "langDe" : "langFr");
+    showAlignDialog({
+        title: t("alignPromptTitle", targetName),
+        desc: t("alignPromptBody"),
+        showInstruction: false,
+        applyLabel: t("alignApply"),
+        keepLabel: t("alignKeep"),
+        onApply: async (dialog, close) => {
+            const sourceText = currentTexts(id)[sourceLang];
+            const baseTarget = currentTexts(id)[targetLang];
+            setAlignDialogBusy(dialog, true, t("alignBusy"));
+            try {
+                if (isDirty(id) && !(await performSave(id))) {
+                    setAlignDialogBusy(dialog, false, t("errorSave"), true);
+                    return;
+                }
+                const aligned = await alignSummary(id, {
+                    sourceLang,
+                    sourceText,
+                    targetLang,
+                    targetText: baseTarget,
+                });
+                const latest = currentTexts(id);
+                state.drafts[id] = { de: latest.de, fr: latest.fr, [targetLang]: aligned.text };
+                delete state.saveStatus[id];
+                close();
+                renderEditors();
+                toast(t("alignDone", targetName), 6000);
+            } catch (err) {
+                console.error(err);
+                setAlignDialogBusy(dialog, false, t("alignFailed"), true);
+            }
+        },
+        onKeep: async (_dialog, close) => {
+            close();
+            await performSave(id);
+        },
+    });
+}
+
+function onAdjust(id, lang) {
+    const otherLang = lang === "de" ? "fr" : "de";
+    const langName = t(lang === "de" ? "langDe" : "langFr");
+    const otherName = t(otherLang === "de" ? "langDe" : "langFr");
+    const runAlign = async (dialog, close, payload) => {
+        setAlignDialogBusy(dialog, true, t("alignBusy"));
+        try {
+            const res = await alignSummary(id, payload);
+            const latest = currentTexts(id);
+            state.drafts[id] = { de: latest.de, fr: latest.fr, [lang]: res.text };
+            delete state.saveStatus[id];
+            close();
+            renderEditors();
+            toast(t("alignDone", langName), 5000);
+        } catch (err) {
+            console.error(err);
+            setAlignDialogBusy(dialog, false, t("alignFailed"), true);
+        }
+    };
+    showAlignDialog({
+        title: t("adjustTitle", langName),
+        desc: t("adjustBody"),
+        showInstruction: true,
+        applyLabel: t("adjustApply"),
+        keepLabel: t("adjustFromOther", otherName),
+        onApply: (dialog, close) => {
+            const instruction = $("#align-instruction").value.trim();
+            if (!instruction) {
+                setAlignDialogBusy(dialog, false, t("adjustNeedInstruction"), true);
+                $("#align-instruction").focus();
+                return;
+            }
+            runAlign(dialog, close, { targetLang: lang, targetText: currentTexts(id)[lang], instruction });
+        },
+        onKeep: (dialog, close) => {
+            const texts = currentTexts(id);
+            runAlign(dialog, close, {
+                sourceLang: otherLang,
+                sourceText: texts[otherLang],
+                targetLang: lang,
+                targetText: texts[lang],
+            });
+        },
+    });
+}
 
 function escapeHtml(text) {
     return String(text).replace(/[&<>"]/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[ch]));
@@ -1130,9 +1389,9 @@ function init() {
         }, 200);
     });
 
-    // Escape closes the detail panel (unless the user is typing or a calendar is open)
+    // Escape closes the detail panel (unless a dialog/calendar is open or the user is typing)
     document.addEventListener("keydown", (e) => {
-        if (e.key !== "Escape" || !state.selectedId || openPickers.size) return;
+        if (e.key !== "Escape" || !state.selectedId || openPickers.size || $("#align-dialog")?.open) return;
         if (e.target.closest("input, textarea, select")) return;
         closeDetail();
     });
