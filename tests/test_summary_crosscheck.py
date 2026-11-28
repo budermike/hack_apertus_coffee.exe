@@ -140,3 +140,16 @@ def test_summarizer_runs_the_crosscheck_only_when_switched_on(monkeypatch):
             assert "Dispositiv" in seen["evidence"] and not result.coherence_ok
         else:
             assert result.summary_fr == "fr-first" and "de_fr_conflict" not in kinds
+
+
+def test_length_fix_shortens_the_longer_text_unless_the_shorter_one_is_incomplete():
+    from hack_apertus_coffee_exe.summary.generate import Summarizer
+
+    de_ok = " ".join(["Wort"] * 180)                       # within DE's 130-240 words
+    assert Summarizer.length_fix({"de": de_ok, "fr": " ".join(["mot"] * 200)}) == {}   # within 30 % in characters
+    fix = Summarizer.length_fix({"de": de_ok, "fr": " ".join(["motlong"] * 280)})
+    assert list(fix) == ["fr"] and "Raccourcis-la" in fix["fr"][0]      # FR too long: shorten FR
+    fix = Summarizer.length_fix({"de": de_ok, "fr": " ".join(["mot"] * 60)})
+    assert list(fix) == ["fr"] and "Complète-la" in fix["fr"][0]         # FR far too short: lengthen FR, not shorten DE
+    fix = Summarizer.length_fix({"de": " ".join(["Wort"] * 60), "fr": " ".join(["mot"] * 200)})
+    assert list(fix) == ["de"] and "Ergänze sie" in fix["de"][0]

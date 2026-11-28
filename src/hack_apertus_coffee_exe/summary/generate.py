@@ -247,7 +247,10 @@ class Summarizer(_AlignLanguage):
        *other cases, style only* (``examples.StyleExamples``).
     3. One rewrite when the text is far too short, one paragraph only, starts with
        «In diesem Urteil», or the check finds a wrong outcome, remand or article.
-    4. DE/FR cross-check (``crosscheck``): an adversarial Apertus reviewer and a number
+    4. Length: if one language is more than 30 % longer than the other (characters,
+       ``check.MAX_LENGTH_RATIO``), one rewrite (``length_fix``): the longer one is shortened,
+       unless the shorter one is below its length target, then that one is lengthened.
+    5. DE/FR cross-check (``crosscheck``): an adversarial Apertus reviewer and a number
        comparison look for points where DE and FR disagree; the judgement decides which one is
        right and the other is rewritten once. What still disagrees is an error in the check
        report. On with ``crosscheck=True`` or ``SUMMARY_CROSSCHECK=1`` (off by default until evaluated).
@@ -371,6 +374,42 @@ class Summarizer(_AlignLanguage):
             notes.append("Nicht mit «In diesem Urteil» beginnen." if language == "de" else "Ne pas commencer par « Dans cet arrêt ».")
         return notes
 
+    @staticmethod
+    def length_fix(texts: dict[str, str]) -> dict[str, list[str]]:
+        """Which language to rewrite, with what note, when DE and FR differ in length by more than 30 %.
+
+        The longer text is shortened, unless the shorter one is below its word target
+        (``LENGTH``, Suva's median band): then the shorter one probably left content out and is
+        lengthened instead. Empty when the lengths agree.
+        """
+        from .check import MAX_LENGTH_RATIO, length_ratio
+
+        ratio = length_ratio(texts["de"], texts["fr"])
+        if not ratio or ratio[0] <= MAX_LENGTH_RATIO:
+            return {}
+        longer = ratio[1]
+        shorter = "fr" if longer == "de" else "de"
+        chars = {lang: len(texts[lang].strip()) for lang in LANGUAGES}
+        words = {lang: len(texts[lang].split()) for lang in LANGUAGES}
+        pct = round((ratio[0] - 1) * 100)
+        if words[shorter] < LENGTH[shorter][0]:
+            target = int(chars[longer] / MAX_LENGTH_RATIO * 1.05)
+            note = (f"Die deutsche Fassung ist deutlich kürzer als die französische ({chars['de']} gegenüber {chars['fr']} Zeichen) "
+                    f"und vermutlich unvollständig. Ergänze sie auf mindestens etwa {target} Zeichen "
+                    f"({LENGTH['de'][0]}–{LENGTH['de'][1]} Wörter), nur mit Angaben aus den Erwägungen."
+                    if shorter == "de" else
+                    f"La version française est nettement plus courte que l'allemande ({chars['fr']} contre {chars['de']} caractères) "
+                    f"et probablement incomplète. Complète-la jusqu'à au moins {target} caractères environ "
+                    f"({LENGTH['fr'][0]}–{LENGTH['fr'][1]} mots), uniquement avec des éléments tirés des considérants.")
+            return {shorter: [note]}
+        target = int(chars[shorter] * MAX_LENGTH_RATIO * 0.95)
+        note = (f"Die deutsche Fassung ist {pct} % länger als die französische ({chars['de']} gegenüber {chars['fr']} Zeichen). "
+                f"Kürze sie auf höchstens etwa {target} Zeichen, ohne Aussagen wegzulassen, die auch in der französischen Fassung stehen."
+                if longer == "de" else
+                f"La version française est {pct} % plus longue que l'allemande ({chars['fr']} contre {chars['de']} caractères). "
+                f"Raccourcis-la à environ {target} caractères au plus, sans supprimer ce qui figure aussi dans la version allemande.")
+        return {longer: [note]}
+
     def summarize(self, judgement: Judgement, similar_case_ids: Sequence[str] = (),
                   exclude_ids: Sequence[str] = ()) -> SummaryResult:
         """DE + FR summary. ``similar_case_ids`` / ``exclude_ids`` are accepted for the
@@ -388,6 +427,9 @@ class Summarizer(_AlignLanguage):
                 text = self.write(judgement, language, analysis, examples, notes)
                 attempts[language] = 2
             texts[language] = text.strip()
+        for language, notes in self.length_fix(texts).items():
+            attempts[language] = attempts.get(language, 1) + 1
+            texts[language] = self.write(judgement, language, analysis, shots[language], notes).strip()
         extra: list = []
         if self.crosscheck:
             from . import crosscheck

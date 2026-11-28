@@ -1177,7 +1177,8 @@ function summarizeButton(id, labelKey) {
 /** Points where DE and FR still disagree after the automatic correction (summary/crosscheck.py). */
 function langConflictNotice(entry) {
     const issues = entry?.issues?.[currentLang] || entry?.issues?.de || [];
-    const conflicts = Array.isArray(issues) ? issues.filter((i) => i && i.kind === "de_fr_conflict" && i.detail) : [];
+    const conflicts = Array.isArray(issues)
+        ? issues.filter((i) => i && (i.kind === "de_fr_conflict" || i.kind === "length_mismatch") && i.detail) : [];
     if (!conflicts.length) return null;
     return el("div", { class: "warn-note", role: "note" },
         el("strong", { text: t("langConflictTitle") }),
