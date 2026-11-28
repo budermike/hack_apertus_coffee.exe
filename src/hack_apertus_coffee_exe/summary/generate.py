@@ -1,10 +1,14 @@
-"""Two-step summary generation with Apertus (issue #15) plus check and retry (#16).
+"""Summary generation with Apertus (issues #15, #16, #65).
 
-1. Facts: judgement -> facts JSON (one call).
-2. Writing: facts + Suva examples + style profile + glossary -> DE text and,
-   separately, FR text (one call each; FR is written, not translated).
-3. Check: rule-based check; a language with errors is regenerated once with the
-   errors as feedback. Remaining issues are stored and shown in the UI.
+``Summarizer`` (default, Apertus 70B via ``SUMMARY_MODEL``, prompts in ``prompts/``):
+1. core question and the 1-3 decisive considerations (structured JSON),
+2. DE and FR text written from the wording of those considerations, with a rule-based block on
+   who appealed and who won and Suva examples marked as other cases,
+3. one rewrite on faults (length, one paragraph, wrong outcome/remand/article, invented considerations).
+
+``SummarizerV1`` (older, prompts in ``prompts/v1/``): facts JSON -> DE -> FR -> check and retry.
+Both offer ``align_language`` (#65) to adapt one language to an edited other language or an instruction.
+Comparison and choice: ``notebooks/summary/02_modelle_prompts.ipynb``.
 """
 
 from __future__ import annotations
@@ -92,7 +96,34 @@ class SummaryResult:
         }
 
 
-class SummarizerV1:
+class _AlignLanguage:
+    """``align_language`` (#65) for both pipelines; needs ``self.llm`` and ``self.prompts_dir``."""
+
+    def align_language(
+        self,
+        *,
+        target_lang: str,
+        target_text: str,
+        source_lang: str | None = None,
+        source_text: str | None = None,
+        instruction: str | None = None,
+        facts: dict[str, Any] | None = None,
+    ) -> str:
+        """Align or refine one summary language using Apertus v1.5 (#65)."""
+        if target_lang not in LANGUAGES:
+            raise ValueError(f"language must be one of {LANGUAGES}, got {target_lang!r}")
+        user = prompts.align_user(
+            target_language=target_lang,
+            target_text=target_text,
+            source_language=source_lang,
+            source_text=source_text,
+            instruction=instruction,
+            facts=facts,
+        )
+        return self.llm.chat(prompts.align_system(target_lang, self.prompts_dir), user).strip()
+
+
+class SummarizerV1(_AlignLanguage):
     """Older pipeline (facts JSON -> DE -> FR, prompts in ``prompts/v1/``), kept for comparison
     (``notebooks/summary/``) and as ``run.summarizer_factory(pipeline="v1")``."""
 
@@ -205,7 +236,8 @@ ANALYSIS_SCHEMA = {
     "additionalProperties": False,
 }
 
-class Summarizer:
+
+class Summarizer(_AlignLanguage):
     """DE + FR summary of one judgement (default pipeline, chosen in ``notebooks/summary/02_modelle_prompts``).
 
     1. The model names the core question and the 1-3 considerations that make the judgement
@@ -221,7 +253,7 @@ class Summarizer:
     """
     def __init__(self, llm: Any, examples: StyleExamples | None = None, prompts_dir: Path = prompts.PROMPTS_DIR,
                  max_judgement_chars: int = 40000, analysis_llm: Any | None = None) -> None:
-        self.llm = llm  # summary.llm.SummaryLLM (Apertus 8B): writes the texts
+        self.llm = llm  # summary.llm.SummaryLLM (default Apertus 70B, see run.summarizer_factory): writes the texts
         # optional other model for step 1 only (core question), e.g. Apertus 70B; default = same model
         self.analysis_llm = analysis_llm or llm
         self.examples = examples or StyleExamples()

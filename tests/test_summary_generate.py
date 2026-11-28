@@ -84,6 +84,45 @@ def test_examples_exclude_own_case_and_prefer_triage_matches():
     assert preferred[0] == "8C_455/2025"
 
 
+def test_align_language_calls_apertus_with_instruction_or_other_language(summarizer):
+    out = summarizer.align_language(
+        target_lang="fr",
+        target_text="Résumé actuel",
+        source_lang="de",
+        source_text="Geänderte deutsche Fassung",
+        facts=FACTS,
+    )
+    assert out == FR_OK
+    system, user = summarizer.llm._client.chat.completions.calls[-1]
+    assert "en français" in system
+    assert "Geänderte deutsche Fassung" in user
+    assert "Résumé actuel" in user
+
+
+def test_alignment_prompt_makes_the_edited_version_authoritative():
+    user = prompts.align_user(
+        target_language="fr", target_text="Ancien résumé complet.", source_language="de",
+        source_text="cool", facts=FACTS,
+    )
+    # the edited text is what the other language has to say; the old text is only a wording reference
+    assert "faisant foi" in user and "cool" in user
+    assert "repère terminologique" in user and "Ancien résumé complet." in user
+    # facts of the judgement would pull the text back to what the judgement says: they are left out
+    assert "gesetzesartikel" not in user and "Art. 44 ATSG" not in user
+    system = prompts.align_system("fr")
+    assert "FAIT FOI" in system and "Ne conserve aucun passage" in system
+    de_user = prompts.align_user(target_language="de", target_text="Alte Fassung.", source_language="fr", source_text="super")
+    assert "Massgebende geänderte Fassung (FR)" in de_user and "1:1" in de_user and "super" in de_user
+    assert "MASSGEBEND" in prompts.align_system("de")
+    with pytest.raises(ValueError):
+        prompts.align_system("it")
+
+
+def test_alignment_prompt_without_another_language_uses_instruction_and_facts():
+    user = prompts.align_user(target_language="de", target_text="Bisher.", instruction="kürzer fassen", facts=FACTS)
+    assert "kürzer fassen" in user and "Art. 44 ATSG" in user and "Bisher." in user
+
+
 def test_summarize_retries_failing_language_once(summarizer):
     result = summarizer.summarize(J)
     completions = summarizer.llm._client.chat.completions
@@ -221,3 +260,9 @@ def test_faults_ask_for_rewrite_when_too_short_or_one_paragraph():
     s = gen_mod.Summarizer(FakeLLM(""), ex_mod.StyleExamples([_style_ref("8C_2/2025", "BGer-Urteil 8C_2/2025")]))
     assert any("Zu kurz" in n for n in s.faults("Kurz.", "de", _party_judgement()))
     assert any("Absatz" in n for n in s.faults(" ".join(["Wort"] * 120), "de", _party_judgement()))
+
+
+def test_default_summarizer_offers_align_language_for_the_api():
+    llm = FakeLLM("Aligned.")
+    summarizer = gen_mod.Summarizer(llm, ex_mod.StyleExamples([_style_ref("8C_2/2025", "BGer-Urteil 8C_2/2025")]))
+    assert summarizer.align_language(target_lang="fr", target_text="Texte.", instruction="plus court") == "Aligned."

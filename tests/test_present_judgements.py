@@ -53,7 +53,7 @@ def test_to_ui_item_matches_the_ui_contract():
     subject = ROWS[0]["metadata"]["subject"]
     assert item == {
         "id": "8C_221_2025",
-        "caseNumber": "8C 221/2025",
+        "caseNumber": "8C_221/2025",
         "date": "2025-11-10",
         "url": "https://search.bger.ch/x",
         "lang": "fr",
@@ -61,11 +61,12 @@ def test_to_ui_item_matches_the_ui_contract():
         "subject": {"de": subject, "fr": subject},
         "explanation": {"de": "Integritätsentschädigung, UVG.", "fr": "Integritätsentschädigung, UVG."},
         "score": 55.0,
+        "baseScore": 55.0,
         "adjustment": 0,
         "summarized": True,
         "signals": [],
         "topics": [],
-        "similarCases": [{"caseNumber": "8C 720/2024", "subject": "Arrêt du TF 8C_720/2024", "similarity": 0.4457}],
+        "similarCases": [{"caseNumber": "8C_720/2024", "subject": "Arrêt du TF 8C_720/2024", "similarity": 0.4457}],
         "ampel": "gelb",
         "rank": 2,
         "outcome": "teilweise",
@@ -114,6 +115,7 @@ def test_question_rule_and_criteria_come_from_the_relevance_scoring():
          "quote": "Die Vorinstanz hat den Sachverhalt willkürfrei festgestellt"},
     ]
     assert item["topics"] == ["K1", "N2"] and item["score"] == 89.5
+    assert item["principle"] == 2 and item["uvUse"] == 2
 
 
 def test_rule_is_not_repeated_in_the_explanation():
@@ -295,24 +297,149 @@ def test_responses_without_triage_file_and_thresholds():
 
 
 def test_routes_in_summary_api(tmp_path):
-    judgements = JudgementList(_write(tmp_path), config=TriageConfig(green_threshold=60.0, yellow_threshold=40.0))
-    backend = Backend(tmp_path / "s.sqlite", tmp_path, Mock())
+    from contextlib import closing
+    from hack_apertus_coffee_exe.summary import store
+
+    db_path = tmp_path / "s.sqlite"
+    judgements = JudgementList(
+        _write(tmp_path),
+        config=TriageConfig(green_threshold=60.0, yellow_threshold=40.0),
+        feedback_map=lambda: _latest_feedback(db_path),
+        selected_ids={"8C_720/2024"},
+    )
+    backend = Backend(db_path, tmp_path, Mock())
     server = make_server(backend, "127.0.0.1", 0, tmp_path, judgements)
     threading.Thread(target=server.serve_forever, daemon=True).start()
     base = f"http://127.0.0.1:{server.server_address[1]}/api"
     try:
         with urllib.request.urlopen(f"{base}/judgements?from=2025-01-01&to=2025-12-31&lang=de") as resp:
             items = json.load(resp)
-        assert [i["caseNumber"] for i in items] == ["8C 7/2025", "8C 221/2025"]
+        assert [i["caseNumber"] for i in items] == ["8C_7/2025", "8C_221/2025"]
+        assert items[1]["similarCases"][0]["suvaSelected"] is True
         with urllib.request.urlopen(f"{base}/config") as resp:
-            assert json.load(resp) == {"thresholds": {"high": 60.0, "medium": 40.0}}
+            cfg = json.load(resp)
+            assert cfg["thresholds"] == {"high": 60.0, "medium": 40.0}
+            assert cfg["availableRange"] == {"from": "2025-09-25", "to": "2026-01-15"}
         request = urllib.request.Request(
             f"{base}/judgements/8C_7_2025/feedback", method="POST",
-            data=json.dumps({"adjustment": -20, "direction": -1, "level": "medium"}).encode(),
+            data=json.dumps({"adjustment": -20, "direction": -1, "level": "low", "decision": "low"}).encode(),
             headers={"Content-Type": "application/json"},
         )
         with urllib.request.urlopen(request) as resp:
-            assert resp.status == 200 and json.load(resp)["stored"] is False
+            payload = json.load(resp)
+            assert resp.status == 200 and payload["stored"] is True
+        with urllib.request.urlopen(f"{base}/judgements?from=2025-01-01&to=2025-12-31&lang=de") as resp:
+            after = json.load(resp)
+        top = next(i for i in after if i["id"] == "8C_7_2025")
+        assert top["adjustment"] == -20.0 and top["userLevel"] == "low"
     finally:
         server.shutdown()
         server.server_close()
+    with closing(store.connect(db_path)) as conn:
+        assert store.feedback_examples(conn) == {"8C_7/2025": False}
+
+
+def _latest_feedback(db_path: Path):
+    from contextlib import closing
+    from hack_apertus_coffee_exe.summary import store
+
+    with closing(store.connect(db_path)) as conn:
+        return store.get_latest_feedback(conn)
+
+
+def test_single_judge_is_detected_from_crawl_text(tmp_path):
+    from hack_apertus_coffee_exe.present.judgements import _is_single_judge
+
+    mock = Path("src/hack_apertus_coffee_exe/triage/mock_crawl")
+    rows = [{"case_id": "8C_901/2026", "final_score": 80.0, "judgement_date": "2026-10-14",
+             "metadata": {"similar_cases": []}}]
+    judgements = JudgementList(_write(tmp_path, rows), config=TriageConfig(), crawl_dir=mock)
+    item = judgements.items()[0]
+    assert isinstance(item["singleJudge"], bool)
+    assert _is_single_judge("Urteil\nBesetzung\nEinzelrichter Müller\nSachverhalt:\n...") is True
+    # lower-court mention in subject/facts must NOT mark a three-judge panel as single-judge
+    assert _is_single_judge(
+        "Urteil\nBesetzung\nBundesrichter A, B, C\nGegenstand\nBeschwerde gegen Einzelrichter..."
+    ) is False
+    assert _is_single_judge("Urteil\nBesetzung\nBundesrichter A, B, C\nSachverhalt:\nGegen Einzelrichter...\n") is False
+
+
+def test_invalid_feedback_payload_returns_400(tmp_path):
+    backend = Backend(tmp_path / "s.sqlite", tmp_path, Mock())
+    server = make_server(backend, "127.0.0.1", 0, tmp_path)
+    threading.Thread(target=server.serve_forever, daemon=True).start()
+    base = f"http://127.0.0.1:{server.server_address[1]}/api"
+    try:
+        for bad in ({"adjustment": [1]}, {"direction": [1]}, {"adjustment": True}, {"decision": "bogus"}):
+            req = urllib.request.Request(
+                f"{base}/judgements/8C_7_2025/feedback", method="POST",
+                data=json.dumps(bad).encode(), headers={"Content-Type": "application/json"},
+            )
+            with pytest.raises(urllib.error.HTTPError) as exc:
+                urllib.request.urlopen(req)
+            assert exc.value.code == 400
+    finally:
+        server.shutdown()
+        server.server_close()
+
+
+# --- learning from the lawyers' decisions (triage/feedback_learning.py) ---------------
+
+
+def _scored(case_id, date, p, area="UV", criteria=("K1",)):
+    from hack_apertus_coffee_exe.triage import calibration
+
+    score = calibration.display_score(p, 0.05)
+    return {
+        "case_id": case_id, "final_score": score, "rank_score": score, "judgement_date": date, "ampel": "gruen",
+        "relevance_reason": "Begründung.", "key_topics": list(criteria), "apertus_score": 80.0,
+        "metadata": {"subject": "Unfallversicherung", "relevance": {"p": p, "threshold": 0.05, "area": area}},
+    }
+
+
+LEARN_ROWS = [
+    _scored("8C_10/2026", "2026-04-02", 0.80, "UV", ("K1", "K2")),
+    _scored("8C_11/2026", "2026-04-03", 0.50, "UV", ("K1",)),
+    _scored("9C_12/2026", "2026-04-04", 0.40, "IV", ("K4",)),
+]
+
+
+def test_a_decision_is_learned_from_and_nothing_is_added_to_a_score(tmp_path):
+    from hack_apertus_coffee_exe.triage.feedback_learning import FeedbackLearner
+
+    feedback: dict = {}
+    judgements = JudgementList(
+        _write(tmp_path, LEARN_ROWS), config=TriageConfig(), feedback_map=lambda: feedback, learner=FeedbackLearner(config=TriageConfig()),
+    )
+    before = {i["id"]: i for i in judgements.items()}
+    assert all(i["score"] == i["baseScore"] and i["adjustment"] == 0 for i in before.values())
+    assert config_response(judgements)[1]["learning"] == {
+        "used": 0, "ignored": 0, "priorSd": 0.25, "listProtected": True, "corrections": [],
+    }
+
+    # the stored row still carries the fixed shift of the old UI: it is not applied any more
+    feedback["8C_10_2026"] = {"adjustment": -55.0, "userLevel": "low"}
+    after = {i["id"]: i for i in judgements.items()}
+    decided, similar, other = after["8C_10_2026"], after["8C_11_2026"], after["9C_12_2026"]
+    assert decided["userLevel"] == "low" and decided["adjustment"] == 0
+    assert decided["baseScore"] == before["8C_10_2026"]["score"]
+    assert similar["score"] < similar["baseScore"] == before["8C_11_2026"]["score"]   # same area and criterion
+    assert other["score"] == other["baseScore"]                                       # nothing in common
+    assert all(i["score"] >= 60 for i in after.values())                              # nobody falls off the list
+    learning = config_response(judgements)[1]["learning"]
+    assert learning["used"] == 1 and {c["feature"] for c in learning["corrections"]} == {"area:UV", "crit:K1", "crit:K2"}
+    assert all(c["value"] < 0 for c in learning["corrections"])
+
+    # taking the decision back restores every score
+    feedback["8C_10_2026"] = {"adjustment": 0.0, "userLevel": None}
+    assert all(i["score"] == i["baseScore"] for i in judgements.items())
+
+
+def test_without_a_learner_the_list_behaves_as_before(tmp_path):
+    judgements = JudgementList(
+        _write(tmp_path, LEARN_ROWS), config=TriageConfig(),
+        feedback_map=lambda: {"8C_10_2026": {"adjustment": -55.0, "userLevel": "low"}},
+    )
+    item = next(i for i in judgements.items() if i["id"] == "8C_10_2026")
+    assert item["adjustment"] == -55.0 and item["score"] == item["baseScore"]
+    assert "learning" not in config_response(judgements)[1]

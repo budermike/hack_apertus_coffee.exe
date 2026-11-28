@@ -13,8 +13,6 @@ const SUMMARY_CONCURRENCY = 2;
 /** Relevance levels, highest first. */
 const LEVELS = ["high", "medium", "low"];
 const LEVEL_LABEL = { high: "levelHigh", medium: "levelMedium", low: "levelLow" };
-/** Area filter value for judgements whose area the backend could not name. */
-const AREA_OTHER = "__other__";
 
 const QUOTE_STATUS = {
     exakt: { key: "quoteExact", tag: "ok" },
@@ -33,12 +31,14 @@ const COLUMNS = [
 const state = {
     items: [],                 // judgements from the last search
     hasSearched: false,
+    lastRange: null,           // { from, to } of the last search, to fetch the scores again
     searching: false,
+    searchProgress: null,
+    searchErrorArg: null,
     error: null,               // i18n key of a list-level error
     selectedId: null,          // judgement shown in the detail panel
-    checked: new Set(),        // ids ticked for "summarize selected"
     sort: { key: "score", dir: -1 },
-    filter: { text: "", min: 0, max: 100, level: "all", area: "" },
+    filter: { text: "", min: 0, max: 100, level: "all" },
     criteriaOpen: false,       // "Kriterien und Belege" expanded? (kept while switching cases)
 
     summaries: {},             // id -> summary entry as stored in the database (see normalizeEntry)
@@ -46,12 +46,15 @@ const state = {
     summaryLoading: new Set(), // ids being summarized right now
     summaryError: new Set(),   // ids whose summary failed
     drafts: {},                // id -> { de, fr } while the user edits a summary
-    saveStatus: {},            // id -> "saving" | "saved" | "approving" | "approved" | "error"
+    saveStatus: {},            // id -> "saving" | "aligning" | "saved" | "resetting" | "reset"
+                               //       | "error" | "resetError"
 
     kbEntries: [],
     kbError: false,            // the database could not be read
     kbQuery: "",
-    activeTab: localStorage.getItem("tab") === "kb" ? "kb" : "search",
+    activeTab: ["search", "kb"].includes(localStorage.getItem("tab"))
+        ? localStorage.getItem("tab")
+        : "search",
 };
 
 /* ---------- helpers ---------- */
@@ -85,11 +88,19 @@ function findItem(id) {
     return state.items.find((i) => i.id === id);
 }
 
-/** Displayed score: base score + net manual adjustment, 0..100, one decimal at most.
+/** Displayed score: the relevance the backend delivers, 0..100, one decimal at most.
+ *  Nothing is added by hand any more (28.11.): a lawyer's decision is a training example on
+ *  the server (triage/feedback_learning.py) and comes back in `score` of every judgement it
+ *  says something about; `baseScore` is the value without the decisions.
  *  This is the ONE number that is shown, filtered, sorted and compared with the thresholds. */
 function effectiveScore(item) {
-    const score = item.score + (item.adjustment || 0);
-    return Math.round(Math.max(0, Math.min(100, score)) * 10) / 10;
+    return Math.round(Math.max(0, Math.min(100, item.score)) * 10) / 10;
+}
+
+/** By how much the lawyers' decisions moved this judgement's score (0 = not at all). */
+function learnedDelta(item) {
+    const base = Number.isFinite(item.baseScore) ? item.baseScore : item.score;
+    return Math.round((item.score - base) * 10) / 10;
 }
 
 function scoreLevel(score) {
@@ -98,17 +109,12 @@ function scoreLevel(score) {
     return "low";
 }
 
-const itemLevel = (item) => scoreLevel(effectiveScore(item));
-
-/** Score a judgement is moved to when the user puts it into a level its own score is not in.
- *  Follows the thresholds, so the judgement really lands in that level. */
-function levelTarget(level) {
-    return level === "high" ? Math.max(85, SUMMARY_THRESHOLD) : Math.min(20, Math.max(0, MEDIUM_THRESHOLD - 1));
-}
+/** Level of a judgement: the lawyer's own decision if there is one, otherwise by its score. */
+const itemLevel = (item) => item.userLevel || scoreLevel(effectiveScore(item));
 
 /** Level the user decided by hand ("high" | "low"), or null if the judgement is as triage scored it. */
 function decidedLevel(item) {
-    return item.userLevel || (item.adjustment ? itemLevel(item) : null);
+    return item.userLevel || null;
 }
 /** Relevant = at or above the threshold = summarized automatically. */
 const isRelevant = (item) => itemLevel(item) === "high";
@@ -255,33 +261,76 @@ function showFormError(key) {
     $("#form-error").textContent = key ? t(key) : "";
 }
 
+let periodSearchGeneration = 0;
+
 async function onSearch(event) {
     event.preventDefault();
     const range = validateRange();
     showFormError(range.error || null);
     if (range.error || state.searching) return;
 
+    const searchGen = ++periodSearchGeneration;
     const button = $("#search-btn");
     button.disabled = true;
     button.classList.add("loading");
     state.searching = true;
+    state.searchProgress = null;
+    state.searchErrorMsg = null;
     state.selectedId = null;
-    state.checked.clear();
     state.summaryQueue = [];        // summaries still waiting belong to the previous search
     state.summaryError.clear();
+    queueGeneration += 1;
+    queuePollErrors = 0;
+    trackedQueueIds.clear();
+    clearTimeout(queuePollTimer);
     renderResults();
 
     try {
         await thresholdsReady;      // levels must be judged with the backend's thresholds
-        state.items = await searchJudgements(range.from, range.to, currentLang);
-        state.error = null;
+        if (!USE_MOCK) {
+            let period = await ensurePeriod(range.from, range.to);
+            let pollErrors = 0;
+            while (period && period.status === "running") {
+                if (searchGen !== periodSearchGeneration) return;
+                state.searchProgress = period;
+                renderList();
+                await new Promise((resolve) => setTimeout(resolve, 1200));
+                if (searchGen !== periodSearchGeneration) return;
+                try {
+                    period = await periodStatus(range.from, range.to);
+                    pollErrors = 0;
+                } catch (pollErr) {
+                    console.warn("period status poll error", pollErr);
+                    pollErrors += 1;
+                    if (pollErrors >= 5) throw pollErr;
+                }
+            }
+            if (period && period.status === "error") {
+                state.items = [];
+                state.error = "periodError";
+                state.searchErrorArg = period.error || period.message || "";
+            } else {
+                state.items = await searchJudgements(range.from, range.to, currentLang);
+                state.error = null;
+                state.searchErrorArg = null;
+            }
+        } else {
+            state.items = await searchJudgements(range.from, range.to, currentLang);
+            state.error = null;
+            state.searchErrorArg = null;
+        }
     } catch (err) {
         console.error(err);
         state.items = [];
         state.error = "errorSearch";
+        state.searchErrorArg = null;
     }
+    if (searchGen !== periodSearchGeneration) return;
     state.hasSearched = true;
+    state.lastRange = { from: range.from, to: range.to };
     state.searching = false;
+    state.searchProgress = null;
+    frReasonAttempted.clear();
     button.disabled = false;
     button.classList.remove("loading");
     renderResults();
@@ -293,16 +342,15 @@ async function onSearch(event) {
 
 function isFilterActive() {
     const f = state.filter;
-    return f.text !== "" || f.min > 0 || f.max < 100 || f.level !== "all" || f.area !== "";
+    return f.text !== "" || f.min > 0 || f.max < 100 || f.level !== "all";
 }
 
 /** Text filter: every word must appear in case number, area, subject, question or explanation. */
 function matchesFilter(item) {
     const score = effectiveScore(item);
-    const { text, min, max, level, area } = state.filter;
+    const { text, min, max, level } = state.filter;
     if (score < min || score > max) return false;
     if (level !== "all" && itemLevel(item) !== level) return false;
-    if (area && (area === AREA_OTHER ? Boolean(item.area) : item.area !== area)) return false;
     if (!text) return true;
     const haystack = [
         item.caseNumber, item.caseNumber.replace("_", " "), item.id, areaName(item.area),
@@ -340,7 +388,6 @@ function onFilterChange() {
     state.filter = {
         ...state.filter,
         text: $("#filter-text").value.trim(),
-        area: $("#filter-area").value,
         min: readScoreInput($("#filter-min"), 0),
         max: readScoreInput($("#filter-max"), 100),
     };
@@ -355,7 +402,6 @@ function setLevelFilter(level) {
 
 function resetFilters() {
     $("#filter-text").value = "";
-    $("#filter-area").value = "";
     $("#filter-min").value = "0";
     $("#filter-max").value = "100";
     state.filter.level = "all";
@@ -396,60 +442,70 @@ function closeDetail() {
     document.querySelector(`#results-rows tr[data-id="${CSS.escape(id)}"]`)?.focus();
 }
 
-/* ---------- ticking several cases ("summarize selected") ---------- */
-
-function toggleChecked(id, checked) {
-    if (checked) state.checked.add(id);
-    else state.checked.delete(id);
-    renderSelectionControls();
-}
-
-function toggleCheckAll(checked) {
-    state.checked = new Set(checked ? visibleItems().map((i) => i.id) : []);
-    renderList();
-}
-
-function summarizeChecked() {
-    const ids = [...state.checked];
-    state.checked.clear();
-    renderList();
-    ids.forEach((id) => requestSummary(id));
-}
-
 /* ---------- relevance correction ---------- */
 
+/** After a decision the backend has learned from it: fetch the scores again, because other
+ *  judgements may have moved too, and keep everything else of the list as it is.
+ *  Returns how many scores changed. */
+async function refreshScores() {
+    if (USE_MOCK || !state.lastRange) return 0;   // the demo backend does not learn
+    try {
+        const fresh = await searchJudgements(state.lastRange.from, state.lastRange.to, currentLang);
+        const byId = new Map(fresh.map((item) => [item.id, item]));
+        let moved = 0;
+        for (const item of state.items) {
+            const next = byId.get(item.id);
+            if (!next) continue;
+            if (next.score !== item.score) moved += 1;
+            item.score = next.score;
+            item.baseScore = next.baseScore;
+        }
+        return moved;
+    } catch (err) {
+        console.warn("scores not refreshed after the decision", err);
+        return 0;
+    }
+}
+
 /** "Für Suva relevant" / "Nicht relevant": the user's own decision for this judgement.
- *  It moves the judgement into the level `high` / `low` (or confirms the level it has);
- *  clicking the active decision again takes it back. Every click is sent as feedback. */
+ *  It puts the judgement into the level `high` / `low` (or confirms the level it has);
+ *  clicking the active decision again takes it back. Every click is sent as feedback and
+ *  the backend learns from it: no fixed number is added to the score. */
 async function setRelevance(id, level) {
     const item = findItem(id);
     if (!item) return;
     const before = itemLevel(item);
-    if (decidedLevel(item) === level) {
-        item.userLevel = null;
-        item.adjustment = 0;
-    } else {
-        item.userLevel = level;
-        item.adjustment = scoreLevel(item.score) === level
-            ? 0 : Math.round((levelTarget(level) - item.score) * 10) / 10;
-    }
+    item.userLevel = decidedLevel(item) === level ? null : level;
 
     const after = itemLevel(item);
     const direction = Math.sign(LEVELS.indexOf(before) - LEVELS.indexOf(after));   // +1 raised, -1 lowered, 0 same level
     // relevant now: summarize automatically; no longer relevant: stop waiting for a summary
     if (isRelevant(item)) requestSummary(id, { first: true });
-    else state.summaryQueue = state.summaryQueue.filter((queued) => queued !== id);
+    else {
+        state.summaryQueue = state.summaryQueue.filter((queued) => queued !== id);
+        trackedQueueIds.delete(id);
+        if (!USE_MOCK) cancelQueuedSummary(id).catch((err) => console.warn(err));
+    }
     renderList();
     renderDetail();
 
-    const { stored } = await sendFeedback(id, item.adjustment, direction, after, item.userLevel);
+    const { stored } = await sendFeedback(id, 0, direction, after, item.userLevel);
     item.feedbackLocalOnly = !stored && Boolean(item.userLevel);
-    refreshRow(id);
+    const moved = stored ? await refreshScores() : 0;
+    renderList();
     if (id === state.selectedId) renderDetail();
-    toast(t(stored ? "feedbackSaved" : "feedbackLocalOnly"), stored ? 4000 : 7000);
+    if (moved) queueRelevantSummaries();   // learning may have lifted judgements over the threshold
+    const message = !stored ? t("feedbackLocalOnly") : moved ? t("feedbackLearned", moved) : t("feedbackSaved");
+    toast(message, stored && !moved ? 4000 : 7000);
 }
 
-/* ---------- summaries: one queue for automatic and manual requests ---------- */
+/* ---------- summaries: server-side queue (#68) + mock fallback ---------- */
+
+const trackedQueueIds = new Set();
+const fetchingStored = new Set();
+let queuePollTimer = null;
+let queueGeneration = 0;
+let queuePollErrors = 0;
 
 /** Where the summary of a judgement stands. List tags, detail panel and messages all ask
  *  here, so they cannot contradict each other:
@@ -465,9 +521,106 @@ function summaryStatus(item) {
     return isRelevant(item) ? "missing" : "manual";
 }
 
+function applyServerQueueStatus(status, gen) {
+    if (!status || gen !== queueGeneration) return;
+    const prevActive = new Set([...state.summaryLoading, ...state.summaryQueue, ...state.summaryError]);
+    state.summaryLoading = new Set(status.running || []);
+    state.summaryQueue = [...(status.queued || [])];
+    state.summaryError = new Set(Object.keys(status.failed || {}));
+
+    const touched = new Set([...prevActive, ...state.summaryLoading, ...state.summaryQueue, ...state.summaryError]);
+    for (const id of status.done || []) {
+        touched.add(id);
+        if (!state.summaries[id] && !fetchingStored.has(id)) {
+            fetchStoredIntoState(id, gen);
+        }
+    }
+    for (const id of touched) onSummaryChange(id);
+
+    clearTimeout(queuePollTimer);
+    if (state.summaryLoading.size > 0 || state.summaryQueue.length > 0) {
+        queuePollTimer = setTimeout(() => pollServerQueue(gen), 1500);
+    }
+}
+
+async function fetchStoredIntoState(id, gen = queueGeneration) {
+    if (state.summaries[id] || fetchingStored.has(id)) return;
+    fetchingStored.add(id);
+    try {
+        const entry = await fetchStoredSummary(id);
+        if (gen !== queueGeneration) return;
+        state.summaries[id] = entry;
+        const item = findItem(id);
+        if (item) item.summarized = true;
+        scheduleKbRefresh();
+    } catch (err) {
+        console.error(err);
+    } finally {
+        fetchingStored.delete(id);
+        if (gen === queueGeneration) onSummaryChange(id);
+    }
+}
+
+async function pollServerQueue(gen = queueGeneration) {
+    if (USE_MOCK || gen !== queueGeneration || trackedQueueIds.size === 0) return;
+    try {
+        const status = await summaryQueueStatus([...trackedQueueIds]);
+        if (gen !== queueGeneration) return;
+        queuePollErrors = 0;
+        applyServerQueueStatus(status, gen);
+    } catch (err) {
+        console.error(err);
+        if (gen !== queueGeneration || trackedQueueIds.size === 0) return;
+        queuePollErrors += 1;
+        if (queuePollErrors < 5) {
+            queuePollTimer = setTimeout(() => pollServerQueue(gen), 3000);
+        }
+    }
+}
+
+async function enqueueOnServer(ids, priority = false) {
+    const clean = ids.filter((id) => id && !state.summaries[id]);
+    if (!clean.length) return;
+    const gen = queueGeneration;
+    clean.forEach((id) => trackedQueueIds.add(id));
+    try {
+        const status = await queueSummaries(clean, priority);
+        if (gen !== queueGeneration) return;
+        // Refresh full trackedQueueIds snapshot so prior running/queued items are never dropped.
+        if (trackedQueueIds.size > clean.length) {
+            await pollServerQueue(gen);
+        } else {
+            applyServerQueueStatus(status, gen);
+        }
+    } catch (err) {
+        console.error(err);
+        if (gen !== queueGeneration) return;
+        const cleanSet = new Set(clean);
+        state.summaryQueue = state.summaryQueue.filter((id) => !cleanSet.has(id));
+        clean.forEach((id) => {
+            trackedQueueIds.delete(id);
+            state.summaryError.add(id);
+            onSummaryChange(id);
+        });
+    }
+}
+
 /** Puts a judgement into the summary queue (`first`: ahead of everything waiting). */
 function requestSummary(id, { first = false } = {}) {
     if (state.summaries[id] || state.summaryLoading.has(id)) return;
+    const item = findItem(id);
+    if (!USE_MOCK) {
+        if (item?.summarized) {
+            fetchStoredIntoState(id);
+            return;
+        }
+        state.summaryError.delete(id);
+        if (first) state.summaryQueue = [id, ...state.summaryQueue.filter((q) => q !== id)];
+        else if (!state.summaryQueue.includes(id)) state.summaryQueue.push(id);
+        onSummaryChange(id);
+        enqueueOnServer([id], first);
+        return;
+    }
     state.summaryError.delete(id);
     state.summaryQueue = state.summaryQueue.filter((queued) => queued !== id);
     if (first) state.summaryQueue.unshift(id);
@@ -486,7 +639,7 @@ async function loadSummary(id) {
     state.summaryLoading.add(id);
     onSummaryChange(id);
     try {
-        state.summaries[id] = await summarizeJudgement(id);   // stored entry; generated first if missing
+        state.summaries[id] = await summarizeJudgement(id);
         const item = findItem(id);
         if (item) item.summarized = true;
     } catch (err) {
@@ -503,30 +656,59 @@ async function loadSummary(id) {
 /** Every judgement at or above the threshold gets its summary automatically, best first.
  *  Everything below gets a "Zusammenfassen" button in the detail panel. */
 function queueRelevantSummaries() {
-    state.items
+    const ids = state.items
         .filter(isRelevant)
         .sort((a, b) => effectiveScore(b) - effectiveScore(a))
-        .forEach((item) => requestSummary(item.id));
+        .map((item) => item.id);
+    if (!ids.length) return;
+    if (!USE_MOCK) {
+        const storedIds = ids.filter((id) => findItem(id)?.summarized && !state.summaries[id]);
+        const missingIds = ids.filter((id) => !findItem(id)?.summarized);
+        storedIds.forEach((id) => fetchStoredIntoState(id));
+        if (missingIds.length) {
+            missingIds.forEach((id) => {
+                if (!state.summaryQueue.includes(id)) state.summaryQueue.push(id);
+                onSummaryChange(id);
+            });
+            enqueueOnServer(missingIds, false);
+        }
+        return;
+    }
+    ids.forEach((id) => requestSummary(id));
 }
 
 function onSummaryChange(id) {
     refreshRow(id);
-    renderSumLine();
     if (id === state.selectedId) renderDetail();
 }
 
-/* ---------- editing, saving and approving summaries ---------- */
+/* ---------- editing, saving and resetting summaries ---------- */
 
 /** Text currently in the editor: the draft if there is one, otherwise the stored summary. */
 function currentTexts(id) {
     return state.drafts[id] || state.summaries[id];
 }
 
+/** The database holds an edited version of this summary (typed by a lawyer, or brought in
+ *  line by Apertus), or an edit from before 28.11. that never got approved. */
+function hasStoredEdit(id) {
+    const stored = state.summaries[id];
+    return stored.pendingLangs.length > 0
+        || SUMMARY_LANGS.some((lang) => stored.origin[lang] && stored.origin[lang] !== "generated");
+}
+
+/** Something to save: the user typed, or an edit saved before the approval step was dropped
+ *  (28.11.) still waits in the database. "Speichern" takes that one over as well. */
 function isDirty(id) {
     const draft = state.drafts[id];
     const stored = state.summaries[id];
-    return Boolean(draft && stored && (draft.de !== stored.de || draft.fr !== stored.fr));
+    if (!stored) return false;
+    if (stored.pendingLangs.length > 0) return true;
+    return Boolean(draft && (draft.de !== stored.de || draft.fr !== stored.fr));
 }
+
+const canReset = (id) => isDirty(id) || hasStoredEdit(id);
+const isSaveBusy = (id) => ["saving", "aligning", "resetting"].includes(state.saveStatus[id]);
 
 function onDraftInput(id, lang, value, editor) {
     const texts = currentTexts(id);
@@ -535,18 +717,36 @@ function onDraftInput(id, lang, value, editor) {
     updateEditorFooter(editor, id);   // no full re-render while typing
 }
 
+/** Saves the editor's texts. They are shown at once: there is no approval step, and the
+ *  database keeps one edited version per language next to the generated one.
+ *  If only one language was changed, the backend lets Apertus bring the other one in line
+ *  (never a text a lawyer typed); `entry.alignment` says what came of it. */
 async function onSave(id) {
-    if (!isDirty(id) || state.saveStatus[id] === "saving") return;
-    const texts = state.drafts[id];
-    state.saveStatus[id] = "saving";
+    if (!isDirty(id) || isSaveBusy(id)) return;
+    const stored = state.summaries[id];
+    const texts = currentTexts(id);
+    const sent = { de: texts.de, fr: texts.fr };
+    const changed = SUMMARY_LANGS.filter((lang) => sent[lang] !== stored[lang] || stored.pendingLangs.includes(lang));
+    const other = changed.length === 1 ? SUMMARY_LANGS.find((lang) => lang !== changed[0]) : null;
+    state.saveStatus[id] = other && stored.origin[other] !== "edited" ? "aligning" : "saving";
     renderEditors();
     try {
-        const entry = await saveSummary(id, texts);
+        const entry = await saveSummary(id, sent);
         state.summaries[id] = entry;
-        // keep the draft if the user typed on while saving
+        // Keep only what the user typed on while saving; everything else follows the saved
+        // entry (Apertus may have rewritten the other language).
         const draft = state.drafts[id];
-        if (draft && draft.de === entry.de && draft.fr === entry.fr) delete state.drafts[id];
+        if (draft) {
+            const merged = Object.fromEntries(
+                SUMMARY_LANGS.map((lang) => [lang, draft[lang] === sent[lang] ? entry[lang] : draft[lang]]));
+            if (merged.de === entry.de && merged.fr === entry.fr) delete state.drafts[id];
+            else state.drafts[id] = merged;
+        }
         state.saveStatus[id] = "saved";
+        const alignment = entry.alignment;
+        if (alignment?.ok) toast(t("alignedToast", alignment.lang), 8000);
+        else if (alignment?.reason === "edited_by_hand") toast(t("alignSkippedToast", alignment.lang), 8000);
+        else if (alignment) toast(t("alignFailedToast", alignment.lang), 8000);
     } catch (err) {
         console.error(err);
         state.saveStatus[id] = "error";
@@ -555,27 +755,30 @@ async function onSave(id) {
     refreshKb();
 }
 
-/** The backend stores an edit as a version that waits for approval; approving makes it
- *  the shown version (and the one the database search finds). */
-async function onApprove(id) {
-    if (isDirty(id) || state.saveStatus[id] === "approving") return;
-    state.saveStatus[id] = "approving";
+/** Drops the edited version of both languages, and what is typed but not saved: the text
+ *  Apertus generated is shown again. That one is never deleted, so this always works. */
+async function onReset(id) {
+    if (!canReset(id) || isSaveBusy(id)) return;
+    if (!confirm(t("resetConfirm"))) return;
+    if (!hasStoredEdit(id)) {        // only typed, nothing saved: nothing to ask the backend
+        delete state.drafts[id];
+        delete state.saveStatus[id];
+        renderEditors();
+        return;
+    }
+    state.saveStatus[id] = "resetting";
     renderEditors();
     try {
-        state.summaries[id] = await approveSummary(id);
-        state.saveStatus[id] = "approved";
+        state.summaries[id] = await resetSummary(id);
+        delete state.drafts[id];
+        state.saveStatus[id] = "reset";
     } catch (err) {
         console.error(err);
-        state.saveStatus[id] = "error";
+        state.saveStatus[id] = "resetError";
     }
     renderEditors();
     refreshKb();
 }
-
-/** "Anpassen" (refine one language with Apertus) is not connected: the backend has no
- *  route for it yet. The button is shown but deliberately does nothing. To connect it,
- *  add the call here; the result belongs into state.drafts[id][lang] (unsaved edit). */
-function onAdjust(_id, _lang) {}
 
 function escapeHtml(text) {
     return String(text).replace(/[&<>"]/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[ch]));
@@ -662,9 +865,10 @@ function relevanceScale(item) {
             el("i", { style: `left:${SUMMARY_THRESHOLD}%` }),
             el("b", { style: `left:${score}%` })),
         el("span", { class: "pnum", text: String(score) }),
-        // manual correction: show by how much the score was moved
-        Boolean(item.adjustment) && el("span", {
-            class: "sub delta", text: (item.adjustment > 0 ? "+" : "−") + Math.abs(item.adjustment),
+        // learned from the lawyers' decisions: show by how much that moved the score
+        Boolean(learnedDelta(item)) && el("span", {
+            class: "sub delta", title: t("learnedDeltaHint", item.baseScore),
+            text: (learnedDelta(item) > 0 ? "+" : "−") + Math.abs(learnedDelta(item)),
         }));
 }
 
@@ -677,7 +881,9 @@ function statusTags(item) {
         item.summarized && el("span", { class: "tag ok", text: t("tagInDb") }),
         Boolean(decidedLevel(item)) && el("span", {
             class: "tag",
-            text: t(item.adjustment ? "tagCorrected" : "tagConfirmed") + (item.feedbackLocalOnly ? t("localSuffix") : ""),
+            // "korrigiert": the decision differs from what the score says; "bestätigt": it agrees
+            text: t(scoreLevel(effectiveScore(item)) === item.userLevel ? "tagConfirmed" : "tagCorrected")
+                + (item.feedbackLocalOnly ? t("localSuffix") : ""),
         }),
     ];
 }
@@ -690,12 +896,6 @@ function renderRow(item) {
         onclick: () => selectCase(item.id),
         onkeydown: (e) => { if (e.key === "Enter" && e.target === e.currentTarget) selectCase(item.id); },
     },
-        el("td", { class: "col-select", onclick: (e) => e.stopPropagation() },
-            el("input", {
-                type: "checkbox", checked: state.checked.has(item.id),
-                "aria-label": `${t("selectItem")} ${item.caseNumber}`,
-                onchange: (e) => toggleChecked(item.id, e.target.checked),
-            })),
         el("td", { class: "col-case nr" }, item.caseNumber, el("div", { class: "sub", text: (item.lang || "").toUpperCase() })),
         el("td", { class: "col-date pnum", text: item.date ? formatDate(item.date) : "" }),
         el("td", { class: "col-area" }, areaLabel(item),
@@ -716,17 +916,9 @@ function refreshRow(id) {
     if (hadFocus) fresh.focus({ preventScroll: true });
 }
 
-function renderHead(visible) {
+function renderHead() {
     const { key, dir } = state.sort;
-    const n = visible.filter((i) => state.checked.has(i.id)).length;
-    const checkAll = el("input", {
-        type: "checkbox", checked: n > 0 && n === visible.length,
-        "aria-label": t("selectAll"), title: t("selectAll"),
-        onchange: (e) => toggleCheckAll(e.target.checked),
-    });
-    checkAll.indeterminate = n > 0 && n < visible.length;
     $("#results-head").replaceChildren(
-        el("th", { class: "col-select" }, checkAll),
         ...COLUMNS.map((col) => {
             if (!col.key) return el("th", { class: col.cls, text: t(col.label) });
             const sorted = col.key === key;
@@ -739,18 +931,7 @@ function renderHead(visible) {
         }));
 }
 
-/** "Ausgewählte zusammenfassen (n)" and the tick in the table head. */
-function renderSelectionControls(visible = visibleItems()) {
-    // selections that a filter has hidden are dropped, so the button never acts on unseen rows
-    const visibleIds = new Set(visible.map((i) => i.id));
-    state.checked = new Set([...state.checked].filter((id) => visibleIds.has(id)));
-    renderHead(visible);
-    const button = $("#summarize-checked");
-    button.hidden = state.checked.size === 0;
-    button.textContent = t("summarizeSelected", state.checked.size);
-}
-
-/** Level buttons with counts, and the areas that occur in this result. */
+/** Level buttons with counts. */
 function renderFilterControls() {
     const counts = { high: 0, medium: 0, low: 0 };
     for (const item of state.items) counts[itemLevel(item)] += 1;
@@ -760,30 +941,6 @@ function renderFilterControls() {
         type: "button", "data-level": level, "aria-pressed": String(state.filter.level === level),
         text: `${label} (${count})`, onclick: () => setLevelFilter(level),
     })));
-
-    const codes = [...new Set(state.items.map((i) => i.area).filter(Boolean))]
-        .sort((a, b) => areaName(a).localeCompare(areaName(b)));
-    const hasOther = state.items.some((i) => !i.area);
-    const select = $("#filter-area");
-    const options = [["", t("allAreas")], ...codes.map((code) => [code, areaName(code)])];
-    if (hasOther && codes.length) options.push([AREA_OTHER, t("otherAreas")]);
-    if (!options.some(([value]) => value === state.filter.area)) state.filter.area = "";
-    select.replaceChildren(...options.map(([value, label]) => el("option", { value, text: label })));
-    select.value = state.filter.area;
-    select.hidden = options.length <= 1;
-}
-
-/** Line in the app bar: what the search found and how far the automatic summaries are. */
-function renderSumLine() {
-    const line = $("#sum-line");
-    if (!state.hasSearched || state.error || state.items.length === 0) {
-        line.textContent = t("appSubtitle");
-        return;
-    }
-    const relevant = state.items.filter(isRelevant);
-    const medium = state.items.filter((i) => itemLevel(i) === "medium").length;
-    const done = relevant.filter((i) => summaryStatus(i) === "ready" || i.summarized).length;
-    line.textContent = t("sumLine", state.items.length, relevant.length, medium, done, SUMMARY_THRESHOLD);
 }
 
 function renderList() {
@@ -793,67 +950,78 @@ function renderList() {
     const searching = state.searching;
 
     $("#results-rows").replaceChildren(...visible.map(renderRow));
-    renderSelectionControls(visible);
+    renderHead();
     $("#results-table").hidden = searching || visible.length === 0;
     $("#filter-bar").hidden = searching || total === 0;
     $("#results-count").textContent = isFilterActive()
         ? t("resultsCountFiltered", visible.length, total)
         : t("resultsCount", total);
 
+    const status = $("#results-status");
+    if (searching && state.searchProgress) {
+        const p = state.searchProgress;
+        const pct = p.total > 0 ? Math.min(100, Math.round((p.completed / p.total) * 100)) : 0;
+        status.hidden = false;
+        status.replaceChildren(
+            el("div", { class: "period-progress" },
+                el("p", { class: "loading-line" }, spinner(), t("periodLoading", p.message)),
+                el("progress", { max: String(Math.max(1, p.total || 1)), value: String(p.completed || 0) }),
+                p.total > 0 && el("span", { class: "sub", text: `${p.completed || 0} / ${p.total} (${pct} %)` })));
+        return;
+    }
     let statusKey = null;
     if (searching) statusKey = "searching";
     else if (state.error) statusKey = state.error;
     else if (!state.hasSearched) statusKey = "emptyInitial";
     else if (total === 0) statusKey = "emptyNoResults";
     else if (visible.length === 0) statusKey = "emptyFiltered";
-    const status = $("#results-status");
     status.hidden = !statusKey;
-    status.textContent = statusKey ? t(statusKey) : "";
-    renderSumLine();
+    status.textContent = statusKey ? t(statusKey, state.searchErrorArg || "") : "";
 }
 
 /* ---------- rendering: summary editor (detail panel and database) ---------- */
 
 function saveStatusText(id) {
     const status = state.saveStatus[id];
-    const pending = state.summaries[id].pendingLangs.length > 0;
     if (status === "saving") return t("saving");
-    if (status === "approving") return t("approving");
+    if (status === "aligning") return t("savingAligning");
+    if (status === "resetting") return t("resetting");
     if (status === "error") return t("errorSave");
+    if (status === "resetError") return t("errorReset");
+    if (!state.drafts[id] && state.summaries[id].pendingLangs.length > 0) return t("pendingLegacy");
     if (isDirty(id)) return t("unsaved");
-    if (status === "approved") return `✓ ${t("approved")}`;
-    if (pending) return (status === "saved" ? `✓ ${t("saved")} · ` : "") + t("pendingApproval");
     if (status === "saved") return `✓ ${t("saved")}`;
+    if (status === "reset") return `✓ ${t("resetDone")}`;
     return "";
 }
 
 function updateEditorFooter(editor, id) {
-    const busy = state.saveStatus[id] === "saving" || state.saveStatus[id] === "approving";
-    const dirty = isDirty(id);
-    editor.querySelector(".save-btn").disabled = !dirty || busy;
-    const approve = editor.querySelector(".approve-btn");
-    approve.hidden = state.summaries[id].pendingLangs.length === 0;
-    approve.disabled = dirty || busy;
+    const busy = isSaveBusy(id);
+    editor.querySelector(".save-btn").disabled = !isDirty(id) || busy;
+    editor.querySelector(".reset-btn").disabled = !canReset(id) || busy;
     const status = editor.querySelector(".save-status");
     status.textContent = saveStatusText(id);
-    status.classList.toggle("error", state.saveStatus[id] === "error");
+    status.classList.toggle("error", ["error", "resetError"].includes(state.saveStatus[id]));
 }
 
-/** Result of the backend's own check of the generated text, if it ran one. */
-function checkNote(entry) {
-    if (!entry.checked && entry.issues.length === 0) return null;
-    const ok = entry.issues.length === 0;
-    return el("div", { class: "check" },
-        el("p", { class: "note" },
-            el("span", { class: `tag ${ok ? "ok" : "warn"}`, text: t(ok ? "checkOk" : "checkReview") }), " ",
-            t(ok ? "checkOkNote" : "checkReviewNote")),
-        !ok && el("ul", { class: "find" }, entry.issues.map((issue) => el("li", {},
-            el("span", { class: `tag ${issue.severity === "error" ? "bad" : ""}`, text: (issue.language || "").toUpperCase() }),
-            " ", issue.detail || issue.kind || ""))));
+/** Two tags above one summary language: the language, and where its text comes from:
+ *  "generiert" (Apertus), "bearbeitet" (typed by a lawyer) or "angeglichen" (written by
+ *  Apertus to follow the lawyer's edit of the other language). The origin is the database's
+ *  (entry.origin, see summaryOrigin in api.js): typing does not change it, only saving does. */
+function summaryTags(entry, lang, name) {
+    const origin = entry.origin?.[lang];
+    const hint = origin === "generated" ? t("originGeneratedHint", entry.model?.[lang] || "?")
+        : origin === "aligned" ? t("originAlignedHint", entry.alignedBy?.[lang] || "Apertus")
+        : t("originEditedHint");
+    return el("h4", { class: "duo-tags" },
+        el("span", { class: "tag lang-tag", lang, text: name }),
+        origin && el("span", {
+            class: `tag origin-tag ${origin}`, title: hint, text: t(`origin_${origin}`),
+        }));
 }
 
-/** German and French summary next to each other, each editable and with its own "Anpassen";
- *  one save button for both. `scope` tells the detail panel ("res") from the database ("kb")
+/** German and French summary next to each other, each editable; one "Speichern" and one
+ *  "Zurücksetzen" for both. `scope` tells the detail panel ("res") from the database ("kb")
  *  so the caret can be restored after a re-render. */
 function summaryEditor(scope, id) {
     const entry = state.summaries[id];
@@ -870,9 +1038,7 @@ function summaryEditor(scope, id) {
         });
         textarea.value = texts[lang] || "";   // content must be set as a property
         return el("div", { class: "duo-col" },
-            el("div", { class: "duo-head" },
-                el("h4", { text: name }),
-                el("button", { type: "button", class: "btn small", text: t("adjust"), onclick: () => onAdjust(id, lang) })),
+            el("div", { class: "duo-head" }, summaryTags(entry, lang, name)),
             textarea);
     });
 
@@ -881,13 +1047,11 @@ function summaryEditor(scope, id) {
         el("div", { class: "row editor-footer" },
             el("button", { type: "button", class: "btn pri save-btn", text: t("save"), onclick: () => onSave(id) }),
             el("button", {
-                type: "button", class: "btn approve-btn", text: t("approve"), title: t("approveHint"),
-                onclick: () => onApprove(id),
+                type: "button", class: "btn reset-btn", text: t("resetSummary"), title: t("resetSummaryHint"),
+                onclick: () => onReset(id),
             }),
             el("span", { class: "note save-status", "aria-live": "polite" }),
             el("button", { type: "button", class: "btn export-btn", text: t("openSuvaFormat"), onclick: () => openSuvaExport(id) })));
-    const note = checkNote(entry);
-    if (note) editor.append(note);
     updateEditorFooter(editor, id);
     return editor;
 }
@@ -934,12 +1098,35 @@ function summarizeButton(id, labelKey) {
         el("button", { type: "button", class: "btn pri", text: t(labelKey), onclick: () => requestSummary(id, { first: true }) }));
 }
 
+function summaryBasisSection(entry) {
+    const facts = entry?.facts;
+    const laws = Array.isArray(facts?.gesetzesartikel) ? facts.gesetzesartikel.filter(Boolean) : [];
+    const points = Array.isArray(facts?.kernerwaegungen)
+        ? facts.kernerwaegungen.filter((k) => k && (k.aussage || k.erwaegung))
+        : [];
+    const examples = Array.isArray(entry?.examples) ? entry.examples.filter(Boolean) : [];
+    if (!laws.length && !points.length && !examples.length) return null;
+    return el("details", { class: "summary-basis" },
+        el("summary", { text: t("summaryBasis") }),
+        laws.length > 0 && el("p", { class: "signals" },
+            el("span", { class: "sub", text: `${t("summaryBasisLaws")}: ` }),
+            laws.map((law) => [el("span", { class: "tag", text: law }), " "])),
+        points.length > 0 && el("div", {},
+            el("p", { class: "sub", text: t("summaryBasisConsiderations") }),
+            el("ul", { class: "basis-list" }, points.map((p) => el("li", {},
+                p.erwaegung && el("strong", { text: `${t("refPrefix")}${p.erwaegung}: ` }),
+                p.aussage || "")))),
+        examples.length > 0 && el("p", { class: "signals" },
+            el("span", { class: "sub", text: `${t("summaryBasisExamples")}: ` }),
+            examples.map((ex) => [el("span", { class: "tag", text: ex }), " "])));
+}
+
 function summarySection(item) {
     const id = item.id;
     const heading = el("h3", { text: t("summary") });
     const busy = (key) => el("p", { class: "note loading-line" }, spinner(), t(key));
     switch (summaryStatus(item)) {
-        case "ready": return [heading, summaryEditor("res", id)];
+        case "ready": return [heading, summaryEditor("res", id), summaryBasisSection(state.summaries[id])].filter(Boolean);
         case "loading": return [heading, busy("summarizing")];
         case "queued": return [heading, busy("summaryQueued")];
         case "error": return [heading, el("p", { class: "form-error", text: t("errorSummary") }), summarizeButton(id, "retry")];
@@ -966,7 +1153,7 @@ function similarSection(item) {
         el("h3", { text: t("similarCases") }),
         el("table", { class: "similar" }, el("tbody", {}, item.similarCases.map((c) => el("tr", {},
             el("td", { class: "nr" }, similarCaseLink(c.caseNumber)),
-            el("td", { text: c.subject || "" }),
+            el("td", {}, c.subject || "", c.suvaSelected && [" ", el("span", { class: "tag ok", text: t("suvaSelected") })]),
             el("td", { class: "pnum", text: t("similarity", c.similarity.toFixed(2)) }))))),
     ];
 }
@@ -1000,20 +1187,59 @@ function textSection(titleKey, field) {
     ];
 }
 
+const frReasonLoading = new Set();
+const frReasonAttempted = new Set();
+
+async function ensureFrenchReason(item) {
+    if (USE_MOCK || currentLang !== "fr" || !item || frReasonLoading.has(item.id) || frReasonAttempted.has(item.id)) {
+        return;
+    }
+    const exp = item.explanation;
+    if (!exp?.de || (exp.fr && exp.fr !== exp.de)) return;
+    frReasonLoading.add(item.id);
+    let updated = false;
+    try {
+        const res = await translateReasonFr(item.id);
+        if (res?.explanation?.fr) { item.explanation = { ...item.explanation, fr: res.explanation.fr }; updated = true; }
+        if (res?.question?.fr && item.question) { item.question = { ...item.question, fr: res.question.fr }; updated = true; }
+        if (res?.rule?.fr && item.rule) { item.rule = { ...item.rule, fr: res.rule.fr }; updated = true; }
+        frReasonAttempted.add(item.id);
+    } catch (err) {
+        console.warn("FR translation failed", err);
+    } finally {
+        frReasonLoading.delete(item.id);
+        if (updated && state.selectedId === item.id) renderDetail();
+    }
+}
+
+/** Divider between list and detail (splitter.js); created in init. */
+let detailSplitter = null;
+
 function renderDetail() {
     const item = findItem(state.selectedId);
     $("#split").classList.toggle("has-detail", Boolean(item));
     $("#detail-pane").hidden = !item;
+    $("#split-handle").hidden = !item;
     const detail = $("#detail");
     if (!item) {
         detail.replaceChildren();
+        detailSplitter?.reset();   // the next case opens at the default width again
         return;
     }
+    detailSplitter?.refresh();
+    ensureFrenchReason(item);
 
     const meta = [
         item.date && formatDate(item.date), loc(item.court), areaLabel(item), subjectDetail(item), outcomeName(item.outcome),
     ];
+    const badges = [
+        item.singleJudge === true && el("span", { class: "tag", text: t("tagSingleJudge") }),
+        typeof item.principle === "number" && el("span", { class: "tag blue", text: t("principleLabel", item.principle) }),
+        typeof item.uvUse === "number" && el("span", { class: "tag blue", text: t("uvUseLabel", item.uvUse) }),
+    ].filter(Boolean);
     const url = item.url && (currentLang === "fr" ? item.url.replace("lang=de", "lang=fr") : item.url);
+    // the text the crawler stored, served by our own backend: readable without leaving the installation
+    const localUrl = USE_MOCK ? "" : originalPageUrl(item.id, currentLang);
     preservingFocus(detail, () => detail.replaceChildren(...[
         el("button", {
             type: "button", class: "detail-close", "aria-label": t("close"), title: t("close"), onclick: closeDetail,
@@ -1021,7 +1247,10 @@ function renderDetail() {
         // as in the demo: the title of the summary once there is one
         el("h2", { text: loc(state.summaries[item.id]?.title) || `${t("judgement")} ${item.caseNumber}` }),
         el("p", { class: "meta" }, meta.filter(Boolean).join(", "), ". ",
+            localUrl && el("a", { href: localUrl, target: "_blank", rel: "noopener", class: "local-original", text: t("openLocal") }),
+            localUrl && url && " · ",
             url && el("a", { href: url, target: "_blank", rel: "noopener", text: t("openOriginal") })),
+        badges.length > 0 && el("div", { class: "row detail-badges" }, badges),
         textSection("question", item.question),
         // the explanation is triage's reasoning, so the heading follows triage's own score
         textSection(scoreLevel(item.score) === "high" ? "whyRelevant" : "whyNotRelevant", item.explanation),
@@ -1049,7 +1278,6 @@ function renderKbEntry(entry) {
             el("summary", {},
                 el("span", { class: "nr", text: entry.caseNumber }),
                 el("span", { class: "kb-entry-title", text: kbTitle(entry) }),
-                entry.pendingLangs.length > 0 && el("span", { class: "tag warn", text: t("tagPending") }),
                 el("span", { class: "sub", text: entry.storedAt ? `${t("storedAt")} ${formatDate(entry.storedAt.slice(0, 10))}` : "" })),
             el("div", { class: "kb-entry-body" }, summaryEditor("kb", entry.id))));
 }
@@ -1130,6 +1358,7 @@ function init() {
     });
     $("#theme-toggle").addEventListener("click", toggleTheme);
     $("#mock-badge").hidden = !USE_MOCK;
+    detailSplitter = createSplitter($("#split"), $("#split-handle"), $("#detail-pane"));
 
     const tabs = [...document.querySelectorAll(".tabs [role=tab]")];
     tabs.forEach((tab, index) => {
@@ -1159,9 +1388,7 @@ function init() {
     for (const id of ["#filter-text", "#filter-min", "#filter-max"]) {
         $(id).addEventListener("input", onFilterChange);
     }
-    $("#filter-area").addEventListener("change", onFilterChange);
     $("#filter-reset").addEventListener("click", resetFilters);
-    $("#summarize-checked").addEventListener("click", summarizeChecked);
     $("#kb-clear").addEventListener("click", onClearDb);
     $("#kb-clear").hidden = !USE_MOCK;   // the real database keeps every version (append-only)
 
@@ -1174,7 +1401,7 @@ function init() {
         }, 200);
     });
 
-    // Escape closes the detail panel (unless the user is typing or a calendar is open)
+    // Escape closes the detail panel (unless a calendar is open or the user is typing)
     document.addEventListener("keydown", (e) => {
         if (e.key !== "Escape" || !state.selectedId || openPickers.size) return;
         if (e.target.closest("input, textarea, select")) return;

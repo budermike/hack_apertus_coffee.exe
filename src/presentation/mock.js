@@ -176,7 +176,8 @@ const mockBackend = (() => {
                 .map((j) => ({
                     ...j,
                     url: "#",
-                    adjustment: data.feedback[j.id]?.adjustment || 0,
+                    baseScore: j.score,
+                    adjustment: 0,   // the demo backend stores the decision but does not learn from it
                     userLevel: data.feedback[j.id]?.decision || null,
                     summarized: Boolean(data.kb[j.id]),
                 }));
@@ -192,6 +193,7 @@ const mockBackend = (() => {
             const entry = {
                 id: j.id, caseNumber: j.caseNumber, date: j.date, url: "#", area: j.area, subject: j.subject,
                 de: MOCK_SUMMARY.de(j), fr: MOCK_SUMMARY.fr(j),
+                status: { de: "generated", fr: "generated" }, model: { de: "mock", fr: "mock" },
                 storedAt: new Date().toISOString(),
             };
             const data = db.load();   // re-read: parallel calls may have written meanwhile
@@ -200,25 +202,69 @@ const mockBackend = (() => {
             return entry;
         },
 
-        /** PUT /judgements/{id}/summary — the mock has no approval step, the edit is shown at once */
+        /** PUT /judgements/{id}/summary: as in the backend, a changed language becomes the one
+         *  edited version and is shown at once; if only one changed, the other follows (here
+         *  a marked placeholder instead of an Apertus text), unless it was typed by hand. */
         async saveSummary(id, texts) {
             await delay(300);
             const data = db.load();
-            if (!data.kb[id]) throw new Error("not in database");
-            data.kb[id] = { ...data.kb[id], de: texts.de, fr: texts.fr, editedAt: new Date().toISOString() };
+            const entry = data.kb[id];
+            if (!entry) throw new Error("not in database");
+            const next = {
+                ...entry,
+                status: { ...entry.status },
+                model: { ...entry.model },
+                alignedBy: { de: null, fr: null, ...entry.alignedBy },
+                editedAt: new Date().toISOString(),
+            };
+            const changed = ["de", "fr"].filter((lang) => typeof texts[lang] === "string" && texts[lang] !== entry[lang]);
+            for (const lang of changed) {
+                next[lang] = texts[lang];
+                next.status[lang] = "approved";
+                next.model[lang] = "human";
+                next.alignedBy[lang] = null;
+            }
+            let alignment = null;
+            if (changed.length === 1) {
+                const source = changed[0];
+                const target = source === "de" ? "fr" : "de";
+                if (entry.status[target] !== "generated" && !next.alignedBy[target]) {
+                    alignment = { lang: target, ok: false, reason: "edited_by_hand" };
+                } else {
+                    const base = entry[target].replace(/\n\n\[Mock: [^\]]*\]$/, "");
+                    next[target] = `${base}\n\n[Mock: ${target.toUpperCase()} ← ${source.toUpperCase()} angeglichen]`;
+                    next.status[target] = "approved";
+                    next.model[target] = "human";
+                    next.alignedBy[target] = "mock";
+                    alignment = { lang: target, ok: true };
+                }
+            }
+            data.kb[id] = next;
+            db.save(data);
+            return { ...next, alignment };
+        },
+
+        /** DELETE /judgements/{id}/summary/edit: back to the generated text */
+        async resetSummary(id) {
+            await delay(200);
+            const data = db.load();
+            const entry = data.kb[id];
+            const j = MOCK_JUDGEMENTS.find((m) => m.id === id);
+            if (!entry || !j) throw new Error("not in database");
+            data.kb[id] = {
+                ...entry,
+                de: MOCK_SUMMARY.de(j), fr: MOCK_SUMMARY.fr(j),
+                status: { de: "generated", fr: "generated" }, model: { de: "mock", fr: "mock" },
+                alignedBy: { de: null, fr: null }, editedAt: null,
+            };
             db.save(data);
             return data.kb[id];
         },
 
-        /** POST /judgements/{id}/summary/approve — nothing waits for approval in the mock */
-        async approveSummary(id) {
-            return db.load().kb[id];
-        },
-
         /** POST /judgements/{id}/feedback */
-        async sendFeedback(id, adjustment, _direction, _level, decision) {
+        async sendFeedback(id, _adjustment, _direction, _level, decision) {
             const data = db.load();
-            if (decision) data.feedback[id] = { adjustment, decision };
+            if (decision) data.feedback[id] = { decision };
             else delete data.feedback[id];
             db.save(data);
             return { stored: true };
