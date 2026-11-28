@@ -1,0 +1,6 @@
+Variante,F2,Recall (bestes F2),Precision (bestes F2),Ausgewählt (bestes F2),Recall@30,Recall@100,Ausgewählt für 90 % Recall,Ausgewählt für 100 % Recall
+A · Abi: Ähnlichkeit + Bonus (heute),0.6609,0.7419,0.46,50,0.4838709677419355,0.8387096774193549,114,1847
+B · heute ohne Bonus,0.5882,0.9677,0.229,131,0.22580645161290322,0.6774193548387096,120,1840
+C · zentriert: nur Ähnlichkeit,0.5918,0.9355,0.2397,121,0.16129032258064516,0.6774193548387096,116,1401
+D · zentriert + Bonus wie heute,0.65,0.8387,0.3421,76,0.3870967741935484,0.8709677419354839,114,1404
+E · zentriert + Bonus ×2 (auf Q4 gewählt),0.6354,0.7419,0.4035,57,0.4838709677419355,0.8709677419354839,114,1409
