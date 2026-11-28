@@ -29,7 +29,7 @@ Crawl JSON (metadata + judgement text)
            apertus_score (llm_weight, default 75%) + cosine_score (or heuristic
            in --no-llm mode). Then
            rank 1..n and ampel gruen/gelb/rot are assigned from configs/triage.json
-           ─► results/ranking_<period>.csv + results/recall_<period>.txt
+           ─► results/ranking_<period>_score.csv + results/recall_<period>_score.txt
 ```
 
 Why two stages?
@@ -85,7 +85,7 @@ The scoring that produces the Suva list with the highest recall (reasons and mea
 - **Pass 1, triage:** criteria for and against relevance (`K1`–`K5`, `N1`–`N3`), each with a verbatim quote that code checks against the judgement, a two-sentence reason, then a score. Transferable principles from invalidity insurance count explicitly (`K3`).
 - **Pass 2, "Vertiefung"** (triage score >= 50): separate scales for legal principle (0–3) and use for accident insurance (0–3), a one-sentence rule, a second score.
 - **Calibration:** a logistic regression with four parameters turns both scores and the area into a relevance value; fitted only on labelled quarters *before* the scored one. A judgement is on the list when the value is above `F2 / 5`, times `list_factor` from the config.
-- **Robustness:** strict JSON schema, one retry with temperature, every answer cached per judgement; a failed judgement is shown yellow with its error, never dropped.
+- **Robustness:** strict JSON schema, one retry with temperature, every answer cached per judgement; a judgement whose answer stays invalid is shown yellow with its error, never dropped. If Apertus could not be asked at all for some judgements (no key, no connection, time-out), the command writes nothing and exits with code 2, so the tracked score files and the Suva list are not replaced by a shorter list; run it again (answered judgements come from the cache) or pass `--allow-failed`.
 - **Output:** the usual `TriageResult` list (`final_score`, `ampel`, `relevance_reason`), so ranking CSV, Suva list, summary batch and UI work unchanged. `final_score` is the relevance value on the 0-100 scale of `configs/triage.json`: the list threshold is mapped onto `green_threshold`, half of it onto `yellow_threshold`. The raw value and the details (criteria, quotes, rule) are in `metadata["relevance"]`.
 
 ### `triage/config.py` + `configs/triage.json`
@@ -95,12 +95,12 @@ All tunables (issue #12): `rank_by`, `llm_weight`, `top_k`, `green_threshold` (6
 Mirror of the crawler's data index in `data/processed/triage/` (`_index.json` + `<YYYY-MM>/<date>_<case>.npy|.json`). Chunk vectors are reused while the text SHA-256 and embedder fingerprint (name, chunking, TF-IDF vocabulary hash) match; Apertus decisions are reused while the request key (model, temperature, max_tokens, full prompt) matches. A changed text invalidates both. The TF-IDF vocabulary is fitted once on all 55 summaries (vocabulary only, no labels), so cached vectors stay valid across periods; leakage is handled at scoring time. Safe to delete.
 
 ### `triage/export.py`
-Issue #33 deliverables: `ranking_<period>.csv` (`Rang, Geschaeftsnummer, Score, Ampel, Begruendung`) and `recall_<period>.txt` in Suva format (`8C_691/2024, 9C_612/2025, ...`, top `recall_top_n`).
+Issue #33 deliverables: `ranking_<label>.csv` (`Rang, Geschaeftsnummer, Score, Ampel, Begruendung`) and `recall_<label>.txt` in Suva format (`8C_691/2024, 9C_612/2025, ...`). `relevance` writes the Suva list under the period label (`ranking_q2_2026.csv`, `recall_q2_2026.txt`, every green judgement); `score` writes under `<period>_score` (top `recall_top_n`), so it never replaces that list.
 
 ### `triage/cli.py`
 Command-line interface (`python -m hack_apertus_coffee_exe.triage.cli <command>`):
 - `check-gateway`: Lists available models on the configured gateway and probes `/embeddings` if supported.
-- `score`: Runs triage for a required period (`--period 2026-Q2` or `--since`/`--until`), writes the ranking CSV + recall list to `results/` and full JSON to `--output`. Also `--no-llm`, `--embedder`, `--model`, `--top-k`, `--config`, `--no-cache`, `--no-export`.
+- `score`: Runs triage for a required period (`--period 2026-Q2` or `--since`/`--until`), writes `ranking_<period>_score.csv` + `recall_<period>_score.txt` to `results/` and full JSON to `--output`. Also `--no-llm`, `--embedder`, `--model`, `--top-k`, `--config`, `--no-cache`, `--no-export`.
 - `eval-corpus`: Runs a leave-one-out cosine similarity evaluation across the 55 Suva summaries in `judgements/`.
 
 ### `tests/test_triage.py`
@@ -151,7 +151,7 @@ python3 -m pytest -q tests/test_triage.py tests/test_triage_issues.py
 # Evaluate leave-one-out cosine similarity on the 55 Suva reference summaries
 python -m hack_apertus_coffee_exe.triage.cli eval-corpus
 
-# Offline triage for Q2/2026 (TF-IDF + keywords) -> results/ranking_q2_2026.csv, results/recall_q2_2026.txt
+# Offline triage for Q2/2026 (TF-IDF + keywords) -> results/ranking_q2_2026_score.csv, results/recall_q2_2026_score.txt
 python -m hack_apertus_coffee_exe.triage.cli score --input data/raw --period 2026-Q2 --no-llm
 
 # Full triage with Apertus v1.5, also writing the full JSON

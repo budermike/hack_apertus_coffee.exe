@@ -22,10 +22,23 @@ from .config import TriageConfig
 from .date_filter import DateRange
 from .pipeline import CrawlItem, TriageResult, load_crawl_items
 from .reference_corpus import load_reference_corpus
-from .relevance import LIST_AREAS, ApertusRelevanceClient, Precedent, build_pool, describe, is_candidate, score_items
+from .relevance import (
+    LIST_AREAS,
+    ApertusRelevanceClient,
+    Precedent,
+    build_pool,
+    describe,
+    is_candidate,
+    not_asked,
+    score_items,
+)
 
 DEFAULT_LABEL_PERIODS = ("2025-Q4", "2026-Q1")  # quarters for which Suva's selection is known
 DEFAULT_TABLES_DIR = "results/tables"
+
+
+class IncompleteRun(RuntimeError):
+    """Apertus could not be asked for some judgements; ``run`` wrote nothing."""
 
 
 def load_period_items(raw_dir: str | Path, period: DateRange) -> list[CrawlItem]:
@@ -171,17 +184,41 @@ def run(
     workers: int = 8,
     log: Callable[[str], None] = print,
     config: TriageConfig | None = None,
+    allow_failed: bool = False,
 ) -> dict[str, Any]:
-    """Score ``period_name`` and the labelled periods before it; returns records, calibration and results."""
+    """Score ``period_name`` and the labelled periods before it; returns records, calibration and results.
+
+    The score files in ``tables_dir`` are tracked in git and feed the evaluation, and the
+    caller writes the Suva list from the results. So when Apertus could not be asked for a
+    judgement (no key, no connection, time-out), nothing is written and ``IncompleteRun`` is
+    raised: a list from such a run is shorter and its calibration differs. Run again; with
+    a cache only the missing judgements are asked. ``allow_failed`` writes everything anyway
+    and shows these judgements in yellow.
+    """
     period = DateRange.from_period(period_name)
     client = client or ApertusRelevanceClient(cache_dir="data/processed/triage")
     selected = load_selected_ids(judgements_dir)
     pool = precedent_pool(raw_dir, label_periods, selected, load_summaries_de(judgements_dir))
     earlier = [p for p in label_periods if DateRange.from_period(p).until < period.since]
-    train: list[dict[str, Any]] = []
+    scored = []
     for name in [*earlier, period_name]:
         rng = DateRange.from_period(name)
         records, items = score_period(rng, client, pool, raw_dir, workers, lambda a, b, n=name: log(f"  {n}: {a}/{b}"))
+        scored.append((name, rng, records, items))
+
+    missing = {name: [r for r in records if not_asked(r)] for name, _, records, _ in scored}
+    if any(missing.values()) and not allow_failed:
+        counts = ", ".join(f"{name}: {len(rows)}" for name, rows in missing.items() if rows)
+        first = next(row for rows in missing.values() for row in rows)
+        raise IncompleteRun(
+            f"Apertus could not be asked for some judgements ({counts}). Nothing was written. "
+            "Run again; with the cache only these judgements are asked. "
+            "--allow-failed (allow_failed=True) writes the results anyway and shows them in yellow. "
+            f"First error ({first['case_id']}): {first['error']}"
+        )
+
+    train: list[dict[str, Any]] = []
+    for name, rng, records, items in scored:
         path = scores_path(tables_dir, rng)
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(json.dumps([public_record(r) for r in records], ensure_ascii=False, indent=1), encoding="utf-8")

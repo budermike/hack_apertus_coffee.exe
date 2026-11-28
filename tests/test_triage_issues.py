@@ -264,6 +264,25 @@ class ExportTests(unittest.TestCase):
             self.assertEqual(listed, [r.case_id for r in results[:3]])
         self.assertEqual(format_recall_list(results, 0), "")
 
+    def test_score_command_never_replaces_the_suva_list(self) -> None:
+        # ranking_<period>.csv and recall_<period>.txt belong to `triage.cli relevance` (#62)
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "in.json").write_text(
+                json.dumps({"case_id": "8C_10/2026", "decision_date": "2026-05-20", "text": ACCIDENT_TEXT}), encoding="utf-8"
+            )
+            (root / "recall_q2_2026.txt").write_text("the Suva list\n", encoding="utf-8")
+            (root / "ranking_q2_2026.csv").write_text("the Suva ranking\n", encoding="utf-8")
+            code = cli_main([
+                "score", "--input", str(root / "in.json"), "--period", "2026-Q2", "--no-llm", "--no-cache",
+                "--export-dir", tmp, "--output", str(root / "triage.json"),
+            ])
+            self.assertEqual(code, 0)
+            self.assertEqual((root / "recall_q2_2026.txt").read_text(encoding="utf-8"), "the Suva list\n")
+            self.assertEqual((root / "ranking_q2_2026.csv").read_text(encoding="utf-8"), "the Suva ranking\n")
+            self.assertEqual((root / "recall_q2_2026_score.txt").read_text(encoding="utf-8").strip(), "8C_10/2026")
+            self.assertTrue((root / "ranking_q2_2026_score.csv").exists())
+
 
 if __name__ == "__main__":
     unittest.main()
