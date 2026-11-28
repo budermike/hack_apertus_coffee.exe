@@ -62,6 +62,19 @@
  *        the ones learned from all decisions (triage/feedback_learning.py); GET /api/config
  *        lists what was learned under `learning`.
  *
+ *   POST {API_BASE}/subjects/localize   body: { lang, ids: [..] }
+ *        -> { lang, subjects: { id: text }, complete }   Subjects ("Gegenstand") of these
+ *        judgements in the language of the UI. A subject exists in the language of the
+ *        judgement only; Apertus carries it over in legal wording (not word for word), once,
+ *        then it is stored. GET /judgements delivers stored ones in `subject[lang]` and
+ *        names the languages still missing in `subjectMissing`.
+ *
+ *   POST {API_BASE}/judgements/{id}/localize   body: { lang }
+ *        -> { lang, subject?, quotes: { index: text }, basis?: { laws, considerations }, complete }
+ *        The quotes under the criteria and what the summary rests on, in the language of
+ *        the UI. A carried-over quote is not the wording of the court any more: the UI
+ *        marks it and keeps the original one click away.
+ *
  *   GET  {API_BASE}/judgements/{id}/original?lang=de|fr
  *        -> HTML page with the judgement text as the crawler stored it (opened in a new tab,
  *        not fetched by script): the original can be read without the external site.
@@ -119,6 +132,15 @@ const httpBackend = {
     },
     periodStatus(from, to) {
         return jsonFetch(`${API_BASE}/periods/status?${new URLSearchParams({ from, to })}`);
+    },
+    localizeSubjects(lang, ids) {
+        return jsonFetch(`${API_BASE}/subjects/localize`, { method: "POST", body: JSON.stringify({ lang, ids }) });
+    },
+    localizeJudgement(id, lang) {
+        return jsonFetch(`${API_BASE}/judgements/${encodeURIComponent(id)}/localize`, {
+            method: "POST",
+            body: JSON.stringify({ lang }),
+        });
     },
     translateReasonFr(id) {
         return jsonFetch(`${API_BASE}/judgements/${encodeURIComponent(id)}/reason-fr`, {
@@ -182,6 +204,8 @@ function normalizeJudgement(raw) {
         baseScore: toNumber(raw.baseScore ?? raw.score),
         adjustment: toNumber(raw.adjustment),
         userLevel: raw.userLevel || null,   // "high" | "low": decided by hand
+        subjectMissing: Array.isArray(raw.subjectMissing) ? raw.subjectMissing : [],   // UI languages without a subject yet
+        scored: typeof raw.scored === "boolean" ? raw.scored : null,   // false: Apertus gave no relevance value
         feedbackLocalOnly: false,
         summarized: Boolean(raw.summarized),
         criteria: Array.isArray(raw.criteria) ? raw.criteria : [],
@@ -270,6 +294,16 @@ async function ensurePeriod(from, to) {
 
 async function periodStatus(from, to) {
     return backend.periodStatus ? await backend.periodStatus(from, to) : { status: "done" };
+}
+
+/** Subjects of these judgements in `lang`; the demo backend has only what mock.js holds. */
+async function localizeSubjects(lang, ids) {
+    return backend.localizeSubjects ? await backend.localizeSubjects(lang, ids) : { subjects: {}, complete: true };
+}
+
+/** Quotes and summary basis of one judgement in `lang`, or null in demo mode. */
+async function localizeJudgement(id, lang) {
+    return backend.localizeJudgement ? await backend.localizeJudgement(id, lang) : null;
 }
 
 async function translateReasonFr(id) {

@@ -532,6 +532,8 @@ blockquote {
 .kb-entry summary::before { content: "▸"; color: var(--muted); transition: transform .12s; }
 .kb-entry details[open] > summary::before { transform: rotate(90deg); }
 .kb-entry summary:hover { background: var(--soft); }
+/* fixed column for the case number, so every title starts on the same line */
+.kb-entry summary .nr { flex: 0 0 8.2em; }
 .kb-entry-title { flex: 1 1 260px; min-width: 0; }
 .kb-entry-body { padding: 6px 14px 16px; }
 
@@ -579,3 +581,9 @@ blockquote {
 @media (prefers-reduced-motion: reduce) {
     * { animation-duration: 0s !important; transition: none !important; }
 }
+
+/* ---------- quotes carried over into the language of the UI ---------- */
+.rendered-note { font-style: italic; }
+.quote-original { margin-top: 4px; }
+.quote-original summary { cursor: pointer; color: var(--muted); font: 400 12px/1.4 var(--ui); }
+.quote-original p { margin: 4px 0 0; color: var(--muted); }

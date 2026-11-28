@@ -10,7 +10,7 @@ UI item (``GET /api/judgements``)::
     {id, caseNumber, date, url, lang, area, subject: {de, fr}, explanation: {de, fr},
      score, baseScore, adjustment, userLevel, summarized, outcome, court: {de, fr}, signals,
      topics, question: {de, fr}, rule: {de, fr}, criteria: [{id, at, quote, status}],
-     similarCases, ampel, rank}
+     similarCases, ampel, rank, scored}
 
 Lawyer feedback (#64): ``userLevel`` is the lawyer's own decision on this judgement. With a
 ``learner`` (``triage.feedback_learning``, the way the server runs) the decisions are training
@@ -290,6 +290,10 @@ def to_ui_item(
     }
     if isinstance(feedback, dict) and feedback.get("userLevel") in ("high", "low"):
         item["userLevel"] = feedback["userLevel"]
+    if isinstance(rel, dict) and "p" in rel:
+        # False: Apertus gave this judgement no relevance value (area outside the scoring, or a
+        # failed call). A lawyer's decision on it stands, but there is nothing to learn from.
+        item["scored"] = isinstance(rel["p"], (int, float)) and not isinstance(rel["p"], bool)
     item.update(relevance_details(meta, fr_entry=fr_entry))
     if "singleJudge" not in item and single_judge is not None:
         item["singleJudge"] = single_judge

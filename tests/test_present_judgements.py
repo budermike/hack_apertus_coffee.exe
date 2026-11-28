@@ -435,6 +435,26 @@ def test_a_decision_is_learned_from_and_nothing_is_added_to_a_score(tmp_path):
     assert all(i["score"] == i["baseScore"] for i in judgements.items())
 
 
+def test_a_decision_on_a_judgement_apertus_did_not_score_stands_but_teaches_nothing(tmp_path):
+    from hack_apertus_coffee_exe.triage.feedback_learning import FeedbackLearner
+
+    unscored = _scored("9C_13/2026", "2026-04-05", 0.5, "KV", ())
+    unscored["metadata"]["relevance"]["p"] = None
+    unscored["final_score"] = unscored["rank_score"] = 0.0
+    feedback = {"9C_13_2026": {"adjustment": 0.0, "userLevel": "high"}}
+    judgements = JudgementList(
+        _write(tmp_path, [*LEARN_ROWS, unscored]), config=TriageConfig(), feedback_map=lambda: feedback,
+        learner=FeedbackLearner(config=TriageConfig()),
+    )
+    items = {i["id"]: i for i in judgements.items()}
+    assert items["9C_13_2026"]["scored"] is False and items["9C_13_2026"]["userLevel"] == "high"
+    assert items["9C_13_2026"]["score"] == 0.0                       # the system has no estimate of its own
+    assert items["8C_10_2026"]["scored"] is True
+    assert all(i["score"] == i["baseScore"] for i in items.values())  # nothing to learn from
+    learning = config_response(judgements)[1]["learning"]
+    assert (learning["used"], learning["ignored"]) == (0, 1)
+
+
 def test_without_a_learner_the_list_behaves_as_before(tmp_path):
     judgements = JudgementList(
         _write(tmp_path, LEARN_ROWS), config=TriageConfig(),

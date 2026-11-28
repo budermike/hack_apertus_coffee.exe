@@ -73,7 +73,9 @@ why).
 selected; quotes checked against the judgement text (exact / approximate / missing);
 editing with one edited version per language, the other language following through
 Apertus, and a reset to the generated text; a searchable database of all summaries; the
-stored judgement text readable inside the application; German and French interface.
+stored judgement text readable inside the application; a German and a French interface
+in which subjects, quotes and the basis of a summary are shown in the chosen language
+(carried over by Apertus in legal wording, a carried-over quote marked as such).
 
 ### Target architecture (mandatory)
 
@@ -109,6 +111,7 @@ runtime.
 | Summaries German / French | `LLM_NAME` (default `apertus-v1-5-8b`) | Inference in two steps: extract the facts, then write each language from the facts with a style profile (`prompts/style_de.md`, `style_fr.md`, `glossary.md`) and Suva examples. A check without a model follows: every consideration and article of law the summary cites must occur in the judgement, and the outcome and a remand must agree with the operative part; on an error the text is written again |
 | Other language after an edit | same as summaries | Inference: brings the untouched language in line with the lawyer's edit |
 | Reasons in French | same as relevance | Inference, once per judgement, cached |
+| Subjects, quotes and summary basis in the language of the interface | same as relevance | Inference in batches with the glossary: legal wording of the target language, not word for word; stored after the first time |
 
 No fine-tuning. `temperature = 0` with a fixed seed; only a relevance call whose answer
 could not be read is repeated once with 0.4. Calls go through one wrapper per stage (`triage/llm.py`, `summary/llm.py`) with
