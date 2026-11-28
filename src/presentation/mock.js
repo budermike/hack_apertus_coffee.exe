@@ -49,8 +49,11 @@ const mockBackend = (() => {
             criteria: [
                 { id: "K1", at: "E2.1", status: "exakt",
                   quote: "Als Berufskrankheiten gelten Krankheiten, die bei der beruflichen Tätigkeit ausschliesslich oder vorwiegend durch schädigende Stoffe verursacht worden sind." },
-                { id: "K4", at: "E5.3", status: "ungefähr",
-                  quote: "An dieser Rechtsprechung ist festzuhalten; sie ist indessen wie folgt zu präzisieren." },
+                { id: "K4", at: "E5.3", status: "fehlt",
+                  quote: "Das Bundesgericht hält an der Rechtsprechung fest und präzisiert sie.",
+                  passage: { at: "E5.3", text: "An dieser Rechtsprechung ist festzuhalten; sie ist indessen wie folgt zu präzisieren." } },
+                { id: "K2", at: "E6.1", status: "fehlt",
+                  quote: "Die Suva hat den Kausalzusammenhang umfassend abgeklärt." },
             ],
         },
         {

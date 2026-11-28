@@ -416,9 +416,9 @@ def test_add_single_case_and_translate_fr_http(tmp_path):
             if stage == "deep":
                 return {"a_grundsatz": 2, "b_nutzen_uv": 3, "c_korrektur": False, "d_merksatz": "Taggeld nach UVG.", "e_score": 82}
             return {
-                "reason_fr": "La Suva est directement concernée.",
-                "question_fr": "Existe-t-il un droit à l'indemnité journalière ?",
-                "rule_fr": "Indemnité journalière selon la LAA.",
+                "a_motivation_fr": "La Suva est directement concernée.",
+                "b_question_fr": "Existe-t-il un droit à l'indemnité journalière ?",
+                "c_regle_fr": "Indemnité journalière selon la LAA.",
             }
 
     client = FakeClient()

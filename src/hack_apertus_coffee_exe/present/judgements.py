@@ -35,6 +35,7 @@ from typing import Any, Callable, Iterable
 
 from ..summary.judgement import load_judgements, operative_outcome
 from ..triage import calibration
+from ..triage import relevance as relevance_scoring
 from ..triage.config import TriageConfig, load_config
 from ..triage.feedback_learning import apply_decision
 from ..triage.date_filter import DateRange
@@ -158,12 +159,21 @@ def _plain_quote(quote: str) -> str:
 
 
 def _fr_cache_key(reason_de: str, question_de: str = "", rule_de: str = "") -> str:
-    payload = json.dumps([reason_de.strip(), question_de.strip(), rule_de.strip()], ensure_ascii=False)
-    return hashlib.sha256(payload.encode("utf-8")).hexdigest()
+    return relevance_scoring.fr_cache_key(reason_de, question_de, rule_de)
 
 
-def relevance_details(meta: dict[str, Any], fr_entry: dict[str, str] | None = None) -> dict[str, Any]:
-    """``question``, ``rule`` and ``criteria`` of the UI from ``metadata.relevance`` (#62, #66)."""
+def relevance_details(
+    meta: dict[str, Any],
+    fr_entry: dict[str, str] | None = None,
+    segments: Callable[[], list[dict[str, str]] | None] | None = None,
+) -> dict[str, Any]:
+    """``question``, ``rule`` and ``criteria`` of the UI from ``metadata.relevance`` (#62, #66).
+
+    A quote Apertus did not copy word for word (``status`` other than ``exakt``) gets
+    ``passage``: the wording of the judgement it renders, with its mark, looked up in the
+    stored text (``segments`` returns ``relevance.segment(text)["segs"]``, asked only when
+    needed). Without ``passage`` the judgement has no passage close to the quote.
+    """
     relevance = meta.get("relevance")
     if not isinstance(relevance, dict):
         return {}
@@ -176,6 +186,7 @@ def relevance_details(meta: dict[str, Any], fr_entry: dict[str, str] | None = No
             fr_text = fr_raw.strip() if isinstance(fr_raw, str) and fr_raw.strip() else de_text
             details[key] = {"de": de_text, "fr": fr_text}
     criteria = []
+    segs: list[dict[str, str]] | None = None  # the judgement, read only if a quote is not verbatim
     listed = relevance.get("criteria")
     for criterion in listed if isinstance(listed, list) else []:
         if not isinstance(criterion, dict):
@@ -186,12 +197,19 @@ def relevance_details(meta: dict[str, Any], fr_entry: dict[str, str] | None = No
         quote = _plain_quote(quote)
         if not quote:
             continue
-        criteria.append({
+        entry = {
             "id": criterion_id,
             "at": at if isinstance(at, str) else "",
             "quote": quote,
             "status": criterion.get("beleg_status"),  # "exakt" | "ungefähr" | "fehlt"
-        })
+        }
+        if entry["status"] != "exakt" and segments is not None:
+            if segs is None:
+                segs = segments() or []
+            passage = relevance_scoring.locate_passage(quote, entry["at"], segs)
+            if passage:
+                entry["passage"] = passage
+        criteria.append(entry)
     if criteria:
         details["criteria"] = criteria
     for src, dst in (("principle", "principle"), ("uv_use", "uvUse")):
@@ -203,14 +221,22 @@ def relevance_details(meta: dict[str, Any], fr_entry: dict[str, str] | None = No
     return details
 
 
+_RULE_MARK = "Merksatz:"
+
+
 def _reason_without_rule(reason: str, meta: dict[str, Any]) -> str:
-    """The reason without the practical rule that the relevance scoring appends to it."""
+    """The reason without the practical rule that the relevance scoring appends to it.
+
+    «Warum relevant» and «Merksatz für die Praxis» are two sections of the UI: the rule is
+    shown in its own, so it is cut off here (compared without regard to spaces).
+    """
     relevance = meta.get("relevance")
     rule = relevance.get("rule") if isinstance(relevance, dict) else None
-    cleaned_rule = rule.strip() if isinstance(rule, str) else ""
-    appended = f" Merksatz: {cleaned_rule}" if cleaned_rule else None
-    stripped = reason.rstrip()
-    return stripped[: -len(appended)] if appended and stripped.endswith(appended) else reason
+    cleaned_rule = " ".join(rule.split()) if isinstance(rule, str) else ""
+    head, mark, tail = reason.rpartition(_RULE_MARK)
+    if cleaned_rule and mark and " ".join(tail.split()) == cleaned_rule:
+        return head.rstrip()
+    return reason
 
 
 def to_ui_item(
@@ -225,6 +251,7 @@ def to_ui_item(
     learned: Any | None = None,
     config: TriageConfig | None = None,
     subject_lookup: Callable[[str], str | None] | None = None,
+    segments: Callable[[], list[dict[str, str]] | None] | None = None,
 ) -> dict[str, Any]:
     """One triage result -> one UI list item."""
     meta = row.get("metadata") or {}
@@ -298,7 +325,7 @@ def to_ui_item(
         # False: Apertus gave this judgement no relevance value (area outside the scoring, or a
         # failed call). A lawyer's decision on it stands, but there is nothing to learn from.
         item["scored"] = isinstance(rel["p"], (int, float)) and not isinstance(rel["p"], bool)
-    item.update(relevance_details(meta, fr_entry=fr_entry))
+    item.update(relevance_details(meta, fr_entry=fr_entry, segments=segments))
     if "singleJudge" not in item and single_judge is not None:
         item["singleJudge"] = single_judge
     if outcome is not None:
@@ -368,6 +395,7 @@ class JudgementList:
         self._header_cache: dict[str, tuple[str | None, str | None, str | None]] = {}
         self._text_meta_cache: dict[str, tuple[str | None, bool | None]] = {}
         self._subjects: dict[str, str] = {}
+        self._segments_cache: dict[str, list[dict[str, str]] | None] = {}
         self._lock = threading.Lock()
 
     def invalidate(self) -> None:
@@ -503,6 +531,24 @@ class JudgementList:
         res = (outcome, single_judge)
         self._text_meta_cache[key] = res
         return res
+
+    def segments_for(self, key: str) -> list[dict[str, str]] | None:
+        """Citable paragraphs of the stored judgement text (``relevance.segment``), None if it is not stored."""
+        if key in self._segments_cache:
+            return self._segments_cache[key]
+        segs: list[dict[str, str]] | None = None
+        path = self._ensure_file_map().get(key) if self.crawl_dir or self.extra_crawl_dir else None
+        if path is not None and path.exists():
+            try:
+                for judgement in load_judgements(path):
+                    if ui_id(judgement.case_id) == key or any(ui_id(c) == key for c in judgement.case_ids):
+                        segs = relevance_scoring.segment(judgement.text)["segs"]
+                        break
+            except Exception:  # an unreadable file: the quotes are shown without the passage
+                segs = None
+        if segs is not None:  # a judgement that is not stored yet may be crawled later
+            self._segments_cache[key] = segs
+        return segs
 
     def subject_for(self, case_id: str) -> str | None:
         """Fast subject lookup for ``similarCases`` without scanning all files."""
@@ -749,6 +795,7 @@ class JudgementList:
                     learned=learned,
                     config=self.config,
                     subject_lookup=self.subject_for if has_crawl or self._subjects else None,
+                    segments=(lambda key=key: self.segments_for(key)) if has_crawl else None,
                 )
             )
         return sorted(out, key=lambda item: item["score"], reverse=True)

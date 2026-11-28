@@ -24,6 +24,7 @@ from __future__ import annotations
 
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
+import difflib
 import hashlib
 import json
 import math
@@ -188,6 +189,65 @@ def quote_status(quote: str, source_squashed: str) -> str:
     joined = "".join(parts)
     windows = [joined[i:i + 40] for i in range(0, max(len(joined) - 39, 1), 10)]
     return "ungefähr" if sum(w in source_squashed for w in windows) / len(windows) >= 0.6 else "fehlt"
+
+
+# A full stop after one of these does not end a sentence («Art. 6», «Dr. med.», «consid. 4.2»).
+_NO_SENTENCE_END = frozenset(
+    "art abs al lit let ziff ch nr no e erw consid cons vgl cf bzw resp ca env s ss ff p pp inkl sog evtl ggf "
+    "dr med prof st rz n bge atf sr rs chf z b u a d h i v m c par dres iur lic phil dipl prakt pract sc nat rer oec jur ing".split()
+)
+_SENTENCE_GAP = re.compile(r"(?<=[.!?])\s+(?=[A-ZÄÖÜÀÂÉÈÊÎÔÛÇ«“„\"(])")
+_WORD = re.compile(r"[0-9]{2,}|[a-zà-ÿ]{5,}")
+MIN_PASSAGE_WORDS = 4      # a quote with fewer telling words cannot be placed
+MIN_PASSAGE_SHARE = 0.7    # share of the quote's telling words a passage must contain
+
+
+def sentences(text: str) -> list[str]:
+    """Sentences of one paragraph of a judgement (abbreviations and dates do not end one)."""
+    out: list[str] = []
+    for part in _SENTENCE_GAP.split(text or ""):
+        last = re.search(r"(\w+)\.$", out[-1]) if out else None
+        word = last.group(1).lower() if last else ""
+        # «am 12. März», «2. Aufl.» go on; a year or an amount («… vom 25. Juni 2025. Die Suva …») ends a sentence
+        goes_on = len(word) <= 2 if word.isdigit() else (len(word) == 1 or word in _NO_SENTENCE_END)
+        if last and goes_on:
+            out[-1] += " " + part
+        elif part.strip():
+            out.append(part.strip())
+    return out
+
+
+def _telling_words(text: str) -> set[str]:
+    """Numbers and longer words, cut to eight letters so that inflected forms match."""
+    return {word[:8] for word in _WORD.findall((text or "").lower())}
+
+
+def locate_passage(quote: str, at: str, segs: Sequence[dict[str, str]]) -> dict[str, str] | None:
+    """The passage of the judgement that a quote of Apertus renders: ``{"at": mark, "text": wording}``.
+
+    For quotes that are not verbatim (``quote_status`` other than ``exakt``): Apertus often
+    rewords the sentence it cites. The passage is one sentence, or two that follow each other,
+    taken word for word from the judgement: first looked for in the paragraphs Apertus named
+    (``at``, e.g. ``E2.1, E5.1``), then in the whole judgement. ``None`` when no passage
+    contains at least 70 % of the quote's telling words: then there is no passage to show.
+    """
+    wanted = _telling_words(quote)
+    if len(wanted) < MIN_PASSAGE_WORDS:
+        return None
+    named = {mark.strip() for mark in re.split(r"[,;]|\bbis\b|\bund\b", at or "") if mark.strip()}
+    for pool in ([s for s in segs if s["id"] in named], segs):
+        best: tuple[float, int, dict[str, str]] | None = None
+        for seg in pool:
+            parts = sentences(seg["text"])
+            for size in (1, 2):
+                for start in range(len(parts) - size + 1):
+                    text = " ".join(parts[start:start + size])
+                    share = len(wanted & _telling_words(text)) / len(wanted)
+                    if share >= MIN_PASSAGE_SHARE and (best is None or (share, -len(text)) > (best[0], best[1])):
+                        best = (share, -len(text), {"at": seg["id"], "text": text})
+        if best:
+            return best[2]
+    return None
 
 
 # ------------------------------------------------------------------ similar earlier judgements
@@ -529,23 +589,41 @@ def score_item(item: CrawlItem, pool: Sequence[Precedent], client: ApertusReleva
     return record
 
 
-def _fr_cache_key(reason_de: str, question_de: str = "", rule_de: str = "") -> str:
-    payload = json.dumps([reason_de.strip(), question_de.strip(), rule_de.strip()], ensure_ascii=False)
+# "v2": entries written before 28.11.2026 are not read any more. They came from a schema whose
+# fields the gateway returned in another order than the prompt listed the texts, and Apertus
+# put the practical rule under "reason_fr" (the UI then showed the same text twice).
+FR_CACHE_VERSION = "v2"
+
+
+def fr_cache_key(reason_de: str, question_de: str = "", rule_de: str = "") -> str:
+    payload = json.dumps([FR_CACHE_VERSION, reason_de.strip(), question_de.strip(), rule_de.strip()], ensure_ascii=False)
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
 
+def same_text(a: str, b: str) -> bool:
+    """True when two texts are the same but for small differences in wording (>= 90 % alike)."""
+    a, b = " ".join((a or "").split()).lower(), " ".join((b or "").split()).lower()
+    return bool(a) and bool(b) and difflib.SequenceMatcher(a=a, b=b, autojunk=False).ratio() >= 0.9
+
+
 FR_TRANSLATE_SYSTEM = (
-    "Tu es juriste au service juridique de la Suva. Rends en français juridique suisse clair les textes "
-    "allemands ci-dessous (motivation, question juridique, règle pratique). Pas de traduction mot à mot : "
+    "Tu es juriste au service juridique de la Suva. Rends en français juridique suisse clair les trois textes "
+    "allemands ci-dessous. Ce sont trois textes différents ; chacun a son champ dans la réponse et ne va que là : "
+    "«a_motivation_fr» = le texte A (pourquoi l'arrêt est pertinent pour la Suva), "
+    "«b_question_fr» = le texte B (la question juridique tranchée), "
+    "«c_regle_fr» = le texte C (ce qu'il faut retenir pour la pratique). "
+    "Un texte marqué «-» donne un champ vide. Pas de traduction mot à mot : "
     "écris comme le ferait une juriste romande, avec les termes et abréviations consacrés (UVG devient LAA, "
     "ATSG devient LPGA, IVG devient LAI, «Art. 6 Abs. 2 UVG» devient «art. 6 al. 2 LAA», «E.» devient «consid.», "
     "Einspracheentscheid = décision sur opposition, Beschwerde = recours). "
     "Ne modifie pas le sens ni les numéros d'arrêts. Réponds uniquement avec l'objet JSON."
 )
+# The prefixes keep the fields in the order of the texts: the gateway's strict mode returns
+# keys in alphabetical order (see TRIAGE_SCHEMA).
 FR_TRANSLATE_SCHEMA = _object({
-    "reason_fr": {"type": "string"},
-    "question_fr": {"type": "string"},
-    "rule_fr": {"type": "string"},
+    "a_motivation_fr": {"type": "string"},
+    "b_question_fr": {"type": "string"},
+    "c_regle_fr": {"type": "string"},
 })
 
 
@@ -563,7 +641,7 @@ def translate_reason_fr(
     """Translate German triage reason/question/rule into French using Apertus v1.5 (#67), with disk cache."""
     if not reason_de.strip() and not question_de.strip() and not rule_de.strip():
         return {"reason_fr": "", "question_fr": "", "rule_fr": ""}
-    key = _fr_cache_key(reason_de, question_de, rule_de)
+    key = fr_cache_key(reason_de, question_de, rule_de)
     if cache_path:
         with _FR_CACHE_LOCK:
             if cache_path.exists():
@@ -575,25 +653,35 @@ def translate_reason_fr(
                     pass
 
     user = (
-        f"Motivation (DE) : {reason_de.strip() or '-'}\n"
-        f"Question juridique (DE) : {question_de.strip() or '-'}\n"
-        f"Règle pratique (DE) : {rule_de.strip() or '-'}"
+        f"Texte A, motivation (DE) : {reason_de.strip() or '-'}\n\n"
+        f"Texte B, question juridique (DE) : {question_de.strip() or '-'}\n\n"
+        f"Texte C, à retenir pour la pratique (DE) : {rule_de.strip() or '-'}"
     )
     if hasattr(client, "call"):
-        answer = client.call("fr_reason", key[:16], FR_TRANSLATE_SYSTEM, user, FR_TRANSLATE_SCHEMA, 600)
+        answer = client.call("fr_reason", key[:16], FR_TRANSLATE_SYSTEM, user, FR_TRANSLATE_SCHEMA, 900)
     else:
         answer = json.loads(client.chat.completions.create(
             model=DEFAULT_MODEL,
             messages=[{"role": "system", "content": FR_TRANSLATE_SYSTEM}, {"role": "user", "content": user}],
             temperature=0.0,
-            max_tokens=600,
+            max_tokens=900,
         ).choices[0].message.content)
 
     out = {
-        "reason_fr": str(answer.get("reason_fr") or "").strip() if reason_de.strip() else "",
-        "question_fr": str(answer.get("question_fr") or "").strip() if question_de.strip() else "",
-        "rule_fr": str(answer.get("rule_fr") or "").strip() if rule_de.strip() else "",
+        "reason_fr": str(answer.get("a_motivation_fr") or "").strip() if reason_de.strip() else "",
+        "question_fr": str(answer.get("b_question_fr") or "").strip() if question_de.strip() else "",
+        "rule_fr": str(answer.get("c_regle_fr") or "").strip() if rule_de.strip() else "",
     }
+    # Two different German texts must not come back as the same French text: then Apertus put
+    # one text into two fields. Such an answer is not stored; the German text stays on show.
+    mixed_up = [
+        (a, b) for a, b in (("reason", "rule"), ("reason", "question"), ("question", "rule"))
+        if same_text(out[f"{a}_fr"], out[f"{b}_fr"])
+        and not same_text({"reason": reason_de, "question": question_de, "rule": rule_de}[a],
+                          {"reason": reason_de, "question": question_de, "rule": rule_de}[b])
+    ]
+    if mixed_up:
+        return {"reason_fr": "", "question_fr": "", "rule_fr": ""}
     if cache_path:
         with _FR_CACHE_LOCK:
             cache_path.parent.mkdir(parents=True, exist_ok=True)

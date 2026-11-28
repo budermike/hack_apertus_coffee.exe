@@ -155,17 +155,17 @@ def test_length_fix_shortens_the_longer_text_unless_the_shorter_one_is_incomplet
     assert list(fix) == ["de"] and "Ergänze sie" in fix["de"][0]
 
 
-def test_the_crosscheck_is_on_by_default_and_can_be_switched_off(monkeypatch):
+def test_the_crosscheck_is_off_by_default_and_can_be_switched_on(monkeypatch):
     from types import SimpleNamespace
 
     from hack_apertus_coffee_exe.summary.generate import Summarizer
 
     llm, examples = SimpleNamespace(model="m", _client=None), SimpleNamespace(select=lambda *a: [])
     monkeypatch.delenv("SUMMARY_CROSSCHECK", raising=False)
-    assert Summarizer(llm, examples).crosscheck is True
-    monkeypatch.setenv("SUMMARY_CROSSCHECK", "0")
     assert Summarizer(llm, examples).crosscheck is False
-    assert Summarizer(llm, examples, crosscheck=True).crosscheck is True
+    monkeypatch.setenv("SUMMARY_CROSSCHECK", "1")
+    assert Summarizer(llm, examples).crosscheck is True
+    assert Summarizer(llm, examples, crosscheck=False).crosscheck is False
 
 
 def test_one_failed_review_pass_keeps_the_other_but_confirms_nothing():
