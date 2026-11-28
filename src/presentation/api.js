@@ -106,12 +106,6 @@ const httpBackend = {
     periodStatus(from, to) {
         return jsonFetch(`${API_BASE}/periods/status?${new URLSearchParams({ from, to })}`);
     },
-    addJudgement(caseNumber) {
-        return jsonFetch(`${API_BASE}/judgements/add`, {
-            method: "POST",
-            body: JSON.stringify({ caseNumber, summarize: true }),
-        });
-    },
     translateReasonFr(id) {
         return jsonFetch(`${API_BASE}/judgements/${encodeURIComponent(id)}/reason-fr`, {
             method: "POST",
@@ -157,9 +151,6 @@ const httpBackend = {
     },
     searchKnowledgeBase(query, lang) {
         return jsonFetch(`${API_BASE}/knowledge-base?${new URLSearchParams({ q: query, lang })}`);
-    },
-    getEvaluation() {
-        return jsonFetch(`${API_BASE}/evaluation`);
     },
 };
 
@@ -267,11 +258,6 @@ async function periodStatus(from, to) {
     return backend.periodStatus ? await backend.periodStatus(from, to) : { status: "done" };
 }
 
-async function addJudgement(caseNumber) {
-    const raw = await backend.addJudgement(caseNumber);
-    return normalizeJudgement(raw);
-}
-
 async function translateReasonFr(id) {
     return backend.translateReasonFr ? await backend.translateReasonFr(id) : null;
 }
@@ -325,10 +311,6 @@ async function sendFeedback(id, adjustment, direction, level, decision) {
 
 async function searchKnowledgeBase(query, lang) {
     return (await backend.searchKnowledgeBase(query, lang)).map(normalizeEntry);
-}
-
-async function fetchEvaluation() {
-    return await backend.getEvaluation();
 }
 
 /** Mock only (development): deletes all summaries and feedback. The real database keeps every version. */

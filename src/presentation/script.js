@@ -45,17 +45,13 @@ const state = {
     summaryLoading: new Set(), // ids being summarized right now
     summaryError: new Set(),   // ids whose summary failed
     drafts: {},                // id -> { de, fr } while the user edits a summary
+    alignedDraft: {},          // id -> { lang, text }: unsaved text Apertus regenerated for that language
     saveStatus: {},            // id -> "saving" | "saved" | "approving" | "approved" | "error"
 
     kbEntries: [],
     kbError: false,            // the database could not be read
     kbQuery: "",
-    evaluation: null,          // loaded from GET /api/evaluation (#71)
-    evalLoading: false,
-    evalError: false,
-    activeTab: ["search", "kb", "eval", "about"].includes(localStorage.getItem("tab"))
-        ? localStorage.getItem("tab")
-        : "search",
+    activeTab: localStorage.getItem("tab") === "kb" ? "kb" : "search",
 };
 
 /* ---------- helpers ---------- */
@@ -325,11 +321,7 @@ async function onSearch(event) {
                 state.error = "periodError";
                 state.searchErrorArg = period.error || period.message || "";
             } else {
-                const fetched = await searchJudgements(range.from, range.to, currentLang);
-                // Preserve any cases manually added via #add-case-form during the wait
-                const seen = new Set(fetched.map((i) => i.id));
-                const kept = (state.items || []).filter((i) => i._manuallyAdded && !seen.has(i.id));
-                state.items = [...kept, ...fetched];
+                state.items = await searchJudgements(range.from, range.to, currentLang);
                 state.error = null;
                 state.searchErrorArg = null;
             }
@@ -354,41 +346,6 @@ async function onSearch(event) {
     renderResults();
 
     queueRelevantSummaries();
-}
-
-async function onAddCase(event) {
-    event.preventDefault();
-    const input = $("#add-case-input");
-    const button = $("#add-case-btn");
-    const value = input.value.trim();
-    if (!value) {
-        showFormError("addCaseError");
-        input.focus();
-        return;
-    }
-    showFormError(null);
-    button.disabled = true;
-    button.classList.add("loading");
-    try {
-        await thresholdsReady;
-        const item = await addJudgement(value);
-        item._manuallyAdded = true;
-        const idx = state.items.findIndex((i) => i.id === item.id);
-        if (idx >= 0) state.items[idx] = item;
-        else state.items.unshift(item);
-        state.hasSearched = true;
-        state.error = null;
-        state.searchErrorArg = null;
-        input.value = "";
-        renderResults();
-        selectCase(item.id);
-    } catch (err) {
-        console.error(err);
-        showFormError("addCaseError");
-    } finally {
-        button.disabled = false;
-        button.classList.remove("loading");
-    }
 }
 
 /* ---------- filters + sorting ---------- */
@@ -743,6 +700,7 @@ async function performSave(id) {
     try {
         const entry = await saveSummary(id, texts);
         state.summaries[id] = entry;
+        delete state.alignedDraft[id];
         // keep the draft if the user typed on while saving
         const draft = state.drafts[id];
         if (draft && draft.de === entry.de && draft.fr === entry.fr) delete state.drafts[id];
@@ -765,8 +723,16 @@ async function onSave(id) {
     const stored = state.summaries[id];
     const changedDe = draft.de !== stored.de;
     const changedFr = draft.fr !== stored.fr;
-    if (changedDe !== changedFr) {
-        openAlignAfterEditDialog(id, changedDe ? "de" : "fr", changedDe ? "fr" : "de");
+    // A language counts as edited by hand unless it still holds, unchanged, the text Apertus
+    // regenerated for it. Every save with exactly one hand-edited language offers to
+    // regenerate the other one; saving only the untouched Apertus text does not ask.
+    const aligned = state.alignedDraft[id];
+    const byHand = (lang, changed) => changed && !(aligned?.lang === lang && draft[lang] === aligned.text);
+    const handDe = byHand("de", changedDe);
+    const handFr = byHand("fr", changedFr);
+    if (handDe !== handFr) {
+        const edited = handDe ? "de" : "fr";
+        openAlignAfterEditDialog(id, edited, edited === "de" ? "fr" : "de");
         return;
     }
     await performSave(id);
@@ -798,15 +764,12 @@ function setAlignDialogBusy(dialog, busy, message = "", isError = false) {
     for (const id of ["#align-apply", "#align-keep", "#align-cancel"]) {
         $(id).disabled = busy;
     }
-    $("#align-instruction").disabled = busy;
 }
 
-function showAlignDialog({ title, desc, showInstruction, applyLabel, keepLabel, onApply, onKeep }) {
+function showAlignDialog({ title, desc, applyLabel, keepLabel, onApply, onKeep }) {
     const dialog = $("#align-dialog");
     $("#align-title").textContent = title;
     $("#align-desc").textContent = desc;
-    $("#align-instruction-wrap").hidden = !showInstruction;
-    $("#align-instruction").value = "";
     const applyBtn = $("#align-apply");
     const keepBtn = $("#align-keep");
     const cancelBtn = $("#align-cancel");
@@ -819,16 +782,14 @@ function showAlignDialog({ title, desc, showInstruction, applyLabel, keepLabel, 
     keepBtn.onclick = () => onKeep(dialog, close);
     cancelBtn.onclick = close;
     dialog.showModal();
-    if (showInstruction) $("#align-instruction").focus();
-    else applyBtn.focus();
+    applyBtn.focus();
 }
 
 function openAlignAfterEditDialog(id, sourceLang, targetLang) {
     const targetName = t(targetLang === "de" ? "langDe" : "langFr");
     showAlignDialog({
-        title: t("alignPromptTitle", targetName),
-        desc: t("alignPromptBody"),
-        showInstruction: false,
+        title: t("alignPromptTitle", targetLang),
+        desc: t("alignPromptBody", sourceLang, targetLang),
         applyLabel: t("alignApply"),
         keepLabel: t("alignKeep"),
         onApply: async (dialog, close) => {
@@ -848,6 +809,7 @@ function openAlignAfterEditDialog(id, sourceLang, targetLang) {
                 });
                 const latest = currentTexts(id);
                 state.drafts[id] = { de: latest.de, fr: latest.fr, [targetLang]: aligned.text };
+                state.alignedDraft[id] = { lang: targetLang, text: aligned.text };   // see onSave
                 delete state.saveStatus[id];
                 close();
                 renderEditors();
@@ -860,52 +822,6 @@ function openAlignAfterEditDialog(id, sourceLang, targetLang) {
         onKeep: async (_dialog, close) => {
             close();
             await performSave(id);
-        },
-    });
-}
-
-function onAdjust(id, lang) {
-    const otherLang = lang === "de" ? "fr" : "de";
-    const langName = t(lang === "de" ? "langDe" : "langFr");
-    const otherName = t(otherLang === "de" ? "langDe" : "langFr");
-    const runAlign = async (dialog, close, payload) => {
-        setAlignDialogBusy(dialog, true, t("alignBusy"));
-        try {
-            const res = await alignSummary(id, payload);
-            const latest = currentTexts(id);
-            state.drafts[id] = { de: latest.de, fr: latest.fr, [lang]: res.text };
-            delete state.saveStatus[id];
-            close();
-            renderEditors();
-            toast(t("alignDone", langName), 5000);
-        } catch (err) {
-            console.error(err);
-            setAlignDialogBusy(dialog, false, t("alignFailed"), true);
-        }
-    };
-    showAlignDialog({
-        title: t("adjustTitle", langName),
-        desc: t("adjustBody"),
-        showInstruction: true,
-        applyLabel: t("adjustApply"),
-        keepLabel: t("adjustFromOther", otherName),
-        onApply: (dialog, close) => {
-            const instruction = $("#align-instruction").value.trim();
-            if (!instruction) {
-                setAlignDialogBusy(dialog, false, t("adjustNeedInstruction"), true);
-                $("#align-instruction").focus();
-                return;
-            }
-            runAlign(dialog, close, { targetLang: lang, targetText: currentTexts(id)[lang], instruction });
-        },
-        onKeep: (dialog, close) => {
-            const texts = currentTexts(id);
-            runAlign(dialog, close, {
-                sourceLang: otherLang,
-                sourceText: texts[otherLang],
-                targetLang: lang,
-                targetText: texts[lang],
-            });
         },
     });
 }
@@ -1148,8 +1064,8 @@ function summaryTags(entry, lang, name) {
         }));
 }
 
-/** German and French summary next to each other, each editable and with its own "Anpassen";
- *  one save button for both. `scope` tells the detail panel ("res") from the database ("kb")
+/** German and French summary next to each other, each editable; one save button for both
+ *  (saving an edit of one language offers to regenerate the other, see onSave). `scope` tells the detail panel ("res") from the database ("kb")
  *  so the caret can be restored after a re-render. */
 function summaryEditor(scope, id) {
     const entry = state.summaries[id];
@@ -1166,9 +1082,7 @@ function summaryEditor(scope, id) {
         });
         textarea.value = texts[lang] || "";   // content must be set as a property
         return el("div", { class: "duo-col" },
-            el("div", { class: "duo-head" },
-                summaryTags(entry, lang, name),
-                el("button", { type: "button", class: "btn small", text: t("adjust"), onclick: () => onAdjust(id, lang) })),
+            el("div", { class: "duo-head" }, summaryTags(entry, lang, name)),
             textarea);
     });
 
@@ -1435,165 +1349,6 @@ function renderKb() {
     status.textContent = statusKey ? t(statusKey) : "";
 }
 
-/* ---------- evaluation & architecture (#71) ---------- */
-
-function formatEvalCell(raw) {
-    const text = raw === null || raw === undefined ? "" : String(raw);
-    if (/^-?\d+\.\d{5,}$/.test(text)) {
-        return { display: Number(text).toFixed(4), numeric: true, title: text };
-    }
-    return { display: text, numeric: /^-?\d+(?:\.\d+)?$/.test(text), title: null };
-}
-
-function buildEvalTable(columns, rows) {
-    if (!columns?.length || !rows?.length) return null;
-    return el("div", { class: "eval-table-wrap" },
-        el("table", { class: "eval-table" },
-            el("thead", {},
-                el("tr", {}, columns.map((col) => el("th", { text: col }))),
-            ),
-            el("tbody", {},
-                (rows || []).map((row) =>
-                    el("tr", {},
-                        row.map((cell) => {
-                            const { display, numeric, title } = formatEvalCell(cell);
-                            return el("td", {
-                                class: numeric ? "num" : null,
-                                text: display,
-                                title: title || null,
-                            });
-                        }),
-                    ),
-                ),
-            ),
-        ),
-    );
-}
-
-function renderCalibrationCard(cal) {
-    if (!cal || typeof cal !== "object") return null;
-    const parts = [];
-    if (Array.isArray(cal.periods) && cal.periods.length) parts.push(`${t("evalCalibrationPeriods")}: ${cal.periods.join(", ")}`);
-    if (typeof cal.n === "number") parts.push(`n = ${cal.n}`);
-    if (typeof cal.n_pos === "number") parts.push(`Suva = ${cal.n_pos}`);
-    if (typeof cal.t === "number") parts.push(`t = ${cal.t}`);
-    if (typeof cal.list_factor === "number") parts.push(`list_factor = ${cal.list_factor}`);
-    if (!parts.length) return null;
-    return el("section", { class: "info-card" },
-        el("div", { class: "info-card-head" },
-            el("h3", { text: t("evalCalibrationTitle") }),
-            el("span", { class: "sub", text: "relevance_calibration_q2_2026.json" }),
-        ),
-        el("p", { class: "note", text: parts.join(" · ") }),
-    );
-}
-
-function renderEvaluation() {
-    const status = $("#eval-status");
-    const container = $("#eval-content");
-    if (!status || !container) return;
-
-    const data = state.evaluation;
-    const tables = data?.tables || [];
-    const cal = data?.calibration || null;
-
-    if (state.evalLoading && !data) {
-        status.hidden = false;
-        status.textContent = t("evalLoading");
-        container.replaceChildren();
-        return;
-    }
-    if (state.evalError) {
-        status.hidden = false;
-        status.textContent = t("evalError");
-        container.replaceChildren();
-        return;
-    }
-    if (!tables.length && !cal) {
-        status.hidden = false;
-        status.textContent = t("evalEmpty");
-        container.replaceChildren();
-        return;
-    }
-
-    status.hidden = true;
-    status.textContent = "";
-    const langKey = currentLang === "fr" ? "Fr" : "De";
-    const cards = tables.map((tbl) => {
-        const title = tbl[`title${langKey}`] || tbl.filename;
-        const desc = tbl[`description${langKey}`] || "";
-        return el("section", { class: "info-card" },
-            el("div", { class: "info-card-head" },
-                el("h3", { text: title }),
-                el("span", { class: "sub", text: `${tbl.filename} · ${t("evalRowsLabel", tbl.totalRows ?? tbl.rows?.length ?? 0)}` }),
-            ),
-            desc && el("p", { class: "note", text: desc }),
-            buildEvalTable(tbl.columns, tbl.rows),
-        );
-    });
-    const calCard = renderCalibrationCard(cal);
-    if (calCard) cards.unshift(calCard);
-    container.replaceChildren(...cards);
-}
-
-function renderAbout() {
-    const container = $("#about-content");
-    if (!container) return;
-
-    const pipelineCard = el("section", { class: "info-card" },
-        el("h3", { text: t("aboutPipelineTitle") }),
-        el("div", { class: "pipeline-grid" },
-            [1, 2, 3, 4].map((step) =>
-                el("div", { class: "pipeline-step" },
-                    el("h4", { text: t(`aboutStep${step}Title`) }),
-                    el("p", { text: t(`aboutStep${step}Body`) }),
-                ),
-            ),
-        ),
-    );
-
-    const complianceCard = el("section", { class: "info-card" },
-        el("h3", { text: t("aboutComplianceTitle") }),
-        el("p", { class: "note", text: t("aboutComplianceBody") }),
-    );
-
-    const models = state.evaluation?.models;
-    const runtimeTable = buildEvalTable(models?.runtime?.columns, models?.runtime?.rows);
-    const devTable = buildEvalTable(models?.development?.columns, models?.development?.rows);
-    const modelsCard = el("section", { class: "info-card" },
-        el("h3", { text: t("aboutModelsTitle") }),
-        (!runtimeTable && !devTable)
-            ? el("p", {
-                class: "note",
-                text: state.evalLoading ? t("evalLoading") : (state.evalError ? t("evalError") : t("aboutModelsEmpty")),
-            })
-            : [
-                runtimeTable && el("h4", { text: t("aboutRuntimeTitle"), style: "margin: 12px 0 8px" }),
-                runtimeTable,
-                devTable && el("h4", { text: t("aboutDevTitle"), style: "margin: 18px 0 8px" }),
-                devTable,
-            ],
-    );
-
-    container.replaceChildren(pipelineCard, complianceCard, modelsCard);
-}
-
-async function refreshEvaluation() {
-    state.evalLoading = true;
-    state.evalError = false;
-    renderEvaluation();
-    renderAbout();
-    try {
-        state.evaluation = await fetchEvaluation();
-    } catch {
-        state.evalError = true;
-    } finally {
-        state.evalLoading = false;
-        renderEvaluation();
-        renderAbout();
-    }
-}
-
 /* ---------- tabs, language ---------- */
 
 function renderResults() {
@@ -1609,8 +1364,6 @@ function renderTabs() {
     });
     $("#panel-search").hidden = state.activeTab !== "search";
     $("#panel-kb").hidden = state.activeTab !== "kb";
-    $("#panel-eval").hidden = state.activeTab !== "eval";
-    $("#panel-about").hidden = state.activeTab !== "about";
 }
 
 function selectTab(tab) {
@@ -1618,9 +1371,6 @@ function selectTab(tab) {
     state.activeTab = tab;
     localStorage.setItem("tab", tab);
     renderTabs();
-    if ((tab === "eval" || tab === "about") && state.evaluation === null && !state.evalLoading) {
-        refreshEvaluation();
-    }
     renderEditors();   // drafts may have changed in the other tab
 }
 
@@ -1637,8 +1387,6 @@ function renderLanguage() {
     showFormError(formErrorKey);
     renderResults();
     renderKb();
-    renderEvaluation();
-    renderAbout();
 }
 
 /* ---------- init ---------- */
@@ -1679,7 +1427,6 @@ function init() {
     setDateInput(toInput, toIso(today));
 
     $("#search-form").addEventListener("submit", onSearch);
-    $("#add-case-form").addEventListener("submit", onAddCase);
     $("#quick-range-btn").addEventListener("click", () => {
         if (!availableRange) return;
         setDateInput(fromInput, availableRange.from);
@@ -1712,7 +1459,6 @@ function init() {
     thresholdsReady = loadThresholds();
     renderLanguage();
     refreshKb();
-    refreshEvaluation();
 }
 
 init();

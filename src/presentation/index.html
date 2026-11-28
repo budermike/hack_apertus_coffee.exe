@@ -35,8 +35,6 @@
                 <span data-i18n="tabKb">Datenbank</span>
                 <span id="kb-tab-count" class="tab-count" hidden></span>
             </button>
-            <button id="tab-eval" type="button" role="tab" data-tab="eval" aria-controls="panel-eval" data-i18n="tabEval">Auswertung</button>
-            <button id="tab-about" type="button" role="tab" data-tab="about" aria-controls="panel-about" data-i18n="tabAbout">So arbeitet das System</button>
         </nav>
     </header>
 
@@ -66,15 +64,6 @@
                         <span data-i18n="search">Suchen</span>
                     </button>
                     <button id="quick-range-btn" type="button" class="btn small" hidden></button>
-                </form>
-                <form id="add-case-form" class="searchbar-group add-case-form" novalidate>
-                    <label for="add-case-input" data-i18n="addCaseLabel">Urteil hinzufügen</label>
-                    <input id="add-case-input" type="text" autocomplete="off"
-                           data-i18n-attr="placeholder:addCasePlaceholder;aria-label:addCasePlaceholder">
-                    <button id="add-case-btn" type="submit" class="btn">
-                        <span class="spinner dark" aria-hidden="true"></span>
-                        <span data-i18n="addCaseBtn">Laden</span>
-                    </button>
                 </form>
                 <p id="form-error" class="form-error" role="alert"></p>
             </div>
@@ -128,36 +117,12 @@
                 <ul id="kb-list" class="kb-list"></ul>
             </div>
         </div>
-
-        <!-- Auswertung: metrics and tables from results/tables/ -->
-        <div id="panel-eval" class="view scroll" role="tabpanel" aria-labelledby="tab-eval" hidden>
-            <div class="page">
-                <h2 data-i18n="evalTitle">Auswertung</h2>
-                <p class="note" data-i18n="evalIntro"></p>
-                <p id="eval-status" class="empty"></p>
-                <div id="eval-content" class="eval-sections"></div>
-            </div>
-        </div>
-
-        <!-- So arbeitet das System: architecture & model register -->
-        <div id="panel-about" class="view scroll" role="tabpanel" aria-labelledby="tab-about" hidden>
-            <div class="page">
-                <h2 data-i18n="aboutTitle">So arbeitet das System</h2>
-                <p class="note" data-i18n="aboutIntro"></p>
-                <div id="about-content" class="about-sections"></div>
-            </div>
-        </div>
     </main>
 
     <dialog id="align-dialog" class="modal" aria-labelledby="align-title">
         <div class="modal-card">
             <h3 id="align-title"></h3>
             <p id="align-desc" class="note"></p>
-            <div id="align-instruction-wrap" hidden>
-                <label for="align-instruction" class="sub" data-i18n="adjustPromptLabel">Anweisung für Apertus</label>
-                <input id="align-instruction" type="text" autocomplete="off"
-                       data-i18n-attr="placeholder:adjustPlaceholder">
-            </div>
             <p id="align-status" class="note loading-line" hidden></p>
             <div class="row editor-footer modal-actions">
                 <button id="align-apply" type="button" class="btn pri"></button>

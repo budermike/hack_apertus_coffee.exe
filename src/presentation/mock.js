@@ -182,15 +182,6 @@ const mockBackend = (() => {
                 }));
         },
 
-        /** POST /judgements/add (mock) */
-        async addJudgement(caseNumber) {
-            await delay(400);
-            const clean = String(caseNumber || "").trim().replace(/\s+/, "_");
-            const existing = MOCK_JUDGEMENTS.find((j) => j.caseNumber.toLowerCase() === clean.toLowerCase());
-            if (existing) return { ...existing, url: "#", summarized: Boolean(db.load().kb[existing.id]) };
-            throw new Error(`mock judgement ${clean} not found`);
-        },
-
         /** POST /judgements/{id}/summary */
         async summarizeJudgement(id) {
             const stored = db.load().kb[id];
@@ -269,17 +260,6 @@ const mockBackend = (() => {
         async clearDatabase() {
             await delay(150);
             db.save({ feedback: {}, kb: {} });
-        },
-
-        /** GET /evaluation — demo mode never fabricates evaluation numbers (#71). */
-        async getEvaluation() {
-            await delay(80);
-            return {
-                available: false,
-                tables: [],
-                calibration: null,
-                models: { runtime: { columns: [], rows: [] }, development: { columns: [], rows: [] } },
-            };
         },
     };
 })();
