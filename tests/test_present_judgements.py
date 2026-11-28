@@ -61,6 +61,7 @@ def test_to_ui_item_matches_the_ui_contract():
         "subject": {"de": subject, "fr": subject},
         "explanation": {"de": "Integritätsentschädigung, UVG.", "fr": "Integritätsentschädigung, UVG."},
         "score": 55.0,
+        "baseScore": 55.0,
         "adjustment": 0,
         "summarized": True,
         "signals": [],
@@ -380,3 +381,65 @@ def test_invalid_feedback_payload_returns_400(tmp_path):
     finally:
         server.shutdown()
         server.server_close()
+
+
+# --- learning from the lawyers' decisions (triage/feedback_learning.py) ---------------
+
+
+def _scored(case_id, date, p, area="UV", criteria=("K1",)):
+    from hack_apertus_coffee_exe.triage import calibration
+
+    score = calibration.display_score(p, 0.05)
+    return {
+        "case_id": case_id, "final_score": score, "rank_score": score, "judgement_date": date, "ampel": "gruen",
+        "relevance_reason": "Begründung.", "key_topics": list(criteria), "apertus_score": 80.0,
+        "metadata": {"subject": "Unfallversicherung", "relevance": {"p": p, "threshold": 0.05, "area": area}},
+    }
+
+
+LEARN_ROWS = [
+    _scored("8C_10/2026", "2026-04-02", 0.80, "UV", ("K1", "K2")),
+    _scored("8C_11/2026", "2026-04-03", 0.50, "UV", ("K1",)),
+    _scored("9C_12/2026", "2026-04-04", 0.40, "IV", ("K4",)),
+]
+
+
+def test_a_decision_is_learned_from_and_nothing_is_added_to_a_score(tmp_path):
+    from hack_apertus_coffee_exe.triage.feedback_learning import FeedbackLearner
+
+    feedback: dict = {}
+    judgements = JudgementList(
+        _write(tmp_path, LEARN_ROWS), config=TriageConfig(), feedback_map=lambda: feedback, learner=FeedbackLearner(config=TriageConfig()),
+    )
+    before = {i["id"]: i for i in judgements.items()}
+    assert all(i["score"] == i["baseScore"] and i["adjustment"] == 0 for i in before.values())
+    assert config_response(judgements)[1]["learning"] == {
+        "used": 0, "ignored": 0, "priorSd": 0.25, "listProtected": True, "corrections": [],
+    }
+
+    # the stored row still carries the fixed shift of the old UI: it is not applied any more
+    feedback["8C_10_2026"] = {"adjustment": -55.0, "userLevel": "low"}
+    after = {i["id"]: i for i in judgements.items()}
+    decided, similar, other = after["8C_10_2026"], after["8C_11_2026"], after["9C_12_2026"]
+    assert decided["userLevel"] == "low" and decided["adjustment"] == 0
+    assert decided["baseScore"] == before["8C_10_2026"]["score"]
+    assert similar["score"] < similar["baseScore"] == before["8C_11_2026"]["score"]   # same area and criterion
+    assert other["score"] == other["baseScore"]                                       # nothing in common
+    assert all(i["score"] >= 60 for i in after.values())                              # nobody falls off the list
+    learning = config_response(judgements)[1]["learning"]
+    assert learning["used"] == 1 and {c["feature"] for c in learning["corrections"]} == {"area:UV", "crit:K1", "crit:K2"}
+    assert all(c["value"] < 0 for c in learning["corrections"])
+
+    # taking the decision back restores every score
+    feedback["8C_10_2026"] = {"adjustment": 0.0, "userLevel": None}
+    assert all(i["score"] == i["baseScore"] for i in judgements.items())
+
+
+def test_without_a_learner_the_list_behaves_as_before(tmp_path):
+    judgements = JudgementList(
+        _write(tmp_path, LEARN_ROWS), config=TriageConfig(),
+        feedback_map=lambda: {"8C_10_2026": {"adjustment": -55.0, "userLevel": "low"}},
+    )
+    item = next(i for i in judgements.items() if i["id"] == "8C_10_2026")
+    assert item["adjustment"] == -55.0 and item["score"] == item["baseScore"]
+    assert "learning" not in config_response(judgements)[1]

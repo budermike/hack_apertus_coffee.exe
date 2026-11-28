@@ -176,7 +176,8 @@ const mockBackend = (() => {
                 .map((j) => ({
                     ...j,
                     url: "#",
-                    adjustment: data.feedback[j.id]?.adjustment || 0,
+                    baseScore: j.score,
+                    adjustment: 0,   // the demo backend stores the decision but does not learn from it
                     userLevel: data.feedback[j.id]?.decision || null,
                     summarized: Boolean(data.kb[j.id]),
                 }));
@@ -261,9 +262,9 @@ const mockBackend = (() => {
         },
 
         /** POST /judgements/{id}/feedback */
-        async sendFeedback(id, adjustment, _direction, _level, decision) {
+        async sendFeedback(id, _adjustment, _direction, _level, decision) {
             const data = db.load();
-            if (decision) data.feedback[id] = { adjustment, decision };
+            if (decision) data.feedback[id] = { decision };
             else delete data.feedback[id];
             db.save(data);
             return { stored: true };

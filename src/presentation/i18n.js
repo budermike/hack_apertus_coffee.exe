@@ -129,10 +129,12 @@ const I18N = {
 
         /* relevance correction */
         correction: "Korrektur",
-        correctionNote: "Ihre Entscheidung bestimmt die Einstufung dieses Urteils. Ein zweiter Klick nimmt sie zurück.",
+        correctionNote: "Ihre Entscheidung bestimmt die Einstufung dieses Urteils, und das System lernt daraus für ähnliche Urteile (gleiches Rechtsgebiet, gleiche Kriterien). Ein zweiter Klick nimmt sie zurück.",
         markRelevant: "Für Suva relevant",
         markNotRelevant: "Nicht relevant",
-        feedbackSaved: "Korrektur gespeichert.",
+        feedbackSaved: "Entscheidung gespeichert.",
+        feedbackLearned: (n) => `Entscheidung gespeichert. Daraus gelernt: ${n} ${n === 1 ? "weiteres Urteil" : "weitere Urteile"} neu bewertet.`,
+        learnedDeltaHint: (base) => `Aus den Entscheidungen der Juristinnen und Juristen gelernt. Ohne sie: ${base}`,
         feedbackLocalOnly: "Korrektur konnte nicht am Server gespeichert werden.",
 
         /* extra case & summary basis (#72) */
@@ -278,10 +280,12 @@ const I18N = {
         exportTitle: "Arrêt du TF",
 
         correction: "Correction",
-        correctionNote: "Votre décision détermine le classement de cet arrêt. Un second clic l'annule.",
+        correctionNote: "Votre décision détermine le classement de cet arrêt, et le système en tire des enseignements pour les arrêts similaires (même domaine, mêmes critères). Un second clic l'annule.",
         markRelevant: "Pertinent pour la Suva",
         markNotRelevant: "Non pertinent",
-        feedbackSaved: "Correction enregistrée.",
+        feedbackSaved: "Décision enregistrée.",
+        feedbackLearned: (n) => `Décision enregistrée. Le système en a tiré des enseignements : ${n} ${n === 1 ? "autre arrêt réévalué" : "autres arrêts réévalués"}.`,
+        learnedDeltaHint: (base) => `Appris des décisions des juristes. Sans elles : ${base}`,
         feedbackLocalOnly: "La correction n'a pas pu être enregistrée sur le serveur.",
 
         tagSingleJudge: "Juge unique",

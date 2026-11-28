@@ -31,6 +31,7 @@ const COLUMNS = [
 const state = {
     items: [],                 // judgements from the last search
     hasSearched: false,
+    lastRange: null,           // { from, to } of the last search, to fetch the scores again
     searching: false,
     searchProgress: null,
     searchErrorArg: null,
@@ -87,11 +88,19 @@ function findItem(id) {
     return state.items.find((i) => i.id === id);
 }
 
-/** Displayed score: base score + net manual adjustment, 0..100, one decimal at most.
+/** Displayed score: the relevance the backend delivers, 0..100, one decimal at most.
+ *  Nothing is added by hand any more (28.11.): a lawyer's decision is a training example on
+ *  the server (triage/feedback_learning.py) and comes back in `score` of every judgement it
+ *  says something about; `baseScore` is the value without the decisions.
  *  This is the ONE number that is shown, filtered, sorted and compared with the thresholds. */
 function effectiveScore(item) {
-    const score = item.score + (item.adjustment || 0);
-    return Math.round(Math.max(0, Math.min(100, score)) * 10) / 10;
+    return Math.round(Math.max(0, Math.min(100, item.score)) * 10) / 10;
+}
+
+/** By how much the lawyers' decisions moved this judgement's score (0 = not at all). */
+function learnedDelta(item) {
+    const base = Number.isFinite(item.baseScore) ? item.baseScore : item.score;
+    return Math.round((item.score - base) * 10) / 10;
 }
 
 function scoreLevel(score) {
@@ -100,17 +109,12 @@ function scoreLevel(score) {
     return "low";
 }
 
-const itemLevel = (item) => scoreLevel(effectiveScore(item));
-
-/** Score a judgement is moved to when the user puts it into a level its own score is not in.
- *  Follows the thresholds, so the judgement really lands in that level. */
-function levelTarget(level) {
-    return level === "high" ? Math.max(85, SUMMARY_THRESHOLD) : Math.min(20, Math.max(0, MEDIUM_THRESHOLD - 1));
-}
+/** Level of a judgement: the lawyer's own decision if there is one, otherwise by its score. */
+const itemLevel = (item) => item.userLevel || scoreLevel(effectiveScore(item));
 
 /** Level the user decided by hand ("high" | "low"), or null if the judgement is as triage scored it. */
 function decidedLevel(item) {
-    return item.userLevel || (item.adjustment ? itemLevel(item) : null);
+    return item.userLevel || null;
 }
 /** Relevant = at or above the threshold = summarized automatically. */
 const isRelevant = (item) => itemLevel(item) === "high";
@@ -323,6 +327,7 @@ async function onSearch(event) {
     }
     if (searchGen !== periodSearchGeneration) return;
     state.hasSearched = true;
+    state.lastRange = { from: range.from, to: range.to };
     state.searching = false;
     state.searchProgress = null;
     frReasonAttempted.clear();
@@ -439,21 +444,38 @@ function closeDetail() {
 
 /* ---------- relevance correction ---------- */
 
+/** After a decision the backend has learned from it: fetch the scores again, because other
+ *  judgements may have moved too, and keep everything else of the list as it is.
+ *  Returns how many scores changed. */
+async function refreshScores() {
+    if (USE_MOCK || !state.lastRange) return 0;   // the demo backend does not learn
+    try {
+        const fresh = await searchJudgements(state.lastRange.from, state.lastRange.to, currentLang);
+        const byId = new Map(fresh.map((item) => [item.id, item]));
+        let moved = 0;
+        for (const item of state.items) {
+            const next = byId.get(item.id);
+            if (!next) continue;
+            if (next.score !== item.score) moved += 1;
+            item.score = next.score;
+            item.baseScore = next.baseScore;
+        }
+        return moved;
+    } catch (err) {
+        console.warn("scores not refreshed after the decision", err);
+        return 0;
+    }
+}
+
 /** "Für Suva relevant" / "Nicht relevant": the user's own decision for this judgement.
- *  It moves the judgement into the level `high` / `low` (or confirms the level it has);
- *  clicking the active decision again takes it back. Every click is sent as feedback. */
+ *  It puts the judgement into the level `high` / `low` (or confirms the level it has);
+ *  clicking the active decision again takes it back. Every click is sent as feedback and
+ *  the backend learns from it: no fixed number is added to the score. */
 async function setRelevance(id, level) {
     const item = findItem(id);
     if (!item) return;
     const before = itemLevel(item);
-    if (decidedLevel(item) === level) {
-        item.userLevel = null;
-        item.adjustment = 0;
-    } else {
-        item.userLevel = level;
-        item.adjustment = scoreLevel(item.score) === level
-            ? 0 : Math.round((levelTarget(level) - item.score) * 10) / 10;
-    }
+    item.userLevel = decidedLevel(item) === level ? null : level;
 
     const after = itemLevel(item);
     const direction = Math.sign(LEVELS.indexOf(before) - LEVELS.indexOf(after));   // +1 raised, -1 lowered, 0 same level
@@ -467,11 +489,14 @@ async function setRelevance(id, level) {
     renderList();
     renderDetail();
 
-    const { stored } = await sendFeedback(id, item.adjustment, direction, after, item.userLevel);
+    const { stored } = await sendFeedback(id, 0, direction, after, item.userLevel);
     item.feedbackLocalOnly = !stored && Boolean(item.userLevel);
-    refreshRow(id);
+    const moved = stored ? await refreshScores() : 0;
+    renderList();
     if (id === state.selectedId) renderDetail();
-    toast(t(stored ? "feedbackSaved" : "feedbackLocalOnly"), stored ? 4000 : 7000);
+    if (moved) queueRelevantSummaries();   // learning may have lifted judgements over the threshold
+    const message = !stored ? t("feedbackLocalOnly") : moved ? t("feedbackLearned", moved) : t("feedbackSaved");
+    toast(message, stored && !moved ? 4000 : 7000);
 }
 
 /* ---------- summaries: server-side queue (#68) + mock fallback ---------- */
@@ -840,9 +865,10 @@ function relevanceScale(item) {
             el("i", { style: `left:${SUMMARY_THRESHOLD}%` }),
             el("b", { style: `left:${score}%` })),
         el("span", { class: "pnum", text: String(score) }),
-        // manual correction: show by how much the score was moved
-        Boolean(item.adjustment) && el("span", {
-            class: "sub delta", text: (item.adjustment > 0 ? "+" : "−") + Math.abs(item.adjustment),
+        // learned from the lawyers' decisions: show by how much that moved the score
+        Boolean(learnedDelta(item)) && el("span", {
+            class: "sub delta", title: t("learnedDeltaHint", item.baseScore),
+            text: (learnedDelta(item) > 0 ? "+" : "−") + Math.abs(learnedDelta(item)),
         }));
 }
 
@@ -855,7 +881,9 @@ function statusTags(item) {
         item.summarized && el("span", { class: "tag ok", text: t("tagInDb") }),
         Boolean(decidedLevel(item)) && el("span", {
             class: "tag",
-            text: t(item.adjustment ? "tagCorrected" : "tagConfirmed") + (item.feedbackLocalOnly ? t("localSuffix") : ""),
+            // "korrigiert": the decision differs from what the score says; "bestätigt": it agrees
+            text: t(scoreLevel(effectiveScore(item)) === item.userLevel ? "tagConfirmed" : "tagCorrected")
+                + (item.feedbackLocalOnly ? t("localSuffix") : ""),
         }),
     ];
 }
