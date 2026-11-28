@@ -138,3 +138,13 @@ def test_http_roundtrip(backend):
         server.server_close()
     with store.connect(backend.db_path) as conn:
         assert [s.status for s in store.get_history(conn, CASE, "de")] == ["generated", "edited"]
+
+
+def test_cli_parser_builds_with_config_defaults(capsys):
+    """`python -m ...summary.api --help` must not crash: the Docker image starts this way."""
+    from hack_apertus_coffee_exe.summary.api import main
+
+    with pytest.raises(SystemExit) as exc:
+        main(["--help"])
+    assert exc.value.code == 0
+    assert "--triage" in capsys.readouterr().out
