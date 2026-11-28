@@ -113,7 +113,8 @@ def test_assemble_copies_the_report_checks_the_video_and_zips_exactly_two_pdfs(t
     (out / "recall_list.txt").write_text("8C_1/2026\n", encoding="utf-8")
 
     checks = {item: done for item, done, _ in sub.assemble(out, root, summaries_ready=True)}
-    assert checks["report"] and (out / "technical_report.pdf").read_bytes() == b"%PDF report"
+    assert checks["report"] and (out / "Coffee_Exe_Report.pdf").read_bytes() == b"%PDF report"
+    assert not (out / "technical_report.pdf").exists()
     assert (root / "Coffee_Exe_Report.pdf").exists()                      # the original stays in the root
     assert not checks["video"] and (out / "video_url.txt").exists()        # placeholder written
     assert not checks["deck"] and not checks["zip"] and not (out / "submission.zip").exists()
@@ -125,7 +126,7 @@ def test_assemble_copies_the_report_checks_the_video_and_zips_exactly_two_pdfs(t
     checks = sub.assemble(out, root, summaries_ready=True)
     assert all(done for _, done, _ in checks)
     with zipfile.ZipFile(out / "submission.zip") as archive:
-        assert sorted(archive.namelist()) == ["pitch_deck.pdf", "technical_report.pdf"]
+        assert sorted(archive.namelist()) == ["Coffee_Exe_Report.pdf", "pitch_deck.pdf"]
 
 
 def test_video_url_ignores_comments_and_needs_a_link(tmp_path):

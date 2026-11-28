@@ -15,10 +15,10 @@ What Suva grades (``challenge_description.md``, evaluation criteria):
    ``summaries_top<n>_<month>.md`` (to read) and ``.json`` (complete).
 
 The command also assembles ``results/submission/`` for sprintd (``assemble``): a copy of the
-report PDF from the repo root (the organisers want it there as ``TeamName_Report.pdf``) as
-``technical_report.pdf``, ``video_url.txt`` (checked against the Demo field of
+report PDF from the repo root (the organisers want it there as ``TeamName_Report.pdf``) under
+the same name, ``video_url.txt`` (checked against the Demo field of
 ``technical_report.md``), ``pitch_deck.pdf`` (added by hand) and, once both PDFs are there,
-``submission.zip`` with exactly these two files, as sprintd asks.
+``submission.zip`` with exactly these two files, as sprintd asks; the report keeps its name.
 
 Which summary goes in, per judgement and language:
 
@@ -255,12 +255,16 @@ def assemble(out: Path, root: Path, summaries_ready: bool) -> list[tuple[str, bo
     """Put the submission together in ``out``; returns the checklist as ``(item, done, text)``."""
     checks: list[tuple[str, bool, str]] = []
     reports = sorted(root.glob("*_Report.pdf"))
-    report = out / "technical_report.pdf"
+    report: Path | None = None
     if len(reports) == 1:
+        report = out / reports[0].name  # submitted under the name the organisers ask for: TeamName_Report.pdf
+        for old in out.glob("*_Report.pdf"):  # a copy under an older name must not end up in the ZIP
+            if old.name != report.name:
+                old.unlink()
         shutil.copy2(reports[0], report)
-        checks.append(("report", True, f"technical_report.pdf (copy of {reports[0].name} in the repo root, which stays there)"))
+        checks.append(("report", True, f"{report.name} (copy of the report in the repo root, which stays there)"))
     else:
-        checks.append(("report", False, f"technical_report.pdf: expected one *_Report.pdf in the repo root, found {len(reports)}"))
+        checks.append(("report", False, f"report: expected one *_Report.pdf in the repo root, found {len(reports)}"))
 
     video_file = out / "video_url.txt"
     if not video_file.exists():
@@ -277,11 +281,11 @@ def assemble(out: Path, root: Path, summaries_ready: bool) -> list[tuple[str, bo
     checks.append(("deck", deck.is_file(), "pitch_deck.pdf" if deck.is_file() else "pitch_deck.pdf: add the deck (PDF, max. 10 slides)"))
 
     zip_path = out / "submission.zip"
-    if report.is_file() and deck.is_file():
+    if report is not None and report.is_file() and deck.is_file():
         with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as archive:
             archive.write(deck, "pitch_deck.pdf")
-            archive.write(report, "technical_report.pdf")
-        checks.append(("zip", True, "submission.zip: pitch_deck.pdf + technical_report.pdf (exactly two files, for sprintd)"))
+            archive.write(report, report.name)
+        checks.append(("zip", True, f"submission.zip: pitch_deck.pdf + {report.name} (exactly two files, for sprintd)"))
     else:
         zip_path.unlink(missing_ok=True)  # never leave a ZIP from an older deck or report
         checks.append(("zip", False, "submission.zip: built once both PDFs are there"))
