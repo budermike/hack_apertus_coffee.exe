@@ -82,6 +82,80 @@ def test_court_signals_and_topics_are_passed_on():
     assert item["court"] == {"de": "IV. öffentlich-rechtliche Abteilung", "fr": "IV. öffentlich-rechtliche Abteilung"}
 
 
+def test_question_rule_and_criteria_come_from_the_relevance_scoring():
+    # shape of metadata.relevance as written by `triage.cli relevance` (#62)
+    relevance = {
+        "area": "UV", "outcome": "teilweise", "p": 0.7492, "threshold": 0.0445, "principle": 2, "uv_use": 2,
+        "deep_score": 85,
+        "question": " Wie ist Art. 32 Abs. 1 UVV bei einer nicht versicherten Nebentätigkeit anzuwenden? ",
+        "rule": "Angerechnet wird nur der Teil der IV-Rente, der die unfallbedingte Invalidität abdeckt.",
+        "criteria": [
+            {"a_id": "K1", "b_stelle": "E4.4.1 bis E4.4.4", "beleg_status": "exakt",
+             "c_zitat": "«Il est établi qu'au moment de son accident en 2008, l'intéressée exerçait une activité»"},
+            {"a_id": "N2", "b_stelle": "E5.3", "beleg_status": "ungefähr",
+             "c_zitat": "Die Vorinstanz hat den Sachverhalt willkürfrei festgestellt"},
+        ],
+    }
+    row = {"case_id": "8C_137/2025", "rank_score": 89.5, "key_topics": ["K1", "N2"],
+           "metadata": {"subject": "Assurance-accidents", "relevance": relevance}}
+    item = to_ui_item(row)
+    question = "Wie ist Art. 32 Abs. 1 UVV bei einer nicht versicherten Nebentätigkeit anzuwenden?"
+    assert item["question"] == {"de": question, "fr": question}
+    assert item["rule"] == {"de": relevance["rule"], "fr": relevance["rule"]}
+    assert item["criteria"] == [
+        # the UI puts «…» around the quote itself
+        {"id": "K1", "at": "E4.4.1 bis E4.4.4", "status": "exakt",
+         "quote": "Il est établi qu'au moment de son accident en 2008, l'intéressée exerçait une activité"},
+        {"id": "N2", "at": "E5.3", "status": "ungefähr",
+         "quote": "Die Vorinstanz hat den Sachverhalt willkürfrei festgestellt"},
+    ]
+    assert item["topics"] == ["K1", "N2"] and item["score"] == 89.5
+
+
+def test_rule_is_not_repeated_in_the_explanation():
+    # the relevance scoring writes "<reason> Merksatz: <rule>" into relevance_reason
+    rule = "Angerechnet wird nur der unfallbedingte Teil der IV-Rente."
+    row = {"case_id": "8C_137/2025", "relevance_reason": f"Materielle Frage der Unfallversicherung. Merksatz: {rule}",
+           "metadata": {"relevance": {"rule": rule}}}
+    item = to_ui_item(row)
+    assert item["explanation"] == {"de": "Materielle Frage der Unfallversicherung.", "fr": "Materielle Frage der Unfallversicherung."}
+    assert item["rule"] == {"de": rule, "fr": rule}
+    # a reason that only mentions a rule, or has no rule in the details, stays as it is
+    for reason, relevance in (
+        ("Kein Bezug zur Suva. Merksatz: etwas anderes", {"rule": rule}),
+        (f"Materielle Frage. Merksatz: {rule}", {"rule": None}),
+        (f"Materielle Frage. Merksatz: {rule}", None),
+    ):
+        kept = to_ui_item({"case_id": "8C_1/2026", "relevance_reason": reason, "metadata": {"relevance": relevance}})
+        assert kept["explanation"]["de"] == reason
+
+
+def test_judgements_without_relevance_details_keep_their_shape():
+    # `triage.cli score` writes no metadata.relevance; the relevance scoring leaves question,
+    # rule and criteria empty for judgements it did not send to Apertus
+    not_scored = {"area": "ZIV", "outcome": "unklar", "question": "", "rule": None, "criteria": []}
+    not_a_list = {"criteria": 7, "question": 3, "rule": ["x"]}
+    for meta in ({}, {"relevance": None}, {"relevance": "kaputt"}, {"relevance": not_scored}, {"relevance": not_a_list}):
+        item = to_ui_item({"case_id": "5A_1/2026", "metadata": meta})
+        assert "question" not in item and "rule" not in item and "criteria" not in item
+
+
+def test_malformed_criteria_are_skipped_and_quote_marks_inside_a_quote_stay():
+    relevance = {"criteria": [
+        "kein Objekt",
+        {"a_id": "K1"},                                    # no quote
+        {"c_zitat": "Zitat ohne Kriterium"},               # no criterion
+        {"a_id": "K2", "c_zitat": "  "},                   # empty quote
+        {"a_id": "K4", "c_zitat": "«»"},                   # empty quote in marks
+        {"a_id": "K3", "c_zitat": "«Unfall» im Sinne von «Art. 4 ATSG»", "b_stelle": None},
+    ]}
+    item = to_ui_item({"case_id": "8C_2/2026", "metadata": {"relevance": relevance}})
+    assert item["criteria"] == [
+        {"id": "K3", "at": "", "quote": "«Unfall» im Sinne von «Art. 4 ATSG»", "status": None},
+    ]
+    assert "question" not in item and "rule" not in item
+
+
 def test_area_code_takes_the_first_area_named():
     assert area_code("Assurance-accidents (rente d'invalidité; atteinte à l'intégrité)") == "UV"
     assert area_code("Invalidenversicherung (Invalidenrente)") == "IV"

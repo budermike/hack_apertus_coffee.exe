@@ -9,15 +9,17 @@ UI item (``GET /api/judgements``)::
 
     {id, caseNumber, date, url, lang, area, subject: {de, fr}, explanation: {de, fr},
      score, adjustment, summarized, outcome, court: {de, fr}, signals, topics,
+     question: {de, fr}, rule: {de, fr}, criteria: [{id, at, quote, status}],
      similarCases, ampel, rank}
 
 ``adjustment`` is always 0 until lawyer feedback (#64) exists. ``outcome`` is only
 set when the crawl folder is given. ``court`` is the chamber from the crawl metadata
-(left out if unknown). ``signals`` (triage ``keyword_hits``) and ``topics`` (Apertus
-``key_topics``) are what the UI shows under "Kriterien und Belege" for now:
-``question``, ``rule`` and ``criteria`` (with quotes) need Apertus output that triage
-does not produce yet, so they are left out. ``ampel`` and ``rank`` are extra fields
-the UI may ignore.
+(left out if unknown). ``question``, ``rule`` and ``criteria`` (with quotes) come from
+the relevance scoring (``triage.cli relevance``, ``metadata.relevance``, #62 / #66).
+Results of ``triage.cli score`` do not have them; then they are left out and the UI
+shows ``signals`` (triage ``keyword_hits``) and ``topics`` (Apertus ``key_topics``)
+under "Kriterien und Belege" instead. ``ampel`` and ``rank`` are extra fields the UI
+may ignore.
 """
 
 from __future__ import annotations
@@ -98,6 +100,65 @@ def _strings(value: Any) -> list[str]:
     return [v for v in value if isinstance(v, str)] if isinstance(value, list) else []
 
 
+def _plain_quote(quote: str) -> str:
+    """Quote without «…» around it: the UI adds the marks itself. Marks inside the quote stay."""
+    quote = quote.strip()
+    inner = quote[1:-1]
+    if quote.startswith("«") and quote.endswith("»") and "«" not in inner and "»" not in inner:
+        return inner.strip()
+    return quote
+
+
+def relevance_details(meta: dict[str, Any]) -> dict[str, Any]:
+    """``question``, ``rule`` and ``criteria`` of the UI from ``metadata.relevance`` (#62, #66).
+
+    Apertus writes the legal question and the practical rule in German only, like the
+    reason, so DE and FR carry the same text. What is missing or malformed is left out:
+    only judgements that the relevance scoring sent to Apertus have these details.
+    """
+    relevance = meta.get("relevance")
+    if not isinstance(relevance, dict):
+        return {}
+    details: dict[str, Any] = {}
+    for key in ("question", "rule"):
+        text = relevance.get(key)
+        if isinstance(text, str) and text.strip():
+            details[key] = {"de": text.strip(), "fr": text.strip()}
+    criteria = []
+    listed = relevance.get("criteria")
+    for criterion in listed if isinstance(listed, list) else []:
+        if not isinstance(criterion, dict):
+            continue
+        criterion_id, quote, at = criterion.get("a_id"), criterion.get("c_zitat"), criterion.get("b_stelle")
+        if not (isinstance(criterion_id, str) and criterion_id and isinstance(quote, str)):
+            continue
+        quote = _plain_quote(quote)
+        if not quote:
+            continue
+        criteria.append({
+            "id": criterion_id,
+            "at": at if isinstance(at, str) else "",
+            "quote": quote,
+            "status": criterion.get("beleg_status"),  # "exakt" | "ungefähr" | "fehlt"
+        })
+    if criteria:
+        details["criteria"] = criteria
+    return details
+
+
+def _reason_without_rule(reason: str, meta: dict[str, Any]) -> str:
+    """The reason without the practical rule that the relevance scoring appends to it.
+
+    ``relevance_period`` writes "<reason> Merksatz: <rule>" so that the ranking CSV is
+    readable on its own. The UI shows the rule in its own section (``rule``), so the list
+    item must not carry it twice.
+    """
+    relevance = meta.get("relevance")
+    rule = relevance.get("rule") if isinstance(relevance, dict) else None
+    appended = f" Merksatz: {rule}" if isinstance(rule, str) and rule.strip() else None
+    return reason[: -len(appended)] if appended and reason.endswith(appended) else reason
+
+
 def to_ui_item(row: dict[str, Any], summarized: bool = False, outcome: str | None = None) -> dict[str, Any]:
     """One triage result -> one UI list item.
 
@@ -108,7 +169,7 @@ def to_ui_item(row: dict[str, Any], summarized: bool = False, outcome: str | Non
     meta = row.get("metadata") or {}
     case_id = row["case_id"]
     subject = meta.get("subject") or meta.get("title") or case_id
-    reason = row.get("relevance_reason") or row.get("reason") or ""
+    reason = _reason_without_rule(row.get("relevance_reason") or row.get("reason") or "", meta)
     item = {
         "id": ui_id(case_id),
         "caseNumber": ui_case_number(case_id),
@@ -131,6 +192,7 @@ def to_ui_item(row: dict[str, Any], summarized: bool = False, outcome: str | Non
         "ampel": row.get("ampel"),
         "rank": row.get("rank"),
     }
+    item.update(relevance_details(meta))
     if outcome is not None:
         item["outcome"] = outcome
     court = meta.get("department") or meta.get("division")
