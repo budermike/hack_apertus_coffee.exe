@@ -92,6 +92,8 @@ def test_edit_then_approve(backend):
     assert entry["de"] == "Vom Juristen" and entry["status"]["de"] == "approved"
     assert entry["pending"] == {"de": None, "fr": None}
     assert entry["editedAt"] is not None
+    assert entry["facts"] == {"de": {"form": "fall"}, "fr": {"form": "fall"}}
+    assert entry["examples"] == {"de": ["8C_177/2025"], "fr": ["8C_177/2025"]}
     # the UI's origin tags read status/model per language: editing DE leaves FR "generated"
     assert entry["status"]["fr"] == "generated"
     assert entry["model"]["de"] == "human" and entry["model"]["fr"] != "human"

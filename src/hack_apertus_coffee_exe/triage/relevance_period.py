@@ -97,6 +97,11 @@ def precedent_pool(
                 elif (cids & extra_feedback) and is_candidate(item):
                     items.append(item)
                     extra_feedback -= cids
+    if neg:
+        for item in items:
+            cids = set(item.metadata.get("case_ids") or [item.case_id])
+            if cids & neg:
+                effective_selected -= cids
     return build_pool(items, effective_selected, summaries)
 
 

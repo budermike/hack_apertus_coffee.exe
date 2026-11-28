@@ -345,9 +345,33 @@ def _latest_feedback(db_path: Path):
 
 
 def test_single_judge_is_detected_from_crawl_text(tmp_path):
+    from hack_apertus_coffee_exe.present.judgements import _is_single_judge
+
     mock = Path("src/hack_apertus_coffee_exe/triage/mock_crawl")
     rows = [{"case_id": "8C_901/2026", "final_score": 80.0, "judgement_date": "2026-10-14",
              "metadata": {"similar_cases": []}}]
     judgements = JudgementList(_write(tmp_path, rows), config=TriageConfig(), crawl_dir=mock)
     item = judgements.items()[0]
     assert isinstance(item["singleJudge"], bool)
+    assert _is_single_judge("Urteil\nBesetzung\nEinzelrichter Müller\nSachverhalt:\n...") is True
+    # lower-court mention in facts must NOT mark a three-judge panel as single-judge
+    assert _is_single_judge("Urteil\nBesetzung\nBundesrichter A, B, C\nSachverhalt:\nGegen Einzelrichter...\n") is False
+
+
+def test_invalid_feedback_payload_returns_400(tmp_path):
+    backend = Backend(tmp_path / "s.sqlite", tmp_path, Mock())
+    server = make_server(backend, "127.0.0.1", 0, tmp_path)
+    threading.Thread(target=server.serve_forever, daemon=True).start()
+    base = f"http://127.0.0.1:{server.server_address[1]}/api"
+    try:
+        for bad in ({"adjustment": [1]}, {"direction": [1]}, {"adjustment": True}, {"decision": "bogus"}):
+            req = urllib.request.Request(
+                f"{base}/judgements/8C_7_2025/feedback", method="POST",
+                data=json.dumps(bad).encode(), headers={"Content-Type": "application/json"},
+            )
+            with pytest.raises(urllib.error.HTTPError) as exc:
+                urllib.request.urlopen(req)
+            assert exc.value.code == 400
+    finally:
+        server.shutdown()
+        server.server_close()

@@ -26,6 +26,7 @@ from __future__ import annotations
 
 import json
 import logging
+import math
 import re
 import threading
 from pathlib import Path
@@ -66,7 +67,25 @@ _AREAS = {
 }
 _AREA_RES = {code: re.compile(pattern, re.I) for code, pattern in _AREAS.items()}
 
-_SINGLE_JUDGE_RE = re.compile(r"\b(?:Einzelrichter(?:in)?|juge unique|giudice unico)\b", re.I)
+_SINGLE_JUDGE_RE = re.compile(r"Einzelrichter|juge unique|giudice unico", re.I)
+_RUBRUM_FACTS_RE = re.compile(r"^(Sachverhalt|Faits|Fatti|Ritenuto in fatto)\s*:?$", re.I)
+_RUBRUM_LAW_RE = re.compile(r"(erwägung|considérant|considerando|diritto|^vu\b|^visto\b)", re.I)
+_RUBRUM_DISP_RE = re.compile(r"^(Demnach (erkennt|verfügt|beschliesst)|Par ces motifs|Per questi motivi)", re.I)
+
+
+def _is_single_judge(text: str) -> bool:
+    """True if single-judge composition appears in the rubrum (before facts/law headings)."""
+    for raw_line in (text or "").split("\n"):
+        para = " ".join(raw_line.split())
+        if not para:
+            continue
+        if len(para) < 70 and para.endswith(":") and (_RUBRUM_FACTS_RE.match(para) or _RUBRUM_LAW_RE.search(para)):
+            break
+        if _RUBRUM_DISP_RE.match(para):
+            break
+        if _SINGLE_JUDGE_RE.search(para):
+            return True
+    return False
 
 # Outcome codes of the UI (OUTCOME_NAMES in i18n.js) for summary.judgement.operative_outcome.
 _OUTCOMES = {
@@ -293,7 +312,7 @@ class JudgementList:
                                 loaded[key] = _OUTCOMES.get(
                                     operative_outcome(judgement.text).result, "unklar"
                                 )
-                                single_loaded[key] = bool(_SINGLE_JUDGE_RE.search(judgement.text[:2500]))
+                                single_loaded[key] = _is_single_judge(judgement.text)
                             logger.info("Read the outcome of %d judgements from %s", len(loaded), self.crawl_dir)
                     self._single_judges = single_loaded
                     self._outcomes = loaded
@@ -346,6 +365,60 @@ class JudgementList:
         return {"high": self.config.green_threshold, "medium": self.config.yellow_threshold}
 
 
+def parse_feedback_body(body: dict[str, Any]) -> dict[str, Any]:
+    """Validate and coerce ``POST /api/judgements/{id}/feedback`` payload; raises ValueError on invalid types."""
+    if not isinstance(body, dict):
+        raise ValueError("feedback body must be a JSON object")
+    decision = body.get("decision")
+    if decision not in (None, "high", "low"):
+        raise ValueError(f"decision must be 'high', 'low', or null, got {decision!r}")
+    level = body.get("level")
+    if level is None:
+        level = "medium" if decision is None else decision
+    if level not in ("high", "medium", "low"):
+        raise ValueError(f"level must be 'high', 'medium', or 'low', got {level!r}")
+
+    raw_adj = body.get("adjustment", 0.0)
+    if raw_adj is None:
+        adjustment = 0.0
+    elif isinstance(raw_adj, bool):
+        raise ValueError("adjustment must be a finite number, not bool")
+    else:
+        try:
+            adjustment = float(raw_adj)
+        except (TypeError, ValueError) as exc:
+            raise ValueError(f"invalid adjustment: {raw_adj!r}") from exc
+        if not math.isfinite(adjustment):
+            raise ValueError(f"adjustment must be finite: {raw_adj!r}")
+
+    raw_dir = body.get("direction", 0)
+    if raw_dir is None:
+        direction = 0
+    elif isinstance(raw_dir, bool) or isinstance(raw_dir, float):
+        raise ValueError(f"invalid direction: {raw_dir!r}")
+    else:
+        try:
+            direction = int(raw_dir)
+        except (TypeError, ValueError) as exc:
+            raise ValueError(f"invalid direction: {raw_dir!r}") from exc
+
+    comment = body.get("comment")
+    if comment is not None and not isinstance(comment, str):
+        raise ValueError("comment must be a string or null")
+    user = body.get("user")
+    if user is not None and not isinstance(user, str):
+        raise ValueError("user must be a string or null")
+
+    return {
+        "decision": decision,
+        "level": level,
+        "adjustment": adjustment,
+        "direction": direction,
+        "comment": comment,
+        "user": user or "ui",
+    }
+
+
 def record_feedback(
     case_number: str, body: dict[str, Any], db_path: str | Path | None = None
 ) -> dict[str, Any]:
@@ -356,19 +429,9 @@ def record_feedback(
     from contextlib import closing
     from ..summary import store
 
-    decision = body.get("decision")
-    level = body.get("level") or ("medium" if decision is None else decision)
+    parsed = parse_feedback_body(body)
     with closing(store.connect(db_path)) as conn:
-        return store.save_feedback(
-            conn,
-            case_number,
-            decision=decision,
-            level=level,
-            adjustment=float(body.get("adjustment") or 0.0),
-            direction=int(body.get("direction") or 0),
-            comment=body.get("comment") if isinstance(body.get("comment"), str) else None,
-            user=str(body.get("user") or "ui"),
-        )
+        return store.save_feedback(conn, case_number, **parsed)
 
 
 def list_response(judgements: JudgementList | None, query: dict[str, list[str]]) -> tuple[int, Any]:

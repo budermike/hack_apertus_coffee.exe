@@ -35,7 +35,7 @@ from urllib.parse import parse_qs, unquote, urlparse
 from dotenv import load_dotenv
 
 from ..config import load_paths
-from ..present.judgements import JudgementList, config_response, list_response
+from ..present.judgements import JudgementList, config_response, list_response, parse_feedback_body
 from . import store
 from .judgement import Judgement, load_judgements, same_case
 from .run import summarize_case, summarizer_factory
@@ -112,23 +112,9 @@ class Backend:
             return HTTPStatus.OK, [summary_entry(conn, cid) for cid in store.search(conn, query)]
 
     def save_feedback(self, case_number: str, body: dict[str, Any]) -> Response:
-        decision = body.get("decision")
-        level = body.get("level") or ("medium" if decision is None else decision)
-        adjustment = float(body.get("adjustment") or 0.0)
-        direction = int(body.get("direction") or 0)
-        comment = body.get("comment") if isinstance(body.get("comment"), str) else None
-        user = str(body.get("user") or "ui")
+        parsed = parse_feedback_body(body)
         with closing(store.connect(self.db_path)) as conn:
-            return HTTPStatus.OK, store.save_feedback(
-                conn,
-                case_number,
-                decision=decision,
-                level=level,
-                adjustment=adjustment,
-                direction=direction,
-                comment=comment,
-                user=user,
-            )
+            return HTTPStatus.OK, store.save_feedback(conn, case_number, **parsed)
 
     # --- helpers ------------------------------------------------------------------
 
@@ -155,6 +141,10 @@ def summary_entry(conn, case_number: str) -> dict[str, Any] | None:
     def per_lang(fn: Callable[[store.Summary], Any]) -> dict[str, Any]:
         return {lang: fn(s) if s else None for lang, s in shown.items()}
 
+    def per_lang_or_history(fn: Callable[[store.Summary], Any], empty: Any) -> dict[str, Any]:
+        fallback = next((fn(item) for item in history if fn(item)), empty)
+        return {lang: (fn(s) or fallback) if s else fallback for lang, s in shown.items()}
+
     return {
         "id": case.case_id.replace("/", "_"),
         "caseNumber": case.case_id,
@@ -167,8 +157,8 @@ def summary_entry(conn, case_number: str) -> dict[str, Any] | None:
         "model": per_lang(lambda s: s.model),
         "coherenceOk": per_lang(lambda s: s.coherence_ok),
         "issues": per_lang(lambda s: s.issues),
-        "facts": per_lang(lambda s: s.facts),
-        "examples": per_lang(lambda s: s.examples),
+        "facts": per_lang_or_history(lambda s: s.facts, {}),
+        "examples": per_lang_or_history(lambda s: s.examples, []),
         "pending": {lang: p.text if p else None for lang, p in pending.items()},
         "storedAt": max(s.created_at for s in history),
         "editedAt": max(edits) if edits else None,

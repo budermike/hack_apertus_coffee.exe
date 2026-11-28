@@ -150,6 +150,15 @@ function summaryOrigin(raw, lang) {
     return null;
 }
 
+/** Non-empty plain object / array helpers so approved empty `{}` / `[]` do not shadow filled values. */
+function nonEmptyObj(obj) {
+    return obj && typeof obj === "object" && !Array.isArray(obj) && Object.keys(obj).length > 0 ? obj : null;
+}
+
+function nonEmptyArr(arr) {
+    return Array.isArray(arr) && arr.length > 0 ? arr : null;
+}
+
 /** Summary entry for the editor. `de` / `fr` hold the newest text: a saved edit that still
  *  waits for approval (`pendingLangs`) wins over the shown version. */
 function normalizeEntry(raw) {
@@ -164,8 +173,9 @@ function normalizeEntry(raw) {
         title: raw.title,
         storedAt: raw.storedAt || "",
         editedAt: raw.editedAt || null,
-        facts: raw.facts?.de || raw.facts?.fr || (raw.facts && !raw.facts.de ? raw.facts : null),
-        examples: raw.examples?.de || raw.examples?.fr || (Array.isArray(raw.examples) ? raw.examples : []),
+        facts: nonEmptyObj(raw.facts?.de) || nonEmptyObj(raw.facts?.fr)
+            || (!raw.facts?.de && !raw.facts?.fr ? nonEmptyObj(raw.facts) : null),
+        examples: nonEmptyArr(raw.examples?.de) || nonEmptyArr(raw.examples?.fr) || nonEmptyArr(raw.examples) || [],
         pendingLangs: SUMMARY_LANGS.filter((lang) => typeof pending[lang] === "string"),
         origin: Object.fromEntries(SUMMARY_LANGS.map((lang) => [lang, summaryOrigin(raw, lang)])),
         model: Object.fromEntries(SUMMARY_LANGS.map((lang) => [lang, raw.model?.[lang] || null])),
