@@ -10,6 +10,12 @@
  *   Alt+↓ in the date field opens the calendar.
  * Only the focused day is in the tab order (roving tabindex); moving past the shown month
  * switches the month. Days after `maxIso` cannot be focused: focus stops at the last allowed day.
+ *
+ * Month and year grids (3 columns, opened via the title button) work the same way:
+ *   ← / →  previous / next month (year)       ↑ / ↓  three months (years) back / ahead
+ *   Home / End  first / last in the row        PageUp / PageDown  previous / next year (page of 12 years)
+ *   Enter / Space  open the focused month (year)
+ * Moving past the first or last cell turns the page; focus stops at the latest allowed month (year).
  */
 
 function toIso(date) {
@@ -63,6 +69,7 @@ function createDatePicker(input, button, { onPick, maxIso } = {}) {
 
     let view;           // first day of the displayed month
     let focusIso;       // day that has the keyboard focus in the day grid (always in `view`'s month)
+    let focusCell;      // keyboard position in the month grid (year * 12 + month) or year grid (year)
     let mode = "days";  // "days" | "months" | "years"
     const YEARS_PER_PAGE = 12;
 
@@ -111,13 +118,40 @@ function createDatePicker(input, button, { onPick, maxIso } = {}) {
 
         if (!hadFocus) return;
         const target = (role && popup.querySelector(`[data-dp-role="${role}"]:not(:disabled)`))
-            || (mode === "days" ? dayButton(focusIso) : null)
+            || (mode === "days" ? dayButton(focusIso) : cellButton(focusCell))
             || popup.querySelector(".dp-cell.selected:not(:disabled)")
             || popup.querySelector(".dp-cell:not(:disabled)");
         target?.focus();
     }
 
     const dayButton = (iso) => popup.querySelector(`.dp-day[data-iso="${iso}"]`);
+    const cellButton = (value) => popup.querySelector(`.dp-cell[data-cell="${value}"]`);
+
+    /** Latest allowed cell of the month / year grid (Infinity without max). */
+    function maxCell() {
+        if (!max()) return Infinity;
+        const [y, m] = max().split("-").map(Number);
+        return mode === "months" ? y * 12 + (m - 1) : y;
+    }
+
+    /** Switches to the month or year grid with the keyboard position on `value`. */
+    function showGrid(newMode, value) {
+        const hadFocus = popup.contains(document.activeElement);
+        mode = newMode;
+        focusCell = Math.min(value, maxCell());
+        view = mode === "months"
+            ? new Date(Math.floor(focusCell / 12), focusCell % 12, 1)
+            : new Date(focusCell, view.getMonth(), 1);
+        render();
+        if (hadFocus) cellButton(focusCell)?.focus();   // into the grid, not onto its title
+    }
+
+    /** Gives a grid cell its value and puts only the focused one into the tab order. */
+    function asCell(b, value) {
+        b.dataset.cell = String(value);
+        b.tabIndex = value === focusCell ? 0 : -1;
+        return b;
+    }
 
     /** Shows the month `date` is in, keeping the focused day (clamped to that month and to max). */
     function showMonth(date) {
@@ -141,13 +175,13 @@ function createDatePicker(input, button, { onPick, maxIso } = {}) {
             const first = new Date(year, m, 1);
             const classes = ["dp-cell"];
             if (selected && selected.slice(0, 7) === toIso(first).slice(0, 7)) classes.push("selected");
-            grid.append(button_(classes.join(" "), monthLabel.format(first),
+            grid.append(asCell(button_(classes.join(" "), monthLabel.format(first),
                 monthName.format(first).replace(".", ""),
                 () => { showMonth(first); mode = "days"; render(); },
-                Boolean(max() && toIso(first) > max())));
+                Boolean(max() && toIso(first) > max())), year * 12 + m));
         }
         popup.replaceChildren(
-            header(String(year), t("chooseYear"), () => { mode = "years"; render(); },
+            header(String(year), t("chooseYear"), () => showGrid("years", year),
                 t("prevYear"), () => shiftView(-12), t("nextYear"), () => shiftView(12), `${year + 1}-01-01`),
             grid,
         );
@@ -164,9 +198,9 @@ function createDatePicker(input, button, { onPick, maxIso } = {}) {
         for (let y = start; y < start + YEARS_PER_PAGE; y++) {
             const classes = ["dp-cell"];
             if (String(y) === selectedYear) classes.push("selected");
-            grid.append(button_(classes.join(" "), null, String(y),
-                () => { view = new Date(y, view.getMonth(), 1); mode = "months"; render(); },
-                Boolean(max() && `${y}-01-01` > max())));
+            grid.append(asCell(button_(classes.join(" "), null, String(y),
+                () => showGrid("months", y * 12 + view.getMonth()),
+                Boolean(max() && `${y}-01-01` > max())), y));
         }
         popup.replaceChildren(
             header(`${start} – ${start + YEARS_PER_PAGE - 1}`, null, null,
@@ -184,7 +218,7 @@ function createDatePicker(input, button, { onPick, maxIso } = {}) {
 
         const head = header(
             new Intl.DateTimeFormat(locale, { month: "long", year: "numeric" }).format(view),
-            t("chooseMonth"), () => { mode = "months"; render(); },
+            t("chooseMonth"), () => showGrid("months", view.getFullYear() * 12 + view.getMonth()),
             t("prevMonth"), () => shiftView(-1),
             t("nextMonth"), () => shiftView(1),
             toIso(new Date(view.getFullYear(), view.getMonth() + 1, 1)),
@@ -230,7 +264,10 @@ function createDatePicker(input, button, { onPick, maxIso } = {}) {
     function shiftView(deltaMonths) {
         const target = new Date(view.getFullYear(), view.getMonth() + deltaMonths, 1);
         if (mode === "days") showMonth(target);
-        else view = target;
+        else {
+            view = target;
+            focusCell = Math.min(focusCell + (mode === "months" ? deltaMonths : deltaMonths / 12), maxCell());
+        }
         render();
     }
 
@@ -242,7 +279,28 @@ function createDatePicker(input, button, { onPick, maxIso } = {}) {
         dayButton(focusIso)?.focus();
     }
 
+    /** Keyboard in the month / year grid: 3 columns; past the edge the page turns. */
+    function moveCell(event) {
+        const col = (((focusCell % 3) + 3) % 3);   // cells start at a multiple of 3 (Jan, year % 12 === 0)
+        const target = {
+            ArrowLeft: focusCell - 1,
+            ArrowRight: focusCell + 1,
+            ArrowUp: focusCell - 3,
+            ArrowDown: focusCell + 3,
+            Home: focusCell - col,
+            End: focusCell + 2 - col,
+            PageUp: focusCell - 12,
+            PageDown: focusCell + 12,
+        }[event.key];
+        if (target === undefined) return;   // Enter / Space: the cell's own click opens it
+        event.preventDefault();
+        event.stopPropagation();
+        showGrid(mode, target);
+        cellButton(focusCell)?.focus();
+    }
+
     popup.addEventListener("keydown", (event) => {
+        if (mode !== "days" && event.target.classList.contains("dp-cell")) return moveCell(event);
         if (mode !== "days" || !event.target.classList.contains("dp-day")) return;
         const d = fromIso(focusIso);
         const weekdayIndex = (d.getDay() + 6) % 7;   // Monday = 0
@@ -265,6 +323,12 @@ function createDatePicker(input, button, { onPick, maxIso } = {}) {
 
     // the day under the mouse becomes the keyboard position too
     popup.addEventListener("focusin", (event) => {
+        const cell = event.target.dataset?.cell;
+        if (cell !== undefined && Number(cell) !== focusCell) {
+            cellButton(focusCell)?.setAttribute("tabindex", "-1");
+            focusCell = Number(cell);
+            event.target.tabIndex = 0;
+        }
         const iso = event.target.dataset?.iso;
         if (!iso || iso === focusIso) return;
         dayButton(focusIso)?.setAttribute("tabindex", "-1");
