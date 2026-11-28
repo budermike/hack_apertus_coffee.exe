@@ -35,6 +35,7 @@ from urllib.parse import parse_qs, unquote, urlparse
 from dotenv import load_dotenv
 
 from ..config import load_paths
+from ..present.evaluation import evaluation_response
 from ..present.judgements import JudgementList, config_response, list_response, parse_feedback_body
 from ..present.period_jobs import PeriodTriageManager
 from . import store
@@ -234,6 +235,8 @@ class Handler(SimpleHTTPRequestHandler):
     backend: Backend  # set by make_server
     judgements: JudgementList | None = None  # set by make_server (present/judgements.py)
     periods: PeriodTriageManager | None = None  # set by make_server (present/period_jobs.py)
+    tables_dir: Path = Path("results/tables")
+    models_path: Path = Path("docs/MODELS.md")
 
     def do_GET(self) -> None:
         url = urlparse(self.path)
@@ -244,6 +247,8 @@ class Handler(SimpleHTTPRequestHandler):
             return self._respond(lambda: list_response(self.judgements, parse_qs(url.query)))
         if parts == ["config"]:  # present/judgements.py
             return self._respond(lambda: config_response(self.judgements))
+        if parts == ["evaluation"]:  # present/evaluation.py
+            return self._respond(lambda: evaluation_response(self.tables_dir, self.models_path))
         if parts == ["periods", "status"]:
             q = parse_qs(url.query)
             return self._respond(lambda: self._period_status(q))
@@ -365,8 +370,20 @@ def make_server(
     static_dir: str | Path,
     judgements: JudgementList | None = None,
     periods: PeriodTriageManager | None = None,
+    tables_dir: str | Path = Path("results/tables"),
+    models_path: str | Path = Path("docs/MODELS.md"),
 ) -> ThreadingHTTPServer:
-    handler = type("BoundHandler", (Handler,), {"backend": backend, "judgements": judgements, "periods": periods})
+    handler = type(
+        "BoundHandler",
+        (Handler,),
+        {
+            "backend": backend,
+            "judgements": judgements,
+            "periods": periods,
+            "tables_dir": Path(tables_dir),
+            "models_path": Path(models_path),
+        },
+    )
     return ThreadingHTTPServer((host, port), partial(handler, directory=str(static_dir)))
 
 

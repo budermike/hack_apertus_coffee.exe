@@ -270,5 +270,16 @@ const mockBackend = (() => {
             await delay(150);
             db.save({ feedback: {}, kb: {} });
         },
+
+        /** GET /evaluation — demo mode never fabricates evaluation numbers (#71). */
+        async getEvaluation() {
+            await delay(80);
+            return {
+                available: false,
+                tables: [],
+                calibration: null,
+                models: { runtime: { columns: [], rows: [] }, development: { columns: [], rows: [] } },
+            };
+        },
     };
 })();
