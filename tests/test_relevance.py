@@ -270,3 +270,151 @@ def test_hits_at_counts_ties_proportionally():
     p, y = np.array([0.9, 0.5, 0.5, 0.5, 0.1]), np.array([True, True, False, False, True])
     assert rev.hits_at(p, y, k=2) == pytest.approx(1 + 1 / 3)
     assert rev.hits_at(p, y, k=10) == 3.0
+
+
+# ---------------------------------------------------------------- whole run (score files, list)
+
+# One labelled quarter (2025-Q4, Suva selected 8C_1/2025) and the quarter to score (2026-Q1).
+RUN_CASES = [
+    ("8C_1/2025", "2025-10-10", "Unfallversicherung (Kausalzusammenhang)", 90),
+    ("8C_2/2025", "2025-11-11", "Unfallversicherung (Taggeld)", 30),
+    ("9C_3/2025", "2025-12-12", "Invalidenversicherung (Rente)", 10),
+    ("8C_4/2026", "2026-01-15", "Unfallversicherung (Kausalzusammenhang)", 85),
+    ("8C_5/2026", "2026-02-10", "Unfallversicherung (Taggeld)", 20),
+]
+
+
+class GatewayByCase:
+    """Stands in for the OpenAI client: one answer (or exception) per case number and stage."""
+
+    def __init__(self, broken=None):
+        self.broken = broken or {}  # case number -> exception to raise, or text to answer
+        self.asked: list[tuple[str, str]] = []
+        self.chat = SimpleNamespace(completions=SimpleNamespace(create=self._create))
+
+    def _create(self, **kwargs):
+        stage = kwargs["response_format"]["json_schema"]["name"]
+        case_id = kwargs["messages"][1]["content"].split("Metadaten des zu beurteilenden Urteils: ")[1].split(" ")[0]
+        self.asked.append((stage, case_id))
+        answer = self.broken.get(case_id)
+        if isinstance(answer, Exception):
+            raise answer
+        if answer is None:
+            score = next(s for c, _, _, s in RUN_CASES if c == case_id)
+            answer = json.dumps(dict(TRIAGE, d_score=score) if stage == "triage" else DEEP)
+        return _answer(answer)
+
+
+def _run_folders(tmp_path):
+    raw, judgements = tmp_path / "raw", tmp_path / "judgements"
+    for case_id, date, subject, _ in RUN_CASES:
+        folder = raw / date[:7]
+        folder.mkdir(parents=True, exist_ok=True)
+        record = {"case_id": case_id, "case_ids": [case_id], "decision_date": date, "subject": subject, "language": "de",
+                  "text": TEXT.replace("8C_1/2026", case_id)}
+        (folder / f"{date}_{case_id.replace('/', '_')}.json").write_text(json.dumps(record, ensure_ascii=False), encoding="utf-8")
+    judgements.mkdir()
+    import zipfile
+
+    with zipfile.ZipFile(judgements / "labels.xlsx", "w") as archive:  # the label list is read as text from the xlsx
+        archive.writestr("xl/sharedStrings.xml", "<sst><si><t>BGer-Urteil 8C_1/2025</t></si></sst>")
+    return raw, judgements
+
+
+def _run(tmp_path, gateway, **kwargs):
+    raw, judgements = _run_folders(tmp_path)
+    config = GatewayConfig(api_key="test", base_url="http://gateway.invalid", model="apertus-v1-5-70b")
+    client = rel.ApertusRelevanceClient(config=config, client=gateway)
+    return period.run("2026-Q1", label_periods=("2025-Q4",), raw_dir=raw, judgements_dir=judgements,
+                      tables_dir=tmp_path / "tables", client=client, workers=1, log=lambda _: None, **kwargs)
+
+
+def test_not_asked_tells_a_gateway_failure_from_a_final_invalid_answer():
+    assert rel.not_asked({"error": "APITimeoutError: Request timed out."})
+    assert rel.not_asked({"error": "ValueError: Missing API key: set LLM_API_KEY or APERTUS_API_KEY in .env or environment."})
+    assert not rel.not_asked({"error": "RelevanceError: triage 2026-01-15_8C_4-2026: invalid JSON (Expecting value)"})
+    assert not rel.not_asked({"error": None}) and not rel.not_asked({})
+
+
+def test_run_writes_the_score_files_and_the_results(tmp_path):
+    out = _run(tmp_path, GatewayByCase())
+    assert sorted(p.name for p in (tmp_path / "tables").iterdir()) == ["relevance_scores_q1_2026.json", "relevance_scores_q4_2025.json"]
+    assert out["calibration"]["periods"] == ["2025-Q4"] and out["calibration"]["n"] == 3 and out["calibration"]["n_pos"] == 1
+    assert [r.case_id for r in out["results"]] == ["8C_4/2026", "8C_5/2026"]
+    assert all(r.llm_model == "apertus-v1-5-70b" for r in out["results"])
+
+
+def test_run_writes_nothing_when_apertus_could_not_be_asked(tmp_path):
+    tables = tmp_path / "tables"
+    tables.mkdir()
+    committed = tables / "relevance_scores_q1_2026.json"
+    committed.write_text("the committed scores", encoding="utf-8")
+    gateway = GatewayByCase({"8C_5/2026": TimeoutError("gateway timed out")})
+    with pytest.raises(period.IncompleteRun) as stopped:
+        _run(tmp_path, gateway)
+    message = str(stopped.value)
+    assert "2026-Q1: 1" in message and "2025-Q4" not in message and "8C_5/2026" in message and "TimeoutError" in message
+    assert committed.read_text(encoding="utf-8") == "the committed scores"
+    assert [p.name for p in tables.iterdir()] == ["relevance_scores_q1_2026.json"]
+    assert len({case for _, case in gateway.asked}) == 5  # every judgement was tried before the run stopped
+
+
+def test_run_stops_when_a_labelled_quarter_is_incomplete(tmp_path):
+    with pytest.raises(period.IncompleteRun, match="2025-Q4: 1"):
+        _run(tmp_path, GatewayByCase({"8C_2/2025": ConnectionError("no route to host")}))
+    assert not (tmp_path / "tables").exists()
+
+
+def test_allow_failed_writes_everything_and_shows_the_judgement_in_yellow(tmp_path):
+    out = _run(tmp_path, GatewayByCase({"8C_5/2026": TimeoutError("gateway timed out")}), allow_failed=True)
+    assert (tmp_path / "tables" / "relevance_scores_q1_2026.json").exists()
+    failed = next(r for r in out["results"] if r.case_id == "8C_5/2026")
+    assert failed.ampel == "gelb" and "von Hand prüfen" in failed.relevance_reason and "TimeoutError" in failed.relevance_reason
+
+
+def test_an_answer_that_stays_invalid_is_final_and_does_not_stop_the_run(tmp_path):
+    gateway = GatewayByCase({"8C_5/2026": "{not json"})  # both tries fail: RelevanceError
+    out = _run(tmp_path, gateway)
+    assert gateway.asked.count(("triage", "8C_5/2026")) == 2
+    failed = next(r for r in out["results"] if r.case_id == "8C_5/2026")
+    assert failed.ampel == "gelb" and "RelevanceError" in failed.relevance_reason
+    stored = json.loads((tmp_path / "tables" / "relevance_scores_q1_2026.json").read_text(encoding="utf-8"))
+    assert [bool(r["error"]) for r in stored] == [False, True]
+
+
+def _cli_relevance(tmp_path, monkeypatch, gateway, *extra):
+    from hack_apertus_coffee_exe.triage import cli
+
+    raw, judgements = _run_folders(tmp_path)
+    monkeypatch.setattr(rel, "_build_client", lambda config, timeout=60, max_retries=3: gateway)
+    return cli.main([
+        "relevance", "--period", "2026-Q1", "--label-periods", "2025-Q4", "--input", str(raw),
+        "--judgements-dir", str(judgements), "--tables-dir", str(tmp_path / "tables"), "--export-dir", str(tmp_path / "out"),
+        "--output", str(tmp_path / "out" / "triage.json"), "--no-cache", "--workers", "1", *extra,
+    ])
+
+
+def test_cli_exits_with_2_and_leaves_the_suva_list_alone(tmp_path, monkeypatch, capsys):
+    out = tmp_path / "out"
+    out.mkdir()
+    (out / "recall_q1_2026.txt").write_text("8C_4/2026\n", encoding="utf-8")
+    code = _cli_relevance(tmp_path, monkeypatch, GatewayByCase({"8C_4/2026": TimeoutError("gateway timed out")}))
+    assert code == 2
+    assert "Nothing was written" in capsys.readouterr().err
+    assert (out / "recall_q1_2026.txt").read_text(encoding="utf-8") == "8C_4/2026\n"
+    assert [p.name for p in out.iterdir()] == ["recall_q1_2026.txt"] and not (tmp_path / "tables").exists()
+
+
+def test_cli_writes_list_scores_and_calibration_when_every_judgement_was_asked(tmp_path, monkeypatch):
+    assert _cli_relevance(tmp_path, monkeypatch, GatewayByCase(), "--list-factor", "1.0") == 0
+    assert sorted(p.name for p in (tmp_path / "out").iterdir()) == ["ranking_q1_2026.csv", "recall_q1_2026.txt", "triage.json"]
+    listed = (tmp_path / "out" / "recall_q1_2026.txt").read_text(encoding="utf-8").strip().split(", ")
+    assert listed[0] == "8C_4/2026" and set(listed) <= {"8C_4/2026", "8C_5/2026"}  # best first, only the scored quarter
+    assert sorted(p.name for p in (tmp_path / "tables").iterdir()) == [
+        "relevance_calibration_q1_2026.json", "relevance_scores_q1_2026.json", "relevance_scores_q4_2025.json",
+    ]
+
+
+def test_cli_allow_failed_keeps_the_old_behaviour(tmp_path, monkeypatch):
+    code = _cli_relevance(tmp_path, monkeypatch, GatewayByCase({"8C_5/2026": TimeoutError("gateway timed out")}), "--allow-failed")
+    assert code == 0 and (tmp_path / "out" / "recall_q1_2026.txt").exists()

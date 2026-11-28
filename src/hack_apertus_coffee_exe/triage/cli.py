@@ -33,6 +33,9 @@ from .export import export_period
 from .pipeline import TriagePipeline, load_crawl_items
 from .reference_corpus import load_reference_corpus
 
+# `score` writes ranking_<period>_score.csv and recall_<period>_score.txt.
+SCORE_EXPORT_SUFFIX = "_score"
+
 
 def _build_embedder(
     kind: str,
@@ -138,10 +141,12 @@ def _cmd_score(args: argparse.Namespace) -> int:
         print(json.dumps(payload, ensure_ascii=False, indent=2))
 
     if not args.no_export:
+        # Own file names: ranking_<period>.csv and recall_<period>.txt are the Suva list of
+        # the `relevance` command (#62) and must not be replaced by this ranking.
         ranking, recall = export_period(
             results,
             args.export_dir or config.export_dir,
-            date_range.label(),
+            f"{date_range.label()}{SCORE_EXPORT_SUFFIX}",
             config.recall_top_n,
         )
         print(f"Wrote {ranking} and {recall} (top {config.recall_top_n})", file=sys.stderr)
@@ -181,18 +186,24 @@ def _cmd_relevance(args: argparse.Namespace) -> int:
     list_factor = args.list_factor if args.list_factor is not None else config.list_factor
     cfg = GatewayConfig.from_env(model=args.model or relevance.DEFAULT_MODEL)
     client = relevance.ApertusRelevanceClient(config=cfg, cache_dir=None if args.no_cache else (args.cache_dir or config.cache_dir))
-    out = relevance_period.run(
-        args.period,
-        label_periods=args.label_periods or config.label_periods,
-        raw_dir=args.input,
-        judgements_dir=args.judgements_dir,
-        tables_dir=args.tables_dir,
-        client=client,
-        list_factor=list_factor,
-        workers=args.workers,
-        log=lambda msg: print(msg, file=sys.stderr),
-        config=config,
-    )
+    try:
+        out = relevance_period.run(
+            args.period,
+            label_periods=args.label_periods or config.label_periods,
+            raw_dir=args.input,
+            judgements_dir=args.judgements_dir,
+            tables_dir=args.tables_dir,
+            client=client,
+            list_factor=list_factor,
+            workers=args.workers,
+            log=lambda msg: print(msg, file=sys.stderr),
+            config=config,
+            allow_failed=args.allow_failed,
+        )
+    except relevance_period.IncompleteRun as exc:
+        print(f"Apertus calls: {client.calls} (model {client.model})", file=sys.stderr)
+        print(f"ERROR: {exc}", file=sys.stderr)
+        return 2
     print(f"Apertus calls: {client.calls} (model {client.model})", file=sys.stderr)
     cal, results = out["calibration"], out["results"]
     if cal is None:
@@ -268,6 +279,11 @@ def build_parser() -> argparse.ArgumentParser:
     p_rel.add_argument("--output", default=None, help="Triage JSON for the UI and for eval --scores")
     p_rel.add_argument("--export-dir", default=None, help="Override export_dir from the config")
     p_rel.add_argument("--no-export", action="store_true", help="Do not write ranking CSV / Suva list")
+    p_rel.add_argument(
+        "--allow-failed",
+        action="store_true",
+        help="Write scores and list even if Apertus could not be asked for some judgements (shown in yellow)",
+    )
     p_rel.set_defaults(func=_cmd_relevance)
 
     p_eval = sub.add_parser("eval-corpus", help="Evaluate leave-one-out cosine similarity on reference corpus")
