@@ -194,7 +194,10 @@ def test_outcome_from_the_crawl_folder(tmp_path):
 def test_missing_or_empty_crawl_dir_leaves_outcomes_empty(tmp_path):
     empty_dir = tmp_path / "empty_crawl"
     empty_dir.mkdir()
-    for crawl_dir in (tmp_path / "missing", empty_dir):
+    index_only_dir = tmp_path / "index_only_crawl"
+    index_only_dir.mkdir()
+    (index_only_dir / "_index.json").write_text("{}", encoding="utf-8")
+    for crawl_dir in (tmp_path / "missing", empty_dir, index_only_dir):
         judgements = JudgementList(_write(tmp_path), config=TriageConfig(), crawl_dir=crawl_dir)
         first = judgements.items()
         second = judgements.items()
