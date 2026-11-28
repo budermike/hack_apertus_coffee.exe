@@ -19,9 +19,9 @@ Alles, was die Lösung beim Ausführen verwendet. **In dieser Tabelle darf in de
 
 | # | Modell | Version / ID | Quelle | Rolle in der Lösung | Open-Weights | Lizenz |
 |---|---|---|---|---|---|---|
-| R1 | Apertus v1.5 70B | `apertus-v1-5-70b`, Reasoning-Modus `apertus-v1-5-70b-thinking` (bzw. `swiss-ai/Apertus-v1.5-70B` auf Hugging Face) | CSCS/Keera Gateway | **Kernaufgabe (Standard):** Relevanz-Bewertung jedes Kandidaten in zwei Durchgängen mit Begründung und Belegzitaten; Zusammenfassungen DE und FR im Suva-Stil; Übertragung von Begründungen und Zitaten in die Sprache der Oberfläche. Der Reasoning-Modus ist wählbar (`--model`) | ja | Apache-2.0 |
+| R1 | Apertus v1.5 70B | `apertus-v1-5-70b`, Reasoning-Modus `apertus-v1-5-70b-thinking` (bzw. `swiss-ai/Apertus-v1.5-70B` auf Hugging Face) | CSCS/Keera Gateway | **Kernaufgabe (Standard):** Relevanz-Bewertung jedes Kandidaten in zwei Durchgängen mit Begründung und Belegzitaten; Zusammenfassungen DE und FR im Suva-Stil; Übertragung von Begründungen und Zitaten in die Sprache der Oberfläche. DE/FR-Abgleich jeder Zusammenfassung: Prüfer in zwei Durchgängen und Schiedsrichter gegen das Urteil (`summary/crosscheck.py`, Standard; aus mit `SUMMARY_CROSSCHECK=0`). Der Reasoning-Modus ist wählbar (`--model`) | ja | Apache-2.0 |
 | R2 | Apertus v1.5 8B | `apertus-v1-5-8b`, Reasoning-Modus `apertus-v1-5-8b-thinking` (bzw. `swiss-ai/Apertus-v1.5-8B`) | CSCS/Keera Gateway | **Kernaufgabe (Option):** kleineres, günstigeres Modell für Relevanz-Bewertung und Zusammenfassungen (`--model`, `SUMMARY_MODEL`); Testaufruf des Gateways (`keera_example.py`) | ja | Apache-2.0 |
-| R3 | Multilingual-E5-small | `intfloat/multilingual-e5-small` (`sentence-transformers==6.3.0`) | Hugging Face, lokal | Mehrsprachige Embeddings (DE/FR/IT) für die Vector-DB; nur nötig, wenn neue Urteile aufgenommen werden | ja | MIT |
+| R3 | Multilingual-E5-small | `intfloat/multilingual-e5-small` (`sentence-transformers==6.3.0`) | Hugging Face, lokal | Mehrsprachige Embeddings (DE/FR/IT) für die Vector-DB: `crawl.ensure` bettet neu geholte Urteile ein; im Docker-Image enthalten (CPU) | ja | MIT |
 
 Alle vier Apertus-Varianten wurden auf denselben Daten verglichen (`notebooks/triage/`, `notebooks/summary/`); Standard ist 70B ohne Reasoning-Modus.
 
@@ -34,8 +34,8 @@ Coding-Assistenten und alle Modelle, mit denen Texte, Code, Bilder, Audio oder V
 | # | Tool | Modell | Anbieter | Rolle | Genutzt von | Open-Weights |
 |---|---|---|---|---|---|---|
 | D1 | Claude (Chat) | Claude Sonnet 5.5 | Anthropic | Planung und Entwurf der Teamdokumente (Leitfaden, CONTRIBUTING, AGENTS.md, dieses Register) | PM | nein |
-| D2 | Claude Code (Coding-Assistent) | Claude Opus 5.5 (`claude-opus-5-5`), Claude Fable 5.2 (`claude-fable-5-2`) | Anthropic | Code, Tests und Dokumentation schreiben und prüfen (Crawler, Relevanz-Bewertung, Zusammenfassung, Wissensbasis, Web-Oberfläche, Evaluation, Report); Audits von Issues und Pull Requests; **agentisches Rubberducking** für Entwurfs- und Analyseentscheide (Datenbank, Schwellen, Modell- und Prompt-Wahl, Datenanalysen in `notebooks/`) | abirahm, Mike, lim_n_to_infty | nein |
-| D3 | Antigravity (Coding-Assistent) | Gemini | Google DeepMind | Code-Review-Korrekturen, Embeddings und Vector-DB, Schema-Dokumentation | abirahm | nein |
+| D2 | Claude Code (Coding-Assistent) | Claude Opus 5.5 (`claude-opus-5-5`), Claude Fable 5.2 (`claude-fable-5-2`) | Anthropic | Code, Tests und Dokumentation schreiben und prüfen (Crawler, Relevanz-Bewertung, Zusammenfassung, Wissensbasis, Web-Oberfläche, Evaluation, Report); Audits von Issues und Pull Requests; **agentisches Rubberducking** für Entwurfs- und Analyseentscheide (Datenbank, Schwellen, Modell- und Prompt-Wahl, Datenanalysen in `notebooks/`) | abirahm, Mike, lim_n_to_infty, Ben (Claude Opus 5.5, auch Patches erstellen und anwenden) | nein |
+| D3 | Antigravity (Coding-Assistent) | Gemini; Gemini 4 Hydrogen | Google DeepMind | Code-Review-Korrekturen, Embeddings und Vector-DB, Schema-Dokumentation (abirahm); erste Triage-Pipeline mit Tests und Datumsfilter (Ben, Gemini 4 Hydrogen) | abirahm, Ben | nein |
 | D4 | Video- oder Sprachtool | noch nicht gemeldet | – | Demo-Video und Pitch. Wer das Video erstellt, trägt das Tool hier ein oder vermerkt «keines» | offen | – |
 
 Diese Tools haben Code, Prompts, Tests und Texte geschrieben. Zur Laufzeit bewerten, wählen oder fassen sie nichts zusammen; das macht Apertus. Sie dürfen beim Entwickeln benutzt werden (Regel 2), aber **nicht zur Laufzeit** der Lösung (Regel 3).

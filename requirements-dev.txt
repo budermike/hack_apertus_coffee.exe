@@ -11,6 +11,3 @@ jupyterlab==4.6.6
 ipykernel==7.4.0
 matplotlib==3.11.2
 
-# Multilingual open-weights embeddings (issue #5, intfloat/multilingual-e5-small, MIT)
-# Needed only to embed new judgements or run free-text vector queries.
-sentence-transformers==6.3.0

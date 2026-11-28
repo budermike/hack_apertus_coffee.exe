@@ -58,7 +58,7 @@ Keep the files and directories as shown below — don't rename or move them.
 | `results/` | Scores, lists, evaluation tables and reports |
 | `tests/` | Unit tests (no network) |
 | `docs/` | Architecture, model register, decisions, schema, audit |
-| `Dockerfile`, `docker-compose.yml` | Container for backend and web interface |
+| `Dockerfile`, `docker-compose.yml` | One container with everything: web interface, backend, crawler with embeddings, scoring, summaries |
 
 ## Environment
 
@@ -107,7 +107,7 @@ The submission must:
 
 ```
 python3 -m venv .venv && source .venv/bin/activate
-pip install -r requirements-dev.txt        # runtime + tests, notebooks, local embedding model
+pip install -r requirements-dev.txt        # runtime (incl. PyTorch and the embedding library) + tests and notebooks
 cp .env.example .env                       # then fill in LLM_API_KEY
 ```
 
@@ -118,7 +118,7 @@ cp .env.example .env                       # then fill in LLM_API_KEY
 | `LLM_NAME` | model for the gateway test call and the older triage | `apertus-v1-5-8b` |
 | `SUMMARY_MODEL` | model for the German and French summaries | `apertus-v1-5-70b` |
 | `SUMMARY_DB_PATH` | SQLite file of the knowledge base (summaries, edits, decisions) | `data/processed/summaries.db` |
-| `EMBEDDING_MODEL` | open-weights embedding model, only for taking in new judgements | `intfloat/multilingual-e5-small` |
+| `EMBEDDING_MODEL` | open-weights embedding model; `crawl.ensure` embeds newly fetched judgements with it into the Vector-DB | `intfloat/multilingual-e5-small` |
 
 The relevance scoring uses `apertus-v1-5-70b` unless `--model` says otherwise. The older names `APERTUS_*` still work as aliases.
 
@@ -154,7 +154,7 @@ Useful options of `summary.api`: `--auto-summarize` generates the summaries of a
 4. **Correct and release.** Edit a summary in one language, let Apertus bring the other language in line, and release the edited version. The knowledge base keeps the generated text and every edit.
 5. **Decide.** «Für Suva relevant» / «Nicht relevant» stores the lawyer's decision; similar judgements move with it, and only the lawyer's own decision takes a judgement off the list.
 6. **Knowledge base.** Search all stored summaries in full text.
-7. **Other periods.** For a period without results the server fetches and scores the judgements in the background (internet, Apertus and the embedding model needed). A single judgement can be added by its case number through the API (`POST /api/judgements/add`); the interface has no button for it yet.
+7. **Other periods.** For a period without results the server fetches the judgements of the social-law divisions and scores them in the background (internet and Apertus needed; no embedding, so this also works in the container). A single judgement can be added by its case number through the API (`POST /api/judgements/add`); the interface has no button for it yet.
 
 ### 6. Run the pipeline yourself
 
@@ -166,7 +166,7 @@ python -m hack_apertus_coffee_exe.triage.cli relevance --period 2026-Q2 --output
 python -m hack_apertus_coffee_exe.summary.run batch --triage results/triage_q2_2026.json
 ```
 
-- `crawl.ensure` fetches only the days that are missing and takes them into the Vector-DB; `--source bger` reads bger.ch instead of the mirror entscheidsuche.ch (`configs/crawl.json`).
+- `crawl.ensure` fetches only the days that are missing and embeds them into the Vector-DB with the embedding model; `--source bger` reads bger.ch instead of the mirror entscheidsuche.ch (`configs/crawl.json`).
 - `triage.cli relevance` scores the period in two Apertus passes and calibrates on the labelled quarters (`configs/triage.json`). `--model apertus-v1-5-70b-thinking` switches on the reasoning mode, `--target-recall` sets the recall target of the list, `--from-scores` recomputes list and exports from stored scores without any Apertus call.
 - `summary.run batch` summarises every judgement on the list; `summary.run one --case 8C_123/2025` summarises a single one, `summary.run show --case …` prints what is stored.
 
@@ -183,7 +183,7 @@ The analyses behind thresholds, models and prompts are in `notebooks/triage/` (r
 
 ## Deployment
 
-The backend and the web UI run in one container (`Dockerfile`, `docker-compose.yml`). The image holds the code, the UI, `configs/`, `prompts/`, the Suva examples in `judgements/` and `results/`, but no model and no PyTorch: Apertus is reached through `LLM_BASE_URL`, and the app as served needs no embedding model.
+Everything runs in one container (`Dockerfile`, `docker-compose.yml`): web UI and backend, the crawler with embedding into the Vector-DB, relevance scoring, summaries and evaluation. The image holds the code, the UI, `configs/`, `prompts/`, the Suva examples in `judgements/`, `results/`, PyTorch (CPU build) and the embedding model `intfloat/multilingual-e5-small`, which is downloaded once at build time. Apertus is reached through `LLM_BASE_URL`.
 
 **Local.** `cp .env.example .env`, fill in `LLM_API_KEY`, then:
 
@@ -191,9 +191,17 @@ The backend and the web UI run in one container (`Dockerfile`, `docker-compose.y
 docker compose up --build      # open http://localhost:8000
 ```
 
+The pipeline commands of «Getting started» run in the same container:
+
+```
+docker compose exec app python -m hack_apertus_coffee_exe.crawl.ensure --from 2026-07-01 --to 2026-07-31
+docker compose exec app python -m hack_apertus_coffee_exe.triage.cli relevance --period 2026-Q3 --output results/triage_q3_2026.json
+docker compose exec app python -m hack_apertus_coffee_exe.summary.run batch --triage results/triage_q3_2026.json
+```
+
 `data/` is mounted from the host, so the crawled judgements and the summaries database (`data/processed/summaries.db`) survive a restart. The port is published on this machine only (`127.0.0.1`), because the app has no login; `APP_BIND=0.0.0.0` opens it to the network and `APP_PORT=8080` changes the port. Without a key the app still starts; only generating a new summary needs it.
 
-**On-premise or air-gapped.** Build the image on a machine with internet access (`docker compose build`), move it with `docker save coffee-exe-suva | gzip > coffee-exe-suva.tar.gz` and `docker load`, and copy `data/` next to `docker-compose.yml`. Set `LLM_BASE_URL` to an Apertus v1.5 endpoint inside the network (any server with an OpenAI-compatible API). The container then opens no connection except to that endpoint, and the web UI loads no external files. Crawling and embedding new judgements is not part of the image: it needs internet access and the embedding model from `requirements-dev.txt`.
+**On-premise or air-gapped.** Build the image on a machine with internet access (`docker compose build`), move it with `docker save coffee-exe-suva | gzip > coffee-exe-suva.tar.gz` and `docker load`, and copy `data/` next to `docker-compose.yml`. Set `LLM_BASE_URL` to an Apertus v1.5 endpoint inside the network (any server with an OpenAI-compatible API). The container then opens no connection except to that endpoint, and the web UI loads no external files. The embedding model is already in the image, so nothing is downloaded at runtime; only fetching new judgements needs the court's site.
 
 **Azure (not tested).** Nothing in the code or the image is tied to a cloud provider, and all settings are environment variables. To move it, push the image to Azure Container Registry, run it as one replica on Azure Container Apps and set `LLM_NAME`, `LLM_BASE_URL` and `LLM_API_KEY` as secrets. `/app/data` needs persistent storage. The summaries database is a SQLite file in WAL mode: that allows one replica only, and whether it works on a network file share such as Azure Files is not verified.
 

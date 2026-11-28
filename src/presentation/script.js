@@ -1189,6 +1189,17 @@ function summarizeButton(id, labelKey) {
         el("button", { type: "button", class: "btn pri", text: t(labelKey), onclick: () => requestSummary(id, { first: true }) }));
 }
 
+/** Points where DE and FR still disagree after the automatic correction (summary/crosscheck.py). */
+function langConflictNotice(entry) {
+    const issues = entry?.issues?.[currentLang] || entry?.issues?.de || [];
+    const conflicts = Array.isArray(issues)
+        ? issues.filter((i) => i && (i.kind === "de_fr_conflict" || i.kind === "length_mismatch") && i.detail) : [];
+    if (!conflicts.length) return null;
+    return el("div", { class: "warn-note", role: "note" },
+        el("strong", { text: t("langConflictTitle") }),
+        el("ul", { class: "basis-list" }, conflicts.map((i) => el("li", { text: i.detail }))));
+}
+
 function summaryBasisSection(entry) {
     const facts = entry?.facts;
     // the facts are stored in German; `basis` holds Apertus' rendering in the other language
@@ -1221,7 +1232,7 @@ function summarySection(item) {
     const heading = el("h3", { text: t("summary") });
     const busy = (key) => el("p", { class: "note loading-line" }, spinner(), t(key));
     switch (summaryStatus(item)) {
-        case "ready": return [heading, summaryEditor("res", id), summaryBasisSection(state.summaries[id])].filter(Boolean);
+        case "ready": return [heading, langConflictNotice(state.summaries[id]), summaryEditor("res", id), summaryBasisSection(state.summaries[id])].filter(Boolean);
         case "loading": return [heading, busy("summarizing")];
         case "queued": return [heading, busy("summaryQueued")];
         case "error": return [heading, el("p", { class: "form-error", text: t("errorSummary") }), summarizeButton(id, "retry")];
