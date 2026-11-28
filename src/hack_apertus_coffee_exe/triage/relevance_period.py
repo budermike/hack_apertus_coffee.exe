@@ -105,12 +105,12 @@ def precedent_pool(
     return build_pool(items, effective_selected, summaries)
 
 
-def _load_feedback_overrides() -> dict[str, bool]:
+def _load_feedback_overrides(db_path: str | Path | None = None) -> dict[str, bool]:
     """Latest lawyer relevance decisions from the summaries DB (#64), fail-safe if no DB exists."""
     try:
         from ..summary import store
 
-        path = store.db_path_from_env()
+        path = Path(db_path) if db_path is not None else store.db_path_from_env()
         if not path.exists():
             return {}
         with closing(store.connect(path)) as conn:
@@ -182,20 +182,35 @@ def to_results(
     for rank, (score, p, record, ampel) in enumerate(scored, start=1):
         triage, deep = record.get("triage") or {}, record.get("deep") or {}
         item = (items or {}).get(record["case_id"])
-        metadata = dict(item.metadata) if item else {k: record[k] for k in ("case_ids", "decision_date", "subject")}
+        metadata = (
+            dict(item.metadata)
+            if item
+            else {
+                "case_ids": record.get("case_ids") or [record["case_id"]],
+                "decision_date": record.get("decision_date"),
+                "subject": record.get("subject"),
+            }
+        )
         metadata["relevance"] = {
             "p": p, "threshold": round(t_list, 4), "area": record["area"], "outcome": record.get("outcome"),
+            "single_judge": record.get("single_judge"),
             "question": triage.get("a_rechtsfrage"), "criteria": triage.get("b_kriterien", []),
             "principle": deep.get("a_grundsatz"), "uv_use": deep.get("b_nutzen_uv"), "rule": deep.get("d_merksatz"),
             "deep_score": deep.get("e_score"),
         }
+        similar_cases = []
+        for x in record.get("precedents", []):
+            entry = {"case_id": x["case_id"], "similarity": x["similarity"]}
+            if x.get("subject"):
+                entry["subject"] = x["subject"]
+            similar_cases.append(entry)
         results.append(
             TriageResult(
                 case_id=record["case_id"], final_score=score, cosine_score=0.0, relevant=ampel == calibration.AMPEL_GREEN,
                 relevance_reason=_reason(record), cosine_max_similarity=0.0, cosine_topk_similarity=0.0,
                 apertus_score=float(triage["d_score"]) if triage else None, keyword_hits=[],
                 key_topics=[c["a_id"] for c in triage.get("b_kriterien", [])],
-                similar_cases=[{"case_id": x["case_id"], "similarity": x["similarity"]} for x in record.get("precedents", [])],
+                similar_cases=similar_cases,
                 metadata=metadata, language=record.get("language") or "de", embedder="none (relevance scoring)",
                 llm_model=record.get("model") if triage else None, judgement_date=record.get("decision_date") or None,
                 rank=rank, ampel=ampel, rank_score=score,

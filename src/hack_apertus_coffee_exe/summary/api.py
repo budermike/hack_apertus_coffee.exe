@@ -70,12 +70,18 @@ class Backend:
         db_path: str | Path | None,
         crawl_dir: str | Path,
         get_summarizer: Callable[[], Any],
+        extra_crawl_dir: str | Path | None = None,
+        on_feedback: Callable[[], None] | None = None,
     ) -> None:
         self.db_path = db_path
         self.crawl_dir = Path(crawl_dir)
+        self.extra_crawl_dir = Path(extra_crawl_dir) if extra_crawl_dir else None
         self.get_summarizer = get_summarizer
+        self.on_feedback = on_feedback
         # One generation at a time: avoids two LLM calls for the same case.
         self._generate_lock = threading.Lock()
+        self._index_lock = threading.Lock()
+        self._raw_index: dict[str, Path] | None = None
         self.queue = SummaryQueue(self)
 
     # --- endpoints ----------------------------------------------------------------
@@ -196,7 +202,10 @@ class Backend:
     def save_feedback(self, case_number: str, body: dict[str, Any]) -> Response:
         parsed = parse_feedback_body(body)
         with closing(store.connect(self.db_path)) as conn:
-            return HTTPStatus.OK, store.save_feedback(conn, case_number, **parsed)
+            saved = store.save_feedback(conn, case_number, **parsed)
+        if self.on_feedback is not None:
+            self.on_feedback()
+        return HTTPStatus.OK, saved
 
     def original_page(self, case_number: str, lang: str = "de") -> tuple[int, str]:
         """The stored judgement text as a self-contained HTML page (status, HTML).
@@ -245,13 +254,50 @@ class Backend:
 
     # --- helpers ------------------------------------------------------------------
 
+    def _build_raw_index(self) -> dict[str, Path]:
+        idx: dict[str, Path] = {}
+        roots = [p for p in (self.crawl_dir, self.extra_crawl_dir) if p is not None and p.exists()]
+        for root in roots:
+            if root.is_file():
+                idx[root.stem] = root
+                continue
+            for path in root.rglob("*.json"):
+                if path.name.startswith((".", "_")):
+                    continue
+                stem = path.stem
+                safe_key = stem[11:] if len(stem) > 11 and stem[4] == "-" and stem[7] == "-" and stem[10] == "_" else stem
+                idx[safe_key] = path
+        return idx
+
+    def invalidate_crawl_index(self) -> None:
+        with self._index_lock:
+            self._raw_index = None
+
     def find_judgement(self, case_number: str) -> Judgement | None:
-        """Load one judgement from the crawl folder (file names end in the safe id)."""
+        """Load one judgement by O(1) filename index across ``crawl_dir`` and ``extra_crawl_dir``."""
         safe_id = case_number.replace("/", "_")
-        for path in sorted(self.crawl_dir.rglob(f"*{safe_id}.json")):
-            for judgement in load_judgements(path):
-                if same_case(judgement.case_id, case_number):
-                    return judgement
+        for attempt in range(2):
+            with self._index_lock:
+                if self._raw_index is None or attempt == 1:
+                    self._raw_index = self._build_raw_index()
+                direct = self._raw_index.get(safe_id)
+            if direct is not None and direct.exists():
+                for judgement in load_judgements(direct):
+                    if same_case(judgement.case_id, case_number) or any(
+                        same_case(cid, case_number) for cid in judgement.case_ids
+                    ):
+                        return judgement
+        roots = [p for p in (self.crawl_dir, self.extra_crawl_dir) if p is not None and p.exists()]
+        for root in roots:
+            paths = [root] if root.is_file() else sorted(
+                p for p in root.rglob(f"*{safe_id}.json") if not p.name.startswith((".", "_"))
+            )
+            for path in paths:
+                for judgement in load_judgements(path):
+                    if same_case(judgement.case_id, case_number) or any(
+                        same_case(cid, case_number) for cid in judgement.case_ids
+                    ):
+                        return judgement
         return None
 
 
@@ -552,15 +598,25 @@ def main(argv: list[str] | None = None) -> int:
     load_dotenv()  # SUMMARY_DB_PATH and gateway settings from .env
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
 
-    backend = Backend(args.db, args.input, summarizer_factory(args.model, args.judgements_dir, args.examples))
+    runtime_crawl_dir = Path("data/processed/triage/crawl")
+    periods_store_dir = Path("data/processed/triage/periods")
+
+    backend = Backend(
+        args.db,
+        args.input,
+        summarizer_factory(args.model, args.judgements_dir, args.examples),
+        extra_crawl_dir=runtime_crawl_dir,
+    )
     judgements = (
         JudgementList(
             args.triage,
             summarized_ids=lambda: _summarized_case_ids(args.db),
             crawl_dir=args.input,
+            extra_crawl_dir=runtime_crawl_dir,
             feedback_map=lambda: _latest_feedback(args.db),
             selected_ids=_load_selected_ids(args.judgements_dir),
-            extra_triage_dir="data/processed/triage_periods",
+            extra_triage_dir=periods_store_dir,
+            tables_dir="results/tables",
             fr_cache_path="data/processed/triage/fr_cache.json",
             learner=FeedbackLearner(),  # relevance decisions are learned from, not added to a score
         )
@@ -568,13 +624,15 @@ def main(argv: list[str] | None = None) -> int:
     )
     periods = PeriodTriageManager(
         raw_dir=args.input,
-        store_dir="data/processed/triage_periods",
+        crawl_cache_dir=runtime_crawl_dir,
+        store_dir=periods_store_dir,
         judgements=judgements,
         db_path=args.db,
         backend=backend,
         judgements_dir=args.judgements_dir,
         model=args.model,
     )
+    backend.on_feedback = periods.invalidate_pool
     if args.auto_summarize and judgements is not None:
         green_threshold = judgements.config.green_threshold
         ids = [i["id"] for i in judgements.items() if i["score"] >= green_threshold and not i["summarized"]]

@@ -626,7 +626,7 @@ def score_items(
         with done_lock:
             done[0] += 1
             cur = done[0]
-        if progress and (cur % 25 == 0 or cur == len(candidates)):
+        if progress:
             progress(cur, len(candidates))
         return record
 

@@ -29,6 +29,7 @@ const I18N = {
         errInvalid: "Ungültiges Datum. Format: TT.MM.JJJJ",
         errOrder: "Das Startdatum muss vor dem Enddatum liegen.",
         errFuture: "Das Enddatum darf nicht in der Zukunft liegen.",
+        errToday: "Für heute liegen noch nicht alle Urteile vor – bitte ein früheres Startdatum wählen.",
 
         /* calendar */
         today: "Heute",
@@ -186,6 +187,7 @@ const I18N = {
         errInvalid: "Date invalide. Format : JJ.MM.AAAA",
         errOrder: "La date de début doit précéder la date de fin.",
         errFuture: "La date de fin ne peut pas être dans le futur.",
+        errToday: "Les arrêts d'aujourd'hui ne sont pas encore complets – veuillez choisir une date de début antérieure.",
 
         today: "Aujourd'hui",
         prevMonth: "Mois précédent",

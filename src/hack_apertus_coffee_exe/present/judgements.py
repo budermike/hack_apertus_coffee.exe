@@ -1,29 +1,9 @@
 """Judgement list for the UI: triage results in the shape of ``src/presentation/api.js``.
 
-Read-only. Source is a triage results file written by
-``python -m hack_apertus_coffee_exe.triage.cli score --output <file>``; nothing is
-scored or stored here. Whether a judgement already has a summary is passed in by
-the caller (the summaries DB belongs to ``summary.store``).
-
-UI item (``GET /api/judgements``)::
-
-    {id, caseNumber, date, url, lang, area, subject: {de, fr}, explanation: {de, fr},
-     score, baseScore, adjustment, userLevel, summarized, outcome, court: {de, fr}, signals,
-     topics, question: {de, fr}, rule: {de, fr}, criteria: [{id, at, quote, status}],
-     similarCases, ampel, rank}
-
-Lawyer feedback (#64): ``userLevel`` is the lawyer's own decision on this judgement. With a
-``learner`` (``triage.feedback_learning``, the way the server runs) the decisions are training
-examples: ``score`` is the relevance after learning from all of them, ``baseScore`` the stored
-one, and ``adjustment`` is always 0 (nothing is added to a single score any more). Without a
-learner ``adjustment`` is the stored manual correction, as before. ``outcome`` is only
-set when the crawl folder is given. ``court`` is the chamber from the crawl metadata
-(left out if unknown). ``question``, ``rule`` and ``criteria`` (with quotes) come from
-the relevance scoring (``triage.cli relevance``, ``metadata.relevance``, #62 / #66).
-Results of ``triage.cli score`` do not have them; then they are left out and the UI
-shows ``signals`` (triage ``keyword_hits``) and ``topics`` (Apertus ``key_topics``)
-under "Kriterien und Belege" instead. ``ampel`` and ``rank`` are extra fields the UI
-may ignore.
+Read-only. Serves pre-scored triage JSON files (including pre-computed
+``relevance_scores_*.json`` when ``tables_dir`` is provided), applies ``FeedbackLearner``
+(#29), and resolves per-case outcomes, single-judge flags, and similar-case subjects lazily
+in O(1) without scanning thousands of crawl files upfront.
 """
 
 from __future__ import annotations
@@ -34,13 +14,21 @@ import logging
 import math
 import re
 import threading
+from datetime import date, timedelta
 from pathlib import Path
 from typing import Any, Callable, Iterable
 
 from ..summary.judgement import load_judgements, operative_outcome
 from ..triage.config import TriageConfig, load_config
+from ..triage.date_filter import DateRange
 
 logger = logging.getLogger(__name__)
+
+_QUARTER_SCORE_FILES: tuple[tuple[str, str], ...] = (
+    ("2025-Q4", "relevance_scores_q4_2025.json"),
+    ("2026-Q1", "relevance_scores_q1_2026.json"),
+    ("2026-Q2", "relevance_scores_q2_2026.json"),
+)
 
 
 def ui_id(case_id: str) -> str:
@@ -96,6 +84,7 @@ def _is_single_judge(text: str) -> bool:
             return True
     return False
 
+
 # Outcome codes of the UI (OUTCOME_NAMES in i18n.js) for summary.judgement.operative_outcome.
 _OUTCOMES = {
     "abgewiesen": "abgewiesen",
@@ -105,6 +94,7 @@ _OUTCOMES = {
     "abgeschrieben": "andere",
     None: "unklar",
 }
+_VALID_REL_OUTCOMES = {"abgewiesen", "gutgeheissen", "teilweise", "nichteintreten", "andere", "unklar"}
 
 
 def area_code(subject: str | None) -> str | None:
@@ -156,11 +146,7 @@ def _fr_cache_key(reason_de: str, question_de: str = "", rule_de: str = "") -> s
 
 
 def relevance_details(meta: dict[str, Any], fr_entry: dict[str, str] | None = None) -> dict[str, Any]:
-    """``question``, ``rule`` and ``criteria`` of the UI from ``metadata.relevance`` (#62, #66).
-
-    Uses French fields from ``metadata.relevance`` or ``fr_entry`` (#67) when present, falling
-    back to German so the UI shows what is available.
-    """
+    """``question``, ``rule`` and ``criteria`` of the UI from ``metadata.relevance`` (#62, #66)."""
     relevance = meta.get("relevance")
     if not isinstance(relevance, dict):
         return {}
@@ -201,12 +187,7 @@ def relevance_details(meta: dict[str, Any], fr_entry: dict[str, str] | None = No
 
 
 def _reason_without_rule(reason: str, meta: dict[str, Any]) -> str:
-    """The reason without the practical rule that the relevance scoring appends to it.
-
-    ``relevance_period`` writes "<reason> Merksatz: <rule>" so that the ranking CSV is
-    readable on its own. The UI shows the rule in its own section (``rule``), so the list
-    item must not carry it twice.
-    """
+    """The reason without the practical rule that the relevance scoring appends to it."""
     relevance = meta.get("relevance")
     rule = relevance.get("rule") if isinstance(relevance, dict) else None
     cleaned_rule = rule.strip() if isinstance(rule, str) else ""
@@ -225,16 +206,9 @@ def to_ui_item(
     selected_ids: set[str] | None = None,
     fr_cache: dict[str, dict[str, str]] | None = None,
     learned: Any | None = None,
+    subject_lookup: Callable[[str], str | None] | None = None,
 ) -> dict[str, Any]:
-    """One triage result -> one UI list item.
-
-    ``learned`` (``feedback_learning.Learned``) scores the judgement with what was learned
-    from the lawyers' decisions; then no manual ``adjustment`` is passed on.
-
-    ``subject`` ("Gegenstand" / "Objet") exists only in the language of the judgement,
-    so DE and FR show the same text. The triage explanation/question/rule use French
-    translations from metadata or ``fr_cache`` (#67) when available.
-    """
+    """One triage result -> one UI list item."""
     meta = row.get("metadata") or {}
     rel = meta.get("relevance") if isinstance(meta.get("relevance"), dict) else {}
     case_id = row["case_id"]
@@ -261,13 +235,17 @@ def to_ui_item(
     for c in row.get("similar_cases") or []:
         if not (isinstance(c, dict) and c.get("case_id")):
             continue
+        cid = c["case_id"]
+        sim_subject = c.get("subject") or c.get("title")
+        if not sim_subject and subject_lookup is not None:
+            sim_subject = subject_lookup(cid)
         entry: dict[str, Any] = {
-            "caseNumber": ui_case_number(c["case_id"]),
-            "subject": c.get("title") or c["case_id"],
+            "caseNumber": ui_case_number(cid),
+            "subject": sim_subject or cid,
             "similarity": float(c.get("similarity") or 0.0),
         }
         if selected_ids is not None:
-            entry["suvaSelected"] = c["case_id"] in selected_ids
+            entry["suvaSelected"] = cid in selected_ids
         similar_cases.append(entry)
     item: dict[str, Any] = {
         "id": ui_id(case_id),
@@ -286,8 +264,11 @@ def to_ui_item(
         "topics": _strings(row.get("key_topics")),
         "similarCases": similar_cases,
         "ampel": learned_ampel or row.get("ampel"),
-        "rank": row.get("rank"),  # rank of the scoring run, not recomputed after learning
+        "rank": row.get("rank"),
     }
+    case_ids = meta.get("case_ids")
+    if isinstance(case_ids, list) and len(case_ids) > 1:
+        item["caseIds"] = [str(x) for x in case_ids if isinstance(x, str)]
     if isinstance(feedback, dict) and feedback.get("userLevel") in ("high", "low"):
         item["userLevel"] = feedback["userLevel"]
     item.update(relevance_details(meta, fr_entry=fr_entry))
@@ -296,7 +277,7 @@ def to_ui_item(
     if outcome is not None:
         item["outcome"] = outcome
     court = meta.get("department") or meta.get("division")
-    if court:  # one language only, like the subject
+    if court:
         item["court"] = {"de": court, "fr": court}
     return item
 
@@ -315,29 +296,39 @@ class JudgementList:
         extra_triage_dir: str | Path | None = None,
         fr_cache_path: str | Path | None = None,
         learner: Any | None = None,
+        tables_dir: str | Path | None = None,
+        extra_crawl_dir: str | Path | None = None,
     ) -> None:
-        self.learner = learner  # triage.feedback_learning.FeedbackLearner, or None: no learning
+        self.learner = learner
         self.triage_path = Path(triage_path)
         self.config = config or load_config()
         self.summarized_ids = summarized_ids
         self.crawl_dir = Path(crawl_dir) if crawl_dir else None
+        self.extra_crawl_dir = Path(extra_crawl_dir) if extra_crawl_dir else None
         self.feedback_map = feedback_map
         self.selected_ids: set[str] | None = set(selected_ids) if selected_ids is not None else None
         self.extra_triage_dir = Path(extra_triage_dir) if extra_triage_dir else None
         self.fr_cache_path = Path(fr_cache_path) if fr_cache_path else None
+        self.tables_dir = Path(tables_dir) if tables_dir else None
         self._rows: list[dict[str, Any]] = []
         self._primary_rows: list[dict[str, Any]] = []
-        self._mtime: float | None = None
-        self._extra_mtime: float = -1.0
+        self._covered_quarters: list[tuple[str, str]] = []
+        self._mtime: int | None = None
+        self._extra_sig: tuple[tuple[str, int, int], ...] | None = None
         self._outcomes: dict[str, str] | None = None
         self._single_judges: dict[str, bool] = {}
+        self._file_map: dict[str, Path] | None = None
+        self._header_cache: dict[str, tuple[str | None, str | None, str | None]] = {}
+        self._text_meta_cache: dict[str, tuple[str | None, bool | None]] = {}
+        self._subjects: dict[str, str] = {}
         self._lock = threading.Lock()
 
     def invalidate(self) -> None:
-        """Force reload of triage rows and crawl outcomes on the next read."""
+        """Reload triage rows and filename index on next read (keeps immutable per-case text cache)."""
         with self._lock:
             self._mtime = None
-            self._extra_mtime = -1.0
+            self._extra_sig = None
+            self._file_map = None
             self._outcomes = None
 
     def _fr_cache(self) -> dict[str, dict[str, str]]:
@@ -350,7 +341,7 @@ class JudgementList:
             return {}
 
     def outcomes(self) -> dict[str, str]:
-        """UI outcome code per case id, read once from the crawl folder (empty without one)."""
+        """UI outcome code per case id across the crawl folder (``items()`` uses lazy O(1) lookup)."""
         if self._outcomes is None:
             with self._lock:
                 if self._outcomes is None:
@@ -366,47 +357,225 @@ class JudgementList:
                         ):
                             logger.warning("Crawl folder missing or empty, leaving outcomes empty: %s", self.crawl_dir)
                         else:
-                            for judgement in load_judgements(self.crawl_dir):
-                                key = ui_id(judgement.case_id)
-                                loaded[key] = _OUTCOMES.get(
-                                    operative_outcome(judgement.text).result, "unklar"
-                                )
-                                single_loaded[key] = _is_single_judge(judgement.text)
-                            logger.info("Read the outcome of %d judgements from %s", len(loaded), self.crawl_dir)
+                            try:
+                                for judgement in load_judgements(self.crawl_dir):
+                                    key = ui_id(judgement.case_id)
+                                    loaded[key] = _OUTCOMES.get(
+                                        operative_outcome(judgement.text).result, "unklar"
+                                    )
+                                    single_loaded[key] = _is_single_judge(judgement.text)
+                                logger.info("Read the outcome of %d judgements from %s", len(loaded), self.crawl_dir)
+                            except (OSError, ValueError) as exc:
+                                logger.warning("Could not load outcomes from %s: %s", self.crawl_dir, exc)
                     self._single_judges = single_loaded
                     self._outcomes = loaded
         return self._outcomes
 
     def single_judges(self) -> dict[str, bool]:
-        """Single-judge flag per UI id, populated once alongside ``outcomes()``."""
+        """Single-judge flag per UI id, populated alongside ``outcomes()``."""
         self.outcomes()
         return self._single_judges
+
+    def _ensure_file_map(self) -> dict[str, Path]:
+        if self._file_map is not None:
+            return self._file_map
+        with self._lock:
+            if self._file_map is not None:
+                return self._file_map
+            fmap: dict[str, Path] = {}
+            for root in (self.crawl_dir, self.extra_crawl_dir):
+                if root is None or not root.exists():
+                    continue
+                if root.is_file():
+                    fmap[root.stem] = root
+                    continue
+                for path in root.rglob("*.json"):
+                    if path.name.startswith((".", "_")):
+                        continue
+                    stem = path.stem
+                    safe_key = (
+                        stem[11:]
+                        if len(stem) > 11 and stem[4] == "-" and stem[7] == "-" and stem[10] == "_"
+                        else stem
+                    )
+                    fmap[safe_key] = path
+            self._file_map = fmap
+            return fmap
+
+    def _lookup_header(self, key: str) -> tuple[str | None, str | None, str | None]:
+        """Lazy O(1) lookup of ``(subject, url, department)`` from JSON header without full-text parsing."""
+        cached = self._header_cache.get(key)
+        if cached is not None:
+            return cached
+        if self.crawl_dir is None and self.extra_crawl_dir is None:
+            return (None, None, None)
+        path = self._ensure_file_map().get(key)
+        subject: str | None = None
+        url: str | None = None
+        department: str | None = None
+        if path is not None and path.exists():
+            try:
+                raw = json.loads(path.read_text(encoding="utf-8"))
+                if isinstance(raw, dict):
+                    if raw.get("subject"):
+                        subject = str(raw["subject"])
+                    if raw.get("url"):
+                        url = str(raw["url"])
+                    if raw.get("department") or raw.get("division"):
+                        department = str(raw.get("department") or raw.get("division"))
+            except Exception:
+                pass
+        res = (subject, url, department)
+        self._header_cache[key] = res
+        return res
+
+    def _lookup_text_meta(self, key: str) -> tuple[str | None, bool | None]:
+        """Lazy O(1) lookup of ``(outcome, single_judge)`` for a single UI id."""
+        cached = self._text_meta_cache.get(key)
+        if cached is not None:
+            return cached
+        if self._outcomes is not None:
+            res = (self._outcomes.get(key), self._single_judges.get(key))
+            self._text_meta_cache[key] = res
+            return res
+        if self.crawl_dir is None and self.extra_crawl_dir is None:
+            return (None, None)
+
+        path = self._ensure_file_map().get(key)
+        outcome: str | None = None
+        single_judge: bool | None = None
+        if path is not None and path.exists():
+            try:
+                for judgement in load_judgements(path):
+                    if ui_id(judgement.case_id) == key or any(ui_id(c) == key for c in judgement.case_ids):
+                        outcome = _OUTCOMES.get(operative_outcome(judgement.text).result, "unklar")
+                        single_judge = _is_single_judge(judgement.text)
+                        break
+            except Exception:
+                pass
+        res = (outcome, single_judge)
+        self._text_meta_cache[key] = res
+        return res
+
+    def subject_for(self, case_id: str) -> str | None:
+        """Fast subject lookup for ``similarCases`` without scanning all files."""
+        subj = self._subjects.get(case_id)
+        if subj:
+            return subj
+        crawled_subj, _, _ = self._lookup_header(ui_id(case_id))
+        if crawled_subj:
+            self._subjects[case_id] = crawled_subj
+            return crawled_subj
+        return None
 
     def _extra_files(self) -> list[Path]:
         if self.extra_triage_dir is None or not self.extra_triage_dir.exists():
             return []
-        return sorted(p for p in self.extra_triage_dir.glob("*.json") if not p.name.startswith("_"))
+        return sorted(
+            p for p in self.extra_triage_dir.glob("*.json")
+            if not p.name.startswith(("_", ".")) and p.name != "covered_days.json"
+        )
+
+    def _load_tables_quarters(self, by_id: dict[str, dict[str, Any]]) -> list[tuple[str, str]]:
+        """Load pre-scored ``relevance_scores_*.json`` quarters in ~12 ms without scanning crawl files."""
+        if self.tables_dir is None or not self.tables_dir.is_dir():
+            return []
+        cal_path = self.tables_dir / "relevance_calibration_q2_2026.json"
+        cal: dict[str, Any] = {"w": [4.0, 2.5, 0.8, -0.8], "t": 0.1484}
+        if cal_path.is_file():
+            try:
+                loaded_cal = json.loads(cal_path.read_text(encoding="utf-8"))
+                if isinstance(loaded_cal, dict) and "w" in loaded_cal and "t" in loaded_cal:
+                    cal = loaded_cal
+            except (OSError, ValueError):
+                pass
+
+        from ..triage import relevance_period
+
+        covered: list[tuple[str, str]] = []
+        for period_name, filename in _QUARTER_SCORE_FILES:
+            score_file = self.tables_dir / filename
+            if not score_file.is_file():
+                continue
+            try:
+                records = json.loads(score_file.read_text(encoding="utf-8"))
+            except (OSError, ValueError):
+                continue
+            if not isinstance(records, list) or not records:
+                continue
+            rng = DateRange.from_period(period_name)
+            covered.append((rng.since.isoformat(), rng.until.isoformat()))
+
+            missing_records = []
+            for rec in records:
+                if not isinstance(rec, dict) or not rec.get("case_id"):
+                    continue
+                cid = rec["case_id"]
+                if rec.get("subject"):
+                    self._subjects[cid] = str(rec["subject"])
+                for p in rec.get("precedents") or []:
+                    if isinstance(p, dict) and p.get("case_id") and p.get("subject"):
+                        self._subjects[p["case_id"]] = str(p["subject"])
+                existing = by_id.get(cid)
+                if existing is not None:
+                    meta = existing.setdefault("metadata", {})
+                    rel = meta.get("relevance")
+                    if isinstance(rel, dict):
+                        if "single_judge" not in rel and isinstance(rec.get("single_judge"), bool):
+                            rel["single_judge"] = rec["single_judge"]
+                        if not rel.get("outcome") and rec.get("outcome"):
+                            rel["outcome"] = rec["outcome"]
+                else:
+                    missing_records.append(rec)
+
+            if missing_records:
+                converted = relevance_period.to_results(
+                    missing_records,
+                    cal,
+                    list_factor=self.config.list_factor,
+                    config=self.config,
+                )
+                for tr in converted:
+                    row_dict = tr.to_dict()
+                    by_id[row_dict["case_id"]] = row_dict
+        return covered
 
     def rows(self) -> list[dict[str, Any]]:
         with self._lock:
-            mtime = self.triage_path.stat().st_mtime
+            mtime = self.triage_path.stat().st_mtime_ns
             extra_files = self._extra_files()
-            extra_mtime = max((p.stat().st_mtime for p in extra_files), default=0.0)
-            if mtime != self._mtime or extra_mtime != self._extra_mtime:
+            extra_sig = tuple((p.name, p.stat().st_mtime_ns, p.stat().st_size) for p in extra_files)
+            if mtime != self._mtime or extra_sig != self._extra_sig:
                 data = json.loads(self.triage_path.read_text(encoding="utf-8"))
                 if not isinstance(data, list):
                     raise ValueError(f"{self.triage_path}: expected a JSON list of triage results")
-                by_id: dict[str, dict[str, Any]] = {r["case_id"]: r for r in data if isinstance(r, dict) and r.get("case_id")}
+                primary = [r for r in data if isinstance(r, dict) and r.get("case_id")]
+                by_id: dict[str, dict[str, Any]] = {}
+                for r in primary:
+                    by_id[r["case_id"]] = r
+                    subj = (r.get("metadata") or {}).get("subject")
+                    if isinstance(subj, str) and subj:
+                        self._subjects[r["case_id"]] = subj
+
+                covered = self._load_tables_quarters(by_id)
                 for extra_path in extra_files:
-                    extra = json.loads(extra_path.read_text(encoding="utf-8"))
+                    try:
+                        extra = json.loads(extra_path.read_text(encoding="utf-8"))
+                    except (OSError, ValueError) as exc:
+                        logger.warning("Skipping unreadable triage file %s: %s", extra_path, exc)
+                        continue
                     if isinstance(extra, list):
                         for row in extra:
                             if isinstance(row, dict) and row.get("case_id"):
                                 by_id[row["case_id"]] = row
-                self._primary_rows = [r for r in data if isinstance(r, dict) and r.get("case_id")]
+                                subj = (row.get("metadata") or {}).get("subject")
+                                if isinstance(subj, str) and subj:
+                                    self._subjects[row["case_id"]] = subj
+                self._primary_rows = primary
+                self._covered_quarters = covered
                 self._rows = list(by_id.values())
-                self._mtime, self._extra_mtime = mtime, extra_mtime
-                logger.info("Loaded %d triage results from %s", len(self._rows), self.triage_path)
+                self._mtime, self._extra_sig = mtime, extra_sig
+                logger.info("Loaded %d triage results (primary: %d)", len(self._rows), len(primary))
             return self._rows
 
     def available_range(self) -> dict[str, str] | None:
@@ -415,13 +584,37 @@ class JudgementList:
         dates = [d for row in self._primary_rows if (d := _date(row))]
         return {"from": min(dates), "to": max(dates)} if dates else None
 
+    def covered_ranges(self) -> list[tuple[str, str]]:
+        """All pre-scored date intervals loaded in memory (pre-scored quarters + primary triage)."""
+        self.rows()
+        ranges = list(self._covered_quarters)
+        avail = self.available_range()
+        if avail:
+            pair = (avail["from"], avail["to"])
+            if pair not in ranges:
+                ranges.append(pair)
+        return ranges
+
     def covers(self, date_from: str | None, date_to: str | None) -> bool:
-        """True if ``[date_from, date_to]`` lies within the primary triaged date span."""
+        """True if ``[date_from, date_to]`` lies within the merged pre-scored date intervals."""
         if not date_from or not date_to:
             self.rows()
-            return bool(self._primary_rows)
-        avail = self.available_range()
-        return bool(avail and avail["from"] <= date_from and date_to <= avail["to"])
+            return bool(self._rows)
+        ranges = self.covered_ranges()
+        if not ranges:
+            return False
+        try:
+            req_s, req_e = date.fromisoformat(date_from), date.fromisoformat(date_to)
+        except ValueError:
+            return False
+        parsed = sorted((date.fromisoformat(s), date.fromisoformat(e)) for s, e in ranges)
+        merged: list[tuple[date, date]] = []
+        for s, e in parsed:
+            if merged and s <= merged[-1][1] + timedelta(days=1):
+                merged[-1] = (merged[-1][0], max(merged[-1][1], e))
+            else:
+                merged.append((s, e))
+        return any(s <= req_s and req_e <= e for s, e in merged)
 
     def learned(self, feedback: dict[str, dict[str, Any]] | None = None) -> Any | None:
         """What was learned from the lawyers' decisions on all loaded judgements (``None`` without a learner)."""
@@ -438,29 +631,60 @@ class JudgementList:
     def items(self, date_from: str | None = None, date_to: str | None = None) -> list[dict[str, Any]]:
         """UI items with ``date_from <= date <= date_to`` (ISO dates, both optional), best score first."""
         done = {ui_id(c) for c in self.summarized_ids()}
-        outcomes = self.outcomes() if self.crawl_dir is not None else {}
-        single_judges = self.single_judges() if self.crawl_dir is not None else {}
         feedback = self.feedback_map()
         learned = self.learned(feedback)
         fr_cache = self._fr_cache()
+        has_crawl = self.crawl_dir is not None or self.extra_crawl_dir is not None
         out = []
         for row in self.rows():
-            date = _date(row) or ""
-            if date_from and date < date_from:
+            d = _date(row) or ""
+            if date_from and d < date_from:
                 continue
-            if date_to and date > date_to:
+            if date_to and d > date_to:
                 continue
             key = ui_id(row["case_id"])
+            meta = row.get("metadata") or {}
+            rel = meta.get("relevance") if isinstance(meta.get("relevance"), dict) else {}
+
+            rel_outcome = rel.get("outcome")
+            outcome = rel_outcome if isinstance(rel_outcome, str) and rel_outcome in _VALID_REL_OUTCOMES else None
+            single_judge = rel.get("single_judge") if isinstance(rel.get("single_judge"), bool) else None
+
+            row_for_ui = row
+            if has_crawl and (outcome is None or single_judge is None):
+                c_out, c_sj = self._lookup_text_meta(key)
+                if outcome is None and c_out is not None:
+                    outcome = c_out
+                if single_judge is None and c_sj is not None:
+                    single_judge = c_sj
+            if has_crawl and (not meta.get("url") or (not meta.get("department") and not meta.get("division"))):
+                _, c_url, c_dept = self._lookup_header(key)
+                if (c_url and not meta.get("url")) or (c_dept and not meta.get("department") and not meta.get("division")):
+                    enriched_meta = dict(meta)
+                    if c_url and not enriched_meta.get("url"):
+                        enriched_meta["url"] = c_url
+                    if c_dept and not enriched_meta.get("department") and not enriched_meta.get("division"):
+                        enriched_meta["department"] = c_dept
+                    row_for_ui = {**row, "metadata": enriched_meta}
+
+            fb = feedback.get(key)
+            if fb is None:
+                for cid in meta.get("case_ids") or ():
+                    fb = feedback.get(ui_id(str(cid)))
+                    if fb is not None:
+                        break
+            is_done = key in done or any(ui_id(str(cid)) in done for cid in (meta.get("case_ids") or ()))
             out.append(
                 to_ui_item(
-                    row,
-                    summarized=key in done,
-                    outcome=outcomes.get(key),
-                    feedback=feedback.get(key),
-                    single_judge=single_judges.get(key),
+                    row_for_ui,
+                    summarized=is_done,
+                    outcome=outcome,
+                    feedback=fb,
+                    single_judge=single_judge,
                     selected_ids=self.selected_ids,
                     fr_cache=fr_cache,
                     learned=learned,
+                    subject_lookup=self.subject_for if has_crawl or self._subjects else None,
                 )
             )
         return sorted(out, key=lambda item: item["score"], reverse=True)
@@ -556,7 +780,7 @@ def config_response(judgements: JudgementList | None) -> tuple[int, Any]:
             body["availableRange"] = avail
         learned = judgements.learned() if hasattr(judgements, "learned") else None
         learning = learned.summary() if learned is not None else None
-        if isinstance(learning, dict):  # what the scores have learned from the lawyers' decisions
+        if isinstance(learning, dict):
             body["learning"] = learning
         return 200, body
     config = load_config()
