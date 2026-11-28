@@ -2,6 +2,8 @@ Variante,Modell,Top 30 je Quartal (von 59),Gefunden in den ersten 100 je Quartal
 "Heute: Ähnlichkeit, ohne Apertus",–,32,51,2039,0,,,,,
 8B · 1 Durchgang,apertus-v1-5-8b,36,55,238,300,48,127,0.6611570247933884,255,59
 8B · 2 Durchgänge,apertus-v1-5-8b,35,55,240,547,47,108,0.6831395348837209,225,57
+8B Thinking · 1 Durchgang,apertus-v1-5-8b-thinking,35,53,387,293,49,141,0.649867374005305,226,52
+8B Thinking · 2 Durchgänge,apertus-v1-5-8b-thinking,36,53,387,457,44,100,0.6547619047619048,244,53
 70B · 1 Durchgang,apertus-v1-5-70b,36,58,208,300,43,70,0.7026143790849673,235,59
 70B · 2 Durchgänge,apertus-v1-5-70b,38,57,195,521,49,97,0.7357357357357357,226,59
 70B Thinking · 2 Durchgänge,apertus-v1-5-70b-thinking,37,59,186,519,50,101,0.7418397626112759,226,59

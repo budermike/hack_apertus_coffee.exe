@@ -256,7 +256,31 @@
   "area": "IV",
   "outcome": "abgewiesen",
   "single_judge": false,
-  "triage": null,
+  "triage": {
+   "a_rechtsfrage": "Die Frage, ob eine revisionsrechtliche Verschlechterung des Gesundheitszustands vorliegt und ob das psychiatrische Gutachten beweiskräftig ist.",
+   "b_kriterien": [
+    {
+     "a_id": "N1",
+     "b_stelle": "E4.1",
+     "c_zitat": "Die medizinische Ausgangslage im Vergleich zur Verfügung vom 23. Oktober 2014 sei gleich geblieben.",
+     "beleg_status": "ungefähr"
+    },
+    {
+     "a_id": "N2",
+     "b_stelle": "E5.7",
+     "c_zitat": "Die medizinische Ausgangslage im Vergleich zur Verfügung vom 23. Oktober 2014 sei gleich geblieben.",
+     "beleg_status": "ungefähr"
+    },
+    {
+     "a_id": "N3",
+     "b_stelle": "E4.1",
+     "c_zitat": "Die medizinische Ausgangslage im Vergleich zur Verfügung vom 23. Oktober 2014 sei gleich geblieben.",
+     "beleg_status": "ungefähr"
+    }
+   ],
+   "c_begruendung": "Das Urteil behandelt ausschliesslich die Invalidenversicherung und die Beurteilung der Arbeitsfähigkeit im IV-Kontext. Es betrifft keine materiellen Fragen der Unfallversicherung (UVG, Prämien, versicherter Verdienst, etc.). Daher ist es für die Suva nicht relevant.",
+   "d_score": 20
+  },
   "deep": null,
   "precedents": [
    {
@@ -276,7 +300,7 @@
     "similarity": 0.143
    }
   ],
-  "error": "RelevanceError: triage 2025-10-02_8C_103-2025: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -390,7 +414,13 @@
    "c_begruendung": "Das Urteil behandelt die Beurteilung der Arbeitsfähigkeit und medizinischer Gutachten, was für die Unfallversicherung relevant sein kann (z.B. bei der Beurteilung psychischer Beschwerden und deren Auswirkungen auf die Arbeitsfähigkeit). Es gibt keine direkte UVG-Frage, aber die Beurteilung der Arbeitsfähigkeit und medizinischen Gutachten sind relevant für die Unfallversicherung. Das Urteil ist wahrscheinlich relevant für die Suva, da es sich um die Beurteilung der Arbeitsfähigkeit und medizinischen Gutachten handelt.",
    "d_score": 68
   },
-  "deep": null,
+  "deep": {
+   "a_grundsatz": 1,
+   "b_nutzen_uv": 2,
+   "c_korrektur": false,
+   "d_merksatz": "Bei der Beurteilung neuer Invaliditätsansprüche ist eine erhebliche gesundheitliche Verschlechterung seit dem letzten Entscheid nachzuweisen; abweichende ärztliche Meinungen ohne neue objektive Befunde genügen nicht zur Umsturz der bisherigen Expertise.",
+   "e_score": 75
+  },
   "precedents": [
    {
     "case_id": "8C_145/2025",
@@ -409,7 +439,7 @@
     "similarity": 0.212
    }
   ],
-  "error": "RelevanceError: deep 2025-10-06_8C_126-2025: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -448,7 +478,13 @@
    "c_begruendung": "Das Urteil behandelt die Wechselwirkung zwischen Unfallversicherung und Invalidenversicherung und klärt die Bedeutung medizinischer Beweismittel bei der Invaliditätsbemessung. Die medizinische Beweiswürdigung, insbesondere die Beurteilung der Restarbeitsfähigkeit und der funktionellen Einschränkungen, ist für die Praxis der Unfallversicherung relevant.",
    "d_score": 85
   },
-  "deep": null,
+  "deep": {
+   "a_grundsatz": 1,
+   "b_nutzen_uv": 0,
+   "c_korrektur": false,
+   "d_merksatz": "Bei teilweiser Wiedererlangung der Arbeitsfähigkeit ist die Invalidenrente drei Monate nach deren Beginn zu befristen, wenn die verbleibende Arbeitsfähigkeit nicht ausreicht, um eine vollständige Erwerbsunfähigkeit zu begründen.",
+   "e_score": 25
+  },
   "precedents": [
    {
     "case_id": "8C_184/2025",
@@ -467,7 +503,7 @@
     "similarity": 0.195
    }
   ],
-  "error": "RelevanceError: deep 2025-10-06_8C_397-2025: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -610,7 +646,13 @@
    "c_begruendung": "Das Urteil prüft eingehend die Beweiswürdigung von medizinischen Gutachten und den Untersuchungsgrundsatz, was für alle Sozialversicherer relevant ist. Es zeigt, wie ein Gutachten zu werten ist, wenn es nicht ausreichend mit abweichenden medizinischen Meinungen auseinandersetzt. Die Prinzipien der Beweiswürdigung und des Untersuchungsgrundsatzes sind übertragbar auf die Unfallversicherung.",
    "d_score": 88
   },
-  "deep": null,
+  "deep": {
+   "a_grundsatz": 2,
+   "b_nutzen_uv": 0,
+   "c_korrektur": true,
+   "d_merksatz": "Ein psychiatrisches Gutachten, das keine ausreichende Auseinandersetzung mit abweichenden ärztlichen Einschätzungen enthält, ist nicht voll beweiskräftig und verletzt den Untersuchungsgrundsatz.",
+   "e_score": 18
+  },
   "precedents": [
    {
     "case_id": "8C_241/2025",
@@ -629,7 +671,7 @@
     "similarity": 0.154
    }
   ],
-  "error": "RelevanceError: deep 2025-10-08_8C_259-2024: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -805,7 +847,13 @@
    "c_begruendung": "Das Urteil betrifft die Invaliditätsbemessung, insbesondere die Ermittlung des Valideneinkommens und die Feststellung der angemessenen Tätigkeit der versicherten Person im Gesundheitsfall. Dies ist ein zentrales Thema des allgemeinen Sozialversicherungsrechts (K2). Zudem präzisiert das Urteil die Feststellung der Vorinstanz bezüglich der angemessenen Tätigkeit (K4), was übertragbare Grundsätze für die Unfallversicherung (K3) enthalten könnte. Die Suva würde daher Interesse an diesem Urteil haben.",
    "d_score": 85
   },
-  "deep": null,
+  "deep": {
+   "a_grundsatz": 0,
+   "b_nutzen_uv": 0,
+   "c_korrektur": false,
+   "d_merksatz": "",
+   "e_score": 25
+  },
   "precedents": [
    {
     "case_id": "8C_44/2025",
@@ -824,7 +872,7 @@
     "similarity": 0.115
    }
   ],
-  "error": "RelevanceError: deep 2025-10-09_8C_302-2025: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -926,7 +974,13 @@
    "c_begruendung": "Das Urteil prüft die Prozessvoraussetzungen für Beschwerden in der Unfallversicherung und präzisiert, dass eine ausreichende Begründung erforderlich ist, um auf eine Beschwerde einzutreten. Obwohl die Suva nicht Partei ist, ist es für die interne Verfahrenspraxis relevant.",
    "d_score": 65
   },
-  "deep": null,
+  "deep": {
+   "a_grundsatz": 0,
+   "b_nutzen_uv": 3,
+   "c_korrektur": false,
+   "d_merksatz": "",
+   "e_score": 20
+  },
   "precedents": [
    {
     "case_id": "8C_455/2025",
@@ -945,7 +999,7 @@
     "similarity": 0.097
    }
   ],
-  "error": "RelevanceError: deep 2025-10-09_8C_466-2025: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -1068,7 +1122,31 @@
   "area": "IV",
   "outcome": "abgewiesen",
   "single_judge": false,
-  "triage": null,
+  "triage": {
+   "a_rechtsfrage": "Die Zulässigkeit der Drittauszahlung von Invalidenrenten an einen geschiedenen Ehepartner gestützt auf eine zivilgerichtliche Schuldneranweisung im Rahmen eines Scheidungsverfahrens.",
+   "b_kriterien": [
+    {
+     "a_id": "K2",
+     "b_stelle": "E3.1",
+     "c_zitat": "Es steht fest und ist unbestritten, dass diese vorliegend nicht erfüllt sind, ist doch die Beschwerdegegnerin gegenüber dem Versicherten unterstützungsberechtigt und nicht -verpflichtet.",
+     "beleg_status": "exakt"
+    },
+    {
+     "a_id": "K3",
+     "b_stelle": "E3.1",
+     "c_zitat": "Es habe der begründete Verdacht bestanden, dass die Beschwerdeführerin gegenüber dem Gutachter nicht korrekt über ihre Einschränkungen und Schmerzen berichtet habe.",
+     "beleg_status": "fehlt"
+    },
+    {
+     "a_id": "K4",
+     "b_stelle": "E4.1",
+     "c_zitat": "Eine vom Zivilgericht nach Art. 132 ZGB angeordnete Anweisung zur Drittauszahlung eines Teils der dem Versicherten zustehenden Leistungen ist sozialversicherungsrechtlich gleich zu behandeln wie solche, die gestützt auf Art. 177 oder Art. 291 ZGB ergehen.",
+     "beleg_status": "exakt"
+    }
+   ],
+   "c_begruendung": "Das Urteil behandelt die Drittauszahlung von Invalidenrenten an geschiedene Ehepartner und präzisiert die Rechtsprechung hierzu. Obwohl es sich um ein IV-Urteil handelt, das allgemeine Sozialversicherungsrecht (K2, K3, K4) betrifft, ist es für die Unfallversicherung irrelevant (UVG), da die Suva nicht Partei ist (N1, N5).",
+   "d_score": 30
+  },
   "deep": null,
   "precedents": [
    {
@@ -1088,7 +1166,7 @@
     "similarity": 0.062
    }
   ],
-  "error": "RelevanceError: triage 2025-10-09_8C_61-2025: invalid JSON (Unterminated string starting at)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -1652,7 +1730,13 @@
    "c_begruendung": "Das Urteil behandelt die Anwendung der LSE und des Kompetenzniveaus 2 sowie die medizinische Beurteilung der Arbeitsfähigkeit, was für die Invaliditätsberechnung bei Berufskrankheiten zentral ist.",
    "d_score": 85
   },
-  "deep": null,
+  "deep": {
+   "a_grundsatz": 1,
+   "b_nutzen_uv": 3,
+   "c_korrektur": true,
+   "d_merksatz": "Der Abzug vom Tabellenlohn darf höchstens 15 % betragen.",
+   "e_score": 75
+  },
   "precedents": [
    {
     "case_id": "8C_676/2024",
@@ -1671,7 +1755,7 @@
     "similarity": 0.123
    }
   ],
-  "error": "RelevanceError: deep 2025-10-15_8C_681-2024: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -1685,8 +1769,38 @@
   "area": "IV",
   "outcome": "gutgeheissen",
   "single_judge": false,
-  "triage": null,
-  "deep": null,
+  "triage": {
+   "a_rechtsfrage": "Ob die Vorinstanz Bundesrecht verletzte, indem sie der Beschwerdegegnerin mit Wirkung ab 1. September 2023 einen Intensivpflegezuschlag bei einem behinderungsbedingten Mehraufwand von mehr als vier, aber weniger als sechs Stunden pro Tag zusprach.",
+   "b_kriterien": [
+    {
+     "a_id": "K2",
+     "b_stelle": "E4.2",
+     "c_zitat": "Nach Art. 39 IVV liegt eine intensive Betreuung im Sinne von Art. 42ter Abs. 3 IVG bei Minderjährigen vor, wenn diese im Tagesdurchschnitt infolge Beeinträchtigung der Gesundheit zusätzliche Betreuung von mindestens vier Stunden benötigen (Abs. 1).",
+     "beleg_status": "exakt"
+    },
+    {
+     "a_id": "K3",
+     "b_stelle": "E4.1",
+     "c_zitat": "Gemäss Art. 42ter Abs. 3 IVG wird die Hilflosenentschädigung für Minderjährige, die zusätzlich eine intensive Betreuung brauchen, erhöht (wobei der Zuschlag bei einem Heimaufenthalt nicht gewährt wird).",
+     "beleg_status": "ungefähr"
+    },
+    {
+     "a_id": "K4",
+     "b_stelle": "E7.1/E7.2/E7.3",
+     "c_zitat": "Im Abklärungsbericht wurde im Wesentlichen ausgeführt, dass die Beschwerdegegnerin noch auf die Anleitung und Führung der Mutter angewiesen sei.",
+     "beleg_status": "ungefähr"
+    }
+   ],
+   "c_begruendung": "Das Urteil behandelt die Bewertung des invaliditätsbedingten Betreuungsaufwands bei Minderjährigen mit Behinderungen, was ein allgemeines sozialversicherungsrechtliches Prinzip darstellt. Das Bundesgericht prüft detailliert die Beweiswürdigung von Abklärungsberichten und korrigiert die Einschätzung der Verwaltung, was für die Suva relevant ist, wenn sie ähnliche Ansprüche bei ihren Versicherten prüfen muss.",
+   "d_score": 88
+  },
+  "deep": {
+   "a_grundsatz": 1,
+   "b_nutzen_uv": 1,
+   "c_korrektur": true,
+   "d_merksatz": "Der Intensivpflegezuschlag ist zu gewähren, wenn der behinderungsbedingte Mehraufwand mehr als vier Stunden pro Tag beträgt; die IV-Stelle muss sich auf den qualifizierten Abklärungsbericht stützen und darf nicht ohne klar feststellbare Fehler von dessen Einschätzung abweichen.",
+   "e_score": 10
+  },
   "precedents": [
    {
     "case_id": "8C_455/2025",
@@ -1705,7 +1819,7 @@
     "similarity": 0.074
    }
   ],
-  "error": "RelevanceError: triage 2025-10-15_9C_214-2025: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -1744,7 +1858,13 @@
    "c_begruendung": "Das Urteil behandelt die Beweiswürdigung medizinischer Gutachten und die Invaliditätsbemessung, was für die Suva relevant ist, wenn sie Invaliditätsbemessung durchführt. Es enthält Grundsätze zur Beweiswürdigung medizinischer Gutachten, die für die Suva relevant sind.",
    "d_score": 88
   },
-  "deep": null,
+  "deep": {
+   "a_grundsatz": 2,
+   "b_nutzen_uv": 2,
+   "c_korrektur": true,
+   "d_merksatz": "Bei widersprüchlichen ärztlichen Einschätzungen ist eine unabhängige medizinische Begutachtung erforderlich.",
+   "e_score": 80
+  },
   "precedents": [
    {
     "case_id": "8C_145/2025",
@@ -1763,7 +1883,7 @@
     "similarity": 0.142
    }
   ],
-  "error": "RelevanceError: deep 2025-10-15_9C_64-2025: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -1892,7 +2012,25 @@
   "area": "IV",
   "outcome": "abgewiesen",
   "single_judge": false,
-  "triage": null,
+  "triage": {
+   "a_rechtsfrage": "Die Frage, ob und in welchem Umfang eine rückwirkende Einschätzung der Arbeitsfähigkeit bei psychischen Erkrankungen aufgrund medizinischer Gutachten unter Berücksichtigung von psychosozialen Belastungsfaktoren zulässig ist.",
+   "b_kriterien": [
+    {
+     "a_id": "K2",
+     "b_stelle": "E4.2.2",
+     "c_zitat": "Die Annahme des Dr. med. B.________, der Gesundheitszustand des Beschwerdegegners und damit auch dessen Arbeitsfähigkeit habe sich ab Januar 2023 schrittweise auf 40 % und später auf 80 % (in der angestammten Tätigkeit) respektive 100 % (in einer leidensangepassten Tätigkeit) verbessert, ist überwiegend wahrscheinlich richtig.",
+     "beleg_status": "ungefähr"
+    },
+    {
+     "a_id": "K3",
+     "b_stelle": "E4.2.3",
+     "c_zitat": "Die Annahme des Dr. med. B.________, der Gesundheitszustand des Beschwerdegegners und damit auch dessen Arbeitsfähigkeit habe sich ab Januar 2023 schrittweise auf 40 % und später auf 80 % (in der angestammten Tätigkeit) respektive 100 % (in einer leidensangepassten Tätigkeit) verbessert, ist überwiegend wahrscheinlich richtig.",
+     "beleg_status": "ungefähr"
+    }
+   ],
+   "c_begruendung": "Das Urteil behandelt die Bewertung von medizinischen Gutachten und die Anwendung der Indikatorenprüfung nach BGE 141 V 281, was für die Beweiswürdigung im Allgemeinen relevant ist. Da der Sachverhalt jedoch ausschließlich im Kontext der Invalidenversicherung liegt und keinerlei Bezug zur Unfallversicherung (UVG) aufweist, ist das Urteil für die Suva nicht relevant.",
+   "d_score": 15
+  },
   "deep": null,
   "precedents": [
    {
@@ -1912,7 +2050,7 @@
     "similarity": 0.152
    }
   ],
-  "error": "RelevanceError: triage 2025-10-16_8C_623-2024: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -2263,7 +2401,19 @@
   "area": "IV",
   "outcome": "nichteintreten",
   "single_judge": false,
-  "triage": null,
+  "triage": {
+   "a_rechtsfrage": "Die Zulässigkeit eines Rechtsmittels gegen einen kantonalen Invalidenversicherungsentscheid wegen mangelnder Motivation des Rechtsmittels.",
+   "b_kriterien": [
+    {
+     "a_id": "N1",
+     "b_stelle": "E3",
+     "c_zitat": "Il n'expose pas en quoi la juridiction cantonale aurait constaté les faits relatifs à l'évolution de sa situation médicale depuis 2002 et la compatibilité des limitations fonctionnelles reconnues avec l'exercice d'une activité adaptée de façon manifestement inexacte",
+     "beleg_status": "exakt"
+    }
+   ],
+   "c_begruendung": "Das Urteil betrifft die Invalidenversicherung und die formelle Zulässigkeit eines Rechtsmittels aufgrund mangelnder Motivation. Es gibt keine materielle Frage der Unfallversicherung und keine übertragbaren Grundsätze für die Unfallversicherung.",
+   "d_score": 0
+  },
   "deep": null,
   "precedents": [
    {
@@ -2283,7 +2433,7 @@
     "similarity": 0.148
    }
   ],
-  "error": "RelevanceError: triage 2025-10-21_9C_483-2025: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -2331,7 +2481,31 @@
   "area": "IV",
   "outcome": "abgewiesen",
   "single_judge": false,
-  "triage": null,
+  "triage": {
+   "a_rechtsfrage": "Die Frage, ob die IV-Stelle zu Recht die Invalidenrente wegen Nichterfüllung der Schadenminderungspflicht verweigert hat.",
+   "b_kriterien": [
+    {
+     "a_id": "N1",
+     "b_stelle": "E2.2",
+     "c_zitat": "Die IV-Stelle auferlegte dem Beschwerdeführer eine Schadenminderungspflicht.",
+     "beleg_status": "fehlt"
+    },
+    {
+     "a_id": "K3",
+     "b_stelle": "E2.2",
+     "c_zitat": "Die IV-Stelle auferlegte dem Beschwerdeführer eine Schadenminderungspflicht.",
+     "beleg_status": "fehlt"
+    },
+    {
+     "a_id": "K4",
+     "b_stelle": "E2.3",
+     "c_zitat": "Die IV-Stelle auferlegte dem Beschwerdeführer eine Schadenminderungspflicht.",
+     "beleg_status": "fehlt"
+    }
+   ],
+   "c_begruendung": "Das Urteil betrifft die Invalidenversicherung und nicht die Unfallversicherung. Obwohl es Prinzipien der Beweiswürdigung und Revision behandelt, ist der spezifische Sachverhalt (Nichterfüllung der Schadenminderungspflicht) nicht für die Praxis der Unfallversicherung relevant.",
+   "d_score": 15
+  },
   "deep": null,
   "precedents": [
    {
@@ -2351,7 +2525,7 @@
     "similarity": 0.107
    }
   ],
-  "error": "RelevanceError: triage 2025-10-22_8C_237-2025: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -2365,8 +2539,44 @@
   "area": "UV",
   "outcome": "abgewiesen",
   "single_judge": false,
-  "triage": null,
-  "deep": null,
+  "triage": {
+   "a_rechtsfrage": "Die Unfalladäquanz des psychischen Gesundheitsschadens im Kontext des Fallabschlusses per 31. Oktober 2013.",
+   "b_kriterien": [
+    {
+     "a_id": "K1",
+     "b_stelle": "E3.3",
+     "c_zitat": "Die Unfalladäquanz des psychischen Gesundheitsschadens ist zu bejahen, sofern nicht ein einziges Adäquanzkriterium in besonders ausgeprägter oder auffallender Weise gegeben ist - und mindestens drei Adäquanzkriterien erfüllt sind (SVR 2010 UV Nr. 25 S. 100, 8C_897/2009 E. 4.5; Urteil 8C_551/2024 vom 2. Juli 2025 E. 4.3).",
+     "beleg_status": "fehlt"
+    },
+    {
+     "a_id": "K2",
+     "b_stelle": "E4.1, E4.2",
+     "c_zitat": "Das Gericht prüfte die praxisgemäss unbestritten ausschlaggebenden Adäquanzkriterien basierend auf dem bundesrechtskonform festgestellten rechtserheblichen Sachverhalt und bejahte in der Folge vier der sieben Kriterien.",
+     "beleg_status": "ungefähr"
+    },
+    {
+     "a_id": "K3",
+     "b_stelle": "E3.2, E3.3",
+     "c_zitat": "Die Vorinstanz hat die für die Beurteilung der Streitsache massgeblichen rechtlichen Grundlagen im angefochtenen Entscheid zutreffend dargelegt.",
+     "beleg_status": "exakt"
+    },
+    {
+     "a_id": "K4",
+     "b_stelle": "E4.1, E4.2",
+     "c_zitat": "Das kantonale Gericht prüfte die praxisgemäss unbestritten ausschlaggebenden Adäquanzkriterien basierend auf dem bundesrechtskonform festgestellten rechtserheblichen Sachverhalt und bejahte in der Folge vier der sieben Kriterien.",
+     "beleg_status": "exakt"
+    }
+   ],
+   "c_begruendung": "Das Urteil behandelt die Unfalladäquanz des psychischen Gesundheitsschadens, die Beweiswürdigung medizinischer Gutachten (MEDAS/Asim) und die Anwendung der Standardindikatoren (BGE 141 V 281/574). Diese Punkte sind zentral für die Praxis der Suva bei der Beurteilung von Unfallfolgen mit psychischen Auswirkungen.",
+   "d_score": 88
+  },
+  "deep": {
+   "a_grundsatz": 1,
+   "b_nutzen_uv": 3,
+   "c_korrektur": false,
+   "d_merksatz": "",
+   "e_score": 50
+  },
   "precedents": [
    {
     "case_id": "8C_180/2025",
@@ -2385,7 +2595,7 @@
     "similarity": 0.099
    }
   ],
-  "error": "RelevanceError: triage 2025-10-22_8C_29-2025: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -2716,7 +2926,13 @@
    "c_begruendung": "Das Urteil behandelt die Frage der Verwertbarkeit der Restarbeitsfähigkeit auf dem ausgeglichenen Arbeitsmarkt, was ein zentrales Thema für die Invaliditätsbemessung ist und auch für die Unfallversicherung relevant sein kann. Es prüft zudem eine formelle Beschwerde bezüglich der Verletzung von Art. 6 Abs. 1 EMRK und präzisiert die Anwendung des Rechts durch das Bundesgericht. Daher sind mehrere Kriterien erfüllt, die für eine Relevanz sprechen.",
    "d_score": 75
   },
-  "deep": null,
+  "deep": {
+   "a_grundsatz": 1,
+   "b_nutzen_uv": 0,
+   "c_korrektur": true,
+   "d_merksatz": "Die Verwertung der verbleibenden Restarbeitsfähigkeit auf dem ausgeglichenen Arbeitsmarkt ist grundsätzlich zumutbar, sofern die zumutbare Tätigkeit in einer Form möglich ist, die der ausgeglichene Arbeitsmarkt tatsächlich kennt oder unter realistischer Berücksichtigung eines durchschnittlichen Arbeitgebers möglich wäre.",
+   "e_score": 12
+  },
   "precedents": [
    {
     "case_id": "8C_44/2025",
@@ -2735,7 +2951,7 @@
     "similarity": 0.113
    }
   ],
-  "error": "RelevanceError: deep 2025-10-24_8C_319-2025: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -2768,7 +2984,13 @@
    "c_begruendung": "Das Urteil behandelt die zentrale Frage der Unfallqualifikation und präzisiert die Voraussetzungen für einen ungewöhnlichen äusseren Faktor. Es ist lehrreich für die Abgrenzung zwischen Unfall und unfallähnlicher Körperschädigung sowie für die Abklärungspflicht des Unfallversicherers.",
    "d_score": 85
   },
-  "deep": null,
+  "deep": {
+   "a_grundsatz": 1,
+   "b_nutzen_uv": 3,
+   "c_korrektur": true,
+   "d_merksatz": "Ein Ausrutschen oder Stolpern auf einer gepflasterten Strasse in Flip-Flops stellt einen ungewöhnlichen äusseren Faktor dar, der den natürlichen Bewegungsablauf programmwidrig beeinflusst hat.",
+   "e_score": 75
+  },
   "precedents": [
    {
     "case_id": "8C_517/2024",
@@ -2787,7 +3009,7 @@
     "similarity": 0.116
    }
   ],
-  "error": "RelevanceError: deep 2025-10-24_8C_536-2024: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -2870,7 +3092,19 @@
   "area": "IV",
   "outcome": "abgewiesen",
   "single_judge": false,
-  "triage": null,
+  "triage": {
+   "a_rechtsfrage": "Ermittlung des Invaliditätsgrades durch Einkommensvergleich und Anwendung von Tabellenlöhnen der LSE im Kontext der Invalidenversicherung",
+   "b_kriterien": [
+    {
+     "a_id": "N3",
+     "b_stelle": "E3.1-E3.2",
+     "c_zitat": "Die Vorinstanz stützte sich auf die Tabelle TA1_tirage_skill_level der LSE für das Jahr 2020, bezogen auf den gesamten privaten Sektor.",
+     "beleg_status": "ungefähr"
+    }
+   ],
+   "c_begruendung": "Das Urteil behandelt ausschliesslich die Invaliditätsbemessung nach den Bestimmungen der Invalidenversicherung, insbesondere den Einkommensvergleich unter Anwendung von Tabellenlöhnen der LSE. Es werden spezifische IV-Bestimmungen zur Schadenminderungspflicht und zur Ermittlung des Invalideneinkommens verwendet. Das Urteil enthält keinerlei Bezug zur Unfallversicherung (UVG, Suva, CNA, INSAI) oder zu allgemeinen sozialversicherungsrechtlichen Grundsätzen, die für die Unfallversicherung relevant wären. Es gibt keine übertragbaren Grundsätze oder Rechtsprechungsänderungen, die für die Suva von Bedeutung wären.",
+   "d_score": 0
+  },
   "deep": null,
   "precedents": [
    {
@@ -2890,7 +3124,7 @@
     "similarity": 0.12
    }
   ],
-  "error": "RelevanceError: triage 2025-10-24_9C_699-2024: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -2996,8 +3230,32 @@
   "area": "UV",
   "outcome": "nichteintreten",
   "single_judge": false,
-  "triage": null,
-  "deep": null,
+  "triage": {
+   "a_rechtsfrage": "Prüfung der Prozessvoraussetzungen für Beschwerden gegen Entscheide über Geldleistungen der Unfallversicherung (UVG)",
+   "b_kriterien": [
+    {
+     "a_id": "K2",
+     "b_stelle": "E1, E2",
+     "c_zitat": "Nach Art. 95 BGG kann mit der Beschwerde nebst anderem die Verletzung von Bundesrecht gerügt werden (lit. a), zudem (abweichend von Art. 97 Abs. 1 BGG) jede unrichtige oder unvollständige Feststellung des rechtserheblichen Sachverhalts, wenn sie sich gegen einen Entscheid über die Zusprechung oder Verweigerung von Geldleistungen der Militär- oder Unfallversicherung richtet (Art. 97 Abs. 2 BGG).",
+     "beleg_status": "exakt"
+    },
+    {
+     "a_id": "K4",
+     "b_stelle": "E4",
+     "c_zitat": "Da dieser Begründungsmangel offensichtlich ist, führt dies zu einem Nichteintreten auf das Rechtsmittel im vereinfachten Verfahren nach Art. 108 Abs. 1 lit. b BGG.",
+     "beleg_status": "exakt"
+    }
+   ],
+   "c_begruendung": "Das Urteil ist relevant, weil es die Prozessvoraussetzungen für Beschwerden gegen Entscheide über Geldleistungen der Unfallversicherung klärt und präzisiert. Es zeigt auf, welche Anforderungen an die Beschwerdebegründung gestellt werden müssen und unter welchen Umständen das Gericht auf eine Beschwerde nicht eintreten würde. Dies ist für die interne Rechtsanwendung und die Prüfung von Beschwerden der Suva von Bedeutung.",
+   "d_score": 75
+  },
+  "deep": {
+   "a_grundsatz": 0,
+   "b_nutzen_uv": 2,
+   "c_korrektur": false,
+   "d_merksatz": "Beschwerden gegen Leistungspflichtentscheidungen im Unfallversicherungsrecht müssen konkret aufzeigen, inwiefern die Feststellungen der Vorinstanz unrichtig sind und welche Bundesrechtvorschriften verletzt wurden; bloße Behauptungen genügen nicht.",
+   "e_score": 30
+  },
   "precedents": [
    {
     "case_id": "8C_455/2025",
@@ -3016,7 +3274,7 @@
     "similarity": 0.1
    }
   ],
-  "error": "RelevanceError: triage 2025-10-28_8C_573-2025: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -3141,7 +3399,13 @@
    "c_begruendung": "Das Urteil behandelt die Bestimmung des Wohnsitzes und der Residenz für Ansprüche in der Invalidenversicherung. Es wendet Art. 13 LPGA und Art. 23-26 ZGB an und prüft eingehend die Fakten zur Residenz des Kindes. Diese Fragen sind für die Praxis der Sozialversicherungsträger relevant, insbesondere bei der Beurteilung der Versicherungsdeckung oder des Anspruchs auf Leistungen. Das Gericht entwickelt Grundsätze zur Residenzbestimmung und das Urteil ist zur Publikation vorgesehen.",
    "d_score": 82
   },
-  "deep": null,
+  "deep": {
+   "a_grundsatz": 0,
+   "b_nutzen_uv": 1,
+   "c_korrektur": true,
+   "d_merksatz": "Der Wohnsitz eines unter elterlicher Sorge stehenden Kindes bestimmt sich nach dem Ort, an dem die stärksten Beziehungen bestehen, wobei insbesondere der Schulort als entscheidender Faktor dient.",
+   "e_score": 22
+  },
   "precedents": [
    {
     "case_id": "8C_145/2025",
@@ -3160,7 +3424,7 @@
     "similarity": 0.076
    }
   ],
-  "error": "RelevanceError: deep 2025-10-28_9C_270-2024: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -3274,7 +3538,13 @@
    "c_begruendung": "Das Urteil behandelt zentrale Prinzipien des Sozialversicherungsrechts wie die Beweiswürdigung medizinischer Gutachten und das strukturierte Beweisverfahren, die auch für die Unfallversicherung relevant sind, insbesondere bei der Beurteilung psychischer Gesundheitsstörungen und deren Auswirkungen auf die Arbeitsfähigkeit. Es präzisiert die Bewertung von psychiatrischen Gutachten im Lichte der Rechtsprechung zu leichten bis mittelschweren depressiven Störungen.",
    "d_score": 75
   },
-  "deep": null,
+  "deep": {
+   "a_grundsatz": 2,
+   "b_nutzen_uv": 0,
+   "c_korrektur": true,
+   "d_merksatz": "Die Invaliditätsbemessung erfolgt anhand der tatsächlich realisierbaren Arbeitsfähigkeit in einer leidensangepassten Tätigkeit, nicht der Zumutbarkeit der ursprünglichen Tätigkeit.",
+   "e_score": 12
+  },
   "precedents": [
    {
     "case_id": "8C_44/2025",
@@ -3293,7 +3563,7 @@
     "similarity": 0.156
    }
   ],
-  "error": "RelevanceError: deep 2025-10-29_8C_663-2024: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -3428,8 +3698,38 @@
   "area": "IV",
   "outcome": "abgewiesen",
   "single_judge": false,
-  "triage": null,
-  "deep": null,
+  "triage": {
+   "a_rechtsfrage": "Evaluation of medical evidence and residual capacity in disability assessment under AI law, with principles transferable to accident insurance.",
+   "b_kriterien": [
+    {
+     "a_id": "K2",
+     "b_stelle": "E4.2",
+     "c_zitat": "Le tribunal cantonal a apprécié les rapports médicaux rassemblés par l'office intimé durant la procédure administrative et produits par la recourante durant la procédure cantonale de recours.",
+     "beleg_status": "exakt"
+    },
+    {
+     "a_id": "K3",
+     "b_stelle": "E3",
+     "c_zitat": "Le litige porte sur le droit de la recourante à une rente de l'assurance-invalidité.",
+     "beleg_status": "exakt"
+    },
+    {
+     "a_id": "K4",
+     "b_stelle": "E6.1-E6.3",
+     "c_zitat": "Le tribunal cantonal a apprécié les rapports médicaux... et a modifié l'évaluation de l'invalidité à laquelle avait procédé l'office intimé en fonction d'une capacité résiduelle de travail de 80 %",
+     "beleg_status": "ungefähr"
+    }
+   ],
+   "c_begruendung": "Das Urteil behandelt grundlegende Prinzipien der Invaliditätsbemessung, insbesondere die Beweiswürdigung medizinischer Berichte und die Festlegung der verbleibenden Arbeitsfähigkeit. Diese Aspekte sind für die Suva relevant, da sie bei der Beurteilung von Arbeitsunfähigkeit und Invalidität in UV-Fällen vergleichbare medizinische Grundlagen und Beweisstandards anwenden müssen. Die detaillierte Prüfung der medizinischen Beweise und die Auseinandersetzung mit widersprüchlichen ärztlichen Einschätzungen sind lehrreich für die Praxis der Suva.",
+   "d_score": 88
+  },
+  "deep": {
+   "a_grundsatz": 0,
+   "b_nutzen_uv": 0,
+   "c_korrektur": false,
+   "d_merksatz": "Der Rekurs ist vollständig unbegründet und ist abzuweisen.",
+   "e_score": 25
+  },
   "precedents": [
    {
     "case_id": "9C_581/2024",
@@ -3448,7 +3748,7 @@
     "similarity": 0.093
    }
   ],
-  "error": "RelevanceError: triage 2025-10-29_9C_690-2024: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -3590,7 +3890,13 @@
    "c_begruendung": "Das Urteil behandelt die Beweiswürdigung von medizinischen Gutachten und RAD-Berichten (K2) sowie die Invaliditätsbemessung (K3). Diese Prinzipien sind auch für die Unfallversicherung relevant. Das Gericht setzt sich eingehend mit der medizinischen Sachverhaltsfeststellung auseinander (K4). Obwohl die Suva nicht Partei ist, sind die allgemeinen sozialversicherungsrechtlichen Grundsätze relevant. Daher ist der Score 75.",
    "d_score": 75
   },
-  "deep": null,
+  "deep": {
+   "a_grundsatz": 1,
+   "b_nutzen_uv": 1,
+   "c_korrektur": false,
+   "d_merksatz": "",
+   "e_score": 30
+  },
   "precedents": [
    {
     "case_id": "8C_241/2025",
@@ -3609,7 +3915,7 @@
     "similarity": 0.11
    }
   ],
-  "error": "RelevanceError: deep 2025-10-31_8C_684-2024: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -3706,7 +4012,13 @@
    "c_begruendung": "Das Urteil ist relevant, weil es die prozessualen Anforderungen an ein Rechtsmittel gegen eine Entscheidung der Unfallversicherung (CNA) klärt. Es prüft die Einhaltung von Art. 42 LTF und Art. 108 LTF, was für die interne Verfahrenspraxis der Suva relevant ist.",
    "d_score": 75
   },
-  "deep": null,
+  "deep": {
+   "a_grundsatz": 0,
+   "b_nutzen_uv": 3,
+   "c_korrektur": true,
+   "d_merksatz": "Ein Rekurs an das Bundesgericht muss die gesetzlichen Formvorschriften erfüllen, insbesondere eine ausreichende Begründung und klare Rechtsbegehren enthalten; bei deren Fehlen tritt das Bundesgericht auf den Rekurs nicht ein.",
+   "e_score": 65
+  },
   "precedents": [
    {
     "case_id": "8C_318/2025",
@@ -3725,7 +4037,7 @@
     "similarity": 0.104
    }
   ],
-  "error": "RelevanceError: deep 2025-11-03_8C_439-2025: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -3798,7 +4110,13 @@
    "c_begruendung": "Das Urteil behandelt eingehend die Beweiswürdigung medizinischer Gutachten (ABI) und die Abklärungspflicht bei Neuanmeldungen. Diese Grundsätze sind für die Unfallversicherung relevant, wenn es um die Beweiswürdigung von Gutachten bei Rückfällen, Spätfolgen oder unfallähnlichen Körperschädigungen geht. Drei Kriterien sprechen für Relevanz, während materielle Fragen der Unfallversicherung (K1) und die Nicht-Parteistellung der Suva (K5) gegen Relevanz sprechen.",
    "d_score": 75
   },
-  "deep": null,
+  "deep": {
+   "a_grundsatz": 1,
+   "b_nutzen_uv": 0,
+   "c_korrektur": true,
+   "d_merksatz": "Fehlt ein wesentlicher Revisionsgrund, wird der Rentenanspruch mangels Veränderung des Gesundheitszustands verneint.",
+   "e_score": 65
+  },
   "precedents": [
    {
     "case_id": "8C_44/2025",
@@ -3817,7 +4135,7 @@
     "similarity": 0.191
    }
   ],
-  "error": "RelevanceError: deep 2025-11-03_8C_76-2025: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -3913,7 +4231,13 @@
    "c_begruendung": "Das Urteil behandelt die zentrale Frage des adäquaten Kausalzusammenhangs zwischen einem Verkehrsunfall und nachfolgenden psychischen Beschwerden, prüft detailliert die sieben Kriterien der Rechtsprechung und bestätigt die Verneinung des Anspruchs nach 31.12.2014. Es ist daher lehrreich für die Praxis der Suva bei der Beurteilung von Unfallfolgen mit psychischen Aspekten und zeigt die Anwendung der Kriterien bei Verneinung des adäquaten Kausalzusammenhangs.",
    "d_score": 95
   },
-  "deep": null,
+  "deep": {
+   "a_grundsatz": 0,
+   "b_nutzen_uv": 3,
+   "c_korrektur": false,
+   "d_merksatz": "",
+   "e_score": 40
+  },
   "precedents": [
    {
     "case_id": "8C_172/2025",
@@ -3932,7 +4256,7 @@
     "similarity": 0.16
    }
   ],
-  "error": "RelevanceError: deep 2025-11-04_8C_311-2025: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -3983,7 +4307,13 @@
    "c_begruendung": "Das Urteil behandelt die Beweiswürdigung medizinischer Gutachten und die Feststellung der Arbeitsfähigkeit in leidensadaptierter Tätigkeit, zentrale Fragen für die Invaliditätsbemessung und die Invalidenrente der Unfallversicherung. Die Klärung der Beweiswürdigung und die Notwendigkeit eines neuen Gutachtens sind für die Praxis der Suva relevant.",
    "d_score": 90
   },
-  "deep": null,
+  "deep": {
+   "a_grundsatz": 2,
+   "b_nutzen_uv": 3,
+   "c_korrektur": true,
+   "d_merksatz": "Bei widersprüchlichen oder unvollständigen Gerichtsgutachten ist eine erneute Begutachtung erforderlich, bevor eine Invaliditätsbemessung erfolgt.",
+   "e_score": 75
+  },
   "precedents": [
    {
     "case_id": "8C_135/2025",
@@ -4002,7 +4332,7 @@
     "similarity": 0.15
    }
   ],
-  "error": "RelevanceError: deep 2025-11-04_8C_398-2025: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -4016,7 +4346,25 @@
   "area": "IV",
   "outcome": "abgewiesen",
   "single_judge": false,
-  "triage": null,
+  "triage": {
+   "a_rechtsfrage": "Invalidenversicherung (Invalidenrente), Beweiswürdigung medizinischer Berichte, Übergangsbestimmungen WEIV",
+   "b_kriterien": [
+    {
+     "a_id": "K2",
+     "b_stelle": "E4.2",
+     "c_zitat": "Die IV-Stelle edierte wiederholt die Akten der Suva, welche von einer zwischenzeitlich per 1. Mai 2023 beabsichtigten Leistungseinstellung abgesehen hatte und weiterhin Versicherungsleistungen erbrachte.",
+     "beleg_status": "ungefähr"
+    },
+    {
+     "a_id": "K3",
+     "b_stelle": "E4.3",
+     "c_zitat": "Die IV-Stelle edierte wiederholt die Akten der Suva, welche von einer zwischenzeitlich per 1. Mai 2023 beabsichtigten Leistungseinstellung abgesehen hatte und weiterhin Versicherungsleistungen erbrachte.",
+     "beleg_status": "ungefähr"
+    }
+   ],
+   "c_begruendung": "Obwohl das Urteil spezifisch zur Invalidenversicherung ergeht, sind die Grundsätze zur Beweiswürdigung medizinischer Berichte (RAD vs. Suva vs. Behandler) sowie die Anwendung des Übergangsrechts (WEIV) relevant für die Suva im Kontext der Berufskrankheiten und der Koordination zwischen UVG und IVG. Aufgrund der Erfahrungswerte ist die Relevanz für die Suva jedoch gering im Vergleich zu Urteilen zur Unfallversicherung.",
+   "d_score": 20
+  },
   "deep": null,
   "precedents": [
    {
@@ -4036,7 +4384,7 @@
     "similarity": 0.156
    }
   ],
-  "error": "RelevanceError: triage 2025-11-04_8C_54-2025: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -4355,7 +4703,13 @@
    "c_begruendung": "Das Urteil behandelt die Bewertung der Restarbeitsfähigkeit und die Berechnung des Invaliditätsgrades, zentrale Fragen für die Unfallversicherung. Es klärt die Kriterien für das Beendigen einer Invalidenrente, was für die Praxis der Suva relevant ist.",
    "d_score": 88
   },
-  "deep": null,
+  "deep": {
+   "a_grundsatz": 1,
+   "b_nutzen_uv": 0,
+   "c_korrektur": false,
+   "d_merksatz": "Bei unvollständiger Verwertung der Restarbeitsfähigkeit in einer geeigneten Tätigkeit ist der Invaliditätsgrad anhand statistischer Daten zu bestimmen, nicht anhand des tatsächlich erzielten, möglicherweise sozialversicherungsträgerbezogenen Einkommens.",
+   "e_score": 5
+  },
   "precedents": [
    {
     "case_id": "8C_145/2025",
@@ -4374,7 +4728,7 @@
     "similarity": 0.117
    }
   ],
-  "error": "RelevanceError: deep 2025-11-07_9C_420-2025: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -4407,7 +4761,13 @@
    "c_begruendung": "Das Urteil klärt die Beurteilung der Arbeitsfähigkeit bei depressiven Störungen, insbesondere die Bedeutung schlüssiger medizinischer Berichte und die Notwendigkeit einer umfassenden Begutachtung bei widersprüchlichen Einschätzungen. Diese Aspekte sind für die Suva relevant, wenn sie psychische Gesundheitsstörungen im Rahmen der Unfallversicherung zu prüfen hat, da sie ähnliche medizinische Beurteilungen und deren Beweiswert im Kontext von Invaliditätsbemessungen berücksichtigen muss. Die Entscheidung verdeutlicht, dass eine mittelgradige depressive Störung unter Berücksichtigung funktioneller Einschränkungen und medizinischer Nachvollziehbarkeit als invalidisierend gelten kann, was für die Suva relevant ist, wenn sie psychische Leiden im Rahmen von Unfallfolgen zu beurteilen hat.",
    "d_score": 75
   },
-  "deep": null,
+  "deep": {
+   "a_grundsatz": 2,
+   "b_nutzen_uv": 0,
+   "c_korrektur": true,
+   "d_merksatz": "Die bloße Möglichkeit einer Therapie schließt eine invalidisierende Wirkung einer (noch) therapierbaren depressiven Störung nicht aus; bei hinreichend gravierenden funktionellen Einschränkungen und schlüssigen fachärztlichen Attestierungen ist eine umfassende Indikatorenprüfung erforderlich.",
+   "e_score": 85
+  },
   "precedents": [
    {
     "case_id": "8C_145/2025",
@@ -4426,7 +4786,7 @@
     "similarity": 0.111
    }
   ],
-  "error": "RelevanceError: deep 2025-11-07_9C_428-2025: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -4471,7 +4831,13 @@
    "c_begruendung": "Das Urteil behandelt eine materielle Frage der Unfallversicherung (K1), allgemeine Grundsätze zur Beweiswürdigung von Gutachten (K2), präzisiert die Rechtsprechung zur Bewertung von medizinischen Gutachten (K4) und betrifft die CNA als Partei (K5).",
    "d_score": 95
   },
-  "deep": null,
+  "deep": {
+   "a_grundsatz": 0,
+   "b_nutzen_uv": 2,
+   "c_korrektur": true,
+   "d_merksatz": "Wenn ein privates ärztliches Gutachten zur Begründung weiterer Abklärungen beigebracht wird, die ohne dieses Gutachten nicht angeordnet worden wären, hat die Unfallversicherung die Kosten dieses Gutachtens zu erstatten.",
+   "e_score": 25
+  },
   "precedents": [
    {
     "case_id": "8C_154/2025",
@@ -4490,7 +4856,7 @@
     "similarity": 0.192
    }
   ],
-  "error": "RelevanceError: deep 2025-11-10_8C_221-2025: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -4504,8 +4870,38 @@
   "area": "UV",
   "outcome": "gutgeheissen",
   "single_judge": false,
-  "triage": null,
-  "deep": null,
+  "triage": {
+   "a_rechtsfrage": "Der Zusammenhang zwischen dem Unfall vom 23. September 2021 und den weiterhin bestehenden Beschwerden an der rechten Schulter nach dem 5. Juni 2022.",
+   "b_kriterien": [
+    {
+     "a_id": "K1",
+     "b_stelle": "E4.2",
+     "c_zitat": "L'accident a décompensé un état maladif préexistant, entraînant non seulement une contusion mais aussi une déchirure tendineuse partielle avec luxation du biceps hors de sa gouttière, ce qui a déstabilisé un os acromial déjà instable.",
+     "beleg_status": "ungefähr"
+    },
+    {
+     "a_id": "K2",
+     "b_stelle": "E3.2",
+     "c_zitat": "On ne saurait remettre en cause une expertise ordonnée par l'administration ou le juge et procéder à de nouvelles investigations du seul fait qu'un ou plusieurs médecins traitants ont une opinion distincte de celle exprimée par les experts.",
+     "beleg_status": "exakt"
+    },
+    {
+     "a_id": "K4",
+     "b_stelle": "E5.2.1",
+     "c_zitat": "L'expert a établi un lien de causalité entre, d'une part, l'événement accidentel et, d'autre part, la déchirure partielle du sous-scapulaire ainsi que la luxation hors de la gouttière du long chef du biceps droit, en se fondant sur un déroulement de l'accident ne correspondant pas aux faits établis correctement par l'instance précédente.",
+     "beleg_status": "exakt"
+    }
+   ],
+   "c_begruendung": "Das Urteil behandelt die zentrale Frage der Kausalität im Unfallversicherungsrecht, insbesondere die Bewertung von medizinischen Gutachten und die Prüfung von Präexistenz. Es liefert eine detaillierte Analyse der Widersprüche im Gutachten und der Faktenlage, was für die Suva relevant ist, um zukünftige Fälle korrekt zu beurteilen.",
+   "d_score": 92
+  },
+  "deep": {
+   "a_grundsatz": 1,
+   "b_nutzen_uv": 2,
+   "c_korrektur": true,
+   "d_merksatz": "Bei der Beurteilung des Kausalzusammenhangs ist der medizinische Sachverhalt entscheidend; bei Vorliegen degenerativer Veränderungen ist der Status quo ante/sine zu prüfen, wobei die plausiblen Unfallmechanismen und die vorhandenen Vorerkrankungen berücksichtigt werden müssen.",
+   "e_score": 78
+  },
   "precedents": [
    {
     "case_id": "8C_172/2025",
@@ -4524,7 +4920,7 @@
     "similarity": 0.233
    }
   ],
-  "error": "RelevanceError: triage 2025-11-10_8C_334-2025: invalid JSON (Unterminated string starting at)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -4580,7 +4976,13 @@
    "c_begruendung": "Das Urteil präzisiert die Bewertung der Restarbeitsfähigkeit und deren Verwertbarkeit auf dem ausgeglichenen Arbeitsmarkt, was für die Suva relevant ist, wenn sie die Arbeitsfähigkeit von Unfallopfern einschätzt.",
    "d_score": 70
   },
-  "deep": null,
+  "deep": {
+   "a_grundsatz": 1,
+   "b_nutzen_uv": 0,
+   "c_korrektur": false,
+   "d_merksatz": "Die Verwertbarkeit der verbleibenden medizinisch-theoretischen Arbeitsfähigkeit ist zu bejahen, wenn die versicherte Person in der Lage ist, den Betrieb des Arbeitgebers zumindest in speziellen Einzelfällen (z. B. Bewerbungsgespräch, Erstinstruktion) aufzusuchen, was nicht als unrealistisch erscheint.",
+   "e_score": 10
+  },
   "precedents": [
    {
     "case_id": "8C_44/2025",
@@ -4599,7 +5001,7 @@
     "similarity": 0.141
    }
   ],
-  "error": "RelevanceError: deep 2025-11-10_8C_535-2024: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -4638,7 +5040,13 @@
    "c_begruendung": "Das Urteil behandelt eine zentrale materielle Frage der Unfallversicherung (Kausalzusammenhang und Stabilisierung) und würdigt eingehend ein medizinisches Gutachten (K2). Die Suva ist Partei (K5).",
    "d_score": 88
   },
-  "deep": null,
+  "deep": {
+   "a_grundsatz": 1,
+   "b_nutzen_uv": 2,
+   "c_korrektur": false,
+   "d_merksatz": "Der Fall gilt ab 4. August 2015 als stabilisiert; spätere Ansprüche sind nicht kausal zum Unfall.",
+   "e_score": 85
+  },
   "precedents": [
    {
     "case_id": "8C_172/2025",
@@ -4657,7 +5065,7 @@
     "similarity": 0.169
    }
   ],
-  "error": "RelevanceError: deep 2025-11-10_8C_720-2024: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -4671,7 +5079,25 @@
   "area": "IV",
   "outcome": "abgewiesen",
   "single_judge": false,
-  "triage": null,
+  "triage": {
+   "a_rechtsfrage": "Invalidenrente der Invalidenversicherung (IV) nach medizinischer Begutachtung (SMAB) und Zulässigkeit neuer Beweismittel",
+   "b_kriterien": [
+    {
+     "a_id": "N1",
+     "b_stelle": "E5",
+     "c_zitat": "Im beweiskräftigen SMAB-Gutachten vom 29. März 2022 sei nachvollziehbar dargelegt worden, dass in der bisherigen Tätigkeit seit dem 11. Juli 2016 von einer 100%igen Arbeitsunfähigkeit auszugehen sei.",
+     "beleg_status": "exakt"
+    },
+    {
+     "a_id": "N3",
+     "b_stelle": "E5",
+     "c_zitat": "Weder den Ausführungen der Beschwerdeführerin noch den Akten seien konkrete Hinweise zu entnehmen, welche an der Expertise Zweifel zu begründen vermöchten.",
+     "beleg_status": "exakt"
+    }
+   ],
+   "c_begruendung": "Das Urteil betrifft die Invalidenversicherung und bestätigt die medizinische Begutachtung (SMAB) sowie die Ablehnung neuer Beweismittel nach dem Entscheid der Vorinstanz. Es hat keinen direkten Bezug zur Unfallversicherungspraxis der Suva.",
+   "d_score": 20
+  },
   "deep": null,
   "precedents": [
    {
@@ -4691,7 +5117,7 @@
     "similarity": 0.124
    }
   ],
-  "error": "RelevanceError: triage 2025-11-10_8C_743-2024: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -4741,7 +5167,13 @@
    "c_begruendung": "Das Urteil 9C_546/2024 betrifft die Anwendung von Art. 25 LPGA in einem IV-Fall und präzisiert die Rechtsprechung zum Beginn des relativen Verjährungszeitraums. Obwohl es primär IV-relevant ist, betrifft es allgemeine sozialversicherungsrechtliche Grundsätze, die auch für die Unfallversicherung relevant sein können, insbesondere bei der Prüfung von Rückforderungen von Leistungen. Die Suva könnte dieses Urteil für ihre interne Rechtsanwendung nutzen, insbesondere bei der Prüfung von Rückforderungsfällen.",
    "d_score": 55
   },
-  "deep": null,
+  "deep": {
+   "a_grundsatz": 1,
+   "b_nutzen_uv": 0,
+   "c_korrektur": false,
+   "d_merksatz": "Der Verjährungszeitraum für die Rückforderung von Leistungen beginnt erst mit der tatsächlichen Auszahlung der Leistung, nicht mit der Kenntnis der Fakten, die eine Rückforderung begründen könnten.",
+   "e_score": 75
+  },
   "precedents": [
    {
     "case_id": "9C_581/2024",
@@ -4760,7 +5192,7 @@
     "similarity": 0.076
    }
   ],
-  "error": "RelevanceError: deep 2025-11-10_9C_546-2024: invalid JSON (Expecting property name enclosed in double quotes)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -5174,7 +5606,13 @@
    "c_begruendung": "Das Urteil behandelt die Beurteilung der Arbeitsfähigkeit und die Anwendung von Tabellenlöhnen im Einkommensvergleich, was für die Suva relevant ist, wenn sie ähnliche Invaliditätsbemessungen in der Unfallversicherung vorzunehmen hat. Es klärt die Bedeutung medizinischer Gutachten und die Beweiswürdigung, die auch im UVG relevant sind.",
    "d_score": 85
   },
-  "deep": null,
+  "deep": {
+   "a_grundsatz": 1,
+   "b_nutzen_uv": 0,
+   "c_korrektur": true,
+   "d_merksatz": "Die medizinischen Befunde und der Einkommensvergleich ergeben keine rentenbegründende Invalidität.",
+   "e_score": 10
+  },
   "precedents": [
    {
     "case_id": "8C_44/2025",
@@ -5193,7 +5631,7 @@
     "similarity": 0.12
    }
   ],
-  "error": "RelevanceError: deep 2025-11-13_9C_551-2025: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -5232,7 +5670,13 @@
    "c_begruendung": "Das Urteil behandelt grundlegende Prinzipien der Invaliditätsbemessung (Einkommensvergleich, ESS-Daten, Revision nach Art. 17 LPGA) und Umschulung, die direkt auf die Unfallversicherung übertragbar sind. Es gibt keine spezifischen UVG-Fragen, aber die allgemeinen Prinzipien des Sozialversicherungsrechts sind relevant.",
    "d_score": 88
   },
-  "deep": null,
+  "deep": {
+   "a_grundsatz": 0,
+   "b_nutzen_uv": 3,
+   "c_korrektur": true,
+   "d_merksatz": "Die Verlust des Arbeitsplatzes ist kein Kriterium für eine Revision des Invaliditätsgrades nach Art. 17 LPGA, und die im Scheidungsverfahren erstellte Wirtschaftsexpertise ist für die Invaliditätsbemessung nicht relevant. Zudem bestätigt das Gericht, dass die im ESS 2016 erfasste Kompetenzstufe 3 für die Tätigkeit als Lehrer ausreichend ist.",
+   "e_score": 8
+  },
   "precedents": [
    {
     "case_id": "8C_7/2025",
@@ -5251,7 +5695,7 @@
     "similarity": 0.141
    }
   ],
-  "error": "RelevanceError: deep 2025-11-13_9C_629-2024: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -5296,7 +5740,13 @@
    "c_begruendung": "Das Urteil behandelt die Leistungseinstellung in der Unfallversicherung aufgrund einer Beweiswürdigung medizinischer Gutachten. Es ist relevant für die Suva, weil es die Praxis zur Beweiswürdigung und Abklärungspflicht zeigt (K1, K2, K4). Die Suva ist Partei (K5).",
    "d_score": 88
   },
-  "deep": null,
+  "deep": {
+   "a_grundsatz": 1,
+   "b_nutzen_uv": 3,
+   "c_korrektur": true,
+   "d_merksatz": "Bei pauschalen Einwänden gegen ein medizinisches Gutachten genügen diese nicht; konkrete Indizien gegen die Zuverlässigkeit des Gutachtens sind erforderlich.",
+   "e_score": 70
+  },
   "precedents": [
    {
     "case_id": "8C_676/2024",
@@ -5315,7 +5765,7 @@
     "similarity": 0.153
    }
   ],
-  "error": "RelevanceError: deep 2025-11-14_8C_34-2025: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -5346,7 +5796,19 @@
   "area": "IV",
   "outcome": "abgewiesen",
   "single_judge": false,
-  "triage": null,
+  "triage": {
+   "a_rechtsfrage": "Die Frage betrifft die Revision einer Hilflosenentschädigung der Invalidenversicherung und die Bewertung von Verbesserungen im Bereich der alltäglichen Lebensverrichtungen.",
+   "b_kriterien": [
+    {
+     "a_id": "N3",
+     "b_stelle": "E3.3",
+     "c_zitat": "Die Beschwerde wird abgewiesen.",
+     "beleg_status": "exakt"
+    }
+   ],
+   "c_begruendung": "Das Urteil betrifft die Invalidenversicherung und die Revision einer Hilflosenentschädigung, nicht die Unfallversicherung. Es werden keine spezifischen Fragen der Unfallversicherung (z.B. Unfallbegriff, unfallähnliche Körperschädigung, adäquater Kausalzusammenhang, Heilbehandlung) behandelt.",
+   "d_score": 12
+  },
   "deep": null,
   "precedents": [
    {
@@ -5366,7 +5828,7 @@
     "similarity": 0.101
    }
   ],
-  "error": "RelevanceError: triage 2025-11-14_8C_531-2025: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -5428,7 +5890,13 @@
    "c_begruendung": "Das Urteil behandelt die Abgrenzung zwischen medizinischer Pflege und nichtmedizinischer Hilfe im Rahmen von Art. 18 UVV. Es prüft spezifische Leistungen wie Dekubitusprophylaxe, Lagerung, Kompressionsstrümpfe und Nagelpflege im Kontext der ärztlichen Indikation und des therapeutischen Ziels. Diese Fragestellung ist für die Suva zentral, da sie Kosten für Pflege und Hilfe zu Hause vergüten muss. Der Entscheid, ob diese Leistungen als medizinisch oder nichtmedizinisch einzustufen sind, beeinflusst direkt die Kostenbasis und die Anspruchsgrösse. Das Gericht prüft die medizinische Indikation für spezifische Maßnahmen wie Dekubitusprophylaxe, Lagerung, Kompressionsstrümpfe und Nagelpflege und bejaht diese, was die Kriterien für die Anerkennung als medizinische Pflege im UVG klarstellt.",
    "d_score": 88
   },
-  "deep": null,
+  "deep": {
+   "a_grundsatz": 1,
+   "b_nutzen_uv": 2,
+   "c_korrektur": false,
+   "d_merksatz": "Pflegeleistungen sind als medizinisch zu qualifizieren, wenn sie ein diagnostisches oder therapeutisches Ziel verfolgen oder ärztlich angeordnet sind; nichtmedizinische Hilfe umfasst Unterstützungsleistungen ohne therapeutische Zielrichtung.",
+   "e_score": 70
+  },
   "precedents": [
    {
     "case_id": "8C_44/2025",
@@ -5447,7 +5915,7 @@
     "similarity": 0.078
    }
   ],
-  "error": "RelevanceError: deep 2025-11-14_8C_626-2024: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -5599,8 +6067,38 @@
   "area": "UV",
   "outcome": "abgewiesen",
   "single_judge": false,
-  "triage": null,
-  "deep": null,
+  "triage": {
+   "a_rechtsfrage": "Ob die Ersatzkasse gemäss Art. 73 Abs. 2 UVG zur Zuweisung eines Arbeitgebers an einen anderen Versicherer verpflichtet ist, wenn der frühere Versicherer das Vertragsverhältnis aufgelöst hat, oder ob das Notstandsabkommen hier anwendbar ist.",
+   "b_kriterien": [
+    {
+     "a_id": "K1",
+     "b_stelle": "E7.1",
+     "c_zitat": "Art. 73 Abs. 2 UVG verpflichtet die Ersatzkasse, säumige Arbeitgeber einem Versicherer zuzuweisen.",
+     "beleg_status": "fehlt"
+    },
+    {
+     "a_id": "K2",
+     "b_stelle": "E4/E5",
+     "c_zitat": "Die Ersatzkasse hat die Aufgabe, für einen lückenlosen Versicherungsschutz zu sorgen.",
+     "beleg_status": "fehlt"
+    },
+    {
+     "a_id": "K4",
+     "b_stelle": "E7.5",
+     "c_zitat": "Art. 73 Abs. 2 UVG steht dem Notstandsabkommen entgegen.",
+     "beleg_status": "fehlt"
+    }
+   ],
+   "c_begruendung": "Das Urteil behandelt die Zuweisungspflicht der Ersatzkasse gemäss Art. 73 Abs. 2 UVG und die Abgrenzung zum Notstandsabkommen, was für die korrekte Durchführung der obligatorischen Unfallversicherung entscheidend ist. Es bestätigt die Vorrangigkeit von Art. 73 Abs. 2 UVG gegenüber dem Notstandsabkommen und klärt die Zuständigkeiten im System der obligatorischen Unfallversicherung.",
+   "d_score": 85
+  },
+  "deep": {
+   "a_grundsatz": 3,
+   "b_nutzen_uv": 3,
+   "c_korrektur": true,
+   "d_merksatz": "Das Notstandsabkommen ist nach dem Inkrafttreten von Art. 73 Abs. 2 UVG nicht mehr anwendbar; die Ersatzkasse ist verpflichtet, säumige Arbeitgeber gemäss Art. 73 Abs. 2 UVG einem anderen Versicherer zuzuweisen.",
+   "e_score": 72
+  },
   "precedents": [
    {
     "case_id": "8C_180/2025",
@@ -5619,7 +6117,7 @@
     "similarity": 0.048
    }
   ],
-  "error": "RelevanceError: triage 2025-11-18_8C_458-2025: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -5667,8 +6165,44 @@
   "area": "UV",
   "outcome": "gutgeheissen",
   "single_judge": false,
-  "triage": null,
-  "deep": null,
+  "triage": {
+   "a_rechtsfrage": "Ist die Erhöhung des Invaliditätsgrades um 1 % vor Bundesrecht gerechtfertigt, wenn Valideneinkommen auf 2022 und Invalideneinkommen auf LSE 2020 indexiert werden?",
+   "b_kriterien": [
+    {
+     "a_id": "K1",
+     "b_stelle": "E4.1, E4.2",
+     "c_zitat": "Das Valideneinkommen ist für das Jahr 2022 zu ermitteln, während das Invalideneinkommen auf der Basis der LSE 2020 indexiert wird.",
+     "beleg_status": "fehlt"
+    },
+    {
+     "a_id": "K2",
+     "b_stelle": "E2.2, E4.1",
+     "c_zitat": "Zur Bestimmung des Invaliditätsgrades wird das Erwerbseinkommen nach Art. 16 ATSG in Beziehung gesetzt zum Valideneinkommen.",
+     "beleg_status": "fehlt"
+    },
+    {
+     "a_id": "K3",
+     "b_stelle": "E2.2",
+     "c_zitat": "Der Vergleich erfolgt anhand der Tabellenlöhne gemäss LSE.",
+     "beleg_status": "fehlt"
+    },
+    {
+     "a_id": "K4",
+     "b_stelle": "E4.1, E4.2",
+     "c_zitat": "Die Indexierung der LSE-Daten für das Jahr 2022 ist korrekt vorzunehmen.",
+     "beleg_status": "fehlt"
+    }
+   ],
+   "c_begruendung": "Das Urteil behandelt die korrekte Anwendung von Art. 16 ATSG und der LSE für die Invaliditätsbemessung, insbesondere die Indexierung der LSE-Daten und die zeitliche Referenz für die Vergleichseinkommen. Da die Suva diese Berechnungsgrundlagen in ihrer Praxis anwendet, ist das Urteil für die interne Rechtsanwendung und die Schadenpraxis relevant.",
+   "d_score": 85
+  },
+  "deep": {
+   "a_grundsatz": 1,
+   "b_nutzen_uv": 3,
+   "c_korrektur": true,
+   "d_merksatz": "Bei der Invaliditätsbemessung müssen die Vergleichseinkommen für denselben Zeitraum (hier: 2022) ermittelt werden.",
+   "e_score": 60
+  },
   "precedents": [
    {
     "case_id": "8C_687/2024",
@@ -5687,7 +6221,7 @@
     "similarity": 0.128
    }
   ],
-  "error": "RelevanceError: triage 2025-11-18_8C_719-2024: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -5760,7 +6294,13 @@
    "c_begruendung": "Das Urteil behandelt die Anwendung der Standardindikatoren bei psychischen Erkrankungen (BGE 141 V 281), die Beweiswürdigung medizinischer Gutachten (MEDAS-Gutachten), die Invaliditätsbemessung und den Einkommensvergleich, die Anwendung von Art. 7 ATSG und Art. 28 IVG, die Prüfung der Statusfrage (Erwerbsstatus vs. Haushaltsstatus) sowie die Anwendung von Art. 17 ATSG. Diese Grundsätze sind für die Unfallversicherung übertragbar, insbesondere bei der Beurteilung von unfallbedingten psychischen Gesundheitsstörungen. Es gibt keine Kriterien, die gegen eine Relevanz sprechen.",
    "d_score": 85
   },
-  "deep": null,
+  "deep": {
+   "a_grundsatz": 2,
+   "b_nutzen_uv": 0,
+   "c_korrektur": true,
+   "d_merksatz": "Eine rein medizinisch attestierte 75%ige Arbeitsunfähigkeit ohne weitere psychiatrische Abklärungen ist nicht rechtsgenüglich; die Angelegenheit ist zur erneuten Begutachtung zurückzuweisen.",
+   "e_score": 10
+  },
   "precedents": [
    {
     "case_id": "8C_44/2025",
@@ -5779,7 +6319,7 @@
     "similarity": 0.115
    }
   ],
-  "error": "RelevanceError: deep 2025-11-18_9C_234-2025: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -5886,7 +6426,13 @@
    "c_begruendung": "Das Urteil behandelt die Suspendierung einer Invalidenrente aufgrund einer Haft, was eine materielle Frage der Unfallversicherung ist. Es wendet Art. 21 LPGA an und präzisiert die Rechtsprechung zur Haftzeit. Die Suva ist Partei und das Gericht prüft die Sache materiell.",
    "d_score": 88
   },
-  "deep": null,
+  "deep": {
+   "a_grundsatz": 3,
+   "b_nutzen_uv": 2,
+   "c_korrektur": true,
+   "d_merksatz": "Bei einer mehrmonatigen Untersuchungshaft ist die Invalidenrente ab dem Monat nach Beginn der Haft zu halbieren, wenn die Haft länger als drei Monate dauert.",
+   "e_score": 75
+  },
   "precedents": [
    {
     "case_id": "8C_154/2025",
@@ -5905,7 +6451,7 @@
     "similarity": 0.142
    }
   ],
-  "error": "RelevanceError: deep 2025-11-19_8C_399-2025: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -6040,7 +6586,13 @@
    "c_begruendung": "Das Urteil behandelt die Beweisführungslast bei Neuanmeldungen und Vertrauensschutzfragen, die auch für die Unfallversicherung relevant sind, insbesondere bei beruflichen Massnahmen. Es gibt keine direkte Bezugnahme auf die Unfallversicherung.",
    "d_score": 65
   },
-  "deep": null,
+  "deep": {
+   "a_grundsatz": 1,
+   "b_nutzen_uv": 0,
+   "c_korrektur": false,
+   "d_merksatz": "Die Beschwerdeführerin musste konkrete und realistische Ausbildungsziele sowie Ausbildungswege vorlegen, um eine anspruchserhebliche Veränderung der Verhältnisse glaubhaft zu machen, was ihr nicht gelungen ist.",
+   "e_score": 12
+  },
   "precedents": [
    {
     "case_id": "8C_241/2025",
@@ -6059,7 +6611,7 @@
     "similarity": 0.106
    }
   ],
-  "error": "RelevanceError: deep 2025-11-20_8C_321-2025: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -6073,7 +6625,25 @@
   "area": "IV",
   "outcome": "unklar",
   "single_judge": false,
-  "triage": null,
+  "triage": {
+   "a_rechtsfrage": "Rechtsverzögerung und Prozessvoraussetzungen in der Invalidenversicherung",
+   "b_kriterien": [
+    {
+     "a_id": "K2",
+     "b_stelle": "E4.2",
+     "c_zitat": "Auf die Beschwerde wird nicht eingetreten.",
+     "beleg_status": "exakt"
+    },
+    {
+     "a_id": "N1",
+     "b_stelle": "E4.1",
+     "c_zitat": "Das Verfahren wird im vereinfachten Verfahren nach Art. 108 Abs. 1 lit. a BGG erledigt.",
+     "beleg_status": "fehlt"
+    }
+   ],
+   "c_begruendung": "Das Urteil betrifft die Invalidenversicherung und nicht die Unfallversicherung. Es geht um Prozessvoraussetzungen wie Kosten und Fristen, die primär IV-spezifisch sind und keine direkte Relevanz für die Unfallversicherung haben.",
+   "d_score": 10
+  },
   "deep": null,
   "precedents": [
    {
@@ -6093,7 +6663,7 @@
     "similarity": 0.044
    }
   ],
-  "error": "RelevanceError: triage 2025-11-20_8C_492-2025: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -6456,8 +7026,38 @@
   "area": "IV",
   "outcome": "abgewiesen",
   "single_judge": false,
-  "triage": null,
-  "deep": null,
+  "triage": {
+   "a_rechtsfrage": "Die Frage, ob im Rahmen der Invaliditätsbemessung ein Soziallohn zu berücksichtigen ist, insbesondere bei langjährigen Arbeitsverhältnissen im Familienbetrieb.",
+   "b_kriterien": [
+    {
+     "a_id": "K2",
+     "b_stelle": "E3.2",
+     "c_zitat": "Soziallohn liegt vor, wenn Teile des ausbezahlten Lohns nicht als Gegenleistung einer Arbeitsleistung erscheinen, sondern aus sozialen Erwägungen gewährt werden.",
+     "beleg_status": "exakt"
+    },
+    {
+     "a_id": "K3",
+     "b_stelle": "E5.1, E5.2.1",
+     "c_zitat": "Soziallohn liegt vor, wenn Teile des ausbezahlten Lohns nicht als Gegenleistung einer Arbeitsleistung erscheinen, sondern aus sozialen Erwägungen gewährt werden.",
+     "beleg_status": "exakt"
+    },
+    {
+     "a_id": "K4",
+     "b_stelle": "E4.2, E5.2.2",
+     "c_zitat": "Soziallohn liegt vor, wenn Teile des ausbezahlten Lohns nicht als Gegenleistung einer Arbeitsleistung erscheinen, sondern aus sozialen Erwägungen gewährt werden.",
+     "beleg_status": "exakt"
+    }
+   ],
+   "c_begruendung": "Das Urteil behandelt die Bestimmung des Invalideneinkommens und den Nachweis von Soziallohn in einem langjährigen Arbeitsverhältnis im Familienbetrieb. Diese Grundsätze sind für die Suva relevant, wenn sie Leistungen bei Versicherten in ähnlichen Kontexten prüfen muss. Die hohen Anforderungen an den Nachweis von Soziallohn und die Prüfung betrieblicher Einsatzmöglichkeiten sind übertragbare Prinzipien.",
+   "d_score": 85
+  },
+  "deep": {
+   "a_grundsatz": 1,
+   "b_nutzen_uv": 1,
+   "c_korrektur": true,
+   "d_merksatz": "Um Soziallohn nachzuweisen, müssen hohe Anforderungen erfüllt sein; im vorliegenden Fall fehlten diese.",
+   "e_score": 8
+  },
   "precedents": [
    {
     "case_id": "8C_676/2024",
@@ -6476,7 +7076,7 @@
     "similarity": 0.132
    }
   ],
-  "error": "RelevanceError: triage 2025-11-25_9C_382-2025: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -6744,7 +7344,13 @@
    "c_begruendung": "Das Urteil präzisiert die Anwendung von Art. 143 Abs. 2 ZPO und Art. 8b Abs. 1 VeÜ-ZSSV für elektronische Beschwerdeeingaben. Diese Regeln sind für alle Sozialversicherer relevant, einschließlich der Suva. Es geht um Eintretensvoraussetzungen und Fristen, was für die Suva relevant ist. Obwohl es kein direktes Unfallversicherungsurteil ist, sind die allgemeinen Prinzipien übertragbar.",
    "d_score": 75
   },
-  "deep": null,
+  "deep": {
+   "a_grundsatz": 0,
+   "b_nutzen_uv": 0,
+   "c_korrektur": true,
+   "d_merksatz": "Eine fristgerechte elektronische Beschwerde erfordert eine qualifizierte elektronische Signatur und die Verwendung einer anerkannten Zustellplattform mit der Versandart 'eGov Einschreiben', um eine Abgabequittung zu erhalten; andernfalls muss die Eingabe nachgereicht werden.",
+   "e_score": 15
+  },
   "precedents": [
    {
     "case_id": "8C_145/2025",
@@ -6763,7 +7369,7 @@
     "similarity": 0.061
    }
   ],
-  "error": "RelevanceError: deep 2025-11-27_8C_604-2024: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -6794,8 +7400,26 @@
   "area": "IV",
   "outcome": "abgewiesen",
   "single_judge": false,
-  "triage": null,
-  "deep": null,
+  "triage": {
+   "a_rechtsfrage": "Die Zulässigkeit von nachträglich vorgebrachten Tatsachen und Beweismitteln nach Art. 99 und 123 BGG im Rahmen eines Revisionsverfahrens.",
+   "b_kriterien": [
+    {
+     "a_id": "K2",
+     "b_stelle": "E4.2",
+     "c_zitat": "Nach Art. 99 Abs. 1 BGG sind echte Noven unzulässig.",
+     "beleg_status": "fehlt"
+    }
+   ],
+   "c_begruendung": "Das Urteil behandelt die Zulässigkeit von nachträglich vorgebrachten Tatsachen und Beweismitteln nach Art. 99 und 123 BGG. Diese allgemeinen sozialversicherungsrechtlichen Grundsätze zur Beweisführung und Revision sind für die Praxis aller Sozialversicherer relevant.",
+   "d_score": 75
+  },
+  "deep": {
+   "a_grundsatz": 1,
+   "b_nutzen_uv": 2,
+   "c_korrektur": true,
+   "d_merksatz": "Nachträglich entdeckte Tatsachen und Beweismittel, die erst nach dem zu revidierenden Urteil entstanden sind, können keinen Revisionsgrund darstellen.",
+   "e_score": 10
+  },
   "precedents": [
    {
     "case_id": "8C_455/2025",
@@ -6814,7 +7438,7 @@
     "similarity": 0.084
    }
   ],
-  "error": "RelevanceError: triage 2025-11-27_8F_10-2025: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -7008,7 +7632,13 @@
    "c_begruendung": "Das Urteil behandelt die Beweiswürdigung medizinischer Gutachten und die Anwendung des strukturierten Beweisverfahrens (BGE 141 V 281) sowie die Methoden zur Invaliditätsbemessung und zum Einkommensvergleich, was für die Suva relevant ist, wenn es um die Bewertung von Arbeitsfähigkeit und Einkommensvergleich geht.",
    "d_score": 75
   },
-  "deep": null,
+  "deep": {
+   "a_grundsatz": 1,
+   "b_nutzen_uv": 0,
+   "c_korrektur": true,
+   "d_merksatz": "",
+   "e_score": 10
+  },
   "precedents": [
    {
     "case_id": "8C_44/2025",
@@ -7027,7 +7657,7 @@
     "similarity": 0.142
    }
   ],
-  "error": "RelevanceError: deep 2025-12-01_8C_139-2025: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -7133,8 +7763,44 @@
   "area": "UV",
   "outcome": "abgewiesen",
   "single_judge": false,
-  "triage": null,
-  "deep": null,
+  "triage": {
+   "a_rechtsfrage": "Kausalzusammenhang und richtunggebende Verschlimmerung im Zusammenhang mit dem Fallabschluss in der Unfallversicherung",
+   "b_kriterien": [
+    {
+     "a_id": "K1",
+     "b_stelle": "E4.2",
+     "c_zitat": "Nicht richtunggebende Verschlimmerungen wie Kontusionen, Prellungen oder Zerrungen des OSG heilten überwiegend wahrscheinlich innert sechs Wochen ab, bei vorbestehenden Veränderungen wie im Bereich des Sprunggelenks sei mit dem Beweisgrad der überwiegenden Wahrscheinlichkeit der Vorzustand nach drei Monaten erreicht.",
+     "beleg_status": "exakt"
+    },
+    {
+     "a_id": "K2",
+     "b_stelle": "E4.2",
+     "c_zitat": "Der Beschwerdeführer bringt nichts vor, was diese medizinische Sachverhaltsfeststellung in Frage zu stellen vermöchte.",
+     "beleg_status": "exakt"
+    },
+    {
+     "a_id": "K4",
+     "b_stelle": "E4.2",
+     "c_zitat": "Abweichend von der auf der Kurzbeurteilung des Dr. med. B.________ beruhenden bundesrechtskonformen Beweiswürdigung der Vorinstanz stellt der Beschwerdeführer eigene medizinische Ausführungen und Überlegungen dazu an, die seines Erachtens für eine richtunggebende Verschlechterung sprechen könnten.",
+     "beleg_status": "exakt"
+    },
+    {
+     "a_id": "K5",
+     "b_stelle": "E1.1",
+     "c_zitat": "Die Suva übernahm die Heilbehandlung und richtete ein Taggeld aus.",
+     "beleg_status": "exakt"
+    }
+   ],
+   "c_begruendung": "Das Urteil behandelt eine zentrale materielle Frage des Unfallversicherungsrechts (Kausalzusammenhang/Fallabschluss) und setzt sich eingehend mit der Rechtsprechung zur richtunggebenden Verschlimmerung auseinander. Die Suva ist Partei (K5). Daher ist es für die Schadenpraxis relevant.",
+   "d_score": 88
+  },
+  "deep": {
+   "a_grundsatz": 1,
+   "b_nutzen_uv": 2,
+   "c_korrektur": false,
+   "d_merksatz": "Bei der Beurteilung des Kausalzusammenhangs bei einem Vorzustand ist die medizinische Einschätzung des Suva-Orthopäden Dr. med. B.________ massgeblich; nicht richtunggebende Verschlimmerungen heilen überwiegend wahrscheinlich innert sechs Wochen ab, der Vorzustand ist bei vorbestehenden Veränderungen nach drei Monaten erreicht.",
+   "e_score": 50
+  },
   "precedents": [
    {
     "case_id": "8C_330/2025",
@@ -7153,7 +7819,7 @@
     "similarity": 0.123
    }
   ],
-  "error": "RelevanceError: triage 2025-12-01_8C_275-2025: invalid JSON (Expecting ',' delimiter)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -7271,7 +7937,13 @@
    "c_begruendung": "Das Urteil behandelt die Verfahrenspflichten des Versicherten, insbesondere die Pflicht zur Begründung von Gesuchen um Prozesskostenhilfe und zur Zusammenarbeit mit den Behörden. Diese Grundsätze können auch für die Unfallversicherung relevant sein, wenn es um die Gewährung von Leistungen geht.",
    "d_score": 75
   },
-  "deep": null,
+  "deep": {
+   "a_grundsatz": 2,
+   "b_nutzen_uv": 0,
+   "c_korrektur": true,
+   "d_merksatz": "Ein Gericht darf bei unvollständigen Rechtsmittelanträgen, insbesondere wenn die Partei um eine Frist zur Ergänzung gebeten hat, nicht aufgrund formaler Mängel entscheiden, sondern muss die Partei auffordern, den Antrag zu ergänzen.",
+   "e_score": 25
+  },
   "precedents": [
    {
     "case_id": "8C_154/2025",
@@ -7290,7 +7962,7 @@
     "similarity": 0.072
    }
   ],
-  "error": "RelevanceError: deep 2025-12-01_9C_583-2025: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -7513,7 +8185,13 @@
    "c_begruendung": "Das Urteil behandelt zentrale Fragen der Invaliditätsbemessung in der Unfallversicherung, insbesondere die Bemessung des Valideneinkommens, des Invalideneinkommens und des Leidensabzugs unter Berücksichtigung des medizinischen Belastungsprofils. Es prüft eingehend die medizinische Arbeitsfähigkeit und deren Auswirkungen auf den Erwerbsstatus, was für die Schadenpraxis eines Unfallversicherers relevant ist. Da die Suva als obligatorischer Unfallversicherer solche Fragen regelmässig zu entscheiden hat, wäre das Urteil geeignet für eine interne Zusammenfassung und Verbreitung im Rechtsdienst.",
    "d_score": 88
   },
-  "deep": null,
+  "deep": {
+   "a_grundsatz": 1,
+   "b_nutzen_uv": 2,
+   "c_korrektur": true,
+   "d_merksatz": "Bei einer medizinisch-theoretisch 100%igen Arbeitsfähigkeit in einer angepassten Tätigkeit ist der Invaliditätsgrad nach dem Einkommensvergleich zu bemessen, wobei ein leidensbedingter Abzug von maximal 10 % zu berücksichtigen ist, wenn die medizinischen Einschränkungen die Arbeitsfähigkeit trotz zumutbarer Tätigkeit erheblich einschränken.",
+   "e_score": 50
+  },
   "precedents": [
    {
     "case_id": "8C_687/2024",
@@ -7532,7 +8210,7 @@
     "similarity": 0.141
    }
   ],
-  "error": "RelevanceError: deep 2025-12-03_8C_656-2024: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -7580,7 +8258,19 @@
   "area": "IV",
   "outcome": "gutgeheissen",
   "single_judge": false,
-  "triage": null,
+  "triage": {
+   "a_rechtsfrage": "Ob der Beschwerdegegner nach dem 1. Mai 2021 weiterhin Anspruch auf eine Entschädigung bei einer Hilflosigkeit mittleren Grades hatte und ob die IV-Stelle die seither ausgerichteten Leistungen im Gesamtbetrag von Fr. 103'004.- zurückfordern durfte.",
+   "b_kriterien": [
+    {
+     "a_id": "N3",
+     "b_stelle": "E4.2, E4.3",
+     "c_zitat": "Die Hilflosigkeit gilt als mittelschwer, wenn die versicherte Person in den meisten alltäglichen Lebensverrichtungen erheblich auf Dritthilfe angewiesen ist (Art. 37 Abs. 2 lit. a IVV).",
+     "beleg_status": "fehlt"
+    }
+   ],
+   "c_begruendung": "Das Urteil behandelt ausschliesslich die Anspruchsvoraussetzungen für eine Hilflosenentschädigung gemäss IVG und IVV. Es betrifft nicht das Unfallversicherungsrecht (UVG), keine Berufskrankheiten oder spezifischen Verfahren der Suva. Die Parteien sind die IV-Stelle und der Versicherte, nicht die Suva. Daher erfüllt es keine der Kriterien für eine Relevanz für die Suva.",
+   "d_score": 0
+  },
   "deep": null,
   "precedents": [
    {
@@ -7600,7 +8290,7 @@
     "similarity": 0.072
    }
   ],
-  "error": "RelevanceError: triage 2025-12-04_8C_185-2025: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -7614,8 +8304,38 @@
   "area": "UV",
   "outcome": "abgewiesen",
   "single_judge": false,
-  "triage": null,
-  "deep": null,
+  "triage": {
+   "a_rechtsfrage": "Ob die Suva zu Recht die Leistungspflicht verneint hat, weil kein Unfall vorlag und keine unfallähnliche Körperschädigung vorlag, und ob die Aktenbeurteilung des Suva-Orthopäden Dr. med. E.________ als beweiskräftig genügt.",
+   "b_kriterien": [
+    {
+     "a_id": "K1",
+     "b_stelle": "E3.2",
+     "c_zitat": "Die verschiedenen Indizien, die für oder gegen Abnützung oder Erkrankung sprechen, müssen aus medizinischer Sicht gewichtet werden.",
+     "beleg_status": "exakt"
+    },
+    {
+     "a_id": "K2",
+     "b_stelle": "E4.2/E4.2.2/E4.2.3",
+     "c_zitat": "Die verschiedenen Indizien, die für oder gegen Abnützung oder Erkrankung sprechen, müssen aus medizinischer Sicht gewichtet werden.",
+     "beleg_status": "exakt"
+    },
+    {
+     "a_id": "K4",
+     "b_stelle": "E3.2",
+     "c_zitat": "Die verschiedenen Indizien, die für oder gegen Abnützung oder Erkrankung sprechen, müssen aus medizinischer Sicht gewichtet werden.",
+     "beleg_status": "exakt"
+    }
+   ],
+   "c_begruendung": "Das Urteil behandelt die zentrale Frage der Leistungspflicht der Suva bei fehlendem Unfallereignis und fraglicher unfallähnlicher Körperschädigung. Es präzisiert die Anwendung von Art. 43 Abs. 1 ATSG und Art. 61 lit. c ATSG im Kontext von Aktenbeurteilungen des Suva-Orthopäden. Es klärt die Beweiswürdigung bei Konflikten zwischen versicherungsinternen und externen medizinischen Berichten. Dies ist für die Schadenpraxis der Suva lehrreich.",
+   "d_score": 88
+  },
+  "deep": {
+   "a_grundsatz": 1,
+   "b_nutzen_uv": 3,
+   "c_korrektur": false,
+   "d_merksatz": "Fehlen auch nur geringe Zweifel an der Zuverlässigkeit und Schlüssigkeit der versicherungsinternen ärztlichen Feststellungen, sind keine weiteren Abklärungen erforderlich.",
+   "e_score": 85
+  },
   "precedents": [
    {
     "case_id": "8C_676/2024",
@@ -7634,7 +8354,7 @@
     "similarity": 0.174
    }
   ],
-  "error": "RelevanceError: triage 2025-12-04_8C_224-2025: invalid JSON (Unterminated string starting at)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -7792,7 +8512,13 @@
    "c_begruendung": "Das Urteil behandelt zentrale Fragen der Unfallversicherung wie Stabilisierung des Gesundheitszustands, Kausalzusammenhang und Zumutbarkeit einer anderen Tätigkeit. Es prüft eingehend die medizinische Beweiswürdigung und die Stabilisierung des Gesundheitszustands. Die Suva würde dies für die Schadenpraxis und Rechtsanwendung als lehrreich einstufen.",
    "d_score": 95
   },
-  "deep": null,
+  "deep": {
+   "a_grundsatz": 1,
+   "b_nutzen_uv": 3,
+   "c_korrektur": false,
+   "d_merksatz": "Der Kausalzusammenhang zur Knieverletzung ist nur möglich, die frühere Tätigkeit als Informatiker ist mit Anpassungen zumutbar, und der Gesundheitszustand war per 31. Oktober 2019 stabilisiert.",
+   "e_score": 80
+  },
   "precedents": [
    {
     "case_id": "8C_172/2025",
@@ -7811,7 +8537,7 @@
     "similarity": 0.143
    }
   ],
-  "error": "RelevanceError: deep 2025-12-09_8C_179-2025: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -7850,7 +8576,13 @@
    "c_begruendung": "Das Urteil ist relevant, weil es sich eingehend mit der Beweiswürdigung medizinischer Gutachten auseinandersetzt, was für alle Sozialversicherer relevant ist. Die Suva könnte solche Grundsätze in ihrer Praxis anwenden. Zudem wird die Rechtsprechung zur Invaliditätsbemessung und zur Zuverlässigkeit von Gutachten präzisiert.",
    "d_score": 65
   },
-  "deep": null,
+  "deep": {
+   "a_grundsatz": 0,
+   "b_nutzen_uv": 1,
+   "c_korrektur": false,
+   "d_merksatz": "",
+   "e_score": 0
+  },
   "precedents": [
    {
     "case_id": "8C_44/2025",
@@ -7869,7 +8601,7 @@
     "similarity": 0.132
    }
   ],
-  "error": "RelevanceError: deep 2025-12-09_8C_286-2025: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -8080,7 +8812,13 @@
    "c_begruendung": "Das Urteil klärt die Voraussetzung des gewöhnlichen Aufenthalts in der Schweiz für den Anspruch auf Invalidenrente und Hilflosenentschädigung, was für die Suva relevant ist, weil sie ähnliche Anspruchsfragen bei ihren Versicherten prüfen muss. Es handelt sich um eine materielle Frage des Sozialversicherungsrechts, die für die Praxis der Suva lehrreich ist.",
    "d_score": 88
   },
-  "deep": null,
+  "deep": {
+   "a_grundsatz": 0,
+   "b_nutzen_uv": 1,
+   "c_korrektur": false,
+   "d_merksatz": "Ein Aufenthalt im Ausland von bis zu einem Jahr kann den gewöhnlichen Aufenthalt in der Schweiz nicht unterbrechen, wenn er auf gültigen Gründen beruht.",
+   "e_score": 10
+  },
   "precedents": [
    {
     "case_id": "8C_676/2024",
@@ -8099,7 +8837,7 @@
     "similarity": 0.068
    }
   ],
-  "error": "RelevanceError: deep 2025-12-10_8C_315-2025: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -8234,8 +8972,38 @@
   "area": "IV",
   "outcome": "abgewiesen",
   "single_judge": false,
-  "triage": null,
-  "deep": null,
+  "triage": {
+   "a_rechtsfrage": "Die zentrale Rechtsfrage ist die Bestimmung des Valideneinkommens bei der Invaliditätsbemessung, insbesondere die Gewichtung der tatsächlichen Erwerbsbiographie gegenüber dem ursprünglich studierten akademischen Beruf.",
+   "b_kriterien": [
+    {
+     "a_id": "K2",
+     "b_stelle": "E4.2, D1",
+     "c_zitat": "Die Beschwerdeführerin war in der Schweiz ausschliesslich im Detailhandel erwerbstätig.",
+     "beleg_status": "fehlt"
+    },
+    {
+     "a_id": "K3",
+     "b_stelle": "BGE 150 V 354",
+     "c_zitat": "Es ist nicht überwiegend wahrscheinlich erstellt, dass ihr ursprünglich studierter akademischer Beruf als Valideneinkommen heranzuziehen sei.",
+     "beleg_status": "ungefähr"
+    },
+    {
+     "a_id": "K4",
+     "b_stelle": "E4.2",
+     "c_zitat": "Die Beschwerdeführerin war in der Schweiz ausschliesslich im Detailhandel erwerbstätig.",
+     "beleg_status": "fehlt"
+    }
+   ],
+   "c_begruendung": "Das Urteil behandelt die zentrale Frage der Valideneinkommensbestimmung bei der Invaliditätsbemessung. Es wägt die tatsächliche Erwerbsbiographie (Detailhandel) gegenüber dem ursprünglich studierten akademischen Beruf ab und wendet intertemporales Recht an. Diese Klarstellung der Rechtsprechung zur hypothetischen Erwerbsbiographie ist für die Suva relevant, da sie ähnliche Fragen der Valideneinkommensermittlung in der Unfallversicherung zu prüfen hat.",
+   "d_score": 85
+  },
+  "deep": {
+   "a_grundsatz": 1,
+   "b_nutzen_uv": 0,
+   "c_korrektur": false,
+   "d_merksatz": "Das Valideneinkommen ist anhand der tatsächlichen Erwerbstätigkeit der Beschwerdeführerin im Detailhandel (Tabelle T17, Ziff. 52) zu bestimmen, nicht anhand des ursprünglich studierten akademischen Berufes.",
+   "e_score": 10
+  },
   "precedents": [
    {
     "case_id": "8C_241/2025",
@@ -8254,7 +9022,7 @@
     "similarity": 0.102
    }
   ],
-  "error": "RelevanceError: triage 2025-12-11_8C_104-2025: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -8287,7 +9055,13 @@
    "c_begruendung": "Das Urteil behandelt eine spezifische materielle Frage der Unfallversicherung bezüglich der Einordnung einer Verletzung als unfallähnliche Körperschädigung. Es betrifft die Beweiswürdigung medizinischer Gutachten und die Anwendung der gesetzlichen Definition. Die Suva ist Partei und das Urteil könnte für die Praxis relevant sein, insbesondere bei der Einordnung von Verletzungen, die nicht eindeutig als Unfall klassifiziert werden können.",
    "d_score": 85
   },
-  "deep": null,
+  "deep": {
+   "a_grundsatz": 2,
+   "b_nutzen_uv": 3,
+   "c_korrektur": true,
+   "d_merksatz": "Bei der Beurteilung von Läsionen nach Art. 6 Abs. 2 UVG muss die medizinische Einordnung durch einen unabhängigen Arzt erfolgen; die exhaustiv definierte Liste darf nicht durch reine Terminologie oder Literaturargumentation umgangen werden, wenn der behandelnde Arzt keine gegenteiligen Befunde vorgelegt hat.",
+   "e_score": 80
+  },
   "precedents": [
    {
     "case_id": "8C_62/2025",
@@ -8306,7 +9080,7 @@
     "similarity": 0.156
    }
   ],
-  "error": "RelevanceError: deep 2025-12-11_8C_177-2025: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -8337,8 +9111,50 @@
   "area": "UV",
   "outcome": "abgewiesen",
   "single_judge": false,
-  "triage": null,
-  "deep": null,
+  "triage": {
+   "a_rechtsfrage": "Stabilisierung des Gesundheitszustands, Invaliditätsgrad und Integritätsentschädigung bei komplexen Fussverletzungen und psychischen Beschwerden",
+   "b_kriterien": [
+    {
+     "a_id": "K1",
+     "b_stelle": "E4",
+     "c_zitat": "L'état de santé de l'assuré devait être considéré comme stabilisé dès lors qu'aucune amélioration ne pouvait être attendue de la poursuite d'un traitement médical",
+     "beleg_status": "exakt"
+    },
+    {
+     "a_id": "K2",
+     "b_stelle": "E3",
+     "c_zitat": "L'examen de la causalité adéquate en cas de troubles psychiques consécutifs à un accident (ATF 129 V 402 consid. 4.4.1; 115 V 133 consid. 6, 403 consid. 5)",
+     "beleg_status": "exakt"
+    },
+    {
+     "a_id": "K3",
+     "b_stelle": "E3",
+     "c_zitat": "L'évaluation de l'invalidité et de l'atteinte à l'intégrité selon les tables de la LAA",
+     "beleg_status": "fehlt"
+    },
+    {
+     "a_id": "K4",
+     "b_stelle": "E4",
+     "c_zitat": "L'évaluation des rapports médicaux et la distinction entre état stabilisé et capacité de travail résiduelle",
+     "beleg_status": "fehlt"
+    },
+    {
+     "a_id": "K5",
+     "b_stelle": "E1",
+     "c_zitat": "Le recours est dirigé contre un arrêt final rendu en matière de droit public par une autorité cantonale de dernière instance",
+     "beleg_status": "fehlt"
+    }
+   ],
+   "c_begruendung": "Das Urteil behandelt materielle Fragen der Unfallversicherung (K1), allgemeines Sozialversicherungsrecht (K2), übertragbare Grundsätze der Invaliditätsbemessung (K3), präzisiert die Rechtsprechung zur Bewertung von Gutachten und Integritätsentschädigungen (K4) und ist Parteiurteil (K5).",
+   "d_score": 92
+  },
+  "deep": {
+   "a_grundsatz": 0,
+   "b_nutzen_uv": 2,
+   "c_korrektur": false,
+   "d_merksatz": "Die Integritätsbemessung ist auf objektiven Befunden zu stützen, nicht auf Schmerzangaben; psychische Störungen sind nicht adäquat kausal zum Unfall.",
+   "e_score": 15
+  },
   "precedents": [
    {
     "case_id": "8C_154/2025",
@@ -8357,7 +9173,7 @@
     "similarity": 0.166
    }
   ],
-  "error": "RelevanceError: triage 2025-12-11_8C_72-2025: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -8505,7 +9321,13 @@
    "c_begruendung": "Das Urteil behandelt die Anforderungen an die Plausibilität einer Veränderung von Gesundheit und Invalidität im Rahmen einer Neuanmeldung nach Art. 87 RAI, was für die Praxis der Suva relevant ist, wenn sie neue Leistungsansprüche nach UVG prüfen muss. Es konkretisiert die Prüfungskriterien und stellt eine Rechtsprechungsklärung dar, weshalb K2, K3 und K4 erfüllt sind.",
    "d_score": 92
   },
-  "deep": null,
+  "deep": {
+   "a_grundsatz": 2,
+   "b_nutzen_uv": 0,
+   "c_korrektur": true,
+   "d_merksatz": "Eine wesentliche Abnahme des IQ und eine fachliche Einschätzung der Arbeitsfähigkeit stellen eine plausible Veränderung des Gesundheitszustands dar, die eine erneute Prüfung der Invaliditätsfrage rechtfertigt, selbst wenn das SMR die medizinischen Berichte als nicht erbringend abtut.",
+   "e_score": 10
+  },
   "precedents": [
    {
     "case_id": "8C_145/2025",
@@ -8524,7 +9346,7 @@
     "similarity": 0.187
    }
   ],
-  "error": "RelevanceError: deep 2025-12-15_8C_400-2025: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -8626,7 +9448,13 @@
    "c_begruendung": "Das Urteil behandelt die Bewertung psychiatrischer Gutachten und die Qualifikation der Gutachter, was für die Suva relevant ist, wenn sie medizinische Gutachten in Anspruch nimmt. Die Prinzipien der Beweiswürdigung sind übertragbar.",
    "d_score": 65
   },
-  "deep": null,
+  "deep": {
+   "a_grundsatz": 1,
+   "b_nutzen_uv": 0,
+   "c_korrektur": false,
+   "d_merksatz": "Das psychiatrische Gutachten zeigt eine Anpassungsstörung ohne Auswirkung auf die Arbeitsfähigkeit auf, weshalb kein invalidisierender Gesundheitsschaden vorliegt.",
+   "e_score": 10
+  },
   "precedents": [
    {
     "case_id": "8C_44/2025",
@@ -8645,7 +9473,7 @@
     "similarity": 0.115
    }
   ],
-  "error": "RelevanceError: deep 2025-12-16_8C_638-2025: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -8676,8 +9504,38 @@
   "area": "UV",
   "outcome": "abgewiesen",
   "single_judge": false,
-  "triage": null,
-  "deep": null,
+  "triage": {
+   "a_rechtsfrage": "Unfallkausalität der Subscapularissehnenläsion im Kontext degenerativer Veränderungen.",
+   "b_kriterien": [
+    {
+     "a_id": "K1",
+     "b_stelle": "E4.2",
+     "c_zitat": "Eine Ablösung am Knochen ist ein klarer Hinweis für eine degenerative Veränderung.",
+     "beleg_status": "fehlt"
+    },
+    {
+     "a_id": "K2",
+     "b_stelle": "E2.2",
+     "c_zitat": "Der Beweiswert eines ärztlichen Berichts oder Gutachtens ist umfassend zu würdigen; die Tonaufzeichnung dient lediglich zur Nachvollziehbarkeit.",
+     "beleg_status": "fehlt"
+    },
+    {
+     "a_id": "K4",
+     "b_stelle": "E4.1",
+     "c_zitat": "Die Ablösung der Subscapularissehne artikularseitig und direkt am Knochen ist ein klarer Hinweis für eine degenerative Veränderung.",
+     "beleg_status": "fehlt"
+    }
+   ],
+   "c_begruendung": "Das Urteil behandelt die Unfallkausalität im Kontext degenerativer Veränderungen, wägt medizinische Gutachten gegeneinander ab und ist für die Suva relevant, da es die Kriterien für die Leistungspflicht im UVG konkret prüft.",
+   "d_score": 88
+  },
+  "deep": {
+   "a_grundsatz": 1,
+   "b_nutzen_uv": 2,
+   "c_korrektur": true,
+   "d_merksatz": "Eine Schulterprellung verursacht keine degenerative Subscapularissehnenruptur, und spätere kleinere Unfälle führen nicht zu neuen strukturellen Läsionen.",
+   "e_score": 75
+  },
   "precedents": [
    {
     "case_id": "8C_62/2025",
@@ -8696,7 +9554,7 @@
     "similarity": 0.158
    }
   ],
-  "error": "RelevanceError: triage 2025-12-16_8C_78-2025: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -8763,7 +9621,13 @@
    "c_begruendung": "Das Urteil behandelt die materielle Frage der Invaliditätsbemessung, insbesondere den Einkommensvergleich und die Bestimmung des Valideneinkommens. Die Grundsätze der Beweiswürdigung und des Einkommensvergleichs sind auch für die Unfallversicherung relevant. Das Gericht prüft eingehend die Frage der Bestimmung des Valideneinkommens und die Würdigung der medizinischen und beruflichen Fakten.",
    "d_score": 88
   },
-  "deep": null,
+  "deep": {
+   "a_grundsatz": 3,
+   "b_nutzen_uv": 3,
+   "c_korrektur": true,
+   "d_merksatz": "Bei der Bestimmung des ohne Invalidität erzielten Einkommens ist grundsätzlich auf den zuletzt vor Eintritt des Gesundheitsschadens tatsächlich erzielten Verdienst abzustellen; Spekulationen über eine hypothetische alternative Karriere ohne Gesundheitsschaden sind nicht ausreichend, um den ohne Invalidität erzielten Verdienst zu bestimmen.",
+   "e_score": 85
+  },
   "precedents": [
    {
     "case_id": "9C_581/2024",
@@ -8782,7 +9646,7 @@
     "similarity": 0.173
    }
   ],
-  "error": "RelevanceError: deep 2025-12-16_9C_45-2025: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -8884,7 +9748,13 @@
    "c_begruendung": "Das Urteil behandelt die Beweiswürdigung und Feststellung des medizinischen Sachverhalts, insbesondere die Bewertung von psychiatrischen Gutachten und die Beweiswürdigung durch das Gericht und die Vorinstanz. Diese Prinzipien können auch in der Unfallversicherung relevant sein, da sie Fragen zur Beweiswürdigung und Feststellung des medizinischen Sachverhalts betreffen, die auch in der Unfallversicherung relevant sind.",
    "d_score": 75
   },
-  "deep": null,
+  "deep": {
+   "a_grundsatz": 1,
+   "b_nutzen_uv": 0,
+   "c_korrektur": true,
+   "d_merksatz": "Das SMAB-Gutachten ist grundsätzlich beweistauglich, solange keine konkreten Indizien gegen seine Zuverlässigkeit sprechen; die psychiatrische Diagnose der behandelnden Ärztin wurde im Lichte des polydisziplinären Gutachtens nicht bestätigt.",
+   "e_score": 12
+  },
   "precedents": [
    {
     "case_id": "8C_44/2025",
@@ -8903,7 +9773,7 @@
     "similarity": 0.107
    }
   ],
-  "error": "RelevanceError: deep 2025-12-17_8C_268-2025: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -8954,7 +9824,13 @@
    "c_begruendung": "Das Urteil behandelt eine zentrale materielle Kausalitätsfrage nach UVG, würdigt medizinische Gutachten und behandelt die Invaliditätsbemessung. Es ist präzise auf die Rechtsprechung bei psychischen Beschwerden nach Unfall eingegangen und die Suva ist Partei. Daher ist es für den Rechtsdienst der Suva relevant.",
    "d_score": 88
   },
-  "deep": null,
+  "deep": {
+   "a_grundsatz": 1,
+   "b_nutzen_uv": 2,
+   "c_korrektur": false,
+   "d_merksatz": "Bei Unfällen mittleren Grades ist die adäquate Kausalität psychischer Störungen anhand der sieben Kriterien zu prüfen, wobei die psychischen Aspekte bei der Anwendung der Kriterien ausgeschlossen werden.",
+   "e_score": 85
+  },
   "precedents": [
    {
     "case_id": "8C_172/2025",
@@ -8973,7 +9849,7 @@
     "similarity": 0.21
    }
   ],
-  "error": "RelevanceError: deep 2025-12-17_8C_356-2025: invalid JSON (Expecting property name enclosed in double quotes)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -8987,8 +9863,38 @@
   "area": "UV",
   "outcome": "abgewiesen",
   "single_judge": false,
-  "triage": null,
-  "deep": null,
+  "triage": {
+   "a_rechtsfrage": "Der Anspruch auf Leistungen der obligatorischen Unfallversicherung über den Fallabschluss hinaus wird verneint, weil die nach dem 14. Oktober 2021 weiterbestehenden Schulterbeschwerden nicht mehr natürlich kausal auf den Unfall vom 14. Juli 2021 zurückzuführen sind.",
+   "b_kriterien": [
+    {
+     "a_id": "K1",
+     "b_stelle": "E5",
+     "c_zitat": "Die nach dem 14. Oktober 2021 weiterbestehenden Schulterbeschwerden links sind nicht mehr natürlich kausal auf den Unfall vom 14. Juli 2021 zurückzuführen.",
+     "beleg_status": "ungefähr"
+    },
+    {
+     "a_id": "K2",
+     "b_stelle": "E2.2",
+     "c_zitat": "Die massgebenden Bestimmungen und Grundsätze zum für die Leistungspflicht des obligatorischen Unfallversicherers (Art. 6 UVG) vorausgesetzten natürlichen Kausalzusammenhang... zutreffend dargelegt.",
+     "beleg_status": "exakt"
+    },
+    {
+     "a_id": "K4",
+     "b_stelle": "E4.3",
+     "c_zitat": "Das Gericht prüft eingehend die medizinische Beurteilung des SMAB-Gutachtens und die Beweiswürdigung medizinischer Berichte.",
+     "beleg_status": "fehlt"
+    }
+   ],
+   "c_begruendung": "Das Urteil behandelt die materielle Frage des Fallabschlusses in der Unfallversicherung und die Beweiswürdigung medizinischer Gutachten. Es ist direkt relevant für die Praxis der Suva bei der Beurteilung von Unfallfolgen und dem Zeitpunkt des Fallabschlusses.",
+   "d_score": 88
+  },
+  "deep": {
+   "a_grundsatz": 1,
+   "b_nutzen_uv": 3,
+   "c_korrektur": false,
+   "d_merksatz": "Die SMAB-Expertise vom 4. August 2023 ist als voll beweiskräftig zu werten; nach dem 31. August 2023 sind keine unfallbedingten Beschwerden mehr ausgewiesen, weshalb der Fallabschluss zu Recht erfolgt ist.",
+   "e_score": 75
+  },
   "precedents": [
    {
     "case_id": "8C_676/2024",
@@ -9007,7 +9913,7 @@
     "similarity": 0.122
    }
   ],
-  "error": "RelevanceError: triage 2025-12-17_8C_512-2025: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -9109,7 +10015,13 @@
    "c_begruendung": "Das Urteil behandelt die Anwendung der neuen IV‑Kriterien bei psychischen Erkrankungen, was für die Koordination zwischen Invalidenversicherung und Unfallversicherung relevant ist. Die Suva wird dadurch sensibilisiert, wie psychiatrische Einschätzungen unter dem strukturierten Beweisverfahren zu werten sind.",
    "d_score": 75
   },
-  "deep": null,
+  "deep": {
+   "a_grundsatz": 2,
+   "b_nutzen_uv": 1,
+   "c_korrektur": false,
+   "d_merksatz": "Bei der Beurteilung psychischer Beschwerden ist das strukturierte Beweisverfahren nach Art. 7 Abs. 2 IVG anzuwenden, wobei alle relevanten Indikatoren (Funktionsstörungen, Ressourcen, Therapieresistenz) zu berücksichtigen sind.",
+   "e_score": 10
+  },
   "precedents": [
    {
     "case_id": "8C_145/2025",
@@ -9128,7 +10040,7 @@
     "similarity": 0.138
    }
   ],
-  "error": "RelevanceError: deep 2025-12-17_9C_369-2024: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -9228,8 +10140,38 @@
   "area": "IV",
   "outcome": "abgewiesen",
   "single_judge": false,
-  "triage": null,
-  "deep": null,
+  "triage": {
+   "a_rechtsfrage": "Beweiswürdigung medizinischer Berichte und Anwendung von Revisionsgründen bei Neuanmeldungen",
+   "b_kriterien": [
+    {
+     "a_id": "K2",
+     "b_stelle": "E2",
+     "c_zitat": "Die zeitliche Grenze der gerichtlichen Überprüfungsbefugnis ist zu beachten.",
+     "beleg_status": "ungefähr"
+    },
+    {
+     "a_id": "K3",
+     "b_stelle": "E5.1, E5.2.1, E5.2.2, E5.2.3",
+     "c_zitat": "Der Bericht einer Psychotherapeutin ist nicht zwingend erforderlich, wenn keine fachärztliche Diagnose vorliegt.",
+     "beleg_status": "fehlt"
+    },
+    {
+     "a_id": "K4",
+     "b_stelle": "E5.1, E5.2.1, E5.2.2, E5.2.3",
+     "c_zitat": "Die Vorinstanz stellte willkürfrei fest, dass bis zum Verfügungszeitpunkt keine ärztlich verordnete Psychotherapie in Anspruch genommen wurde.",
+     "beleg_status": "fehlt"
+    }
+   ],
+   "c_begruendung": "Das Urteil behandelt die Beweiswürdigung medizinischer Berichte (insbesondere psychiatrischer Berichte von Psychotherapeutinnen) und die Anwendung von Revisionsgründen bei Neuanmeldungen. Diese Fragen sind für die Unfallversicherung relevant, da auch hier die Beweiswürdigung von Gutachten und die Feststellung von Invalidität entscheidend sind. Das Gericht prüft eingehend die medizinischen Unterlagen und die Anwendung von IVV-Regeln, was für die Suva relevant ist.",
+   "d_score": 85
+  },
+  "deep": {
+   "a_grundsatz": 1,
+   "b_nutzen_uv": 0,
+   "c_korrektur": true,
+   "d_merksatz": "Bei Neuanmeldungen der Invalidenversicherung ist eine relevante Veränderung des Gesundheitszustands nur dann anzunehmen, wenn eine fachärztlich gestellte Diagnose oder eine ärztlich verordnete Psychotherapie vor dem Verfügungszeitpunkt bestand.",
+   "e_score": 10
+  },
   "precedents": [
    {
     "case_id": "8C_44/2025",
@@ -9248,7 +10190,7 @@
     "similarity": 0.11
    }
   ],
-  "error": "RelevanceError: triage 2025-12-18_8C_499-2025: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -9471,7 +10413,13 @@
    "c_begruendung": "Das Urteil behandelt die Prozessvoraussetzungen im Kontext der Unfallversicherung, insbesondere die Anforderungen an die Beschwerdebegründung und die Einhaltung der Rechtsmittelfristen nach BGG. Es ist relevant für die interne Praxis der Suva bei der Prüfung von Beschwerden. Da es sich um ein rein formelles Urteil ohne materielle Beurteilung eines konkreten Falles handelt, ist die Relevanz moderat.",
    "d_score": 65
   },
-  "deep": null,
+  "deep": {
+   "a_grundsatz": 0,
+   "b_nutzen_uv": 3,
+   "c_korrektur": false,
+   "d_merksatz": "",
+   "e_score": 20
+  },
   "precedents": [
    {
     "case_id": "8C_455/2025",
@@ -9490,7 +10438,7 @@
     "similarity": 0.083
    }
   ],
-  "error": "RelevanceError: deep 2025-12-19_8C_639-2025: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -9504,7 +10452,43 @@
   "area": "UV",
   "outcome": "nichteintreten",
   "single_judge": false,
-  "triage": null,
+  "triage": {
+   "a_rechtsfrage": "Die zentrale Rechtsfrage betrifft die Einhaltung der Rechtsmittelfristen und die Gültigkeit der Feststellungen des kantonalen Gerichts bezüglich des Ausstandsbegehrens im Rahmen des Unfallversicherungsverfahrens.",
+   "b_kriterien": [
+    {
+     "a_id": "K1",
+     "b_stelle": "E4.2",
+     "c_zitat": "Die bundesgerichtliche Rechtsmittelfrist ist gemäss Art. 44 - 48 und Art. 100 Abs. 1 BGG am 20. Oktober 2025 abgelaufen.",
+     "beleg_status": "exakt"
+    },
+    {
+     "a_id": "K2",
+     "b_stelle": "E5",
+     "c_zitat": "Innert dieser Frist hat der Beschwerdeführer nicht aufgezeigt, inwieweit die von der Vorinstanz in diesem Zusammenhang getroffenen Sachverhaltsfeststellungen im Sinne von Art. 97 Abs. 2 BGG unrichtig sein und die darauf beruhenden Erwägungen gegen Bundesrecht verstossen oder einen anderen Beschwerdegrund (vgl. Art. 95 lit. a-e BGG) gesetzt haben sollen.",
+     "beleg_status": "exakt"
+    },
+    {
+     "a_id": "K3",
+     "b_stelle": "N/A",
+     "c_zitat": "",
+     "beleg_status": "fehlt"
+    },
+    {
+     "a_id": "K4",
+     "b_stelle": "N/A",
+     "c_zitat": "",
+     "beleg_status": "fehlt"
+    },
+    {
+     "a_id": "K5",
+     "b_stelle": "N/A",
+     "c_zitat": "",
+     "beleg_status": "fehlt"
+    }
+   ],
+   "c_begruendung": "Das Urteil behandelt ausschliesslich prozessuale Aspekte, insbesondere die Einhaltung der Rechtsmittelfristen und die Begründungsanforderungen gemäss BGG. Es enthält keine materiellen Feststellungen zur Unfallversicherung (Unfallbegriff, Kausalität, Invalidität etc.). Daher fehlen die Kriterien K1 und K3, die für eine hohe Relevanz erforderlich wären.",
+   "d_score": 20
+  },
   "deep": null,
   "precedents": [
    {
@@ -9524,7 +10508,7 @@
     "similarity": 0.091
    }
   ],
-  "error": "RelevanceError: triage 2025-12-19_8C_640-2025: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -9585,7 +10569,13 @@
    "c_begruendung": "Das Urteil prüft eingehend die Beweiskraft des psychiatrischen Gutachtens und die Anwendung der Indikatoren bei psychischen Leiden. Es ist lehrreich für die Praxis der Beweiswürdigung in der Sozialversicherung, was auch für die Unfallversicherung relevant sein kann, wenn es um die Beurteilung von Arbeitsfähigkeit bei psychischen Leiden geht.",
    "d_score": 72
   },
-  "deep": null,
+  "deep": {
+   "a_grundsatz": 1,
+   "b_nutzen_uv": 0,
+   "c_korrektur": false,
+   "d_merksatz": "Eine remittierte reaktive depressive Anpassungsstörung (ICD-10 F43.21) stellt keinen invalidisierenden Gesundheitsschaden dar, wenn sie durch psychosoziale Faktoren erklärbar ist und keine dauerhaften Auswirkungen auf die Arbeitsfähigkeit hat.",
+   "e_score": 15
+  },
   "precedents": [
    {
     "case_id": "8C_44/2025",
@@ -9604,7 +10594,7 @@
     "similarity": 0.156
    }
   ],
-  "error": "RelevanceError: deep 2025-12-22_8C_69-2025: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
@@ -9785,7 +10775,13 @@
    "c_begruendung": "Das Urteil behandelt eine zentrale Frage der Unfallversicherung, nämlich die Abgrenzung zwischen unfallähnlicher Körperschädigung und Abnützung/Erkrankung. Es prüft eingehend die medizinischen Beurteilungen und zitiert die Rechtsprechung zu Art. 6 Abs. 2 lit. g UVG. Das Urteil präzisiert die Rechtsprechung zur unfallähnlichen Körperschädigung und ist für die Schadenpraxis relevant.",
    "d_score": 85
   },
-  "deep": null,
+  "deep": {
+   "a_grundsatz": 1,
+   "b_nutzen_uv": 2,
+   "c_korrektur": true,
+   "d_merksatz": "Das Bundesgericht wies die Argumentation der AXA zurück, wonach die Knieverletzung vorwiegend auf Abnützung oder Erkrankung zurückzuführen sei, und bestätigte, dass der Gesundheitsschaden nicht vorwiegend auf Abnützung, sondern auf ein Trauma zurückzuführen ist, weshalb die AXA für die Folgen des Ereignisses vom 21. März 2023 nicht aufzukommen hat.",
+   "e_score": 50
+  },
   "precedents": [
    {
     "case_id": "8C_676/2024",
@@ -9804,7 +10800,7 @@
     "similarity": 0.124
    }
   ],
-  "error": "RelevanceError: deep 2025-12-23_8C_366-2024: invalid JSON (Expecting value)",
+  "error": null,
   "model": "apertus-v1-5-8b-thinking"
  },
  {
