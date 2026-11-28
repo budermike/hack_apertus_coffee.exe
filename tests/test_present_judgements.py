@@ -588,3 +588,39 @@ def test_a_decision_puts_its_judgement_on_the_right_side_and_keeps_the_order_ins
         assert (items[key]["score"] >= 60) == (level == "high") and (items[key]["score"] < 40) == (level == "low")
         assert items[key]["ampel"] == ("gruen" if level == "high" else "rot")
     assert items["9C_23_2026"]["score"] >= items["9C_22_2026"]["score"]   # clamped, not set to one value
+
+
+def test_a_reworded_quote_gets_the_passage_of_the_judgement_and_the_rule_leaves_the_reason(tmp_path):
+    text = ("Urteil vom 8. Oktober 2026\nIV. öffentlich-rechtliche Abteilung\nSachverhalt:\nA. Unfall.\nErwägungen:\n"
+            "2.1. Im Fokus steht die Frage, ob der Unfall vom 13. März 2018 zu einer richtungsgebenden Verschlimmerung "
+            "des Vorzustands führte.\nDemnach erkennt das Bundesgericht:\n1. Die Beschwerde wird abgewiesen.")
+    raw = tmp_path / "raw" / "2026-10"
+    raw.mkdir(parents=True)
+    (raw / "2026-10-08_8C_79_2026.json").write_text(json.dumps({
+        "id": "8C_79_2026", "case_id": "8C_79/2026", "case_ids": ["8C_79/2026"], "decision_date": "2026-10-08",
+        "language": "de", "subject": "Unfallversicherung", "url": "https://search.bger.ch/x", "text": text,
+    }), encoding="utf-8")
+    rule = "Der Rückfall ist zu entschädigen."
+    relevance = {"p": 0.8, "rule": rule, "question": "Kausalzusammenhang?", "criteria": [
+        {"a_id": "K1", "b_stelle": "E2.1", "beleg_status": "fehlt",
+         "c_zitat": "Der Unfall vom 13. März 2018 bewirkte eine richtungsgebende Verschlimmerung des Vorzustands."},
+        {"a_id": "K2", "b_stelle": "E2.1", "beleg_status": "fehlt",
+         "c_zitat": "Das Bundesgericht ändert seine Rechtsprechung zum Schleudertrauma grundlegend."},
+    ]}
+    row = {"case_id": "8C_79/2026", "rank_score": 84.0, "judgement_date": "2026-10-08",
+           "relevance_reason": f"Kausalzusammenhang, für die Suva relevant.  Merksatz:  {rule} ",
+           "metadata": {"subject": "Unfallversicherung", "relevance": relevance}}
+    triage = tmp_path / "triage.json"
+    triage.write_text(json.dumps([row]), encoding="utf-8")
+    item = JudgementList(triage, config=TriageConfig(), crawl_dir=tmp_path / "raw").items()[0]
+    first, second = item["criteria"]
+    # the passage is the judgement's own wording with its mark; Apertus' wording stays as `quote`
+    assert first["passage"] == {"at": "E2.1", "text": "Im Fokus steht die Frage, ob der Unfall vom 13. März 2018 zu einer "
+                                                      "richtungsgebenden Verschlimmerung des Vorzustands führte."}
+    assert first["status"] == "fehlt" and first["quote"].startswith("Der Unfall vom 13. März 2018 bewirkte")
+    assert "passage" not in second  # nothing close in the judgement: none is made up
+    # «Warum relevant» and «Merksatz für die Praxis» are two different texts
+    assert item["explanation"]["de"] == "Kausalzusammenhang, für die Suva relevant."
+    assert item["rule"]["de"] == rule
+    # without the stored judgement text there is no passage, and nothing breaks
+    assert all("passage" not in c for c in to_ui_item(row)["criteria"])
