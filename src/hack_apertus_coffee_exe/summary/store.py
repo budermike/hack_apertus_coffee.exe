@@ -11,6 +11,8 @@ Key rules:
   previous one and is shown at once, ``discard_edit`` returns to the generated text.
   ``save_edit`` / ``approve`` (every edit a new version, shown after approval) remain for
   callers that want the full history.
+- ``aligned_by`` names the Apertus model when the text of that version was not typed by the
+  lawyer but brought in line with their edit of the other language. It is NULL otherwise.
 - Any case number (also secondary numbers of joined cases) resolves to the
   main ``case_id`` via the ``case_numbers`` table.
 """
@@ -55,6 +57,7 @@ CREATE TABLE IF NOT EXISTS summaries (
     issues         TEXT,
     facts          TEXT,
     examples       TEXT,
+    aligned_by     TEXT,
     UNIQUE (case_id, language, version),
     CHECK (
         (status = 'generated' AND model <> 'human')
@@ -119,6 +122,7 @@ class Summary:
     issues: list[dict[str, Any]] = field(default_factory=list)
     facts: dict[str, Any] = field(default_factory=dict)
     examples: list[str] = field(default_factory=list)
+    aligned_by: str | None = None
 
 
 @dataclass(frozen=True)
@@ -170,6 +174,17 @@ def connect(path: str | Path | None = None) -> sqlite3.Connection:
 def init_db(conn: sqlite3.Connection) -> None:
     """Create all tables and indexes if they do not exist (idempotent)."""
     conn.executescript(SCHEMA_SQL)
+    # Databases created before 28.11.2026 have no ``aligned_by``: add it, the rows stay.
+    if "aligned_by" not in _summary_columns(conn):
+        try:
+            conn.execute("ALTER TABLE summaries ADD COLUMN aligned_by TEXT")
+        except sqlite3.OperationalError:
+            if "aligned_by" not in _summary_columns(conn):  # not just added by another connection
+                raise
+
+
+def _summary_columns(conn: sqlite3.Connection) -> set[str]:
+    return {row[1] for row in conn.execute("PRAGMA table_info(summaries)")}
 
 
 # --- Cases -------------------------------------------------------------------
@@ -336,13 +351,24 @@ def approve(conn: sqlite3.Connection, case_number: str, language: str) -> Summar
         )
 
 
-def replace_edit(conn: sqlite3.Connection, case_number: str, language: str, text: str) -> Summary:
+def replace_edit(
+    conn: sqlite3.Connection,
+    case_number: str,
+    language: str,
+    text: str,
+    *,
+    aligned_by: str | None = None,
+) -> Summary:
     """Store the lawyer's text as the one edited version of this summary and show it at once.
 
     What the UI uses since the correction of 28.11.: there is the generated version (kept
     for good, so the model output stays traceable) and at most one human version per
     language. A new edit replaces the previous one instead of adding a version, and it
     needs no approval. ``discard_edit`` goes back to the generated text.
+
+    ``aligned_by`` is the model ID when Apertus wrote ``text`` to follow the lawyer's edit
+    of the other language. The row still belongs to the edited version (``model = human``,
+    as the table's CHECK demands), but the database says who wrote it.
     """
     case_id = _require_case(conn, case_number)
     with conn:
@@ -368,6 +394,7 @@ def replace_edit(conn: sqlite3.Connection, case_number: str, language: str, text
             prompt_version=None,
             status="approved",
             coherence_ok=None,
+            aligned_by=aligned_by,
         )
 
 
@@ -389,6 +416,20 @@ def discard_edit(conn: sqlite3.Connection, case_number: str, language: str | Non
                 (case_id, lang, HUMAN),
             ).rowcount
         return deleted
+
+
+def discard_pending(conn: sqlite3.Connection, case_number: str, language: str) -> int:
+    """Delete the edits of one language that still wait for approval (status 'edited').
+
+    Such rows come from the time before 28.11.2026, when an edit had to be approved.
+    Returns the number of deleted rows; the shown version is not touched.
+    """
+    case_id = _require_case(conn, case_number)
+    with conn:
+        return conn.execute(
+            "DELETE FROM summaries WHERE case_id = ? AND language = ? AND status = 'edited'",
+            (case_id, language),
+        ).rowcount
 
 
 def get_or_generate(
@@ -632,6 +673,7 @@ def _insert(
     issues: list[dict[str, Any]] | None = None,
     facts: dict[str, Any] | None = None,
     examples: list[str] | None = None,
+    aligned_by: str | None = None,
 ) -> Summary:
     if language not in LANGUAGES:
         raise ValueError(f"language must be one of {LANGUAGES}, got {language!r}")
@@ -641,13 +683,13 @@ def _insert(
         """
         INSERT INTO summaries
             (case_id, language, version, title, text, model, prompt_version,
-             created_at, status, coherence_ok, issues, facts, examples)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+             created_at, status, coherence_ok, issues, facts, examples, aligned_by)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """,
         (
             case_id, language, version, title, text, model, prompt_version,
             created_at, status, coherence,
-            _to_json(issues), _to_json(facts), _to_json(examples),
+            _to_json(issues), _to_json(facts), _to_json(examples), aligned_by,
         ),
     )
     return Summary(
@@ -665,6 +707,7 @@ def _insert(
         issues=issues or [],
         facts=facts or {},
         examples=examples or [],
+        aligned_by=aligned_by,
     )
 
 

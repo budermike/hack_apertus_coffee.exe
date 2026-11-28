@@ -41,6 +41,7 @@ def summarizer():
     return SimpleNamespace(
         summarize=Mock(side_effect=fake_result),
         align_language=Mock(return_value="Angepasste Fassung"),
+        llm=SimpleNamespace(model="apertus-v1-5-8b"),
     )
 
 
@@ -119,13 +120,45 @@ def test_editing_one_language_brings_the_other_in_line(backend, summarizer):
     assert entry["de"] == "Vom Juristen" and entry["fr"] == "Angepasste Fassung"
     assert entry["alignment"] == {"lang": "fr", "ok": True}
     assert entry["model"] == {"de": "human", "fr": "human"}
+    # the database says which of the two the lawyer typed and which one Apertus wrote
+    assert entry["alignedBy"] == {"de": None, "fr": "apertus-v1-5-8b"}
     call = summarizer.align_language.call_args.kwargs
     assert (call["source_lang"], call["source_text"]) == ("de", "Vom Juristen")
     assert (call["target_lang"], call["target_text"]) == ("fr", "Résumé FR")
     assert call["instruction"] is None and call["facts"] == {"form": "fall"}
-    # only the changed language is sent: the same works from French to German
-    _, entry = backend.edit_summary(SAFE, {"fr": "Du juriste"})
-    assert entry["alignment"] == {"lang": "de", "ok": True} and entry["de"] == "Angepasste Fassung"
+    # a further German edit: the French text Apertus wrote follows again, still one version
+    summarizer.align_language.return_value = "Zweite Angleichung"
+    _, entry = backend.edit_summary(SAFE, {"de": "Vom Juristen, zweite Fassung"})
+    assert entry["alignment"] == {"lang": "fr", "ok": True} and entry["fr"] == "Zweite Angleichung"
+    assert summarizer.align_language.call_args.kwargs["target_text"] == "Angepasste Fassung"
+    assert len(_versions(backend, "fr")) == 2
+
+
+def test_alignment_works_from_french_to_german(backend):
+    backend.create_summary(SAFE)
+    _, entry = backend.edit_summary(SAFE, {"fr": "Du juriste"})  # only the changed language is sent
+    assert entry["alignment"] == {"lang": "de", "ok": True}
+    assert entry["fr"] == "Du juriste" and entry["de"] == "Angepasste Fassung"
+    assert entry["alignedBy"] == {"de": "apertus-v1-5-8b", "fr": None}
+
+
+def test_apertus_never_overwrites_a_text_typed_by_hand(backend, summarizer):
+    backend.create_summary(SAFE)
+    backend.edit_summary(SAFE, {"de": "Vom Juristen"})  # French follows (Apertus)
+    # the lawyer corrects the French text by hand: the German one is theirs and stays
+    _, entry = backend.edit_summary(SAFE, {"fr": "Corrigé à la main"})
+    assert entry["alignment"] == {"lang": "de", "ok": False, "reason": "edited_by_hand"}
+    assert entry["de"] == "Vom Juristen" and entry["fr"] == "Corrigé à la main"
+    assert entry["alignedBy"] == {"de": None, "fr": None}
+    # now both are hand-written: a German edit no longer touches the French text either
+    _, entry = backend.edit_summary(SAFE, {"de": "Vom Juristen, ergänzt"})
+    assert entry["alignment"] == {"lang": "fr", "ok": False, "reason": "edited_by_hand"}
+    assert entry["fr"] == "Corrigé à la main"
+    assert summarizer.align_language.call_count == 1
+    # after a reset Apertus may write again
+    backend.reset_summary(SAFE)
+    _, entry = backend.edit_summary(SAFE, {"de": "Neu angefangen"})
+    assert entry["alignment"] == {"lang": "fr", "ok": True}
 
 
 def test_edit_is_kept_when_apertus_cannot_align(backend, summarizer):
@@ -134,8 +167,14 @@ def test_edit_is_kept_when_apertus_cannot_align(backend, summarizer):
     status, entry = backend.edit_summary(SAFE, {"de": "Vom Juristen"})
     assert status == 200 and entry["de"] == "Vom Juristen" and entry["fr"] == "Résumé FR"
     assert entry["alignment"]["lang"] == "fr" and entry["alignment"]["ok"] is False
+    assert entry["alignment"]["reason"] == "failed"
     assert "Missing API key" in entry["alignment"]["error"]
     assert entry["model"]["fr"] != "human"
+    # what the gateway answers is not passed on (it may quote parts of the request)
+    summarizer.align_language.side_effect = RuntimeError("401: invalid key sk-...1234")
+    _, entry = backend.edit_summary(SAFE, {"de": "Vom Juristen, zweiter Versuch"})
+    assert entry["de"] == "Vom Juristen, zweiter Versuch" and entry["fr"] == "Résumé FR"
+    assert entry["alignment"] == {"lang": "fr", "ok": False, "reason": "failed", "error": "Apertus call failed"}
 
 
 def test_alignment_can_be_switched_off(backend, summarizer):
@@ -238,7 +277,7 @@ def test_cli_parser_builds_with_config_defaults(capsys):
     assert "--triage" in capsys.readouterr().out
 
 
-def test_queue_and_align_http_routes(backend, summarizer):
+def test_queue_http_routes_and_removed_adjust_route(backend, summarizer):
     import time
 
     server = make_server(backend, "127.0.0.1", 0, CRAWL_DIR)
@@ -275,15 +314,15 @@ def test_queue_and_align_http_routes(backend, summarizer):
             }).encode(),
             headers={"Content-Type": "application/json"},
         )
-        with urllib.request.urlopen(align_req) as res:
-            aligned = json.load(res)
-        assert res.status == 200 and aligned == {"lang": "fr", "text": "Angepasste Fassung"}
-        assert summarizer.align_language.call_count == 1
+        # "Anpassen" is gone (correction of 28.11.): the route no longer exists, nothing is sent to Apertus
+        with pytest.raises(urllib.error.HTTPError) as gone:
+            urllib.request.urlopen(align_req)
+        assert gone.value.code == 404
+        summarizer.align_language.assert_not_called()
 
         # Validation: bad payload must yield 400 (never 500)
         for url, payload in (
             (f"{base}/summaries/queue", {"caseIds": [], "priority": "yes"}),
-            (f"{base}/judgements/{SAFE}/summary/align", {"targetLang": "fr", "sourceText": "Text without sourceLang"}),
         ):
             bad_req = urllib.request.Request(
                 url,

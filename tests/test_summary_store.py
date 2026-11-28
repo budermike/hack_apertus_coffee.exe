@@ -280,6 +280,44 @@ def test_discard_edit_returns_to_the_generated_text(conn):
     assert store.get_history(conn, "9C_999/2025", "de") == []
 
 
+def test_replace_edit_records_who_wrote_an_aligned_text(conn):
+    store.save_generated(conn, CASE, "de", GENERATED)
+    store.save_generated(conn, CASE, "fr", GENERATED)
+    by_hand = store.replace_edit(conn, CASE, "de", "Von Hand")
+    aligned = store.replace_edit(conn, CASE, "fr", "Aligné", aligned_by="apertus-v1-5-8b")
+    assert by_hand.aligned_by is None and aligned.aligned_by == "apertus-v1-5-8b"
+    assert aligned.model == "human"  # still the one edited version of that language
+    assert store.get_display(conn, CASE, "fr").aligned_by == "apertus-v1-5-8b"
+    assert store.get_display(conn, CASE, "de").aligned_by is None
+    # typing over it makes it the lawyer's text again
+    assert store.replace_edit(conn, CASE, "fr", "Corrigé").aligned_by is None
+    assert store.discard_edit(conn, CASE) == 2
+    assert store.get_display(conn, CASE, "fr").aligned_by is None
+
+
+def test_database_from_before_the_aligned_by_column_is_upgraded(db_path):
+    old_schema = store.SCHEMA_SQL.replace("    aligned_by     TEXT,\n", "")
+    assert "aligned_by" not in old_schema
+    old = sqlite3.connect(db_path)
+    old.executescript(old_schema)
+    old.execute("INSERT INTO cases (case_id) VALUES (?)", (CASE,))
+    old.execute("INSERT INTO case_numbers (case_number, case_id) VALUES (?, ?)", (CASE, CASE))
+    old.execute(
+        "INSERT INTO summaries (case_id, language, version, text, model, prompt_version, created_at, status) "
+        "VALUES (?, 'de', 1, 'Alter Text', 'apertus-v1-5-70b', 'v1', '2026-11-27T10:00:00+00:00', 'generated')",
+        (CASE,),
+    )
+    old.commit()
+    old.close()
+
+    conn = store.connect(db_path)
+    kept = store.get_display(conn, CASE, "de")
+    assert kept.text == "Alter Text" and kept.aligned_by is None
+    assert store.replace_edit(conn, CASE, "de", "Neu", aligned_by="apertus-v1-5-8b").aligned_by == "apertus-v1-5-8b"
+    conn.close()
+    store.connect(db_path).close()  # opening it again is harmless
+
+
 # --- Pipeline fields, both languages, lookup, search -----------------------------
 
 

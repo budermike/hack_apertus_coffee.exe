@@ -45,15 +45,13 @@ const state = {
     summaryLoading: new Set(), // ids being summarized right now
     summaryError: new Set(),   // ids whose summary failed
     drafts: {},                // id -> { de, fr } while the user edits a summary
-    saveStatus: {},            // id -> "saving" | "saved" | "approving" | "approved" | "error"
+    saveStatus: {},            // id -> "saving" | "aligning" | "saved" | "resetting" | "reset"
+                               //       | "error" | "resetError"
 
     kbEntries: [],
     kbError: false,            // the database could not be read
     kbQuery: "",
-    evaluation: null,          // loaded from GET /api/evaluation (#71)
-    evalLoading: false,
-    evalError: false,
-    activeTab: ["search", "kb", "eval", "about"].includes(localStorage.getItem("tab"))
+    activeTab: ["search", "kb"].includes(localStorage.getItem("tab"))
         ? localStorage.getItem("tab")
         : "search",
 };
@@ -179,9 +177,7 @@ function toggleTheme() {
 
 /* ---------- thresholds ---------- */
 
-let availableRange = null;
-
-/** Takes the thresholds (and cached date span) from the backend; keeps defaults if it does not answer. */
+/** Takes the thresholds from the backend; keeps the defaults if it does not answer. */
 async function loadThresholds() {
     const config = await fetchConfig();
     const high = toNumber(config?.thresholds?.high, NaN);
@@ -190,21 +186,6 @@ async function loadThresholds() {
         SUMMARY_THRESHOLD = high;
         MEDIUM_THRESHOLD = medium;
     }
-    if (config?.availableRange?.from && config?.availableRange?.to) {
-        availableRange = config.availableRange;
-        renderQuickRangeButton();
-    }
-}
-
-function renderQuickRangeButton() {
-    const btn = $("#quick-range-btn");
-    if (!btn) return;
-    if (!availableRange) {
-        btn.hidden = true;
-        return;
-    }
-    btn.hidden = false;
-    btn.textContent = `${t("quickRangePrefix")}${formatDate(availableRange.from)} – ${formatDate(availableRange.to)}`;
 }
 
 let thresholdsReady = Promise.resolve();
@@ -325,11 +306,7 @@ async function onSearch(event) {
                 state.error = "periodError";
                 state.searchErrorArg = period.error || period.message || "";
             } else {
-                const fetched = await searchJudgements(range.from, range.to, currentLang);
-                // Preserve any cases manually added via #add-case-form during the wait
-                const seen = new Set(fetched.map((i) => i.id));
-                const kept = (state.items || []).filter((i) => i._manuallyAdded && !seen.has(i.id));
-                state.items = [...kept, ...fetched];
+                state.items = await searchJudgements(range.from, range.to, currentLang);
                 state.error = null;
                 state.searchErrorArg = null;
             }
@@ -354,41 +331,6 @@ async function onSearch(event) {
     renderResults();
 
     queueRelevantSummaries();
-}
-
-async function onAddCase(event) {
-    event.preventDefault();
-    const input = $("#add-case-input");
-    const button = $("#add-case-btn");
-    const value = input.value.trim();
-    if (!value) {
-        showFormError("addCaseError");
-        input.focus();
-        return;
-    }
-    showFormError(null);
-    button.disabled = true;
-    button.classList.add("loading");
-    try {
-        await thresholdsReady;
-        const item = await addJudgement(value);
-        item._manuallyAdded = true;
-        const idx = state.items.findIndex((i) => i.id === item.id);
-        if (idx >= 0) state.items[idx] = item;
-        else state.items.unshift(item);
-        state.hasSearched = true;
-        state.error = null;
-        state.searchErrorArg = null;
-        input.value = "";
-        renderResults();
-        selectCase(item.id);
-    } catch (err) {
-        console.error(err);
-        showFormError("addCaseError");
-    } finally {
-        button.disabled = false;
-        button.classList.remove("loading");
-    }
 }
 
 /* ---------- filters + sorting ---------- */
@@ -715,18 +657,33 @@ function onSummaryChange(id) {
     if (id === state.selectedId) renderDetail();
 }
 
-/* ---------- editing, saving and approving summaries ---------- */
+/* ---------- editing, saving and resetting summaries ---------- */
 
 /** Text currently in the editor: the draft if there is one, otherwise the stored summary. */
 function currentTexts(id) {
     return state.drafts[id] || state.summaries[id];
 }
 
+/** The database holds an edited version of this summary (typed by a lawyer, or brought in
+ *  line by Apertus), or an edit from before 28.11. that never got approved. */
+function hasStoredEdit(id) {
+    const stored = state.summaries[id];
+    return stored.pendingLangs.length > 0
+        || SUMMARY_LANGS.some((lang) => stored.origin[lang] && stored.origin[lang] !== "generated");
+}
+
+/** Something to save: the user typed, or an edit saved before the approval step was dropped
+ *  (28.11.) still waits in the database. "Speichern" takes that one over as well. */
 function isDirty(id) {
     const draft = state.drafts[id];
     const stored = state.summaries[id];
-    return Boolean(draft && stored && (draft.de !== stored.de || draft.fr !== stored.fr));
+    if (!stored) return false;
+    if (stored.pendingLangs.length > 0) return true;
+    return Boolean(draft && (draft.de !== stored.de || draft.fr !== stored.fr));
 }
+
+const canReset = (id) => isDirty(id) || hasStoredEdit(id);
+const isSaveBusy = (id) => ["saving", "aligning", "resetting"].includes(state.saveStatus[id]);
 
 function onDraftInput(id, lang, value, editor) {
     const texts = currentTexts(id);
@@ -735,52 +692,36 @@ function onDraftInput(id, lang, value, editor) {
     updateEditorFooter(editor, id);   // no full re-render while typing
 }
 
-async function performSave(id) {
-    if (!isDirty(id) || state.saveStatus[id] === "saving") return false;
-    const texts = state.drafts[id];
-    state.saveStatus[id] = "saving";
-    renderEditors();
-    try {
-        const entry = await saveSummary(id, texts);
-        state.summaries[id] = entry;
-        // keep the draft if the user typed on while saving
-        const draft = state.drafts[id];
-        if (draft && draft.de === entry.de && draft.fr === entry.fr) delete state.drafts[id];
-        state.saveStatus[id] = "saved";
-        renderEditors();
-        refreshKb();
-        return true;
-    } catch (err) {
-        console.error(err);
-        state.saveStatus[id] = "error";
-        renderEditors();
-        refreshKb();
-        return false;
-    }
-}
-
+/** Saves the editor's texts. They are shown at once: there is no approval step, and the
+ *  database keeps one edited version per language next to the generated one.
+ *  If only one language was changed, the backend lets Apertus bring the other one in line
+ *  (never a text a lawyer typed); `entry.alignment` says what came of it. */
 async function onSave(id) {
-    if (!isDirty(id) || state.saveStatus[id] === "saving") return;
-    const draft = state.drafts[id];
+    if (!isDirty(id) || isSaveBusy(id)) return;
     const stored = state.summaries[id];
-    const changedDe = draft.de !== stored.de;
-    const changedFr = draft.fr !== stored.fr;
-    if (changedDe !== changedFr) {
-        openAlignAfterEditDialog(id, changedDe ? "de" : "fr", changedDe ? "fr" : "de");
-        return;
-    }
-    await performSave(id);
-}
-
-/** The backend stores an edit as a version that waits for approval; approving makes it
- *  the shown version (and the one the database search finds). */
-async function onApprove(id) {
-    if (isDirty(id) || state.saveStatus[id] === "approving") return;
-    state.saveStatus[id] = "approving";
+    const texts = currentTexts(id);
+    const sent = { de: texts.de, fr: texts.fr };
+    const changed = SUMMARY_LANGS.filter((lang) => sent[lang] !== stored[lang] || stored.pendingLangs.includes(lang));
+    const other = changed.length === 1 ? SUMMARY_LANGS.find((lang) => lang !== changed[0]) : null;
+    state.saveStatus[id] = other && stored.origin[other] !== "edited" ? "aligning" : "saving";
     renderEditors();
     try {
-        state.summaries[id] = await approveSummary(id);
-        state.saveStatus[id] = "approved";
+        const entry = await saveSummary(id, sent);
+        state.summaries[id] = entry;
+        // Keep only what the user typed on while saving; everything else follows the saved
+        // entry (Apertus may have rewritten the other language).
+        const draft = state.drafts[id];
+        if (draft) {
+            const merged = Object.fromEntries(
+                SUMMARY_LANGS.map((lang) => [lang, draft[lang] === sent[lang] ? entry[lang] : draft[lang]]));
+            if (merged.de === entry.de && merged.fr === entry.fr) delete state.drafts[id];
+            else state.drafts[id] = merged;
+        }
+        state.saveStatus[id] = "saved";
+        const alignment = entry.alignment;
+        if (alignment?.ok) toast(t("alignedToast", alignment.lang), 8000);
+        else if (alignment?.reason === "edited_by_hand") toast(t("alignSkippedToast", alignment.lang), 8000);
+        else if (alignment) toast(t("alignFailedToast", alignment.lang), 8000);
     } catch (err) {
         console.error(err);
         state.saveStatus[id] = "error";
@@ -789,125 +730,29 @@ async function onApprove(id) {
     refreshKb();
 }
 
-function setAlignDialogBusy(dialog, busy, message = "", isError = false) {
-    const status = $("#align-status");
-    status.hidden = !busy && !message;
-    status.classList.toggle("form-error", isError);
-    if (busy) status.replaceChildren(spinner(), message);
-    else status.textContent = message;
-    for (const id of ["#align-apply", "#align-keep", "#align-cancel"]) {
-        $(id).disabled = busy;
+/** Drops the edited version of both languages, and what is typed but not saved: the text
+ *  Apertus generated is shown again. That one is never deleted, so this always works. */
+async function onReset(id) {
+    if (!canReset(id) || isSaveBusy(id)) return;
+    if (!confirm(t("resetConfirm"))) return;
+    if (!hasStoredEdit(id)) {        // only typed, nothing saved: nothing to ask the backend
+        delete state.drafts[id];
+        delete state.saveStatus[id];
+        renderEditors();
+        return;
     }
-    $("#align-instruction").disabled = busy;
-}
-
-function showAlignDialog({ title, desc, showInstruction, applyLabel, keepLabel, onApply, onKeep }) {
-    const dialog = $("#align-dialog");
-    $("#align-title").textContent = title;
-    $("#align-desc").textContent = desc;
-    $("#align-instruction-wrap").hidden = !showInstruction;
-    $("#align-instruction").value = "";
-    const applyBtn = $("#align-apply");
-    const keepBtn = $("#align-keep");
-    const cancelBtn = $("#align-cancel");
-    applyBtn.textContent = applyLabel;
-    keepBtn.textContent = keepLabel;
-    setAlignDialogBusy(dialog, false, "");
-
-    const close = () => { if (dialog.open) dialog.close(); };
-    applyBtn.onclick = () => onApply(dialog, close);
-    keepBtn.onclick = () => onKeep(dialog, close);
-    cancelBtn.onclick = close;
-    dialog.showModal();
-    if (showInstruction) $("#align-instruction").focus();
-    else applyBtn.focus();
-}
-
-function openAlignAfterEditDialog(id, sourceLang, targetLang) {
-    const targetName = t(targetLang === "de" ? "langDe" : "langFr");
-    showAlignDialog({
-        title: t("alignPromptTitle", targetName),
-        desc: t("alignPromptBody"),
-        showInstruction: false,
-        applyLabel: t("alignApply"),
-        keepLabel: t("alignKeep"),
-        onApply: async (dialog, close) => {
-            const sourceText = currentTexts(id)[sourceLang];
-            const baseTarget = currentTexts(id)[targetLang];
-            setAlignDialogBusy(dialog, true, t("alignBusy"));
-            try {
-                if (isDirty(id) && !(await performSave(id))) {
-                    setAlignDialogBusy(dialog, false, t("errorSave"), true);
-                    return;
-                }
-                const aligned = await alignSummary(id, {
-                    sourceLang,
-                    sourceText,
-                    targetLang,
-                    targetText: baseTarget,
-                });
-                const latest = currentTexts(id);
-                state.drafts[id] = { de: latest.de, fr: latest.fr, [targetLang]: aligned.text };
-                delete state.saveStatus[id];
-                close();
-                renderEditors();
-                toast(t("alignDone", targetName), 6000);
-            } catch (err) {
-                console.error(err);
-                setAlignDialogBusy(dialog, false, t("alignFailed"), true);
-            }
-        },
-        onKeep: async (_dialog, close) => {
-            close();
-            await performSave(id);
-        },
-    });
-}
-
-function onAdjust(id, lang) {
-    const otherLang = lang === "de" ? "fr" : "de";
-    const langName = t(lang === "de" ? "langDe" : "langFr");
-    const otherName = t(otherLang === "de" ? "langDe" : "langFr");
-    const runAlign = async (dialog, close, payload) => {
-        setAlignDialogBusy(dialog, true, t("alignBusy"));
-        try {
-            const res = await alignSummary(id, payload);
-            const latest = currentTexts(id);
-            state.drafts[id] = { de: latest.de, fr: latest.fr, [lang]: res.text };
-            delete state.saveStatus[id];
-            close();
-            renderEditors();
-            toast(t("alignDone", langName), 5000);
-        } catch (err) {
-            console.error(err);
-            setAlignDialogBusy(dialog, false, t("alignFailed"), true);
-        }
-    };
-    showAlignDialog({
-        title: t("adjustTitle", langName),
-        desc: t("adjustBody"),
-        showInstruction: true,
-        applyLabel: t("adjustApply"),
-        keepLabel: t("adjustFromOther", otherName),
-        onApply: (dialog, close) => {
-            const instruction = $("#align-instruction").value.trim();
-            if (!instruction) {
-                setAlignDialogBusy(dialog, false, t("adjustNeedInstruction"), true);
-                $("#align-instruction").focus();
-                return;
-            }
-            runAlign(dialog, close, { targetLang: lang, targetText: currentTexts(id)[lang], instruction });
-        },
-        onKeep: (dialog, close) => {
-            const texts = currentTexts(id);
-            runAlign(dialog, close, {
-                sourceLang: otherLang,
-                sourceText: texts[otherLang],
-                targetLang: lang,
-                targetText: texts[lang],
-            });
-        },
-    });
+    state.saveStatus[id] = "resetting";
+    renderEditors();
+    try {
+        state.summaries[id] = await resetSummary(id);
+        delete state.drafts[id];
+        state.saveStatus[id] = "reset";
+    } catch (err) {
+        console.error(err);
+        state.saveStatus[id] = "resetError";
+    }
+    renderEditors();
+    refreshKb();
 }
 
 function escapeHtml(text) {
@@ -1110,37 +955,36 @@ function renderList() {
 
 function saveStatusText(id) {
     const status = state.saveStatus[id];
-    const pending = state.summaries[id].pendingLangs.length > 0;
     if (status === "saving") return t("saving");
-    if (status === "approving") return t("approving");
+    if (status === "aligning") return t("savingAligning");
+    if (status === "resetting") return t("resetting");
     if (status === "error") return t("errorSave");
+    if (status === "resetError") return t("errorReset");
+    if (!state.drafts[id] && state.summaries[id].pendingLangs.length > 0) return t("pendingLegacy");
     if (isDirty(id)) return t("unsaved");
-    if (status === "approved") return `✓ ${t("approved")}`;
-    if (pending) return (status === "saved" ? `✓ ${t("saved")} · ` : "") + t("pendingApproval");
     if (status === "saved") return `✓ ${t("saved")}`;
+    if (status === "reset") return `✓ ${t("resetDone")}`;
     return "";
 }
 
 function updateEditorFooter(editor, id) {
-    const busy = state.saveStatus[id] === "saving" || state.saveStatus[id] === "approving";
-    const dirty = isDirty(id);
-    editor.querySelector(".save-btn").disabled = !dirty || busy;
-    const approve = editor.querySelector(".approve-btn");
-    approve.hidden = state.summaries[id].pendingLangs.length === 0;
-    approve.disabled = dirty || busy;
+    const busy = isSaveBusy(id);
+    editor.querySelector(".save-btn").disabled = !isDirty(id) || busy;
+    editor.querySelector(".reset-btn").disabled = !canReset(id) || busy;
     const status = editor.querySelector(".save-status");
     status.textContent = saveStatusText(id);
-    status.classList.toggle("error", state.saveStatus[id] === "error");
+    status.classList.toggle("error", ["error", "resetError"].includes(state.saveStatus[id]));
 }
 
-/** Two tags above one summary language: the language, and where its text comes from
- *  ("generiert" / "bearbeitet"). The origin is the database's (entry.origin, see
- *  summaryOrigin in api.js): typing does not change it, only a saved edit does. */
+/** Two tags above one summary language: the language, and where its text comes from:
+ *  "generiert" (Apertus), "bearbeitet" (typed by a lawyer) or "angeglichen" (written by
+ *  Apertus to follow the lawyer's edit of the other language). The origin is the database's
+ *  (entry.origin, see summaryOrigin in api.js): typing does not change it, only saving does. */
 function summaryTags(entry, lang, name) {
     const origin = entry.origin?.[lang];
-    const pending = entry.pendingLangs.includes(lang);
     const hint = origin === "generated" ? t("originGeneratedHint", entry.model?.[lang] || "?")
-        : pending ? t("originPendingHint") : t("originEditedHint");
+        : origin === "aligned" ? t("originAlignedHint", entry.alignedBy?.[lang] || "Apertus")
+        : t("originEditedHint");
     return el("h4", { class: "duo-tags" },
         el("span", { class: "tag lang-tag", lang, text: name }),
         origin && el("span", {
@@ -1148,8 +992,8 @@ function summaryTags(entry, lang, name) {
         }));
 }
 
-/** German and French summary next to each other, each editable and with its own "Anpassen";
- *  one save button for both. `scope` tells the detail panel ("res") from the database ("kb")
+/** German and French summary next to each other, each editable; one "Speichern" and one
+ *  "Zurücksetzen" for both. `scope` tells the detail panel ("res") from the database ("kb")
  *  so the caret can be restored after a re-render. */
 function summaryEditor(scope, id) {
     const entry = state.summaries[id];
@@ -1166,9 +1010,7 @@ function summaryEditor(scope, id) {
         });
         textarea.value = texts[lang] || "";   // content must be set as a property
         return el("div", { class: "duo-col" },
-            el("div", { class: "duo-head" },
-                summaryTags(entry, lang, name),
-                el("button", { type: "button", class: "btn small", text: t("adjust"), onclick: () => onAdjust(id, lang) })),
+            el("div", { class: "duo-head" }, summaryTags(entry, lang, name)),
             textarea);
     });
 
@@ -1177,8 +1019,8 @@ function summaryEditor(scope, id) {
         el("div", { class: "row editor-footer" },
             el("button", { type: "button", class: "btn pri save-btn", text: t("save"), onclick: () => onSave(id) }),
             el("button", {
-                type: "button", class: "btn approve-btn", text: t("approve"), title: t("approveHint"),
-                onclick: () => onApprove(id),
+                type: "button", class: "btn reset-btn", text: t("resetSummary"), title: t("resetSummaryHint"),
+                onclick: () => onReset(id),
             }),
             el("span", { class: "note save-status", "aria-live": "polite" }),
             el("button", { type: "button", class: "btn export-btn", text: t("openSuvaFormat"), onclick: () => openSuvaExport(id) })));
@@ -1404,7 +1246,6 @@ function renderKbEntry(entry) {
             el("summary", {},
                 el("span", { class: "nr", text: entry.caseNumber }),
                 el("span", { class: "kb-entry-title", text: kbTitle(entry) }),
-                entry.pendingLangs.length > 0 && el("span", { class: "tag warn", text: t("tagPending") }),
                 el("span", { class: "sub", text: entry.storedAt ? `${t("storedAt")} ${formatDate(entry.storedAt.slice(0, 10))}` : "" })),
             el("div", { class: "kb-entry-body" }, summaryEditor("kb", entry.id))));
 }
@@ -1435,165 +1276,6 @@ function renderKb() {
     status.textContent = statusKey ? t(statusKey) : "";
 }
 
-/* ---------- evaluation & architecture (#71) ---------- */
-
-function formatEvalCell(raw) {
-    const text = raw === null || raw === undefined ? "" : String(raw);
-    if (/^-?\d+\.\d{5,}$/.test(text)) {
-        return { display: Number(text).toFixed(4), numeric: true, title: text };
-    }
-    return { display: text, numeric: /^-?\d+(?:\.\d+)?$/.test(text), title: null };
-}
-
-function buildEvalTable(columns, rows) {
-    if (!columns?.length || !rows?.length) return null;
-    return el("div", { class: "eval-table-wrap" },
-        el("table", { class: "eval-table" },
-            el("thead", {},
-                el("tr", {}, columns.map((col) => el("th", { text: col }))),
-            ),
-            el("tbody", {},
-                (rows || []).map((row) =>
-                    el("tr", {},
-                        row.map((cell) => {
-                            const { display, numeric, title } = formatEvalCell(cell);
-                            return el("td", {
-                                class: numeric ? "num" : null,
-                                text: display,
-                                title: title || null,
-                            });
-                        }),
-                    ),
-                ),
-            ),
-        ),
-    );
-}
-
-function renderCalibrationCard(cal) {
-    if (!cal || typeof cal !== "object") return null;
-    const parts = [];
-    if (Array.isArray(cal.periods) && cal.periods.length) parts.push(`${t("evalCalibrationPeriods")}: ${cal.periods.join(", ")}`);
-    if (typeof cal.n === "number") parts.push(`n = ${cal.n}`);
-    if (typeof cal.n_pos === "number") parts.push(`Suva = ${cal.n_pos}`);
-    if (typeof cal.t === "number") parts.push(`t = ${cal.t}`);
-    if (typeof cal.list_factor === "number") parts.push(`list_factor = ${cal.list_factor}`);
-    if (!parts.length) return null;
-    return el("section", { class: "info-card" },
-        el("div", { class: "info-card-head" },
-            el("h3", { text: t("evalCalibrationTitle") }),
-            el("span", { class: "sub", text: "relevance_calibration_q2_2026.json" }),
-        ),
-        el("p", { class: "note", text: parts.join(" · ") }),
-    );
-}
-
-function renderEvaluation() {
-    const status = $("#eval-status");
-    const container = $("#eval-content");
-    if (!status || !container) return;
-
-    const data = state.evaluation;
-    const tables = data?.tables || [];
-    const cal = data?.calibration || null;
-
-    if (state.evalLoading && !data) {
-        status.hidden = false;
-        status.textContent = t("evalLoading");
-        container.replaceChildren();
-        return;
-    }
-    if (state.evalError) {
-        status.hidden = false;
-        status.textContent = t("evalError");
-        container.replaceChildren();
-        return;
-    }
-    if (!tables.length && !cal) {
-        status.hidden = false;
-        status.textContent = t("evalEmpty");
-        container.replaceChildren();
-        return;
-    }
-
-    status.hidden = true;
-    status.textContent = "";
-    const langKey = currentLang === "fr" ? "Fr" : "De";
-    const cards = tables.map((tbl) => {
-        const title = tbl[`title${langKey}`] || tbl.filename;
-        const desc = tbl[`description${langKey}`] || "";
-        return el("section", { class: "info-card" },
-            el("div", { class: "info-card-head" },
-                el("h3", { text: title }),
-                el("span", { class: "sub", text: `${tbl.filename} · ${t("evalRowsLabel", tbl.totalRows ?? tbl.rows?.length ?? 0)}` }),
-            ),
-            desc && el("p", { class: "note", text: desc }),
-            buildEvalTable(tbl.columns, tbl.rows),
-        );
-    });
-    const calCard = renderCalibrationCard(cal);
-    if (calCard) cards.unshift(calCard);
-    container.replaceChildren(...cards);
-}
-
-function renderAbout() {
-    const container = $("#about-content");
-    if (!container) return;
-
-    const pipelineCard = el("section", { class: "info-card" },
-        el("h3", { text: t("aboutPipelineTitle") }),
-        el("div", { class: "pipeline-grid" },
-            [1, 2, 3, 4].map((step) =>
-                el("div", { class: "pipeline-step" },
-                    el("h4", { text: t(`aboutStep${step}Title`) }),
-                    el("p", { text: t(`aboutStep${step}Body`) }),
-                ),
-            ),
-        ),
-    );
-
-    const complianceCard = el("section", { class: "info-card" },
-        el("h3", { text: t("aboutComplianceTitle") }),
-        el("p", { class: "note", text: t("aboutComplianceBody") }),
-    );
-
-    const models = state.evaluation?.models;
-    const runtimeTable = buildEvalTable(models?.runtime?.columns, models?.runtime?.rows);
-    const devTable = buildEvalTable(models?.development?.columns, models?.development?.rows);
-    const modelsCard = el("section", { class: "info-card" },
-        el("h3", { text: t("aboutModelsTitle") }),
-        (!runtimeTable && !devTable)
-            ? el("p", {
-                class: "note",
-                text: state.evalLoading ? t("evalLoading") : (state.evalError ? t("evalError") : t("aboutModelsEmpty")),
-            })
-            : [
-                runtimeTable && el("h4", { text: t("aboutRuntimeTitle"), style: "margin: 12px 0 8px" }),
-                runtimeTable,
-                devTable && el("h4", { text: t("aboutDevTitle"), style: "margin: 18px 0 8px" }),
-                devTable,
-            ],
-    );
-
-    container.replaceChildren(pipelineCard, complianceCard, modelsCard);
-}
-
-async function refreshEvaluation() {
-    state.evalLoading = true;
-    state.evalError = false;
-    renderEvaluation();
-    renderAbout();
-    try {
-        state.evaluation = await fetchEvaluation();
-    } catch {
-        state.evalError = true;
-    } finally {
-        state.evalLoading = false;
-        renderEvaluation();
-        renderAbout();
-    }
-}
-
 /* ---------- tabs, language ---------- */
 
 function renderResults() {
@@ -1609,8 +1291,6 @@ function renderTabs() {
     });
     $("#panel-search").hidden = state.activeTab !== "search";
     $("#panel-kb").hidden = state.activeTab !== "kb";
-    $("#panel-eval").hidden = state.activeTab !== "eval";
-    $("#panel-about").hidden = state.activeTab !== "about";
 }
 
 function selectTab(tab) {
@@ -1618,9 +1298,6 @@ function selectTab(tab) {
     state.activeTab = tab;
     localStorage.setItem("tab", tab);
     renderTabs();
-    if ((tab === "eval" || tab === "about") && state.evaluation === null && !state.evalLoading) {
-        refreshEvaluation();
-    }
     renderEditors();   // drafts may have changed in the other tab
 }
 
@@ -1633,12 +1310,9 @@ function renderLanguage() {
         btn.setAttribute("aria-pressed", String(active));
     });
     refreshDateInputs();
-    renderQuickRangeButton();
     showFormError(formErrorKey);
     renderResults();
     renderKb();
-    renderEvaluation();
-    renderAbout();
 }
 
 /* ---------- init ---------- */
@@ -1679,13 +1353,6 @@ function init() {
     setDateInput(toInput, toIso(today));
 
     $("#search-form").addEventListener("submit", onSearch);
-    $("#add-case-form").addEventListener("submit", onAddCase);
-    $("#quick-range-btn").addEventListener("click", () => {
-        if (!availableRange) return;
-        setDateInput(fromInput, availableRange.from);
-        setDateInput(toInput, availableRange.to);
-        $("#search-form").requestSubmit();
-    });
     for (const id of ["#filter-text", "#filter-min", "#filter-max"]) {
         $(id).addEventListener("input", onFilterChange);
     }
@@ -1702,9 +1369,9 @@ function init() {
         }, 200);
     });
 
-    // Escape closes the detail panel (unless a dialog/calendar is open or the user is typing)
+    // Escape closes the detail panel (unless a calendar is open or the user is typing)
     document.addEventListener("keydown", (e) => {
-        if (e.key !== "Escape" || !state.selectedId || openPickers.size || $("#align-dialog")?.open) return;
+        if (e.key !== "Escape" || !state.selectedId || openPickers.size) return;
         if (e.target.closest("input, textarea, select")) return;
         closeDetail();
     });
@@ -1712,7 +1379,6 @@ function init() {
     thresholdsReady = loadThresholds();
     renderLanguage();
     refreshKb();
-    refreshEvaluation();
 }
 
 init();
