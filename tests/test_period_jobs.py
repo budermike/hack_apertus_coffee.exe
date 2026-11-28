@@ -514,3 +514,94 @@ def test_failed_crawl_days_and_today_are_never_marked_covered(tmp_path):
         assert mgr.covers("2026-07-01", "2026-07-03") is False
     finally:
         mgr.stop()
+
+
+# ---------- reuse and precedence (#96) ----------
+
+from hack_apertus_coffee_exe.present.judgements import reusable_row  # noqa: E402
+
+
+def _row(case_id, day, p, area="UV", score=70.0):
+    return {
+        "case_id": case_id, "final_score": score, "rank_score": score, "judgement_date": day, "ampel": "gruen",
+        "metadata": {"case_ids": [case_id], "decision_date": day, "subject": "Unfallversicherung",
+                     "relevance": {"p": p, "threshold": 0.07, "area": area}},
+    }
+
+
+def test_reusable_row_keeps_scored_rows_and_rescores_failed_ones():
+    assert reusable_row(_row("8C_1/2026", "2026-07-01", 0.4)) is True
+    assert reusable_row(_row("8C_2/2026", "2026-07-01", None, area="UV")) is False   # the Apertus call failed
+    assert reusable_row(_row("8C_3/2026", "2026-07-01", None, area="KV")) is True    # never goes to Apertus
+    assert reusable_row({"case_id": "8C_4/2026", "metadata": {}}) is False             # older output without relevance
+
+
+def _raw(raw_dir, case_id, day):
+    record = {
+        "id": case_id.replace("/", "_"), "case_id": case_id, "case_ids": [case_id], "decision_date": day,
+        "subject": "Unfallversicherung (Kausalzusammenhang)", "language": "de", "url": "https://search.bger.ch/x",
+        "text": "IV. öffentlich-rechtliche Abteilung\nErwägungen:\n1. Die Suva lehnte ab.\n"
+                "Demnach erkennt das Bundesgericht:\n1. Die Beschwerde wird abgewiesen.",
+    }
+    month = raw_dir / day[:7]
+    month.mkdir(parents=True, exist_ok=True)
+    (month / f"{day}_{case_id.replace('/', '_')}.json").write_text(json.dumps(record), encoding="utf-8")
+
+
+class CountingClient:
+    """Fake Apertus: records which judgements it was asked about."""
+
+    model = "apertus-v1-5-70b"
+    asked: list[str] = []
+
+    def call(self, stage, key, system, user, schema, max_tokens):
+        CountingClient.asked.append(next(c for c in ("8C_500/2026", "8C_501/2026", "8C_502/2026") if c in user))
+        if stage == "triage":
+            return {"a_rechtsfrage": "Kausalzusammenhang?", "b_kriterien": [], "c_begruendung": "UVG-Fall.", "d_score": 82}
+        return {"a_grundsatz": 2, "b_nutzen_uv": 3, "c_korrektur": False, "d_merksatz": "Merke.", "e_score": 80}
+
+
+def test_a_failed_triage_is_scored_again_and_a_valid_one_is_reused(tmp_path):
+    raw_dir, store_dir = tmp_path / "raw", tmp_path / "periods"
+    for case_id, day in (("8C_500/2026", "2026-07-01"), ("8C_501/2026", "2026-07-02"), ("8C_502/2026", "2026-07-03")):
+        _raw(raw_dir, case_id, day)
+    store_dir.mkdir()
+    _write_triage(store_dir / "earlier_load.json", [
+        _row("8C_500/2026", "2026-07-01", 0.4, score=71.5),   # triaged before: shown as it is
+        _row("8C_502/2026", "2026-07-03", None, score=40.0),   # Apertus failed on it: scored again
+    ])
+    jl = JudgementList(_write_triage(tmp_path / "triage.json", []), config=TriageConfig(), crawl_dir=raw_dir,
+                       extra_triage_dir=store_dir)
+    CountingClient.asked = []
+    mgr = PeriodTriageManager(raw_dir=raw_dir, store_dir=store_dir, judgements=jl,
+                              ensure_fn=lambda *a, **kw: None, client_factory=CountingClient)
+    try:
+        mgr.ensure_async("2026-07-01", "2026-07-03")
+        deadline = time.monotonic() + 3.0
+        while time.monotonic() < deadline and mgr.status("2026-07-01", "2026-07-03")["status"] == "running":
+            time.sleep(0.02)
+        assert mgr.status("2026-07-01", "2026-07-03")["status"] == "done"
+        assert "8C_500/2026" not in CountingClient.asked
+        assert set(CountingClient.asked) == {"8C_501/2026", "8C_502/2026"}
+        items = {i["caseNumber"]: i for i in jl.items("2026-07-01", "2026-07-03")}
+        assert items["8C_500/2026"]["score"] == 71.5
+        assert items["8C_502/2026"]["score"] != 40.0          # the new score replaced the failed row
+    finally:
+        mgr.stop()
+
+
+def test_a_period_file_never_replaces_a_valid_judgement_of_the_primary_file(tmp_path):
+    store_dir = tmp_path / "periods"
+    store_dir.mkdir()
+    primary = _write_triage(tmp_path / "triage.json", [
+        _row("8C_676/2025", "2026-06-10", 0.05, score=36.0),
+        _row("8C_677/2025", "2026-06-11", None, score=40.0),      # failed in the primary run
+    ])
+    _write_triage(store_dir / "2026-06-01_2026-07-07.json", [
+        _row("8C_676/2025", "2026-06-10", 0.09, score=60.8),     # a second Apertus run of the same judgement
+        _row("8C_677/2025", "2026-06-11", 0.2, score=72.0),      # re-scored after the failure
+        _row("8C_900/2026", "2026-07-02", 0.2, score=75.0),      # new: added
+    ])
+    items = {i["caseNumber"]: i for i in JudgementList(primary, config=TriageConfig(), extra_triage_dir=store_dir).items()}
+    assert items["8C_676/2025"]["score"] == 36.0
+    assert items["8C_677/2025"]["score"] == 72.0 and items["8C_900/2026"]["score"] == 75.0

@@ -300,6 +300,24 @@ def to_ui_item(
     return item
 
 
+def reusable_row(row: dict[str, Any]) -> bool:
+    """True if a stored triage result can be shown again without asking Apertus (#96).
+
+    That is every row with a relevance value, and rows outside the areas Apertus scores
+    (they never reach Apertus). A row whose Apertus call failed (no value in a scored area)
+    and rows without relevance data (older ``triage.cli score`` output) are scored again.
+    """
+    from ..triage.relevance import LIST_AREAS
+
+    rel = (row.get("metadata") or {}).get("relevance")
+    if not isinstance(rel, dict):
+        return False
+    p = rel.get("p")
+    if isinstance(p, (int, float)) and not isinstance(p, bool):
+        return True
+    return rel.get("area") not in LIST_AREAS
+
+
 class JudgementList:
     """Serves triage results for a date range; reloads files when they change."""
 
@@ -587,6 +605,9 @@ class JudgementList:
                         self._subjects[r["case_id"]] = subj
 
                 covered = self._load_tables_quarters(by_id)
+                # The primary file and the pre-scored quarters are the evaluated runs: a period
+                # file may add judgements and re-score failed ones, never replace a valid row (#96).
+                protected = {cid for cid, r in by_id.items() if reusable_row(r)}
                 for extra_path in extra_files:
                     try:
                         extra = json.loads(extra_path.read_text(encoding="utf-8"))
@@ -595,11 +616,15 @@ class JudgementList:
                         continue
                     if isinstance(extra, list):
                         for row in extra:
-                            if isinstance(row, dict) and row.get("case_id"):
-                                by_id[row["case_id"]] = row
-                                subj = (row.get("metadata") or {}).get("subject")
-                                if isinstance(subj, str) and subj:
-                                    self._subjects[row["case_id"]] = subj
+                            if not (isinstance(row, dict) and row.get("case_id")) or row["case_id"] in protected:
+                                continue
+                            known = by_id.get(row["case_id"])
+                            if known is not None and reusable_row(known) and not reusable_row(row):
+                                continue  # a failed call never hides a valid score, whatever the file order
+                            by_id[row["case_id"]] = row
+                            subj = (row.get("metadata") or {}).get("subject")
+                            if isinstance(subj, str) and subj:
+                                self._subjects[row["case_id"]] = subj
                 self._primary_rows = primary
                 self._covered_quarters = covered
                 self._rows = list(by_id.values())

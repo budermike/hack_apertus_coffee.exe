@@ -23,7 +23,7 @@ from ..triage import relevance, relevance_period
 from ..triage.config import TriageConfig, load_config
 from ..triage.llm import GatewayConfig
 from ..triage.pipeline import CrawlItem, load_crawl_items
-from .judgements import JudgementList, _OUTCOMES, _is_single_judge, to_ui_item, ui_id
+from .judgements import JudgementList, _OUTCOMES, _is_single_judge, reusable_row, to_ui_item, ui_id
 
 logger = logging.getLogger(__name__)
 
@@ -402,6 +402,8 @@ class PeriodTriageManager:
         seen: set[str] = set()
         try:
             for r in self.judgements.rows():
+                if not reusable_row(r):  # the Apertus call failed: score it again (#96)
+                    continue
                 cid = r.get("case_id")
                 if cid:
                     seen.add(str(cid))
