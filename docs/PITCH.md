@@ -4,7 +4,7 @@
 2. **Solution** (15 s) — what we built, one sentence
 3. **Live demo** (45 s) — one happy path, pre-tested, with a backup video
 4. **Why Apertus / why open & sovereign** (30 s)
-6. **Team** (15 s)
+5. **Team** (15 s)
 
 ## Demo checklist
 - [ ] Demo input prepared and tested
