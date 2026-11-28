@@ -127,7 +127,7 @@ class _AlignLanguage:
     def align_edit(self, **kwargs: Any) -> Alignment:
         """Carry a lawyer's edit of one language over to the other one: content only, no
         translation, the judgement as reference, notes from a closing check (``align.align_edit``)."""
-        return align_edit(self.llm, prompts_dir=self.prompts_dir, **kwargs)
+        return align_edit(getattr(self, "align_llm", None) or self.llm, prompts_dir=self.prompts_dir, **kwargs)
 
 
 class SummarizerV1(_AlignLanguage):

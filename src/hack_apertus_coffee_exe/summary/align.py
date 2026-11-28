@@ -1,22 +1,28 @@
-"""Carry a lawyer's edit of one summary language over to the other language (issue #102).
+"""Bring the other summary language in line after a lawyer edited one of them (issue #102).
 
-Not a translation. The steps:
+Two ways, chosen by what the edit did (``align_edit``):
+
+**A few edits inside sentences** (a date, an amount, one statement) are carried over at their
+place, and every other sentence of the other language stays word for word:
 
 1. The edit is found here, without a model: the sentences of the edited language before and
    after the edit are compared (``source_changes``).
-2. For every changed passage Apertus v1.5 gets one small task: the passage before and after,
-   the wording of the judgement as the reference for the legal meaning and the other language
+2. Per changed sentence Apertus v1.5 gets one small task: the sentence before and after, the
+   wording of the judgement as the reference for the legal meaning and the other language's
    text. It answers with JSON: does the change touch the substance, which sentences of the
-   other language say the same (quoted word for word), and how do these sentences read now.
-3. The answer is applied here: the quoted sentences are looked up in the text and replaced
-   (``planned_replacement``, ``replace_sentences``). Every other sentence stays word for
-   word. An answer that fails one of the checks listed in ``planned_replacement`` is not
-   applied; the lawyer is told to carry that change over by hand. The checks limit what a
-   wrong answer can do; they cannot tell whether the new sentence is legally right, so the
-   aligned text stays marked for review.
-4. Apertus marks a change that is unclear or contradicts the judgement, and a last call
-   compares both languages for statements one of them lacks (``CHECK_SYSTEM``). These notes
-   go to the lawyer; nothing is changed because of them.
+   other language say the same (quoted), and how do these sentences read now.
+3. The answer is applied here (``planned_replacement``, ``replace_sentences``) after a reverse
+   question confirmed the sentence (``confirmed``). An answer that fails a check is not applied.
+
+**Whole sentences removed or added, many edits, or an edit that cannot be placed:** the other
+language is written anew from the edited text in one call (``render``), so that it says what
+the edited text says, sentence for sentence. The two generated summaries are built differently
+(often one tells the case and the other goes by considerations), so a removed sentence has no
+single counterpart: carried over sentence by sentence, 2 of 8 removed sentences were removed
+in the other language (independent test on the running application, 28.11.2026).
+
+Notes for the lawyer are written in the language they edited. A comparison of both languages
+for remaining differences is available (``final_check``) and off by default.
 """
 
 from __future__ import annotations
@@ -34,11 +40,12 @@ from .judgement import Judgement, consideration_numbers, consideration_passages,
 
 LANGUAGES = ("de", "fr")
 MAX_CHECK_NOTES = 5  # findings of the closing comparison that are shown
+CALL_TIMEOUT = 60    # seconds per Apertus call: a lawyer is waiting for the save
 
 # A full stop after one of these does not end a sentence («Art. 6», «consid. 4.2», «al. 2»).
 _ABBREVIATIONS = frozenset(
     "art abs al lit let ziff ch nr no e erw consid cons vgl cf bzw resp ca env s ss ff p pp inkl sog evtl ggf "
-    "dr prof st rz n bge atf sr rs chf z b u a d h i v m c par".split()
+    "dr med prof st rz n bge atf sr rs chf z b u a d h i v m c par dres iur lic phil dipl eidg".split()
 )
 
 _SENTENCE_END_RE = re.compile(r"[.!?][»“”\")\]]*(\s+)")
@@ -97,38 +104,39 @@ def _similar(a: str, b: str) -> float:
 def source_changes(before: str, after: str) -> list[dict[str, str]]:
     """What an edit changed, sentence by sentence.
 
-    Per change ``before`` and ``after`` (the sentences concerned; ``before`` is empty for a new
-    passage, ``after`` for a removed one) and, word by word, what was ``removed`` and ``added``.
+    Per change ``before`` and ``after`` (one sentence each; ``before`` is empty for a new
+    sentence, ``after`` for a removed one) and, word by word, what was ``removed`` and ``added``.
+    ``number`` is the place of ``before`` among the sentences of the text before the edit (from 1; 0 for a new sentence).
     """
     old = [" ".join(s.split()) for s, _ in split_sentences(before)]
     new = [" ".join(s.split()) for s, _ in split_sentences(after)]
-    changes = []
+    pairs: list[tuple[str, str, int]] = []  # sentence before, after, number of the sentence before (0: new)
     for tag, i1, i2, j1, j2 in difflib.SequenceMatcher(a=old, b=new, autojunk=False).get_opcodes():
         if tag == "equal":
             continue
-        if i2 - i1 != j2 - j1:
-            pairs = [(" ".join(old[i1:i2]), " ".join(new[j1:j2]))]
-        else:
-            # A sentence that was reworded is a change of its own. Sentences in a row that
-            # were replaced by other ones are one change together, not paired one by one.
-            pairs = []
-            loose: tuple[str, str] | None = None
-            for was, now in zip(old[i1:i2], new[j1:j2]):
-                if _similar(was, now) >= 0.5:
-                    pairs += ([loose] if loose else []) + [(was, now)]
-                    loose = None
-                else:
-                    loose = (f"{loose[0]} {was}", f"{loose[1]} {now}") if loose else (was, now)
-            pairs += [loose] if loose else []
-        for was, now in pairs:
-            words_was, words_now = was.split(), now.split()
-            removed, added = [], []
-            for word_tag, a1, a2, b1, b2 in difflib.SequenceMatcher(a=words_was, b=words_now, autojunk=False).get_opcodes():
-                if word_tag in ("replace", "delete"):
-                    removed.append(" ".join(words_was[a1:a2]))
-                if word_tag in ("replace", "insert"):
-                    added.append(" ".join(words_now[b1:b2]))
-            changes.append({"before": was, "after": now, "removed": " […] ".join(removed), "added": " […] ".join(added)})
+        # Within a changed passage every sentence is a change of its own: reworded (it has a
+        # counterpart that is at least half the same), removed or new. The other language
+        # often says the same in another place or order, so each one is placed separately.
+        j = j1
+        for i in range(i1, i2):
+            match = next((k for k in range(j, j2) if _similar(old[i], new[k]) >= 0.5), None)
+            if match is None:
+                pairs.append((old[i], "", i + 1))
+                continue
+            pairs += [("", now, 0) for now in new[j:match]] + [(old[i], new[match], i + 1)]
+            j = match + 1
+        pairs += [("", now, 0) for now in new[j:j2]]
+    changes = []
+    for was, now, number in pairs:
+        words_was, words_now = was.split(), now.split()
+        removed, added = [], []
+        for word_tag, a1, a2, b1, b2 in difflib.SequenceMatcher(a=words_was, b=words_now, autojunk=False).get_opcodes():
+            if word_tag in ("replace", "delete"):
+                removed.append(" ".join(words_was[a1:a2]))
+            if word_tag in ("replace", "insert"):
+                added.append(" ".join(words_now[b1:b2]))
+        changes.append({"before": was, "after": now, "removed": " […] ".join(removed), "added": " […] ".join(added),
+                        "number": number})
     return changes
 
 
@@ -192,7 +200,7 @@ Antworte mit JSON:
 6. Schreibe in der deutschen Rechtssprache der Schweiz, mit den festen Begriffen und Abkürzungen des Glossars (LAA wird UVG, «consid.» wird «E.»), so wie es eine Juristin der Suva auf Deutsch schreibt:
 {glossary}
 7. «unklar»: true, wenn nicht eindeutig ist, was die Änderung rechtlich aussagen will. Dann nichts hineininterpretieren.
-8. «hinweis»: nur wenn «unklar» oder «widerspricht_urteil» true ist: ein Satz auf Deutsch, was unklar ist oder was das Urteil stattdessen sagt. Sonst "".
+8. «hinweis»: nur wenn «unklar» oder «widerspricht_urteil» true ist: ein Satz auf Französisch (die Sprache der bearbeiteten Fassung), was unklar ist oder was das Urteil stattdessen sagt. Sonst "".
 """,
     "fr": """\
 Tu es juriste au service juridique de la Suva. Un arrêt du Tribunal fédéral fait l'objet d'un résumé en allemand et d'un résumé en français. Un passage de la version allemande a été modifié à la main. Tu reportes cette seule modification dans la version française, pour autant qu'elle touche le fond.
@@ -209,9 +217,92 @@ Réponds en JSON :
 6. Écris dans la langue juridique française de Suisse, avec les termes et abréviations consacrés du glossaire (UVG devient LAA, «E.» devient «consid.»), comme le ferait une juriste romande de la Suva :
 {glossary}
 7. «unklar» : true s'il n'est pas clair ce que la modification veut dire juridiquement. Dans ce cas, n'interprète rien.
-8. «hinweis» : seulement si «unklar» ou «widerspricht_urteil» vaut true : une phrase en français disant ce qui est peu clair ou ce que dit l'arrêt à la place. Sinon "".
+8. «hinweis» : seulement si «unklar» ou «widerspricht_urteil» vaut true : une phrase en allemand (la langue de la version modifiée) disant ce qui est peu clair ou ce que dit l'arrêt à la place. Sinon "".
 """,
 }
+
+# A sentence that was removed as a whole: Apertus only quotes the sentence of the other language
+# that says the same. One field, no judgement text in the prompt: with the full answer of
+# CHANGE_SCHEMA, Apertus 70B took 38 s for 500 tokens and ran on after the empty «neu» (28.11.2026).
+DROP_SCHEMA = {
+    "type": "object",
+    "properties": {"alt": {"type": "string"}},
+    "required": ["alt"],
+    "additionalProperties": False,
+}
+DROP_SYSTEM = {
+    "de": """\
+Du vergleichst die französische und die deutsche Zusammenfassung desselben Bundesgerichtsurteils. Ein Satz der französischen Zusammenfassung wurde gestrichen. Kopiere in «alt» wörtlich den einen Satz der deutschen Zusammenfassung, der dieselbe Aussage enthält: genau ein Satz, unverändert aus der deutschen Zusammenfassung übernommen. Enthält kein deutscher Satz diese Aussage, ist «alt» leer (""). Antworte ausschliesslich mit JSON.
+""",
+    "fr": """\
+Tu compares le résumé allemand et le résumé français du même arrêt du Tribunal fédéral. Une phrase du résumé allemand a été supprimée. Copie dans «alt», mot pour mot, la seule phrase du résumé français qui contient la même affirmation : exactement une phrase, reprise telle quelle du résumé français. Si aucune phrase française ne contient cette affirmation, «alt» est vide (""). Réponds uniquement en JSON.
+""",
+}
+DROP_LABELS = {"de": ("Deutsche Zusammenfassung", "Gestrichener französischer Satz"),
+               "fr": ("Résumé français", "Phrase allemande supprimée")}
+
+BACK_SCHEMA = {
+    "type": "object",
+    "properties": {"satz": {"type": "integer"}},
+    "required": ["satz"],
+    "additionalProperties": False,
+}
+
+# Cross-check before a sentence is changed or removed: asked the other way round, does Apertus
+# name the edited sentence for the sentence it wants to touch? (Prompt in the language of that sentence.)
+BACK_SYSTEM = {
+    "de": """\
+Du vergleichst zwei Zusammenfassungen desselben Bundesgerichtsurteils. Du erhältst einen deutschen Satz und eine nummerierte Liste französischer Sätze. Gib in «satz» die Nummer des französischen Satzes an, der dieselbe Aussage enthält wie der deutsche Satz. Entspricht ihm keiner, gib 0 an. Antworte ausschliesslich mit JSON.
+""",
+    "fr": """\
+Tu compares deux résumés du même arrêt du Tribunal fédéral. Tu reçois une phrase en français et une liste numérotée de phrases en allemand. Indique dans «satz» le numéro de la phrase allemande qui contient la même affirmation que la phrase française. Si aucune ne lui correspond, indique 0. Réponds uniquement en JSON.
+""",
+}
+BACK_LABELS = {"de": ("Deutscher Satz", "Französische Sätze"), "fr": ("Phrase française", "Phrases allemandes")}
+BACK_CHECK = True  # default of ``align_edit(back_check=...)``
+WHOLE_TEXT = True  # default of ``align_edit(whole_text=...)``
+MAX_SENTENCE_EDITS = 4  # more reworded sentences than this: the whole text is written anew (fewer calls)
+RENDER_TIMEOUT = 150    # seconds for writing the whole text (about 13 tokens per second on Apertus 70B)
+
+# The whole other language written anew from the edited one. Used when sentences were removed
+# or added: the two generated summaries are built differently (often one tells the case and the
+# other goes by considerations), so a removed sentence has no single counterpart to remove.
+RENDER_SYSTEM = {
+    "de": """\
+Du bist Juristin / Jurist im Rechtsdienst der Suva. Die französische Zusammenfassung eines Bundesgerichtsurteils wurde von Hand bearbeitet und ist massgebend. Du schreibst die deutsche Fassung dazu.
+
+Regeln:
+1. Die deutsche Fassung enthält genau die Aussagen der bearbeiteten französischen Fassung, nicht mehr und nicht weniger: Jeder französische Satz wird durch einen deutschen Satz wiedergegeben, in derselben Reihenfolge und mit denselben Absätzen. Füge keinen Satz, keine Tatsache und keine Erwägung hinzu, die in der französischen Fassung nicht steht.
+2. Keine Wort-für-Wort-Übersetzung: Schreibe so, wie es eine Juristin der Suva auf Deutsch formuliert, mit den festen Begriffen und Abkürzungen des Glossars (LAA wird UVG, «consid.» wird «E.»):
+{glossary}
+3. Übernimm Zahlen, Daten, Urteilsnummern und anonymisierte Namen unverändert.
+
+Ausgabe: ausschliesslich der deutsche Text, ohne Titel und ohne Kommentar.
+""",
+    "fr": """\
+Tu es juriste au service juridique de la Suva. Le résumé allemand d'un arrêt du Tribunal fédéral a été modifié à la main et fait foi. Tu rédiges la version française correspondante.
+
+Règles :
+1. La version française contient exactement les affirmations de la version allemande modifiée, ni plus ni moins : chaque phrase allemande est rendue par une phrase française, dans le même ordre et avec les mêmes paragraphes. N'ajoute aucune phrase, aucun fait, aucun considérant qui ne figure pas dans la version allemande.
+2. Pas de traduction mot à mot : écris comme le ferait une juriste romande de la Suva, avec les termes et abréviations consacrés du glossaire (UVG devient LAA, «E.» devient «consid.») :
+{glossary}
+3. Reprends tels quels les chiffres, les dates, les numéros d'arrêts et les noms anonymisés.
+
+Sortie : uniquement le texte français, sans titre ni commentaire.
+""",
+}
+RENDER_LABELS = {
+    "de": ("Bearbeitete französische Fassung (massgebend)", "Schreibe jetzt die deutsche Fassung."),
+    "fr": ("Version allemande modifiée (fait foi)", "Rédige maintenant la version française."),
+}
+
+
+def render_user(target_lang: str, source_text: str) -> str:
+    # The old text of the target language is left out on purpose: with it in the prompt,
+    # Apertus 70B kept its sentences (8C_17/2026: 14 sentences for 8 edited ones, 28.11.2026).
+    edited, task = RENDER_LABELS[target_lang]
+    return f"{edited} :\n{source_text.strip()}\n\n{task}"
+
 
 CHECK_SYSTEM = {
     "de": """\
@@ -241,12 +332,12 @@ _LABELS = {
             "extend": "Aufgabe: «{added}» wurde ergänzt. Kopiere in «alt» den Satz der {target}n Fassung, der dem Satz unter «vorher» entspricht, und gib ihn in «neu» mit dieser zusätzlichen Aussage wieder.",
             "insert": "Aufgabe: Die Stelle unter «nachher» ist neu. Kopiere in «alt» den Satz der {target}n Fassung, nach dem sie stehen soll, und gib ihn in «neu» unverändert wieder, gefolgt von einem neuen Satz, der nur diese Aussage enthält.",
         },
-        "task": "«neu» ist ausschliesslich auf Deutsch. Gib jetzt das JSON.",
+        "task": "«alt» und «neu» sind ausschliesslich auf Deutsch, «hinweis» auf Französisch. Gib jetzt das JSON.",
         "check_failed": "Die Schlussprüfung der beiden Fassungen konnte nicht durchgeführt werden.",
         "version": "Die {name} Fassung",
-        "not_applied": "Eine Änderung konnte nicht sicher übertragen werden, bitte von Hand nachführen: «{change}»",
+        "not_applied": "Diese Änderung konnte Apertus nicht sicher in die andere Sprache übertragen, bitte dort von Hand nachführen: «{change}»",
         "unclear": "Apertus hält diese Änderung für unklar und hat sie nicht übertragen: «{change}»",
-        "contradicts": "Diese Änderung widerspricht nach Apertus dem Urteilstext: «{change}»",
+        "contradicts": "Übertragen, widerspricht aber nach Apertus dem Urteilstext: «{change}»",
         "too_many": "Es wurden mehr als {limit} Stellen geändert. Die übrigen hat Apertus nicht übertragen, bitte von Hand nachführen.",
     },
     "fr": {
@@ -263,12 +354,12 @@ _LABELS = {
             "extend": "Tâche : «{added}» a été ajouté. Copie dans «alt» la phrase de la version {target} qui correspond à la phrase sous «avant» et rends-la dans «neu» avec cette affirmation supplémentaire.",
             "insert": "Tâche : le passage sous «après» est nouveau. Copie dans «alt» la phrase de la version {target} après laquelle il doit figurer et rends-la telle quelle dans «neu», suivie d'une nouvelle phrase qui ne contient que cette affirmation.",
         },
-        "task": "«neu» est entièrement en français. Donne maintenant le JSON.",
+        "task": "«alt» et «neu» sont entièrement en français, «hinweis» en allemand. Donne maintenant le JSON.",
         "check_failed": "Le contrôle final des deux versions n'a pas pu être effectué.",
         "version": "La version {name}",
-        "not_applied": "Une modification n'a pas pu être reportée de manière sûre, à reprendre à la main : «{change}»",
+        "not_applied": "Apertus n'a pas pu reporter cette modification de manière sûre dans l'autre langue, à y reprendre à la main : «{change}»",
         "unclear": "Apertus juge cette modification peu claire et ne l'a pas reportée : «{change}»",
-        "contradicts": "Selon Apertus, cette modification contredit le texte de l'arrêt : «{change}»",
+        "contradicts": "Reportée, mais selon Apertus elle contredit le texte de l'arrêt : «{change}»",
         "too_many": "Plus de {limit} passages ont été modifiés. Apertus n'a pas reporté les autres, à reprendre à la main.",
     },
 }
@@ -294,7 +385,8 @@ def change_user(target_lang: str, source_lang: str, change: dict[str, str], targ
 
 
 def _task(change: dict[str, str]) -> str:
-    """Kind of a change: words replaced, removed, added to a sentence (``extend``) or a new passage."""
+    """Kind of a change within a sentence (words replaced, removed: ``delete``, added: ``extend``)
+    or a new sentence (``insert``). A sentence removed as a whole has its own question (``DROP_SYSTEM``)."""
     return ("replace" if change["removed"] and change["added"] else "delete" if change["removed"]
             else "extend" if change["before"] else "insert")
 
@@ -306,9 +398,12 @@ def check_user(target_lang: str, texts: dict[str, str]) -> str:
 
 # --- applying an answer -------------------------------------------------------------------
 
-MIN_QUOTE_MATCH = 0.75  # how closely a sentence Apertus quotes must match a sentence of the text
-MIN_KEPT = 0.6          # how much of the old wording a replacement must keep
-MAX_CHANGES = 8         # changed passages carried over per save (one Apertus call each); the rest is noted
+# Low on purpose (team, 28.11.2026: carry the change over rather than leave it to the lawyer).
+# Apertus often quotes a sentence loosely; the reverse question (``confirmed``) is what keeps a
+# wrong sentence from being touched.
+MIN_QUOTE_MATCH = 0.55  # how closely a sentence Apertus quotes must match a sentence of the text
+MIN_KEPT = 0.45         # how much of the old wording a replacement must keep
+MAX_CHANGES = 12        # changed sentences carried over per save (one Apertus call each); the rest is noted
 
 _CONTENT_WORD_RE = re.compile(r"[^\W\d_]{4,}")
 
@@ -371,7 +466,7 @@ def planned_replacement(sentences: Sequence[tuple[str, str]], quote: str, new: s
     - a quote that differs from the sentence it stands for, when the words Apertus changed
       cannot be placed in the real sentence (``_transfer``), or when part of the sentence
       would be lost;
-    - a replacement that keeps less than 60 % of the old wording (a new text, not the old
+    - a replacement that keeps less than 45 % of the old wording (a new text, not the old
       one with the change);
     - more new sentences than the edit added;
     - a figure that is neither in the old sentence nor in the edit (taken from the judgement
@@ -443,17 +538,47 @@ def replace_sentences(sentences: Sequence[tuple[str, str]], numbers: Sequence[in
     return "".join(text + gap for text, gap in out).strip()
 
 
-def _json(llm: Any, system: str, user: str, name: str, schema: dict[str, Any]) -> dict[str, Any]:
-    """Apertus' JSON answer; an answer that is no JSON gets one retry with a little temperature."""
+def _json(llm: Any, system: str, user: str, name: str, schema: dict[str, Any], max_tokens: int = 600) -> dict[str, Any]:
+    """Apertus' JSON answer; an answer that is no JSON gets one retry with a little temperature.
+
+    ``max_tokens`` is small on purpose: an answer is a few sentences, and a decoding that runs
+    away (seen with an empty «neu») must end before the time limit.
+    """
     fmt = {"type": "json_schema", "json_schema": {"name": name, "strict": True, "schema": schema}}
     for temperature in (None, 0.3):
         try:
-            data = json.loads(llm.chat(system, user, response_format=fmt, temperature=temperature))
+            data = json.loads(llm.chat(system, user, max_tokens=max_tokens, response_format=fmt,
+                                       temperature=temperature, timeout=CALL_TIMEOUT))
         except json.JSONDecodeError:
             continue
         if isinstance(data, dict):
             return data
     raise ValueError("Apertus did not answer with JSON")
+
+
+def confirmed(llm: Any, target_lang: str, target_sentence: str, source_sentences: Sequence[str], number: int) -> bool:
+    """True when Apertus, asked the other way round, names sentence ``number`` of the edited
+    language (before the edit) as the one that says the same as ``target_sentence``."""
+    one, many = BACK_LABELS[target_lang]
+    listed = "\n".join(f"[{n}] {sentence}" for n, sentence in enumerate(source_sentences, start=1))
+    try:
+        answer = _json(llm, BACK_SYSTEM[target_lang], f"{one}:\n{target_sentence}\n\n{many}:\n{listed}",
+                       "gegenprobe", BACK_SCHEMA, max_tokens=20)
+    except ValueError:
+        return False
+    return answer.get("satz") == number
+
+
+def render(llm: Any, target_lang: str, source_text: str, prompts_dir: Path = prompts.PROMPTS_DIR) -> str:
+    """The other language written anew from the edited text (``RENDER_SYSTEM``), one Apertus call.
+
+    Raises ``ValueError`` when Apertus returns no text.
+    """
+    system = RENDER_SYSTEM[target_lang].format(glossary=prompts.glossary(prompts_dir))
+    text = llm.chat(system, render_user(target_lang, source_text), max_tokens=1500, timeout=RENDER_TIMEOUT).strip()
+    if not text:
+        raise ValueError("Apertus returned no text")
+    return text
 
 
 def align_edit(
@@ -467,14 +592,27 @@ def align_edit(
     judgement: Judgement | None = None,
     considerations: Sequence[str] = (),
     prompts_dir: Path = prompts.PROMPTS_DIR,
-    final_check: bool = True,
+    final_check: bool = False,
+    back_check: bool | None = None,
+    whole_text: bool | None = None,
 ) -> Alignment:
     """Carry the edit ``source_before`` -> ``source_text`` over to ``target_text`` (see module text).
 
-    ``llm`` is a ``summary.llm.SummaryLLM``. One Apertus call per changed passage and one for
-    the closing comparison (``final_check``). A change Apertus gives no usable answer for is
-    not applied and noted. A gateway error while carrying a change over is raised; one in
-    the closing comparison is noted.
+    ``llm`` is a ``summary.llm.SummaryLLM``. One Apertus call per changed sentence, and one more
+    for the closing comparison when ``final_check`` is set (off by default: the lawyer asked
+    for the change to be carried over, not for a list of differences). The notes are written
+    in ``source_lang``, the language the lawyer worked in. With ``back_check`` (default
+    ``BACK_CHECK``) every sentence that would be changed or removed is confirmed by a second,
+    reverse question first (``confirmed``); without that confirmation it is left alone and noted.
+
+    With ``whole_text`` (default ``WHOLE_TEXT``) the sentence-by-sentence way is used only for
+    a few edits inside sentences. When whole sentences were removed or added, or when one of
+    the edits cannot be placed safely, the other language is written anew from the edited
+    text (``render``): afterwards it says what the edited text says, sentence for sentence,
+    and there is nothing left to do by hand. Without ``whole_text`` every change is carried
+    over on its own and what cannot be placed is noted. A change Apertus gives no usable answer for is
+    not applied and noted. A gateway error is raised when nothing was carried over yet;
+    after that, the changes that are left are noted, as is an error in the closing comparison.
     """
     if target_lang not in LANGUAGES or source_lang not in LANGUAGES or target_lang == source_lang:
         raise ValueError(f"languages must be two of {LANGUAGES}, got {source_lang!r} -> {target_lang!r}")
@@ -485,38 +623,82 @@ def align_edit(
         reference = reference_text(judgement, target_lang, [target_text, source_text, source_before], considerations)
     if not changes:
         return Alignment(text=text, has_reference=bool(reference))
+    anew = WHOLE_TEXT if whole_text is None else whole_text
+
+    def written_anew() -> Alignment:
+        return Alignment(text=render(llm, target_lang, source_text, prompts_dir), has_reference=judgement is not None)
+
+    if anew and (len(changes) > MAX_SENTENCE_EDITS or any(not c["before"] or not c["after"] for c in changes)):
+        return written_anew()
     system = change_system(target_lang, prompts_dir)
-    lab = _LABELS[target_lang]
+    lab = _LABELS[source_lang]  # notes are for the lawyer, in the language of the text they edited
+    check_back = BACK_CHECK if back_check is None else back_check
+    before_sentences = [" ".join(sentence.split()) for sentence, _ in split_sentences(source_before)]
+
+    def safe(numbers: Sequence[int], change: dict[str, Any]) -> bool:
+        """The sentences Apertus wants to touch really belong to the edited sentence."""
+        if not check_back or not change["number"]:
+            return True
+        return all(confirmed(llm, target_lang, sentences[n - 1][0], before_sentences, change["number"]) for n in numbers)
+
     notes: list[str] = []  # one per change that needs the lawyer: never cut short
-    for change in changes[:MAX_CHANGES]:
+    for position, change in enumerate(changes[:MAX_CHANGES]):
         sentences = split_sentences(text)
         shown = change["after"] or change["before"]
         try:
-            answer = _json(llm, system, change_user(target_lang, source_lang, change, text, reference),
-                           "angleichung", CHANGE_SCHEMA)
+            if not change["after"]:  # a whole sentence was removed: only the sentence that says the same is asked for
+                whole, removed_label = DROP_LABELS[target_lang]
+                answer = _json(llm, DROP_SYSTEM[target_lang], f"{whole}:\n{text}\n\n{removed_label}:\n{change['before']}",
+                               "streichung", DROP_SCHEMA, max_tokens=300)
+            else:
+                answer = _json(llm, system, change_user(target_lang, source_lang, change, text, reference),
+                               "angleichung", CHANGE_SCHEMA)
         except ValueError:  # no JSON, twice
             notes.append(lab["not_applied"].format(change=shown))
             continue
-        if answer.get("widerspricht_urteil"):
-            notes.append(str(answer.get("hinweis") or "").strip() or lab["contradicts"].format(change=shown))
+        except Exception:
+            # The gateway fell away in the middle. What was carried over so far is kept and the
+            # rest is left to the lawyer; when nothing was carried over yet, the caller reports
+            # that Apertus could not be reached.
+            if text == target_text.strip():
+                raise
+            notes += [lab["not_applied"].format(change=c["after"] or c["before"]) for c in changes[position:MAX_CHANGES]]
+            break
+        quote, fresh = str(answer.get("alt") or ""), str(answer.get("neu") or "")
+        if not change["after"]:
+            if not quote.strip():
+                continue  # the other language does not have it: nothing to do
+            numbers = sorted({_locate(sentences, quoted) for quoted, _ in split_sentences(quote)})
+            if len(numbers) == 1 and numbers[0] and safe(numbers, change):
+                text = replace_sentences(sentences, numbers, "")  # removing is done here, not by Apertus
+            else:
+                notes.append(lab["not_applied"].format(change=shown))
+            continue
+        reason = str(answer.get("hinweis") or "").strip()
         if answer.get("unklar"):  # nothing is read into an unclear edit
-            notes.append(str(answer.get("hinweis") or "").strip() or lab["unclear"].format(change=shown))
+            notes.append(" ".join(filter(None, [lab["unclear"].format(change=shown), reason])))
+            continue
+        figures_changed = sorted(_FIGURE_RE.findall(change["before"])) != sorted(_FIGURE_RE.findall(change["after"]))
+        if not answer.get("inhaltlich") and not (figures_changed and change["before"]):
+            continue  # wording only; a date or an amount that changed is never just wording
+        plan = planned_replacement(sentences, quote, fresh, change)
+        if plan and not safe(plan[0], change):
+            plan = None
+        if not plan:  # nothing to apply safely: this change is left to the lawyer
             notes.append(lab["not_applied"].format(change=shown))
             continue
-        if not answer.get("inhaltlich"):
-            continue  # wording only
-        plan = planned_replacement(sentences, str(answer.get("alt") or ""), str(answer.get("neu") or ""), change)
-        if plan:
-            text = replace_sentences(sentences, *plan)
-        else:  # nothing to apply safely: this change is left to the lawyer
-            notes.append(lab["not_applied"].format(change=shown))
+        text = replace_sentences(sentences, *plan)
+        if answer.get("widerspricht_urteil"):
+            notes.append(" ".join(filter(None, [lab["contradicts"].format(change=shown), reason])))
     if len(changes) > MAX_CHANGES:
         notes.append(lab["too_many"].format(limit=MAX_CHANGES))
+    if anew and any(note.startswith((lab["not_applied"].split("«")[0], lab["unclear"].split("«")[0])) for note in notes):
+        return written_anew()  # an edit could not be placed: no note, the whole text follows the edit
     notes = list(dict.fromkeys(n for n in notes if n))
     if final_check:
         try:
-            check = _json(llm, CHECK_SYSTEM[target_lang],
-                          check_user(target_lang, {source_lang: source_text, target_lang: text}),
+            check = _json(llm, CHECK_SYSTEM[source_lang],
+                          check_user(source_lang, {source_lang: source_text, target_lang: text}),
                           "schlusspruefung", CHECK_SCHEMA)
             found = [str(n).strip() for n in check.get("abweichungen") or []]
             notes += [n for n in dict.fromkeys(found) if n and n not in notes][:MAX_CHECK_NOTES]

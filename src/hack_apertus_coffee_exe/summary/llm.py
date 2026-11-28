@@ -39,9 +39,10 @@ class SummaryLLM:
         return self.config.model
 
     def chat(self, system: str, user: str, max_tokens: int | None = None,
-             response_format: dict[str, Any] | None = None, temperature: float | None = None) -> str:
+             response_format: dict[str, Any] | None = None, temperature: float | None = None,
+             timeout: float | None = None) -> str:
         """``response_format`` (e.g. a JSON schema) is passed to the gateway as it is;
-        ``temperature`` replaces the configured one for this call."""
+        ``temperature`` and ``timeout`` (seconds) replace the configured ones for this call."""
         response = self._client.chat.completions.create(
             model=self.config.model,
             messages=[
@@ -51,6 +52,7 @@ class SummaryLLM:
             temperature=self.temperature if temperature is None else temperature,
             max_tokens=max_tokens or self.max_tokens,
             **({"response_format": response_format} if response_format else {}),
+            **({"timeout": timeout} if timeout else {}),
         )
         return (response.choices[0].message.content or "").strip()
 
