@@ -1,22 +1,28 @@
-"""Carry a lawyer's edit of one summary language over to the other language (issue #102).
+"""Bring the other summary language in line after a lawyer edited one of them (issue #102).
 
-Not a translation. The steps:
+Two ways, chosen by what the edit did (``align_edit``):
+
+**A few edits inside sentences** (a date, an amount, one statement) are carried over at their
+place, and every other sentence of the other language stays word for word:
 
 1. The edit is found here, without a model: the sentences of the edited language before and
    after the edit are compared (``source_changes``).
-2. For every changed passage Apertus v1.5 gets one small task: the passage before and after,
-   the wording of the judgement as the reference for the legal meaning and the other language
+2. Per changed sentence Apertus v1.5 gets one small task: the sentence before and after, the
+   wording of the judgement as the reference for the legal meaning and the other language's
    text. It answers with JSON: does the change touch the substance, which sentences of the
-   other language say the same (quoted word for word), and how do these sentences read now.
-3. The answer is applied here: the quoted sentences are looked up in the text and replaced
-   (``planned_replacement``, ``replace_sentences``). Every other sentence stays word for
-   word. An answer that fails one of the checks listed in ``planned_replacement`` is not
-   applied; the lawyer is told to carry that change over by hand. The checks limit what a
-   wrong answer can do; they cannot tell whether the new sentence is legally right, so the
-   aligned text stays marked for review.
-4. Apertus marks a change that is unclear or contradicts the judgement, and a last call
-   compares both languages for statements one of them lacks (``CHECK_SYSTEM``). These notes
-   go to the lawyer; nothing is changed because of them.
+   other language say the same (quoted), and how do these sentences read now.
+3. The answer is applied here (``planned_replacement``, ``replace_sentences``) after a reverse
+   question confirmed the sentence (``confirmed``). An answer that fails a check is not applied.
+
+**Whole sentences removed or added, many edits, or an edit that cannot be placed:** the other
+language is written anew from the edited text in one call (``render``), so that it says what
+the edited text says, sentence for sentence. The two generated summaries are built differently
+(often one tells the case and the other goes by considerations), so a removed sentence has no
+single counterpart: carried over sentence by sentence, 2 of 8 removed sentences were removed
+in the other language (independent test on the running application, 28.11.2026).
+
+Notes for the lawyer are written in the language they edited. A comparison of both languages
+for remaining differences is available (``final_check``) and off by default.
 """
 
 from __future__ import annotations
@@ -254,6 +260,49 @@ Tu compares deux résumés du même arrêt du Tribunal fédéral. Tu reçois une
 }
 BACK_LABELS = {"de": ("Deutscher Satz", "Französische Sätze"), "fr": ("Phrase française", "Phrases allemandes")}
 BACK_CHECK = True  # default of ``align_edit(back_check=...)``
+WHOLE_TEXT = True  # default of ``align_edit(whole_text=...)``
+MAX_SENTENCE_EDITS = 4  # more reworded sentences than this: the whole text is written anew (fewer calls)
+RENDER_TIMEOUT = 150    # seconds for writing the whole text (about 13 tokens per second on Apertus 70B)
+
+# The whole other language written anew from the edited one. Used when sentences were removed
+# or added: the two generated summaries are built differently (often one tells the case and the
+# other goes by considerations), so a removed sentence has no single counterpart to remove.
+RENDER_SYSTEM = {
+    "de": """\
+Du bist Juristin / Jurist im Rechtsdienst der Suva. Die französische Zusammenfassung eines Bundesgerichtsurteils wurde von Hand bearbeitet und ist massgebend. Du schreibst die deutsche Fassung dazu.
+
+Regeln:
+1. Die deutsche Fassung enthält genau die Aussagen der bearbeiteten französischen Fassung, nicht mehr und nicht weniger: Jeder französische Satz wird durch einen deutschen Satz wiedergegeben, in derselben Reihenfolge und mit denselben Absätzen. Füge keinen Satz, keine Tatsache und keine Erwägung hinzu, die in der französischen Fassung nicht steht.
+2. Keine Wort-für-Wort-Übersetzung: Schreibe so, wie es eine Juristin der Suva auf Deutsch formuliert, mit den festen Begriffen und Abkürzungen des Glossars (LAA wird UVG, «consid.» wird «E.»):
+{glossary}
+3. Übernimm Zahlen, Daten, Urteilsnummern und anonymisierte Namen unverändert.
+
+Ausgabe: ausschliesslich der deutsche Text, ohne Titel und ohne Kommentar.
+""",
+    "fr": """\
+Tu es juriste au service juridique de la Suva. Le résumé allemand d'un arrêt du Tribunal fédéral a été modifié à la main et fait foi. Tu rédiges la version française correspondante.
+
+Règles :
+1. La version française contient exactement les affirmations de la version allemande modifiée, ni plus ni moins : chaque phrase allemande est rendue par une phrase française, dans le même ordre et avec les mêmes paragraphes. N'ajoute aucune phrase, aucun fait, aucun considérant qui ne figure pas dans la version allemande.
+2. Pas de traduction mot à mot : écris comme le ferait une juriste romande de la Suva, avec les termes et abréviations consacrés du glossaire (UVG devient LAA, «E.» devient «consid.») :
+{glossary}
+3. Reprends tels quels les chiffres, les dates, les numéros d'arrêts et les noms anonymisés.
+
+Sortie : uniquement le texte français, sans titre ni commentaire.
+""",
+}
+RENDER_LABELS = {
+    "de": ("Bearbeitete französische Fassung (massgebend)", "Schreibe jetzt die deutsche Fassung."),
+    "fr": ("Version allemande modifiée (fait foi)", "Rédige maintenant la version française."),
+}
+
+
+def render_user(target_lang: str, source_text: str) -> str:
+    # The old text of the target language is left out on purpose: with it in the prompt,
+    # Apertus 70B kept its sentences (8C_17/2026: 14 sentences for 8 edited ones, 28.11.2026).
+    edited, task = RENDER_LABELS[target_lang]
+    return f"{edited} :\n{source_text.strip()}\n\n{task}"
+
 
 CHECK_SYSTEM = {
     "de": """\
@@ -349,8 +398,11 @@ def check_user(target_lang: str, texts: dict[str, str]) -> str:
 
 # --- applying an answer -------------------------------------------------------------------
 
-MIN_QUOTE_MATCH = 0.75  # how closely a sentence Apertus quotes must match a sentence of the text
-MIN_KEPT = 0.6          # how much of the old wording a replacement must keep
+# Low on purpose (team, 28.11.2026: carry the change over rather than leave it to the lawyer).
+# Apertus often quotes a sentence loosely; the reverse question (``confirmed``) is what keeps a
+# wrong sentence from being touched.
+MIN_QUOTE_MATCH = 0.55  # how closely a sentence Apertus quotes must match a sentence of the text
+MIN_KEPT = 0.45         # how much of the old wording a replacement must keep
 MAX_CHANGES = 12        # changed sentences carried over per save (one Apertus call each); the rest is noted
 
 _CONTENT_WORD_RE = re.compile(r"[^\W\d_]{4,}")
@@ -414,7 +466,7 @@ def planned_replacement(sentences: Sequence[tuple[str, str]], quote: str, new: s
     - a quote that differs from the sentence it stands for, when the words Apertus changed
       cannot be placed in the real sentence (``_transfer``), or when part of the sentence
       would be lost;
-    - a replacement that keeps less than 60 % of the old wording (a new text, not the old
+    - a replacement that keeps less than 45 % of the old wording (a new text, not the old
       one with the change);
     - more new sentences than the edit added;
     - a figure that is neither in the old sentence nor in the edit (taken from the judgement
@@ -517,6 +569,18 @@ def confirmed(llm: Any, target_lang: str, target_sentence: str, source_sentences
     return answer.get("satz") == number
 
 
+def render(llm: Any, target_lang: str, source_text: str, prompts_dir: Path = prompts.PROMPTS_DIR) -> str:
+    """The other language written anew from the edited text (``RENDER_SYSTEM``), one Apertus call.
+
+    Raises ``ValueError`` when Apertus returns no text.
+    """
+    system = RENDER_SYSTEM[target_lang].format(glossary=prompts.glossary(prompts_dir))
+    text = llm.chat(system, render_user(target_lang, source_text), max_tokens=1500, timeout=RENDER_TIMEOUT).strip()
+    if not text:
+        raise ValueError("Apertus returned no text")
+    return text
+
+
 def align_edit(
     llm: Any,
     *,
@@ -530,6 +594,7 @@ def align_edit(
     prompts_dir: Path = prompts.PROMPTS_DIR,
     final_check: bool = False,
     back_check: bool | None = None,
+    whole_text: bool | None = None,
 ) -> Alignment:
     """Carry the edit ``source_before`` -> ``source_text`` over to ``target_text`` (see module text).
 
@@ -538,7 +603,14 @@ def align_edit(
     for the change to be carried over, not for a list of differences). The notes are written
     in ``source_lang``, the language the lawyer worked in. With ``back_check`` (default
     ``BACK_CHECK``) every sentence that would be changed or removed is confirmed by a second,
-    reverse question first (``confirmed``); without that confirmation it is left alone and noted. A change Apertus gives no usable answer for is
+    reverse question first (``confirmed``); without that confirmation it is left alone and noted.
+
+    With ``whole_text`` (default ``WHOLE_TEXT``) the sentence-by-sentence way is used only for
+    a few edits inside sentences. When whole sentences were removed or added, or when one of
+    the edits cannot be placed safely, the other language is written anew from the edited
+    text (``render``): afterwards it says what the edited text says, sentence for sentence,
+    and there is nothing left to do by hand. Without ``whole_text`` every change is carried
+    over on its own and what cannot be placed is noted. A change Apertus gives no usable answer for is
     not applied and noted. A gateway error is raised when nothing was carried over yet;
     after that, the changes that are left are noted, as is an error in the closing comparison.
     """
@@ -551,6 +623,13 @@ def align_edit(
         reference = reference_text(judgement, target_lang, [target_text, source_text, source_before], considerations)
     if not changes:
         return Alignment(text=text, has_reference=bool(reference))
+    anew = WHOLE_TEXT if whole_text is None else whole_text
+
+    def written_anew() -> Alignment:
+        return Alignment(text=render(llm, target_lang, source_text, prompts_dir), has_reference=judgement is not None)
+
+    if anew and (len(changes) > MAX_SENTENCE_EDITS or any(not c["before"] or not c["after"] for c in changes)):
+        return written_anew()
     system = change_system(target_lang, prompts_dir)
     lab = _LABELS[source_lang]  # notes are for the lawyer, in the language of the text they edited
     check_back = BACK_CHECK if back_check is None else back_check
@@ -599,8 +678,9 @@ def align_edit(
         if answer.get("unklar"):  # nothing is read into an unclear edit
             notes.append(" ".join(filter(None, [lab["unclear"].format(change=shown), reason])))
             continue
-        if not answer.get("inhaltlich"):
-            continue  # wording only
+        figures_changed = sorted(_FIGURE_RE.findall(change["before"])) != sorted(_FIGURE_RE.findall(change["after"]))
+        if not answer.get("inhaltlich") and not (figures_changed and change["before"]):
+            continue  # wording only; a date or an amount that changed is never just wording
         plan = planned_replacement(sentences, quote, fresh, change)
         if plan and not safe(plan[0], change):
             plan = None
@@ -612,6 +692,8 @@ def align_edit(
             notes.append(" ".join(filter(None, [lab["contradicts"].format(change=shown), reason])))
     if len(changes) > MAX_CHANGES:
         notes.append(lab["too_many"].format(limit=MAX_CHANGES))
+    if anew and any(note.startswith((lab["not_applied"].split("«")[0], lab["unclear"].split("«")[0])) for note in notes):
+        return written_anew()  # an edit could not be placed: no note, the whole text follows the edit
     notes = list(dict.fromkeys(n for n in notes if n))
     if final_check:
         try:

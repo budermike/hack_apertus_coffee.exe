@@ -24,6 +24,8 @@ JUDGEMENT = Judgement(
 def no_back_check(monkeypatch):
     """The reverse question before a sentence is touched has its own tests below."""
     monkeypatch.setattr(align, "BACK_CHECK", False)
+    # sentence by sentence only; writing the whole text anew is tested at the end
+    monkeypatch.setattr(align, "WHOLE_TEXT", False)
 
 
 class FakeLLM:
@@ -349,3 +351,63 @@ def test_a_sentence_is_touched_only_when_the_reverse_question_names_the_edited_s
     # a new sentence has no counterpart to ask about
     llm = FakeLLM(change(alt="Le recours est rejeté.", neu="Le recours est rejeté. Les frais sont à la charge de la Suva."))
     assert run(llm, DE + " Die Kosten trägt die Suva.", back_check=True).text.endswith("de la Suva.") and len(llm.calls) == 1
+
+
+def test_a_changed_date_or_amount_is_never_wording_only_and_loose_quotes_are_accepted():
+    target = "La Suva a cessé les prestations au 31 mars 2024. Le recours est rejeté."
+    before = "Die Suva stellte die Leistungen per 31. März 2024 ein. Die Beschwerde wird abgewiesen."
+    after = "Die Suva stellte die Leistungen ein. Die Beschwerde wird abgewiesen."
+    # Apertus calls it wording only: the date goes all the same
+    llm = FakeLLM(change(alt="La Suva a cessé les prestations au 31 mars 2024.", neu="La Suva a cessé les prestations.", inhaltlich=False))
+    result = align.align_edit(llm, target_lang="fr", target_text=target, source_lang="de", source_text=after, source_before=before)
+    assert result.text == "La Suva a cessé les prestations. Le recours est rejeté." and result.notes == []
+    # a removed sentence that Apertus quotes only roughly is still found
+    llm = FakeLLM({"alt": "La Suva a mis fin aux prestations le 31 mars 2024."})
+    result = align.align_edit(llm, target_lang="fr", target_text=target, source_lang="de",
+                              source_text="Die Beschwerde wird abgewiesen.", source_before=before)
+    assert result.text == "Le recours est rejeté." and result.notes == []
+
+
+def test_removed_or_added_sentences_let_the_other_language_be_written_anew():
+    # default behaviour: the German text was cut to its first sentence
+    anew = "Le Tribunal fédéral retient que l'art. 6 al. 2 LAA exige une lésion figurant dans la liste (consid. 4.2)."
+    llm = FakeLLM(anew)
+    result = run(llm, DE.split(" Die Suva")[0], whole_text=True, judgement=JUDGEMENT)
+    assert result.text == anew and result.notes == [] and result.has_reference is True
+    system, user, kwargs = llm.calls[0]
+    assert len(llm.calls) == 1 and "ni plus ni moins" in system and "response_format" not in kwargs
+    assert kwargs["timeout"] == align.RENDER_TIMEOUT
+    # only the edited German text goes along: with the old French text Apertus keeps its sentences
+    assert "Version allemande modifiée" in user and "Das Bundesgericht hält fest" in user and "Le recours est rejeté" not in user
+    # a new sentence, too
+    assert run(FakeLLM("Neu."), DE + " Die Kosten trägt die Suva.", whole_text=True).text == "Neu."
+    with pytest.raises(ValueError):
+        run(FakeLLM("  "), DE + " Die Kosten trägt die Suva.", whole_text=True)
+    # and the other way round: a French text cut short gives a German text written anew, asked in German
+    llm = FakeLLM("Das Bundesgericht hält fest, dass Art. 6 Abs. 2 UVG eine Listenverletzung verlangt (E. 4.2).")
+    result = align.align_edit(llm, target_lang="de", target_text=DE, source_lang="fr",
+                              source_text=FR.split(" La Suva")[0], source_before=FR, whole_text=True)
+    assert result.text.startswith("Das Bundesgericht hält fest") and result.notes == []
+    assert "nicht mehr und nicht weniger" in llm.calls[0][0] and "Bearbeitete französische Fassung" in llm.calls[0][1]
+
+
+def test_an_edit_inside_a_sentence_is_still_carried_over_at_its_place_and_the_rest_stays():
+    old = "La Suva doit apporter la preuve avec une vraisemblance suffisante."
+    llm = FakeLLM(change(alt=old, neu=old.replace("suffisante", "prépondérante")))
+    result = run(llm, DE.replace("hinreichender", "überwiegender"), whole_text=True)
+    assert result.text == FR.replace("suffisante", "prépondérante") and len(llm.calls) == 1
+    # wording only: nothing happens, nothing is written anew
+    llm = FakeLLM(change(inhaltlich=False))
+    assert run(llm, DE.replace("hält fest", "hat festgehalten"), whole_text=True).text == FR and len(llm.calls) == 1
+
+
+def test_an_edit_that_cannot_be_placed_lets_the_text_be_written_anew_instead_of_a_note():
+    llm = FakeLLM(change(alt="Cette phrase ne figure pas dans le texte.", neu="Autre phrase."), "Texte français entièrement réécrit.")
+    result = run(llm, DE.replace("hinreichender", "überwiegender"), whole_text=True)
+    assert result.text == "Texte français entièrement réécrit." and result.notes == []
+    # more reworded sentences than MAX_SENTENCE_EDITS: written anew at once
+    before = " ".join(f"Satz {n} betrifft die Leistungspflicht Nummer {n}{n}." for n in range(10, 16))
+    llm = FakeLLM("Six phrases.")
+    result = align.align_edit(llm, target_lang="fr", target_text=FR, source_lang="de",
+                              source_text=before.replace("Leistungspflicht", "Kausalität"), source_before=before, whole_text=True)
+    assert result.text == "Six phrases." and len(llm.calls) == 1
