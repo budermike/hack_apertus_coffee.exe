@@ -145,7 +145,6 @@ CREATE TABLE IF NOT EXISTS summaries (
     issues         TEXT,
     facts          TEXT,
     examples       TEXT,
-    aligned_by     TEXT,
     UNIQUE (case_id, language, version),
     -- Modell-Text vs. menschlich bearbeiteter Text
     CHECK (
@@ -171,7 +170,6 @@ CREATE TABLE IF NOT EXISTS summaries (
 | `issues` | JSON-Liste der Befunde des Coherence-Checks für diese Sprache (z. B. erfundene Erwägung), damit die UI zeigen kann, was nicht passt; `NULL` bei Bearbeitungen |
 | `facts` | JSON-Objekt der extrahierten Fakten (Zwischenschritt der Pipeline); `NULL` bei Bearbeitungen |
 | `examples` | JSON-Liste der Suva-Beispiele (Geschäftsnummern), die im Prompt verwendet wurden; `NULL` bei Bearbeitungen |
-| `aligned_by` | Apertus-Modell-ID, wenn der Text dieser bearbeiteten Fassung nicht getippt, sondern von Apertus an die Bearbeitung der anderen Sprache angeglichen wurde; sonst `NULL`. Die Zeile bleibt `model = 'human'` (der `CHECK` verlangt das), `aligned_by` sagt, wer den Text geschrieben hat. Fehlt die Spalte in einer älteren Datenbank, ergänzt `store.py` sie beim Öffnen |
 
 ### Tabelle `case_numbers`
 
@@ -198,6 +196,24 @@ CREATE INDEX IF NOT EXISTS idx_summaries_case_lang
     ON summaries (case_id, language, version);
 ```
 
+### Tabelle `summary_alignments`
+
+Vermerkt, welche bearbeitete Fassung nicht getippt, sondern von Apertus an die Bearbeitung der anderen Sprache angeglichen wurde.
+
+```sql
+CREATE TABLE IF NOT EXISTS summary_alignments (
+    summary_id INTEGER PRIMARY KEY REFERENCES summaries (id) ON DELETE CASCADE,
+    model      TEXT    NOT NULL
+);
+```
+
+| Spalte | Bedeutung |
+|---|---|
+| `summary_id` | Die Zeile in `summaries`, deren Text Apertus geschrieben hat. Wird die Zeile gelöscht (neue Bearbeitung, Zurücksetzen), verschwindet der Vermerk mit |
+| `model` | Apertus-Modell-ID, z. B. `apertus-v1-5-8b` |
+
+Die Zeile in `summaries` bleibt `model = 'human'` (der `CHECK` verlangt das für bearbeitete Fassungen); im Code steht der Vermerk als `Summary.aligned_by`. Eine eigene Tabelle statt einer zusätzlichen Spalte, damit Code von vor dem 28.11.2026 dieselbe Datenbank weiterhin lesen kann (`SELECT *` auf `summaries` liefert die gewohnten Spalten).
+
 ### Regeln für Summaries
 
 **Generieren**
@@ -209,14 +225,14 @@ CREATE INDEX IF NOT EXISTS idx_summaries_case_lang
 
 - **Keine Freigabe mehr:** Eine gespeicherte Bearbeitung wird sofort angezeigt. `generated` gilt wie bisher ohne weiteren Schritt als gültig.
 - **Eine bearbeitete Fassung pro Sprache:** `store.replace_edit` löscht die bisherige bearbeitete Fassung dieser Sprache und legt die neue an (`status = 'approved'`, `model = 'human'`, `prompt_version = NULL`). Es entstehen also keine immer neuen Versionen. Die generierte Zeile bleibt unangetastet.
-- **Die andere Sprache zieht nach:** Wird nur eine Sprache geändert, gleicht Apertus die andere an (`Summarizer.align_language`). Der angeglichene Text wird als bearbeitete Fassung der anderen Sprache gespeichert, mit der Modell-ID in `aligned_by`.
-- **Von Hand Geschriebenes überschreibt Apertus nie:** Ist die andere Sprache von Hand bearbeitet (`aligned_by IS NULL`), bleibt sie stehen; die Oberfläche sagt das.
+- **Die andere Sprache zieht nach:** Wird nur eine Sprache geändert, gleicht Apertus die andere an (`Summarizer.align_language`). Der angeglichene Text wird als bearbeitete Fassung der anderen Sprache gespeichert; die Modell-ID steht in `summary_alignments` (im Code `Summary.aligned_by`).
+- **Von Hand Geschriebenes überschreibt Apertus nie:** Ist die andere Sprache von Hand bearbeitet (kein Vermerk in `summary_alignments`), bleibt sie stehen; die Oberfläche sagt das.
 - **Kann Apertus nicht angleichen** (kein Schlüssel, Gateway nicht erreichbar), wird die Bearbeitung trotzdem gespeichert; die andere Sprache bleibt unverändert und die Oberfläche meldet es.
 - **Zurücksetzen:** `store.discard_edit` löscht die bearbeitete Fassung (eine Sprache oder beide). Angezeigt wird wieder der generierte Text. Das geht immer, weil generierte Zeilen nie gelöscht werden.
 
 Ablauf Generieren → Deutsch bearbeiten → (Französisch zieht nach) ergibt pro Sprache höchstens zwei Zeilen:
 
-| language | version | status | model | aligned_by | text |
+| language | version | status | model | Vermerk in `summary_alignments` | text |
 |---|---|---|---|---|---|
 | `de` | 1 | `generated` | `apertus-v1-5-70b` | `NULL` | Modell-Output |
 | `de` | 2 | `approved` | `human` | `NULL` | von Hand bearbeitet |
@@ -226,7 +242,7 @@ Ablauf Generieren → Deutsch bearbeiten → (Französisch zieht nach) ergibt pr
 **Anzeigen**
 
 - **Angezeigte Version:** die `approved`-Zeile, sonst die `generated`-Zeile.
-- **Herkunft in der Oberfläche:** «generiert» (`generated`), «bearbeitet» (`approved`, `aligned_by IS NULL`), «angeglichen» (`approved`, `aligned_by` gesetzt).
+- **Herkunft in der Oberfläche:** «generiert» (`generated`), «bearbeitet» (`approved`, ohne Vermerk), «angeglichen» (`approved`, mit Vermerk in `summary_alignments`).
 
 **Datenbanken von vor dem 28.11.2026**
 
