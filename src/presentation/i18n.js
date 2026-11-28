@@ -126,7 +126,17 @@ const I18N = {
         markRelevant: "Für Suva relevant",
         markNotRelevant: "Nicht relevant",
         feedbackSaved: "Korrektur gespeichert.",
-        feedbackLocalOnly: "Entscheidung nur in diesem Browser gespeichert: Das Backend speichert Korrekturen noch nicht.",
+        feedbackLocalOnly: "Korrektur konnte nicht am Server gespeichert werden.",
+
+        /* extra case & summary basis (#72) */
+        tagSingleJudge: "Einzelrichter",
+        principleLabel: (n) => `Grundsatzgehalt ${n}/3`,
+        uvUseLabel: (n) => `UV-Nutzen ${n}/3`,
+        suvaSelected: "Von Suva gewählt",
+        summaryBasis: "Worauf sich die Zusammenfassung stützt",
+        summaryBasisLaws: "Gesetzesartikel",
+        summaryBasisConsiderations: "Massgebende Erwägungen",
+        summaryBasisExamples: "Stil-Vorbilder",
 
         /* database */
         kbTitle: "Datenbank",
@@ -258,7 +268,16 @@ const I18N = {
         markRelevant: "Pertinent pour la Suva",
         markNotRelevant: "Non pertinent",
         feedbackSaved: "Correction enregistrée.",
-        feedbackLocalOnly: "Décision enregistrée dans ce navigateur seulement : le backend n'enregistre pas encore les corrections.",
+        feedbackLocalOnly: "La correction n'a pas pu être enregistrée sur le serveur.",
+
+        tagSingleJudge: "Juge unique",
+        principleLabel: (n) => `Portée de principe ${n}/3`,
+        uvUseLabel: (n) => `Intérêt LAA ${n}/3`,
+        suvaSelected: "Sélectionné par la Suva",
+        summaryBasis: "Sur quoi s'appuie le résumé",
+        summaryBasisLaws: "Articles de loi",
+        summaryBasisConsiderations: "Considérants déterminants",
+        summaryBasisExamples: "Exemples de style",
 
         kbTitle: "Base de données",
         kbIntro: "Tous les résumés enregistrés. Ils peuvent être recherchés, modifiés et adaptés ici.",

@@ -26,6 +26,7 @@ from __future__ import annotations
 
 import json
 import logging
+import math
 import re
 import threading
 from pathlib import Path
@@ -43,8 +44,8 @@ def ui_id(case_id: str) -> str:
 
 
 def ui_case_number(case_id: str) -> str:
-    """``8C_7/2025`` -> ``8C 7/2025`` (display form used by the UI)."""
-    return case_id.replace("_", " ", 1)
+    """``8C_7/2025`` -> ``8C_7/2025`` (bger.ch spelling with underscore, #73)."""
+    return case_id
 
 
 # Legal area codes of the UI (AREA_NAMES in src/presentation/i18n.js), matched on the
@@ -65,6 +66,30 @@ _AREAS = {
     "SOZ": r"sozialversicherung|assurances? sociales?|assicurazion[ei] social[ei]",
 }
 _AREA_RES = {code: re.compile(pattern, re.I) for code, pattern in _AREAS.items()}
+
+_SINGLE_JUDGE_RE = re.compile(r"Einzelrichter|juge unique|giudice unico", re.I)
+_COMPOSITION_END_RE = re.compile(
+    r"^(?:Verfahrensbeteiligte|Participants|Partecipanti|Gegenstand|Objet|Oggetto|"
+    r"Sachverhalt|Faits|Fatti|Ritenuto in fatto|Erwägung|Considérant|Considerando)\b",
+    re.I,
+)
+_RUBRUM_LAW_RE = re.compile(r"(erwägung|considérant|considerando|diritto|^vu\b|^visto\b)", re.I)
+_RUBRUM_DISP_RE = re.compile(r"^(Demnach (erkennt|verfügt|beschliesst)|Par ces motifs|Per questi motivi)", re.I)
+
+
+def _is_single_judge(text: str) -> bool:
+    """True if single-judge composition appears in the Besetzung header (before party/subject lines)."""
+    for raw_line in (text or "").split("\n"):
+        para = " ".join(raw_line.split())
+        if not para:
+            continue
+        if _COMPOSITION_END_RE.match(para) or _RUBRUM_DISP_RE.match(para):
+            break
+        if len(para) < 70 and para.endswith(":") and _RUBRUM_LAW_RE.search(para):
+            break
+        if _SINGLE_JUDGE_RE.search(para):
+            return True
+    return False
 
 # Outcome codes of the UI (OUTCOME_NAMES in i18n.js) for summary.judgement.operative_outcome.
 _OUTCOMES = {
@@ -154,6 +179,12 @@ def relevance_details(meta: dict[str, Any]) -> dict[str, Any]:
         })
     if criteria:
         details["criteria"] = criteria
+    for src, dst in (("principle", "principle"), ("uv_use", "uvUse")):
+        val = relevance.get(src)
+        if isinstance(val, int) and not isinstance(val, bool):
+            details[dst] = val
+    if isinstance(relevance.get("single_judge"), bool):
+        details["singleJudge"] = relevance["single_judge"]
     return details
 
 
@@ -172,7 +203,15 @@ def _reason_without_rule(reason: str, meta: dict[str, Any]) -> str:
     return stripped[: -len(appended)] if appended and stripped.endswith(appended) else reason
 
 
-def to_ui_item(row: dict[str, Any], summarized: bool = False, outcome: str | None = None) -> dict[str, Any]:
+def to_ui_item(
+    row: dict[str, Any],
+    summarized: bool = False,
+    outcome: str | None = None,
+    *,
+    feedback: dict[str, Any] | None = None,
+    single_judge: bool | None = None,
+    selected_ids: set[str] | None = None,
+) -> dict[str, Any]:
     """One triage result -> one UI list item.
 
     ``subject`` ("Gegenstand" / "Objet") exists only in the language of the judgement,
@@ -183,7 +222,24 @@ def to_ui_item(row: dict[str, Any], summarized: bool = False, outcome: str | Non
     case_id = row["case_id"]
     subject = meta.get("subject") or meta.get("title") or case_id
     reason = _reason_without_rule(row.get("relevance_reason") or row.get("reason") or "", meta)
-    item = {
+    raw_adj = feedback.get("adjustment") if isinstance(feedback, dict) else 0
+    adjustment = (
+        0 if not isinstance(raw_adj, (int, float)) or isinstance(raw_adj, bool) or raw_adj == 0
+        else round(float(raw_adj), 1)
+    )
+    similar_cases = []
+    for c in row.get("similar_cases") or []:
+        if not (isinstance(c, dict) and c.get("case_id")):
+            continue
+        entry: dict[str, Any] = {
+            "caseNumber": ui_case_number(c["case_id"]),
+            "subject": c.get("title") or c["case_id"],
+            "similarity": float(c.get("similarity") or 0.0),
+        }
+        if selected_ids is not None:
+            entry["suvaSelected"] = c["case_id"] in selected_ids
+        similar_cases.append(entry)
+    item: dict[str, Any] = {
         "id": ui_id(case_id),
         "caseNumber": ui_case_number(case_id),
         "date": _date(row),
@@ -193,19 +249,19 @@ def to_ui_item(row: dict[str, Any], summarized: bool = False, outcome: str | Non
         "subject": {"de": subject, "fr": subject},
         "explanation": {"de": reason, "fr": reason},
         "score": _score(row),
-        "adjustment": 0,
+        "adjustment": adjustment,
         "summarized": summarized,
         "signals": _strings(row.get("keyword_hits")),
         "topics": _strings(row.get("key_topics")),
-        "similarCases": [
-            {"caseNumber": ui_case_number(c["case_id"]), "subject": c.get("title") or c["case_id"],
-             "similarity": float(c.get("similarity") or 0.0)}
-            for c in row.get("similar_cases") or [] if isinstance(c, dict) and c.get("case_id")
-        ],
+        "similarCases": similar_cases,
         "ampel": row.get("ampel"),
         "rank": row.get("rank"),
     }
+    if isinstance(feedback, dict) and feedback.get("userLevel") in ("high", "low"):
+        item["userLevel"] = feedback["userLevel"]
     item.update(relevance_details(meta))
+    if "singleJudge" not in item and single_judge is not None:
+        item["singleJudge"] = single_judge
     if outcome is not None:
         item["outcome"] = outcome
     court = meta.get("department") or meta.get("division")
@@ -223,14 +279,19 @@ class JudgementList:
         config: TriageConfig | None = None,
         summarized_ids: Callable[[], Iterable[str]] = lambda: (),
         crawl_dir: str | Path | None = None,
+        feedback_map: Callable[[], dict[str, dict[str, Any]]] = lambda: {},
+        selected_ids: Iterable[str] | None = None,
     ) -> None:
         self.triage_path = Path(triage_path)
         self.config = config or load_config()
         self.summarized_ids = summarized_ids
         self.crawl_dir = Path(crawl_dir) if crawl_dir else None
+        self.feedback_map = feedback_map
+        self.selected_ids: set[str] | None = set(selected_ids) if selected_ids is not None else None
         self._rows: list[dict[str, Any]] = []
         self._mtime: float | None = None
         self._outcomes: dict[str, str] | None = None
+        self._single_judges: dict[str, bool] = {}
         self._lock = threading.Lock()
 
     def outcomes(self) -> dict[str, str]:
@@ -239,6 +300,7 @@ class JudgementList:
             with self._lock:
                 if self._outcomes is None:
                     loaded: dict[str, str] = {}
+                    single_loaded: dict[str, bool] = {}
                     if self.crawl_dir is not None:
                         if not self.crawl_dir.exists() or (
                             self.crawl_dir.is_dir()
@@ -250,12 +312,20 @@ class JudgementList:
                             logger.warning("Crawl folder missing or empty, leaving outcomes empty: %s", self.crawl_dir)
                         else:
                             for judgement in load_judgements(self.crawl_dir):
-                                loaded[ui_id(judgement.case_id)] = _OUTCOMES.get(
+                                key = ui_id(judgement.case_id)
+                                loaded[key] = _OUTCOMES.get(
                                     operative_outcome(judgement.text).result, "unklar"
                                 )
+                                single_loaded[key] = _is_single_judge(judgement.text)
                             logger.info("Read the outcome of %d judgements from %s", len(loaded), self.crawl_dir)
+                    self._single_judges = single_loaded
                     self._outcomes = loaded
         return self._outcomes
+
+    def single_judges(self) -> dict[str, bool]:
+        """Single-judge flag per UI id, populated once alongside ``outcomes()``."""
+        self.outcomes()
+        return self._single_judges
 
     def rows(self) -> list[dict[str, Any]]:
         with self._lock:
@@ -272,6 +342,8 @@ class JudgementList:
         """UI items with ``date_from <= date <= date_to`` (ISO dates, both optional), best score first."""
         done = {ui_id(c) for c in self.summarized_ids()}
         outcomes = self.outcomes() if self.crawl_dir is not None else {}
+        single_judges = self.single_judges() if self.crawl_dir is not None else {}
+        feedback = self.feedback_map()
         out = []
         for row in self.rows():
             date = _date(row) or ""
@@ -280,7 +352,16 @@ class JudgementList:
             if date_to and date > date_to:
                 continue
             key = ui_id(row["case_id"])
-            out.append(to_ui_item(row, summarized=key in done, outcome=outcomes.get(key)))
+            out.append(
+                to_ui_item(
+                    row,
+                    summarized=key in done,
+                    outcome=outcomes.get(key),
+                    feedback=feedback.get(key),
+                    single_judge=single_judges.get(key),
+                    selected_ids=self.selected_ids,
+                )
+            )
         return sorted(out, key=lambda item: item["score"], reverse=True)
 
     def thresholds(self) -> dict[str, float]:
@@ -288,10 +369,73 @@ class JudgementList:
         return {"high": self.config.green_threshold, "medium": self.config.yellow_threshold}
 
 
-def record_feedback(case_number: str, body: dict[str, Any]) -> dict[str, Any]:
-    """Placeholder for lawyer feedback (#64): accepted and logged, not stored or used yet."""
-    logger.info("Feedback for %s (not stored yet, see #64): %s", case_number, body)
-    return {"stored": False, "note": "feedback is not stored yet (#64)"}
+def parse_feedback_body(body: dict[str, Any]) -> dict[str, Any]:
+    """Validate and coerce ``POST /api/judgements/{id}/feedback`` payload; raises ValueError on invalid types."""
+    if not isinstance(body, dict):
+        raise ValueError("feedback body must be a JSON object")
+    decision = body.get("decision")
+    if decision not in (None, "high", "low"):
+        raise ValueError(f"decision must be 'high', 'low', or null, got {decision!r}")
+    level = body.get("level")
+    if level is None:
+        level = "medium" if decision is None else decision
+    if level not in ("high", "medium", "low"):
+        raise ValueError(f"level must be 'high', 'medium', or 'low', got {level!r}")
+
+    raw_adj = body.get("adjustment", 0.0)
+    if raw_adj is None:
+        adjustment = 0.0
+    elif isinstance(raw_adj, bool):
+        raise ValueError("adjustment must be a finite number, not bool")
+    else:
+        try:
+            adjustment = float(raw_adj)
+        except (TypeError, ValueError) as exc:
+            raise ValueError(f"invalid adjustment: {raw_adj!r}") from exc
+        if not math.isfinite(adjustment):
+            raise ValueError(f"adjustment must be finite: {raw_adj!r}")
+
+    raw_dir = body.get("direction", 0)
+    if raw_dir is None:
+        direction = 0
+    elif isinstance(raw_dir, bool) or isinstance(raw_dir, float):
+        raise ValueError(f"invalid direction: {raw_dir!r}")
+    else:
+        try:
+            direction = int(raw_dir)
+        except (TypeError, ValueError) as exc:
+            raise ValueError(f"invalid direction: {raw_dir!r}") from exc
+
+    comment = body.get("comment")
+    if comment is not None and not isinstance(comment, str):
+        raise ValueError("comment must be a string or null")
+    user = body.get("user")
+    if user is not None and not isinstance(user, str):
+        raise ValueError("user must be a string or null")
+
+    return {
+        "decision": decision,
+        "level": level,
+        "adjustment": adjustment,
+        "direction": direction,
+        "comment": comment,
+        "user": user or "ui",
+    }
+
+
+def record_feedback(
+    case_number: str, body: dict[str, Any], db_path: str | Path | None = None
+) -> dict[str, Any]:
+    """Store lawyer feedback (#64) in SQLite when ``db_path`` is provided, else log placeholder."""
+    if db_path is None:
+        logger.info("Feedback for %s (not stored yet, see #64): %s", case_number, body)
+        return {"stored": False, "note": "feedback is not stored yet (#64)"}
+    from contextlib import closing
+    from ..summary import store
+
+    parsed = parse_feedback_body(body)
+    with closing(store.connect(db_path)) as conn:
+        return store.save_feedback(conn, case_number, **parsed)
 
 
 def list_response(judgements: JudgementList | None, query: dict[str, list[str]]) -> tuple[int, Any]:

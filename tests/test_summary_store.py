@@ -311,3 +311,15 @@ def test_check_constraint_rejects_inconsistent_rows(conn, status, model, prompt_
             " created_at, status) VALUES (?, 'de', 1, 't', ?, ?, 't', ?)",
             (CASE, model, prompt_version, status),
         )
+
+
+def test_feedback_persistence_and_undo(conn):
+    res1 = store.save_feedback(conn, "8C_129_2025", decision="high", level="high", adjustment=25.0, direction=1)
+    assert res1["stored"] is True and res1["caseId"] == CASE
+    assert store.get_latest_feedback(conn)["8C_129_2025"]["userLevel"] == "high"
+    assert store.feedback_examples(conn) == {CASE: True}
+
+    store.save_feedback(conn, CASE, decision=None, level="medium", adjustment=0.0, direction=-1)
+    assert store.get_latest_feedback(conn)["8C_129_2025"]["userLevel"] is None
+    assert store.get_latest_feedback(conn)["8C_129_2025"]["adjustment"] == 0.0
+    assert store.feedback_examples(conn) == {}

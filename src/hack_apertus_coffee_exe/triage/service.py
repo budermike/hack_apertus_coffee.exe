@@ -104,11 +104,24 @@ def apply_feedback(
     comment: str | None = None,
     user: str,
 ) -> dict[str, Any]:
-    """Store a lawyer's traffic-light correction and return the new score and rank.
+    """Store a lawyer's traffic-light correction (#64) in SQLite and return the stored feedback.
 
-    Writes a ``feedback`` row and a manual override (the model score is kept), marks
-    the judgement as positive / negative reference in the Vector-DB
-    (``VectorDB.set_reference_flags``). The new score follows the thresholds from #75.
-    Never calls the LLM. Used by ``POST /api/judgements/{id}/feedback``.
+    Maps ``gruen`` -> ``high``, ``gelb`` -> ``medium``, ``rot`` -> ``low`` and delegates
+    persistence to :func:`hack_apertus_coffee_exe.summary.store.save_feedback`.
+    Never calls the LLM.
     """
-    raise NotImplementedError("apply_feedback: lawyer feedback (#64), thresholds from #75")
+    from ..summary import store
+
+    ampel_to_level = {"gruen": "high", "gelb": "medium", "rot": "low"}
+    level = ampel_to_level.get(ampel)
+    if level is None:
+        raise ValueError(f"Unsupported ampel {ampel!r}; expected one of {tuple(ampel_to_level)}")
+    decision = level if level in ("high", "low") else None
+    return store.save_feedback(
+        conn,
+        case_id,
+        decision=decision,
+        level=level,
+        comment=comment,
+        user=user,
+    )

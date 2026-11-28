@@ -856,12 +856,35 @@ function summarizeButton(id, labelKey) {
         el("button", { type: "button", class: "btn pri", text: t(labelKey), onclick: () => requestSummary(id, { first: true }) }));
 }
 
+function summaryBasisSection(entry) {
+    const facts = entry?.facts;
+    const laws = Array.isArray(facts?.gesetzesartikel) ? facts.gesetzesartikel.filter(Boolean) : [];
+    const points = Array.isArray(facts?.kernerwaegungen)
+        ? facts.kernerwaegungen.filter((k) => k && (k.aussage || k.erwaegung))
+        : [];
+    const examples = Array.isArray(entry?.examples) ? entry.examples.filter(Boolean) : [];
+    if (!laws.length && !points.length && !examples.length) return null;
+    return el("details", { class: "summary-basis" },
+        el("summary", { text: t("summaryBasis") }),
+        laws.length > 0 && el("p", { class: "signals" },
+            el("span", { class: "sub", text: `${t("summaryBasisLaws")}: ` }),
+            laws.map((law) => [el("span", { class: "tag", text: law }), " "])),
+        points.length > 0 && el("div", {},
+            el("p", { class: "sub", text: t("summaryBasisConsiderations") }),
+            el("ul", { class: "basis-list" }, points.map((p) => el("li", {},
+                p.erwaegung && el("strong", { text: `${t("refPrefix")}${p.erwaegung}: ` }),
+                p.aussage || "")))),
+        examples.length > 0 && el("p", { class: "signals" },
+            el("span", { class: "sub", text: `${t("summaryBasisExamples")}: ` }),
+            examples.map((ex) => [el("span", { class: "tag", text: ex }), " "])));
+}
+
 function summarySection(item) {
     const id = item.id;
     const heading = el("h3", { text: t("summary") });
     const busy = (key) => el("p", { class: "note loading-line" }, spinner(), t(key));
     switch (summaryStatus(item)) {
-        case "ready": return [heading, summaryEditor("res", id)];
+        case "ready": return [heading, summaryEditor("res", id), summaryBasisSection(state.summaries[id])].filter(Boolean);
         case "loading": return [heading, busy("summarizing")];
         case "queued": return [heading, busy("summaryQueued")];
         case "error": return [heading, el("p", { class: "form-error", text: t("errorSummary") }), summarizeButton(id, "retry")];
@@ -888,7 +911,7 @@ function similarSection(item) {
         el("h3", { text: t("similarCases") }),
         el("table", { class: "similar" }, el("tbody", {}, item.similarCases.map((c) => el("tr", {},
             el("td", { class: "nr" }, similarCaseLink(c.caseNumber)),
-            el("td", { text: c.subject || "" }),
+            el("td", {}, c.subject || "", c.suvaSelected && [" ", el("span", { class: "tag ok", text: t("suvaSelected") })]),
             el("td", { class: "pnum", text: t("similarity", c.similarity.toFixed(2)) }))))),
     ];
 }
@@ -941,6 +964,11 @@ function renderDetail() {
     const meta = [
         item.date && formatDate(item.date), loc(item.court), areaLabel(item), subjectDetail(item), outcomeName(item.outcome),
     ];
+    const badges = [
+        item.singleJudge === true && el("span", { class: "tag", text: t("tagSingleJudge") }),
+        typeof item.principle === "number" && el("span", { class: "tag blue", text: t("principleLabel", item.principle) }),
+        typeof item.uvUse === "number" && el("span", { class: "tag blue", text: t("uvUseLabel", item.uvUse) }),
+    ].filter(Boolean);
     const url = item.url && (currentLang === "fr" ? item.url.replace("lang=de", "lang=fr") : item.url);
     preservingFocus(detail, () => detail.replaceChildren(...[
         el("button", {
@@ -950,6 +978,7 @@ function renderDetail() {
         el("h2", { text: loc(state.summaries[item.id]?.title) || `${t("judgement")} ${item.caseNumber}` }),
         el("p", { class: "meta" }, meta.filter(Boolean).join(", "), ". ",
             url && el("a", { href: url, target: "_blank", rel: "noopener", text: t("openOriginal") })),
+        badges.length > 0 && el("div", { class: "row detail-badges" }, badges),
         textSection("question", item.question),
         // the explanation is triage's reasoning, so the heading follows triage's own score
         textSection(scoreLevel(item.score) === "high" ? "whyRelevant" : "whyNotRelevant", item.explanation),

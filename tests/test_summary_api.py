@@ -55,8 +55,10 @@ def test_get_without_summary_is_404_and_never_generates(backend, summarizer):
 def test_create_generates_once_and_returns_entry(backend, summarizer):
     status, entry = backend.create_summary(SAFE)
     assert status == 200
-    assert entry["id"] == SAFE and entry["caseNumber"] == "8C 901/2026"
+    assert entry["id"] == SAFE and entry["caseNumber"] == CASE
     assert entry["de"] == "Zusammenfassung DE" and entry["fr"] == "Résumé FR"
+    assert entry["facts"] == {"de": {"form": "fall"}, "fr": {"form": "fall"}}
+    assert entry["examples"] == {"de": ["8C_177/2025"], "fr": ["8C_177/2025"]}
     assert entry["url"].startswith("https://search.bger.ch/")
     assert entry["status"] == {"de": "generated", "fr": "generated"}
 
@@ -90,6 +92,8 @@ def test_edit_then_approve(backend):
     assert entry["de"] == "Vom Juristen" and entry["status"]["de"] == "approved"
     assert entry["pending"] == {"de": None, "fr": None}
     assert entry["editedAt"] is not None
+    assert entry["facts"] == {"de": {"form": "fall"}, "fr": {"form": "fall"}}
+    assert entry["examples"] == {"de": ["8C_177/2025"], "fr": ["8C_177/2025"]}
     # the UI's origin tags read status/model per language: editing DE leaves FR "generated"
     assert entry["status"]["fr"] == "generated"
     assert entry["model"]["de"] == "human" and entry["model"]["fr"] != "human"

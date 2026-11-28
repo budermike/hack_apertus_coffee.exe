@@ -13,6 +13,7 @@ evaluation (``eval/relevance_eval.py``) runs without gateway and without cache.
 
 from __future__ import annotations
 
+from contextlib import closing
 import json
 from pathlib import Path
 from typing import Any, Callable, Sequence
@@ -68,7 +69,11 @@ def load_summaries_de(judgements_dir: str | Path) -> dict[str, str]:
 
 
 def precedent_pool(
-    raw_dir: str | Path, label_periods: Sequence[str], selected_ids: set[str], summaries: dict[str, str]
+    raw_dir: str | Path,
+    label_periods: Sequence[str],
+    selected_ids: set[str],
+    summaries: dict[str, str],
+    feedback_overrides: dict[str, bool] | None = None,
 ) -> list[Precedent]:
     """Judgements with a known Suva decision: every candidate of the labelled periods, plus older selected ones."""
     ranges = [DateRange.from_period(p) for p in label_periods]
@@ -76,15 +81,42 @@ def precedent_pool(
     for period in ranges:
         items += [item for item in load_period_items(raw_dir, period) if is_candidate(item)]
     first = min(r.since for r in ranges).isoformat() if ranges else "9999"
+    pos = {cid for cid, relevant in (feedback_overrides or {}).items() if relevant}
+    neg = {cid for cid, relevant in (feedback_overrides or {}).items() if not relevant}
+    effective_selected = (set(selected_ids) | pos) - neg
+    seen = {cid for item in items for cid in (item.metadata.get("case_ids") or [item.case_id])}
+    extra_feedback = set(feedback_overrides or ()) - seen
     for folder in sorted(Path(raw_dir).glob("20??-??")):
-        if folder.name < first[:7]:
-            older = load_crawl_items(folder)
-            items += [
-                item for item in older
-                if set(item.metadata.get("case_ids") or [item.case_id]) & selected_ids
-                and str(item.metadata.get("decision_date") or "") < first
-            ]
-    return build_pool(items, selected_ids, summaries)
+        if folder.name < first[:7] or extra_feedback:
+            loaded = load_crawl_items(folder)
+            for item in loaded:
+                cids = set(item.metadata.get("case_ids") or [item.case_id])
+                if folder.name < first[:7] and (cids & effective_selected) and str(item.metadata.get("decision_date") or "") < first:
+                    items.append(item)
+                    extra_feedback -= cids
+                elif (cids & extra_feedback) and is_candidate(item):
+                    items.append(item)
+                    extra_feedback -= cids
+    if neg:
+        for item in items:
+            cids = set(item.metadata.get("case_ids") or [item.case_id])
+            if cids & neg:
+                effective_selected -= cids
+    return build_pool(items, effective_selected, summaries)
+
+
+def _load_feedback_overrides() -> dict[str, bool]:
+    """Latest lawyer relevance decisions from the summaries DB (#64), fail-safe if no DB exists."""
+    try:
+        from ..summary import store
+
+        path = store.db_path_from_env()
+        if not path.exists():
+            return {}
+        with closing(store.connect(path)) as conn:
+            return store.feedback_examples(conn)
+    except Exception:
+        return {}
 
 
 def public_record(record: dict[str, Any]) -> dict[str, Any]:
@@ -197,7 +229,13 @@ def run(
     period = DateRange.from_period(period_name)
     client = client or ApertusRelevanceClient(cache_dir="data/processed/triage")
     selected = load_selected_ids(judgements_dir)
-    pool = precedent_pool(raw_dir, label_periods, selected, load_summaries_de(judgements_dir))
+    pool = precedent_pool(
+        raw_dir,
+        label_periods,
+        selected,
+        load_summaries_de(judgements_dir),
+        feedback_overrides=_load_feedback_overrides(),
+    )
     earlier = [p for p in label_periods if DateRange.from_period(p).until < period.since]
     scored = []
     for name in [*earlier, period_name]:
