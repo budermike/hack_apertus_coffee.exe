@@ -666,6 +666,7 @@ class PeriodTriageManager:
             selected_ids=self.judgements.selected_ids if self.judgements is not None else None,
             fr_cache=self.judgements._fr_cache() if self.judgements is not None else None,
             subject_lookup=self.judgements.subject_for if self.judgements is not None else None,
+            segments=lambda: relevance.segment(item.text)["segs"],
         )
 
     def translate_reason_fr(self, case_number: str) -> dict[str, Any]:
