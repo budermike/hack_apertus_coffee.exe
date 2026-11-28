@@ -166,7 +166,7 @@ an Apertus v1.5 endpoint. No GPU. Versions are pinned in `requirements.txt` / `r
 python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements-dev.txt
 cp .env.example .env            # set LLM_API_KEY; LLM_BASE_URL and LLM_NAME have defaults
-pytest                          # 322 tests, no network, under 15 seconds
+pytest                          # over 300 tests, no network, under 15 seconds
 python src/keera_example.py     # one test call to the gateway
 
 # web application on the shipped Q2 results (http://127.0.0.1:8000)
