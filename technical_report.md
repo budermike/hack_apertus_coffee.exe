@@ -92,14 +92,16 @@ Apertus v1.5 performs the core task everywhere; no other language model is calle
 |---|---|---|
 | Relevance, two passes | `apertus-v1-5-70b` | Prompt with Suva's criteria (K1–K5 for, N1–N3 against) and similar earlier judgements with Suva's decision; JSON answer with quotes |
 | Summaries German / French | `SUMMARY_MODEL` (default `apertus-v1-5-70b`) | First the core question and the 1–3 decisive considerations (JSON), then each language written from their wording with a style profile measured on Suva's 55 texts, a glossary, three Suva examples marked as other cases and a rule-based block on who appealed and who won; a check by rules (cited considerations and articles exist, outcome agrees with the operative part) triggers one rewrite. After an edit, Apertus aligns the other language |
+| DE/FR check | `SUMMARY_MODEL` (default `apertus-v1-5-70b`) | Lengths compared by rules (at most 30 % apart, in characters). A reviewer looks for contradictions and omissions between the two languages in two passes with the texts in both orders; for each finding of both passes a referee decides from the judgement which language is right, and the other one is rewritten once. Remaining conflicts are shown to the lawyer. Hit rate not yet measured (`eval/crosscheck_eval.py`) |
 | Interface language | `apertus-v1-5-70b` | Reasons, subjects and quotes carried over into German or French in legal wording, stored after the first time |
 
 No fine-tuning. `temperature = 0` with a fixed seed; calls go through one wrapper per stage with
 timeouts and retries, answers are cached. Supporting model: `intfloat/multilingual-e5-small`
 (MIT, open weights, local). All four Apertus variants (8B, 70B, each with and without
 reasoning mode) were compared; the reasoning mode brought no measurable gain. Coding assistants
-used in development are listed in `docs/MODELS.md`; they wrote code, prompts and texts and do
-nothing at runtime.
+used in development (Claude Code with Claude Opus 5.5 and Claude Fable 5.2, Claude Sonnet 5.5,
+Antigravity with Gemini and Gemini 4 Hydrogen) are listed with their roles in `docs/MODELS.md`;
+they wrote code, prompts and texts and do nothing at runtime.
 
 ## 4. Data
 
